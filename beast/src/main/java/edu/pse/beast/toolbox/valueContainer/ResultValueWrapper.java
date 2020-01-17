@@ -2,6 +2,8 @@ package edu.pse.beast.toolbox.valueContainer;
 
 /**
  * The Class ResultValueWrapper.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class ResultValueWrapper {
 
@@ -17,8 +19,10 @@ public abstract class ResultValueWrapper {
     /**
      * Instantiates a new result value wrapper.
      *
-     * @param mainIdx the main idx
-     * @param nameString the name string
+     * @param mainIdx
+     *            the main idx
+     * @param nameString
+     *            the name string
      */
     public ResultValueWrapper(final int mainIdx, final String nameString) {
         this.mainIndex = mainIdx;
@@ -43,7 +47,8 @@ public abstract class ResultValueWrapper {
      */
     public int getMainIndex() {
         if (!isTopLevel) {
-            throw new IllegalArgumentException("This object has no valid main index");
+            throw new IllegalArgumentException("This object has no"
+                                                + " valid main index.");
         }
         return mainIndex;
     }
@@ -55,7 +60,8 @@ public abstract class ResultValueWrapper {
      */
     public String getName() {
         if (!isTopLevel) {
-            throw new IllegalArgumentException("This object has no valid name");
+            throw new IllegalArgumentException("This object has no"
+                                                + " valid name.");
         }
         return name;
     }

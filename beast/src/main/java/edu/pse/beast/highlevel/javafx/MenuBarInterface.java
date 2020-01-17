@@ -4,6 +4,8 @@ import edu.pse.beast.saverloader.MinimalSaverInterface;
 
 /**
  * The Interface MenuBarInterface.
+ *
+ * @author Lukas Stapelbroek
  */
 public interface MenuBarInterface extends MinimalSaverInterface {
 

@@ -6,14 +6,18 @@ import edu.pse.beast.options.OptionElement;
 
 /**
  * OptionElement subclass for the language option.
+ *
+ * @author Lukas Stapelbroek
  */
 public class LanguageOptionElement extends OptionElement {
 
     /**
      * Instantiates a new language option element.
      *
-     * @param availableOptions the choosable options
-     * @param chosenLangID     the chosen language ID
+     * @param availableOptions
+     *            the choosable options
+     * @param chosenLangID
+     *            the chosen language ID
      */
     public LanguageOptionElement(final List<String> availableOptions,
                                  final String chosenLangID) {

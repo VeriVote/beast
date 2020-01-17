@@ -38,7 +38,8 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
      * @param outputType
      *            the outType of this election
      */
-    public ElectionTypeContainer(final InputType inputType, final OutputType outputType) {
+    public ElectionTypeContainer(final InputType inputType,
+                                 final OutputType outputType) {
         this.inType = inputType;
         this.inType.setElectionTypeContainer(this);
         this.outType = outputType;
@@ -52,7 +53,8 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
     private void generateStructs() {
         this.inputStruct = new CBMCStruct(inType);
         this.outputStruct = new CBMCStruct(outType);
-        if (this.inputStruct.equals(this.outputStruct)) { // they have the same shape
+        if (this.inputStruct.equals(this.outputStruct)) { // they have the same
+                                                          // shape
             this.outputStruct = inputStruct;
         }
         inType.setStruct(inputStruct);

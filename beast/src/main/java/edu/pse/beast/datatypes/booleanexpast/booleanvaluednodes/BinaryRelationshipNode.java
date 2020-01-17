@@ -6,6 +6,8 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
  * @author Lukas Stapelbroek
  */
 public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
 
     /** The lhs exp node. */
     private final BooleanExpressionNode lhsExpNode;
@@ -16,8 +18,10 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     /**
      * Instantiates a new binary relationship node.
      *
-     * @param lhsExprNode the lhs node
-     * @param rhsExprNode the rhs node
+     * @param lhsExprNode
+     *            the lhs node
+     * @param rhsExprNode
+     *            the rhs node
      */
     public BinaryRelationshipNode(final BooleanExpressionNode lhsExprNode,
                                   final BooleanExpressionNode rhsExprNode) {
@@ -45,14 +49,11 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((lhsExpNode == null)
-                        ? 0 : lhsExpNode.hashCode());
-        result = prime * result
-                + ((rhsExpNode == null)
-                        ? 0 : rhsExpNode.hashCode());
+        result = PRIME * result
+                + ((lhsExpNode == null) ? 0 : lhsExpNode.hashCode());
+        result = PRIME * result
+                + ((rhsExpNode == null) ? 0 : rhsExpNode.hashCode());
         return result;
     }
 
@@ -65,13 +66,11 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
             return false;
         }
         BinaryRelationshipNode that = (BinaryRelationshipNode) o;
-        if (lhsExpNode != null
-                ? !lhsExpNode.equals(that.lhsExpNode)
-                        : that.lhsExpNode != null) {
+        if (lhsExpNode != null ? !lhsExpNode.equals(that.lhsExpNode)
+                : that.lhsExpNode != null) {
             return false;
         }
-        return rhsExpNode != null
-                ? rhsExpNode.equals(that.rhsExpNode)
-                        : that.rhsExpNode == null;
+        return rhsExpNode != null ? rhsExpNode.equals(that.rhsExpNode)
+                : that.rhsExpNode == null;
     }
 }

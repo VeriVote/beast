@@ -20,6 +20,8 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * The Class ResultImageRenderer.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class ResultImageRenderer {
 
@@ -48,7 +50,8 @@ public final class ResultImageRenderer {
     private static double currentScale = 1;
 
     /** The element list. */
-    private static List<ResultImageElement> elementList = new ArrayList<ResultImageElement>();
+    private static List<ResultImageElement> elementList =
+            new ArrayList<ResultImageElement>();
 
     /** The view. */
     private static ImageView view = new ImageView();
@@ -58,11 +61,13 @@ public final class ResultImageRenderer {
 
     /** The image min width. */
     private static double imageMinWidth =
-            GUIController.getController().getResultBorderPane().getWidth();
+            GUIController.getController()
+            .getResultBorderPane().getWidth();
 
     /** The image min height. */
     private static double imageMinHeight =
-            GUIController.getController().getResultBorderPane().getHeight();
+            GUIController.getController()
+            .getResultBorderPane().getHeight();
 
     /** The image desired width. */
     private static double imageDesiredWidth = imageMinWidth;
@@ -72,9 +77,12 @@ public final class ResultImageRenderer {
 
     /** The image. */
     // the next image the graphic will be drawn on
-    private static BufferedImage image = new BufferedImage(
-            (int) imageDesiredWidth, (int) imageDesiredHeight,
-            BufferedImage.TYPE_4BYTE_ABGR);
+    private static BufferedImage image =
+            new BufferedImage(
+                    (int) imageDesiredWidth,
+                    (int) imageDesiredHeight,
+                    BufferedImage.TYPE_4BYTE_ABGR
+                    );
 
     /**
      * Instantiates a new result image renderer.
@@ -85,10 +93,11 @@ public final class ResultImageRenderer {
         GUIController.getController().getResultBorderPane().widthProperty()
                 .addListener(new ChangeListener<Number>() {
                     @Override
-            public void changed(final ObservableValue<? extends Number> observableValue,
-                                final Number oldSceneWidth, final Number newSceneWidth) {
-                        imageMinWidth =
-                                GUIController.getController().getResultBorderPane().getWidth();
+                    public void changed(final ObservableValue<? extends Number> observableValue,
+                                        final Number oldSceneWidth,
+                                        final Number newSceneWidth) {
+                        imageMinWidth = GUIController.getController()
+                                .getResultBorderPane().getWidth();
                         updateImageSizeAndRedraw();
                     }
                 });
@@ -96,10 +105,11 @@ public final class ResultImageRenderer {
         GUIController.getController().getResultBorderPane().heightProperty()
                 .addListener(new ChangeListener<Number>() {
                     @Override
-            public void changed(final ObservableValue<? extends Number> observableValue,
-                                final Number oldSceneHeight, final Number newSceneHeight) {
-                        imageMinHeight =
-                                GUIController.getController().getResultBorderPane().getHeight();
+                    public void changed(final ObservableValue<? extends Number> observableValue,
+                                        final Number oldSceneHeight,
+                                        final Number newSceneHeight) {
+                        imageMinHeight = GUIController.getController()
+                                .getResultBorderPane().getHeight();
                         updateImageSizeAndRedraw();
                     }
                 });
@@ -107,29 +117,32 @@ public final class ResultImageRenderer {
         GUIController.getController().getZoomSlider().valueProperty()
                 .addListener(new ChangeListener<>() {
                     @Override
-            public void changed(final ObservableValue<? extends Number> observable,
-                                final Number oldValue, final Number newValue) {
+                    public void changed(final ObservableValue<? extends Number> observable,
+                                        final Number oldValue,
+                                        final Number newValue) {
                         zoomTo((double) newValue);
                     }
                 });
 
         // TODO determine which mouse behavior would fit best
-        view.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(final MouseEvent event) {
-                double clickX = event.getX();
-                double clickY = event.getY();
-                for (ResultImageElement element : elementList) {
-                    if (element.isInside(clickX, clickY)) {
-                        MouseEvent tmpEvent = (MouseEvent) event.clone();
-                        element.isClicked(tmpEvent);
-                        tmpEvent.consume();
+        view.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(final MouseEvent event) {
+                        double clickX = event.getX();
+                        double clickY = event.getY();
+                        for (ResultImageElement element : elementList) {
+                            if (element.isInside(clickX, clickY)) {
+                                MouseEvent tmpEvent =
+                                        (MouseEvent) event.clone();
+                                element.isClicked(tmpEvent);
+                                tmpEvent.consume();
+                            }
+                        }
+                        event.consume();
+                        drawElements();
                     }
-                }
-                event.consume();
-                drawElements();
-            }
-        });
+                });
     }
 
     /**
@@ -147,9 +160,12 @@ public final class ResultImageRenderer {
      * @param element
      *            the element which will be added to the list
      */
-    public static synchronized void addElement(final ResultImageElement element) {
-        imageDesiredWidth = Math.max(imageDesiredWidth, element.getxPosBottomRight());
-        imageDesiredHeight = Math.max(imageDesiredHeight, element.getyPosBottomRight());
+    public static synchronized void addElement(
+            final ResultImageElement element) {
+        imageDesiredWidth =
+                Math.max(imageDesiredWidth, element.getxPosBottomRight());
+        imageDesiredHeight =
+                Math.max(imageDesiredHeight, element.getyPosBottomRight());
         elementList.add(element);
     }
 
@@ -181,7 +197,9 @@ public final class ResultImageRenderer {
         graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
                 RenderingHints.VALUE_STROKE_PURE);
 
-        for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
+        for (Iterator<ResultImageElement> iterator =
+                elementList.iterator();
+                iterator.hasNext();) {
             ResultImageElement element = iterator.next();
             element.drawElement((Graphics2D) graphics.create(), currentScale);
         }
@@ -206,8 +224,10 @@ public final class ResultImageRenderer {
      */
     private static void updateImageSize() {
         image = new BufferedImage(
-                (int) (Math.max(imageMinWidth, imageDesiredWidth) * currentScale),
-                (int) (Math.max(imageMinHeight, imageDesiredHeight) * currentScale),
+                (int) (Math.max(imageMinWidth, imageDesiredWidth)
+                        * currentScale),
+                (int) (Math.max(imageMinHeight, imageDesiredHeight)
+                        * currentScale),
                 BufferedImage.TYPE_4BYTE_ABGR);
     }
 
@@ -222,7 +242,8 @@ public final class ResultImageRenderer {
     /**
      * Zoom to.
      *
-     * @param zoomValue the zoom value
+     * @param zoomValue
+     *            the zoom value
      */
     private static synchronized void zoomTo(final double zoomValue) {
         if (zoomValue < 0) {
@@ -238,8 +259,10 @@ public final class ResultImageRenderer {
         }
 
         // preserve the previous scroll setting
-        scrollPosV = GUIController.getController().getResultScrollPane().getVvalue();
-        scrollPosH = GUIController.getController().getResultScrollPane().getHvalue();
+        scrollPosV = GUIController.getController().getResultScrollPane()
+                .getVvalue();
+        scrollPosH = GUIController.getController().getResultScrollPane()
+                .getHvalue();
         updateImageSizeAndRedraw();
     }
 
@@ -250,8 +273,10 @@ public final class ResultImageRenderer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                GUIController.getController().getResultScrollPane().setVvalue(scrollPosV);
-                GUIController.getController().getResultScrollPane().setHvalue(scrollPosH);
+                GUIController.getController().getResultScrollPane()
+                        .setVvalue(scrollPosV);
+                GUIController.getController().getResultScrollPane()
+                        .setHvalue(scrollPosH);
             }
         });
     }
@@ -263,8 +288,10 @@ public final class ResultImageRenderer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                GUIController.getController().getResultScrollPane().setVvalue(0);
-                GUIController.getController().getResultScrollPane().setHvalue(0);
+                GUIController.getController().getResultScrollPane()
+                        .setVvalue(0);
+                GUIController.getController().getResultScrollPane()
+                        .setHvalue(0);
             }
         });
     }

@@ -17,6 +17,8 @@ import javafx.scene.Node;
 
 /**
  * The Class CBMCOutput.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CBMCOutput extends ResultPresentationType {
 
@@ -27,16 +29,19 @@ public class CBMCOutput extends ResultPresentationType {
     public Node presentResult(final Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                        TextStyle.fontSize(STANDARD_SIZE), ParStyle.EMPTY);
+                    TextStyle.fontSize(STANDARD_SIZE), ParStyle.EMPTY);
             area.setEditable(false);
         }
         List<String> resultText = result.getResultText();
-        for (Iterator<String> iterator = resultText.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = resultText.iterator();
+                iterator.hasNext();) {
             String text = iterator.next();
             area.appendText(text);
         }
-        VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>>
-            vsPane = new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+        VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                                                Either<String, LinkedImage>,
+                                                TextStyle>> vsPane =
+            new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
         return vsPane;
     }
 

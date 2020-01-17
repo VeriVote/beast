@@ -7,6 +7,8 @@ import javafx.scene.text.Text;
 
 /**
  * The Class RichTextInformation.
+ *
+ * @author Lukas Stapelbroek
  */
 public class RichTextInformation {
 
@@ -32,8 +34,8 @@ public class RichTextInformation {
      * @param clr
      *            the color the text should have
      */
-    public RichTextInformation(final String textString,
-                               final Font fnt, final Color clr) {
+    public RichTextInformation(final String textString, final Font fnt,
+                               final Color clr) {
         this.text = textString;
         this.font = fnt;
         this.color = clr;
@@ -42,7 +44,8 @@ public class RichTextInformation {
     /**
      * Instantiates a new rich text information.
      *
-     * @param textString            standard text in black with size 12
+     * @param textString
+     *            standard text in black with size 12
      */
     public RichTextInformation(final String textString) {
         this.text = textString;

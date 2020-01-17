@@ -23,25 +23,27 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     /**
      * Instantiates a new property checker.
      *
-     * @param checkerIdString the ID for the checker to be used
+     * @param checkerIdString
+     *            the ID for the checker to be used
      */
     public PropertyChecker(final String checkerIdString) {
         this.checkerID = checkerIdString;
     }
 
     @Override
-    public List<Result>
-            checkPropertiesForDescription(final ElectionDescription elecDescr,
-                                          final List<ParentTreeItem> parentProperties,
-                                          final ElectionCheckParameter electionCheckParameter) {
-        if (elecDescr == null || parentProperties == null || electionCheckParameter == null) {
+    public List<Result> checkPropertiesForDescription(final ElectionDescription elecDescr,
+                                                      final List<ParentTreeItem> parentProperties,
+                                                      final ElectionCheckParameter
+                                                              electionCheckParameter) {
+        if (elecDescr == null || parentProperties == null
+                || electionCheckParameter == null) {
             return null;
         } else {
             this.factoryController =
                     new FactoryController(elecDescr, parentProperties,
-                                          electionCheckParameter,
-                                          checkerID,
-                                          electionCheckParameter.getProcesses());
+                                          electionCheckParameter, checkerID,
+                                          electionCheckParameter
+                                              .getProcesses());
             return factoryController.getResults();
         }
     }

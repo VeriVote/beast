@@ -12,6 +12,8 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 /**
  * The Class CandidateList.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CandidateList extends CBMCOutputType {
 
@@ -19,7 +21,9 @@ public class CandidateList extends CBMCOutputType {
     private static final int DIMENSIONS = 1;
 
     /** The Constant SIZE_OF_DIMENSIONS. */
-    private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
+    private static final String[] SIZE_OF_DIMENSIONS = {
+            UnifiedNameContainer.getCandidate()
+    };
 
     /**
      * The constructor.
@@ -46,34 +50,32 @@ public class CandidateList extends CBMCOutputType {
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
         code.addTab();
         code.add(super.getContainer().getOutputStruct().getStructAccess()
-                 + " tmp = " + UnifiedNameContainer.getVotingMethod() + "("
-                 + UnifiedNameContainer.getNewVotesName() + "1);");
+                + " tmp = " + UnifiedNameContainer.getVotingMethod()
+                + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
         code.add("unsigned int *tmp_result = tmp."
-                 + UnifiedNameContainer.getStructValueName() + ";");
+                + UnifiedNameContainer.getStructValueName() + ";");
+        // create the array where the new seats will get saved
         code.add("unsigned int " + UnifiedNameContainer.getNewResultName()
-                 + "1[" + UnifiedNameContainer.getCandidate() + "];"); // create the array
-                                                                       // where the
-                                                                       // new seats will get saved
-                                                                       // iterate over the
+                + "1[" + UnifiedNameContainer.getCandidate() + "];");
+        // iterate over the seat array, and
         code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate()
-                 + "; i++) {");
-        // seat array, and
+                + "; i++) {");
         // fill it
         code.addTab();
         // we do this, so our cbmc parser can read out the value of the
         // array
         code.add("" + UnifiedNameContainer.getNewResultName()
-                 + "1[i] = tmp_result[i];");
+                + "1[i] = tmp_result[i];");
         code.deleteTab();
         code.add("}"); // close the for loop
         // iterate over all
         code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate()
-                 + "; i++) {");
+                + "; i++) {");
         code.addTab();
-        // candidates /
-        // seats
-        code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == "
-                 + UnifiedNameContainer.getOrigResultName() + "[i]);");
+        // candidates / seats
+        code.add("assert(" + UnifiedNameContainer.getNewResultName()
+                + "1[i] == " + UnifiedNameContainer.getOrigResultName()
+                + "[i]);");
         code.deleteTab();
         code.add("}"); // end of the for loop
         code.deleteTab();
@@ -98,8 +100,8 @@ public class CandidateList extends CBMCOutputType {
     }
 
     // @Override TODO remove
-    // public List<ResultValueWrapper> getCodeToRunMargin(final List<String>
-    // final origResult, final List<String> lastResult) {
+    // public List<ResultValueWrapper> getCodeToRunMargin(final List<String> final origResult,
+    //                                                    final List<String> lastResult) {
     // List<ResultValueWrapper> previousVotingResult =
     // super.helper.extractVariable(UnifiedNameContainer.getElect(),
     // lastResult);
@@ -109,7 +111,7 @@ public class CandidateList extends CBMCOutputType {
     //
     // @Override
     // public List<ResultValueWrapper> getNewResult(final String variableMatcher,
-    // final List<String> lastFailedRun) {
+    //                                              final List<String> lastFailedRun) {
     // List<ResultValueWrapper> tmpResult =
     // super.helper.extractVariable(variableMatcher, lastFailedRun);
     //
@@ -120,7 +122,8 @@ public class CandidateList extends CBMCOutputType {
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(
                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                InternalTypeRep.VOTER);
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override
@@ -130,15 +133,14 @@ public class CandidateList extends CBMCOutputType {
                 iterator.hasNext();) {
             String currentValue = iterator.next();
             try {
-                toReturn = toReturn
-                        + GUIController.getController().getElectionSimulation()
+                toReturn += GUIController.getController().getElectionSimulation()
                                 .getPartyName(Integer.parseInt(currentValue))
-                        + ", ";
+                            + ", ";
             } catch (NumberFormatException e) {
-                toReturn = toReturn + currentValue + ", ";
+                toReturn += currentValue + ", ";
             }
         }
-        toReturn = toReturn + "]";
+        toReturn += "]";
         return toReturn;
     }
 

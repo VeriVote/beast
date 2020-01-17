@@ -2,6 +2,8 @@ package edu.pse.beast.types;
 
 /**
  * The Class ComplexType.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class ComplexType {
 

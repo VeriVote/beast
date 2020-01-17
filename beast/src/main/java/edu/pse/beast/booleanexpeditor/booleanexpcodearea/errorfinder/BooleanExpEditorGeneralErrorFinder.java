@@ -11,6 +11,8 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**
  * The Class BooleanExpEditorGeneralErrorFinder.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class BooleanExpEditorGeneralErrorFinder {
     /**
@@ -21,7 +23,8 @@ public final class BooleanExpEditorGeneralErrorFinder {
     /**
      * Checks for errors.
      *
-     * @param parentTreeItem parent tree item
+     * @param parentTreeItem
+     *            parent tree item
      * @return true, if there are errors, else false
      */
     public static boolean hasErrors(final ParentTreeItem parentTreeItem) {
@@ -37,13 +40,15 @@ public final class BooleanExpEditorGeneralErrorFinder {
     /**
      * Gets the errors.
      *
-     * @param parentTreeItem the parent tree item
+     * @param parentTreeItem
+     *            the parent tree item
      * @return the errors
      */
     public static List<CodeError> getErrors(final ParentTreeItem parentTreeItem) {
         List<CodeError> combinedErrors = new ArrayList<CodeError>();
-        final PreAndPostConditionsDescription property = parentTreeItem.getPreAndPostProperties();
-        // pre cond error finder
+        final PreAndPostConditionsDescription property =
+                parentTreeItem.getPreAndPostProperties();
+        // precondition error finder
         final BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(
                 property.getPreConditionsDescription().getCode());
         combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
@@ -55,7 +60,7 @@ public final class BooleanExpEditorGeneralErrorFinder {
             )
         );
 
-        // post cond error finder
+        // postcondition error finder
         final BooleanExpANTLRHandler postAntlrHandler = new BooleanExpANTLRHandler(
                 property.getPostConditionsDescription().getCode());
         combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(postAntlrHandler));

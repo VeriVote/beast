@@ -17,7 +17,8 @@ import edu.pse.beast.types.OutputType;
  *
  * @author Lukas Stapelbroek
  */
-public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescription> {
+public class ElectionDescriptionSaverLoader
+        implements SaverLoader<ElectionDescription> {
     /** The saver loader. */
     private static Gson saverLoader;
 

@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The Class TimeOut.
+ *
+ * @author Lukas Stapelbroek
  */
 public class TimeOut {
 
@@ -19,9 +21,11 @@ public class TimeOut {
     /**
      * Creates a new TimeOut. Internally it saves the time in milliseconds.
      *
-     * @param unit     the unit for the input time. For reference
-     *                 {@link java.util.concurrent.TimeUnit}
-     * @param duration the duration how long the timeout is in the specified unit.
+     * @param unit
+     *            the unit for the input time. For reference
+     *            {@link java.util.concurrent.TimeUnit}
+     * @param duration
+     *            the duration how long the timeout is in the specified unit.
      */
     public TimeOut(final TimeUnit unit, final long duration) {
         amount = unit.toMillis(duration);
@@ -34,8 +38,8 @@ public class TimeOut {
     }
 
     /**
-     * creates an "empty" timeout, that shows that the checker should run until he
-     * is finished or the user stopps the check from the outside.
+     * creates an "empty" timeout, that shows that the checker should run until
+     * he is finished or the user stopps the check from the outside.
      */
     public TimeOut() {
         amount = 0;

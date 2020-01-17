@@ -9,6 +9,8 @@ import org.w3c.dom.NamedNodeMap;
 
 /**
  * The Class CBMCResultValueSingle.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CBMCResultValueSingle implements CBMCResultValue {
 
@@ -42,12 +44,14 @@ public class CBMCResultValueSingle implements CBMCResultValue {
     /**
      * Sets the value.
      *
-     * @param typeString            the datatye (e.g "int")
-     * @param val            the value (e.g "5")
-     * @param bitWidth            the width in bit this datatype has (e.g 32 for int)
+     * @param typeString
+     *            the datatye (e.g "int")
+     * @param val
+     *            the value (e.g "5")
+     * @param bitWidth
+     *            the width in bit this datatype has (e.g 32 for int)
      */
-    public void setValue(final String typeString,
-                         final String val,
+    public void setValue(final String typeString, final String val,
                          final int bitWidth) {
         this.type = typeString;
         this.value = val;
@@ -61,7 +65,9 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         this.value = // the value is saved in the first child
                 element.getFirstChild().getNodeValue();
         this.width = // the width of the data type
-                Integer.parseInt(attributes.getNamedItem(WIDTH_NAME).getNodeValue());
+                Integer.parseInt(
+                        attributes.getNamedItem(WIDTH_NAME).getNodeValue()
+                );
     }
 
     /**
@@ -107,22 +113,27 @@ public class CBMCResultValueSingle implements CBMCResultValue {
     /**
      * Check index.
      *
-     * @param indices the indices
+     * @param indices
+     *            the indices
      */
     private void checkIndex(final List<Integer> indices) {
         if (indices.size() != 0) {
-            throw new IndexOutOfBoundsException(
-                    "ResultValueSingle objects only contain one element, "
-                            + "therefore the index list has to be empty");
+            throw new IndexOutOfBoundsException("ResultValueSingle objects"
+                                                + " only contain one element,"
+                                                + " therefore the index list"
+                                                + " must be empty.");
         }
     }
 
     /**
      * Parses the number.
      *
-     * @param dataType the data type
-     * @param dataValue the data value
-     * @param dataWidth the data width
+     * @param dataType
+     *            the data type
+     * @param dataValue
+     *            the data value
+     * @param dataWidth
+     *            the data width
      * @return the number
      */
     private static Number parseNumber(final String dataType,
@@ -144,8 +155,10 @@ public class CBMCResultValueSingle implements CBMCResultValue {
     /**
      * Parses the natural number.
      *
-     * @param dataValue the data value
-     * @param dataWidth the data width
+     * @param dataValue
+     *            the data value
+     * @param dataWidth
+     *            the data width
      * @return the number
      */
     private static Number parseNaturalNumber(final String dataValue,
@@ -165,8 +178,10 @@ public class CBMCResultValueSingle implements CBMCResultValue {
     /**
      * Parses the decimal number.
      *
-     * @param dataValue the data value
-     * @param dataWidth the data width
+     * @param dataValue
+     *            the data value
+     * @param dataWidth
+     *            the data width
      * @return the number
      */
     private static Number parseDecimalNumber(final String dataValue,

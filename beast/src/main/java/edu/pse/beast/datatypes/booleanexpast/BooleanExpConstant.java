@@ -4,6 +4,8 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
  * The Class BooleanExpConstant.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class BooleanExpConstant {
 

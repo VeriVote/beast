@@ -12,6 +12,8 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 /**
  * The Class Checker.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class Checker implements Runnable {
 
@@ -86,12 +88,9 @@ public abstract class Checker implements Runnable {
      * @param resultVal
      *            the result
      */
-    public Checker(final int voterAmount,
-                   final int candAmount,
-                   final int seatAmount,
-                   final String advancedOptions,
-                   final File fileToCheck,
-                   final CheckerFactory parentFactory,
+    public Checker(final int voterAmount, final int candAmount,
+                   final int seatAmount, final String advancedOptions,
+                   final File fileToCheck, final CheckerFactory parentFactory,
                    final Result resultVal) {
         this.voters = voterAmount;
         this.candidates = candAmount;
@@ -120,14 +119,17 @@ public abstract class Checker implements Runnable {
             ThreadedBufferedReader outReader =
                     new ThreadedBufferedReader(
                             new BufferedReader(
-                                    new InputStreamReader(process.getInputStream())
-                                    ),
-                            output, latch, true);
+                                    new InputStreamReader(process.getInputStream())),
+                            output, latch, true
+                            );
             ThreadedBufferedReader errReader =
                     new ThreadedBufferedReader(
                             new BufferedReader(
-                                    new InputStreamReader(process.getErrorStream())),
-                            errors, latch, false);
+                                    new InputStreamReader(process.getErrorStream()
+                                            )
+                                    ),
+                            errors, latch, false
+                            );
             result.setLastTmpResult(output);
             result.setLastTmpError(errors);
             // result
@@ -137,7 +139,8 @@ public abstract class Checker implements Runnable {
                     if (process.exitValue() == EXIT_ON_SUCCESS) {
                         success = true;
                     } else {
-                        if (process.exitValue() != EXIT_ON_INCORRECT_ENVIRONMENT) {
+                        if (process.exitValue()
+                                != EXIT_ON_INCORRECT_ENVIRONMENT) {
                             ErrorLogger.log("Process finished with exitcode: "
                                             + process.exitValue());
                         }
@@ -225,11 +228,16 @@ public abstract class Checker implements Runnable {
     /**
      * Creates the process, which is run in a separate thread.
      *
-     * @param fileToCheck            the path to the file to check
-     * @param voterAmount            the amount of voters to check with
-     * @param candAmount            the amount of candidates to check with
-     * @param seatAmount            the amount of seats to check with
-     * @param advancedOptions            all advanced options that might be applied
+     * @param fileToCheck
+     *            the path to the file to check
+     * @param voterAmount
+     *            the amount of voters to check with
+     * @param candAmount
+     *            the amount of candidates to check with
+     * @param seatAmount
+     *            the amount of seats to check with
+     * @param advancedOptions
+     *            all advanced options that might be applied
      * @return a process that describes the system process that is currently
      *         checking the property
      */

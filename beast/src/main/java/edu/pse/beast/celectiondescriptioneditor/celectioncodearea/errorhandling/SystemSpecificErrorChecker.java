@@ -32,14 +32,14 @@ public abstract class SystemSpecificErrorChecker {
     static final String COMPILER_STRING = "gcc";
 
     /**
-     * This flag prohibits that file are creates by the compiler and
-     * only the syntax is checked.
+     * This flag prohibits that file are creates by the compiler and only the
+     * syntax is checked.
      */
     static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
 
     /**
-     * We want to compile to a specific name, so we can delete the file
-     * then later on.
+     * We want to compile to a specific name, so we can delete the file then
+     * later on.
      */
     static final String SET_OUTPUT_FILE_NAME = "-o ";
 
@@ -49,34 +49,34 @@ public abstract class SystemSpecificErrorChecker {
     /** The Constant USER_INCLUDE_FOLDER. */
     static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    /** If gcc finds, that a return is missing, it prints out this error message.
-     * The error then is of the format
-     * "FILENANE:LINE:COLUMN warning:control reaches...".
+    /**
+     * If gcc finds, that a return is missing, it prints out this error message.
+     * The error then is of the format "FILENANE:LINE:COLUMN warning:control
+     * reaches...".
      */
-    static final String GCC_MISSING_RETURN_FOUND
-        = "warning: control reaches end of non-void function";
+    static final String GCC_MISSING_RETURN_FOUND =
+            "warning: control reaches end of non-void function";
 
     /**
      * If gcc finds that a function is missing, it gets displayed like this.
      */
-    static final String GCC_MISSING_FUNCTION_FOUND
-        = "warning: implicit declaration of function";
+    static final String GCC_MISSING_FUNCTION_FOUND = "warning: implicit declaration of function";
 
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
 
     /**
-     * Constructor creates an error checker that compiles the c code and passes it
-     * on to a system specific compiler.
+     * Constructor creates an error checker that compiles the c code and passes
+     * it on to a system specific compiler.
      */
     public SystemSpecificErrorChecker() {
-        // clear the folder where the files that get checked get saved to, because
+        // clear the folder where the files that get checked get saved to,
+        // because
         // sometimes they persist from the last time when BEAST was run.
         try {
             final String dummy = "dummy.file";
-            cleanDirectory(
-                new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER),
-                dummy);
+            cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER),
+                           dummy);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,18 +84,23 @@ public abstract class SystemSpecificErrorChecker {
 
     /**
      * Taken from "org.apache.commons.io.FileUtils". Lists files in a directory,
-     * asserting that the supplied directory satisfies exists and is a directory.
+     * asserting that the supplied directory satisfies exists and is a
+     * directory.
      *
-     * @param directory The directory to list
+     * @param directory
+     *            The directory to list
      * @return The files in the directory, never null.
-     * @throws IOException if an I/O error occurs
+     * @throws IOException
+     *             if an I/O error occurs
      */
-    private static File[] verifiedListFiles(final File directory) throws IOException {
+    private static File[] verifiedListFiles(final File directory)
+            throws IOException {
         if (!directory.exists()) {
             throw new IllegalArgumentException(directory + " does not exist");
         }
         if (!directory.isDirectory()) {
-            throw new IllegalArgumentException(directory + " is not a directory");
+            throw new IllegalArgumentException(
+                    directory + " is not a directory");
         }
         final File[] files = directory.listFiles();
         if (files == null) { // null if security restricted
@@ -105,14 +110,17 @@ public abstract class SystemSpecificErrorChecker {
     }
 
     /**
-     * Taken and adapted from "org.apache.commons.io.FileUtils" Cleans a directory
-     * without deleting it.
+     * Taken and adapted from "org.apache.commons.io.FileUtils" Cleans a
+     * directory without deleting it.
      *
-     * @param directory directory to clean
-     * @param keep the keep
-     * @throws IOException              in case cleaning is unsuccessful
-     * @throws IllegalArgumentException if {@code directory} does not exist or is
-     *                                  not a directory
+     * @param directory
+     *            directory to clean
+     * @param keep
+     *            the keep
+     * @throws IOException
+     *             in case cleaning is unsuccessful
+     * @throws IllegalArgumentException
+     *             if {@code directory} does not exist or is not a directory
      */
     private static void cleanDirectory(final File directory,
                                        final String keep) throws IOException {
@@ -120,7 +128,8 @@ public abstract class SystemSpecificErrorChecker {
         IOException exception = null;
         for (final File file : files) {
             try {
-                if (!file.getName().equals(keep)) { // Difference to original method
+                if (!file.getName().equals(keep)) { // Difference to original
+                                                    // method
                     FileUtils.forceDelete(file);
                 }
             } catch (final IOException ioe) {
@@ -135,39 +144,52 @@ public abstract class SystemSpecificErrorChecker {
     /**
      * Checks the code for errors.
      *
-     * @param toCheck    the code to check
-     * @param lineOffset line offset
+     * @param toCheck
+     *            the code to check
+     * @param lineOffset
+     *            line offset
      * @return all errors found in a list
      */
     public List<CodeError> checkCodeForErrors(final List<String> toCheck,
                                               final int lineOffset) {
         List<String> result = new ArrayList<String>();
         List<String> errors = new ArrayList<String>();
-        String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
-        String pathToNewFile = absolutePath + FileLoader.getNewUniqueName(absolutePath);
+        String absolutePath = SuperFolderFinder.getSuperFolder()
+                                + PATH_TO_TEMP_FOLDER;
+        final String pathToNewFile =
+                absolutePath + FileLoader.getNewUniqueName(absolutePath);
         // pathToNewFile = pathToNewFile.replaceAll("%20", " ");
-        // Create two links to files, so in case an object file gets created we can
+        // Create two links to files, so in case an object file gets created we
+        // can
         // delete it afterwards, too.
-        File cFile = new File(pathToNewFile + FileLoader.C_FILE_ENDING);
+        final File cFile = new File(pathToNewFile + FileLoader.C_FILE_ENDING);
         // that will be created, to delete it afterwards
-        File batFile = new File(pathToNewFile + FileLoader.BAT_FILE_ENDING);
-        File objFile = new File(pathToNewFile + FileLoader.OBJECT_FILE_ENDING);
-        // on windows we have to create a .bat file, so we create a reference to the
+        final File batFile = new File(pathToNewFile + FileLoader.BAT_FILE_ENDING);
+        final File objFile = new File(pathToNewFile + FileLoader.OBJECT_FILE_ENDING);
+        // on windows we have to create a .bat file, so we create a reference to
+        // the
         // file that will be created, to delete it afterwards
-        File exeFile = new File(pathToNewFile + FileLoader.EXE_FILE_ENDING);
+        final File exeFile = new File(pathToNewFile + FileLoader.EXE_FILE_ENDING);
         // write the code to the file
         FileSaver.writeStringLinesToFile(toCheck, cFile);
         Process process = checkCodeFileForErrors(cFile);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader
-                = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getInputStream())),
-                    result, latch, true);
-            ThreadedBufferedReader errReader
-                = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getErrorStream())),
-                    errors, latch, false);
+            ThreadedBufferedReader outReader =
+                    new ThreadedBufferedReader(
+                            new BufferedReader(
+                                    new InputStreamReader(
+                                            process.getInputStream()
+                                            )
+                                    ),
+                            result, latch, true);
+            ThreadedBufferedReader errReader =
+                    new ThreadedBufferedReader(
+                            new BufferedReader(
+                                    new InputStreamReader(
+                                            process.getErrorStream())
+                                    ),
+                            errors, latch, false);
             // wait for the process to finish;
             try {
                 process.waitFor();
@@ -179,7 +201,8 @@ public abstract class SystemSpecificErrorChecker {
             }
             // parse the errors out of the returned lists
             List<CodeError> toReturn = parseError(result, errors, lineOffset);
-            // deletes the temporary file, so it does not clog up the file system
+            // deletes the temporary file, so it does not clog up the file
+            // system
             if (GUIController.getController().getDeleteTmpFiles()) {
                 cFile.delete();
                 batFile.delete();
@@ -198,7 +221,8 @@ public abstract class SystemSpecificErrorChecker {
     /**
      * Checks a file for errors. Has to be implemented system specifically.
      *
-     * @param toCheck the file to check
+     * @param toCheck
+     *            the file to check
      * @return a process that is currently checking the file
      */
     protected abstract Process checkCodeFileForErrors(File toCheck);
@@ -207,9 +231,12 @@ public abstract class SystemSpecificErrorChecker {
      * Parses the system specific outputs from the process to the internal
      * "CodeError" format.
      *
-     * @param result     the result list from the previously started process
-     * @param errors     the error list from the previously started process
-     * @param lineOffset line offset
+     * @param result
+     *            the result list from the previously started process
+     * @param errors
+     *            the error list from the previously started process
+     * @param lineOffset
+     *            line offset
      * @return a list of all found code errors in the list
      */
     protected abstract List<CodeError> parseError(List<String> result,

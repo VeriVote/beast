@@ -20,8 +20,14 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
 
 /**
  * The Class InOutType.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class InOutType {
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+    /** The Constant ARR. */
+    private static final String ARR = "arr";
 
     /**
      * The Enum DataType.
@@ -49,7 +55,8 @@ public abstract class InOutType {
         /**
          * Instantiates a new data type.
          *
-         * @param textString the text string
+         * @param textString
+         *            the text string
          */
         DataType(final String textString) {
             this.text = textString;
@@ -87,15 +94,17 @@ public abstract class InOutType {
     /**
      * The constructor.
      *
-     * @param usigned the usigned
-     * @param datType the dat type
-     * @param dims the dims
-     * @param sizeOfDims the size of dims
+     * @param usigned
+     *            the usigned
+     * @param datType
+     *            the dat type
+     * @param dims
+     *            the dims
+     * @param sizeOfDims
+     *            the size of dims
      */
-    public InOutType(final boolean usigned,
-                     final DataType datType,
-                     final int dims,
-                     final String[] sizeOfDims) {
+    public InOutType(final boolean usigned, final DataType datType,
+                     final int dims, final String[] sizeOfDims) {
         this.unsigned = usigned;
         this.dataType = datType;
         this.dimensions = dims;
@@ -105,7 +114,8 @@ public abstract class InOutType {
     /**
      * Sets the election type container.
      *
-     * @param elecTypeContainer the new election type container
+     * @param elecTypeContainer
+     *            the new election type container
      */
     public void setElectionTypeContainer(final ElectionTypeContainer elecTypeContainer) {
         this.container = elecTypeContainer;
@@ -170,7 +180,8 @@ public abstract class InOutType {
     /**
      * Gets the dimension descriptor.
      *
-     * @param includeSizes the include sizes
+     * @param includeSizes
+     *            the include sizes
      * @return returns a String containing the shape of the input object e.g "["
      *         + UnifiedNameContainer.getVoter() + "]" for single choice
      */
@@ -181,14 +192,15 @@ public abstract class InOutType {
     /**
      * Gets the dimension descriptor.
      *
-     * @param sizes the sizes
+     * @param sizes
+     *            the sizes
      * @return the dimension descriptor
      */
     public String getDimensionDescriptor(final String[] sizes) {
         String toReturn = "";
         for (int i = 0; i < dimensions; i++) {
             String content = sizes[i];
-            toReturn = toReturn + createSquareBrackets(content);
+            toReturn += createSquareBrackets(content);
         }
         return toReturn;
     }
@@ -218,7 +230,8 @@ public abstract class InOutType {
     /**
      * Creates the square brackets.
      *
-     * @param content            the content to be put in the brackets
+     * @param content
+     *            the content to be put in the brackets
      * @return e.g "[content]"
      */
     private String createSquareBrackets(final String content) {
@@ -228,14 +241,15 @@ public abstract class InOutType {
     /**
      * Access values.
      *
-     * @param electionContainer the election container
+     * @param electionContainer
+     *            the election container
      * @return a string which, when written behind a variable which given type,
      *         allows access to its values (e.g ".arr", if it is a struct in
      *         which the value is stored in "arr"
      */
     public final String accessValues(final ElectionTypeContainer electionContainer) {
         if (dimensions == 0) {
-            return ""; // zero dimensional dataTypes are not represented by
+            return ""; // zero-dimensional dataTypes are not represented by
                        // structs
         } else {
             return UnifiedNameContainer.getStructValueName();
@@ -245,7 +259,8 @@ public abstract class InOutType {
     /**
      * Prints the array.
      *
-     * @param wrapper the wrapper
+     * @param wrapper
+     *            the wrapper
      * @return the string
      */
     public String printArray(final CBMCResultValueWrapper wrapper) {
@@ -253,10 +268,12 @@ public abstract class InOutType {
 
         if (resultValue.getResultType() == ResultType.STRUCT) {
             CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
-            return printArray(struct.getResultVariable(
-                    UnifiedNameContainer.getStructValueName()));
-        }
-        if (resultValue.getResultType() == ResultType.SINGLE) {
+            return printArray(
+                    struct.getResultVariable(
+                            UnifiedNameContainer.getStructValueName()
+                    )
+            );
+        } else if (resultValue.getResultType() == ResultType.SINGLE) {
             CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
             return single.getValue();
         } else if (resultValue.getResultType() == ResultType.ARRAY) {
@@ -264,23 +281,24 @@ public abstract class InOutType {
             List<CBMCResultValueWrapper> newValues = array.getValues();
             String subArray = "";
             for (int i = 0; i < array.getArraySize(); i++) {
-                subArray = subArray + printArray(newValues.get(i)) + ",";
+                subArray += printArray(newValues.get(i)) + ",";
             }
-            subArray = subArray.substring(0, subArray.length() - 1); // cut off
-                                                                     // the last
-                                                                     // ","
+            // cut off the last ","
+            subArray = subArray.substring(0, subArray.length() - 1);
             subArray = "{" + subArray + "}";
             return subArray;
         } else {
-            throw new IllegalArgumentException(
-                    "Only single numbers arrays, and a struct of an array are allowed here");
+            throw new IllegalArgumentException("Only single numbers arrays,"
+                                                + " and a struct of an array"
+                                                + " are allowed here");
         }
     }
 
     /**
      * Gets the access dimensions.
      *
-     * @param filling the filling
+     * @param filling
+     *            the filling
      * @return the access dimensions
      */
     public String getAccessDimensions(final List<String> filling) {
@@ -294,14 +312,15 @@ public abstract class InOutType {
     /**
      * Gets the full var access.
      *
-     * @param varName the var name
-     * @param filling the filling
+     * @param varName
+     *            the var name
+     * @param filling
+     *            the filling
      * @return the full var access
      */
     public String getFullVarAccess(final String varName,
                                    final List<String> filling) {
-        return varName + "."
-                + UnifiedNameContainer.getStructValueName()
+        return varName + "." + UnifiedNameContainer.getStructValueName()
                 + getAccessDimensions(filling);
     }
 
@@ -326,39 +345,49 @@ public abstract class InOutType {
     /**
      * Draw result.
      *
-     * @param result the result
-     * @param varNameMatcher the var name matcher
-     * @param sizes the sizes
+     * @param result
+     *            the result
+     * @param varNameMatcher
+     *            the var name matcher
+     * @param sizes
+     *            the sizes
      * @return the list
      */
     public List<String> drawResult(final Result result,
                                    final String varNameMatcher,
                                    final Map<Integer, Long> sizes) {
         List<String> toReturn = new ArrayList<String>();
-        List<ResultValueWrapper> votes =
-                result.readVariableValue(varNameMatcher); // TODO name container
+        List<ResultValueWrapper> votes = // TODO name container
+                result.readVariableValue(varNameMatcher);
 
-        for (ResultValueWrapper currentVar: votes) {
+        for (final ResultValueWrapper currentVar : votes) {
             long size = sizes.get(currentVar.getMainIndex());
             String name = currentVar.getName();
-            toReturn.add(name + "\n");
+            toReturn.add(name + LINE_BREAK);
             CBMCResultValueStruct struct =
                     (CBMCResultValueStruct) currentVar.getResultValue();
             if (getAmountOfDimensions() == 2) {
                 CBMCResultValueArray arr =
-                        (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-                toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, size,
-                                                                               name.length()));
+                        (CBMCResultValueArray) struct
+                            .getResultVariable(ARR).getResultValue();
+                toReturn.addAll(CBMCResultPresentationHelper
+                        .printTwoDimResult(arr, size, name.length()));
             } else if (getAmountOfDimensions() == 1) {
-                CBMCResultValueArray arr =
-                        (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-                toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, size,
-                                                                            name.length()));
+                CBMCResultValueArray arr = (CBMCResultValueArray) struct
+                        .getResultVariable(ARR).getResultValue();
+                toReturn.add(
+                        CBMCResultPresentationHelper.printOneDimResult(
+                                arr, size, name.length()
+                        )
+                );
             } else if (getAmountOfDimensions() == 0) {
-                toReturn.add(CBMCResultPresentationHelper.printSingleElement(
-                        (CBMCResultValueSingle) struct.getResultVariable("arr")
-                                .getResultValue(),
-                        name.length()));
+                toReturn.add(
+                        CBMCResultPresentationHelper.printSingleElement(
+                                (CBMCResultValueSingle)
+                                    struct.getResultVariable(ARR).getResultValue(),
+                                name.length()
+                        )
+                );
             }
         }
         return toReturn;
@@ -367,9 +396,12 @@ public abstract class InOutType {
     /**
      * Draw result.
      *
-     * @param wrapper the wrapper
-     * @param varName the var name
-     * @param size the size
+     * @param wrapper
+     *            the wrapper
+     * @param varName
+     *            the var name
+     * @param size
+     *            the size
      * @return the list
      */
     public List<String> drawResult(final ResultValueWrapper wrapper,
@@ -377,23 +409,30 @@ public abstract class InOutType {
                                    final Long size) {
         List<String> toReturn = new ArrayList<String>();
         toReturn.add(varName);
-        CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+        CBMCResultValueStruct struct =
+                (CBMCResultValueStruct) wrapper.getResultValue();
 
         if (getAmountOfDimensions() == 2) {
             CBMCResultValueArray arr =
-                    (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-            toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, size,
-                                                                           varName.length()));
+                    (CBMCResultValueArray) struct.getResultVariable(ARR).getResultValue();
+            toReturn.addAll(
+                    CBMCResultPresentationHelper.printTwoDimResult(
+                            arr, size, varName.length()
+                    )
+            );
         } else if (getAmountOfDimensions() == 1) {
             CBMCResultValueArray arr =
-                    (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-            toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, size,
-                                                                        varName.length()));
+                    (CBMCResultValueArray) struct.getResultVariable(ARR).getResultValue();
+            toReturn.add(
+                    CBMCResultPresentationHelper.printOneDimResult(
+                            arr, size, varName.length()
+                    )
+            );
         } else if (getAmountOfDimensions() == 0) {
             toReturn.add(
                     CBMCResultPresentationHelper.printSingleElement(
                             (CBMCResultValueSingle) struct
-                                    .getResultVariable("arr").getResultValue(),
+                                    .getResultVariable(ARR).getResultValue(),
                             varName.length()));
         }
         return toReturn;
@@ -410,9 +449,12 @@ public abstract class InOutType {
     /**
      * So far only used for preference voting.
      *
-     * @param code            the code
-     * @param valueName the value name
-     * @param loopVariables the loop variables
+     * @param code
+     *            the code
+     * @param valueName
+     *            the value name
+     * @param loopVariables
+     *            the loop variables
      */
     public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
                                                      String valueName,
@@ -421,7 +463,8 @@ public abstract class InOutType {
     /**
      * Sets the struct.
      *
-     * @param complType the new struct
+     * @param complType
+     *            the new struct
      */
     public void setStruct(final ComplexType complType) {
         this.complexType = complType;

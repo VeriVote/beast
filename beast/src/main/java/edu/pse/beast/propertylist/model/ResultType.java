@@ -27,7 +27,8 @@ public enum ResultType {
     CANCEL,
 
     /**
-     * The analysis revealed that the election description fulfills the property.
+     * The analysis revealed that the election description fulfills the
+     * property.
      */
     SUCCESS,
 

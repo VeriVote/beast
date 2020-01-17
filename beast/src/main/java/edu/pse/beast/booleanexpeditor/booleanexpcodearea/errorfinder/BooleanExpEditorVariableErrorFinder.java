@@ -27,19 +27,21 @@ public final class BooleanExpEditorVariableErrorFinder {
     /**
      * Gets the errors.
      *
-     * @param antlrHandler the antlr handler
-     * @param list the list
-     * @param codeArea the code area
+     * @param antlrHandler
+     *            the antlr handler
+     * @param list
+     *            the list
+     * @param codeArea
+     *            the code area
      * @return the errors
      */
     public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler,
                                                  final SymbolicVariableList list,
                                                  final NewCodeArea codeArea) {
-        FormalExpErrorFinderTreeListener listener
-              =  new FormalExpErrorFinderTreeListener(
-                    list, codeArea,
-                    codeArea.getElectionDescription()
-                );
+        FormalExpErrorFinderTreeListener listener =
+                new FormalExpErrorFinderTreeListener(
+                        list, codeArea,
+                        codeArea.getElectionDescription());
         ParseTree tree = antlrHandler.getParseTree();
         ParseTreeWalker walker = new ParseTreeWalker();
         try {

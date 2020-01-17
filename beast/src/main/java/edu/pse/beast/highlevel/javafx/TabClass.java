@@ -4,6 +4,8 @@ import javafx.scene.control.Tab;
 
 /**
  * The Class TabClass.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class TabClass {
 
@@ -16,7 +18,8 @@ public abstract class TabClass {
     /**
      * Instantiates a new tab class.
      *
-     * @param assocTab the assoc tab
+     * @param assocTab
+     *            the assoc tab
      */
     public TabClass(final Tab assocTab) {
         this.associatedTab = assocTab;

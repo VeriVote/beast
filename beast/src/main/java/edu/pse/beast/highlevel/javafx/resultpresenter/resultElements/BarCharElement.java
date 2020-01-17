@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * The Class BarCharElement.
+ *
+ * @author Lukas Stapelbroek
  */
 public class BarCharElement extends ResultImageElement {
 
@@ -23,11 +25,16 @@ public class BarCharElement extends ResultImageElement {
     /**
      * Instantiates a new bar char element.
      *
-     * @param xPosTopLeft the x pos top left
-     * @param yPosTopLeft the y pos top left
-     * @param xPosBottomRight the x pos bottom right
-     * @param yPosBottomRight the y pos bottom right
-     * @param resultVals the result vals
+     * @param xPosTopLeft
+     *            the x pos top left
+     * @param yPosTopLeft
+     *            the y pos top left
+     * @param xPosBottomRight
+     *            the x pos bottom right
+     * @param yPosBottomRight
+     *            the y pos bottom right
+     * @param resultVals
+     *            the result vals
      */
     public BarCharElement(final double xPosTopLeft, final double yPosTopLeft,
                           final double xPosBottomRight, final double yPosBottomRight,
@@ -45,10 +52,10 @@ public class BarCharElement extends ResultImageElement {
         // total size of the pie chart;
         List<Tuple3<String, Double, Color>> remove =
                 new LinkedList<Tuple3<String, Double, Color>>();
-        for (Tuple3<String, Double, Color> value: resultValues) {
+        for (Tuple3<String, Double, Color> value : resultValues) {
             if (value.second() == 0) {
                 System.err.println("You are not allowed to have fields "
-                                   + "with zero size in this chart");
+                                    + "with zero size in this chart");
                 remove.add(value); // remove this element from the chart
             } else {
                 tmpSize += Math.abs(value.second());
@@ -69,7 +76,8 @@ public class BarCharElement extends ResultImageElement {
             System.err.println(
                     "The bar chart was not given a size larger than zero!");
         } else {
-            for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator();
+            for (Iterator<Tuple3<String, Double, Color>> iterator =
+                    resultValues.iterator();
                     iterator.hasNext();) {
                 // TODO implement bar chart later
                 System.err.println("The bar chart is not implemented yet!");

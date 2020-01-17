@@ -6,13 +6,16 @@ import edu.pse.beast.toolbox.valueContainer.ResultValue;
 
 /**
  * The Interface CBMCResultValue.
+ *
+ * @author Lukas Stapelbroek
  */
 public interface CBMCResultValue extends ResultValue {
 
     /**
      * Sets the value.
      *
-     * @param element the new value
+     * @param element
+     *            the new value
      */
     void setValue(Element element);
 }

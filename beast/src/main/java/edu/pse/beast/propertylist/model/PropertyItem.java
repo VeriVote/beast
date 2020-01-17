@@ -1,3 +1,6 @@
+/*
+ * @author Lukas Stapelbroek
+ */
 package edu.pse.beast.propertylist.model;
 
 import java.util.List;
@@ -16,6 +19,9 @@ import edu.pse.beast.propertychecker.Result;
  * @author Justin Hecht
  */
 public class PropertyItem implements ResultPresenterElement {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
+
     /** The description. */
     private PreAndPostConditionsDescription description;
 
@@ -37,14 +43,15 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Constructor for the class.
      *
-     * @param descr                The property description to add to the property item
-     * @param testStatus           Sets whether the property will be analyzed in the next
-     *                             check
-     * @param computeMargin whether the margin will be computed
+     * @param descr
+     *            The property description to add to the property item
+     * @param testStatus
+     *            Sets whether the property will be analyzed in the next check
+     * @param computeMargin
+     *            whether the margin will be computed
      */
     public PropertyItem(final PreAndPostConditionsDescription descr,
-                        final boolean testStatus,
-                        final boolean computeMargin) {
+                        final boolean testStatus, final boolean computeMargin) {
         description = descr;
         willBeTested = testStatus;
 
@@ -56,15 +63,16 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Constructor with one parameter sets the test status to true.
      *
-     * @param descr The property description to add to the property item
+     * @param descr
+     *            The property description to add to the property item
      */
     public PropertyItem(final PreAndPostConditionsDescription descr) {
         this(descr, true, false);
     }
 
     /**
-     * Constructor without parameters returns a pretty unique name for the property
-     * description and a blank description.
+     * Constructor without parameters returns a pretty unique name for the
+     * property description and a blank description.
      */
     public PropertyItem() {
         this(new PreAndPostConditionsDescription(UUID.randomUUID().toString()),
@@ -83,7 +91,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Present canceled.
      *
-     * @param isTimeout the is timeout
+     * @param isTimeout
+     *            the is timeout
      */
     @Override
     public void presentCanceled(final boolean isTimeout) {
@@ -105,7 +114,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Present failure.
      *
-     * @param errorList the error list
+     * @param errorList
+     *            the error list
      */
     @Override
     public void presentFailure(final List<String> errorList) {
@@ -116,7 +126,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Present failure example.
      *
-     * @param resultVal the result val
+     * @param resultVal
+     *            the result val
      */
     @Override
     public void presentFailureExample(final Result resultVal) {
@@ -131,18 +142,17 @@ public class PropertyItem implements ResultPresenterElement {
      */
     @Override
     public int hashCode() {
-        final int prime = 31;
         int resultVal = 1;
-        resultVal = prime * resultVal
-                + ((description == null)
-                        ? 0 : description.hashCode());
+        resultVal = PRIME * resultVal
+                + ((description == null) ? 0 : description.hashCode());
         return resultVal;
     }
 
     /**
      * Equals.
      *
-     * @param o the o
+     * @param o
+     *            the o
      * @return true, if successful
      */
     @Override
@@ -167,15 +177,18 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Sets the description.
      *
-     * @param descr the new description
+     * @param descr
+     *            the new description
      */
     public void setDescription(final PreAndPostConditionsDescription descr) {
         this.description = descr;
     }
 
 //  public void setDescription(String newName, FormalPropertiesDescription preCond,
-//      FormalPropertiesDescription postCond, SymbolicVariableList symVars) {
-//    this.description = new PreAndPostConditionsDescription(newName, preCond, postCond, symVars);
+//                             FormalPropertiesDescription postCond,
+//                             SymbolicVariableList symVars) {
+//    this.description = new PreAndPostConditionsDescription(newName, preCond,
+//                                                           postCond, symVars);
 //  }
 
 //  public void setDescriptionName(String newName) {
@@ -199,7 +212,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Sets the test status.
      *
-     * @param newStatus the new test status
+     * @param newStatus
+     *            the new test status
      */
     public void setTestStatus(final boolean newStatus) {
         willBeTested = newStatus;
@@ -208,7 +222,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Sets the margin status.
      *
-     * @param newStatus the new margin status
+     * @param newStatus
+     *            the new margin status
      */
     public void setMarginStatus(final boolean newStatus) {
         willBeMarginComputed = newStatus;
@@ -235,7 +250,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Sets the result type.
      *
-     * @param resType the new result type
+     * @param resType
+     *            the new result type
      */
     public void setResultType(final ResultType resType) {
         this.resultType = resType;
@@ -253,7 +269,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Sets the error.
      *
-     * @param errorList the new error
+     * @param errorList
+     *            the new error
      */
     public void setError(final List<String> errorList) {
         this.error = errorList;
@@ -271,7 +288,8 @@ public class PropertyItem implements ResultPresenterElement {
     /**
      * Present.
      *
-     * @param resultToPresent the result to present
+     * @param resultToPresent
+     *            the result to present
      */
     @Override
     public void present(final Result resultToPresent) {

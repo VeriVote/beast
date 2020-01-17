@@ -15,8 +15,11 @@ import javafx.scene.Node;
 
 /**
  * The Class BoundedVarCodeArea.
+ *
+ * @author Lukas Stapelbroek
  */
-public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+public class BoundedVarCodeArea extends AutoCompletionCodeArea
+        implements MenuBarInterface {
 
     /** The Constant RESOURCE. */
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
@@ -42,15 +45,16 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
     /**
      * Display errors.
      *
-     * @param codeErrors the code errors
+     * @param codeErrors
+     *            the code errors
      */
     public void displayErrors(final List<CodeError> codeErrors) {
         String toDisplay = "";
-        for (Iterator<CodeError> iterator = codeErrors.iterator(); iterator.hasNext();) {
+        for (Iterator<CodeError> iterator = codeErrors.iterator();
+                iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();
-            toDisplay +=
-                "line: " + codeError.getLine()
-                + "| Message: " + codeError.getMsg() + "\n";
+            toDisplay += "line: " + codeError.getLine()
+                        + "| Message: " + codeError.getMsg() + "\n";
         }
         GUIController.setErrorText(toDisplay);
     }
@@ -59,7 +63,8 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
      * Sets the description for this property code area (either pre or post prop
      * description).
      *
-     * @param descr the description
+     * @param descr
+     *            the description
      */
     public void setDescription(final FormalPropertiesDescription descr) {
         saveDescription(descr);
@@ -70,7 +75,8 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
     /**
      * Save description.
      *
-     * @param newDescription the new description
+     * @param newDescription
+     *            the new description
      */
     public void saveDescription(final FormalPropertiesDescription newDescription) {
         if (this.description != null) {
@@ -129,8 +135,7 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
     }
 
     @Override
-    public void insertAutoCompletion(final int start,
-                                     final int end,
+    public void insertAutoCompletion(final int start, final int end,
                                      final String toInsert) {
         replaceText(start, end, toInsert);
     }

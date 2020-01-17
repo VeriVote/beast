@@ -31,7 +31,8 @@ public class ActionList {
      * Adds the supplied action to the list so if the user calls undoLast
      * immediately, this action will be undone.
      *
-     * @param acc the action to be added to the list
+     * @param acc
+     *            the action to be added to the list
      */
     public void add(final Action acc) {
         lastPerformed.add(acc);
@@ -72,7 +73,8 @@ public class ActionList {
      * The supplied Actionlistlistener will be notified when the list starts and
      * finishes undoing or redoing actions.
      *
-     * @param actListListener the object to be notified in the future
+     * @param actListListener
+     *            the object to be notified in the future
      */
     public void addActionlistListener(final ActionlistListener actListListener) {
         this.listener.add(actListListener);

@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 
 /**
  * The Class ResultTreeItem.
+ *
+ * @author Lukas Stapelbroek
  */
 public class ResultTreeItem extends CustomTreeItem {
 
@@ -34,10 +36,13 @@ public class ResultTreeItem extends CustomTreeItem {
     /**
      * Instantiates a new result tree item.
      *
-     * @param resultVal the result val
-     * @param ownerItem the owner item
+     * @param resultVal
+     *            the result val
+     * @param ownerItem
+     *            the owner item
      */
-    public ResultTreeItem(final Result resultVal, final ChildTreeItem ownerItem) {
+    public ResultTreeItem(final Result resultVal,
+                          final ChildTreeItem ownerItem) {
         this.result = resultVal;
         this.owner = ownerItem;
         this.result.setOwner(this);
@@ -138,24 +143,18 @@ public class ResultTreeItem extends CustomTreeItem {
     public void setPresentable() {
         if (result != null && result.isFinished()) {
             if (result.isMarginComp() || result.isTest()) {
-                this.setBackground(
-                        new Background(
-                                new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)
-                                )
-                );
+                this.setBackground(new Background(new BackgroundFill(Color.AQUA,
+                                   CornerRadii.EMPTY, Insets.EMPTY)));
             } else if (!result.isValid()) {
-                this.setBackground(
-                        new Background(
-                                new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)
-                                )
-                );
+                this.setBackground(new Background(new BackgroundFill(
+                                   Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
             } else {
                 if (result.isSuccess()) {
                     this.setBackground(new Background(new BackgroundFill(
-                            Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+                                       Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
                 } else {
                     this.setBackground(new Background(new BackgroundFill(
-                            Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+                                       Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
             }
         }

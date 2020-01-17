@@ -13,12 +13,14 @@ public class VoteExp extends AccessValueNode {
     /**
      * Instantiates a new vote exp.
      *
-     * @param type  the internal type
-     * @param accessingVars accessing variables
-     * @param count the count of this vote
+     * @param type
+     *            the internal type
+     * @param accessingVars
+     *            accessing variables
+     * @param count
+     *            the count of this vote
      */
-    public VoteExp(final InOutType type,
-                   final TypeExpression[] accessingVars,
+    public VoteExp(final InOutType type, final TypeExpression[] accessingVars,
                    final int count) {
         super(type, accessingVars, count);
     }

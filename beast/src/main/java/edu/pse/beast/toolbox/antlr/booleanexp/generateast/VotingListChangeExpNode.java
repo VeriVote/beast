@@ -8,6 +8,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 
 /**
  * The Class VotingListChangeExpNode.
+ *
+ * @author Lukas Stapelbroek
  */
 public class VotingListChangeExpNode extends BooleanExpressionNode {
 
@@ -20,12 +22,14 @@ public class VotingListChangeExpNode extends BooleanExpressionNode {
     /**
      * The constructor.
      *
-     * @param voteNode the vote node
-     * @param votingListChangeCont the voting list change cont
+     * @param voteNode
+     *            the vote node
+     * @param votingListChangeCont
+     *            the voting list change cont
      */
     public VotingListChangeExpNode(final TerminalNode voteNode,
                                    final VotingListChangeContentContext
-                                       votingListChangeCont) {
+                                           votingListChangeCont) {
         this.vote = voteNode;
         this.votingListChangeContent = votingListChangeCont;
     }

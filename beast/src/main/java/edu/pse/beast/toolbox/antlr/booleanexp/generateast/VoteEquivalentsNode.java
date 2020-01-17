@@ -6,6 +6,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 
 /**
  * The Class VoteEquivalentsNode.
+ *
+ * @author Lukas Stapelbroek
  */
 public class VoteEquivalentsNode extends BooleanExpressionNode {
 
@@ -21,9 +23,12 @@ public class VoteEquivalentsNode extends BooleanExpressionNode {
     /**
      * The constructor.
      *
-     * @param voteEquivContext the vote equiv context
-     * @param toOutputString the to output string
-     * @param voteOutputLen the vote output len
+     * @param voteEquivContext
+     *            the vote equiv context
+     * @param toOutputString
+     *            the to output string
+     * @param voteOutputLen
+     *            the vote output len
      */
     public VoteEquivalentsNode(final VoteEquivalentsContext voteEquivContext,
                                final String toOutputString,

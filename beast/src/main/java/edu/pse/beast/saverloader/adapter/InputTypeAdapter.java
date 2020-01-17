@@ -16,24 +16,34 @@ import edu.pse.beast.types.InputType;
 
 /**
  * The Class InputTypeAdapter.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class InputTypeAdapter
-                implements JsonSerializer<InputType>,
-                           JsonDeserializer<InputType> {
+        implements JsonSerializer<InputType>, JsonDeserializer<InputType> {
+    /** The Constant PROPERTIES. */
+    private static final String PROPERTIES = "properties";
+
+    /** The Constant TYPE. */
+    private static final String TYPE = "type";
 
     @Override
     public InputType deserialize(final JsonElement json, final Type typeOf,
                                  final JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get("type").getAsString();
-        JsonElement element = jsonObject.get("properties");
+        String type = jsonObject.get(TYPE).getAsString();
+        JsonElement element = jsonObject.get(PROPERTIES);
         try {
-            for (Iterator<InputType> iterator = InputType.getInputTypes().iterator();
+            for (Iterator<InputType> iterator =
+                    InputType.getInputTypes().iterator();
                     iterator.hasNext();) {
                 InputType inType = (InputType) iterator.next();
                 if (inType.getClass().getSimpleName().equals(type)) {
-                    return context.deserialize(element, Class.forName(inType.getClass().getName()));
+                    return context.deserialize(
+                            element,
+                            Class.forName(inType.getClass().getName())
+                            );
                 }
             }
             return null;
@@ -46,8 +56,8 @@ public final class InputTypeAdapter
     public JsonElement serialize(final InputType src, final Type typeOfSrc,
                                  final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
-        result.add("properties", context.serialize(src, src.getClass()));
+        result.add(TYPE, new JsonPrimitive(src.getClass().getSimpleName()));
+        result.add(PROPERTIES, context.serialize(src, src.getClass()));
         return result;
     }
 }

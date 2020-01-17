@@ -8,15 +8,16 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  * @author Lukas Stapelbroek
  */
 public class NotNode extends BooleanExpressionNode {
-
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
     /** The following node. */
     private BooleanExpressionNode followingNode;
 
     /**
      * Creates a new NotNode.
      *
-     * @param followingExprNode the node that follows this node (the node that gets
-     *                          negated)
+     * @param followingExprNode
+     *            the node that follows this node (the node that gets negated)
      */
     public NotNode(final BooleanExpressionNode followingExprNode) {
         this.followingNode = followingExprNode;
@@ -39,16 +40,15 @@ public class NotNode extends BooleanExpressionNode {
     @Override
     public String getTreeString(final int depth) {
         String tabs = "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
-        return "NOT\n" + tabs + "following: " + followingNode.getTreeString(depth + 1);
+        return "NOT\n" + tabs + "following: "
+                + followingNode.getTreeString(depth + 1);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((followingNode == null)
-                        ? 0 : followingNode.hashCode());
+        result = PRIME * result
+                + ((followingNode == null) ? 0 : followingNode.hashCode());
         return result;
     }
 
@@ -63,6 +63,6 @@ public class NotNode extends BooleanExpressionNode {
         NotNode notNode = (NotNode) o;
         return followingNode != null
                 ? followingNode.equals(notNode.followingNode)
-                        : notNode.followingNode == null;
+                : notNode.followingNode == null;
     }
 }

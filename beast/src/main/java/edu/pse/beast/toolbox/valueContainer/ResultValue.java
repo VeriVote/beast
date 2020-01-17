@@ -2,6 +2,8 @@ package edu.pse.beast.toolbox.valueContainer;
 
 /**
  * The Interface ResultValue.
+ *
+ * @author Lukas Stapelbroek
  */
 public interface ResultValue {
 
@@ -12,12 +14,12 @@ public interface ResultValue {
 
         /** The array. */
         ARRAY,
- /** The pointer. */
- POINTER,
- /** The single. */
- SINGLE,
- /** The struct. */
- STRUCT
+        /** The pointer. */
+        POINTER,
+        /** The single. */
+        SINGLE,
+        /** The struct. */
+        STRUCT
     }
 
     /**

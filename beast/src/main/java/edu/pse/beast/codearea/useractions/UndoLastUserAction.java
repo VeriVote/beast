@@ -16,7 +16,8 @@ public class UndoLastUserAction extends UserAction {
     /**
      * Instantiates a new undo last user action.
      *
-     * @param actList the act list
+     * @param actList
+     *            the act list
      */
     public UndoLastUserAction(final ActionList actList) {
         super("undo");

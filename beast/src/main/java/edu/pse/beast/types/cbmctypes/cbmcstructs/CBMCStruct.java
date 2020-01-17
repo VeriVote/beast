@@ -9,6 +9,8 @@ import edu.pse.beast.types.InOutType.DataType;
 
 /**
  * The Class CBMCStruct.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CBMCStruct extends ComplexType {
 
@@ -42,7 +44,8 @@ public class CBMCStruct extends ComplexType {
     /**
      * The constructor.
      *
-     * @param inputOutputType the input output type
+     * @param inputOutputType
+     *            the input output type
      */
     public CBMCStruct(final InOutType inputOutputType) {
         this.inOutType = inputOutputType;

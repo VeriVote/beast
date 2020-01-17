@@ -16,23 +16,31 @@ import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 
 /**
  * The Class VariableListListenerAdapter.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class VariableListListenerAdapter
         implements JsonSerializer<VariableListListener>,
-                   JsonDeserializer<VariableListListener> {
+        JsonDeserializer<VariableListListener> {
+    /** The Constant PROPERTIES. */
+    private static final String PROPERTIES = "properties";
+
+    /** The Constant TYPE. */
+    private static final String TYPE = "type";
 
     @Override
-    public VariableListListener deserialize(final JsonElement json, final Type typeOfT,
+    public VariableListListener deserialize(final JsonElement json,
+                                            final Type typeOfT,
                                             final JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get("type").getAsString();
-        JsonElement element = jsonObject.get("properties");
+        String type = jsonObject.get(TYPE).getAsString();
+        JsonElement element = jsonObject.get(PROPERTIES);
         try {
             if (FormalExpErrorFinderTreeListener.class.getSimpleName().equals(type)) {
-                return context.deserialize(
-                        element,
-                        Class.forName(FormalExpErrorFinderTreeListener.class.getName()));
+                return context.deserialize(element, Class.forName(
+                        FormalExpErrorFinderTreeListener.class.getName())
+                        );
             } else {
                 System.err.println("cant deserialize variable list listener");
             }
@@ -43,11 +51,12 @@ public final class VariableListListenerAdapter
     }
 
     @Override
-    public JsonElement serialize(final VariableListListener src, final Type typeOfSrc,
+    public JsonElement serialize(final VariableListListener src,
+                                 final Type typeOfSrc,
                                  final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
-        result.add("properties", context.serialize(src, src.getClass()));
+        result.add(TYPE, new JsonPrimitive(src.getClass().getSimpleName()));
+        result.add(PROPERTIES, context.serialize(src, src.getClass()));
         return result;
     }
 }

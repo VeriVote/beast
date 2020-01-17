@@ -10,6 +10,8 @@ import com.sun.jna.platform.win32.WinNT;
 
 /**
  * The Class Win32Process.
+ *
+ * @author Lukas Stapelbroek
  */
 public class Win32Process {
 
@@ -38,9 +40,10 @@ public class Win32Process {
     /**
      * Creates a new Win32 Process given a process id.
      *
-     * @param procId       the process id that describes this process
-     * @throws IOException if something goes wrong with creating the process
-     *                     reference
+     * @param procId
+     *            the process id that describes this process
+     * @throws IOException
+     *             if something goes wrong with creating the process reference
      */
     public Win32Process(final int procId) throws IOException {
         handle = Kernel32.INSTANCE.OpenProcess(
@@ -48,12 +51,11 @@ public class Win32Process {
                     | PROCESS_TERMINATE | SYNCHRONIZE,
                 false, procId);
         if (handle == null) {
-            throw new IOException(
-                    "OpenProcess failed: "
+            throw new IOException("OpenProcess failed: "
                     + Kernel32Util.formatMessageFromLastErrorCode(
                             Kernel32.INSTANCE.GetLastError()
-                    )
-            );
+                            )
+                    );
         }
         this.setPid(procId);
     }
@@ -82,7 +84,8 @@ public class Win32Process {
     /**
      * Sets the pid.
      *
-     * @param procId the new pid
+     * @param procId
+     *            the new pid
      */
     public void setPid(final int procId) {
         this.pid = procId;

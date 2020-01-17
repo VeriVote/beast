@@ -11,6 +11,8 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 /**
  * The Class SingleCandidate.
+ *
+ * @author Lukas Stapelbroek
  */
 public class SingleCandidate extends CBMCOutputType {
 

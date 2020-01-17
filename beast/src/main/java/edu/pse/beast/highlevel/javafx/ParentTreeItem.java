@@ -25,6 +25,8 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * The Class ParentTreeItem.
+ *
+ * @author Lukas Stapelbroek
  */
 public class ParentTreeItem extends CustomTreeItem {
 
@@ -74,10 +76,14 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Instantiates a new parent tree item.
      *
-     * @param propertyDesc the property desc
-     * @param isSelected the is selected
-     * @param treeItemReference the tree item reference
-     * @param createChildren the create children
+     * @param propertyDesc
+     *            the property desc
+     * @param isSelected
+     *            the is selected
+     * @param treeItemReference
+     *            the tree item reference
+     * @param createChildren
+     *            the create children
      */
     ParentTreeItem(final PreAndPostConditionsDescription propertyDesc,
                    final boolean isSelected,
@@ -91,9 +97,13 @@ public class ParentTreeItem extends CustomTreeItem {
         this.getChildren().add(propName);
         this.getChildren().add(new Separator(Orientation.VERTICAL));
         this.getChildren().add(checkAll);
-        checkItem = new CheckChildTreeItem("Verification ", this, new TreeItem<CustomTreeItem>());
-        marginItem = new MarginChildTreeItem("Margin", this, new TreeItem<CustomTreeItem>());
-        testItem = new TestChildTreeItem("Test", this, new TreeItem<CustomTreeItem>());
+        checkItem = new CheckChildTreeItem("Verification ", this,
+                new TreeItem<CustomTreeItem>());
+        marginItem = new MarginChildTreeItem("Margin", this,
+                new TreeItem<CustomTreeItem>());
+        testItem =
+                new TestChildTreeItem("Test", this,
+                                      new TreeItem<CustomTreeItem>());
         if (createChildren) {
             subItems.add(checkItem);
             subItems.add(marginItem);
@@ -148,7 +158,8 @@ public class ParentTreeItem extends CustomTreeItem {
      * Adds the children to stage.
      */
     public void addChildrenToStage() {
-        for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
+        for (Iterator<ChildTreeItem> iterator = subItems.iterator();
+                iterator.hasNext();) {
             CustomTreeItem item = iterator.next();
             // TreeItem<CustomTreeItem> reference = new
             // TreeItem<CustomTreeItem>(item);
@@ -161,21 +172,25 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Was clicked.
      *
-     * @param bringToFront the bring to front
+     * @param bringToFront
+     *            the bring to front
      */
     public void wasClicked(final boolean bringToFront) {
-        GUIController.getController().setCurrentPropertyDescription(this, bringToFront);
+        GUIController.getController()
+            .setCurrentPropertyDescription(this,
+                                           bringToFront);
     }
 
     /**
      * Check box changed.
      *
-     * @param state the state
+     * @param state
+     *            the state
      */
     private void checkBoxChanged(final boolean state) {
         if (initialized) {
-            for (Iterator<ChildTreeItem> iterator = subItems.iterator();
-                    iterator.hasNext();) {
+            for (Iterator<ChildTreeItem> iterator = subItems
+                    .iterator(); iterator.hasNext();) {
                 ChildTreeItem childTreeItem = iterator.next();
                 if (!disabled) {
                     childTreeItem.setSelected(state);
@@ -201,7 +216,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Sets the selected.
      *
-     * @param state the new selected
+     * @param state
+     *            the new selected
      */
     public void setSelected(final boolean state) {
         checkAll.setSelected(state);
@@ -222,7 +238,9 @@ public class ParentTreeItem extends CustomTreeItem {
      */
     public void childCheckboxChanged() {
         boolean acc = true;
-        for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
+        for (Iterator<ChildTreeItem> iterator =
+                subItems.iterator();
+                iterator.hasNext();) {
             ChildTreeItem item = iterator.next();
             acc = acc && item.isSelected();
         }
@@ -256,7 +274,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Sets the check result.
      *
-     * @param result the new check result
+     * @param result
+     *            the new check result
      */
     public void setCheckResult(final Result result) {
         checkItem.addResult(result);
@@ -265,7 +284,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Sets the margin result.
      *
-     * @param result the new margin result
+     * @param result
+     *            the new margin result
      */
     public void setMarginResult(final Result result) {
         marginItem.addResult(result);
@@ -274,7 +294,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Sets the check status.
      *
-     * @param status the new check status
+     * @param status
+     *            the new check status
      */
     public void setCheckStatus(final AnalysisStatus status) {
         // checkItem.setStatus(status);
@@ -283,7 +304,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Sets the margin status.
      *
-     * @param status the new margin status
+     * @param status
+     *            the new margin status
      */
     public void setMarginStatus(final AnalysisStatus status) {
         // marginItem.setStatus(status);
@@ -303,8 +325,8 @@ public class ParentTreeItem extends CustomTreeItem {
      * so we have have to check all to update the GUI.
      */
     public void update() {
-        for (Iterator<ChildTreeItem> iterator = subItems.iterator();
-                iterator.hasNext();) {
+        for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator
+                .hasNext();) {
             ChildTreeItem child = iterator.next();
             child.update();
         }
@@ -328,7 +350,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Adds the errors.
      *
-     * @param combinedErrors the combined errors
+     * @param combinedErrors
+     *            the combined errors
      */
     public void addErrors(final List<CodeError> combinedErrors) {
         String errorText = "";
@@ -336,7 +359,7 @@ public class ParentTreeItem extends CustomTreeItem {
                 iterator.hasNext();) {
             CodeError codeError = iterator.next();
             String error = codeError.getLine() + " : " + codeError.getMsg()
-                    + "\n";
+                            + "\n";
             errorText += error;
         }
         GUIController.setErrorText(errorText);
@@ -345,7 +368,8 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Sets the text.
      *
-     * @param text the new text
+     * @param text
+     *            the new text
      */
     public void setText(final String text) {
         propName.setText(text);
@@ -363,8 +387,10 @@ public class ParentTreeItem extends CustomTreeItem {
     /**
      * Adds the child.
      *
-     * @param values the values
-     * @param index the index
+     * @param values
+     *            the values
+     * @param index
+     *            the index
      */
     public void addChild(final ChildTreeItemValues values, final int index) {
         ChildTreeItem child = null;

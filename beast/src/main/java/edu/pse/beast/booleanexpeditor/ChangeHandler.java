@@ -33,12 +33,16 @@ public class ChangeHandler {
     /**
      * Constructor.
      *
-     * @param preTextPane              JTextPane of the preCondition BooleanExpCodeArea
-     * @param postTextPane             JTextPane of the postCondition BooleanExpCodeArea
-     * @param symbolicVarList          SymbolicVariableList of a newly loaded or saved
-     *                                     PreAndPostConditionsDescription object.
+     * @param preTextPane
+     *            JTextPane of the preCondition BooleanExpCodeArea
+     * @param postTextPane
+     *            JTextPane of the postCondition BooleanExpCodeArea
+     * @param symbolicVarList
+     *            SymbolicVariableList of a newly loaded or saved
+     *            PreAndPostConditionsDescription object.
      */
-    public ChangeHandler(final JTextPane preTextPane, final JTextPane postTextPane,
+    public ChangeHandler(final JTextPane preTextPane,
+                         final JTextPane postTextPane,
                          final SymbolicVariableList symbolicVarList) {
         this.symbolicVariableList = symbolicVarList;
         this.prePane = preTextPane;
@@ -50,8 +54,10 @@ public class ChangeHandler {
      * Method that adds new JTextPanes to the changeHandler incase the
      * BooleanExpEditor created new ones.
      *
-     * @param preTextPane  the new preConditions JTextPane
-     * @param postTextPane the new postConditions JTextPane
+     * @param preTextPane
+     *            the new preConditions JTextPane
+     * @param postTextPane
+     *            the new postConditions JTextPane
      */
     public void addNewTextPanes(final JTextPane preTextPane,
                                 final JTextPane postTextPane) {
@@ -66,8 +72,8 @@ public class ChangeHandler {
      */
     public void updatePreValues() {
         preString = prePane.getText() + postPane.getText();
-        preSymbolicVariableList
-            = new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
+        preSymbolicVariableList =
+                new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
     }
 
     /**
@@ -77,6 +83,7 @@ public class ChangeHandler {
      */
     public boolean hasChanged() {
         return !(preString.equals(prePane.getText() + postPane.getText())
-                && preSymbolicVariableList.equals(symbolicVariableList.getSymbolicVariables()));
+                && preSymbolicVariableList
+                        .equals(symbolicVariableList.getSymbolicVariables()));
     }
 }

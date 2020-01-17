@@ -6,6 +6,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.No
 
 /**
  * The Class NotEmptyContentNode.
+ *
+ * @author Lukas Stapelbroek
  */
 public class NotEmptyContentNode extends BooleanExpressionNode {
 
@@ -18,8 +20,10 @@ public class NotEmptyContentNode extends BooleanExpressionNode {
     /**
      * Instantiates a new not empty content node.
      *
-     * @param contentContext the content context
-     * @param votingOutputString the voting output string
+     * @param contentContext
+     *            the content context
+     * @param votingOutputString
+     *            the voting output string
      */
     public NotEmptyContentNode(final NotEmptyContentContext contentContext,
                                final String votingOutputString) {

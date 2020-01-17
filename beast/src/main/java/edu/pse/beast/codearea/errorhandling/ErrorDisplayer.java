@@ -23,7 +23,8 @@ import edu.pse.beast.toolbox.Tuple;
  *
  * @author Holger Klein
  */
-public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
+public abstract class ErrorDisplayer
+        implements DisplaysStringsToUser, MouseMotionListener {
 
     /** The Constant MIN_MOUSE_MOVE. */
     private static final int MIN_MOUSE_MOVE = 10;
@@ -55,13 +56,15 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     /**
      * Instantiates a new error displayer.
      *
-     * @param textPane the text pane
-     * @param currStrResLoader the curr str res loader
+     * @param textPane
+     *            the text pane
+     * @param currStrResLoader
+     *            the curr str res loader
      */
     public ErrorDisplayer(final JTextPane textPane,
                           final StringResourceLoader currStrResLoader) {
-        absPosToMsg = new ArrayList<>();
-        msges = new ArrayList<>();
+        absPosToMsg = new ArrayList<Tuple<Integer, Integer>>();
+        msges = new ArrayList<String>();
         ToolTipManager.sharedInstance().setInitialDelay(1);
         ToolTipManager.sharedInstance().setDismissDelay(DISMISS_DELAY);
         this.pane = textPane;
@@ -92,7 +95,8 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     /**
      * Sets the string resource loader.
      *
-     * @param stringResLoader the new string resource loader
+     * @param stringResLoader
+     *            the new string resource loader
      */
     protected void setStringResourceLoader(final StringResourceLoader stringResLoader) {
         this.currentStringResLoader = stringResLoader;
@@ -103,11 +107,12 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
      * found ones. This method must be overwritten by subclasses to do anything
      * useful
      *
-     * @param errors the errors to be presented
+     * @param errors
+     *            the errors to be presented
      */
     public void showErrors(final ArrayList<CodeError> errors) {
-        absPosToMsg = new ArrayList<>();
-        msges = new ArrayList<>();
+        absPosToMsg = new ArrayList<Tuple<Integer, Integer>>();
+        msges = new ArrayList<String>();
 
         for (Object o : highLights) {
             pane.getHighlighter().removeHighlight(o);
@@ -118,8 +123,10 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     /**
      * Show error.
      *
-     * @param er the er
-     * @param msg the msg
+     * @param er
+     *            the er
+     * @param msg
+     *            the msg
      */
     protected void showError(final CodeError er, final String msg) {
         int startpos = er.getStartPos();
@@ -130,9 +137,12 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         absPosToMsg.add(new Tuple<>(startpos, endpos));
         msges.add(msg);
         try {
-            highLights.add(pane.getHighlighter().addHighlight(startpos, endpos + 1, painter));
+            highLights.add(pane.getHighlighter()
+                    .addHighlight(startpos, endpos + 1, painter)
+            );
         } catch (BadLocationException ex) {
-            Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ErrorDisplayer.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -158,14 +168,16 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             pane.setToolTipText(null);
             // errorPopupMenu.setVisible(false);
             return;
-        }
-        if (Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < MIN_MOUSE_MOVE
-                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < MIN_MOUSE_MOVE
+        } else if (Math.abs(
+                errorPopupMenu.getLocation().x - pt.getX()) < MIN_MOUSE_MOVE
+                && Math.abs(errorPopupMenu.getLocation().x
+                        - pt.getX()) < MIN_MOUSE_MOVE
                 && errorPopupMenu.isVisible()) {
             return;
         }
         for (int i = 0; i < absPosToMsg.size(); ++i) {
-            if (absPosToMsg.get(i).first() <= pos && absPosToMsg.get(i).second() >= pos) {
+            if (absPosToMsg.get(i).first() <= pos
+                    && absPosToMsg.get(i).second() >= pos) {
                 pane.setToolTipText(msges.get(i));
                 // errorPopupMenu.getErrorItem().setText(msges.get(i));
                 // errorPopupMenu.show(pane, e.getX(), e.getY() + 20);

@@ -24,11 +24,12 @@ public final class SymbolicVarListSaverLoader {
     private SymbolicVarListSaverLoader() { }
 
     /**
-     * Creates a String from a given SymbolicVariableList, that can then be saved to
-     * a file and later given to createFromSaveString() to retrieve the saved
-     * object.
+     * Creates a String from a given SymbolicVariableList, that can then be
+     * saved to a file and later given to createFromSaveString() to retrieve the
+     * saved object.
      *
-     * @param list the SymbolicVariableList
+     * @param list
+     *            the SymbolicVariableList
      * @return the saveString
      */
     public static String createSaveString(final SymbolicVariableList list) {
@@ -43,7 +44,8 @@ public final class SymbolicVarListSaverLoader {
     /**
      * Creates the save string for var.
      *
-     * @param var the var
+     * @param var
+     *            the var
      * @return the string
      */
     private static String createSaveStringForVar(final SymbolicVariable var) {
@@ -55,7 +57,8 @@ public final class SymbolicVarListSaverLoader {
      * Creates a SymbolicVariableList object from a given, by createSaveString()
      * generated, saveString.
      *
-     * @param s the SaveString
+     * @param s
+     *            the SaveString
      * @return the SymbolicVariableList object
      */
     public static SymbolicVariableList createFromSaveString(final String s) {
@@ -63,7 +66,10 @@ public final class SymbolicVarListSaverLoader {
         String newString = s.replaceAll("\n", "");
         String[] var = newString.split(";");
         for (int i = 0; i < var.length; ++i) {
-            createSymbVarFromSaveString(var[i].replace("symbolic_variable:", ""), created);
+            createSymbVarFromSaveString(
+                    var[i].replace("symbolic_variable:", ""),
+                    created
+            );
         }
         return created;
     }
@@ -71,8 +77,10 @@ public final class SymbolicVarListSaverLoader {
     /**
      * Creates the symb var from save string.
      *
-     * @param s the s
-     * @param list the list
+     * @param s
+     *            the s
+     * @param list
+     *            the list
      */
     private static void createSymbVarFromSaveString(final String s,
                                                     final SymbolicVariableList list) {

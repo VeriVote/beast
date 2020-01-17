@@ -23,16 +23,19 @@ public class RegexAndColor {
     /**
      * Instantiates a new regex and color.
      *
-     * @param regExStr the reg ex str
-     * @param color the color
+     * @param regExStr
+     *            the reg ex str
+     * @param color
+     *            the color
      */
     public RegexAndColor(final String regExStr, final Color color) {
         StyleContext styleContext = StyleContext.getDefaultStyleContext();
         this.regEx = regExStr;
-        this.attributeSetForColor
-            = styleContext.addAttribute(styleContext.getEmptySet(),
-                                        StyleConstants.Foreground,
-                                        color);
+        this.attributeSetForColor =
+                styleContext.addAttribute(
+                        styleContext.getEmptySet(),
+                        StyleConstants.Foreground,
+                        color);
     }
 
     /**

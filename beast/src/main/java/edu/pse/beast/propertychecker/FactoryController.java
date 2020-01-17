@@ -63,18 +63,18 @@ public class FactoryController implements Runnable {
     private List<ChildTreeItem> treeItems = new ArrayList<ChildTreeItem>();
 
     // /**
-    //  *
-    //  * @param electionDescSrc
-    //  * the source for the election descriptions
-    //  * @param preAndPostConditionDescrSrc
-    //  * the properties to be checked
-    //  * @param parmSrc
-    //  * the parameter
-    //  * @param checkerID
-    //  * the ID of the checker that should be used
-    //  * @param concurrentChecker
-    //  * the amount of concurrent checker to be used
-    //  **/
+    // *
+    // * @param electionDescSrc
+    // * the source for the election descriptions
+    // * @param preAndPostConditionDescrSrc
+    // * the properties to be checked
+    // * @param parmSrc
+    // * the parameter
+    // * @param checkerID
+    // * the ID of the checker that should be used
+    // * @param concurrentChecker
+    // * the amount of concurrent checker to be used
+    // **/
     //  public FactoryController(ElectionDescriptionSource electionDescSrc,
     //                           PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc,
     //                           ParameterSource parmSrc, String checkerID,
@@ -130,7 +130,8 @@ public class FactoryController implements Runnable {
     //
     //     // get a list of result objects that fit for the specified checkerID
     //     // because we have no preAndPostConditions we only need ONE result
-    //     this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID,
+    //     this.results =
+    //     CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID,
     //     preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
     //
     //     preAndPostConditionDescrSrc.referenceResult(this.results);
@@ -158,11 +159,16 @@ public class FactoryController implements Runnable {
     /**
      * The constructor.
      *
-     * @param electionDescription the election description
-     * @param parentProperties the parent properties
-     * @param electionCheckParameter the election check parameter
-     * @param checkerIdString the checker id string
-     * @param concurrentCheckers the concurrent checkers
+     * @param electionDescription
+     *            the election description
+     * @param parentProperties
+     *            the parent properties
+     * @param electionCheckParameter
+     *            the election check parameter
+     * @param checkerIdString
+     *            the checker id string
+     * @param concurrentCheckers
+     *            the concurrent checkers
      */
     public FactoryController(final ElectionDescription electionDescription,
                              final List<ParentTreeItem> parentProperties,
@@ -175,19 +181,24 @@ public class FactoryController implements Runnable {
         this.elecDesc = electionDescription;
         this.parameter = electionCheckParameter;
         this.checkerID = checkerIdString;
-        this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentCheckers);
+        this.currentlyRunning =
+                new ArrayList<CheckerFactory>(concurrentCheckers);
 
         // set the result objects for all the selected children
-        for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator();
+        for (Iterator<ParentTreeItem> parentIterator =
+                parentProperties.iterator();
                 parentIterator.hasNext();) {
-            ParentTreeItem parentTreeItem = (ParentTreeItem) parentIterator.next();
-            for (Iterator<ChildTreeItem> childIterator
-                  = parentTreeItem.getSubItems().iterator(); childIterator
-                    .hasNext();) {
+            ParentTreeItem parentTreeItem =
+                    (ParentTreeItem) parentIterator.next();
+            for (Iterator<ChildTreeItem> childIterator =
+                    parentTreeItem.getSubItems().iterator();
+                    childIterator.hasNext();) {
                 ChildTreeItem child = childIterator.next();
                 if (child.isSelected()) {
-                    Result result = CheckerFactoryFactory.getMatchingResult(checkerIdString);
-                    result.setProperty(parentTreeItem.getPreAndPostProperties());
+                    Result result = CheckerFactoryFactory
+                            .getMatchingResult(checkerIdString);
+                    result.setProperty(
+                            parentTreeItem.getPreAndPostProperties());
                     child.addResult(result);
                     treeItems.add(child);
                     results.add(result);
@@ -207,7 +218,10 @@ public class FactoryController implements Runnable {
 
         // if the user wishes for a timeout, we activate it here
         if (electionCheckParameter.getTimeout().isActive()) {
-            notifier = new TimeOutNotifier(this, electionCheckParameter.getTimeout().getDuration());
+            notifier = new TimeOutNotifier(
+                    this,
+                    electionCheckParameter.getTimeout().getDuration()
+                    );
         } else {
             notifier = null;
         }
@@ -227,9 +241,11 @@ public class FactoryController implements Runnable {
     // // if we can start more checkers (we have not used our
     // // allowed pool completely), we can start a new one
     // if (currentlyRunning.size() < concurrentChecker) {
-    // CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID,
+    // CheckerFactory factory =
+    // CheckerFactoryFactory.getCheckerFactory(checkerID,
     // this,
-    // electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(), parmSrc,
+    // electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(),
+    // parmSrc,
     // results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
     //
     // synchronized (this) {
@@ -294,15 +310,18 @@ public class FactoryController implements Runnable {
                 // if we can start more checkers (we have not used our
                 // allowed pool completely), we can start a new one
                 if (currentlyRunning.size() < concurrentChecker) {
-                    // CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID,
+                    // CheckerFactory factory =
+                    // CheckerFactoryFactory.getCheckerFactory(checkerID,
                     // this,
-                    // electionDescSrc, propertiesToCheck.get(i).getDescription(), parameter,
-                    // results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
+                    // electionDescSrc,
+                    // propertiesToCheck.get(i).getDescription(), parameter,
+                    // results.get(i),
+                    // propertiesToCheckAndMargin.get(i).getMarginStatus());
 
-                    CheckerFactory factory
-                          = CheckerFactoryFactory.getCheckerFactory(
-                                    checkerID, this, elecDesc,
-                                    results.get(i), parameter);
+                    CheckerFactory factory =
+                            CheckerFactoryFactory
+                            .getCheckerFactory(checkerID, this, elecDesc,
+                                               results.get(i), parameter);
 
                     synchronized (this) {
                         currentlyRunning.add(factory);
@@ -335,9 +354,9 @@ public class FactoryController implements Runnable {
             } catch (InterruptedException e) {
                 ErrorLogger.log(
                         "Was interrupted while waiting for the last processes "
-                        + "to finish \n"
-                        + "The waiting will still continue. To stop the factory "
-                        + "properly, call \"stopChecking()\" !");
+                                + "to finish \n"
+                                + "The waiting will still continue. To stop the factory "
+                                + "properly, call \"stopChecking()\" !");
             }
         }
 
@@ -348,9 +367,9 @@ public class FactoryController implements Runnable {
             } catch (InterruptedException e) {
                 ErrorLogger.log(
                         "Was interrupted while waiting for the last processes "
-                        + "to finish \n"
-                        + "The waiting will still continue. To stop the factory "
-                        + "properly, call \"stopChecking()\" !");
+                                + "to finish \n"
+                                + "The waiting will still continue. To stop the factory "
+                                + "properly, call \"stopChecking()\" !");
             }
         }
 
@@ -364,13 +383,15 @@ public class FactoryController implements Runnable {
      * Tells the controller to stop checking. It stops all currently running
      * Checkers and does not start new ones.
      *
-     * @param timeOut if it is true, the checking was stopped because of a timeout;
+     * @param timeOut
+     *            if it is true, the checking was stopped because of a timeout;
      */
     public synchronized void stopChecking(final boolean timeOut) {
         if (!stopped) {
             this.stopped = true;
             // send a signal to all currently running Checkers so they will stop
-            for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator();
+            for (Iterator<CheckerFactory> iterator =
+                    currentlyRunning.iterator();
                     iterator.hasNext();) {
                 CheckerFactory toStop = iterator.next();
                 toStop.stopChecking();
@@ -389,12 +410,13 @@ public class FactoryController implements Runnable {
     }
 
     /**
-     * Notifies the factory that one of the started checker factories finished, so a
-     * new one could be started.
+     * Notifies the factory that one of the started checker factories finished,
+     * so a new one could be started.
      *
-     * @param finishedFactory the factory that just finished, so it can be removed
-     *                        from the list of ones to be notified when the checking
-     *                        is stopped forcefully
+     * @param finishedFactory
+     *            the factory that just finished, so it can be removed from the
+     *            list of ones to be notified when the checking is stopped
+     *            forcefully
      */
     public synchronized void notifyThatFinished(final CheckerFactory finishedFactory) {
         if (currentlyRunning.size() == 0) {
@@ -407,11 +429,11 @@ public class FactoryController implements Runnable {
     }
 
     // /**
-    //  *
-    //  * @return a NEW list with all the results objects. This list is used
-    //  * nowhere in the property checker, so you can remove parts out of it
-    //  * as you want.
-    //  **/
+    // *
+    // * @return a NEW list with all the results objects. This list is used
+    // * nowhere in the property checker, so you can remove parts out of it
+    // * as you want.
+    // **/
     // public List<ResultInterface> getResults() {
     //     if (results == null) {
     //         ErrorLogger.log("Result objects could not be created.");
@@ -463,16 +485,17 @@ public class FactoryController implements Runnable {
     /**
      * Sets the properties to check.
      *
-     * @param propsToCheck the new properties to check
+     * @param propsToCheck
+     *            the new properties to check
      */
     public void setPropertiesToCheck(final List<ChildTreeItem> propsToCheck) {
         this.propertiesToCheck = propsToCheck;
     }
 
     /**
-     * This Class is there for the shutDownHook. It is used, so if the program has a
-     * chance of cleaning up, it still has a chance of messaging all checkers to
-     * stop running.
+     * This Class is there for the shutDownHook. It is used, so if the program
+     * has a chance of cleaning up, it still has a chance of messaging all
+     * checkers to stop running.
      *
      * @author Lukas Stapelbroek
      *

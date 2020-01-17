@@ -4,6 +4,8 @@ import org.w3c.dom.Element;
 
 /**
  * The Class CBMCResultValuePointer.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CBMCResultValuePointer implements CBMCResultValue {
 

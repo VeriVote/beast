@@ -30,14 +30,13 @@ public final class SuperFolderFinder {
         if (!initialized || superFolder.length() == 0) {
             // the class is two "directories away from the super folder
             // counteract possible whitespace errors on windows
-            final String pathName
+            final String pathName =
             // TODO: Why are we not using 'System.getProperty("user.dir")'?
-                  = SuperFolderFinder.class.getProtectionDomain()
-                        .getCodeSource().getLocation().getPath();
-            File f = new File(pathName);
-            superFolder
-                  = (new File(f.getParent()).getParent())
-                    .replaceAll("%20", " ");
+                    SuperFolderFinder.class.getProtectionDomain()
+                            .getCodeSource().getLocation().getPath();
+            final File f = new File(pathName);
+            superFolder =
+                    (new File(f.getParent()).getParent()).replaceAll("%20", " ");
         }
         return superFolder;
     }

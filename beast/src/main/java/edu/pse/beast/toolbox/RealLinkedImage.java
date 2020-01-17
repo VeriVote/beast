@@ -6,6 +6,8 @@ import javafx.scene.canvas.Canvas;
 /**
  * A custom object which contains a file path to an image file. When rendered in
  * the rich text editor, the image is loaded from the specified file.
+ *
+ * @author Lukas Stapelbroek
  */
 public class RealLinkedImage implements LinkedImage {
 

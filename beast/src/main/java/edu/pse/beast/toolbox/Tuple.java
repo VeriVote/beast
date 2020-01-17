@@ -4,8 +4,11 @@ package edu.pse.beast.toolbox;
  * A simple generic tuple.
  *
  * @author Holger Klein
- * @param <FIRST> the generic type
- * @param <SECOND> the generic type
+ *
+ * @param <FIRST>
+ *            the generic type
+ * @param <SECOND>
+ *            the generic type
  */
 public class Tuple<FIRST, SECOND> {
 
@@ -18,8 +21,10 @@ public class Tuple<FIRST, SECOND> {
     /**
      * The constructor.
      *
-     * @param x the x
-     * @param y the y
+     * @param x
+     *            the x
+     * @param y
+     *            the y
      */
     public Tuple(final FIRST x, final SECOND y) {
         this.first = x;

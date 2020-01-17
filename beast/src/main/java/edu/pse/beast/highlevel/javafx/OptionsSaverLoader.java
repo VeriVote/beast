@@ -9,10 +9,11 @@ import edu.pse.beast.saverloader.SaverLoader;
 
 /**
  * The Class OptionsSaverLoader.
+ *
+ * @author Lukas Stapelbroek
  */
-public class OptionsSaverLoader
-                extends edu.pse.beast.codeareajavafx.SaverLoader
-                implements SaverLoader<OptionsNew> {
+public class OptionsSaverLoader extends edu.pse.beast.codeareajavafx.SaverLoader
+        implements SaverLoader<OptionsNew> {
 
     /** The saver loader. */
     private static Gson saverLoader;
@@ -20,8 +21,10 @@ public class OptionsSaverLoader
     /**
      * Instantiates a new options saver loader.
      *
-     * @param fileEnding the file ending
-     * @param fileExtensionDescription the file extension description
+     * @param fileEnding
+     *            the file ending
+     * @param fileExtensionDescription
+     *            the file extension description
      */
     public OptionsSaverLoader(final String fileEnding,
                               final String fileExtensionDescription) {
@@ -35,7 +38,8 @@ public class OptionsSaverLoader
     }
 
     @Override
-    public OptionsNew createFromSaveString(final String toLoad) throws JsonSyntaxException {
+    public OptionsNew createFromSaveString(final String toLoad)
+            throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, OptionsNew.class);
     }
 

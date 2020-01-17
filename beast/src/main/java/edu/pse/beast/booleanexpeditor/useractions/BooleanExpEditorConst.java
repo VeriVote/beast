@@ -16,7 +16,8 @@ public class BooleanExpEditorConst {
     /**
      * String should be either "Voters", "Candidates" or "Seats".
      *
-     * @param constantString the String representing the constant, either "V", "C" or "S"
+     * @param constantString
+     *            the String representing the constant, either "V", "C" or "S"
      */
     public BooleanExpEditorConst(final String constantString) {
         this.constant = constantString;

@@ -45,29 +45,32 @@ public class ShortcutHandler {
     /**
      * If a useraction is mapped to the Keyevents keycode, it will be performed.
      *
-     * @param ke the KeyEvent whose keycode might be mapped to a useraction
+     * @param ke
+     *            the KeyEvent whose keycode might be mapped to a useraction
      */
     public void handleKey(final KeyEvent ke) {
         shortcutMap.get(ke.getKeyCode()).perform();
     }
 
     /**
-     * Maps the given action to the key on the keyboard corresponding to the given
-     * char.
+     * Maps the given action to the key on the keyboard corresponding to the
+     * given char.
      *
-     * @param keyChar the char corresponding to the key which sould be mapped onto
-     *                performing ac
-     * @param ac      the action to be performaed once ctrl + keychar is pressed
+     * @param keyChar
+     *            the char corresponding to the key which sould be mapped onto
+     *            performing ac
+     * @param ac
+     *            the action to be performaed once ctrl + keychar is pressed
      */
-    public void addAction(final char keyChar,
-                          final UserAction ac) {
+    public void addAction(final char keyChar, final UserAction ac) {
         shortcutMap.put(getKeyCode(keyChar), ac);
     }
 
     /**
      * Gets the mappedchar for.
      *
-     * @param id the id
+     * @param id
+     *            the id
      * @return the mappedchar for
      */
     public Integer getMappedcharFor(final String id) {
@@ -82,7 +85,8 @@ public class ShortcutHandler {
     /**
      * Gets the key code.
      *
-     * @param keyChar the key char
+     * @param keyChar
+     *            the key char
      * @return the key code
      */
     private Integer getKeyCode(final char keyChar) {

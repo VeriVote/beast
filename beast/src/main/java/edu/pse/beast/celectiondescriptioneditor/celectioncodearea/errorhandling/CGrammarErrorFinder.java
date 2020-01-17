@@ -31,7 +31,8 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     /**
      * Constructor.
      *
-     * @param antlrHandlr the handle to AntLR used for error finding
+     * @param antlrHandlr
+     *            the handle to AntLR used for error finding
      */
     public CGrammarErrorFinder(final CAntlrHandler antlrHandlr) {
         this.antlrHandler = antlrHandlr;
@@ -52,19 +53,18 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
                             final int line,
                             final int charPosInLine,
                             final String msg,
-                            final RecognitionException e) {
-        CodeError err
-            = new CodeError(line, charPosInLine, "antlr", 0,
-                            ((Token) offendingSymbol).getStartIndex(),
-                            ((Token) offendingSymbol).getStopIndex());
+            final RecognitionException e) {
+        CodeError err = new CodeError(line, charPosInLine, "antlr", 0,
+                                      ((Token) offendingSymbol).getStartIndex(),
+                                      ((Token) offendingSymbol).getStopIndex());
         err.setExtraInfo("msg", msg);
         errors.add(err);
     }
 
     @Override
-    public void reportAmbiguity(final Parser parser, final DFA dfa,
-                                final int i, final int i1, final boolean bln,
-                                final BitSet bitset, final ATNConfigSet atncs) {
+    public void reportAmbiguity(final Parser parser, final DFA dfa, final int i,
+                                final int i1, final boolean bln, final BitSet bitset,
+                                final ATNConfigSet atncs) {
     }
 
     @Override
@@ -76,7 +76,8 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
 
     @Override
     public void reportContextSensitivity(final Parser parser, final DFA dfa,
-                                         final int i, final int i1, final int i2,
+                                         final int i, final int i1,
+                                         final int i2,
                                          final ATNConfigSet atncs) {
     }
 }

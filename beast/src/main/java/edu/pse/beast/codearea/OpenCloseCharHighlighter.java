@@ -42,8 +42,10 @@ public class OpenCloseCharHighlighter implements CaretListener {
     /**
      * Instantiates a new open close char highlighter.
      *
-     * @param chars the chars
-     * @param textPane the text pane
+     * @param chars
+     *            the chars
+     * @param textPane
+     *            the text pane
      */
     public OpenCloseCharHighlighter(final OpenCloseCharList chars,
                                     final JTextPane textPane) {
@@ -83,8 +85,10 @@ public class OpenCloseCharHighlighter implements CaretListener {
     /**
      * Highlight corresponding open char.
      *
-     * @param pos the pos
-     * @param openCloseChar the open close char
+     * @param pos
+     *            the pos
+     * @param openCloseChar
+     *            the open close char
      */
     private void highlightCorrespondingOpenChar(final int pos,
                                                 final OpenCloseChar openCloseChar) {
@@ -109,8 +113,10 @@ public class OpenCloseCharHighlighter implements CaretListener {
     /**
      * Highlight corresponding close char.
      *
-     * @param pos the pos
-     * @param openCloseChar the open close char
+     * @param pos
+     *            the pos
+     * @param openCloseChar
+     *            the open close char
      */
     private void highlightCorrespondingCloseChar(final int pos,
                                                  final OpenCloseChar openCloseChar) {
@@ -135,13 +141,15 @@ public class OpenCloseCharHighlighter implements CaretListener {
     /**
      * Highlight char.
      *
-     * @param pos the pos
+     * @param pos
+     *            the pos
      */
     private void highlightChar(final int pos) {
         try {
             addedHls.add(highlighter.addHighlight(pos - 1, pos, hPainter));
         } catch (BadLocationException ex) {
-            Logger.getLogger(OpenCloseCharHighlighter.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OpenCloseCharHighlighter.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 

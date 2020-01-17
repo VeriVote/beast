@@ -21,6 +21,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 /**
  * The Class WeightedApproval.
+ *
+ * @author Lukas Stapelbroek
  */
 public class WeightedApproval extends CBMCInputType {
 
@@ -176,7 +178,7 @@ public class WeightedApproval extends CBMCInputType {
         code.add("unsigned int candSum = arr[i][candidate];");
         if (unique) {
             code.add("for(unsigned int j = 0; j < "
-                     + UnifiedNameContainer.getCandidate() + "; ++i) {");
+                    + UnifiedNameContainer.getCandidate() + "; ++i) {");
             code.add("if(j != candidate && arr[i][j] >= candSum) candSum = 0;");
             code.add("}");
         }
@@ -189,7 +191,8 @@ public class WeightedApproval extends CBMCInputType {
                 new InternalTypeContainer(
                         new InternalTypeContainer(InternalTypeRep.INTEGER),
                         InternalTypeRep.CANDIDATE),
-                InternalTypeRep.VOTER);
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override
@@ -221,7 +224,8 @@ public class WeightedApproval extends CBMCInputType {
 
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
-        return GUIController.getController().getElectionSimulation().getNumVoters();
+        return GUIController.getController()
+                .getElectionSimulation().getNumVoters();
     }
 
     @Override
@@ -233,7 +237,8 @@ public class WeightedApproval extends CBMCInputType {
     public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
         List<String> values = row.getValues();
         List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
-        for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = values.iterator();
+                iterator.hasNext();) {
             String value = iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();

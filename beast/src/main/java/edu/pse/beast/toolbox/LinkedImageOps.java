@@ -1,13 +1,16 @@
 package edu.pse.beast.toolbox;
 
-//Taken from the Demos from https://github.com/FXMisc/RichTextFX
-
 import org.fxmisc.richtext.model.NodeSegmentOpsBase;
 
 /**
  * The Class LinkedImageOps.
  *
- * @param <S> the generic type
+ * Taken from the Demos from https://github.com/FXMisc/RichTextFX.
+ *
+ * @author Lukas Stapelbroek
+ *
+ * @param <S>
+ *            the generic type
  */
 public class LinkedImageOps<S> extends NodeSegmentOpsBase<LinkedImage, S> {
 

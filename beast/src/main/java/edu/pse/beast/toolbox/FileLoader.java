@@ -24,19 +24,19 @@ public final class FileLoader {
     // we want to compile all available c files, so the user does not need to
     /** The Constant C_FILE_ENDING. */
     // specify anything
-    public static final String C_FILE_ENDING      = ".c";
+    public static final String C_FILE_ENDING = ".c";
 
     /** The Constant BAT_FILE_ENDING. */
-    public static final String BAT_FILE_ENDING    = ".bat";
+    public static final String BAT_FILE_ENDING = ".bat";
 
     /** The Constant EXE_FILE_ENDING. */
-    public static final String EXE_FILE_ENDING    = ".exe";
+    public static final String EXE_FILE_ENDING = ".exe";
 
     /** The Constant OBJECT_FILE_ENDING. */
     public static final String OBJECT_FILE_ENDING = ".obj";
 
     /** The Constant OUT_FILE_ENDING. */
-    public static final String OUT_FILE_ENDING    = ".out";
+    public static final String OUT_FILE_ENDING = ".out";
 
     /** The Constant HUNDRED. */
     private static final int HUNDRED = 100;
@@ -47,24 +47,29 @@ public final class FileLoader {
     /**
      * Instantiates a new file loader.
      */
-    private FileLoader() {
-    }
+    private FileLoader() { }
 
     /**
      * Load file as string.
      *
-     * @param file the file that will be read
-     * @return A LinkedList of String elements which are in the same order as in the
-     *         file
-     * @throws FileNotFoundException if the file is not found it throws an exception
-     * @throws IOException           throws Exception
+     * @param file
+     *            the file that will be read
+     * @return A LinkedList of String elements which are in the same order as in
+     *         the file
+     * @throws FileNotFoundException
+     *             if the file is not found it throws an exception
+     * @throws IOException
+     *             throws Exception
      */
     public static LinkedList<String> loadFileAsString(final File file)
             throws FileNotFoundException, IOException {
         LinkedList<String> stringlist;
         InputStream inputStream = new FileInputStream(file);
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-        stringlist = new LinkedList<>();
+        BufferedReader br =
+                new BufferedReader(
+                        new InputStreamReader(inputStream, "UTF-8")
+                );
+        stringlist = new LinkedList<String>();
         String line;
         line = br.readLine();
         while (line != null) {
@@ -78,7 +83,8 @@ public final class FileLoader {
     /**
      * Load file as image.
      *
-     * @param toRead the File you want to read
+     * @param toRead
+     *            the File you want to read
      * @return the image, if it was possible to read it. In case it could not be
      *         read, the method returns null
      */
@@ -87,8 +93,7 @@ public final class FileLoader {
         try {
             toReturn = ImageIO.read(toRead);
         } catch (IOException e) {
-            ErrorLogger.log("The specified file: "
-                            + toRead.getAbsolutePath()
+            ErrorLogger.log("The specified file: " + toRead.getAbsolutePath()
                             + " could not be loaded");
         }
         return toReturn;
@@ -97,8 +102,9 @@ public final class FileLoader {
     /**
      * Creates a new name inside a directory.
      *
-     * @param pathToDir the path of the directory you want the new unique String to
-     *                  be created in
+     * @param pathToDir
+     *            the path of the directory you want the new unique String to be
+     *            created in
      * @return the unique String
      */
     public static synchronized String getNewUniqueName(final String pathToDir) {
@@ -122,7 +128,8 @@ public final class FileLoader {
     /**
      * Gets the random name.
      *
-     * @param wordSize the word size
+     * @param wordSize
+     *            the word size
      * @return the random name
      */
     private static String getRandomName(final int wordSize) {
@@ -131,15 +138,18 @@ public final class FileLoader {
     }
 
     /**
-     * Returns all files that end with the specified String that are in this folder.
+     * Returns all files that end with the specified String that are in this
+     * folder.
      *
-     * @param pathToDir the path to the folder
-     * @param endsWith  the String
+     * @param pathToDir
+     *            the path to the folder
+     * @param endsWith
+     *            the String
      * @return the described files
      */
     public static List<String> listAllFilesFromFolder(final String pathToDir,
                                                       final String endsWith) {
-        ArrayList<String> foundFiles = new ArrayList<>();
+        ArrayList<String> foundFiles = new ArrayList<String>();
         File folder = new File(pathToDir.replace("\"", ""));
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {

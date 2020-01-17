@@ -41,8 +41,10 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     /**
      * Constructor.
      *
-     * @param minimumSpinner JSpinner for the minimum
-     * @param maximumSpinner JSpinner for the maximum
+     * @param minimumSpinner
+     *            JSpinner for the minimum
+     * @param maximumSpinner
+     *            JSpinner for the maximum
      */
     public MinMaxSpinValueHandler(final JSpinner minimumSpinner,
                                   final JSpinner maximumSpinner) {
@@ -67,16 +69,19 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     }
 
     /**
-     * Setter for the minimum and maximum. Only allows values 1 to 10000 and ensures
-     * that min gets the lower value.
+     * Setter for the minimum and maximum. Only allows values 1 to 10000 and
+     * ensures that min gets the lower value.
      *
-     * @param min new minimum
-     * @param max new maximum
+     * @param min
+     *            new minimum
+     * @param max
+     *            new maximum
      */
-    public synchronized void setMinAndMax(final Integer min, final Integer max) {
+    public synchronized void setMinAndMax(final Integer min,
+                                          final Integer max) {
         reacts = true;
-        if (min <= MAX_VALUE && min >= MIN_VALUE
-                && max <= MAX_VALUE && max >= MIN_VALUE) {
+        if (min <= MAX_VALUE && min >= MIN_VALUE && max <= MAX_VALUE
+                && max >= MIN_VALUE) {
             minSpinner.setValue(java.lang.Math.min(min, max));
             maxSpinner.setValue(java.lang.Math.max(min, max));
         } else {
@@ -85,7 +90,8 @@ public class MinMaxSpinValueHandler implements ChangeListener {
         }
         Integer minAfter = Integer.parseInt(minSpinner.getValue().toString());
         Integer maxAfter = Integer.parseInt(maxSpinner.getValue().toString());
-        if (minBefore == null || !(minBefore.equals(minAfter) && maxBefore.equals(maxAfter))) {
+        if (minBefore == null || !(minBefore.equals(minAfter)
+                && maxBefore.equals(maxAfter))) {
             minBefore = minAfter;
             maxBefore = maxAfter;
             setHasChanged(true);
@@ -97,11 +103,12 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     public synchronized void stateChanged(final ChangeEvent e) {
         String minString = (minSpinner.getValue().toString());
         String maxString = (maxSpinner.getValue().toString());
-        if ((minString + maxString).chars().allMatch(Character::isDigit) && reacts) {
+        if ((minString + maxString).chars().allMatch(Character::isDigit)
+                && reacts) {
             Integer min = Integer.parseInt(minString);
             Integer max = Integer.parseInt(maxString);
-            if (min <= MAX_VALUE && min >= MIN_VALUE
-                    && max <= MAX_VALUE && max >= MIN_VALUE) {
+            if (min <= MAX_VALUE && min >= MIN_VALUE && max <= MAX_VALUE
+                    && max >= MIN_VALUE) {
                 if (e.getSource().equals(minSpinner)) {
                     if (min > maxBefore) {
                         max = min;
@@ -127,10 +134,11 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     }
 
     /**
-     * Toggles whether the chosen minimum and maximum react to user input (to not
-     * interrupt checks).
+     * Toggles whether the chosen minimum and maximum react to user input (to
+     * not interrupt checks).
      *
-     * @param reactsToUser whether they react
+     * @param reactsToUser
+     *            whether they react
      */
     protected synchronized void setReacts(final boolean reactsToUser) {
         this.reacts = reactsToUser;
@@ -147,9 +155,11 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     }
 
     /**
-     * Sets whether the values of the JSpinners were changed since last time saving.
+     * Sets whether the values of the JSpinners were changed since last time
+     * saving.
      *
-     * @param changed whether they changed
+     * @param changed
+     *            whether they changed
      */
     protected synchronized void setHasChanged(final boolean changed) {
         this.hasChanged = changed;

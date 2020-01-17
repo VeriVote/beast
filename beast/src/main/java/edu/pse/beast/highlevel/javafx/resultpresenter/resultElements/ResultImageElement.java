@@ -6,6 +6,8 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * The Class ResultImageElement.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class ResultImageElement {
 
@@ -25,10 +27,14 @@ public abstract class ResultImageElement {
     /**
      * Instantiates a new result image element.
      *
-     * @param xPositionTopLeft the x position top left
-     * @param yPositionTopLeft the y position top left
-     * @param xPositionBottomRight the x position bottom right
-     * @param yPositionBottomRight the y position bottom right
+     * @param xPositionTopLeft
+     *            the x position top left
+     * @param yPositionTopLeft
+     *            the y position top left
+     * @param xPositionBottomRight
+     *            the x position bottom right
+     * @param yPositionBottomRight
+     *            the y position bottom right
      */
     public ResultImageElement(final double xPositionTopLeft,
                               final double yPositionTopLeft,
@@ -78,29 +84,35 @@ public abstract class ResultImageElement {
 
     /**
      * Determines if a point is inside.
-     * @param posX the x position
-     * @param posY the y position
+     *
+     * @param posX
+     *            the x position
+     * @param posY
+     *            the y position
      * @return true, if the point is inside this rectangle
      */
     public boolean isInside(final double posX, final double posY) {
-        return ((posX <= xPosBottomRight)
-                && (posX >= xPosTopLeft)
-                && (posY <= yPosBottomRight)
-                && (posY >= yPosTopLeft));
+        return ((posX <= xPosBottomRight) && (posX >= xPosTopLeft)
+                && (posY <= yPosBottomRight) && (posY >= yPosTopLeft));
     }
 
-    //abstract methods
+    // abstract methods
 
     /**
      * Notifies the methods that it was clicked on.
-     * @param event the y position where the click was made
+     *
+     * @param event
+     *            the y position where the click was made
      */
     public abstract void isClicked(MouseEvent event);
 
     /**
      * Draws this element, scaled by the "scale" factor.
-     * @param graphics the image where the element has to be drawn on
-     * @param scale the scale by which the element will be scaled
+     *
+     * @param graphics
+     *            the image where the element has to be drawn on
+     * @param scale
+     *            the scale by which the element will be scaled
      */
     public abstract void drawElement(Graphics2D graphics, double scale);
 }

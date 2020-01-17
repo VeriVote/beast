@@ -39,197 +39,226 @@ public interface BooleanExpNodeVisitor {
     /**
      * Visit and node.
      *
-     * @param node the node
+     * @param node
+     *            the node
      */
     void visitAndNode(LogicalAndNode node);
 
     /**
      * Visit or node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitOrNode(LogicalOrNode node);
 
     /**
      * Visit implication node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitImplicationNode(ImplicationNode node);
 
     /**
      * Visit equivalency node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitEquivalencyNode(EquivalencyNode node);
 
     /**
      * Visit for all node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitForAllNode(ForAllNode node);
 
     /**
      * Visit there exists node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitThereExistsNode(ThereExistsNode node);
 
     /**
      * Visit not node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitNotNode(NotNode node);
 
     /**
      * Visit comparison node.
      *
-     * @param node the node to visit
+     * @param node
+     *            the node to visit
      */
     void visitComparisonNode(ComparisonNode node);
 
     /**
      * Visit symb var exp.
      *
-     * @param exp the symbolic variable expression to visit
+     * @param exp
+     *            the symbolic variable expression to visit
      */
     void visitSymbVarExp(SymbolicVarExp exp);
 
     /**
      * Visit const exp.
      *
-     * @param exp the expression to visit
+     * @param exp
+     *            the expression to visit
      */
     void visitConstExp(ConstantExp exp);
 
     /**
      * Visit elect exp.
      *
-     * @param exp the election expression to visit
+     * @param exp
+     *            the election expression to visit
      */
     void visitElectExp(ElectExp exp);
 
     /**
      * Visit vote exp.
      *
-     * @param exp the vote expression to visit
+     * @param exp
+     *            the vote expression to visit
      */
     void visitVoteExp(VoteExp exp);
 
     /**
      * Visit vote sum exp.
      *
-     * @param exp    the vote sum expression to visit
-     * @param unique unique or not
+     * @param exp
+     *            the vote sum expression to visit
+     * @param unique
+     *            unique or not
      */
     void visitVoteSumExp(VoteSumForCandExp exp, boolean unique);
 
     /**
      * Visit integer node.
      *
-     * @param integerNode the integer node
+     * @param integerNode
+     *            the integer node
      */
     void visitIntegerNode(IntegerNode integerNode);
 
     /**
      * Visit integer comparison node.
      *
-     * @param listComparisonNode the list comparison node
+     * @param listComparisonNode
+     *            the list comparison node
      */
     void visitIntegerComparisonNode(IntegerComparisonNode listComparisonNode);
 
     /**
      * Visit binary integer valued node.
      *
-     * @param binaryIntegerValuedNode the binary integer valued node
+     * @param binaryIntegerValuedNode
+     *            the binary integer valued node
      */
     void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode);
 
     /**
      * Visit at pos node.
      *
-     * @param atPosExp the at pos exp
+     * @param atPosExp
+     *            the at pos exp
      */
     void visitAtPosNode(AtPosExp atPosExp);
 
     /**
      * Visit voting tuple change node.
      *
-     * @param votingTupelChangeExp the voting tupel change exp
+     * @param votingTupelChangeExp
+     *            the voting tupel change exp
      */
     void visitVotingTupleChangeNode(VotingTupleChangeExpNode votingTupelChangeExp);
 
     /**
      * Visit voting list change node.
      *
-     * @param node the node
+     * @param node
+     *            the node
      */
     void visitVotingListChangeNode(VotingListChangeExpNode node);
 
     /**
      * Visit candidate list change exp node.
      *
-     * @param candidateListChangeExpNode the candidate list change exp node
+     * @param candidateListChangeExpNode
+     *            the candidate list change exp node
      */
     void visitCandidateListChangeExpNode(CandidateListChangeExpNode candidateListChangeExpNode);
 
     /**
      * Visit vote equivalents node.
      *
-     * @param voteEquivalentsNode the vote equivalents node
+     * @param voteEquivalentsNode
+     *            the vote equivalents node
      */
     void visitVoteEquivalentsNode(VoteEquivalentsNode voteEquivalentsNode);
 
     /**
      * Visit concatenation exp node.
      *
-     * @param concatenationExpNode the concatenation exp node
+     * @param concatenationExpNode
+     *            the concatenation exp node
      */
     void visitConcatenationExpNode(ConcatenationExpNode concatenationExpNode);
 
     /**
      * Visit permutation exp node.
      *
-     * @param permutationExpNode the permutation exp node
+     * @param permutationExpNode
+     *            the permutation exp node
      */
     void visitPermutationExpNode(PermutationExpNode permutationExpNode);
 
     /**
      * Visit intersect exp node.
      *
-     * @param intersectExpNode the intersect exp node
+     * @param intersectExpNode
+     *            the intersect exp node
      */
     void visitIntersectExpNode(IntersectExpNode intersectExpNode);
 
     /**
      * Visit intersect content node.
      *
-     * @param intersectContentNode the intersect content node
+     * @param intersectContentNode
+     *            the intersect content node
      */
     void visitIntersectContentNode(IntersectContentNode intersectContentNode);
 
     /**
      * Visit not empty exp node.
      *
-     * @param notEmptyExpressionNode the not empty expression node
+     * @param notEmptyExpressionNode
+     *            the not empty expression node
      */
     void visitNotEmptyExpNode(NotEmptyExpressionNode notEmptyExpressionNode);
 
     /**
      * Visit not empty content node.
      *
-     * @param notEmptyContentNode the not empty content node
+     * @param notEmptyContentNode
+     *            the not empty content node
      */
     void visitNotEmptyContentNode(NotEmptyContentNode notEmptyContentNode);
 
     /**
      * Visit intersect type exp node.
      *
-     * @param intersectTypeExpNode the intersect type exp node
+     * @param intersectTypeExpNode
+     *            the intersect type exp node
      */
     void visitIntersectTypeExpNode(IntersectTypeExpNode intersectTypeExpNode);
 }

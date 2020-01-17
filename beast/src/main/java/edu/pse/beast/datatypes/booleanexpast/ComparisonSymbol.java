@@ -13,7 +13,8 @@ public class ComparisonSymbol {
     /**
      * Constructor.
      *
-     * @param cStringRepr the representation of this symbol in C
+     * @param cStringRepr
+     *            the representation of this symbol in C
      */
     public ComparisonSymbol(final String cStringRepr) {
         this.cStringRepresentation = cStringRepr;

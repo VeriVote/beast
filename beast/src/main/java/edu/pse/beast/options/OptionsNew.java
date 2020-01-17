@@ -2,6 +2,8 @@ package edu.pse.beast.options;
 
 /**
  * The Class OptionsNew.
+ *
+ * @author Lukas Stapelbroek
  */
 public class OptionsNew {
 
@@ -35,7 +37,8 @@ public class OptionsNew {
     /**
      * Sets the min voters.
      *
-     * @param minVoterBound the new min voters
+     * @param minVoterBound
+     *            the new min voters
      */
     public void setMinVoters(final int minVoterBound) {
         this.minVoters = minVoterBound;
@@ -53,7 +56,8 @@ public class OptionsNew {
     /**
      * Sets the max voters.
      *
-     * @param maxVoterBound the new max voters
+     * @param maxVoterBound
+     *            the new max voters
      */
     public void setMaxVoters(final int maxVoterBound) {
         this.maxVoters = maxVoterBound;
@@ -71,7 +75,8 @@ public class OptionsNew {
     /**
      * Sets the min candidates.
      *
-     * @param minCandidateBound the new min candidates
+     * @param minCandidateBound
+     *            the new min candidates
      */
     public void setMinCandidates(final int minCandidateBound) {
         this.minCandidates = minCandidateBound;
@@ -89,7 +94,8 @@ public class OptionsNew {
     /**
      * Sets the max candidates.
      *
-     * @param maxCandidateBound the new max candidates
+     * @param maxCandidateBound
+     *            the new max candidates
      */
     public void setMaxCandidates(final int maxCandidateBound) {
         this.maxCandidates = maxCandidateBound;
@@ -107,7 +113,8 @@ public class OptionsNew {
     /**
      * Sets the min seats.
      *
-     * @param minSeatBound the new min seats
+     * @param minSeatBound
+     *            the new min seats
      */
     public void setMinSeats(final int minSeatBound) {
         this.minSeats = minSeatBound;
@@ -125,7 +132,8 @@ public class OptionsNew {
     /**
      * Sets the max seats.
      *
-     * @param maxSeatBound the new max seats
+     * @param maxSeatBound
+     *            the new max seats
      */
     public void setMaxSeats(final int maxSeatBound) {
         this.maxSeats = maxSeatBound;

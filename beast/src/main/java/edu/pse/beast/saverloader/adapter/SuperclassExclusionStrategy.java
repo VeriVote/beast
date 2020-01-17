@@ -24,17 +24,19 @@ public final class SuperclassExclusionStrategy implements ExclusionStrategy {
     /**
      * Checks if is field in superclass.
      *
-     * @param subclass the subclass
-     * @param fieldName the field name
+     * @param subclass
+     *            the subclass
+     * @param fieldName
+     *            the field name
      * @return true, if is field in superclass
      */
-    private boolean isFieldInSuperclass(final Class<?> subclass, final String fieldName) {
+    private boolean isFieldInSuperclass(final Class<?> subclass,
+                                        final String fieldName) {
         Class<?> superclass = subclass.getSuperclass();
         Field field;
 
         while (superclass != null) {
             field = getField(superclass, fieldName);
-
             if (field != null) {
                 return true;
             }
@@ -46,8 +48,10 @@ public final class SuperclassExclusionStrategy implements ExclusionStrategy {
     /**
      * Gets the field.
      *
-     * @param theClass the the class
-     * @param fieldName the field name
+     * @param theClass
+     *            the the class
+     * @param fieldName
+     *            the field name
      * @return the field
      */
     private Field getField(final Class<?> theClass, final String fieldName) {

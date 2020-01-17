@@ -16,19 +16,24 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
 
 /**
  * The Class InputType.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class InputType extends InOutType {
 
     /**
      * The constructor.
      *
-     * @param unsigned the unsigned
-     * @param dataType the data type
-     * @param dimensions the dimensions
-     * @param sizeOfDimensions the size of dimensions
+     * @param unsigned
+     *            the unsigned
+     * @param dataType
+     *            the data type
+     * @param dimensions
+     *            the dimensions
+     * @param sizeOfDimensions
+     *            the size of dimensions
      */
-    public InputType(final boolean unsigned,
-                     final DataType dataType,
+    public InputType(final boolean unsigned, final DataType dataType,
                      final int dimensions,
                      final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
@@ -42,7 +47,8 @@ public abstract class InputType extends InOutType {
     public static List<InputType> getInputTypes() {
         ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
         List<InputType> types = new ArrayList<InputType>();
-        for (Iterator<InputType> iterator = loader.iterator(); iterator.hasNext();) {
+        for (Iterator<InputType> iterator = loader.iterator();
+                iterator.hasNext();) {
             InputType type = iterator.next();
             types.add(type);
         }
@@ -96,11 +102,16 @@ public abstract class InputType extends InOutType {
     /**
      * Vets a value to determine if it is legal for the input type, or not.
      *
-     * @param container            the type container
-     * @param rows            the new row of values
-     * @param rowNumber            TODO
-     * @param positionInRow the position in row
-     * @param newValue            the new value
+     * @param container
+     *            the type container
+     * @param rows
+     *            the new row of values
+     * @param rowNumber
+     *            TODO
+     * @param positionInRow
+     *            the position in row
+     * @param newValue
+     *            the new value
      * @return the new value
      */
     public abstract String vetValue(ElectionTypeContainer container,
@@ -116,8 +127,10 @@ public abstract class InputType extends InOutType {
     /**
      * Wrong input type array.
      *
-     * @param amountCandidates the amount candidates
-     * @param amountVoters the amount voters
+     * @param amountCandidates
+     *            the amount candidates
+     * @param amountVoters
+     *            the amount voters
      * @return the string[]
      */
     public String[] wrongInputTypeArray(final int amountCandidates,
@@ -130,20 +143,27 @@ public abstract class InputType extends InOutType {
     /**
      * Gets the vote points.
      *
-     * @param votes the votes
-     * @param amountCandidates the amount candidates
-     * @param amountVoters the amount voters
+     * @param votes
+     *            the votes
+     * @param amountCandidates
+     *            the amount candidates
+     * @param amountVoters
+     *            the amount voters
      * @return the vote points
      */
-    public abstract String[] getVotePoints(String[][] votes, int amountCandidates,
+    public abstract String[] getVotePoints(String[][] votes,
+                                           int amountCandidates,
                                            int amountVoters);
 
     /**
      * Gets the vote points.
      *
-     * @param votes the votes
-     * @param amountCandidates the amount candidates
-     * @param amountVoters the amount voters
+     * @param votes
+     *            the votes
+     * @param amountCandidates
+     *            the amount candidates
+     * @param amountVoters
+     *            the amount voters
      * @return the vote points
      */
     public abstract String[] getVotePoints(String[] votes, int amountCandidates,
@@ -153,9 +173,11 @@ public abstract class InputType extends InOutType {
     // margin, List<String> origResult);
 
     /**
-     * Returns the assignment of votingData e.g {1,2,3} for a array of shape [3].
+     * Returns the assignment of votingData e.g {1,2,3} for a array of shape
+     * [3].
      *
-     * @param wrapper the wrapper
+     * @param wrapper
+     *            the wrapper
      * @return the voting result code
      */
     public final String getVotingResultCode(final CBMCResultValueWrapper wrapper) {
@@ -165,10 +187,13 @@ public abstract class InputType extends InOutType {
     /**
      * Adds the code for vote sum.
      *
-     * @param code the code
-     * @param unique the unique
+     * @param code
+     *            the code
+     * @param unique
+     *            the unique
      */
-    public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
+    public abstract void addCodeForVoteSum(CodeArrayListBeautifier code,
+                                           boolean unique);
 
     @Override
     public abstract InternalTypeContainer getInternalTypeContainer();
@@ -176,7 +201,8 @@ public abstract class InputType extends InOutType {
     /**
      * Vet amount candidates.
      *
-     * @param amountCandidates the amount candidates
+     * @param amountCandidates
+     *            the amount candidates
      * @return the int
      */
     public abstract int vetAmountCandidates(int amountCandidates);
@@ -184,7 +210,8 @@ public abstract class InputType extends InOutType {
     /**
      * Vet amount voters.
      *
-     * @param amountVoters the amount voters
+     * @param amountVoters
+     *            the amount voters
      * @return the int
      */
     public abstract int vetAmountVoters(int amountVoters);
@@ -192,7 +219,8 @@ public abstract class InputType extends InOutType {
     /**
      * Vet amount seats.
      *
-     * @param amountSeats the amount seats
+     * @param amountSeats
+     *            the amount seats
      * @return the int
      */
     public abstract int vetAmountSeats(int amountSeats);
@@ -200,7 +228,8 @@ public abstract class InputType extends InOutType {
     /**
      * Gets the num voting points.
      *
-     * @param result the result
+     * @param result
+     *            the result
      * @return the num voting points
      */
     public abstract int getNumVotingPoints(ResultValueWrapper result);
@@ -208,16 +237,17 @@ public abstract class InputType extends InOutType {
     /**
      * Gets the vote description string.
      *
-     * @param origVotes the orig votes
+     * @param origVotes
+     *            the orig votes
      * @return the vote description string
      */
-    public abstract String getVoteDescriptionString(
-            List<List<String>> origVotes);
+    public abstract String getVoteDescriptionString(List<List<String>> origVotes);
 
     /**
      * Convert row to result value.
      *
-     * @param row the row
+     * @param row
+     *            the row
      * @return the CBMC result value
      */
     public abstract CBMCResultValue convertRowToResultValue(NEWRowOfValues row);
@@ -229,13 +259,17 @@ public abstract class InputType extends InOutType {
 
     /**
      * ASSERTION: newVotesName already has to be bounded to the max and min
-     * values. It can have change the vote of origVotesName at a position defined
-     * by loopNames to a vote that is different than the original one.
+     * values. It can have change the vote of origVotesName at a position
+     * defined by loopNames to a vote that is different than the original one.
      *
-     * @param newVotesName the new votes name
-     * @param origVotesName the orig votes name
-     * @param loopVars the loop vars
-     * @param code the code
+     * @param newVotesName
+     *            the new votes name
+     * @param origVotesName
+     *            the orig votes name
+     * @param loopVars
+     *            the loop vars
+     * @param code
+     *            the code
      */
     public abstract void flipVote(String newVotesName, String origVotesName,
                                   List<String> loopVars,
@@ -244,9 +278,12 @@ public abstract class InputType extends InOutType {
     /**
      * Sets the vote value.
      *
-     * @param newVotesName the new votes name
-     * @param origVotesName the orig votes name
-     * @param loopVars the loop vars
+     * @param newVotesName
+     *            the new votes name
+     * @param origVotesName
+     *            the orig votes name
+     * @param loopVars
+     *            the loop vars
      * @return the string
      */
     public String setVoteValue(final String newVotesName,
@@ -260,15 +297,16 @@ public abstract class InputType extends InOutType {
     /**
      * Gets the full vote access.
      *
-     * @param voteName the vote name
-     * @param loopVars the loop vars
+     * @param voteName
+     *            the vote name
+     * @param loopVars
+     *            the loop vars
      * @return the full vote access
      */
     public String getFullVoteAccess(final String voteName,
                                     final List<String> loopVars) {
         String access = this.getAccessDimensions(loopVars);
-        return (voteName + "."
-                + UnifiedNameContainer.getStructValueName()
+        return (voteName + "." + UnifiedNameContainer.getStructValueName()
                 + access);
     }
 
@@ -303,9 +341,12 @@ public abstract class InputType extends InOutType {
     /**
      * Gets the sizes in order.
      *
-     * @param amountVoters the amount voters
-     * @param amountCandidates the amount candidates
-     * @param amountSeats the amount seats
+     * @param amountVoters
+     *            the amount voters
+     * @param amountCandidates
+     *            the amount candidates
+     * @param amountSeats
+     *            the amount seats
      * @return the sizes in order
      */
     public List<Integer> getSizesInOrder(final int amountVoters,
@@ -318,10 +359,14 @@ public abstract class InputType extends InOutType {
     /**
      * Rec get sizes in order.
      *
-     * @param amountVoters the amount voters
-     * @param amountCandidates the amount candidates
-     * @param amountSeats the amount seats
-     * @param sizesOfDimensions the sizes of dimensions
+     * @param amountVoters
+     *            the amount voters
+     * @param amountCandidates
+     *            the amount candidates
+     * @param amountSeats
+     *            the amount seats
+     * @param sizesOfDimensions
+     *            the sizes of dimensions
      * @return the list
      */
     private List<Integer> recGetSizesInOrder(final int amountVoters,
@@ -341,8 +386,13 @@ public abstract class InputType extends InOutType {
                 toReturn.add(amountSeats);
             }
             toReturn.addAll(
-                    recGetSizesInOrder(amountVoters, amountCandidates, amountSeats,
-                                       sizesOfDimensions.subList(1, sizesOfDimensions.size())));
+                    recGetSizesInOrder(amountVoters, amountCandidates,
+                                       amountSeats,
+                                       sizesOfDimensions.subList(
+                                               1, sizesOfDimensions.size()
+                                       )
+                            )
+            );
             return toReturn;
         }
     }
@@ -350,8 +400,11 @@ public abstract class InputType extends InOutType {
     /**
      * Restrict votes.
      *
-     * @param voteName the vote name
-     * @param code the code
+     * @param voteName
+     *            the vote name
+     * @param code
+     *            the code
      */
-    public abstract void restrictVotes(String voteName, CodeArrayListBeautifier code);
+    public abstract void restrictVotes(String voteName,
+                                       CodeArrayListBeautifier code);
 }

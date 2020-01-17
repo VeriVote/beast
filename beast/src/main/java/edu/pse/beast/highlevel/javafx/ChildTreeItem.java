@@ -26,11 +26,14 @@ import javafx.scene.paint.Color;
 
 /**
  * The Class ChildTreeItem.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class ChildTreeItem extends CustomTreeItem {
 
     /** The results. */
-    private ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
+    private ArrayList<ResultTreeItem> results =
+            new ArrayList<ResultTreeItem>();
 
     /** The prop name. */
     private Label propName;
@@ -52,9 +55,12 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * The constructor.
      *
-     * @param values the values
-     * @param parentItem the parent item
-     * @param treeItemReference the tree item reference
+     * @param values
+     *            the values
+     * @param parentItem
+     *            the parent item
+     * @param treeItemReference
+     *            the tree item reference
      */
     ChildTreeItem(final ChildTreeItemValues values,
                   final ParentTreeItem parentItem,
@@ -65,7 +71,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         this.disabled = values.isDisabled();
         this.setTreeItemReference(treeItemReference);
         treeItemReference.setValue(this);
-        for (Iterator<Result> iterator = values.getResults().iterator(); iterator.hasNext();) {
+        for (Iterator<Result> iterator =
+                values.getResults().iterator();
+                iterator.hasNext();) {
             Result result = (Result) iterator.next();
             addResult(result);
         }
@@ -75,11 +83,15 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * Instantiates a new child tree item.
      *
-     * @param name the name
-     * @param parentItem the parent item
-     * @param treeItemReference the tree item reference
+     * @param name
+     *            the name
+     * @param parentItem
+     *            the parent item
+     * @param treeItemReference
+     *            the tree item reference
      */
-    ChildTreeItem(final String name, final ParentTreeItem parentItem,
+    ChildTreeItem(final String name,
+                  final ParentTreeItem parentItem,
                   final TreeItem<CustomTreeItem> treeItemReference) {
         this.parent = parentItem;
         propName = new Label(name);
@@ -148,12 +160,14 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * Adds the result.
      *
-     * @param result the result
+     * @param result
+     *            the result
      */
     public void addResult(final Result result) {
         ResultTreeItem resultItem = new ResultTreeItem(result, this);
         results.add(resultItem);
-        TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(resultItem);
+        TreeItem<CustomTreeItem> reference =
+                new TreeItem<CustomTreeItem>(resultItem);
         this.getTreeItemReference().getChildren().add(reference);
         // this.getChildren().add(resultItem);
         addChildrenToStage();
@@ -180,7 +194,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * Reset result.
      *
-     * @param result the result
+     * @param result
+     *            the result
      */
     public void resetResult(final Result result) {
         this.addResult(result);
@@ -228,7 +243,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     public void resetPresentable() {
         this.setBackground(
                 new Background(
-                        new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)
+                        new BackgroundFill(Color.WHITE, CornerRadii.EMPTY,
+                                           Insets.EMPTY)
                         )
         );
     }
@@ -240,7 +256,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
      */
     public ChildTreeItemValues getValues() {
         ArrayList<Result> tmpList = new ArrayList<Result>();
-        for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
+        for (Iterator<ResultTreeItem> iterator = results.iterator();
+                iterator.hasNext();) {
             ResultTreeItem result = (ResultTreeItem) iterator.next();
             tmpList.add(result.getResult());
         }
@@ -256,10 +273,12 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         resultTreeItems.clear();
         TreeItem<CustomTreeItem> item2 = this.getTreeItemReference();
         item2.isExpanded();
-        ObservableList<TreeItem<CustomTreeItem>> children2 = item2.getChildren();
+        ObservableList<TreeItem<CustomTreeItem>> children2 =
+                item2.getChildren();
         children2.size();
         this.getTreeItemReference().getChildren().clear();
-        for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
+        for (Iterator<ResultTreeItem> iterator = results.iterator();
+                iterator.hasNext();) {
             ResultTreeItem item = (ResultTreeItem) iterator.next();
             item.setPresentable();
             resultTreeItems.add(new TreeItem<CustomTreeItem>(item));
@@ -270,7 +289,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * Delete result.
      *
-     * @param resultTreeItem the result tree item
+     * @param resultTreeItem
+     *            the result tree item
      */
     public void deleteResult(final ResultTreeItem resultTreeItem) {
         results.remove(resultTreeItem);
@@ -280,7 +300,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * Shows the result depending on the current presentation type.
      *
-     * @param result the result
+     * @param result
+     *            the result
      */
     public void showResult(final Result result) {
         ResultPresenterNEW.getInstance().setResult(result);

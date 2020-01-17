@@ -27,6 +27,8 @@ import javafx.scene.paint.Color;
 
 /**
  * The Class TextAndImages.
+ *
+ * @author Lukas Stapelbroek
  */
 public class TextAndImages extends ResultPresentationType {
 
@@ -49,7 +51,8 @@ public class TextAndImages extends ResultPresentationType {
     private static final int OVAL_SIZE = 30;
 
     /** The styled text ops. */
-    private final TextOps<String, TextStyle> styledTextOps = SegmentOps.styledTextOps();
+    private final TextOps<String, TextStyle> styledTextOps =
+            SegmentOps.styledTextOps();
 
     /** The linked image ops. */
     private final LinkedImageOps<TextStyle> linkedImageOps = new LinkedImageOps<>();
@@ -60,48 +63,48 @@ public class TextAndImages extends ResultPresentationType {
                     ParStyle.EMPTY, // default paragraph style
                     // paragraph style setter
                 (paragraph, style) -> paragraph.setStyle(style.toCss()),
-                    TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE).updateFontFamily("Serif")
-                        .updateTextColor(Color.BLACK), // default segment style
-                     // segment operations
+                    TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
+                    // default segment style
+                    .updateFontFamily("Serif").updateTextColor(Color.BLACK),
+                    // segment operations
                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
                 seg -> createNode(seg,
-                    (text, style) -> text.setStyle(style.toCss()))); // Node creator and
-                                                                     // segment style setter
+                            // Node creator and segment style setter
+                    (text, style) -> text.setStyle(style.toCss())
+                            )
+                    );
 
     /**
      * Creates the node.
      *
-     * @param seg the seg
-     * @param applyStyle the apply style
+     * @param seg
+     *            the seg
+     * @param applyStyle
+     *            the apply style
      * @return the node
      */
-    private Node createNode(final StyledSegment<Either<String, LinkedImage>,
-                                                TextStyle> seg,
+    private Node createNode(final StyledSegment<Either<String, LinkedImage>, TextStyle> seg,
                             final BiConsumer<? super TextExt, TextStyle> applyStyle) {
-        return seg.getSegment().unify(
-            text ->
-                            StyledTextArea.createStyledTextNode(text,
-                                                                seg.getStyle(),
-                                                                applyStyle),
-                            LinkedImage::createNode);
+        return seg
+                .getSegment().unify(
+                    text -> StyledTextArea.createStyledTextNode(text,
+                                seg.getStyle(), applyStyle),
+                        LinkedImage::createNode);
     }
 
     @Override
     public Node presentResult(final Result result) {
         // TODO still WIP, no images get created
-        GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>
-            resultArea =
+        GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> resultArea =
                 new GenericStyledArea<>(
-                        ParStyle.EMPTY, // default paragraph style
-                                        // paragraph style setter
+                        // default paragraph style paragraph style setter
+                        ParStyle.EMPTY,
                     (paragraph, style) -> paragraph.setStyle(style.toCss()),
                         TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
                         // default segment style
-                        .updateFontFamily("Serif")
-                        .updateTextColor(Color.BLACK),
+                        .updateFontFamily("Serif").updateTextColor(Color.BLACK),
                         // segment operations
-                        styledTextOps._or(linkedImageOps,
-                            (s1, s2) -> Optional.empty()),
+                        styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
                     seg -> createNode(seg, // Node creator and segment
                         (text, style) -> text.setStyle(style.toCss())));
         resultArea.setEditable(false);
@@ -110,18 +113,22 @@ public class TextAndImages extends ResultPresentationType {
 
         ReadOnlyStyledDocument<ParStyle, Either<String, LinkedImage>, TextStyle> ros =
                 ReadOnlyStyledDocument.fromSegment(
-                        Either.right(new RealLinkedImage(new Canvas(CANVAS_SIZE, CANVAS_SIZE))),
-                        ParStyle.EMPTY, TextStyle.DEFAULT, resultArea.getSegOps());
+                        Either.right(new RealLinkedImage(
+                                new Canvas(CANVAS_SIZE, CANVAS_SIZE))),
+                        ParStyle.EMPTY, TextStyle.DEFAULT,
+                        resultArea.getSegOps());
         g.setFill(Color.RED);
         g.fillOval(OVAL_X_COORD, OVAL_Y_COORD, OVAL_SIZE, OVAL_SIZE);
         String textTest = "testasdjfklasdf\n";
         for (int i = 0; i < THOUSAND; i++) {
-            resultArea.replaceText(resultArea.getLength(), resultArea.getLength(), textTest);
+            resultArea.replaceText(resultArea.getLength(),
+                                   resultArea.getLength(), textTest);
         }
         resultArea.replace(resultArea.getLength(), resultArea.getLength(), ros);
         VirtualizedScrollPane<GenericStyledArea<ParStyle,
-                              Either<String, LinkedImage>, TextStyle>>
-            vsPane = new VirtualizedScrollPane<>(resultArea); // Wrap it in a scroll area
+                                                Either<String, LinkedImage>,
+                                                TextStyle>> vsPane =
+            new VirtualizedScrollPane<>(resultArea); // Wrap it in a scroll area
         return vsPane;
     }
 

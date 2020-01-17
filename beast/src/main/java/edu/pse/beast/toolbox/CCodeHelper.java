@@ -19,20 +19,29 @@ import edu.pse.beast.types.InternalTypeRep;
  */
 public final class CCodeHelper {
     // String that only allows string in valid C format (they can still contain
-    /** The character regex. */
     // identifiers)
+
+    /** The character regex. */
     private static String characterRegex = "[_a-zA-Z][_a-zA-Z0-9]{0,30}";
 
     /** The reserved words. */
-    private static String[] reservedWords = {
-        "auto", "break", "case", "char", "const", "continue", "default",
-        "do", "double", "else", "enum", "extern", "float", "for", "goto",
-        "if", "inline", "int", "long", "register", "restrict", "return",
-        "short", "signed", "sizeof", "static", "struct", "switch",
-        "typedef", "union", "unsigned", "void", "volatile", "while",
-        "_Alignas", "_Alignof", "_Atomic", "_Bool", "_Complex",
-        "_Generic", "_Imaginary", "_Noreturn", "_Static_assert", "_Thread_local"
-    };
+    private static String[] reservedWords =
+        {
+        "auto", "break", "case", "char",
+        "const", "continue", "default",
+        "do", "double", "else", "enum",
+        "extern", "float", "for", "goto",
+        "if", "inline", "int", "long",
+        "register", "restrict", "return",
+        "short", "signed", "sizeof",
+        "static", "struct", "switch",
+        "typedef", "union", "unsigned",
+        "void", "volatile", "while",
+        "_Alignas", "_Alignof", "_Atomic",
+        "_Bool", "_Complex", "_Generic",
+        "_Imaginary", "_Noreturn",
+        "_Static_assert", "_Thread_local"
+        };
 
     /** The c reserved words. */
     private static List<String> cReservedWords =
@@ -41,8 +50,7 @@ public final class CCodeHelper {
     /**
      * Instantiates a new c code helper.
      */
-    private CCodeHelper() {
-    }
+    private CCodeHelper() { }
 
     /**
      * Returns the C constant which is the max amount of elements in a given
@@ -128,24 +136,26 @@ public final class CCodeHelper {
      *            the input format of the voting array passed to the function
      * @return the voting function declaration line
      */
-    public static String generateSimpleDeclString(
-            final ElectionTypeContainer container) {
-        String decl = "RESULT " + UnifiedNameContainer.getVotingMethod()
-                      + "(unsigned int amountVotes, VOTES) {";
+    public static String generateSimpleDeclString(final ElectionTypeContainer container) {
+        String decl = "RESULT "
+                + UnifiedNameContainer.getVotingMethod()
+                + "(unsigned int amountVotes, VOTES) {";
 
-        String[] sizeOfDimensions = container.getInputType().getSizeOfDimensions();
+        String[] sizeOfDimensions =
+                container.getInputType().getSizeOfDimensions();
 
         if (sizeOfDimensions.length > 0) {
             sizeOfDimensions[0] = "amountVotes";
         }
 
         decl = decl.replace("RESULT",
-                            container.getInputType().getDataTypeAndSign()
-                            + container.getOutputType().getDimensionDescriptor(true));
+                container.getInputType().getDataTypeAndSign() + container
+                        .getOutputType().getDimensionDescriptor(true));
         decl = decl.replace("VOTES",
-                            container.getInputType().getDataTypeAndSign() + " "
-                            + UnifiedNameContainer.getVotingArray()
-                            + container.getInputType().getDimensionDescriptor(sizeOfDimensions));
+                container.getInputType().getDataTypeAndSign() + " "
+                        + UnifiedNameContainer.getVotingArray()
+                        + container.getInputType()
+                                .getDimensionDescriptor(sizeOfDimensions));
 
         return decl;
     }
@@ -154,13 +164,16 @@ public final class CCodeHelper {
      * generates the declaration String for a voting function depending on its
      * input and result type.
      *
-     * @param container            the input format of the voting array passed to the function
-     * @param voteStructName the vote struct name
+     * @param container
+     *            the input format of the voting array passed to the function
+     * @param voteStructName
+     *            the vote struct name
      * @return the voting function declaration line
      */
-    public static String generateStructDeclString(
-            final ElectionTypeContainer container, final String voteStructName) {
-        String decl = "RESULT " + UnifiedNameContainer.getVotingMethod()
+    public static String generateStructDeclString(final ElectionTypeContainer container,
+                                                  final String voteStructName) {
+        String decl = "RESULT "
+                + UnifiedNameContainer.getVotingMethod()
                 + "(unsigned int amountVotes, VOTES) {";
 
         decl = decl.replace("RESULT",
@@ -187,21 +200,26 @@ public final class CCodeHelper {
      *            the string resource loader currently used
      * @return the complete voting function
      */
-    public static ElectionDescription generateElectionDescription(
-            final ElectionTypeContainer container, final String name,
-            final ElectionTemplateHandler templateHandler,
-            final StringResourceLoader stringResourceLoader) {
+    public static ElectionDescription
+            generateElectionDescription(final ElectionTypeContainer container,
+                                        final String name,
+                                        final ElectionTemplateHandler templateHandler,
+                                        final StringResourceLoader stringResourceLoader) {
         ElectionDescription description =
-                new ElectionDescription(name, container.getInputType(), container.getOutputType(),
+                new ElectionDescription(name,
+                                        container.getInputType(),
+                                        container.getOutputType(),
                                         0, 0, 0, true);
-        ArrayList<String> code = new ArrayList<>();
+        ArrayList<String> code = new ArrayList<String>();
         String inputIdInFile = container.getInputType().getInputIDinFile();
         String outputIdInFile = container.getOutputType().getOutputIDinFile();
 
         code.add("//" + stringResourceLoader.getStringFromID(inputIdInFile)
-                 + ": " + stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
+                + ": "
+                + stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
         code.add("//" + stringResourceLoader.getStringFromID(outputIdInFile)
-                 + ": " + stringResourceLoader.getStringFromID(outputIdInFile + "_exp"));
+                + ": " + stringResourceLoader
+                        .getStringFromID(outputIdInFile + "_exp"));
         code.add(generateSimpleDeclString(container));
         code.add("} ");
         description.setCode(code);
@@ -236,7 +254,8 @@ public final class CCodeHelper {
     /**
      * Checks if is valid C name.
      *
-     * @param name the name
+     * @param name
+     *            the name
      * @return true, if is valid C name
      */
     public static boolean isValidCName(final String name) {
@@ -246,7 +265,8 @@ public final class CCodeHelper {
                 return true;
             }
         }
-        System.out.println("The given symbolic variable name is not valid in C");
+        System.out.println("The given symbolic variable name"
+                            + " is not valid in C");
         return false;
     }
 }

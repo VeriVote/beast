@@ -12,16 +12,20 @@ import edu.pse.beast.types.InternalTypeContainer;
 public class BooleanExpScope {
 
     /** The names. */
-    private final ArrayList<String> names = new ArrayList<>();
+    private final ArrayList<String> names =
+            new ArrayList<String>();
 
     /** The types. */
-    private final ArrayList<InternalTypeContainer> types = new ArrayList<>();
+    private final ArrayList<InternalTypeContainer> types =
+            new ArrayList<InternalTypeContainer>();
 
     /**
      * The constructor.
      *
-     * @param id the id
-     * @param type the type
+     * @param id
+     *            the id
+     * @param type
+     *            the type
      */
     public void addTypeForId(final String id,
                              final InternalTypeContainer type) {
@@ -32,7 +36,8 @@ public class BooleanExpScope {
     /**
      * Gets the type for id.
      *
-     * @param id the id
+     * @param id
+     *            the id
      * @return the type for id
      */
     public InternalTypeContainer getTypeForId(final String id) {
@@ -47,7 +52,8 @@ public class BooleanExpScope {
     /**
      * Removes the.
      *
-     * @param id the id
+     * @param id
+     *            the id
      */
     public void remove(final String id) {
         for (int i = 0; i < names.size(); ++i) {

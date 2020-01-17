@@ -25,7 +25,8 @@ public class CopyUserAction extends UserAction {
     /**
      * Instantiates a new copy user action.
      *
-     * @param textPane the text pane
+     * @param textPane
+     *            the text pane
      */
     public CopyUserAction(final JTextPane textPane) {
         super("copy");
@@ -35,7 +36,8 @@ public class CopyUserAction extends UserAction {
 
     @Override
     public void perform() {
-        StringSelection stringSelection = new StringSelection(pane.getSelectedText());
+        StringSelection stringSelection =
+                new StringSelection(pane.getSelectedText());
         clipboard.setContents(stringSelection, null);
     }
 }

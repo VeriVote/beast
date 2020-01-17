@@ -30,16 +30,20 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     private StyleContext styleContext = StyleContext.getDefaultStyleContext();
 
     /** The black attribute set. */
-    private AttributeSet blackAttributeSet
-        = styleContext.addAttribute(styleContext.getEmptySet(),
-                                    StyleConstants.Foreground,
-                                    Color.BLACK);
+    private AttributeSet blackAttributeSet =
+            styleContext.addAttribute(
+                    styleContext.getEmptySet(),
+                    StyleConstants.Foreground,
+                    Color.BLACK
+            );
 
     /**
      * Instantiates a new syntax HL composite filter.
      *
-     * @param pane the text pane
-     * @param regexAndColors the regex and color list
+     * @param pane
+     *            the text pane
+     * @param regexAndColors
+     *            the regex and color list
      */
     public SyntaxHLCompositeFilter(final JTextPane pane,
                                    final ArrayList<RegexAndColor> regexAndColors) {
@@ -48,30 +52,24 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     }
 
     @Override
-    public void insertString(final FilterBypass fb,
-                             final int offset,
-                             final String text,
-                             final AttributeSet attributeSet)
+    public void insertString(final FilterBypass fb, final int offset,
+                             final String text, final AttributeSet attributeSet)
             throws BadLocationException {
         super.insertString(fb, offset, text, attributeSet);
         handleTextChanged();
     }
 
     @Override
-    public void remove(final FilterBypass fb,
-                       final int offset,
+    public void remove(final FilterBypass fb, final int offset,
                        final int length) throws BadLocationException {
         super.remove(fb, offset, length);
         handleTextChanged();
     }
 
     @Override
-    public void replace(final FilterBypass fb,
-                        final int offset,
-                        final int length,
-                        final String text,
-                        final AttributeSet attributeSet)
-                                throws BadLocationException {
+    public void replace(final FilterBypass fb, final int offset,
+                        final int length, final String text,
+                        final AttributeSet attributeSet) throws BadLocationException {
         super.replace(fb, offset, length, text, attributeSet);
         handleTextChanged();
     }
@@ -86,10 +84,11 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     }
 
     /**
-     * Build the regular expression that looks for the whole word of each word that
-     * you wish to find.
+     * Build the regular expression that looks for the whole word of each word
+     * that you wish to find.
      *
-     * @param token the token
+     * @param token
+     *            the token
      * @return the regular expression as a Pattern
      */
     private Pattern buildPattern(final String token) {
@@ -109,11 +108,10 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
             // Look for tokens and highlight them
             Matcher matcher = null;
             try {
-                matcher
-                    = buildPattern(iter.getRegEx()).matcher(
-                          textPane.getStyledDocument()
-                           .getText(0,
-                                    textPane.getStyledDocument().getLength()));
+                matcher = buildPattern(iter.getRegEx())
+                        .matcher(textPane.getStyledDocument().getText(
+                                0, textPane.getStyledDocument().getLength()
+                                ));
             } catch (BadLocationException e) {
                 e.printStackTrace();
             }
@@ -121,8 +119,7 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
                 // Change the color of recognized tokens
                 textPane.getStyledDocument()
                     .setCharacterAttributes(matcher.start(),
-                                            matcher.end()
-                                            - matcher.start(),
+                                            matcher.end() - matcher.start(),
                                             iter.getAttributeSet(),
                                             false);
             }

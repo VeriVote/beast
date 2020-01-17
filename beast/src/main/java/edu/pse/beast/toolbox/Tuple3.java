@@ -5,9 +5,12 @@ package edu.pse.beast.toolbox;
  *
  * @author taken with small changes from Vitaly Zinchenko
  *         (https://stackoverflow.com/a/32484678)
- * @param <F> the generic type
- * @param <S> the generic type
- * @param <T> the generic type
+ * @param <F>
+ *            the generic type
+ * @param <S>
+ *            the generic type
+ * @param <T>
+ *            the generic type
  */
 public class Tuple3<F, S, T> {
 
@@ -23,9 +26,12 @@ public class Tuple3<F, S, T> {
     /**
      * The constructor.
      *
-     * @param fst the fst
-     * @param snd the snd
-     * @param thrd the thrd
+     * @param fst
+     *            the fst
+     * @param snd
+     *            the snd
+     * @param thrd
+     *            the thrd
      */
     public Tuple3(final F fst, final S snd, final T thrd) {
         this.first = fst;
@@ -39,16 +45,17 @@ public class Tuple3<F, S, T> {
             return false;
         }
         Tuple3<?, ?, ?> p = (Tuple3<?, ?, ?>) o;
-        return first().equals(p.first())
-                && second().equals(p.second())
+        return first().equals(p.first()) && second().equals(p.second())
                 && third().equals(p.third());
     }
 
     /**
      * Equals.
      *
-     * @param x the x
-     * @param y the y
+     * @param x
+     *            the x
+     * @param y
+     *            the y
      * @return true, if successful
      */
     public static boolean equals(final Object x, final Object y) {
@@ -65,15 +72,22 @@ public class Tuple3<F, S, T> {
     /**
      * Creates the.
      *
-     * @param <F> the generic type
-     * @param <S> the generic type
-     * @param <T> the generic type
-     * @param f the f
-     * @param s the s
-     * @param t the t
+     * @param <F>
+     *            the generic type
+     * @param <S>
+     *            the generic type
+     * @param <T>
+     *            the generic type
+     * @param f
+     *            the f
+     * @param s
+     *            the s
+     * @param t
+     *            the t
      * @return the tuple 3
      */
-    public static <F, S, T> Tuple3<F, S, T> create(final F f, final S s, final T t) {
+    public static <F, S, T> Tuple3<F, S, T>
+            create(final F f, final S s, final T t) {
         return new Tuple3<F, S, T>(f, s, t);
     }
 

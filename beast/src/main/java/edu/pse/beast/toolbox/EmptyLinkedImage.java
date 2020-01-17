@@ -1,11 +1,13 @@
 package edu.pse.beast.toolbox;
 
-//Taken from the Demos from https://github.com/FXMisc/RichTextFX
-
 import javafx.scene.Node;
 
 /**
  * The Class EmptyLinkedImage.
+ *
+ * Taken from the Demos from https://github.com/FXMisc/RichTextFX
+ *
+ * @author Lukas Stapelbroek
  */
 public class EmptyLinkedImage implements LinkedImage {
 

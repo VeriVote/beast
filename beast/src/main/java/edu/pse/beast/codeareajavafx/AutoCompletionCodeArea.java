@@ -17,6 +17,8 @@ import javafx.geometry.Bounds;
 
 /**
  * The Class AutoCompletionCodeArea.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class AutoCompletionCodeArea extends CodeArea {
 
@@ -33,8 +35,8 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     private static final String WHITESPACE = " ";
 
     /** The Constant SPECIAL_CHARACTER_REGEX. */
-    private static final String SPECIAL_CHARACTER_REGEX
-        = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
+    private static final String SPECIAL_CHARACTER_REGEX =
+            ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
 
     /** The start. */
     private int start;
@@ -72,11 +74,14 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     /**
      * Process autocompletion.
      *
-     * @param content the content
-     * @param startIdx the start idx
-     * @param endIdx the end idx
+     * @param content
+     *            the content
+     * @param startIdx
+     *            the start idx
+     * @param endIdx
+     *            the end idx
      */
-    public void processAutocompletion(final List<String> content,
+    public void processAutoCompletion(final List<String> content,
                                       final Integer startIdx,
                                       final Integer endIdx) {
         Tuple<Integer, Integer> position = getAbsolutCaretPosition();
@@ -87,38 +92,43 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             insertAutoCompletion(startIdx, endIdx, content.get(0));
         } else {
             GUIController.getController().getAutoCompleter()
-            .showAutoCompletionWindows(position.first(), position.second(), content, this);
+                    .showAutoCompletionWindows(position.first(),
+                                               position.second(),
+                                               content, this);
         }
     }
 
     /**
      * Process autocompletion.
      *
-     * @param completion the completion
+     * @param completion
+     *            the completion
      */
-    public void processAutocompletion(final Tuple3<List<String>,
+    public void processAutoCompletion(final Tuple3<List<String>,
                                                    Integer,
                                                    Integer> completion) {
-        processAutocompletion(completion.first(),
-                              completion.second(),
+        processAutoCompletion(completion.first(), completion.second(),
                               completion.third());
     }
 
     /**
      * Insert auto completion.
      *
-     * @param startIdx the start idx
-     * @param endIdx the end idx
-     * @param toInsert the to insert
+     * @param startIdx
+     *            the start idx
+     * @param endIdx
+     *            the end idx
+     * @param toInsert
+     *            the to insert
      */
-    public abstract void insertAutoCompletion(int startIdx,
-                                              int endIdx,
+    public abstract void insertAutoCompletion(int startIdx, int endIdx,
                                               String toInsert);
 
     /**
      * Gets the completions.
      *
-     * @param recommendations the recommendations
+     * @param recommendations
+     *            the recommendations
      * @return the completions
      */
     protected Tuple3<List<String>, Integer, Integer>
@@ -132,8 +142,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             for (int i = prefixEnd - 1; i >= 0; i--) {
                 char tmp = completeText.charAt(i);
 
-                if (tmp == ' '
-                        | ("" + tmp).matches(SPECIAL_CHARACTER_REGEX)
+                if (tmp == ' ' | ("" + tmp).matches(SPECIAL_CHARACTER_REGEX)
                         | ("" + tmp).matches(CONTROL_CHARACTERS)) {
                     if (!prefix.matches(WORD)) {
                         prefix = "";
@@ -155,13 +164,13 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         }
 
         completeText = completeText.replaceAll(CONTROL_CHARACTERS, WHITESPACE);
-        completeText = completeText.replaceAll(SPECIAL_CHARACTER_REGEX, WHITESPACE);
+        completeText =
+                completeText.replaceAll(SPECIAL_CHARACTER_REGEX, WHITESPACE);
         completeText = completeText.replaceAll("\\s+", WHITESPACE);
 
         Set<String> possibilities = new TreeSet<String>(recommendations);
-        possibilities.addAll(
-                GUIController.getController().getBooleanExpEditor().getSymbolicVariableNames()
-        );
+        possibilities.addAll(GUIController.getController().getBooleanExpEditor()
+                .getSymbolicVariableNames());
         // split on white spaces to extract the words
         String[] split = completeText.split(WHITESPACE);
 
@@ -174,11 +183,14 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         List<String> possibleList = new ArrayList<String>();
         if (prefix.equals("")) {
             possibleList.addAll(possibilities);
-        } else { // we already have started a word, so we have to filter out all non fitting
+        } else { // we already have started a word, so we have to filter out all
+                 // non fitting
                  // words
-            for (Iterator<String> iterator = possibilities.iterator(); iterator.hasNext();) {
+            for (Iterator<String> iterator = possibilities.iterator();
+                    iterator.hasNext();) {
                 String str = iterator.next();
-                if (str != null && str.toLowerCase().startsWith(prefix.toLowerCase())) {
+                if (str != null
+                        && str.toLowerCase().startsWith(prefix.toLowerCase())) {
                     possibleList.add(str);
                 }
             }
@@ -186,13 +198,16 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         // if (possibleList.size() == 1) {
         // }
 
-        return new Tuple3<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
+        return new Tuple3<List<String>, Integer, Integer>(possibleList,
+                                                          prefixStart,
+                                                          prefixEnd);
     }
 
     /**
      * Insert hidden auto completion.
      *
-     * @param toInsert the to insert
+     * @param toInsert
+     *            the to insert
      */
     public void insertHiddenAutoCompletion(final String toInsert) {
         insertAutoCompletion(start, end, toInsert);

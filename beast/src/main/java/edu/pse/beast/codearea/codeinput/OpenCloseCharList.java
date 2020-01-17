@@ -29,7 +29,8 @@ public class OpenCloseCharList {
     /**
      * Checks if is open char.
      *
-     * @param c the c
+     * @param c
+     *            the c
      * @return true, if is open char
      */
     public boolean isOpenChar(final char c) {
@@ -44,7 +45,8 @@ public class OpenCloseCharList {
     /**
      * Gets the open close char.
      *
-     * @param c the c
+     * @param c
+     *            the c
      * @return the open close char
      */
     public OpenCloseChar getOpenCloseChar(final char c) {
@@ -69,7 +71,8 @@ public class OpenCloseCharList {
     /**
      * Checks if is close char.
      *
-     * @param c the c
+     * @param c
+     *            the c
      * @return true, if is close char
      */
     public boolean isCloseChar(final char c) {

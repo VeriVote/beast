@@ -16,9 +16,14 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
  * A factory for creating CBMCProcess objects.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CBMCProcessFactory extends CheckerFactory {
     // TODO clean up this file
+
+    /** The Constant DOT_C. */
+    private static final String DOT_C = ".c";
 
     /** The Constant WHITESPACE. */
     private static final String WHITESPACE = " ";
@@ -305,8 +310,8 @@ public class CBMCProcessFactory extends CheckerFactory {
         } else if (environment.toLowerCase().contains("mac")) {
             determinedOS = OperatingSystems.Mac;
         } else {
-            ErrorLogger
-                    .log("Sorry, your OS " + environment + " is not supported");
+            ErrorLogger.log("Sorry, your OS (" + environment
+                            + ") is not supported.");
         }
         return determinedOS;
     }
@@ -316,7 +321,8 @@ public class CBMCProcessFactory extends CheckerFactory {
                                          final ElectionDescription electionDesc,
                                          final Result result,
                                          final ElectionCheckParameter parameter) {
-        return new CBMCProcessFactory(controller, electionDesc, result, parameter);
+        return new CBMCProcessFactory(controller, electionDesc, result,
+                                      parameter);
     }
     //
     // @Override
@@ -348,13 +354,13 @@ public class CBMCProcessFactory extends CheckerFactory {
                                     final PreAndPostConditionsDescription postAndPrepPropDesc) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc,
-                postAndPrepPropDesc);
+        CBMCCodeGenerator generator =
+                new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc);
         ArrayList<String> code = generator.getCode();
         String absolutePath = SuperFolderFinder.getSuperFolder()
-                + PATH_TO_TEMP_FOLDER;
+                                + PATH_TO_TEMP_FOLDER;
         File file = new File(new File(absolutePath),
-                FileLoader.getNewUniqueName(absolutePath) + ".c");
+                             FileLoader.getNewUniqueName(absolutePath) + DOT_C);
         if (file.getParentFile() == null) {
             ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
@@ -384,18 +390,19 @@ public class CBMCProcessFactory extends CheckerFactory {
      */
     public File createCodeFileMargin(final ElectionDescription electionDesc,
                                      final PreAndPostConditionsDescription postAndPrepPropDesc,
-                                     final int margin,
-                                     final ElectionSimulationData origResult,
+                                     final int margin, final ElectionSimulationData origResult,
                                      final ElectionSimulationData inputData) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc,
-                postAndPrepPropDesc, margin, origResult, inputData);
+        CBMCCodeGenerator generator =
+                new CBMCCodeGenerator(electionDesc,
+                                      postAndPrepPropDesc, margin,
+                                      origResult, inputData);
         ArrayList<String> code = generator.getCode();
         String absolutePath = SuperFolderFinder.getSuperFolder()
-                + PATH_TO_TEMP_FOLDER;
+                                + PATH_TO_TEMP_FOLDER;
         File file = new File(new File(absolutePath),
-                FileLoader.getNewUniqueName(absolutePath) + ".c");
+                             FileLoader.getNewUniqueName(absolutePath) + DOT_C);
         if (file.getParentFile() == null) {
             ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
@@ -424,13 +431,14 @@ public class CBMCProcessFactory extends CheckerFactory {
                                    final ElectionSimulationData inputData) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc,
-                postAndPrepPropDesc, inputData);
+        CBMCCodeGenerator generator =
+                new CBMCCodeGenerator(electionDesc,
+                                      postAndPrepPropDesc, inputData);
         ArrayList<String> code = generator.getCode();
-        String absolutePath =
-                SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
+        String absolutePath = SuperFolderFinder.getSuperFolder()
+                                + PATH_TO_TEMP_FOLDER;
         File file = new File(new File(absolutePath),
-                FileLoader.getNewUniqueName(absolutePath) + ".c");
+                             FileLoader.getNewUniqueName(absolutePath) + DOT_C);
         if (file.getParentFile() == null) {
             ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
@@ -611,11 +619,9 @@ public class CBMCProcessFactory extends CheckerFactory {
     @Override
     protected Checker startProcessCheck(final ElectionDescription electionDesc,
                                         final PreAndPostConditionsDescription postAndPrepPropDesc,
-                                        final String advanced,
-                                        final int voters,
+                                        final String advanced, final int voters,
                                         final int candidates,
-                                        final int seats,
-                                        final CheckerFactory parent,
+                                        final int seats, final CheckerFactory parent,
                                         final Result result) {
         String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
         // remove all unnecessary white spaces
@@ -629,11 +635,11 @@ public class CBMCProcessFactory extends CheckerFactory {
         switch (os) {
         case Linux:
             startedChecker = new LinuxProcess(voters, candidates, seats,
-                                              userOptions, toCheck, parent, result);
+                    userOptions, toCheck, parent, result);
             break;
         case Windows:
             startedChecker = new WindowsProcess(voters, candidates, seats,
-                                                userOptions, toCheck, parent, result);
+                    userOptions, toCheck, parent, result);
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(
@@ -651,11 +657,9 @@ public class CBMCProcessFactory extends CheckerFactory {
     @Override
     protected Checker startProcessMargin(final ElectionDescription electionDesc,
                                          final PreAndPostConditionsDescription postAndPrepPropDesc,
-                                         final String advanced,
-                                         final int voters,
+                                         final String advanced, final int voters,
                                          final int candidates,
-                                         final int seats,
-                                         final CheckerFactory parent,
+                                         final int seats, final CheckerFactory parent,
                                          final int margin,
                                          final ElectionSimulationData origResult,
                                          final ElectionSimulationData votingData,
@@ -665,43 +669,6 @@ public class CBMCProcessFactory extends CheckerFactory {
         // create the file in which the code is saved
         toCheck = createCodeFileMargin(electionDesc, postAndPrepPropDesc,
                                        margin, origResult, votingData);
-        Checker startedChecker = null;
-        switch (os) {
-        case Linux:
-            startedChecker = new LinuxProcess(voters, candidates, seats,
-                    userOptions, toCheck, parent, result);
-            break;
-        case Windows:
-            startedChecker = new WindowsProcess(voters, candidates, seats,
-                    userOptions, toCheck, parent, result);
-            break;
-        case Mac:
-            ErrorForUserDisplayer.displayError(
-                    "MacOS is not supported yet, please implement the class CBMCProcess "
-                            + "and add it then here in the "
-                            + "CBMCProcessFactory to be created");
-            break;
-        default:
-            ErrorLogger.log(
-                    "Warning, your OS could not be determined or is not supported yet.");
-        }
-        return startedChecker;
-    }
-
-    @Override
-    protected Checker startProcessTest(final ElectionDescription electionDesc,
-                                       final PreAndPostConditionsDescription postAndPrepPropDesc,
-                                       final String advanced,
-                                       final int voters,
-                                       final int candidates,
-                                       final int seats,
-                                       final CheckerFactory parent,
-                                       final ElectionSimulationData votingData,
-                                       final Result result) {
-        String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
-        // remove all unnecessary white spaces
-        // create the file in which the code is saved
-        toCheck = createCodeFileTest(electionDesc, postAndPrepPropDesc, votingData);
         Checker startedChecker = null;
         switch (os) {
         case Linux:
@@ -719,7 +686,44 @@ public class CBMCProcessFactory extends CheckerFactory {
                             + "CBMCProcessFactory to be created");
             break;
         default:
-            ErrorLogger.log("Warning, your OS could not be determined or is not supported yet.");
+            ErrorLogger.log(
+                    "Warning, your OS could not be determined or is not supported yet.");
+        }
+        return startedChecker;
+    }
+
+    @Override
+    protected Checker startProcessTest(final ElectionDescription electionDesc,
+                                       final PreAndPostConditionsDescription postAndPrepPropDesc,
+                                       final String advanced, final int voters,
+                                       final int candidates,
+                                       final int seats, final CheckerFactory parent,
+                                       final ElectionSimulationData votingData,
+                                       final Result result) {
+        final String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
+        // remove all unnecessary white spaces
+        // create the file in which the code is saved
+        toCheck = createCodeFileTest(electionDesc, postAndPrepPropDesc,
+                                     votingData);
+        Checker startedChecker = null;
+        switch (os) {
+        case Linux:
+            startedChecker = new LinuxProcess(voters, candidates, seats,
+                                              userOptions, toCheck, parent, result);
+            break;
+        case Windows:
+            startedChecker = new WindowsProcess(voters, candidates, seats,
+                                                userOptions, toCheck, parent, result);
+            break;
+        case Mac:
+            ErrorForUserDisplayer.displayError(
+                    "MacOS is not supported yet, please implement the class CBMCProcess "
+                            + "and add it then here in the "
+                            + "CBMCProcessFactory to be created");
+            break;
+        default:
+            ErrorLogger.log(
+                    "Warning, your OS could not be determined or is not supported yet.");
         }
         return startedChecker;
     }

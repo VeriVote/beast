@@ -6,19 +6,24 @@ import edu.pse.beast.types.OutputType;
 
 /**
  * The Class CBMCOutputType.
+ *
+ * @author Lukas Stapelbroek
  */
 public abstract class CBMCOutputType extends OutputType {
 
     /**
      * The constructor.
      *
-     * @param unsigned the unsigned
-     * @param dataType the data type
-     * @param dimensions the dimensions
-     * @param sizeOfDimensions the size of dimensions
+     * @param unsigned
+     *            the unsigned
+     * @param dataType
+     *            the data type
+     * @param dimensions
+     *            the dimensions
+     * @param sizeOfDimensions
+     *            the size of dimensions
      */
-    public CBMCOutputType(final boolean unsigned,
-                          final DataType dataType,
+    public CBMCOutputType(final boolean unsigned, final DataType dataType,
                           final int dimensions,
                           final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
@@ -31,8 +36,7 @@ public abstract class CBMCOutputType extends OutputType {
         code.addTab();
         String definition = getContainer().getOutputStruct().getStructAccess()
                 + " " + UnifiedNameContainer.getElect() + "1 = "
-                + UnifiedNameContainer.getVotingMethod()
-                + "( ORIG_VOTES_SIZE, "
+                + UnifiedNameContainer.getVotingMethod() + "( ORIG_VOTES_SIZE, "
                 + UnifiedNameContainer.getOrigVotesName() + ");";
         code.add(definition);
         code.add("assert(0);"); // add an assertion that never holds to be able

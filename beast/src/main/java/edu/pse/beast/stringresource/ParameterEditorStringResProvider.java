@@ -6,6 +6,15 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class ParameterEditorStringResProvider extends StringResourceProvider {
+    /** The Constant PARAMETER_EDITOR_TOOLBAR. */
+    private static final String PARAMETER_EDITOR_TOOLBAR = "ParameterEditorToolbar";
+
+    /** The Constant PARAMETER_EDITOR_OTHER. */
+    private static final String PARAMETER_EDITOR_OTHER = "ParameterEditorOther";
+
+    /** The Constant PARAMETER_EDITOR_MENU. */
+    private static final String PARAMETER_EDITOR_MENU = "ParameterEditorMenu";
+
     /** The menu string res. */
     private StringResourceLoader menuStringRes;
 
@@ -18,7 +27,8 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     /**
      * Instantiates a new parameter editor string res provider.
      *
-     * @param languageId the languageId. Set to "de" for german
+     * @param languageId
+     *            the languageId. Set to "de" for german
      */
     public ParameterEditorStringResProvider(final String languageId) {
         super(languageId);
@@ -56,10 +66,11 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     // filenames. The superclass provides the functions for this process
     @Override
     protected final void initialize() {
-
-        toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("ParameterEditorToolbar");
-        menuStringRes = this.getStringResourceLoaderFromModuleName("ParameterEditorMenu");
-        otherStringRes = this.getStringResourceLoaderFromModuleName("ParameterEditorOther");
-
+        toolbarTipStringRes =
+                this.getStringResourceLoaderFromModuleName(PARAMETER_EDITOR_TOOLBAR);
+        menuStringRes =
+                this.getStringResourceLoaderFromModuleName(PARAMETER_EDITOR_MENU);
+        otherStringRes =
+                this.getStringResourceLoaderFromModuleName(PARAMETER_EDITOR_OTHER);
     }
 }

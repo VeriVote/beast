@@ -19,7 +19,8 @@ public class CElectionDescriptionEditorChangeHandler {
     /**
      * Constructor.
      *
-     * @param cArea JTextPane of the CElectionEditorCodeArea
+     * @param cArea
+     *            JTextPane of the CElectionEditorCodeArea
      */
     public CElectionDescriptionEditorChangeHandler(final JTextPane cArea) {
         this.codeArea = cArea;
@@ -29,7 +30,8 @@ public class CElectionDescriptionEditorChangeHandler {
     /**
      * Adds a new text pane.
      *
-     * @param cArea the text pane to add
+     * @param cArea
+     *            the text pane to add
      */
     public void addNewTextPane(final JTextPane cArea) {
         this.codeArea = cArea;
@@ -47,8 +49,9 @@ public class CElectionDescriptionEditorChangeHandler {
     /**
      * Checks for changed.
      *
-     * @return true if the currently loaded CElectionDescription object differs from
-     *         what is currently displayed in CElectionEditorWindow, false otherwise
+     * @return true if the currently loaded CElectionDescription object differs
+     *         from what is currently displayed in CElectionEditorWindow, false
+     *         otherwise
      */
     public boolean hasChanged() {
         return !(preString.equals(codeArea.getText()));

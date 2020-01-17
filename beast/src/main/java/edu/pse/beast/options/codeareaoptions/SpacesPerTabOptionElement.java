@@ -6,6 +6,8 @@ import edu.pse.beast.options.OptionElement;
 
 /**
  * OptionElement subclass for the spacespertabs option.
+ *
+ * @author Lukas Stapelbroek
  */
 public class SpacesPerTabOptionElement extends OptionElement {
 
@@ -15,8 +17,10 @@ public class SpacesPerTabOptionElement extends OptionElement {
     /**
      * Constructor.
      *
-     * @param availableOptions    the available options
-     * @param numberTabsStr       the number of spaces per tab
+     * @param availableOptions
+     *            the available options
+     * @param numberTabsStr
+     *            the number of spaces per tab
      */
     public SpacesPerTabOptionElement(final List<String> availableOptions,
                                      final String numberTabsStr) {

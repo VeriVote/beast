@@ -1,4 +1,5 @@
-package edu.pse.beast.celectiondescriptioneditor.electiontemplates; //TODO clean up
+package edu.pse.beast.celectiondescriptioneditor.electiontemplates;
+//TODO clean up
 
 import java.util.ArrayList;
 

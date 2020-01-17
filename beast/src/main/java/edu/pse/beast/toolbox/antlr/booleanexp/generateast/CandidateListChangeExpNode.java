@@ -8,6 +8,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.In
 
 /**
  * The Class CandidateListChangeExpNode.
+ *
+ * @author Lukas Stapelbroek
  */
 public class CandidateListChangeExpNode extends BooleanExpressionNode {
 
@@ -20,8 +22,10 @@ public class CandidateListChangeExpNode extends BooleanExpressionNode {
     /**
      * The constructor.
      *
-     * @param electNode the elect node
-     * @param intersectExpContext the intersect exp context
+     * @param electNode
+     *            the elect node
+     * @param intersectExpContext
+     *            the intersect exp context
      */
     public CandidateListChangeExpNode(final TerminalNode electNode,
                                       final IntersectExpContext

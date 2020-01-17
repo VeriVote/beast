@@ -26,7 +26,8 @@ public abstract class Options {
     /**
      * Creates a new Options object.
      *
-     * @param idString the ID of this object
+     * @param idString
+     *            the ID of this object
      */
     public Options(final String idString) {
         this.id = idString;
@@ -62,7 +63,8 @@ public abstract class Options {
     /**
      * Adds an OptionElement to the OptionElement list.
      *
-     * @param elementToAdd the element to be added to the list
+     * @param elementToAdd
+     *            the element to be added to the list
      */
     public void addOptionElement(final OptionElement elementToAdd) {
         optElements.add(elementToAdd);
@@ -71,14 +73,16 @@ public abstract class Options {
     /**
      * Adds a set of suboptions to the suboptions list.
      *
-     * @param optionToAdd the suboption to be added
+     * @param optionToAdd
+     *            the suboption to be added
      */
     public void addSubOptions(final Options optionToAdd) {
         subOptions.add(optionToAdd);
     }
 
     /**
-     * Gets called when an option got changed and re-applies it where it is used.
+     * Gets called when an option got changed and re-applies it where it is
+     * used.
      */
     public void reapply() {
         reapplySpecialized();

@@ -13,7 +13,8 @@ public class OptionStringResProvider extends StringResourceProvider {
     /**
      * Instantiates a new option string res provider.
      *
-     * @param languageId the languageId. Set to "de" for german
+     * @param languageId
+     *            the languageId. Set to "de" for german
      */
     public OptionStringResProvider(final String languageId) {
         super(languageId);
@@ -28,7 +29,6 @@ public class OptionStringResProvider extends StringResourceProvider {
     public StringResourceLoader getOptionStringRes() {
         return optionStringRes;
     }
-
 
     // Initializes all attributes. Loads all StringResourceLoaders with the
     // filenames. The superclass provides the functions for this process

@@ -144,26 +144,30 @@ public final class BEASTCommunicator {
      */
     public static synchronized boolean startCheckNEW() {
         stopped = false;
-        ElectionDescription electionDesc = GUIController.getController().getElectionDescription();
-        List<ParentTreeItem> properties = GUIController.getController().getProperties();
-        ElectionCheckParameter parameter = GUIController.getController().getParameter();
+        ElectionDescription electionDesc =
+                GUIController.getController().getElectionDescription();
+        List<ParentTreeItem> properties =
+                GUIController.getController().getProperties();
+        ElectionCheckParameter parameter =
+                GUIController.getController().getParameter();
 
         if (!hasProperties(properties)) {
             // checks if there even are any properties selected for analysis in
             // the PreAndPostConditionsSource
-            GUIController.setConsoleText("No property selected"); // TODO: (add string resouce
-                                                                  // loading later)");
+            GUIController.setConsoleText("No property selected!");
+            // TODO: (add string resouce loading later)");
+
             return false;
         }
         if (!checkForErrors(electionDesc, properties)) {
-            GUIController.setConsoleText("Starting verification");
+            GUIController.setConsoleText("Starting verification ..");
             // TODO load the property checker
             PropertyChecker checker = new PropertyChecker("CBMC");
             currentCheckers.add(checker);
             // analysis gets started by
             // CheckerCommunicator.checkPropertiesForDescription()
-            List<Result> results = checker.checkPropertiesForDescription(electionDesc, properties,
-                                                                         parameter);
+            List<Result> results =
+                    checker.checkPropertiesForDescription(electionDesc, properties, parameter);
             if (results != null) {
                 // Thread that checks for new presentable results every n
                 // milliseconds
@@ -186,22 +190,25 @@ public final class BEASTCommunicator {
                             // + df.format(passedTimeSeconds));
                             try {
                                 Thread.sleep(Math.max(0,
-                                        SIXTYSEVEN - (System.currentTimeMillis() - frameTime)));
+                                        SIXTYSEVEN - (System.currentTimeMillis()
+                                                - frameTime)));
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(
-                                        BEASTCommunicator.class.getName()).log(Level.SEVERE,
-                                                                               null, ex);
+                                        BEASTCommunicator.class.getName())
+                                        .log(Level.SEVERE, null, ex);
                             }
                             frameTime = System.currentTimeMillis();
                             // check if all results are finished already
                             allDone = true;
-                            for (Iterator<Result> iterator = results.iterator();
+                            for (Iterator<Result> iterator =
+                                    results.iterator();
                                     iterator.hasNext();) {
                                 Result result = iterator.next();
                                 allDone = allDone && result.isFinished();
                             }
                         }
-                        GUIController.setConsoleText("Verification ended after " + timeString);
+                        GUIController.setConsoleText(
+                                "Verification ended after " + timeString);
                         GUIController.getController().checkFinished();
                     }
                 });
@@ -221,11 +228,12 @@ public final class BEASTCommunicator {
      */
     public static synchronized boolean stopCheck() {
         stopped = true;
-        for (Iterator<PropertyChecker> iterator = currentCheckers.iterator();
+        for (Iterator<PropertyChecker> iterator =
+                currentCheckers.iterator();
                 iterator.hasNext();) {
             PropertyChecker checker = iterator.next();
             checker.abortChecking();
-            System.out.println("Aborting");
+            System.out.println("Aborting.");
         }
         return true;
     }
@@ -242,20 +250,24 @@ public final class BEASTCommunicator {
      */
     public static boolean checkForErrors(final ElectionDescription description,
                                          final List<ParentTreeItem> properties) {
-        GUIController.setConsoleText("Searching for errors");
+        GUIController.setConsoleText("Searching for errors.");
         // save the currently opened property
-        GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription();
-        List<CodeError> codeErrors =
-                CVariableErrorFinder.findErrors(description.getComplexCode(), description);
+        GUIController.getController().getBooleanExpEditor()
+                .savePropertyTextAreasIntoDescription();
+        List<CodeError> codeErrors = CVariableErrorFinder
+                .findErrors(description.getComplexCode(), description);
         if (codeErrors.size() != 0) {
-            GUIController.getController().getCodeArea().displayErrors(codeErrors);
+            GUIController.getController().getCodeArea()
+                    .displayErrors(codeErrors);
             return true;
         }
         boolean errorsFound = false;
-        for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+        for (Iterator<ParentTreeItem> iterator = properties.iterator();
+                iterator.hasNext();) {
             ParentTreeItem parentTreeItem = iterator.next();
             if (parentTreeItem.isChildSelected()) {
-                errorsFound |= BooleanExpEditorGeneralErrorFinder.hasErrors(parentTreeItem);
+                errorsFound |= BooleanExpEditorGeneralErrorFinder
+                        .hasErrors(parentTreeItem);
             }
         }
         return errorsFound;
@@ -264,7 +276,8 @@ public final class BEASTCommunicator {
     /**
      * Checks for properties.
      *
-     * @param properties the properties
+     * @param properties
+     *            the properties
      * @return true, if successful
      */
     private static boolean hasProperties(final List<ParentTreeItem> properties) {
@@ -281,18 +294,22 @@ public final class BEASTCommunicator {
      * Creates a String that contains the given time in seconds in a readable
      * format.
      *
-     * @param passedTimeSeconds            the passed time in seconds as a double
+     * @param passedTimeSeconds
+     *            the passed time in seconds as a double
      * @return the string
      */
     private static String createTimeString(final double passedTimeSeconds) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String timeString = "";
         if (passedTimeLongerThanDay(passedTimeSeconds)) {
-            timeString = createTimeStringLongerThanDay(passedTimeSeconds, decimalFormat);
+            timeString = createTimeStringLongerThanDay(passedTimeSeconds,
+                                                       decimalFormat);
         } else if (passedTimeLongerThanHour(passedTimeSeconds)) {
-            timeString = createTimeStringLongerThanHour(passedTimeSeconds, decimalFormat);
+            timeString = createTimeStringLongerThanHour(passedTimeSeconds,
+                                                        decimalFormat);
         } else if (passedTimeLongerThanMinute(passedTimeSeconds)) {
-            timeString = createTimeStringLongerThanMinute(passedTimeSeconds, decimalFormat);
+            timeString = createTimeStringLongerThanMinute(passedTimeSeconds,
+                                                          decimalFormat);
         } else {
             String seconds = decimalFormat.format(passedTimeSeconds);
             timeString = seconds + "s";
@@ -303,8 +320,10 @@ public final class BEASTCommunicator {
     /**
      * Creates the time string longer than minute.
      *
-     * @param passedTimeSeconds the passed time seconds
-     * @param decimalFormat the decimal format
+     * @param passedTimeSeconds
+     *            the passed time seconds
+     * @param decimalFormat
+     *            the decimal format
      * @return the string
      */
     private static String createTimeStringLongerThanMinute(final double passedTimeSeconds,
@@ -320,8 +339,10 @@ public final class BEASTCommunicator {
     /**
      * Creates the time string longer than hour.
      *
-     * @param passedTimeSeconds the passed time seconds
-     * @param decimalFormat the decimal format
+     * @param passedTimeSeconds
+     *            the passed time seconds
+     * @param decimalFormat
+     *            the decimal format
      * @return the string
      */
     private static String createTimeStringLongerThanHour(final double passedTimeSeconds,
@@ -339,8 +360,10 @@ public final class BEASTCommunicator {
     /**
      * Creates the time string longer than day.
      *
-     * @param passedTimeSeconds the passed time seconds
-     * @param decimalFormat the decimal format
+     * @param passedTimeSeconds
+     *            the passed time seconds
+     * @param decimalFormat
+     *            the decimal format
      * @return the string
      */
     private static String createTimeStringLongerThanDay(final double passedTimeSeconds,
@@ -353,14 +376,16 @@ public final class BEASTCommunicator {
         int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
         double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
         String seconds = decimalFormat.format(minutesRemainder);
-        timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        timeString = days + "d " + hours + "h " + minutes + "m "
+                    + seconds + "s";
         return timeString;
     }
 
     /**
      * Passed time longer than day.
      *
-     * @param passedTimeSeconds the passed time seconds
+     * @param passedTimeSeconds
+     *            the passed time seconds
      * @return true, if successful
      */
     private static boolean passedTimeLongerThanDay(final double passedTimeSeconds) {
@@ -370,7 +395,8 @@ public final class BEASTCommunicator {
     /**
      * Passed time longer than hour.
      *
-     * @param passedTimeSeconds the passed time seconds
+     * @param passedTimeSeconds
+     *            the passed time seconds
      * @return true, if successful
      */
     private static boolean passedTimeLongerThanHour(final double passedTimeSeconds) {
@@ -380,7 +406,8 @@ public final class BEASTCommunicator {
     /**
      * Passed time longer than minute.
      *
-     * @param passedTimeSeconds the passed time seconds
+     * @param passedTimeSeconds
+     *            the passed time seconds
      * @return true, if successful
      */
     private static boolean passedTimeLongerThanMinute(final double passedTimeSeconds) {

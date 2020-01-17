@@ -46,8 +46,10 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     /**
      * Constructor.
      *
-     * @param timeoutJSpinner JSpinner for the timeout value
-     * @param timeoutUnits    JComboBox for the timeout unit
+     * @param timeoutJSpinner
+     *            JSpinner for the timeout value
+     * @param timeoutUnits
+     *            JComboBox for the timeout unit
      */
     public TimeoutValueHandler(final JSpinner timeoutJSpinner,
                                final JComboBox<String> timeoutUnits) {
@@ -94,7 +96,8 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      * Setter for the timeout. Determines if the desired timeout is allowed and
      * adjusts the spinner and combobox accordingly.
      *
-     * @param to new TimeOut
+     * @param to
+     *            new TimeOut
      */
     public void setValue(final TimeOut to) {
         if (reacts) {
@@ -103,7 +106,8 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             } else {
                 timeoutSpinner.setValue(
                         to.getOrigUnit().convert(to.getDuration(),
-                                                 TimeUnit.MILLISECONDS));
+                                                 TimeUnit.MILLISECONDS)
+                );
             }
             setHasChanged(true);
             switch (to.getOrigUnit()) {
@@ -120,14 +124,17 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
                 timeoutUnit.setSelectedIndex(THREE);
                 break;
             default:
-                System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                System.err.println("Timeout kann nicht auf diesen"
+                                    + " Wert gesetzt werden.");
                 break;
             }
             timeoutBefore = getTimeout();
         } else {
             timeoutSpinner.setValue(
-                    timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(),
-                                                        TimeUnit.MILLISECONDS));
+                    timeoutBefore.getOrigUnit().convert(
+                            timeoutBefore.getDuration(),
+                            TimeUnit.MILLISECONDS)
+            );
             switch (timeoutBefore.getOrigUnit()) {
             case SECONDS:
                 timeoutUnit.setSelectedIndex(0);
@@ -142,16 +149,19 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
                 timeoutUnit.setSelectedIndex(THREE);
                 break;
             default:
-                System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                System.err.println("Timeout kann nicht auf diesen"
+                                    + " Wert gesetzt werden.");
                 break;
             }
         }
     }
 
     /**
-     * Toggles whether the timeout reacts to user input (to not interrupt checks).
+     * Toggles whether the timeout reacts to user input (to not interrupt
+     * checks).
      *
-     * @param reactsToUser whether it reacts
+     * @param reactsToUser
+     *            whether it reacts
      */
     void setReacts(final boolean reactsToUser) {
         this.reacts = reactsToUser;
@@ -179,7 +189,8 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     /**
      * Sets whether the TimeOut was changed since last time saving.
      *
-     * @param changed whether it changed
+     * @param changed
+     *            whether it changed
      */
     protected void setHasChanged(final boolean changed) {
         this.hasChanged = changed;

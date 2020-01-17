@@ -14,7 +14,8 @@ public abstract class UserAction {
     /**
      * Instantiates a new user action.
      *
-     * @param idString the identification
+     * @param idString
+     *            the identification
      */
     public UserAction(final String idString) {
         this.id = idString;

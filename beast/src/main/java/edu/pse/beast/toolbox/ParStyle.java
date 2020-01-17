@@ -1,7 +1,5 @@
 package edu.pse.beast.toolbox;
 
-//take from a demo from https://github.com/FXMisc/RichTextFX
-
 import static javafx.scene.text.TextAlignment.CENTER;
 import static javafx.scene.text.TextAlignment.JUSTIFY;
 import static javafx.scene.text.TextAlignment.LEFT;
@@ -21,6 +19,10 @@ import javafx.scene.text.TextAlignment;
 //TODO maybe make the same changes that were done to TextStyle (default values)
 /**
  * Holds information about the style of a paragraph.
+ *
+ * Taken from a demo from https://github.com/FXMisc/RichTextFX.
+ *
+ * @author Lukas Stapelbroek
  */
 public class ParStyle {
 
@@ -28,7 +30,8 @@ public class ParStyle {
     public static final ParStyle EMPTY = new ParStyle();
 
     /** The Constant CODEC. */
-    public static final Codec<ParStyle> CODEC = new Codec<ParStyle>() {
+    public static final Codec<ParStyle> CODEC =
+            new Codec<ParStyle>() {
         private final Codec<Optional<TextAlignment>> optAlignmentCodec =
                 Codec.optionalCodec(Codec.enumCodec(TextAlignment.class));
         private final Codec<Optional<Color>> optColorCodec =
@@ -40,16 +43,15 @@ public class ParStyle {
         }
 
         @Override
-        public void encode(final DataOutputStream os,
-                           final ParStyle t) throws IOException {
+        public void encode(final DataOutputStream os, final ParStyle t)
+                throws IOException {
             optAlignmentCodec.encode(os, t.alignment);
             optColorCodec.encode(os, t.backgroundColor);
         }
 
         @Override
         public ParStyle decode(final DataInputStream is) throws IOException {
-            return new ParStyle(
-                    optAlignmentCodec.decode(is),
+            return new ParStyle(optAlignmentCodec.decode(is),
                     optColorCodec.decode(is));
         }
 
@@ -71,8 +73,10 @@ public class ParStyle {
     /**
      * Instantiates a new par style.
      *
-     * @param align the align
-     * @param backColor the back color
+     * @param align
+     *            the align
+     * @param backColor
+     *            the back color
      */
     public ParStyle(final Optional<TextAlignment> align,
                     final Optional<Color> backColor) {
@@ -119,7 +123,8 @@ public class ParStyle {
     /**
      * Background color.
      *
-     * @param color the color
+     * @param color
+     *            the color
      * @return the par style
      */
     public static ParStyle backgroundColor(final Color color) {
@@ -135,8 +140,8 @@ public class ParStyle {
     public boolean equals(final Object other) {
         if (other instanceof ParStyle) {
             ParStyle that = (ParStyle) other;
-            return Objects.equals(this.alignment, that.alignment)
-                && Objects.equals(this.backgroundColor, that.backgroundColor);
+            return Objects.equals(this.alignment, that.alignment) && Objects
+                    .equals(this.backgroundColor, that.backgroundColor);
         } else {
             return false;
         }
@@ -177,7 +182,8 @@ public class ParStyle {
         });
 
         backgroundColor.ifPresent(color -> {
-            sb.append("-fx-background-color: " + TextStyle.cssColor(color) + ";");
+            sb.append("-fx-background-color: "
+                    + TextStyle.cssColor(color) + ";");
         });
 
         return sb.toString();
@@ -186,19 +192,24 @@ public class ParStyle {
     /**
      * Update with.
      *
-     * @param mixin the mixin
+     * @param mixin
+     *            the mixin
      * @return the par style
      */
     public ParStyle updateWith(final ParStyle mixin) {
         return new ParStyle(
-                mixin.alignment.isPresent() ? mixin.alignment : alignment,
-                mixin.backgroundColor.isPresent() ? mixin.backgroundColor : backgroundColor);
+                mixin.alignment.isPresent()
+                    ? mixin.alignment : alignment,
+                mixin.backgroundColor.isPresent()
+                    ? mixin.backgroundColor : backgroundColor
+                );
     }
 
     /**
      * Update alignment.
      *
-     * @param align the align
+     * @param align
+     *            the align
      * @return the par style
      */
     public ParStyle updateAlignment(final TextAlignment align) {
@@ -208,7 +219,8 @@ public class ParStyle {
     /**
      * Update background color.
      *
-     * @param backColor the back color
+     * @param backColor
+     *            the back color
      * @return the par style
      */
     public ParStyle updateBackgroundColor(final Color backColor) {

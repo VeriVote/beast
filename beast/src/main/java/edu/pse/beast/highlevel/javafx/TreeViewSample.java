@@ -23,9 +23,10 @@ import javafx.util.Callback;
 
 /**
  * The Class TreeViewSample.
+ *
+ * @author Lukas Stapelbroek
  */
 public class TreeViewSample extends Application {
-
     /** The Constant ROOT. */
     private static final String ROOT = "root.png";
 
@@ -53,7 +54,8 @@ public class TreeViewSample extends Application {
                     new Employee("Judy Mayer", "IT Support"),
                     new Employee("Gregory Smith", "IT Support"),
                     new Employee("Jacob Smith", "Accounts Department"),
-                    new Employee("Isabella Johnson", "Accounts Department"));
+                    new Employee("Isabella Johnson", "Accounts Department")
+                    );
 
     /** The root node. */
     private TreeItem<String> rootNode =
@@ -62,7 +64,8 @@ public class TreeViewSample extends Application {
     /**
      * The main method.
      *
-     * @param args the arguments
+     * @param args
+     *            the arguments
      */
     public static void main(final String[] args) {
         Application.launch(args);
@@ -71,11 +74,12 @@ public class TreeViewSample extends Application {
     @Override
     public void start(final Stage stage) {
         rootNode.setExpanded(true);
-        for (Employee employee : employees) {
+        for (final Employee employee : employees) {
             TreeItem<String> empLeaf = new TreeItem<String>(employee.getName());
             boolean found = false;
             for (TreeItem<String> depNode : rootNode.getChildren()) {
-                if (depNode.getValue().contentEquals(employee.getDepartment())) {
+                if (depNode.getValue()
+                        .contentEquals(employee.getDepartment())) {
                     depNode.getChildren().add(empLeaf);
                     found = true;
                     break;
@@ -97,12 +101,13 @@ public class TreeViewSample extends Application {
 
         TreeView<String> treeView = new TreeView<String>(rootNode);
         treeView.setEditable(true);
-        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-            @Override
-            public TreeCell<String> call(final TreeView<String> p) {
-                return new TextFieldTreeCellImpl();
-            }
-        });
+        treeView.setCellFactory(
+                new Callback<TreeView<String>, TreeCell<String>>() {
+                    @Override
+                    public TreeCell<String> call(final TreeView<String> p) {
+                        return new TextFieldTreeCellImpl();
+                    }
+                });
 
         box.getChildren().add(treeView);
         stage.setScene(scene);
@@ -120,8 +125,7 @@ public class TreeViewSample extends Application {
         /**
          * Instantiates a new text field tree cell impl.
          */
-        TextFieldTreeCellImpl() {
-        }
+        TextFieldTreeCellImpl() { }
 
         /**
          * Start edit.
@@ -150,8 +154,10 @@ public class TreeViewSample extends Application {
         /**
          * Update item.
          *
-         * @param item the item
-         * @param empty the empty
+         * @param item
+         *            the item
+         * @param empty
+         *            the empty
          */
         @Override
         public void updateItem(final String item, final boolean empty) {
@@ -215,10 +221,13 @@ public class TreeViewSample extends Application {
         /**
          * Instantiates a new employee.
          *
-         * @param nameString the name string
-         * @param departmentString the department string
+         * @param nameString
+         *            the name string
+         * @param departmentString
+         *            the department string
          */
-        private Employee(final String nameString, final String departmentString) {
+        private Employee(final String nameString,
+                         final String departmentString) {
             this.name = new SimpleStringProperty(nameString);
             this.department = new SimpleStringProperty(departmentString);
         }
@@ -235,7 +244,8 @@ public class TreeViewSample extends Application {
         /**
          * Sets the name.
          *
-         * @param fName the new name
+         * @param fName
+         *            the new name
          */
         public void setName(final String fName) {
             name.set(fName);
@@ -253,7 +263,8 @@ public class TreeViewSample extends Application {
         /**
          * Sets the department.
          *
-         * @param fName the new department
+         * @param fName
+         *            the new department
          */
         public void setDepartment(final String fName) {
             department.set(fName);

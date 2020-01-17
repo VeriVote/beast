@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 /**
  * The Class WindowsOStoolbox.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class WindowsOStoolbox {
 
@@ -23,12 +25,14 @@ public final class WindowsOStoolbox {
     /**
      * Gets the v scmd path.
      *
-     * @return the String that should lead to a vsDevCMD which is required to run
-     *         cbmc on windows
-     * @throws IOException in case the VScmd could not be found this gets thrown
+     * @return the String that should lead to a vsDevCMD which is required to
+     *         run cbmc on windows
+     * @throws IOException
+     *             in case the VScmd could not be found this gets thrown
      */
     public static String getVScmdPath() throws IOException {
-        File file = new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_VS_CMD);
+        File file = new File(
+                SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_VS_CMD);
         if (Files.isExecutable(file.toPath())) {
             return file.getPath();
         } else { // we were unable to locate the command prompt in the resources
@@ -39,31 +43,31 @@ public final class WindowsOStoolbox {
             String pathToBatch = "/Common7/Tools/VsDevCmd.bat";
 
             ArrayList<String> toSearch = new ArrayList<>();
-            Files.list(x86).filter(Files::isReadable).filter(path
-                -> path.toString().contains(searchTerm))
+            Files.list(x86).filter(Files::isReadable)
+                    .filter(path -> path.toString().contains(searchTerm))
                     .forEach(VSPath -> toSearch.add(VSPath.toString()));
-            Files.list(x64).filter(Files::isReadable).filter(path
-                -> path.toString().contains(searchTerm))
+            Files.list(x64).filter(Files::isReadable)
+                    .filter(path -> path.toString().contains(searchTerm))
                     .forEach(VSPath -> toSearch.add(VSPath.toString()));
 
-            for (Iterator<String> iterator = toSearch.iterator(); iterator.hasNext();) {
+            for (final Iterator<String> iterator = toSearch.iterator();
+                    iterator.hasNext();) {
                 String toCheck = (iterator.next()) + pathToBatch;
                 if (Files.isReadable(new File(toCheck).toPath())) {
                     return toCheck;
                 }
             }
             ErrorForUserDisplayer
-                    .displayError(
-                            "The progam was unable to find a "
-                                    + "Developer Command Prompt for Visual Studio. \n"
-                                    + " Please install it if you have not and search for "
-                                    + "the vsCMD.bat in it! \n"
-                                    + " Please copy the .bat to the folder /windows/ in your "
-                                    + "BEAST install directory"
-                                    + "(named \"VsDevCmd.bat\") so it can "
-                                    + "be found automatically.");
+                    .displayError("The progam was unable to find a "
+                            + "Developer Command Prompt for Visual Studio. \n"
+                            + " Please install it if you have not and search for "
+                            + "the vsCMD.bat in it! \n"
+                            + " Please copy the .bat to the folder /windows/ in your "
+                            + "BEAST install directory"
+                            + "(named \"VsDevCmd.bat\") so it can "
+                            + "be found automatically.");
             return "The program was unable to find a Developer Command Prompt "
-                + "for Visual Studio. Look at the error log";
+                    + "for Visual Studio. Look at the error log";
         }
     }
 }

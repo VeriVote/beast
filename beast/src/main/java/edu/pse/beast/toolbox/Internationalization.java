@@ -1,8 +1,3 @@
-/**
- * Copyright (c) 2016 sothawo
- *
- * http://www.sothawo.com
- */
 package edu.pse.beast.toolbox;
 
 import java.text.MessageFormat;
@@ -26,8 +21,7 @@ import javafx.scene.control.Tooltip;
  *
  * @author P.J. Meisch (pj.meisch@sothawo.com).
  *
- *         taken from:
- *         https://www.sothawo.com/2016/09/
+ *         Taken from: https://www.sothawo.com/2016/09/
  *         how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
  */
 public final class Internationalization {
@@ -40,8 +34,9 @@ public final class Internationalization {
     private Internationalization() { }
 
     static {
-        LOCALE = new SimpleObjectProperty<>(getDefaultLocale());
-        LOCALE.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
+        LOCALE = new SimpleObjectProperty<Locale>(getDefaultLocale());
+        LOCALE.addListener((observable, oldValue, newValue)
+            -> Locale.setDefault(newValue));
     }
 
     /**
@@ -50,7 +45,7 @@ public final class Internationalization {
      * @return List of Locale objects.
      */
     public static List<Locale> getSupportedLocales() {
-        return new ArrayList<>(Arrays.asList(Locale.ENGLISH, Locale.GERMAN));
+        return new ArrayList<Locale>(Arrays.asList(Locale.ENGLISH, Locale.GERMAN));
     }
 
     /**
@@ -61,7 +56,8 @@ public final class Internationalization {
      */
     public static Locale getDefaultLocale() {
         Locale sysDefault = Locale.getDefault();
-        return getSupportedLocales().contains(sysDefault) ? sysDefault : Locale.ENGLISH;
+        return getSupportedLocales().contains(sysDefault)
+                ? sysDefault : Locale.ENGLISH;
     }
 
     /**
@@ -76,7 +72,8 @@ public final class Internationalization {
     /**
      * Sets the locale.
      *
-     * @param locale the new locale
+     * @param locale
+     *            the new locale
      */
     public static void setLocale(final Locale locale) {
         localeProperty().set(locale);
@@ -93,25 +90,30 @@ public final class Internationalization {
     }
 
     /**
-     * Gets the string with the given key from the resource bundle for the current
-     * LOCALE and uses it as first argument to MessageFormat.format, passing in the
-     * optional arguments and returning the result.
+     * Gets the string with the given key from the resource bundle for the
+     * current LOCALE and uses it as first argument to MessageFormat.format,
+     * passing in the optional arguments and returning the result.
      *
-     * @param key  message key
-     * @param args optional arguments for the message
+     * @param key
+     *            message key
+     * @param args
+     *            optional arguments for the message
      * @return localized formatted string
      */
     public static String get(final String key, final Object... args) {
-        ResourceBundle bundle = ResourceBundle.getBundle("messages", getLocale());
+        ResourceBundle bundle =
+                ResourceBundle.getBundle("messages", getLocale());
         return MessageFormat.format(bundle.getString(key), args);
     }
 
     /**
-     * Creates a String binding to a localized String for the given message bundle
-     * key.
+     * Creates a String binding to a localized String for the given message
+     * bundle key.
      *
-     * @param key key
-     * @param args arguments
+     * @param key
+     *            key
+     * @param args
+     *            arguments
      * @return String binding
      */
     public static StringBinding createStringBinding(final String key,
@@ -120,10 +122,11 @@ public final class Internationalization {
     }
 
     /**
-     * Creates a String binding to a localized String that is computed by calling
-     * the given function.
+     * Creates a String binding to a localized String that is computed by
+     * calling the given function.
      *
-     * @param func function called on every change
+     * @param func
+     *            function called on every change
      * @return StringBinding
      */
     public static StringBinding createStringBinding(final Callable<String> func) {
@@ -133,7 +136,8 @@ public final class Internationalization {
     /**
      * Creates a bound Label whose value is computed on language change.
      *
-     * @param func the function to compute the value
+     * @param func
+     *            the function to compute the value
      * @return Label
      */
     public static Label labelForValue(final Callable<String> func) {
@@ -145,8 +149,10 @@ public final class Internationalization {
     /**
      * Creates a bound Button for the given resource bundle key.
      *
-     * @param key  ResourceBundle key
-     * @param args optional arguments for the message
+     * @param key
+     *            ResourceBundle key
+     * @param args
+     *            optional arguments for the message
      * @return Button
      */
     public static Button buttonForKey(final String key, final Object... args) {
@@ -158,11 +164,14 @@ public final class Internationalization {
     /**
      * Creates a bound tool tip for the given resource bundle key.
      *
-     * @param key  ResourceBundle key
-     * @param args optional arguments for the message
+     * @param key
+     *            ResourceBundle key
+     * @param args
+     *            optional arguments for the message
      * @return Label
      */
-    public static Tooltip tooltipForKey(final String key, final Object... args) {
+    public static Tooltip tooltipForKey(final String key,
+                                        final Object... args) {
         Tooltip tooltip = new Tooltip();
         tooltip.textProperty().bind(createStringBinding(key, args));
         return tooltip;

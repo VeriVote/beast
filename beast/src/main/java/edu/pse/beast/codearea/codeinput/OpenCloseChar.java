@@ -20,11 +20,12 @@ public class OpenCloseChar {
     /**
      * Instantiates a new open close char.
      *
-     * @param openChar the open char
-     * @param closeChar the close char
+     * @param openChar
+     *            the open char
+     * @param closeChar
+     *            the close char
      */
-    public OpenCloseChar(final char openChar,
-                         final char closeChar) {
+    public OpenCloseChar(final char openChar, final char closeChar) {
         this.open = openChar;
         this.close = closeChar;
     }
@@ -48,18 +49,22 @@ public class OpenCloseChar {
     }
 
     /**
-     * The open char is inserted into the given pane at the given position. It also
-     * automatically inserts the closing char and centers the caret position between them
-     * asd | becomes asd {|}
+     * The open char is inserted into the given pane at the given position. It
+     * also automatically inserts the closing char and centers the caret
+     * position between them asd | becomes asd {|}
      *
-     * @param pane the JTextPane in which the open and close chars should be
-     *             inserted
-     * @param pos  the position at which the chars should be inserted
-     * @throws BadLocationException if the position is not valid
+     * @param pane
+     *            the JTextPane in which the open and close chars should be
+     *            inserted
+     * @param pos
+     *            the position at which the chars should be inserted
+     * @throws BadLocationException
+     *             if the position is not valid
      */
-    public void insertIntoDocument(final JTextPane pane,
-                                   final int pos) throws BadLocationException {
-        String stringToInsert = Character.toString(open) + Character.toString(close);
+    public void insertIntoDocument(final JTextPane pane, final int pos)
+            throws BadLocationException {
+        String stringToInsert =
+                Character.toString(open) + Character.toString(close);
         pane.getStyledDocument().insertString(pos, stringToInsert, null);
         pane.setCaretPosition(pos + 1);
     }

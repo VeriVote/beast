@@ -21,15 +21,18 @@ import edu.pse.beast.types.OutputType;
  *
  * @author Lukas Stapelbroek
  */
-public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues> {
+public class ChildTreeItemSaverLoader
+        implements SaverLoader<ChildTreeItemValues> {
 
     /** The saver loader. */
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters
         GsonBuilder builder = new GsonBuilder();
-        builder.addDeserializationExclusionStrategy(new SuperclassExclusionStrategy());
-        builder.addSerializationExclusionStrategy(new SuperclassExclusionStrategy());
+        builder.addDeserializationExclusionStrategy(
+                new SuperclassExclusionStrategy());
+        builder.addSerializationExclusionStrategy(
+                new SuperclassExclusionStrategy());
         builder.registerTypeAdapter(Result.class, new ResultAdapter());
         builder.registerTypeAdapter(InOutType.class, new InOutTypeAdapter());
         builder.registerTypeAdapter(InputType.class, new InputTypeAdapter());
@@ -45,6 +48,7 @@ public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues
 
     @Override
     public String createSaveString(final ChildTreeItemValues childTreeItemValues) {
-        return saverLoader.toJson(childTreeItemValues, ChildTreeItemValues.class);
+        return saverLoader.toJson(childTreeItemValues,
+                                  ChildTreeItemValues.class);
     }
 }

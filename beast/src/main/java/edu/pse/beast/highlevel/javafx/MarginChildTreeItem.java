@@ -4,15 +4,20 @@ import javafx.scene.control.TreeItem;
 
 /**
  * The Class MarginChildTreeItem.
+ *
+ * @author Lukas Stapelbroek
  */
 public class MarginChildTreeItem extends ChildTreeItem {
 
     /**
      * The constructor.
      *
-     * @param name the name
-     * @param parent the parent
-     * @param treeItemReference the tree item reference
+     * @param name
+     *            the name
+     * @param parent
+     *            the parent
+     * @param treeItemReference
+     *            the tree item reference
      */
     MarginChildTreeItem(final String name, final ParentTreeItem parent,
                         final TreeItem<CustomTreeItem> treeItemReference) {
@@ -22,9 +27,12 @@ public class MarginChildTreeItem extends ChildTreeItem {
     /**
      * The constructor.
      *
-     * @param values the values
-     * @param parent the parent
-     * @param treeItemReference the tree item reference
+     * @param values
+     *            the values
+     * @param parent
+     *            the parent
+     * @param treeItemReference
+     *            the tree item reference
      */
     public MarginChildTreeItem(final ChildTreeItemValues values,
                                final ParentTreeItem parent,

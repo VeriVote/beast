@@ -16,7 +16,8 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  * @author Lukas Stapelbroek
  *
  */
-public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {
+public class LinuxCompilerAndRunner
+        extends SystemSpecificCompilerAndExecutioner {
 
     /** The Constant COMPILER_STRING. */
     // program that is to be used for checking
@@ -49,16 +50,21 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
     @Override
     protected Process compileCFile(final File toCheck) {
         // the name of the file
-        final String nameOfOutFile = toCheck.getName().replace(C_FILE_ENDING, OUT_FILE_ENDING);
-        final File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
-        final String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
-        final String userIncludeAndPath
-              = ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
+        final String nameOfOutFile =
+                toCheck.getName().replace(C_FILE_ENDING,
+                                          OUT_FILE_ENDING);
+        final File outFile =
+                new File(toCheck.getParentFile(), nameOfOutFile);
+        final String compileToThis =
+                SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
+        final String userIncludeAndPath =
+                ENABLE_USER_INCLUDE
+                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
         // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles
-              = FileLoader.listAllFilesFromFolder(
-                        "\"" + SuperFolderFinder.getSuperFolder()
-                        + USER_INCLUDE_FOLDER + "\"", C_FILE_ENDING);
+        List<String> allFiles = FileLoader.listAllFilesFromFolder(
+                "\"" + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
+                        + "\"",
+                C_FILE_ENDING);
         Process startedProcess = null;
         List<String> arguments = new ArrayList<String>();
         // add the arguments needed for the call
@@ -68,13 +74,16 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
         // add the path to the created file that should be checked
         arguments.add(toCheck.getAbsolutePath());
         // iterate over all "*.c" files from the include folder, to include them
-        for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = allFiles.iterator();
+                iterator.hasNext();) {
             String toBeIncludedFile = iterator.next();
-            arguments.add(toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
+            arguments.add(
+                    toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
         }
         // defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);
-        ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
+        ProcessBuilder prossBuild =
+                new ProcessBuilder(arguments.toArray(new String[0]));
         try { // start the process
             startedProcess = prossBuild.start();
         } catch (IOException e) {
@@ -93,7 +102,8 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
         arguments.add("./" + toRun + OUT_FILE_ENDING);
         // the absolute path to the file that holds
         arguments.add(dataFile.getAbsolutePath());
-        ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
+        ProcessBuilder prossBuild = new ProcessBuilder(
+                arguments.toArray(new String[0]));
         try { // start the process
             startedProcess = prossBuild.start();
         } catch (IOException e) {

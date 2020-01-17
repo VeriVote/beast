@@ -13,6 +13,8 @@ import javafx.stage.FileChooser;
 
 /**
  * The Class PropertyCombiner.
+ *
+ * @author Lukas Stapelbroek
  */
 public class PropertyCombiner extends TabClass {
 
@@ -34,10 +36,14 @@ public class PropertyCombiner extends TabClass {
     /**
      * The constructor.
      *
-     * @param associatedTab the associated tab
-     * @param fileEnd the file end
-     * @param initDir the init dir
-     * @param fileExtensionDescr the file extension descr
+     * @param associatedTab
+     *            the associated tab
+     * @param fileEnd
+     *            the file end
+     * @param initDir
+     *            the init dir
+     * @param fileExtensionDescr
+     *            the file extension descr
      */
     public PropertyCombiner(final Tab associatedTab, final String fileEnd,
                             final String initDir,
@@ -51,12 +57,14 @@ public class PropertyCombiner extends TabClass {
     /**
      * Save.
      *
-     * @param fileName the file name
-     * @param preText the pre text
-     * @param postText the post text
+     * @param fileName
+     *            the file name
+     * @param preText
+     *            the pre text
+     * @param postText
+     *            the post text
      */
-    public void save(final String fileName,
-                     final String preText,
+    public void save(final String fileName, final String preText,
                      final String postText) {
         if (hasSaveFile) {
             if (saveFile != null) {
@@ -70,12 +78,14 @@ public class PropertyCombiner extends TabClass {
     /**
      * Save.
      *
-     * @param toSaveIn the to save in
-     * @param preText the pre text
-     * @param postText the post text
+     * @param toSaveIn
+     *            the to save in
+     * @param preText
+     *            the pre text
+     * @param postText
+     *            the post text
      */
-    public void save(final File toSaveIn,
-                     final String preText,
+    public void save(final File toSaveIn, final String preText,
                      final String postText) {
         PrintWriter out = null;
         try {
@@ -94,17 +104,22 @@ public class PropertyCombiner extends TabClass {
     /**
      * Save as.
      *
-     * @param fileName the file name
-     * @param preText the pre text
-     * @param postText the post text
+     * @param fileName
+     *            the file name
+     * @param preText
+     *            the pre text
+     * @param postText
+     *            the post text
      */
-    public void saveAs(final String fileName,
-                       final String preText,
+    public void saveAs(final String fileName, final String preText,
                        final String postText) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                fileExtensionDescription + " (*" + fileEnding + ")", "*." + fileEnding));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter(
+                        fileExtensionDescription + " (*" + fileEnding + ")",
+                        "*." + fileEnding));
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
 //
 //      fileChooser.selectedExtensionFilterProperty()
 //      fileChooser.setSelectedExtensionFilter(
@@ -112,9 +127,11 @@ public class PropertyCombiner extends TabClass {
 //      fileChooser.setSelectedExtensionFilter(
 //          new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
         // fileChooser.setTitle("Save document");
+
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
+        File selectedFile =
+                fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
         if (selectedFile != null) {
             save(selectedFile, preText, postText);
         }
@@ -123,18 +140,20 @@ public class PropertyCombiner extends TabClass {
     /**
      * Load.
      *
-     * @param preCodeArea the pre code area
-     * @param postCodeArea the post code area
+     * @param preCodeArea
+     *            the pre code area
+     * @param postCodeArea
+     *            the post code area
      */
     public void load(final NewPropertyCodeArea preCodeArea,
                      final NewPropertyCodeArea postCodeArea) {
         FileChooser fileChooser = new FileChooser();
         // fileChooser.setTitle("Load document");
         fileChooser.setInitialDirectory(new File(initialDir));
-        fileChooser.setSelectedExtensionFilter(
-            new FileChooser.ExtensionFilter("Arbitrary RTFX file",
-                                            "*" + fileEnding));
-        File selectedFile = fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
+        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
+                "Arbitrary RTFX file", "*" + fileEnding));
+        File selectedFile =
+                fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
         if (selectedFile != null) {
             load(selectedFile, preCodeArea, postCodeArea);
         }
@@ -143,11 +162,15 @@ public class PropertyCombiner extends TabClass {
     /**
      * Load.
      *
-     * @param toLoadFrom the to load from
-     * @param preCodeArea the pre code area
-     * @param postCodeArea the post code area
+     * @param toLoadFrom
+     *            the to load from
+     * @param preCodeArea
+     *            the pre code area
+     * @param postCodeArea
+     *            the post code area
      */
-    public void load(final File toLoadFrom, final NewPropertyCodeArea preCodeArea,
+    public void load(final File toLoadFrom,
+                     final NewPropertyCodeArea preCodeArea,
                      final NewPropertyCodeArea postCodeArea) {
         try {
             FileInputStream fis = new FileInputStream(toLoadFrom);

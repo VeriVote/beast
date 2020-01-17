@@ -2,6 +2,8 @@ package edu.pse.beast.highlevel.javafx;
 
 /**
  * The Class ResultArea.
+ *
+ * @author Lukas Stapelbroek
  */
 public class ResultArea implements MenuBarInterface {
 

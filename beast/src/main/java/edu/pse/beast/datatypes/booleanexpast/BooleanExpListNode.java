@@ -17,8 +17,8 @@ public class BooleanExpListNode {
      * boolNodesPerElectLevel.get(3) ELECT2 == ELECT5; <-- would be stored in
      * boolNodesPerElectLevel.get(5)
      */
-    private ArrayList<ArrayList<BooleanExpressionNode>>
-        boolNodesPerElectLevel = new ArrayList<>();
+    private ArrayList<ArrayList<BooleanExpressionNode>> boolNodesPerElectLevel =
+            new ArrayList<ArrayList<BooleanExpressionNode>>();
 
     /** The max vote level. */
     private int maxVoteLevel;
@@ -44,7 +44,8 @@ public class BooleanExpListNode {
     /**
      * Sets the max vote level.
      *
-     * @param maxVoteLevelNumber the new max vote level
+     * @param maxVoteLevelNumber
+     *            the new max vote level
      */
     public void setMaxVoteLevel(final int maxVoteLevelNumber) {
         if (maxVoteLevelNumber > this.maxVoteLevel) {
@@ -64,8 +65,10 @@ public class BooleanExpListNode {
     /**
      * Adds the node.
      *
-     * @param node the node
-     * @param highestElectNumber the highest elect number
+     * @param node
+     *            the node
+     * @param highestElectNumber
+     *            the highest elect number
      */
     public void addNode(final BooleanExpressionNode node,
                         final int highestElectNumber) {
@@ -78,7 +81,8 @@ public class BooleanExpListNode {
     @Override
     public String toString() {
         StringBuilder b = new StringBuilder();
-        boolNodesPerElectLevel.forEach(l -> l.forEach(n -> b.append(n.toString())));
+        boolNodesPerElectLevel
+                .forEach(l -> l.forEach(n -> b.append(n.toString())));
         return b.toString();
     }
 
@@ -89,7 +93,8 @@ public class BooleanExpListNode {
      */
     public String getTreeString() {
         StringBuilder b = new StringBuilder();
-        boolNodesPerElectLevel.forEach(l -> l.forEach(n -> b.append(n.getTreeString(0))));
+        boolNodesPerElectLevel
+                .forEach(l -> l.forEach(n -> b.append(n.getTreeString(0))));
         return b.toString();
     }
 }

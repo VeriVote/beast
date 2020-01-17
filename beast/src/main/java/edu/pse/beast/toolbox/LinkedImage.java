@@ -1,7 +1,5 @@
 package edu.pse.beast.toolbox;
 
-//Taken from the Demos from https://github.com/FXMisc/RichTextFX
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,42 +10,51 @@ import javafx.scene.Node;
 
 /**
  * The Interface LinkedImage.
+ *
+ * Taken from the Demos from https://github.com/FXMisc/RichTextFX
+ *
+ * @author Lukas Stapelbroek
  */
 public interface LinkedImage {
 
     /**
      * Codec.
      *
-     * @param <S> the generic type
+     * @param <S>
+     *            the generic type
      * @return the codec
      */
     static <S> Codec<LinkedImage> codec() {
-        System.out.println("Code called! Investigate in LinkedImage, as we don't use paths");
+        System.out.println("Code called! Investigate in LinkedImage,"
+                            + " as we don't use paths");
 
         return new Codec<LinkedImage>() {
             @Override
             public String getName() {
                 return "LinkedImage";
             }
+
             @Override
             public void encode(final DataOutputStream os,
-                               final LinkedImage linkedImage)
-                                       throws IOException {
+                               final LinkedImage linkedImage) throws IOException {
                 if (linkedImage.isReal()) {
                     os.writeBoolean(true);
-                    String externalPath = linkedImage.getImagePath().replace("\\", "/");
+                    String externalPath =
+                            linkedImage.getImagePath().replace("\\", "/");
                     Codec.STRING_CODEC.encode(os, externalPath);
                 } else {
                     os.writeBoolean(false);
                 }
             }
+
             @Override
             public LinkedImage decode(final DataInputStream is)
                     throws IOException {
                 if (is.readBoolean()) {
                     String imagePath = Codec.STRING_CODEC.decode(is);
                     imagePath = imagePath.replace("\\", "/");
-                    // maybe rewrite encoder to encode the image, and not the path
+                    // maybe rewrite encoder to encode the image, and not the
+                    // path
                     throw new AssertionError("Unreachable code");
                     // return new RealLinkedImage(imagePath);
                 } else {

@@ -6,6 +6,15 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class PropertyListStringResProvider extends StringResourceProvider {
+    /** The Constant PROPERTY_LIST_OTHER. */
+    private static final String PROPERTY_LIST_OTHER = "PropertyListOther";
+
+    /** The Constant PROPERTY_LIST_MENU. */
+    private static final String PROPERTY_LIST_MENU = "PropertyListMenu";
+
+    /** The Constant PROPERTY_LIST_TOOLBAR. */
+    private static final String PROPERTY_LIST_TOOLBAR = "PropertyListToolbar";
+
     /** The menu string res. */
     private StringResourceLoader menuStringRes;
 
@@ -18,7 +27,8 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     /**
      * Instantiates a new property list string res provider.
      *
-     * @param languageId the languageId. Set to "de" for german
+     * @param languageId
+     *            the languageId. Set to "de" for german
      */
     public PropertyListStringResProvider(final String languageId) {
         super(languageId);
@@ -56,8 +66,11 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     // filenames. The superclass provides the functions for this process.
     @Override
     protected final void initialize() {
-        toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("PropertyListToolbar");
-        menuStringRes = this.getStringResourceLoaderFromModuleName("PropertyListMenu");
-        otherStringRes = this.getStringResourceLoaderFromModuleName("PropertyListOther");
+        toolbarTipStringRes =
+                this.getStringResourceLoaderFromModuleName(PROPERTY_LIST_TOOLBAR);
+        menuStringRes =
+                this.getStringResourceLoaderFromModuleName(PROPERTY_LIST_MENU);
+        otherStringRes =
+                this.getStringResourceLoaderFromModuleName(PROPERTY_LIST_OTHER);
     }
 }

@@ -26,9 +26,12 @@ public class Project {
     /**
      * The constructor.
      *
-     * @param electionDescr the election descr
-     * @param propertyList the property list
-     * @param inputDataDescr the input data descr
+     * @param electionDescr
+     *            the election descr
+     * @param propertyList
+     *            the property list
+     * @param inputDataDescr
+     *            the input data descr
      */
     public Project(final ElectionDescription electionDescr,
                    final List<ParentTreeItem> propertyList,

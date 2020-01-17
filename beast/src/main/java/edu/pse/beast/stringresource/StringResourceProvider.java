@@ -20,10 +20,11 @@ public abstract class StringResourceProvider {
     private String languageId;
 
     /**
-     * The constructor does not call initialize. If you make a subclass you have to
-     * call it yourself
+     * The constructor does not call initialize. If you make a subclass you have
+     * to call it yourself
      *
-     * @param langId the language. Choose "de" for German
+     * @param langId
+     *            the language. Choose "de" for German
      */
     public StringResourceProvider(final String langId) {
         this.languageId = langId;
@@ -32,7 +33,8 @@ public abstract class StringResourceProvider {
     /**
      * Change language.
      *
-     * @param langId the language. Choose "de" for German
+     * @param langId
+     *            the language. Choose "de" for German
      */
     public void changeLanguage(final String langId) {
         this.languageId = langId;
@@ -47,20 +49,24 @@ public abstract class StringResourceProvider {
     /**
      * Gets the file location string.
      *
-     * @param moduleName the Name of the StringResource you want
+     * @param moduleName
+     *            the Name of the StringResource you want
      * @return the relative fileLocation
      */
     private String getFileLocationString(final String moduleName) {
-        return ("/core/stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
+        return ("/core/stringfiles/" + languageId + "/" + moduleName + "_"
+                + languageId + ".txt");
     }
 
     /**
      * Reports Error to the class file tool-box.
      *
-     * @param file that has the wrongFormat
+     * @param file
+     *            that has the wrongFormat
      */
     private void errorFileHasWrongFormat(final File file) {
-        ErrorLogger.log("The file " + file.getName() + " is not correctly formated");
+        ErrorLogger.log("The file " + file.getName()
+                        + " is not correctly formated");
         ErrorLogger.log("You can find and correct the file in this directory "
                         + file.getAbsolutePath());
     }
@@ -68,21 +74,25 @@ public abstract class StringResourceProvider {
     /**
      * File not found.
      *
-     * @param file the file
+     * @param file
+     *            the file
      */
     private void fileNotFound(final File file) {
         ErrorLogger.log("The file " + file.getName() + " can not be found");
-        ErrorLogger.log("The file should be in this directory " + file.getAbsolutePath());
+        ErrorLogger.log("The file should be in this directory "
+                        + file.getAbsolutePath());
     }
 
     /**
-     * This method is used to initialize the StringResourceLoaders of the subclasses.
+     * This method is used to initialize the StringResourceLoaders of the
+     * subclasses.
      *
-     * @param moduleName the Name of the txt File without the language or the path
+     * @param moduleName
+     *            the Name of the txt File without the language or the path
      * @return returns the StringResourceLoader
      */
     protected final StringResourceLoader
-                        getStringResourceLoaderFromModuleName(final String moduleName) {
+                getStringResourceLoaderFromModuleName(final String moduleName) {
         final String subFolderAndFilename = getFileLocationString(moduleName);
         final String superFolder = SuperFolderFinder.getSuperFolder();
         final String location = superFolder + subFolderAndFilename;

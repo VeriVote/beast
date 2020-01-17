@@ -17,19 +17,19 @@ public final class ErrorForUserDisplayer {
     /**
      * Instantiates a new error for user displayer.
      */
-    private ErrorForUserDisplayer() {
-    }
+    private ErrorForUserDisplayer() { }
 
     /**
-     * displays the message on the users screen. if multiple messages are displayed
-     * the method will only return when all messages are read.
+     * displays the message on the users screen. if multiple messages are
+     * displayed the method will only return when all messages are read.
      *
-     * @param message the message to be displayed
+     * @param message
+     *            the message to be displayed
      */
     public static void displayError(final String message) {
         increment();
-        JOptionPane.showMessageDialog(new JFrame(), message,
-                                      "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(new JFrame(), message, "Error",
+                                      JOptionPane.ERROR_MESSAGE);
         decrement();
         while (true) {
             if (currentlyDisplayedErrors == 0) {

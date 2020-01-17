@@ -2,6 +2,8 @@ package edu.pse.beast.propertychecker;
 
 /**
  * The Enum OperatingSystems.
+ *
+ * @author Lukas Stapelbroek
  */
 public enum OperatingSystems {
     /**
