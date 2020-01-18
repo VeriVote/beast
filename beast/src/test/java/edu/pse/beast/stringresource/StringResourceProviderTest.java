@@ -8,15 +8,16 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 /**
+ * The tests for the StringResourceProvider.
  *
  * @author Niels Hanselmann
  */
 public class StringResourceProviderTest {
-
+    /** The instance. */
     private final StringResourceProviderImpl instance;
 
     /**
-     * initializes the Test
+     * Initializes the Test.
      */
     public StringResourceProviderTest() {
         String test = "test";
@@ -72,12 +73,17 @@ public class StringResourceProviderTest {
         assertEquals(exp.getIdForString("test2"), result.getIdForString("test2"));
     }
 
+    /**
+     * Implementation of the StringResourceProvider type.
+     *
+     * @author Lukas Stapelbroek
+     */
     public final class StringResourceProviderImpl extends StringResourceProvider {
-
+        /** The string resource. */
         private StringResourceLoader stringRes;
 
         /**
-         * Inner public Testclass
+         * Inner public Testclass.
          *
          * @param test does not matter for the test
          */
@@ -91,7 +97,7 @@ public class StringResourceProviderTest {
         }
 
         /**
-         * returns the stringRes for the languageChangeTest
+         * Returns the stringRes for the languageChangeTest.
          *
          * @return the stringRes
          */

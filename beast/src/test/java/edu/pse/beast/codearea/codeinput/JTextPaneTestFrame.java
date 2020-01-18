@@ -3,6 +3,7 @@ package edu.pse.beast.codearea.codeinput;
 import javax.swing.JScrollPane;
 
 /**
+ * The tests for JTextPane frames.
  *
  * @author Holger Klein
  */
@@ -11,12 +12,14 @@ public final class JTextPaneTestFrame extends javax.swing.JFrame {
     private static final long serialVersionUID = 1L;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    /** A scroll pane instance. */
     private javax.swing.JScrollPane jScrollPane1;
+    /** A text pane instance. */
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Creates new form JTextPaneTestFrame
+     * Creates new form JTextPaneTestFrame.
      */
     public JTextPaneTestFrame() {
         initComponents();

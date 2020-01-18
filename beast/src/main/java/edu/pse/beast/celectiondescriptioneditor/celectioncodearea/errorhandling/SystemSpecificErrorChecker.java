@@ -88,10 +88,12 @@ public abstract class SystemSpecificErrorChecker {
      * directory.
      *
      * @param directory
-     *            The directory to list
+     *            The directory to list.
      * @return The files in the directory, never null.
+     * @throws IllegalArgumentException
+     *             if the directory does not exist or is no directory.
      * @throws IOException
-     *             if an I/O error occurs
+     *             if an I/O error occurs.
      */
     private static File[] verifiedListFiles(final File directory)
             throws IOException {

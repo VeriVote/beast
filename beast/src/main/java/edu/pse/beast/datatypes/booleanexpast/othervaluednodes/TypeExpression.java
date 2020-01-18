@@ -40,8 +40,8 @@ public abstract class TypeExpression extends BooleanExpressionNode {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * This {@code equals} implementation for {@link TypeExpression}
+     *
+     * <p>This {@code equals} implementation for {@link TypeExpression}
      * only relies on other fields or methods that are not visible to
      * subclasses. Hence, subclasses cannot break its behavior.
      */
@@ -60,7 +60,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
     /**
      * {@inheritDoc}
      *
-     * Use this implementation by calling "super()" in inheriting
+     * <p>Use this implementation by calling "super()" in inheriting
      * implementations of this method.
      */
     @Override

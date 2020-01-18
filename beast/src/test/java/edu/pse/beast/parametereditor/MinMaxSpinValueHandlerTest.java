@@ -9,6 +9,7 @@ import javax.swing.JSpinner;
 import org.junit.Test;
 
 /**
+ * The tests for MinMaxSpinValueHandler.
  *
  * @author Jonas Wohnig
  */

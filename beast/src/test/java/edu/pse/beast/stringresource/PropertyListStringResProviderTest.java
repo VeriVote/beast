@@ -5,15 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * The tests for PropertyListStringResProvider.
  *
  * @author Niels Hanselmann
  */
 public class PropertyListStringResProviderTest {
-
+    /** The instance. */
     private final PropertyListStringResProvider instance;
 
     /**
-     * sets up the testclass
+     * Sets up the testclass.
      */
     public PropertyListStringResProviderTest() {
         this.instance = new PropertyListStringResProvider("test");

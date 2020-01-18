@@ -205,6 +205,9 @@ public final class CBMCResultValueWrapper extends ResultValueWrapper {
 
     /**
      * Throw error.
+     *
+     * @throws IndexOutOfBoundsException
+     *            always
      */
     private static void throwError() {
         throw new IndexOutOfBoundsException("The dimension of the object does"

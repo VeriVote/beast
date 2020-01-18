@@ -16,13 +16,14 @@ import javax.imageio.ImageIO;
 import org.junit.Test;
 
 /**
+ * The tests for FileLoader.
  *
  * @author Niels Hanselmann
  */
 public class FileLoaderTest {
 
     /**
-     * file LoaderTest
+     * File LoaderTest.
      */
     public FileLoaderTest() { }
 

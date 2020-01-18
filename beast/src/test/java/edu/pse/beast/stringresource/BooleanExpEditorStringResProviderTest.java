@@ -5,15 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * The tests for BooleanExpEditorStringResProvider.
  *
  * @author Niels Hanselmann
  */
 public class BooleanExpEditorStringResProviderTest {
-
+    /** The instance. */
     private final BooleanExpEditorStringResProvider instance;
 
     /**
-     * sets up the testclass
+     * Sets up the testclass.
      */
     public BooleanExpEditorStringResProviderTest() {
         instance = new BooleanExpEditorStringResProvider("test");

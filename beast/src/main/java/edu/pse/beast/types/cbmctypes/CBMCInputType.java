@@ -49,8 +49,8 @@ public abstract class CBMCInputType extends InputType {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * FIXME: Investigate why {@link SingleChoiceStack#flipVote(..)}
+     *
+     * <p>FIXME: Investigate why {@link SingleChoiceStack#flipVote(..)}
      * makes a re-implementation and whether this is really necessary.
      */
     @Override

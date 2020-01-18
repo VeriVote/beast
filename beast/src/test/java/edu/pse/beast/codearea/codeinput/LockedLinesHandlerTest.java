@@ -17,12 +17,16 @@ import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import edu.pse.beast.codearea.actionlist.ActionList;
 
 /**
+ * The tests for LockedLinesHandler.
  *
  * @author Holger Klein
  */
 public class LockedLinesHandlerTest {
+    /** The instance. */
     private LockedLinesHandler lockedLinesHandler;
+    /** A text pane. */
     private JTextPane pane;
+    /** A SaveTextBeforeRemove instance. */
     private SaveTextBeforeRemove beforeRemove;
 
     public LockedLinesHandlerTest() {

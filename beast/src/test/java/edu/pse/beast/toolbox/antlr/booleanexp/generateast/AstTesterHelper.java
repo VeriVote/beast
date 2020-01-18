@@ -9,6 +9,8 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 
 /**
+ * Utility methods for the AST tests.
+ *
  * @author Holger Klein
  */
 public final class AstTesterHelper {

@@ -16,6 +16,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.TimeOutSaverLoader;
  * @author Nikolai Schnell
  */
 public class TimeOutSaverLoaderTest {
+    /** The time out instance. */
     private static TimeOut timeOut;
 
     @BeforeClass

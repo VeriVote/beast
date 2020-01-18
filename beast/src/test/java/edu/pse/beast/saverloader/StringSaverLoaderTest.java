@@ -13,6 +13,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.StringSaverLoader;
  * @author Nikolai Schnell
  */
 public class StringSaverLoaderTest {
+    /** A test string instance. */
     private static String testString;
 
     @BeforeClass

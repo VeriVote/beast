@@ -114,6 +114,8 @@ public final class CBMCResultValueSingle implements CBMCResultValue {
      *
      * @param indices
      *            the indices
+     * @throws IndexOutOfBoundsException
+     *            if the index list is not empty.
      */
     private void checkIndex(final List<Integer> indices) {
         if (indices.size() != 0) {

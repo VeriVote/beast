@@ -7,9 +7,12 @@ import java.util.Map;
 import org.junit.Test;
 
 /**
+ * The tests for SaverLoaderHelper.
+ *
  * @author Holger Klein
  */
 public class SaverLoaderHelperTest {
+    /** The instance. */
     private SaverLoaderHelper h = new SaverLoaderHelper();
 
     @Test

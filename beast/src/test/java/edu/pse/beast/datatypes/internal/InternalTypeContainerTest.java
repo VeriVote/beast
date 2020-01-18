@@ -8,6 +8,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
 /**
+ * The tests for InternalTypeContainer.
  *
  * @author Niels Hanselmann
  */

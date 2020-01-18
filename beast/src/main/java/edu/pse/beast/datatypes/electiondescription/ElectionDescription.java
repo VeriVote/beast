@@ -336,7 +336,7 @@ public class ElectionDescription {
      *
      * @param toProcess
      *            the String from which the return statements should be
-     *            replaced. The String can not be preceded by a comment symbol
+     *            replaced. The String cannot be preceded by a comment symbol
      *            which would still be active for this part. It also cannot
      *            start being a text (meaning it has a single (") in front of
      *            it.

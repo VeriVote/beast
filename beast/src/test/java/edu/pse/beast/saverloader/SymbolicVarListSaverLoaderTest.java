@@ -17,6 +17,7 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Nikolai Schnell
  */
 public class SymbolicVarListSaverLoaderTest {
+    /** The symbolic variable list instance. */
     private static SymbolicVariableList symbolicVariableList;
 
     @BeforeClass

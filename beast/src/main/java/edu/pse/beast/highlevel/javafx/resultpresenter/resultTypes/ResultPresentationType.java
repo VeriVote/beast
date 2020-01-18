@@ -127,7 +127,7 @@ public abstract class ResultPresentationType {
      * size of each vote.
      *
      * @param toExtract
-     *            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
+     *            has be of the form: ValueWrapper -> {@link ResultValueSingle}
      * @return the all sizes
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {

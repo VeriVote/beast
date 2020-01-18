@@ -7,6 +7,11 @@ import java.util.List;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.DeepErrorChecker;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 
+/**
+ * Tests for CompilerClass.
+ *
+ * @author Lukas Stapelbroek
+ */
 public final class CompilerTestClass {
     private CompilerTestClass() {
         ArrayList<String> list = new ArrayList<String>();

@@ -9,15 +9,16 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
 /**
+ * The tests for SymbolicVariable.
  *
  * @author Niels Hanselmann
  */
 public class SymbolicVariableTest {
-
+    /** The instance. */
     private final SymbolicVariable instance;
 
     /**
-     * sets up the test
+     * Sets up the test.
      */
     public SymbolicVariableTest() {
         InternalTypeContainer cont = new InternalTypeContainer(InternalTypeRep.INTEGER);

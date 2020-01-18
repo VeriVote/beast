@@ -5,15 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * The tests for the ParameterEditorStringResProvider.
  *
  * @author Niels Hanselmann
  */
 public class ParameterEditorStringResProviderTest {
-
+    /** The instance. */
     private final ParameterEditorStringResProvider instance;
 
     /**
-     * initializes the testclass
+     * Initializes the testclass.
      */
     public ParameterEditorStringResProviderTest() {
         this.instance = new ParameterEditorStringResProvider("test");

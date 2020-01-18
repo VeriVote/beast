@@ -1,6 +1,8 @@
 package edu.pse.beast.toolbox.antlr.booleanexp.generateast;
 
 /**
+ * The tests for UserASTs.
+ *
  * @author Holger Klein
  */
 public class UserAstTestHelper {

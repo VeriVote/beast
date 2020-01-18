@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ * The tests for JTextPaneToolBox.
  *
  * @author Holger Klein
  */

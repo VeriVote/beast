@@ -1,6 +1,7 @@
 package edu.pse.beast.toolbox;
 
 /**
+ * The tests for ErrorForUserDisplayer.
  *
  * @author Niels Hanselmann
  */
@@ -8,7 +9,7 @@ public final class ErrorForUserDisplayerTest {
     private ErrorForUserDisplayerTest() { }
 
     /**
-     * a small main class Test for the ErrorForUserDisplayer
+     * A small main class Test for the ErrorForUserDisplayer.
      *
      * @param args arguments
      */

@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
+ * The tests for CElectionDescriptionEditorBuilder.
  *
  * @author Holger Klein
  */

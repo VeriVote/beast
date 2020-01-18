@@ -61,10 +61,10 @@ public class ErrorWindow {
      * Method to display ArrayList of Errors in the ErrorWindow.
      *
      * @param preConditionErrors
-     *            An ArrayList<CodeError> instance with all the CodeErrors from
+     *            An {@link ArrayList} instance with all the CodeErrors from
      *            the preCondition text pane
      * @param postConditionErrors
-     *            An ArrayList<CodeError> instance with all the CodeErrors from
+     *            An {@link ArrayList} instance with all the CodeErrors from
      *            the postCondition text pane
      * @param booleanExpErrorDisplayer
      *            the ErrorDisplayer that creates the messages given CodeError

@@ -153,7 +153,7 @@ public final class WindowsProcess extends CBMCProcess {
                         + RELATIVE_PATH_TO_CBMC_64).getPath();
             } else {
                 ErrorForUserDisplayer.displayError(
-                        "CBMC only runs on 64 bit systems. Therefore, BEAST can not be used"
+                        "CBMC only runs on 64 bit systems. Therefore, BEAST cannot be used"
                                 + " with CBMC on 32 bit systems");
             }
 

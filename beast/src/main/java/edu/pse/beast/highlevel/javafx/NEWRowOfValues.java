@@ -193,6 +193,8 @@ public class NEWRowOfValues {
      * Gets the values.
      *
      * @return the values of this row, from 0 up to
+     * @throws IllegalArgumentException
+     *            if the row size is zero.
      */
     public List<String> getValues() {
         if (rowSize == 0) {

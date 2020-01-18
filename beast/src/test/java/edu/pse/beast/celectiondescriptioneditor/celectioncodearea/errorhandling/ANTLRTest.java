@@ -12,6 +12,8 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 
 /**
+ * The tests for ANTLR.
+ *
  * @author Nikolai Schnell
  */
 public final class ANTLRTest {

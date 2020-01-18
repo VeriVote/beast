@@ -14,6 +14,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.FormalPropertySaverLoader;
  * @author Nikolai Schnell
  */
 public class FormalPropertySaverLoaderTest {
+    /** The description instance. */
     private static FormalPropertiesDescription description;
 
     @BeforeClass

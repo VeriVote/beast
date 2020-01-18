@@ -20,9 +20,7 @@ import javafx.scene.text.TextAlignment;
 /**
  * Holds information about the style of a paragraph.
  *
- * Taken from a demo from https://github.com/FXMisc/RichTextFX.
- *
- * @author Lukas Stapelbroek
+ * @author Taken from a demo from https://github.com/FXMisc/RichTextFX.
  */
 public final class ParStyle {
     /** The Constant EMPTY. */

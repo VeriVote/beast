@@ -17,7 +17,9 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Nikolai Schnell
  */
 public class PreAndPostConditionsDescriptionSaverLoaderTest {
+    /** The instance. */
     private static PropertyDescriptionSaverLoader preAndPostConditionsDescriptionSaverLoader;
+    /** A description instance. */
     private static PreAndPostConditionsDescription description;
 
     @BeforeClass

@@ -7,6 +7,7 @@ import javax.swing.JSpinner;
 import org.junit.Test;
 
 /**
+ * The tests for SingleValueSpinnerHandler.
  *
  * @author Jonas Wohnig
  */

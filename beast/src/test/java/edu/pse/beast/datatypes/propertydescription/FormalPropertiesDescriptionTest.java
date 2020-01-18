@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * The tests for FormalPropertiesDescription.
  *
  * @author Niels Hanselmann
  */

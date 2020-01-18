@@ -13,6 +13,7 @@ import org.junit.Test;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 /**
+ * The tests for TimeoutValueHandler.
  *
  * @author Jonas Wohnig
  */

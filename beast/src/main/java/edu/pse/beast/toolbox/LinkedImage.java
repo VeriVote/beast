@@ -11,9 +11,7 @@ import javafx.scene.Node;
 /**
  * The Interface LinkedImage.
  *
- * Taken from the Demos from https://github.com/FXMisc/RichTextFX
- *
- * @author Lukas Stapelbroek
+ * @author Taken from the Demos from https://github.com/FXMisc/RichTextFX
  */
 public interface LinkedImage {
 

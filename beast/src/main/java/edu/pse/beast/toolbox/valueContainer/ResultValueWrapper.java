@@ -44,6 +44,8 @@ public abstract class ResultValueWrapper {
      *
      * @return returns the main index (for example votes1 has the mainIndex of
      *         1)
+     * @throws IllegalArgumentException
+     *            if we are not at top level.
      */
     public int getMainIndex() {
         if (!isTopLevel) {
@@ -57,6 +59,8 @@ public abstract class ResultValueWrapper {
      * Gets the name.
      *
      * @return the name of the var (for example votes1 has the name votes)
+     * @throws IllegalArgumentException
+     *            if we are not at top level.
      */
     public String getName() {
         if (!isTopLevel) {

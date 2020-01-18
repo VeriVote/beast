@@ -14,6 +14,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 
 /**
+ * The tests for ANTLR.
+ *
  * @author Nikolai Schnell
  */
 public final class ANTLRTest {

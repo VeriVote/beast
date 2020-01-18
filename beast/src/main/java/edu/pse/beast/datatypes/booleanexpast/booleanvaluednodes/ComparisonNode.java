@@ -58,8 +58,8 @@ public class ComparisonNode extends BooleanExpressionNode {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * Generates the code for the comparison of 2 types which are not integers.
+     *
+     * <p>Generates the code for the comparison of 2 types which are not integers.
      * These types can be lists which may have different depth and might be
      * accessed by variables.
      */

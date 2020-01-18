@@ -17,7 +17,7 @@ import javafx.scene.text.Font;
 /**
  * Holds information about the style of a text fragment.
  *
- * Taken with changes from https://github.com/FXMisc/RichTextFX/blob/
+ * <p>Taken with changes from https://github.com/FXMisc/RichTextFX/blob/
  * 5d64bd7ef211292ec096b5b152aa79ee934e4678/richtextfx-demos/src/main/java/org/
  * fxmisc/richtext/demo/hyperlink/TextStyle.java
  *

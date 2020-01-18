@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 /**
+ * The tests for the StringLoaderInterface.
  *
  * @author Niels Hanselmann
  */
@@ -14,7 +15,7 @@ public class StringLoaderInterfaceTest {
     private final StringLoaderInterface instance;
 
     /**
-     * Test setup
+     * Test setup.
      */
     public StringLoaderInterfaceTest() {
         this.instance = new StringLoaderInterface("test");

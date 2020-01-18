@@ -10,6 +10,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
 /**
+ * The tests for PreAndPostConditionsDescription.
  *
  * @author Niels Hanselmann
  */

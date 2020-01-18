@@ -5,15 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * The tests for OptionStringResProvider.
  *
  * @author Niels Hanselmann
  */
 public class OptionStringResProviderTest {
-
+    /** The instance. */
     private OptionStringResProvider instance;
 
     /**
-     * sets up the test
+     * Sets up the test.
      */
     public OptionStringResProviderTest() {
         instance = new OptionStringResProvider("test");

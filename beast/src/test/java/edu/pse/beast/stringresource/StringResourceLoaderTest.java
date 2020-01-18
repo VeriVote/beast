@@ -7,16 +7,18 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 /**
+ * The tests for StringResourceLoader.
  *
  * @author Niels Hanselmann
  */
 public class StringResourceLoaderTest {
-
+    /** The list. */
     private final LinkedList<String> list;
+    /** The instance. */
     private final StringResourceLoader instance;
 
     /**
-     * sets up a StringResourceLoader with 2 LinkedList
+     * Sets up a StringResourceLoader with 2 LinkedList.
      */
     public StringResourceLoaderTest() {
         list = new LinkedList<>();

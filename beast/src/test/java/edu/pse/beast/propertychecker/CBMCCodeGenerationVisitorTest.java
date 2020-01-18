@@ -1,6 +1,8 @@
 package edu.pse.beast.propertychecker;
 
 /**
+ * The tests for CBMCCodeGenerationVisitor.
+ *
  * @author Holger Klein
  */
 public class CBMCCodeGenerationVisitorTest {

@@ -35,7 +35,7 @@ import javax.swing.text.Utilities;
  * supports wrapped lines and will highlight the line number of the current line
  * in the text component.
  *
- * This class was designed to be used as a component added to the row header of
+ * <p>This class was designed to be used as a component added to the row header of
  * a JScrollPane.
  *
  * @author https://tips4java.wordpress.com/2009/05/23/text-component-line-number/

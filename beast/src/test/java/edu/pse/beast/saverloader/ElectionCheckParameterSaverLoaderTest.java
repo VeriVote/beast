@@ -27,7 +27,7 @@ public class ElectionCheckParameterSaverLoaderTest {
 
     /** The Constant THREE_HOURS_IN_MILISECONDS. */
     private static final int THREE_HOURS_IN_MILISECONDS = 10800000;
-
+    /** The instance. */
     private static ElectionCheckParameter electionCheckParameter;
 
     @BeforeClass

@@ -78,7 +78,7 @@ public abstract class StringResourceProvider {
      *            the file
      */
     private void fileNotFound(final File file) {
-        ErrorLogger.log("The file " + file.getName() + " can not be found");
+        ErrorLogger.log("The file " + file.getName() + " cannot be found");
         ErrorLogger.log("The file should be in this directory "
                         + file.getAbsolutePath());
     }

@@ -14,6 +14,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
 /**
+ * The tests for FormalPropertySyntaxTreeToAstTranslator.
  *
  * @author Holger Klein
  */

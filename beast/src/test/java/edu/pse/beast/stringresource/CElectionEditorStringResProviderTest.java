@@ -5,15 +5,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * The tests for CElectionEditorStringResProvider.
  *
  * @author Niels Hanselmann
  */
 public class CElectionEditorStringResProviderTest {
-
+    /** The instance. */
     private final CElectionEditorStringResProvider instance;
 
     /**
-     * sets up the testclass
+     * Sets up the testclass.
      */
     public CElectionEditorStringResProviderTest() {
         instance = new CElectionEditorStringResProvider("test");

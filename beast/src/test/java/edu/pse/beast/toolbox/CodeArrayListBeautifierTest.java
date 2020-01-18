@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 /**
+ * The tests for CodeArrayListBeautifier.
  *
  * @author Niels Hanselmann
  */

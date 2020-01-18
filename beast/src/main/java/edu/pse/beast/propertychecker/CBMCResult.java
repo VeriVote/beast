@@ -232,16 +232,18 @@ public final class CBMCResult extends Result {
      * @param identifier
      *            the identifier
      * @return true, if successful
+     * @throws IndexOutOfBoundsException
+     *            if multiple result tags are detected.
      */
     private boolean checkAssertion(final String identifier) {
         if (isInitialized()) {
             NodeList resultElements =
                     rootElement.getElementsByTagName(RESULT_TAG);
             if (resultElements.getLength() == 0) {
-                return false; // no result tag found, so it can not hold
+                return false; // no result tag found, so it cannot hold
             } else if (resultElements.getLength() > 1) {
                 throw new IndexOutOfBoundsException(
-                        "Multiple Result Tags detected, this can not happen"
+                        "Multiple Result Tags detected, this cannot happen"
                         );
             } else {
                 return resultElements.item(0).getTextContent().equals(identifier);
