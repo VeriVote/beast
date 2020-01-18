@@ -6,11 +6,11 @@ import javax.swing.JFrame;
  *
  * @author Holger Klein
  */
-public class WindowStarter implements Runnable {
+public final class WindowStarter implements Runnable {
     private JFrame frame;
 
-    public WindowStarter(JFrame frame) {
-        this.frame = frame;
+    public WindowStarter(final JFrame jFrame) {
+        this.frame = jFrame;
     }
 
     public void show() {

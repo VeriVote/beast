@@ -9,8 +9,7 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
  *
  * @author Holger Klein
  */
-public class IntegerComparisonNode extends ComparisonNode {
-
+public final class IntegerComparisonNode extends ComparisonNode {
     /**
      * Instantiates a new integer comparison node.
      *
@@ -31,18 +30,5 @@ public class IntegerComparisonNode extends ComparisonNode {
     @Override
     public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitIntegerComparisonNode(this);
-    }
-
-    @Override
-    public String getTreeString(final int depth) {
-        StringBuilder b = new StringBuilder();
-        String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
-        b.append(tabs + "IntegerComparisonNode: Symbol "
-                + getComparisonSymbol().getCStringRep() + "\n");
-        b.append(tabs + "\t" + "lhs: "
-                + getLhsTypeExp().getTreeString(depth + 1));
-        b.append(tabs + "\t" + "rhs: "
-                + getRhsTypeExp().getTreeString(depth + 1));
-        return b.toString();
     }
 }

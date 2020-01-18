@@ -56,7 +56,7 @@ import edu.pse.beast.types.cbmctypes.outputplugins.CandidateList;
  *
  * @author Niels Hanselmann
  */
-public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
+public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * This String must always be "assume" or "assert". If it is not set it is
      * null.

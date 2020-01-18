@@ -16,7 +16,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  *
  * @author Holger Klein
  */
-public class CErrorDisplayer extends ErrorDisplayer {
+public final class CErrorDisplayer extends ErrorDisplayer {
     /**
      * Constructor.
      *

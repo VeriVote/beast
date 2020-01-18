@@ -11,7 +11,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
  *
  * @author Lukas Stapelbroek
  */
-public class VotingListChangeExpNode extends BooleanExpressionNode {
+public final class VotingListChangeExpNode extends BooleanExpressionNode {
 
     /** The vote. */
     private final TerminalNode vote;

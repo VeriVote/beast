@@ -22,8 +22,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author Lukas Stapelbroek
  */
-public class ElectionSimulation implements MenuBarInterface {
-
+public final class ElectionSimulation implements MenuBarInterface {
     /** The Constant CSV_SEPARATOR. */
     private static final String CSV_SEPARATOR = ",";
 

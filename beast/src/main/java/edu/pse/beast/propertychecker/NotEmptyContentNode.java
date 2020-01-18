@@ -9,7 +9,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.No
  *
  * @author Lukas Stapelbroek
  */
-public class NotEmptyContentNode extends BooleanExpressionNode {
+public final class NotEmptyContentNode extends BooleanExpressionNode {
 
     /** The context. */
     private final NotEmptyContentContext context;

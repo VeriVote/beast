@@ -9,7 +9,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Co
  *
  * @author Lukas Stapelbroek
  */
-public class ConcatenationExpNode extends BooleanExpressionNode {
+public final class ConcatenationExpNode extends BooleanExpressionNode {
 
     /** The concatenation exp context. */
     private final ConcatenationExpContext concatenationExpContext;

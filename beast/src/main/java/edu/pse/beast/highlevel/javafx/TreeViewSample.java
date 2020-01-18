@@ -26,7 +26,7 @@ import javafx.util.Callback;
  *
  * @author Lukas Stapelbroek
  */
-public class TreeViewSample extends Application {
+public final class TreeViewSample extends Application {
     /** The Constant ROOT. */
     private static final String ROOT = "root.png";
 

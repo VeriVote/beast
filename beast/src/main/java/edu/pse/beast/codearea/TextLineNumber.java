@@ -40,7 +40,7 @@ import javax.swing.text.Utilities;
  *
  * @author https://tips4java.wordpress.com/2009/05/23/text-component-line-number/
  */
-public class TextLineNumber extends JPanel
+public final class TextLineNumber extends JPanel
         implements CaretListener, DocumentListener, PropertyChangeListener {
 
     /** The Constant LEFT. */

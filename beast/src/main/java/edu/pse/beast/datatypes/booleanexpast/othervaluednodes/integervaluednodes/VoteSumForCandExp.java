@@ -8,8 +8,7 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
  *
  * @author Lukas Stapelbroek
  */
-public class VoteSumForCandExp extends IntegerValuedExpression {
-
+public final class VoteSumForCandExp extends IntegerValuedExpression {
     /** The accessing var. */
     private final TypeExpression accessingVar;
 
@@ -53,8 +52,8 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "Votesum" + (unique ? "Unique" : "") + " " + voteArrNum + "\n"
-                + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "var "
+        return "Votesum" + (unique ? "Unique" : "") + " " + voteArrNum + LINE_BREAK
+                + TABS.substring(0, depth + 1) + "var "
                 + accessingVar.getTreeString(depth + 1);
     }
 
@@ -102,10 +101,10 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public int hashCode() {
-        int result = PRIME_ONE
+        int result = PRIME
                 + (accessingVar != null ? accessingVar.hashCode() : 0);
-        result = PRIME_ONE * result + (unique ? PRIME_TWO : PRIME_THREE);
-        result = PRIME_ONE * result + voteArrNum;
+        result = PRIME * result + (unique ? PRIME_TWO : PRIME_THREE);
+        result = PRIME * result + voteArrNum;
         return result;
     }
 }

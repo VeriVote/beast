@@ -6,7 +6,7 @@ import javax.swing.JScrollPane;
  *
  * @author Holger Klein
  */
-public class JTextPaneTestFrame extends javax.swing.JFrame {
+public final class JTextPaneTestFrame extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 

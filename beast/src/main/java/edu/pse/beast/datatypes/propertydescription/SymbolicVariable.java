@@ -8,7 +8,7 @@ import edu.pse.beast.types.InternalTypeContainer;
  *
  * @author Niels Hanselmann
  */
-public class SymbolicVariable {
+public final class SymbolicVariable {
     /** The Constant PRIME. */
     private static final int PRIME = 31;
 

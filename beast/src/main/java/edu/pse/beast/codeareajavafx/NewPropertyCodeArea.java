@@ -28,7 +28,7 @@ import javafx.scene.control.IndexRange;
  *
  * @author Lukas Stapelbroek
  */
-public class NewPropertyCodeArea extends AutoCompletionCodeArea
+public final class NewPropertyCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
 
     /** The Constant OPERATORS. */

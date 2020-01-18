@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Holger Klein
  */
-public class SortedIntegerList {
+public final class SortedIntegerList {
     /**
      * This list contains all the stored integers.
      */

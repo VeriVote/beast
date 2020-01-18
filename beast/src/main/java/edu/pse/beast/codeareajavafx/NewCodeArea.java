@@ -49,7 +49,7 @@ import javafx.scene.input.KeyEvent;
  *
  * @author Lukas Stapelbroek
  */
-public class NewCodeArea extends AutoCompletionCodeArea
+public final class NewCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
 
     /** The Constant TAB_SPACES. */
@@ -277,7 +277,7 @@ public class NewCodeArea extends AutoCompletionCodeArea
         recommendations.addAll(Arrays.asList(PREPROCESSOR));
         recommendations.addAll(Arrays.asList(DATATYPES));
         saverLoader = new SaverLoader(".elec", "BEAST election description",
-                this);
+                                      this);
         ElectionDescription startElecDescription =
                 new ElectionDescription("New description", new SingleChoice(),
                                         new SingleCandidate(), 0, 0, 0, true);
@@ -289,7 +289,7 @@ public class NewCodeArea extends AutoCompletionCodeArea
         String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
-        IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
+        final IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
         this.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             consume(event);
@@ -685,7 +685,7 @@ public class NewCodeArea extends AutoCompletionCodeArea
     private void openJson(final String json, final boolean bringToFront) {
         ElectionDescription newDescription = null;
         try {
-            newDescription = json.equals("") ? null
+            newDescription = "".equals(json) ? null
                     : electionSaverLoader.createFromSaveString(json);
         } catch (JsonSyntaxException e) {
             System.err.println(e.getMessage());

@@ -9,8 +9,7 @@ import edu.pse.beast.options.OptionElement;
  *
  * @author Lukas Stapelbroek
  */
-public class DeleteCFilesElement extends OptionElement {
-
+public final class DeleteCFilesElement extends OptionElement {
     /**
      * Instantiates a new delete C files element.
      *

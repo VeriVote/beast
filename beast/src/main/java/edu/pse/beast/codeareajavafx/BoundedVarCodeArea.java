@@ -18,7 +18,7 @@ import javafx.scene.Node;
  *
  * @author Lukas Stapelbroek
  */
-public class BoundedVarCodeArea extends AutoCompletionCodeArea
+public final class BoundedVarCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
 
     /** The Constant RESOURCE. */

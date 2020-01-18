@@ -23,7 +23,7 @@ import javafx.scene.text.Font;
  *
  * @author Lukas Stapelbroek
  */
-public class TextStyle {
+public final class TextStyle {
     /** The Constant DEFAULT. */
     public static final TextStyle DEFAULT = new TextStyle();
 

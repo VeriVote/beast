@@ -12,7 +12,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
  *
  * @author Lukas Stapelbroek
  */
-public class PropertyDescriptionSaverLoader
+public final class PropertyDescriptionSaverLoader
         implements SaverLoader<PreAndPostConditionsDescription> {
 
     /** The saver loader. */

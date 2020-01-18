@@ -58,7 +58,8 @@
 ////    elected.add(3l);
 ////    elected.add(2l);*/
 ////
-////    ArrayList<CBMCResultWrapperMultiArray> votes = new ArrayList<CBMCResultWrapperMultiArray>();
+////    ArrayList<CBMCResultWrapperMultiArray> votes =
+////        new ArrayList<CBMCResultWrapperMultiArray>();
 ////
 ////
 ////    votes.add(new CBMCResultWrapperMultiArray(0, "wildelection"));
@@ -123,7 +124,8 @@
 ////    votes.get(1).addTo(4, 3, 1l);
 ////    votes.get(1).addTo(4, 4, 1l);
 ////
-////    ArrayList<CBMCResultWrapperSingleArray> seats = new ArrayList<CBMCResultWrapperSingleArray>();
+////    ArrayList<CBMCResultWrapperSingleArray> seats =
+////        new ArrayList<CBMCResultWrapperSingleArray>();
 ////
 ////    seats.add(new CBMCResultWrapperSingleArray(0, "wildseats"));
 ////    seats.get(0).addTo(0, 0l);

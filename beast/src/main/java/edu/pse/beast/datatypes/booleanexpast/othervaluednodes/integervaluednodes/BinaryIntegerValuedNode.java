@@ -7,10 +7,7 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  *
  * @author Holger Klein
  */
-public class BinaryIntegerValuedNode extends IntegerValuedExpression {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
-
+public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
     /** The lhs. */
     private final IntegerValuedExpression lhs;
 
@@ -46,10 +43,10 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
     @Override
     public String getTreeString(final int depth) {
         StringBuilder b = new StringBuilder();
-        String tabs = "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
-        b.append("BinaryIntNode: Symbol " + relationSymbol + "\n");
-        b.append(tabs + "lhs: " + getLhs().getTreeString(depth + 1));
-        b.append(tabs + "rhs: " + getRhs().getTreeString(depth + 1));
+        String tabs = TABS.substring(0, depth + 1);
+        b.append("BinaryIntNode: Symbol " + relationSymbol + LINE_BREAK);
+        b.append(tabs + LHS + getLhs().getTreeString(depth + 1));
+        b.append(tabs + RHS + getRhs().getTreeString(depth + 1));
         return b.toString();
     }
 

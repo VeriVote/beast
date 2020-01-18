@@ -19,7 +19,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCProcessFactory extends CheckerFactory {
+public final class CBMCProcessFactory extends CheckerFactory {
     // TODO clean up this file
 
     /** The Constant DOT_C. */

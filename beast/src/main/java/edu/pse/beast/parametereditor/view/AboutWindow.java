@@ -9,7 +9,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  *
  * @author Jonas Wohnig
  */
-public class AboutWindow extends javax.swing.JFrame
+public final class AboutWindow extends javax.swing.JFrame
         implements DisplaysStringsToUser {
     /** The Constant DEFAULT_SIZE. */
     private static final int DEFAULT_SIZE = javax.swing.GroupLayout.DEFAULT_SIZE;

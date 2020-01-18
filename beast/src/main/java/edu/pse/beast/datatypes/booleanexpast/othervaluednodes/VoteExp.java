@@ -8,8 +8,7 @@ import edu.pse.beast.types.InOutType;
  *
  * @author Lukas Stapelbroek
  */
-public class VoteExp extends AccessValueNode {
-
+public final class VoteExp extends AccessValueNode {
     /**
      * Instantiates a new vote exp.
      *

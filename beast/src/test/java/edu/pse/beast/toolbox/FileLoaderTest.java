@@ -21,26 +21,26 @@ import org.junit.Test;
  */
 public class FileLoaderTest {
 
+    /**
+     * file LoaderTest
+     */
+    public FileLoaderTest() { }
+
     private boolean bufferedImagesEqual(final BufferedImage img1, final BufferedImage img2) {
         if (img1 == null) {
             return img2 == null;
         } else if (img1.getWidth() == img2.getWidth() && img1.getHeight() == img2.getHeight()) {
             for (int x = 0; x < img1.getWidth(); x++) {
                 for (int y = 0; y < img1.getHeight(); y++) {
-                    if (img1.getRGB(x, y) != img2.getRGB(x, y))
+                    if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
                         return false;
+                    }
                 }
             }
         } else {
             return false;
         }
         return true;
-    }
-
-    /**
-     * file LoaderTest
-     */
-    public FileLoaderTest() {
     }
 
     /**

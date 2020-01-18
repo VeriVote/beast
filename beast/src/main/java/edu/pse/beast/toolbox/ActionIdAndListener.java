@@ -11,8 +11,7 @@ import java.awt.event.ActionListener;
  *
  * @author Holger Klein, Lukas Stapelbroek
  */
-public class ActionIdAndListener {
-
+public final class ActionIdAndListener {
     /** The id. */
     private final String id;
 

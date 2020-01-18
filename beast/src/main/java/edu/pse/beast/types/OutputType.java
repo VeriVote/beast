@@ -52,7 +52,7 @@ public abstract class OutputType extends InOutType {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return otherToString();
     }
 
@@ -167,7 +167,7 @@ public abstract class OutputType extends InOutType {
     public abstract String getResultDescriptionString(List<String> result);
 
     @Override
-    public String getInfo() { // TODO move later on further down
+    public final String getInfo() { // TODO move later on further down
         return "";
     }
 

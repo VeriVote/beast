@@ -48,7 +48,7 @@ enum CDATATYPE {
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCResult extends Result {
+public final class CBMCResult extends Result {
 
     /** The Constant WIN_OFFSET. */
     private static final int WIN_OFFSET = 8;

@@ -20,7 +20,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  *
  * @author Lukas Stapelbroek
  */
-public class SingleChoiceStack extends CBMCInputType {
+public final class SingleChoiceStack extends CBMCInputType {
 
     /** The Constant FIVE. */
     private static final int FIVE = 5;
@@ -113,22 +113,22 @@ public class SingleChoiceStack extends CBMCInputType {
                          final String origVotesName,
                          final List<String> loopVars,
                          final CodeArrayListBeautifier code) {
-        String newVotesAccTop = getFullVoteAccess(newVotesName, loopVars);
-        String origVotesAccTop = getFullVoteAccess(origVotesName, loopVars);
+        final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+        final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add("");
         code.add("long tmp_diff = nondet_long();");
         code.add("");
         code.add("assume(abs(tmp_diff) <= MARGIN);");
-        code.add("assume(0 <= (" + origVotesAccTop + " + tmp_diff));");
+        code.add("assume(0 <= (" + origVotesNameAcc + " + tmp_diff));");
         code.add("if(tmp_diff < 0) {");
         code.add("");
-        code.add("assume(abs(tmp_diff) <= " + origVotesAccTop + ");");
+        code.add("assume(abs(tmp_diff) <= " + origVotesNameAcc + ");");
         code.add("");
         code.add("}");
-        code.add(newVotesAccTop + " = " + origVotesAccTop + " + tmp_diff;");
+        code.add(newVotesNameAcc + " = " + origVotesNameAcc + " + tmp_diff;");
         code.add("");
         code.add("pos_diff = total_diff  + abs(tmp_diff);");
-        code.add("total_diff = total_diff + tmp_diff;");
+        code.add("total_diff += tmp_diff;");
     }
 
     @Override
@@ -181,29 +181,17 @@ public class SingleChoiceStack extends CBMCInputType {
 
     @Override
     public int vetAmountCandidates(final int amountCandidates) {
-        if (amountCandidates < 1) {
-            return 1;
-        } else {
-            return amountCandidates;
-        }
+        return vetAmountInputValue(amountCandidates);
     }
 
     @Override
     public int vetAmountVoters(final int amountVoters) {
-        if (amountVoters < 1) {
-            return 1;
-        } else {
-            return amountVoters;
-        }
+        return vetAmountInputValue(amountVoters);
     }
 
     @Override
     public int vetAmountSeats(final int amountSeats) {
-        if (amountSeats < 1) {
-            return 1;
-        } else {
-            return amountSeats;
-        }
+        return vetAmountInputValue(amountSeats);
     }
 
     @Override

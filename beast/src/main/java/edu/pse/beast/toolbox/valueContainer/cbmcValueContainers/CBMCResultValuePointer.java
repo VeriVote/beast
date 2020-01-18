@@ -7,8 +7,7 @@ import org.w3c.dom.Element;
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCResultValuePointer implements CBMCResultValue {
-
+public final class CBMCResultValuePointer implements CBMCResultValue {
     @Override
     public void setValue(final Element element) {
         // TODO ask Michael how pointers can be extracted

@@ -25,7 +25,7 @@ import edu.pse.beast.toolbox.SortedIntegerList;
  *
  * @author Holger Klein
  */
-public class LockedLinesHandler implements DocumentListener {
+public final class LockedLinesHandler implements DocumentListener {
 
     /** The locked lines. */
     private SortedIntegerList lockedLines = new SortedIntegerList();

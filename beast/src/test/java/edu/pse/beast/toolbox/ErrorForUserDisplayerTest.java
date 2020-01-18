@@ -12,7 +12,7 @@ public final class ErrorForUserDisplayerTest {
      *
      * @param args arguments
      */
-    public static void main(String args[]) {
+    public static void main(final String[] args) {
         ErrorForUserDisplayer.displayError("hi");
         ErrorForUserDisplayer.displayError("hi again");
         ErrorForUserDisplayer.displayError("hi again2");

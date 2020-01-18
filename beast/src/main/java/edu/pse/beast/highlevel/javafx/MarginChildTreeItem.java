@@ -7,8 +7,7 @@ import javafx.scene.control.TreeItem;
  *
  * @author Lukas Stapelbroek
  */
-public class MarginChildTreeItem extends ChildTreeItem {
-
+public final class MarginChildTreeItem extends ChildTreeItem {
     /**
      * The constructor.
      *

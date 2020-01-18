@@ -6,9 +6,6 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
  * @author Lukas Stapelbroek
  */
 public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
-
     /** The lhs exp node. */
     private final BooleanExpressionNode lhsExpNode;
 
@@ -48,7 +45,7 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int result = 1;
         result = PRIME * result
                 + ((lhsExpNode == null) ? 0 : lhsExpNode.hashCode());
@@ -58,7 +55,7 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

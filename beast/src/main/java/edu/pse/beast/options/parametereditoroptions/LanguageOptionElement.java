@@ -9,8 +9,7 @@ import edu.pse.beast.options.OptionElement;
  *
  * @author Lukas Stapelbroek
  */
-public class LanguageOptionElement extends OptionElement {
-
+public final class LanguageOptionElement extends OptionElement {
     /**
      * Instantiates a new language option element.
      *

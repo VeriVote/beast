@@ -8,6 +8,23 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  * @author Lukas Stapelbroek
  */
 public abstract class BooleanExpressionNode {
+    /** The Constant PRIME. */
+    protected static final int PRIME = 31;
+
+    /** The Constant LINE_BREAK. */
+    protected static final String LINE_BREAK = "\n";
+
+    /** The Constant TAB. */
+    protected static final String TAB = "\t";
+
+    /** The Constant TABS. */
+    protected static final String TABS = "\t\t\t\t\t\t\t\t\t\t\t\t";
+
+    /** The Constant LHS. */
+    protected static final String LHS = "lhs: ";
+
+    /** The Constant RHS. */
+    protected static final String RHS = "rhs: ";
 
     /**
      * Visits this node.

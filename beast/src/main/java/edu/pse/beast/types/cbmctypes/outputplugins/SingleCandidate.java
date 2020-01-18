@@ -14,8 +14,7 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
  *
  * @author Lukas Stapelbroek
  */
-public class SingleCandidate extends CBMCOutputType {
-
+public final class SingleCandidate extends CBMCOutputType {
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 0;
 

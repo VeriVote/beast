@@ -27,8 +27,7 @@ import javafx.scene.control.TreeItem;
  *
  * @author Lukas Stapelbroek
  */
-public class BooleanExpEditorNEW implements MenuBarInterface {
-
+public final class BooleanExpEditorNEW implements MenuBarInterface {
     /** The pre area. */
     private NewPropertyCodeArea preArea;
 

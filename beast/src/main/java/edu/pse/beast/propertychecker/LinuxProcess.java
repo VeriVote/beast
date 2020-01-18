@@ -17,7 +17,7 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  *
  * @author Lukas Stapelbroek
  */
-public class LinuxProcess extends CBMCProcess {
+public final class LinuxProcess extends CBMCProcess {
     /** The Constant QUOTE. */
     private static final String QUOTE = "\"";
 

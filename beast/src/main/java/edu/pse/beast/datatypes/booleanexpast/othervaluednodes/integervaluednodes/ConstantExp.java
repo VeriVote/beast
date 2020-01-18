@@ -5,10 +5,9 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 /**
  * The Class ConstantExp.
  *
- * @author Holger
+ * @author Holger Klein
  */
-public class ConstantExp extends IntegerValuedExpression {
-
+public final class ConstantExp extends IntegerValuedExpression {
     /** The constant. */
     private final String constant;
 
@@ -38,7 +37,7 @@ public class ConstantExp extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "const " + constant + "\n";
+        return "const " + constant + LINE_BREAK;
     }
 
     @Override
@@ -59,6 +58,6 @@ public class ConstantExp extends IntegerValuedExpression {
 
     @Override
     public int hashCode() {
-        return constant != null ? constant.hashCode() : 0;
+        return PRIME + (constant != null ? constant.hashCode() : 0);
     }
 }

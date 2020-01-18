@@ -12,8 +12,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Jonas Wohnig
  */
-public class MinMaxSpinValueHandler implements ChangeListener {
-
+public final class MinMaxSpinValueHandler implements ChangeListener {
     /** The Constant MIN_VALUE. */
     private static final int MIN_VALUE = 1;
 

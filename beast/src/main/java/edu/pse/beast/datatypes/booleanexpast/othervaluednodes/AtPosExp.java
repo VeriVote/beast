@@ -9,9 +9,7 @@ import edu.pse.beast.types.InternalTypeContainer;
  *
  * @author Holger Klein
  */
-public class AtPosExp extends TypeExpression {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
+public final class AtPosExp extends TypeExpression {
     /** The integer valued expression. */
     private final IntegerValuedExpression integerValuedExpression;
 
@@ -36,7 +34,7 @@ public class AtPosExp extends TypeExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1)
+        return "atpos" + LINE_BREAK + TABS.substring(0, depth + 1)
                 + "int " + integerValuedExpression.getTreeString(depth + 1);
     }
 

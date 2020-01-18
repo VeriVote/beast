@@ -18,7 +18,7 @@ import javax.swing.text.StyleContext;
  *
  * @author Nikolai Schnell
  */
-public class SyntaxHLCompositeFilter extends DocumentFilter {
+public final class SyntaxHLCompositeFilter extends DocumentFilter {
 
     /** The text pane. */
     private JTextPane textPane;

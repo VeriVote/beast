@@ -143,7 +143,7 @@ public abstract class Result implements ResultInterface {
     }
 
     @Override
-    public boolean readyToPresent() {
+    public final boolean readyToPresent() {
         return finished;
     }
 

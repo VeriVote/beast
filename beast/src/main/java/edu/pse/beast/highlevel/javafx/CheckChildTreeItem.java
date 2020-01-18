@@ -7,8 +7,7 @@ import javafx.scene.control.TreeItem;
  *
  * @author Lukas Stapelbroek
  */
-public class CheckChildTreeItem extends ChildTreeItem {
-
+public final class CheckChildTreeItem extends ChildTreeItem {
     /**
      * Instantiates a new check child tree item.
      *

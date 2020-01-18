@@ -30,7 +30,7 @@ public final class ANTLRTest {
         view.open();
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         showGuiTreeView("1 == 4 * 2 / (4 - 1) + 2;");
     }
 }

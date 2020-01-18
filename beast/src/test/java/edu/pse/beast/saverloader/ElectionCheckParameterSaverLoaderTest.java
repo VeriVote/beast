@@ -19,6 +19,15 @@ import edu.pse.beast.saverloader.staticsaverloaders.ElectionCheckParameterSaverL
  * @author Nikolai Schnell
  */
 public class ElectionCheckParameterSaverLoaderTest {
+    /** The Constant A_FEW_HOURS. */
+    private static final long A_FEW_HOURS = (long) 3.2;
+
+    /** The Constant NUM_PROCESSES. */
+    private static final int NUM_PROCESSES = 4;
+
+    /** The Constant THREE_HOURS_IN_MILISECONDS. */
+    private static final int THREE_HOURS_IN_MILISECONDS = 10800000;
+
     private static ElectionCheckParameter electionCheckParameter;
 
     @BeforeClass
@@ -28,7 +37,8 @@ public class ElectionCheckParameterSaverLoaderTest {
                 Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
-                              1, 1, 1, new TimeOut(TimeUnit.HOURS, (long) 3.2), 4, "--unwind 6");
+                              1, 1, 1, new TimeOut(TimeUnit.HOURS, A_FEW_HOURS),
+                              NUM_PROCESSES, "--unwind 6");
     }
 
     /**
@@ -52,9 +62,9 @@ public class ElectionCheckParameterSaverLoaderTest {
         assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(0), 1);
         assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(1), 2);
         assertEquals(recreatedElectionCheckParameter.getArgument(), "--unwind 6");
-        assertEquals((int)recreatedElectionCheckParameter.getProcesses(), 4);
+        assertEquals((int)recreatedElectionCheckParameter.getProcesses(), NUM_PROCESSES);
         final TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
-        assertEquals(recreatedTimeOut.getDuration(), 10800000);
+        assertEquals(recreatedTimeOut.getDuration(), THREE_HOURS_IN_MILISECONDS);
         assertEquals(recreatedTimeOut.getOrigUnit(), TimeUnit.HOURS);
     }
 }

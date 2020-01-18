@@ -36,16 +36,37 @@ public abstract class CBMCInputType extends InputType {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
+    /**
+     * Vet amount of input value.
+     *
+     * @param value
+     *            the input value
+     * @return the int
+     */
+    protected final int vetAmountInputValue(final int value) {
+        return (value < 1) ? 1 : value;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * FIXME: Investigate why {@link SingleChoiceStack#flipVote(..)}
+     * makes a re-implementation and whether this is really necessary.
+     */
     @Override
     public void flipVote(final String newVotesName, final String origVotesName,
                          final List<String> loopVars,
                          final CodeArrayListBeautifier code) {
+        // TODO: Check whether this makes sense and why flipVote in
+        //       SingleChoiceStack does not reuse anything of this!
+        final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+        final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+        code.add("");
         code.add("int changed = nondet_int();");
+        code.add("");
         code.add("assume(0 <= changed);");
         code.add("assume(changed <= 1);");
         code.add("if(changed) {");
-        String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
-        String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         // we changed one vote, so we keep track of it
         code.add("pos_diff++;");
         code.add("assume(" + newVotesNameAcc
@@ -59,7 +80,7 @@ public abstract class CBMCInputType extends InputType {
     }
 
     @Override
-    public void addCheckerSpecificHeaders(final CodeArrayListBeautifier code) {
+    public final void addCheckerSpecificHeaders(final CodeArrayListBeautifier code) {
         // add the headers CBMC needs;
         code.add("#include <stdlib.h>");
         code.add("#include <stdint.h>");
@@ -74,7 +95,7 @@ public abstract class CBMCInputType extends InputType {
     }
 
     @Override
-    public String getVoteDescriptionString(final List<List<String>> origVotes) {
+    public final String getVoteDescriptionString(final List<List<String>> origVotes) {
         String votesString = "";
         int voterIndex = 0;
         // iterate over the voters

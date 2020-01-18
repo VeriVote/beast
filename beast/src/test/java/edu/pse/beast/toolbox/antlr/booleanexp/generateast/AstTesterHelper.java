@@ -14,7 +14,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 public final class AstTesterHelper {
     private AstTesterHelper() { }
 
-    public static void areTheSame(BooleanExpListNode lhs, BooleanExpListNode rhs) {
+    public static void areTheSame(final BooleanExpListNode lhs, final BooleanExpListNode rhs) {
         assertEquals(lhs.getHighestElect(), rhs.getHighestElect());
         assertEquals(lhs.getMaxVoteLevel(), rhs.getMaxVoteLevel());
         for (int i = 0; i < lhs.getBooleanExpressions().size(); i++) {
@@ -24,16 +24,16 @@ public final class AstTesterHelper {
         }
     }
 
-    private static void areTheSame(List<BooleanExpressionNode> lhsList,
-                                   List<BooleanExpressionNode> rhsList) {
+    private static void areTheSame(final List<BooleanExpressionNode> lhsList,
+                                   final List<BooleanExpressionNode> rhsList) {
         assertEquals(lhsList.size(), rhsList.size());
         for (int i = 0; i < lhsList.size(); i++) {
             areTheSame(lhsList.get(i), rhsList.get(i));
         }
     }
 
-    private static void areTheSame(BooleanExpressionNode lhsNode,
-                                   BooleanExpressionNode rhsNode) {
+    private static void areTheSame(final BooleanExpressionNode lhsNode,
+                                   final BooleanExpressionNode rhsNode) {
         if (!lhsNode.equals(rhsNode)) {
             System.out.println("expected: " + lhsNode.toString()
                                + " actual: " + rhsNode.toString());

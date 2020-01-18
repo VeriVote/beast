@@ -24,8 +24,7 @@ import javafx.scene.Node;
  *
  * @author Lukas Stapelbroek
  */
-public class MarginResult extends ResultPresentationType {
-
+public final class MarginResult extends ResultPresentationType {
     /** The area. */
     private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 

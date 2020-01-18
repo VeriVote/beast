@@ -20,8 +20,8 @@ import edu.pse.beast.codearea.errorhandling.ErrorFinder;
  *
  * @author Holger Klein
  */
-public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
-
+public final class CGrammarErrorFinder
+        implements ErrorFinder, ANTLRErrorListener {
     /** The antlr handler. */
     private final CAntlrHandler antlrHandler;
 

@@ -10,9 +10,6 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
  * @author Lukas Stapelbroek
  */
 public class ComparisonNode extends BooleanExpressionNode {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
-
     /** The lhs type exp. */
     private final TypeExpression lhsTypeExp;
 
@@ -30,7 +27,7 @@ public class ComparisonNode extends BooleanExpressionNode {
      * @param rhsTypeExpr
      *            the rhsExpression
      * @param comparisonSymb
-     *            the symbol that describes this comparision (for example <, >,
+     *            the symbol that describes this comparison (for example <, >,
      *            == )
      */
     public ComparisonNode(final TypeExpression lhsTypeExpr,
@@ -59,13 +56,20 @@ public class ComparisonNode extends BooleanExpressionNode {
         return getRhsTypeExp();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Generates the code for the comparison of 2 types which are not integers.
+     * These types can be lists which may have different depth and might be
+     * accessed by variables.
+     */
     @Override
     public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitComparisonNode(this);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int result = 1;
         result = PRIME * result + ((comparisonSymbol == null) ? 0
                 : comparisonSymbol.hashCode());
@@ -77,7 +81,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -100,14 +104,22 @@ public class ComparisonNode extends BooleanExpressionNode {
                 : that.comparisonSymbol == null;
     }
 
+    private String getTreeStringExtra() {
+        final String simpleClassName = this.getClass().getSimpleName();
+        final String text = ": Symbol ";
+        return simpleClassName.equals("ComparisonNode")
+                ? "" : simpleClassName + text;
+    }
+
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         StringBuilder b = new StringBuilder();
-        String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
-        b.append(tabs + comparisonSymbol.getCStringRep() + "\n");
-        b.append(tabs + "\t" + "lhs: "
+        String tabs = TABS.substring(0, depth);
+        b.append(tabs + getTreeStringExtra()
+                + comparisonSymbol.getCStringRep() + LINE_BREAK);
+        b.append(tabs + TAB + LHS
                 + getLhsTypeExp().getTreeString(depth + 1));
-        b.append(tabs + "\t" + "rhs: "
+        b.append(tabs + TAB + RHS
                 + getRhsTypeExp().getTreeString(depth + 1));
         return b.toString();
     }

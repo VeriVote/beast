@@ -12,8 +12,7 @@ package edu.pse.beast.toolbox;
  * @param <T>
  *            the generic type
  */
-public class Tuple3<F, S, T> {
-
+public final class Tuple3<F, S, T> {
     /** The first. */
     private final F first;
 

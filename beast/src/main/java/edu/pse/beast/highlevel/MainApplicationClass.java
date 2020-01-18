@@ -34,8 +34,7 @@ import javafx.stage.WindowEvent;
  *
  * @author Jonas Wohnig
  */
-public class MainApplicationClass extends Application {
-
+public final class MainApplicationClass extends Application {
     /** The Constant MAIN_SCENE_HEIGHT. */
     private static final int MAIN_SCENE_HEIGHT = 600;
 

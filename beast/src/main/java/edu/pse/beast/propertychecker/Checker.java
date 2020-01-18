@@ -112,7 +112,7 @@ public abstract class Checker implements Runnable {
     }
 
     @Override
-    public void run() {
+    public final void run() {
         process = createProcess(toCheck, voters, candidates, seats, advanced);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);

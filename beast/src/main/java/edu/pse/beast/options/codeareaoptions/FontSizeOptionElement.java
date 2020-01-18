@@ -9,8 +9,7 @@ import edu.pse.beast.options.OptionElement;
  *
  * @author Lukas Stapelbroek
  */
-public class FontSizeOptionElement extends OptionElement {
-
+public final class FontSizeOptionElement extends OptionElement {
     /** The size. */
     private int size;
 

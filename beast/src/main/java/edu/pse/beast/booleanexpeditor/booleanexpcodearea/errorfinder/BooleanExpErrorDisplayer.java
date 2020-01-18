@@ -14,7 +14,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  *
  * @author Holger Klein
  */
-public class BooleanExpErrorDisplayer extends ErrorDisplayer {
+public final class BooleanExpErrorDisplayer extends ErrorDisplayer {
     /**
      * Constructor.
      *

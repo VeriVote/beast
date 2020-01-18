@@ -20,7 +20,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  *
  * @author Lukas Stapelbroek
  */
-public class SingleChoice extends CBMCInputType {
+public final class SingleChoice extends CBMCInputType {
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
@@ -167,29 +167,17 @@ public class SingleChoice extends CBMCInputType {
 
     @Override
     public int vetAmountCandidates(final int amountCandidates) {
-        if (amountCandidates < 1) {
-            return 1;
-        } else {
-            return amountCandidates;
-        }
+        return vetAmountInputValue(amountCandidates);
     }
 
     @Override
     public int vetAmountVoters(final int amountVoters) {
-        if (amountVoters < 1) {
-            return 1;
-        } else {
-            return amountVoters;
-        }
+        return vetAmountInputValue(amountVoters);
     }
 
     @Override
     public int vetAmountSeats(final int amountSeats) {
-        if (amountSeats < 1) {
-            return 1;
-        } else {
-            return amountSeats;
-        }
+        return vetAmountInputValue(amountSeats);
     }
 
     @Override

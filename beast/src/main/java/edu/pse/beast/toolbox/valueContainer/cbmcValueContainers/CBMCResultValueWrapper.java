@@ -32,8 +32,7 @@ enum CDATATYPE {
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCResultValueWrapper extends ResultValueWrapper {
-
+public final class CBMCResultValueWrapper extends ResultValueWrapper {
     /** The data type. */
     private CDATATYPE dataType;
 

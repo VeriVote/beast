@@ -11,8 +11,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.In
  *
  * @author Lukas Stapelbroek
  */
-public class CandidateListChangeExpNode extends BooleanExpressionNode {
-
+public final class CandidateListChangeExpNode extends BooleanExpressionNode {
     /** The elect. */
     private final TerminalNode elect;
 
@@ -41,7 +40,7 @@ public class CandidateListChangeExpNode extends BooleanExpressionNode {
 
     @Override
     public String getTreeString(final int depth) {
-        System.out.println("might add treestring");
+        System.out.println("Might add treestring.");
         return "";
     }
 

@@ -5,14 +5,9 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 /**
  * The Class QuantifierNode.
  *
- * @author Lukas Stapelbroek
- *
- * @author Holger
+ * @author Holger Klein, Lukas Stapelbroek
  */
 public abstract class QuantifierNode extends BooleanExpressionNode {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
-
     /** The decl symb var. */
     private final SymbolicVariable declSymbVar;
 
@@ -34,7 +29,7 @@ public abstract class QuantifierNode extends BooleanExpressionNode {
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         int result = 1;
         result = PRIME * result
                 + ((declSymbVar == null) ? 0 : declSymbVar.hashCode());
@@ -44,7 +39,7 @@ public abstract class QuantifierNode extends BooleanExpressionNode {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

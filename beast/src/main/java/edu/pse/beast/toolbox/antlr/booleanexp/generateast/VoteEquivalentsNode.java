@@ -9,8 +9,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
  *
  * @author Lukas Stapelbroek
  */
-public class VoteEquivalentsNode extends BooleanExpressionNode {
-
+public final class VoteEquivalentsNode extends BooleanExpressionNode {
     /** The vote equivalents context. */
     private final VoteEquivalentsContext voteEquivalentsContext;
 

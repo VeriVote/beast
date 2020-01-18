@@ -14,8 +14,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Lukas Stapelbroek
  */
-public class BarCharElement extends ResultImageElement {
-
+public final class BarCharElement extends ResultImageElement {
     /** The result values. */
     private List<Tuple3<String, Double, Color>> resultValues;
 

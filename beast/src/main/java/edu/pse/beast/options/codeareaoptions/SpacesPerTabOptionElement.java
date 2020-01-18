@@ -9,8 +9,7 @@ import edu.pse.beast.options.OptionElement;
  *
  * @author Lukas Stapelbroek
  */
-public class SpacesPerTabOptionElement extends OptionElement {
-
+public final class SpacesPerTabOptionElement extends OptionElement {
     /** The number tabs. */
     private int numberTabs;
 

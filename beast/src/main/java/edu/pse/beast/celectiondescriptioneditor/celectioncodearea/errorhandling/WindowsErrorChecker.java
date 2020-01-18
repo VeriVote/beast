@@ -23,7 +23,7 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  * @author Lukas Stapelbroek
  *
  */
-public class WindowsErrorChecker extends SystemSpecificErrorChecker {
+public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
     /** The Constant COMPILER_STRING. */
     // the compiler we use on windows, because it is also needed by cbmc

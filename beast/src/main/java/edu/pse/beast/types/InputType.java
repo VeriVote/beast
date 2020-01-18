@@ -253,7 +253,7 @@ public abstract class InputType extends InOutType {
     public abstract CBMCResultValue convertRowToResultValue(NEWRowOfValues row);
 
     @Override
-    public String getInfo() { // TODO move later on further down
+    public final String getInfo() { // TODO move later on further down
         return "";
     }
 

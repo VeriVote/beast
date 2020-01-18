@@ -72,7 +72,7 @@ public class StringResourceProviderTest {
         assertEquals(exp.getIdForString("test2"), result.getIdForString("test2"));
     }
 
-    public class StringResourceProviderImpl extends StringResourceProvider {
+    public final class StringResourceProviderImpl extends StringResourceProvider {
 
         private StringResourceLoader stringRes;
 
@@ -81,7 +81,7 @@ public class StringResourceProviderTest {
          *
          * @param test does not matter for the test
          */
-        public StringResourceProviderImpl(String test) {
+        public StringResourceProviderImpl(final String test) {
             super(test);
         }
 

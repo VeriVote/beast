@@ -17,9 +17,8 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  * @author Lukas Stapelbroek
  *
  */
-public class WindowsCompilerAndRunner
+public final class WindowsCompilerAndRunner
         extends SystemSpecificCompilerAndExecutioner {
-
     /** The Constant COMPILER_STRING. */
     // the compiler we use on windows, because it is also needed by cbmc
     private static final String COMPILER_STRING = "cl.exe";

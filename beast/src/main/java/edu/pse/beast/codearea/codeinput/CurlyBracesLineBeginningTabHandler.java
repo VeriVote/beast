@@ -9,7 +9,7 @@ import javax.swing.JTextPane;
  *
  * @author Holger Klein
  */
-public class CurlyBracesLineBeginningTabHandler
+public final class CurlyBracesLineBeginningTabHandler
         implements LineBeginningTabsHandler {
 
     /** The Constant BRACE_LEFT. */

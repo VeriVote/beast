@@ -46,7 +46,8 @@
 ////    elected.add(3l);
 ////    elected.add(2l);
 ////
-////    ArrayList<CBMCResultWrapperSingleArray> votes = new ArrayList<CBMCResultWrapperSingleArray>();
+////    ArrayList<CBMCResultWrapperSingleArray> votes =
+////        new ArrayList<CBMCResultWrapperSingleArray>();
 ////    ArrayList<CBMCResultWrapperLong> elect = new ArrayList<CBMCResultWrapperLong>();
 ////
 ////    votes.add(new CBMCResultWrapperSingleArray(0, "wildelection"));

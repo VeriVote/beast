@@ -22,8 +22,8 @@ import edu.pse.beast.codearea.actionlist.ActionList;
  *
  * @author Holger Klein
  */
-public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
-
+public final class SaveTextBeforeRemove
+        implements KeyListener, ActionlistListener {
     /** The pane. */
     private JTextPane pane;
 

@@ -161,7 +161,7 @@ public abstract class ErrorDisplayer
      */
 
     @Override
-    public void mouseMoved(final MouseEvent e) {
+    public final void mouseMoved(final MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel2D(pt);
         if (pos == JTextPaneToolbox.getText(pane).length()) {

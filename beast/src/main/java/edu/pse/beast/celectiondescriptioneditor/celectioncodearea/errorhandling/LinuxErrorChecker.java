@@ -19,7 +19,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  * @author Lukas Stapelbroek
  *
  */
-public class LinuxErrorChecker extends SystemSpecificErrorChecker {
+public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
     /** The Constant FOUR. */
     private static final int FOUR = 4;

@@ -10,8 +10,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Tu
  *
  * @author Lukas Stapelbroek
  */
-public class VotingTupleChangeExpNode extends BooleanExpressionNode {
-
+public final class VotingTupleChangeExpNode extends BooleanExpressionNode {
     /** The tuple. */
     private final TupleContext tuple;
 

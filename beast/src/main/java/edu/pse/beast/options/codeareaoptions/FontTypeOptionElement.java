@@ -9,7 +9,7 @@ import edu.pse.beast.options.OptionElement;
  *
  * @author Lukas Stapelbroek
  */
-public class FontTypeOptionElement extends OptionElement {
+public final class FontTypeOptionElement extends OptionElement {
     /**
      * Constructor.
      *

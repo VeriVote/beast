@@ -12,8 +12,7 @@ import org.w3c.dom.NodeList;
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCResultValueStruct implements CBMCResultValue {
-
+public final class CBMCResultValueStruct implements CBMCResultValue {
     /** The Constant MEMBER_TAG. */
     private static final String MEMBER_TAG = "member";
 

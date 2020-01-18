@@ -11,8 +11,7 @@ import edu.pse.beast.toolbox.Project;
  *
  * @author Lukas Stapelbroek
  */
-public class ProjectSaverLoader implements SaverLoader<Project> {
-
+public final class ProjectSaverLoader implements SaverLoader<Project> {
     /** The saver loader. */
     private static Gson saverLoader;
 

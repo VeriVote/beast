@@ -16,9 +16,8 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  * @author Lukas Stapelbroek
  *
  */
-public class LinuxCompilerAndRunner
+public final class LinuxCompilerAndRunner
         extends SystemSpecificCompilerAndExecutioner {
-
     /** The Constant COMPILER_STRING. */
     // program that is to be used for checking
     private static final String COMPILER_STRING = "gcc";

@@ -5,12 +5,9 @@ import javafx.scene.Node;
 /**
  * The Class EmptyLinkedImage.
  *
- * Taken from the Demos from https://github.com/FXMisc/RichTextFX
- *
- * @author Lukas Stapelbroek
+ * @author Taken from the Demos from https://github.com/FXMisc/RichTextFX
  */
-public class EmptyLinkedImage implements LinkedImage {
-
+public final class EmptyLinkedImage implements LinkedImage {
     @Override
     public boolean isReal() {
         return false;

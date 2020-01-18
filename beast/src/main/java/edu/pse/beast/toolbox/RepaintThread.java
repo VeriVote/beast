@@ -10,8 +10,7 @@ import javax.swing.JFrame;
  *
  * @author Holger Klein
  */
-public class RepaintThread implements Runnable {
-
+public final class RepaintThread implements Runnable {
     /** The Constant SIXTY. */
     private static final int SIXTY = 60;
 

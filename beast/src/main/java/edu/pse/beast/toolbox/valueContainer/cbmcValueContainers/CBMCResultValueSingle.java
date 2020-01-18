@@ -12,8 +12,7 @@ import org.w3c.dom.NamedNodeMap;
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCResultValueSingle implements CBMCResultValue {
-
+public final class CBMCResultValueSingle implements CBMCResultValue {
     /** The Constant INT_LENGTH. */
     private static final int INT_LENGTH = 32;
 

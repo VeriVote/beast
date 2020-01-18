@@ -24,7 +24,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  *
  * @author Lukas Stapelbroek
  */
-public class WeightedApproval extends CBMCInputType {
+public final class WeightedApproval extends CBMCInputType {
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;

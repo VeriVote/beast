@@ -9,7 +9,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
  *
  * @author Lukas Stapelbroek, Holger Klein
  */
-public class BooleanExpListNode {
+public final class BooleanExpListNode {
     /**
      * this list stores the subnodes by the highest number of ELECT statement
      * appearing in them. This is important for code generation. Ex:

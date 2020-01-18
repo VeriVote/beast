@@ -7,8 +7,7 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  *
  * @author Holger Klein
  */
-public class IntegerNode extends IntegerValuedExpression {
-
+public final class IntegerNode extends IntegerValuedExpression {
     /** The held integer. */
     private final int heldInteger;
 
@@ -29,7 +28,7 @@ public class IntegerNode extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "Integer: " + heldInteger + "\n";
+        return "Integer: " + heldInteger + LINE_BREAK;
     }
 
     /**
@@ -58,6 +57,6 @@ public class IntegerNode extends IntegerValuedExpression {
 
     @Override
     public int hashCode() {
-        return heldInteger;
+        return PRIME + heldInteger;
     }
 }

@@ -80,9 +80,8 @@ import edu.pse.beast.types.InternalTypeRep;
  *
  * @author Holger Klein
  */
-public class FormalExpErrorFinderTreeListener
+public final class FormalExpErrorFinderTreeListener
         implements FormalPropertyDescriptionListener, VariableListListener {
-
     /** The created. */
     private final ArrayList<CodeError> created = new ArrayList<>();
 

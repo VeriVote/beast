@@ -9,9 +9,7 @@ import edu.pse.beast.types.InternalTypeContainer;
  *
  * @author Lukas Stapelbroek
  */
-public class SymbolicVarExp extends TypeExpression {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
+public final class SymbolicVarExp extends TypeExpression {
     /** The symb var. */
     private final SymbolicVariable symbVar;
 

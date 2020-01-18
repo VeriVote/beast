@@ -7,8 +7,7 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  *
  * @author Lukas Stapelbroek
  */
-public class LogicalOrNode extends BinaryRelationshipNode {
-
+public final class LogicalOrNode extends BinaryRelationshipNode {
     /**
      * Instantiates a new logical or node.
      *
@@ -29,9 +28,9 @@ public class LogicalOrNode extends BinaryRelationshipNode {
 
     @Override
     public String getTreeString(final int depth) {
-        String tabs = "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
-        return "||\n" + tabs + "lhs: "
+        String tabs = TABS.substring(0, depth + 1);
+        return "||" + LINE_BREAK + tabs + LHS
                 + getLHSBooleanExpNode().getTreeString(depth + 1) + tabs
-                + "rhs: " + getRHSBooleanExpNode().getTreeString(depth + 1);
+                + RHS + getRHSBooleanExpNode().getTreeString(depth + 1);
     }
 }

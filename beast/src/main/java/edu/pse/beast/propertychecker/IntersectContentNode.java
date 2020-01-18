@@ -9,7 +9,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.In
  *
  * @author Lukas Stapelbroek
  */
-public class IntersectContentNode extends BooleanExpressionNode {
+public final class IntersectContentNode extends BooleanExpressionNode {
 
     /** The intersect content context. */
     private final IntersectContentContext intersectContentContext;
@@ -38,7 +38,7 @@ public class IntersectContentNode extends BooleanExpressionNode {
 
     @Override
     public String getTreeString(final int depth) {
-        System.out.println("might add treestring");
+        System.out.println("Might add treestring.");
         return "";
     }
 

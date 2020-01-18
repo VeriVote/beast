@@ -17,9 +17,8 @@ import javax.swing.text.View;
  *
  * @author https://tips4java.wordpress.com/2008/10/28/rectangle-painter/
  **/
-public class SquigglePainter
+public final class SquigglePainter
         extends DefaultHighlighter.DefaultHighlightPainter {
-
     /** The Constant SQUIGGLE. */
     private static final int SQUIGGLE = 2;
 

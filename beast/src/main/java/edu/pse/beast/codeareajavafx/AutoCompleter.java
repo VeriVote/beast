@@ -35,7 +35,7 @@ public class AutoCompleter {
     private Scene scene;
 
     /** The caller. */
-    private AutoCompletionCodeArea caller = null;
+    private AutoCompletionCodeArea caller;
 
     /**
      * The Constructor.
@@ -43,7 +43,7 @@ public class AutoCompleter {
     public AutoCompleter() {
         autoCompletionStage.initStyle(StageStyle.UNDECORATED);
         // autoCompletionStage.initModality(Modality.APPLICATION_MODAL);
-        VBox box = new VBox();
+        final VBox box = new VBox();
         box.setSpacing(0);
         box.getChildren().add(list);
         // autoCompletionStage.getIcons().add(new Image("file:///" +

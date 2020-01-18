@@ -15,8 +15,7 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
  *
  * @author Lukas Stapelbroek
  */
-public class ParliamentStack extends CBMCOutputType {
-
+public final class ParliamentStack extends CBMCOutputType {
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
 

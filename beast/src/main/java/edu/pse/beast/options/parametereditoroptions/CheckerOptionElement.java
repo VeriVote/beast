@@ -9,7 +9,7 @@ import edu.pse.beast.options.OptionElement;
  *
  * @author Lukas Stapelbroek
  */
-public class CheckerOptionElement extends OptionElement {
+public final class CheckerOptionElement extends OptionElement {
     /**
      * Constructor.
      *

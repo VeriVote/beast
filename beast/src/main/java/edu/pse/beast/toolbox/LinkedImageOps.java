@@ -10,8 +10,7 @@ import org.fxmisc.richtext.model.NodeSegmentOpsBase;
  * @param <S>
  *            the generic type
  */
-public class LinkedImageOps<S> extends NodeSegmentOpsBase<LinkedImage, S> {
-
+public final class LinkedImageOps<S> extends NodeSegmentOpsBase<LinkedImage, S> {
     /**
      * Instantiates a new linked image ops.
      */

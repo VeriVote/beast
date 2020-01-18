@@ -14,8 +14,7 @@ import edu.pse.beast.toolbox.UserAction;
  *
  * @author Holger Klein
  */
-public class CopyUserAction extends UserAction {
-
+public final class CopyUserAction extends UserAction {
     /** The pane. */
     private JTextPane pane;
 

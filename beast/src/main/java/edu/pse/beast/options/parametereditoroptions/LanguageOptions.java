@@ -14,8 +14,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  *
  * @author Lukas Stapelbroek
  */
-public class LanguageOptions extends Options {
-
+public final class LanguageOptions extends Options {
     /** The sli. */
     private StringLoaderInterface sli;
 

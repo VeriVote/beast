@@ -31,8 +31,8 @@ public class FormalPropertySaverLoaderTest {
     @Test
     public void testCreateFromSaveString() throws Exception {
         String saveString = FormalPropertySaverLoader.createSaveString(description);
-        FormalPropertiesDescription recreatedFormalPropertiesDescription = FormalPropertySaverLoader
-                .createFromSaveString(saveString);
+        FormalPropertiesDescription recreatedFormalPropertiesDescription =
+                FormalPropertySaverLoader.createFromSaveString(saveString);
 
         assertEquals(recreatedFormalPropertiesDescription.getCode(),
                      "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");

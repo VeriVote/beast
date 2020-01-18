@@ -13,7 +13,7 @@ import com.sun.jna.platform.win32.WinNT;
  *
  * @author Lukas Stapelbroek
  */
-public class Win32Process {
+public final class Win32Process {
 
     /** The Constant SYNCHRONIZE. */
     private static final int SYNCHRONIZE = 0x00100000;

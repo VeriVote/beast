@@ -14,8 +14,7 @@ import java.util.concurrent.CountDownLatch;
  * @author Lukas Stapelbroek
  *
  */
-public class ThreadedBufferedReader implements Runnable {
-
+public final class ThreadedBufferedReader implements Runnable {
     /** The Constant CHECKING_INTERVAL. */
     private static final int CHECKING_INTERVAL = 5000;
 

@@ -24,8 +24,7 @@ import javafx.scene.text.TextAlignment;
  *
  * @author Lukas Stapelbroek
  */
-public class ParStyle {
-
+public final class ParStyle {
     /** The Constant EMPTY. */
     public static final ParStyle EMPTY = new ParStyle();
 

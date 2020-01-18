@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Holger Klein
  */
-public class FormalPropertiesDescription {
+public final class FormalPropertiesDescription {
     /** The Constant PRIME. */
     private static final int PRIME = 31;
     /** The code. */

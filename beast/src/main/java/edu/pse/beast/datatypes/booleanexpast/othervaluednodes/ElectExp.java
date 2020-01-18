@@ -8,8 +8,7 @@ import edu.pse.beast.types.InOutType;
  *
  * @author Holger Klein
  */
-public class ElectExp extends AccessValueNode {
-
+public final class ElectExp extends AccessValueNode {
     /**
      * Instantiates a new elect exp.
      *

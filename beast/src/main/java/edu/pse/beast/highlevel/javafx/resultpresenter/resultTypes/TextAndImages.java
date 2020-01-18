@@ -30,8 +30,7 @@ import javafx.scene.paint.Color;
  *
  * @author Lukas Stapelbroek
  */
-public class TextAndImages extends ResultPresentationType {
-
+public final class TextAndImages extends ResultPresentationType {
     /** The Constant DEFAULT_FONT_SIZE. */
     private static final int DEFAULT_FONT_SIZE = 12;
 

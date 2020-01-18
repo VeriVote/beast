@@ -10,8 +10,7 @@ import edu.pse.beast.types.InOutType;
  *
  * @author Lukas Stapelbroek
  */
-public class IntersectTypeExpNode extends TypeExpression {
-
+public final class IntersectTypeExpNode extends TypeExpression {
     /** The context. */
     private final IntersectExpContext context;
 
@@ -47,5 +46,25 @@ public class IntersectTypeExpNode extends TypeExpression {
      */
     public IntersectExpContext getContext() {
         return context;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = PRIME * result + ((context == null) ? 0 : context.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        IntersectTypeExpNode that = (IntersectTypeExpNode) o;
+        return context != null ? context.equals(that.context)
+                : that.context == null;
     }
 }

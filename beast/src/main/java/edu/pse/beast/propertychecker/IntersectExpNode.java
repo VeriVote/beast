@@ -9,7 +9,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.In
  *
  * @author Lukas Stapelbroek
  */
-public class IntersectExpNode extends BooleanExpressionNode {
+public final class IntersectExpNode extends BooleanExpressionNode {
 
     /** The intersect exp context. */
     private final IntersectExpContext intersectExpContext;

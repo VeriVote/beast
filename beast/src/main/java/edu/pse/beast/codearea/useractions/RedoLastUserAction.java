@@ -8,7 +8,7 @@ import edu.pse.beast.toolbox.UserAction;
  *
  * @author Holger Klein
  */
-public class RedoLastUserAction extends UserAction {
+public final class RedoLastUserAction extends UserAction {
 
     /** The list. */
     private ActionList list;

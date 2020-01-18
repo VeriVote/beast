@@ -12,16 +12,15 @@ import edu.pse.beast.types.InOutType.DataType;
  *
  * @author Lukas Stapelbroek
  */
-public class CBMCStruct extends ComplexType {
-
-    /** The Constant PRIME_THREE. */
-    private static final int PRIME_THREE = 1237;
+public final class CBMCStruct extends ComplexType {
+    /** The Constant PRIME_ONE. */
+    private static final int PRIME = 31;
 
     /** The Constant PRIME_TWO. */
     private static final int PRIME_TWO = 1231;
 
-    /** The Constant PRIME_ONE. */
-    private static final int PRIME_ONE = 31;
+    /** The Constant PRIME_THREE. */
+    private static final int PRIME_THREE = 1237;
 
     /** The in out type. */
     private final InOutType inOutType;
@@ -65,11 +64,11 @@ public class CBMCStruct extends ComplexType {
     @Override
     public int hashCode() {
         int result = 1;
-        result = PRIME_ONE * result
+        result = PRIME * result
                 + ((dataType == null) ? 0 : dataType.hashCode());
-        result = PRIME_ONE * result + dimensions;
-        result = PRIME_ONE * result + Arrays.hashCode(sizeOfDimensions);
-        result = PRIME_ONE * result + (unsigned ? PRIME_TWO : PRIME_THREE);
+        result = PRIME * result + dimensions;
+        result = PRIME * result + Arrays.hashCode(sizeOfDimensions);
+        result = PRIME * result + (unsigned ? PRIME_TWO : PRIME_THREE);
         return result;
     }
 

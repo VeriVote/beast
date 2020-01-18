@@ -84,9 +84,8 @@ import edu.pse.beast.types.OutputType;
  *
  * @author Holger Klein
  */
-public class FormalPropertySyntaxTreeToAstTranslator
+public final class FormalPropertySyntaxTreeToAstTranslator
         extends FormalPropertyDescriptionBaseListener {
-
     /** The Constant AND. */
     private static final String AND = "&&";
 

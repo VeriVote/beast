@@ -28,7 +28,7 @@
 // TODO rewrite for the new GUI
 ///**
 //*
-//* @author Holger
+//* @author Holger Klein
 //*/
 //public class OptionsSaverLoaderInterface {
 //    public static LanguageOptions loadLangOpts(StringLoaderInterface sli) throws IOException {

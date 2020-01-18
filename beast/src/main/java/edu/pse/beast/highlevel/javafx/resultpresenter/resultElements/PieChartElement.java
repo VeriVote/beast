@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Lukas Stapelbroek
  */
-public class PieChartElement extends ResultImageElement {
+public final class PieChartElement extends ResultImageElement {
 
     /** The Constant CIRCLE_ANGLE. */
     private static final int CIRCLE_ANGLE = 360;

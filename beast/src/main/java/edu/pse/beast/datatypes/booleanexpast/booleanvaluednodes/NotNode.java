@@ -7,9 +7,7 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  *
  * @author Lukas Stapelbroek
  */
-public class NotNode extends BooleanExpressionNode {
-    /** The Constant PRIME. */
-    private static final int PRIME = 31;
+public final class NotNode extends BooleanExpressionNode {
     /** The following node. */
     private BooleanExpressionNode followingNode;
 
@@ -39,8 +37,8 @@ public class NotNode extends BooleanExpressionNode {
 
     @Override
     public String getTreeString(final int depth) {
-        String tabs = "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
-        return "NOT\n" + tabs + "following: "
+        String tabs = TABS.substring(0, depth + 1);
+        return "NOT" + LINE_BREAK + tabs + "following: "
                 + followingNode.getTreeString(depth + 1);
     }
 

@@ -8,8 +8,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  *
  * @author Holger Klein
  */
-public class ThereExistsNode extends QuantifierNode {
-
+public final class ThereExistsNode extends QuantifierNode {
     /**
      * Instantiates a new there exists node.
      *
@@ -31,7 +30,7 @@ public class ThereExistsNode extends QuantifierNode {
     @Override
     public String getTreeString(final int depth) {
         return "ExistsOne: Declared var: " + getDeclaredSymbolicVar().getId()
-                + "\n" + "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1)
+                + LINE_BREAK + TABS.substring(0, depth + 1)
                 + "following: "
                 + getFollowingExpNode().getTreeString(depth + 1);
     }

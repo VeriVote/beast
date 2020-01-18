@@ -17,8 +17,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  *
  * @author Jonas Wohnig
  */
-public class TimeoutValueHandler implements ChangeListener, ActionListener {
-
+public final class TimeoutValueHandler implements ChangeListener, ActionListener {
     /** The Constant ONE. */
     private static final int ONE = 1;
 

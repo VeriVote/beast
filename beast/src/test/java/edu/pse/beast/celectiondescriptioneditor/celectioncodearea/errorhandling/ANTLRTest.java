@@ -28,7 +28,7 @@ public final class ANTLRTest {
         view.open();
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         showGuiTreeView("int i = 0;");
     }
 }

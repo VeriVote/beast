@@ -9,7 +9,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Pe
  *
  * @author Lukas Stapelbroek
  */
-public class PermutationExpNode extends BooleanExpressionNode {
+public final class PermutationExpNode extends BooleanExpressionNode {
 
     /** The permutation exp context. */
     private final PermutationExpContext permutationExpContext;

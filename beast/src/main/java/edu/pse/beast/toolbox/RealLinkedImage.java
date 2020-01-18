@@ -9,8 +9,7 @@ import javafx.scene.canvas.Canvas;
  *
  * @author Lukas Stapelbroek
  */
-public class RealLinkedImage implements LinkedImage {
-
+public final class RealLinkedImage implements LinkedImage {
     /** The canvas. */
     private Canvas canvas;
 

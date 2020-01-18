@@ -104,7 +104,7 @@ public abstract class CheckerFactory implements Runnable {
     // The main working thread in this CheckerFactory. It cycles through all
     // possible configurations and creates sequentially a new checker for each
     @Override
-    public void run() {
+    public final void run() {
         String advanced = parameter.getArgument();
         String[] toTrim = advanced.split(";");
         for (int i = 0; i < toTrim.length; i++) {

@@ -12,7 +12,7 @@ import edu.pse.beast.saverloader.SaverLoader;
  *
  * @author Lukas Stapelbroek
  */
-public class OptionsSaverLoader extends edu.pse.beast.codeareajavafx.SaverLoader
+public final class OptionsSaverLoader extends edu.pse.beast.codeareajavafx.SaverLoader
         implements SaverLoader<OptionsNew> {
 
     /** The saver loader. */

@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Niels Hanselmann
  */
-public class PreAndPostConditionsDescription {
+public final class PreAndPostConditionsDescription {
     /** The Constant PRIME. */
     private static final int PRIME = 31;
 

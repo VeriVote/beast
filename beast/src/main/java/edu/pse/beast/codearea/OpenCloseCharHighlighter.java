@@ -22,7 +22,7 @@ import edu.pse.beast.codearea.codeinput.OpenCloseCharList;
  *
  * @author Holger Klein
  */
-public class OpenCloseCharHighlighter implements CaretListener {
+public final class OpenCloseCharHighlighter implements CaretListener {
 
     /** The char list. */
     private final OpenCloseCharList charList;

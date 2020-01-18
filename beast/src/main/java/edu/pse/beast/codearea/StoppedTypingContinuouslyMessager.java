@@ -16,9 +16,8 @@ import javax.swing.event.CaretListener;
  *
  * @author Holger Klein
  */
-public class StoppedTypingContinuouslyMessager
+public final class StoppedTypingContinuouslyMessager
         implements KeyListener, CaretListener {
-
     /** The pane. */
     private final JTextPane pane;
 

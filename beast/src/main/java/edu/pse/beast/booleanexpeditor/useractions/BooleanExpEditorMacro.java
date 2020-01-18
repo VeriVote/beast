@@ -5,8 +5,7 @@ package edu.pse.beast.booleanexpeditor.useractions;
  *
  * @author Nikolai Schnell
  */
-public class BooleanExpEditorMacro {
-
+public final class BooleanExpEditorMacro {
     /** The macro. */
     private final String macro;
 

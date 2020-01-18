@@ -10,10 +10,6 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Holger Klein
  */
 public abstract class TypeExpression extends BooleanExpressionNode {
-
-    /** The Constant PRIME_ONE. */
-    protected static final int PRIME_ONE = 31;
-
     /** The Constant PRIME_TWO. */
     protected static final int PRIME_TWO = 1231;
 
@@ -42,6 +38,13 @@ public abstract class TypeExpression extends BooleanExpressionNode {
         return type.getInternalTypeContainer();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This {@code equals} implementation for {@link TypeExpression}
+     * only relies on other fields or methods that are not visible to
+     * subclasses. Hence, subclasses cannot break its behavior.
+     */
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -54,8 +57,14 @@ public abstract class TypeExpression extends BooleanExpressionNode {
         return type != null ? type.equals(that.type) : that.type == null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Use this implementation by calling "super()" in inheriting
+     * implementations of this method.
+     */
     @Override
     public int hashCode() {
-        return PRIME_ONE + (type != null ? type.hashCode() : 0);
+        return PRIME + (type != null ? type.hashCode() : 0);
     }
 }

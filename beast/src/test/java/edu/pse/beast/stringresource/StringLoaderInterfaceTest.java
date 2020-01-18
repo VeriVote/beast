@@ -10,6 +10,7 @@ import org.junit.Test;
  */
 public class StringLoaderInterfaceTest {
 
+    /** The instance. */
     private final StringLoaderInterface instance;
 
     /**

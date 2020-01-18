@@ -31,7 +31,7 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  *
  * @author Lukas Stapelbroek
  */
-public class WindowsProcess extends CBMCProcess {
+public final class WindowsProcess extends CBMCProcess {
     /** The Constant QUOTE. */
     private static final String QUOTE = "\"";
 

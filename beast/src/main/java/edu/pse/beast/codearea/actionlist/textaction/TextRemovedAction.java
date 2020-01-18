@@ -14,7 +14,7 @@ import edu.pse.beast.codearea.actionlist.Action;
  *
  * @author Holger Klein
  */
-public class TextRemovedAction implements Action {
+public final class TextRemovedAction implements Action {
 
     /** The td. */
     private final TextDelta td;

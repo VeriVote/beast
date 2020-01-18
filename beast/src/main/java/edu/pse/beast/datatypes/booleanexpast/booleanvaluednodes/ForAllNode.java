@@ -8,8 +8,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  *
  * @author Holger Klein
  */
-public class ForAllNode extends QuantifierNode {
-
+public final class ForAllNode extends QuantifierNode {
     /**
      * Instantiates a new for all node.
      *
@@ -31,7 +30,7 @@ public class ForAllNode extends QuantifierNode {
     @Override
     public String getTreeString(final int depth) {
         return "ForAll: Declared var: " + getDeclaredSymbolicVar().getId()
-                + "\n" + "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1)
+                + LINE_BREAK + TABS.substring(0, depth + 1)
                 + "following: "
                 + getFollowingExpNode().getTreeString(depth + 1);
     }

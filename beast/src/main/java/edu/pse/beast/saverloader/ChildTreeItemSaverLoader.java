@@ -21,7 +21,7 @@ import edu.pse.beast.types.OutputType;
  *
  * @author Lukas Stapelbroek
  */
-public class ChildTreeItemSaverLoader
+public final class ChildTreeItemSaverLoader
         implements SaverLoader<ChildTreeItemValues> {
 
     /** The saver loader. */

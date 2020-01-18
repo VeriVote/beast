@@ -16,7 +16,7 @@ import edu.pse.beast.toolbox.TimeOutNotifier;
  *
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
-public class FactoryController implements Runnable {
+public final class FactoryController implements Runnable {
 
     /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;

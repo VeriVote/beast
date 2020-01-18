@@ -30,8 +30,8 @@ public abstract class CBMCOutputType extends OutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addMarginMainTest(final CodeArrayListBeautifier code,
-                                                     final int voteNumber) {
+    public final CodeArrayListBeautifier addMarginMainTest(final CodeArrayListBeautifier code,
+                                                           final int voteNumber) {
         code.add("int main() {");
         code.addTab();
         String definition = getContainer().getOutputStruct().getStructAccess()

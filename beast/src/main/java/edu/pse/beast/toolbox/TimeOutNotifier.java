@@ -7,8 +7,7 @@ import edu.pse.beast.propertychecker.FactoryController;
  *
  * @author Lukas Stapelbroek
  */
-public class TimeOutNotifier implements Runnable {
-
+public final class TimeOutNotifier implements Runnable {
     /** The disabled. */
     private boolean disabled = false;
 
