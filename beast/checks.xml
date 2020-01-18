@@ -196,10 +196,13 @@
       <!--Checks for Javadoc comments. -->
       <!--See http://checkstyle.sf.net/config_javadoc.html -->
       <module name="InvalidJavadocPosition"/>
-      <module name="JavadocMethod"/>
+      <module name="JavadocMethod">
+        <property name="allowedAnnotations" value="Override,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName"/>
+      </module>
       <module name="MissingJavadocMethod">
         <!--getter and setter need not necessarily be documented ... -->
         <property name="allowMissingPropertyJavadoc" value="true"/>
+        <property name="allowedAnnotations" value="Override,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName"/>
         <property name="scope" value="package"/>
       </module>
       <module name="JavadocType">
