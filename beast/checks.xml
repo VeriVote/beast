@@ -237,28 +237,19 @@
       <!--Checks for imports -->
       <!--See https://checkstyle.org/config_import.html -->
       <module name="AvoidStarImport"/>
-      <module name="CustomImportOrder">
-        <property name="customImportOrderRules"
-                  value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE"/>
-        <property name="standardPackageRegExp" value="^java\."/>
-        <property name="specialImportsRegExp" value="^(javax|javafx)\."/>
-        <property name="thirdPartyPackageRegExp" value="^(org|com)\."/>
-        <property name="sortImportsInGroupAlphabetically" value="true"/>
-        <property name="separateLineBetweenGroups" value="true"/>
-      </module>
-
       <module name="IllegalImport"/> <!--defaults to sun.* packages -->
 
-      <!-- module name="ImportOrder">
-        <property name="staticGroups" value="org,java"/>
+      <module name="ImportOrder">
+        <property name="staticGroups" value="java,javax,javafx,org,com"/>
         <property name="groups" value="/^java\./,javax,javafx,org,com"/>
-        <- property name="useContainerOrderingForStatic" value="true"/->
+        <property name="useContainerOrderingForStatic" value="true"/>
         <property name="ordered" value="true"/>
-        <- property name="separated" value="true"/->
-        <- property name="separatedStaticGroups" value="true"/->
+        <property name="separated" value="true"/>
+        <property name="separatedStaticGroups" value="true"/>
         <property name="option" value="top"/>
         <property name="sortStaticImportsAlphabetically" value="true"/>
-      </module-->
+      </module>
+
       <module name="RedundantImport"/>
       <module name="UnusedImports">
         <property name="processJavadoc" value="false"/>

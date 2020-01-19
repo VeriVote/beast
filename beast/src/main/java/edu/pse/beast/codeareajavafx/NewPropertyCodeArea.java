@@ -10,6 +10,11 @@ import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
+import javafx.scene.control.IndexRange;
+
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
@@ -18,10 +23,6 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.highlevel.javafx.BooleanExpEditorNEW;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.toolbox.Tuple3;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
-import javafx.scene.control.IndexRange;
 
 /**
  * The Class NewPropertyCodeArea.

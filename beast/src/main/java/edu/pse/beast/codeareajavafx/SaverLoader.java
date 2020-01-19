@@ -8,11 +8,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import javafx.stage.FileChooser;
+
 import edu.pse.beast.highlevel.MainApplicationClass;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.saverloader.MinimalSaverInterface;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import javafx.stage.FileChooser;
 
 /**
  * The Class SaverLoader.

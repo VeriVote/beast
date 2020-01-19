@@ -6,10 +6,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import edu.pse.beast.highlevel.MainApplicationClass;
-import edu.pse.beast.highlevel.javafx.TabClass;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
+
+import edu.pse.beast.highlevel.MainApplicationClass;
+import edu.pse.beast.highlevel.javafx.TabClass;
 
 /**
  * The Class PropertyCombiner.
