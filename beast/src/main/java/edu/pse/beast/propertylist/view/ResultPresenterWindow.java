@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.view; TODO remove
-//
+package edu.pse.beast.propertylist.view; // TODO remove
+
 //import java.awt.BorderLayout;
 //import java.awt.Color;
 //import java.awt.Dimension;

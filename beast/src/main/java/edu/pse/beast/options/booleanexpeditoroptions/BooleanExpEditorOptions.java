@@ -1,5 +1,5 @@
-//package edu.pse.beast.options.booleanexpeditoroptions;
-//
+package edu.pse.beast.options.booleanexpeditoroptions;
+
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 //import edu.pse.beast.options.Options;
 //

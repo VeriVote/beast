@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor.view;
-//
+package edu.pse.beast.celectiondescriptioneditor.view;
+
 ///**
 // * starts a CCodeEditorWindow
 // * @author Holger Klein

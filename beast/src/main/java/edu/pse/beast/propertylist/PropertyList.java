@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import java.awt.Frame;
 //import java.util.ArrayList;
 //import java.util.Iterator;

@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import static org.junit.Assert.assertNotNull;
 //
 //import org.junit.After;

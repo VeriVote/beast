@@ -1,5 +1,5 @@
-//package edu.pse.beast.highlevel.javafx;
-//
+package edu.pse.beast.highlevel.javafx;
+
 //import javafx.event.EventHandler;
 //import javafx.scene.control.TreeCell;
 //import javafx.scene.input.MouseEvent;

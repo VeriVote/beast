@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.view; TODO remove
-//
+package edu.pse.beast.propertylist.view; // TODO remove
+
 //import java.util.Arrays;
 //import java.util.List;
 //

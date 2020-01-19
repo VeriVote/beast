@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.view; TODO remove
-//
+package edu.pse.beast.propertylist.view; // TODO remove
+
 //import org.junit.After;
 //import org.junit.AfterClass;
 //import org.junit.Before;

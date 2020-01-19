@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor;
-//
+package edu.pse.beast.parametereditor;
+
 //import javax.swing.JButton;
 //import javax.swing.JTextField;
 //import javax.swing.event.ChangeEvent;

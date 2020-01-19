@@ -1,5 +1,5 @@
-//package edu.pse.beast.gui;
-//
+package edu.pse.beast.gui;
+
 //import java.awt.event.KeyEvent;
 //import java.io.File;
 //

@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor;
-//
+package edu.pse.beast.parametereditor;
+
 //import java.util.ArrayList;
 //
 //import edu.pse.beast.parametereditor.view.ParameterEditorWindow;

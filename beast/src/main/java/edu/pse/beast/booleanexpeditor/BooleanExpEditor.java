@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor;
-//
+package edu.pse.beast.booleanexpeditor;
+
 //import java.util.ArrayList;
 //
 //import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;

@@ -1,5 +1,5 @@
-//package edu.pse.beast.electionsimulator.model;
-//
+package edu.pse.beast.electionsimulator.model;
+
 //import java.util.ArrayList;
 //import java.util.Iterator;
 //

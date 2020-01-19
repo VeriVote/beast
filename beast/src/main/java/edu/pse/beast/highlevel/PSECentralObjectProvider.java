@@ -1,5 +1,5 @@
-//package edu.pse.beast.highlevel;
-//
+package edu.pse.beast.highlevel;
+
 //import edu.pse.beast.options.parametereditoroptions.LanguageOptions;
 //import edu.pse.beast.propertychecker.PropertyChecker;
 //import edu.pse.beast.stringresource.StringLoaderInterface;

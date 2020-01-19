@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 //import java.util.ArrayList;

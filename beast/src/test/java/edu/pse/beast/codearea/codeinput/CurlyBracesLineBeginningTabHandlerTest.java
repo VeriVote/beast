@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput;
-//
+package edu.pse.beast.codearea.codeinput;
+
 //import static org.junit.Assert.assertEquals;
 //
 //import javax.swing.JTextPane;

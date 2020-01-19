@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor.useractions;
-//
+package edu.pse.beast.parametereditor.useractions;
+
 //import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 //import edu.pse.beast.datatypes.Project;
 //import edu.pse.beast.parametereditor.ParameterEditor;

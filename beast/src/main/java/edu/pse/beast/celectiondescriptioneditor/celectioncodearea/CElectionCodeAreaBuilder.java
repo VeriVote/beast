@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor.celectioncodearea;
-//
+package edu.pse.beast.celectiondescriptioneditor.celectioncodearea;
+
 //import java.util.ArrayList;
 //
 //import javax.swing.JScrollPane;

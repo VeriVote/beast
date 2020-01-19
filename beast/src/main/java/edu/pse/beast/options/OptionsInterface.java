@@ -1,5 +1,5 @@
-//package edu.pse.beast.options;
-//
+package edu.pse.beast.options;
+
 //import java.io.IOException;
 //
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;

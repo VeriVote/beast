@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor;
-//
+package edu.pse.beast.celectiondescriptioneditor;
+
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.List;

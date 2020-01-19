@@ -1,5 +1,5 @@
-//package edu.pse.beast.highlevel.javafx; TODO remove
-//
+package edu.pse.beast.highlevel.javafx; // TODO remove
+
 //import java.util.List;
 //
 //import edu.pse.beast.propertychecker.Result;

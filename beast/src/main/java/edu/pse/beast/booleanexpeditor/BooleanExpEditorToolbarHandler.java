@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor;
-//
+package edu.pse.beast.booleanexpeditor;
+
 //import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
 //import edu.pse.beast.stringresource.StringLoaderInterface;

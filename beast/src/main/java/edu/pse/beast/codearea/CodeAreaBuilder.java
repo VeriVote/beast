@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea;
-//
+package edu.pse.beast.codearea;
+
 //import javax.swing.JScrollPane;
 //import javax.swing.JTextPane;
 //

@@ -1,5 +1,5 @@
-//package edu.pse.beast.types; TODO removeS
-//
+package edu.pse.beast.types; // TODO removeS
+
 //import java.util.ArrayList;
 //import java.util.Iterator;
 //import java.util.List;

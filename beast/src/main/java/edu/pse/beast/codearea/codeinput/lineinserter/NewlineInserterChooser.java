@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput.lineinserter;
-//
+package edu.pse.beast.codearea.codeinput.lineinserter;
+
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
 //

@@ -1,5 +1,5 @@
-//package edu.pse.beast.pluginhandler; TODO remove
-//
+package edu.pse.beast.pluginhandler; // TODO remove
+
 //import java.util.ArrayList;
 //import java.util.Iterator;
 //import java.util.List;

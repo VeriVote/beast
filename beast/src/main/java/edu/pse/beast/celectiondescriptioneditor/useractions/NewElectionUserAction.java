@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor.useractions;
-//
+package edu.pse.beast.celectiondescriptioneditor.useractions;
+
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
 //

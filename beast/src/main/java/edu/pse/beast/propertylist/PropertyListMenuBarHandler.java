@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import java.util.ArrayList;
 //
 //import edu.pse.beast.propertylist.view.PropertyListWindow;

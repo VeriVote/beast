@@ -1,4 +1,4 @@
-//package edu.pse.beast.propertychecker; //TODO rewrite for xml document
+package edu.pse.beast.propertychecker; //TODO rewrite for xml document
 //
 //import static org.junit.Assert.assertFalse;
 //import static org.junit.Assert.assertTrue;

@@ -1,5 +1,5 @@
-//package edu.pse.beast.options.parametereditoroptions;
-//
+package edu.pse.beast.options.parametereditoroptions;
+
 //import edu.pse.beast.highlevel.PSECentralObjectProvider;
 //import edu.pse.beast.options.Options;
 //import edu.pse.beast.parametereditor.ParameterEditor;

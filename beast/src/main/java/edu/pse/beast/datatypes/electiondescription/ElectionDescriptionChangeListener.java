@@ -1,5 +1,5 @@
-//package edu.pse.beast.datatypes.electiondescription; TODO remove
-//
+package edu.pse.beast.datatypes.electiondescription; // TODO remove
+
 //import edu.pse.beast.types.InputType;
 //import edu.pse.beast.types.OutputType;
 //

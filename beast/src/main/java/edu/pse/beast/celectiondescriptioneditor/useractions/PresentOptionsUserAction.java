@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor.useractions;
-//
+package edu.pse.beast.celectiondescriptioneditor.useractions;
+
 //import edu.pse.beast.options.OptionPresenter;
 //import edu.pse.beast.options.ceditoroptions.CElectionEditorOptions;
 //import edu.pse.beast.toolbox.UserAction;

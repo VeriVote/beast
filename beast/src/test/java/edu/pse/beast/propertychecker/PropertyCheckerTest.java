@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertychecker;
-//
+package edu.pse.beast.propertychecker;
+
 //import java.util.ArrayList;
 //import java.util.List;
 //import java.util.concurrent.TimeUnit;

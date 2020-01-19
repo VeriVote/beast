@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import javax.swing.JToolBar;
 //
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;

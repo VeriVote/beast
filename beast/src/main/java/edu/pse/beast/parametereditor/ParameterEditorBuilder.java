@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor;
-//
+package edu.pse.beast.parametereditor;
+
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 //import java.util.ArrayList;

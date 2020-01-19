@@ -1,5 +1,5 @@
-//package edu.pse.beast.datatypes;
-//
+package edu.pse.beast.datatypes;
+
 //import static org.junit.Assert.assertEquals;
 //
 //import org.junit.Test;

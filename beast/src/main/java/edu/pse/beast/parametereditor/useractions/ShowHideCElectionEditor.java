@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor.useractions;
-//
+package edu.pse.beast.parametereditor.useractions;
+
 //import java.awt.Frame;
 //
 //import javax.swing.JFrame;

@@ -1,5 +1,5 @@
-//package edu.pse.beast.datatypes.internal;
-//
+package edu.pse.beast.datatypes.internal;
+
 ///**
 // *
 // * @author Niels Hanselmann

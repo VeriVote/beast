@@ -1,5 +1,5 @@
-//package edu.pse.beast.electionsimulator.useractions;
-//
+package edu.pse.beast.electionsimulator.useractions;
+
 //import edu.pse.beast.propertylist.DeleteDescriptionAction;
 //import edu.pse.beast.propertylist.PropertyList;
 //import edu.pse.beast.toolbox.UserAction;

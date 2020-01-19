@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
-//
+package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
+
 //import java.util.ArrayList;
 //
 //import javax.swing.JTextPane;

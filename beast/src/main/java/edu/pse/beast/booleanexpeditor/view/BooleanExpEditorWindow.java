@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor.view;
-//
+package edu.pse.beast.booleanexpeditor.view;
+
 //import javax.swing.DefaultListModel;
 //import javax.swing.JList;
 //import javax.swing.JTextPane;

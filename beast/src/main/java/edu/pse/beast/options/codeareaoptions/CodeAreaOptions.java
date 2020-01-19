@@ -1,5 +1,5 @@
-//package edu.pse.beast.options.codeareaoptions;
-//
+package edu.pse.beast.options.codeareaoptions;
+
 //import java.awt.Font;
 //import java.awt.GraphicsEnvironment;
 //import java.util.ArrayList;

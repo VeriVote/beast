@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.model;
-//
+package edu.pse.beast.propertylist.model;
+
 //import java.awt.Frame;
 //import java.util.ArrayList;
 //import java.util.Observable;

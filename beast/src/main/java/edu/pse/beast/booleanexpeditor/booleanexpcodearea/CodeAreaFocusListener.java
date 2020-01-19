@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor.booleanexpcodearea;
-//
+package edu.pse.beast.booleanexpeditor.booleanexpcodearea;
+
 //import java.awt.event.FocusEvent;
 //import java.awt.event.FocusListener;
 //

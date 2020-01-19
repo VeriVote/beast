@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.autocompletion;
-//
+package edu.pse.beast.codearea.autocompletion;
+
 //import java.awt.Point;
 //import java.awt.event.KeyEvent;
 //import java.awt.event.KeyListener;

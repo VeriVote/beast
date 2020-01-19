@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor.view;
-//
+package edu.pse.beast.parametereditor.view;
+
 //import java.awt.BorderLayout;
 //import java.awt.Component;
 //

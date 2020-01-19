@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor;
-//
+package edu.pse.beast.parametereditor;
+
 //import javax.swing.JToolBar;
 //
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;

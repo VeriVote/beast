@@ -1,5 +1,5 @@
-//package edu.pse.beast.datatypes; TODO remove
-//
+package edu.pse.beast.datatypes; // TODO remove
+
 ///**
 // * Interface used by saverloader.FileChooser that allows it to change and
 // * receive the Names of given objects.

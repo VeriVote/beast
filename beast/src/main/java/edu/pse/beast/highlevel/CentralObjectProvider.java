@@ -1,6 +1,5 @@
-//
-//package edu.pse.beast.highlevel;
-//
+package edu.pse.beast.highlevel;
+
 ///**
 // * The CentralObjectProvider provides access to the interfaces for the packages used
 // * to run BEAST for the BEASTCommunicator.

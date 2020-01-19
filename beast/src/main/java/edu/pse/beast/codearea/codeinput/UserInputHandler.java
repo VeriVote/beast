@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput;
-//
+package edu.pse.beast.codearea.codeinput;
+
 //import java.awt.event.KeyEvent;
 //import java.awt.event.KeyListener;
 //

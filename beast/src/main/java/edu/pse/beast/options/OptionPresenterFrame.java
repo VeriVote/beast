@@ -1,5 +1,5 @@
-//package edu.pse.beast.options;
-//
+package edu.pse.beast.options;
+
 //import java.awt.BorderLayout;
 //import java.awt.GridLayout;
 //

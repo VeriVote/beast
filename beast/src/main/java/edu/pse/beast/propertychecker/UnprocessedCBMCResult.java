@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertychecker; TODO remove
-//
+package edu.pse.beast.propertychecker; // TODO remove
+
 //public class UnprocessedCBMCResult extends CBMCResult {
 //
 //    public UnprocessedCBMCResult() {

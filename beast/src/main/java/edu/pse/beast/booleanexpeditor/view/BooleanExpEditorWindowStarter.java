@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor.view;
-//
+package edu.pse.beast.booleanexpeditor.view;
+
 ///**
 // * Starts the given BooleanExpEditorWindow Class in a new thread.
 // * @author Nikolai Schnell

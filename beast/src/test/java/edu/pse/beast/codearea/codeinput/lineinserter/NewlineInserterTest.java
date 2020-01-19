@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput.lineinserter;
-//
+package edu.pse.beast.codearea.codeinput.lineinserter;
+
 //import static org.junit.Assert.assertEquals;
 //
 //import javax.swing.JTextPane;

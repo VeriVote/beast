@@ -1,5 +1,5 @@
-//package edu.pse.beast.stringresource;
-//
+package edu.pse.beast.stringresource;
+
 //import java.util.HashMap;
 //import java.util.Map;
 //

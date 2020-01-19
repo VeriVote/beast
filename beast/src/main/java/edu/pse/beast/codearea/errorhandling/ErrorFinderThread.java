@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.errorhandling;
-//
+package edu.pse.beast.codearea.errorhandling;
+
 //import java.util.ArrayList;
 //import java.util.logging.Level;
 //import java.util.logging.Logger;

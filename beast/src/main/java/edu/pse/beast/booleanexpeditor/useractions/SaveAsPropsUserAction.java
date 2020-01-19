@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor.useractions;
-//
+package edu.pse.beast.booleanexpeditor.useractions;
+
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 //import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 //import edu.pse.beast.saverloader.FileChooser;

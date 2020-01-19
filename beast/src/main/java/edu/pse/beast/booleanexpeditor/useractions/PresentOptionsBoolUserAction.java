@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor.useractions;
-//
+package edu.pse.beast.booleanexpeditor.useractions;
+
 //import edu.pse.beast.options.OptionPresenter;
 //import edu.pse.beast.options.booleanexpeditoroptions.BooleanExpEditorOptions;
 //import edu.pse.beast.toolbox.UserAction;

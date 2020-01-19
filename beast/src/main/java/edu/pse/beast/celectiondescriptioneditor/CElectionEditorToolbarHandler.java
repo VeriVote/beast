@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor;
-//
+package edu.pse.beast.celectiondescriptioneditor;
+
 //import edu.pse.beast.celectiondescriptioneditor.view.CCodeEditorWindow;
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
 //import edu.pse.beast.stringresource.StringLoaderInterface;

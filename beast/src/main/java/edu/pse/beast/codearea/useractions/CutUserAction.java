@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.useractions;
-//
+package edu.pse.beast.codearea.useractions;
+
 //import java.awt.Toolkit;
 //import java.awt.datatransfer.Clipboard;
 //import java.awt.datatransfer.StringSelection;

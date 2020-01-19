@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor.useractions;
-//
+package edu.pse.beast.parametereditor.useractions;
+
 //import edu.pse.beast.options.OptionPresenter;
 //import edu.pse.beast.options.parametereditoroptions.ParametereditorOptions;
 //import edu.pse.beast.parametereditor.ParameterEditor;

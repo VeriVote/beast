@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput;
-//
+package edu.pse.beast.codearea.codeinput;
+
 //import java.awt.Color;
 //import java.util.HashMap;
 //import java.util.logging.Level;

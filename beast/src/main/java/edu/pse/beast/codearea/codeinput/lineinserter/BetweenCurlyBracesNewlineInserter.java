@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput.lineinserter;
-//
+package edu.pse.beast.codearea.codeinput.lineinserter;
+
 //import javax.swing.JTextPane;
 //import javax.swing.text.BadLocationException;
 //

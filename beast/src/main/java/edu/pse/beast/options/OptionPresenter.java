@@ -1,5 +1,5 @@
-//package edu.pse.beast.options;
-//
+package edu.pse.beast.options;
+
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //import edu.pse.beast.stringresource.StringResourceLoader;

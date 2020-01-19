@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.view;
-//
+package edu.pse.beast.propertylist.view;
+
 //import java.awt.Color;
 //import java.awt.Dimension;
 //import java.awt.Point;

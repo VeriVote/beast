@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder;
-//
+package edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder;
+
 //import javax.swing.JTextPane;
 //import javax.swing.text.BadLocationException;
 //

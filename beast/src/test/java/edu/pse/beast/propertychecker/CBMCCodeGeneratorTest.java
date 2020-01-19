@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertychecker;
-//
+package edu.pse.beast.propertychecker;
+
 //import static org.junit.Assert.assertTrue;
 //
 //import java.util.ArrayList;

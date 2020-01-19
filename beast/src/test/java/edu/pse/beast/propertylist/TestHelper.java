@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import java.awt.AWTException;
 //import java.awt.Robot;
 //import java.awt.event.KeyEvent;

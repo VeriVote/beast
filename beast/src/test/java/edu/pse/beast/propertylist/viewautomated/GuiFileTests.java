@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.viewautomated;
-//
+package edu.pse.beast.propertylist.viewautomated;
+
 //import static org.junit.Assert.assertEquals;
 //
 //import java.awt.AWTException;

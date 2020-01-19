@@ -1,5 +1,5 @@
-//package edu.pse.beast.options.ceditoroptions;
-//
+package edu.pse.beast.options.ceditoroptions;
+
 //import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 //import edu.pse.beast.options.Options;
 //

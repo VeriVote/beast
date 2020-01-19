@@ -1,5 +1,5 @@
-//package edu.pse.beast.electionsimulator.view;
-//
+package edu.pse.beast.electionsimulator.view;
+
 //import java.awt.Dimension;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;

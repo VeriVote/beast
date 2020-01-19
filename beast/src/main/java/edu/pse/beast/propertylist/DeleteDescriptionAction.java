@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist;
-//
+package edu.pse.beast.propertylist;
+
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 //import edu.pse.beast.propertylist.model.PLModel;
 //import edu.pse.beast.propertylist.model.PropertyItem;

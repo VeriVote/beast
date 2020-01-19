@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.codeinput;
-//
+package edu.pse.beast.codearea.codeinput;
+
 //import java.util.ArrayList;
 //import java.util.Iterator;
 //import java.util.List;

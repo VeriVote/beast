@@ -1,6 +1,5 @@
-// TODO remove class after rewrite
-// package edu.pse.beast.types.cbmctypes;
-//
+package edu.pse.beast.types.cbmctypes; // TODO remove class after rewrite
+
 // import java.util.ArrayList;
 // import java.util.Iterator;
 // import java.util.List;

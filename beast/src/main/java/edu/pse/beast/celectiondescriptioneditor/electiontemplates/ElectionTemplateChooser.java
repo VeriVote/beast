@@ -1,5 +1,5 @@
-//package edu.pse.beast.celectiondescriptioneditor.electiontemplates;
-//
+package edu.pse.beast.celectiondescriptioneditor.electiontemplates;
+
 //import java.util.Iterator;
 //
 //import javax.swing.JOptionPane;

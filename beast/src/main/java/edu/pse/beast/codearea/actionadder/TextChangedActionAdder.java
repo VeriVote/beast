@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.actionadder;
-//
+package edu.pse.beast.codearea.actionadder;
+
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
 //

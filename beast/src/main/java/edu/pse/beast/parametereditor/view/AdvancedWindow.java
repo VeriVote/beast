@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor.view;
-//
+package edu.pse.beast.parametereditor.view;
+
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //import edu.pse.beast.stringresource.StringResourceLoader;

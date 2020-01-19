@@ -1,5 +1,5 @@
-//package edu.pse.beast.booleanexpeditor;
-//
+package edu.pse.beast.booleanexpeditor;
+
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 //import java.util.ArrayList;

@@ -1,5 +1,5 @@
-//package edu.pse.beast.parametereditor.view;
-//
+package edu.pse.beast.parametereditor.view;
+
 ///**
 // * The ParameterEditorWindowStarter is used to open the ParameterEditorWindow.
 // * @author Jonas Wohnig

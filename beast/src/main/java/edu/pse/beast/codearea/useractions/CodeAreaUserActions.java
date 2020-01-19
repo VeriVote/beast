@@ -1,5 +1,5 @@
-//package edu.pse.beast.codearea.useractions;
-//
+package edu.pse.beast.codearea.useractions;
+
 //import java.util.ArrayList;
 //
 //import edu.pse.beast.codearea.CodeArea;

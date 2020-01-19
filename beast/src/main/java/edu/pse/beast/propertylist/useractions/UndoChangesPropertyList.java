@@ -1,5 +1,5 @@
-//package edu.pse.beast.propertylist.useractions;
-//
+package edu.pse.beast.propertylist.useractions;
+
 //import edu.pse.beast.propertylist.DeleteDescriptionAction;
 //import edu.pse.beast.propertylist.PropertyList;
 //import edu.pse.beast.toolbox.UserAction;
