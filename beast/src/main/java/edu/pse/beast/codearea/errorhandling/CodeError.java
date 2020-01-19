@@ -1,6 +1,7 @@
 package edu.pse.beast.codearea.errorhandling;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Class CodeError.
@@ -28,7 +29,7 @@ public class CodeError {
     private int endPos;
 
     /** The extra info. */
-    private HashMap<String, String> extraInfo = new HashMap<>();
+    private Map<String, String> extraInfo = new HashMap<String, String>();
 
     /**
      * Instantiates a new code error.

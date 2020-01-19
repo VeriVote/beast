@@ -5,18 +5,18 @@ package edu.pse.beast.toolbox;
  *
  * @author Holger Klein
  *
- * @param <FIRST>
+ * @param <F>
  *            the generic type
- * @param <SECOND>
+ * @param <S>
  *            the generic type
  */
-public class Tuple<FIRST, SECOND> {
+public class Tuple<F, S> {
 
     /** The first. */
-    private final FIRST first;
+    private final F first;
 
     /** The second. */
-    private final SECOND second;
+    private final S second;
 
     /**
      * The constructor.
@@ -26,7 +26,7 @@ public class Tuple<FIRST, SECOND> {
      * @param y
      *            the y
      */
-    public Tuple(final FIRST x, final SECOND y) {
+    public Tuple(final F x, final S y) {
         this.first = x;
         this.second = y;
     }
@@ -36,7 +36,7 @@ public class Tuple<FIRST, SECOND> {
      *
      * @return the first
      */
-    public FIRST first() {
+    public F first() {
         return first;
     }
 
@@ -45,7 +45,7 @@ public class Tuple<FIRST, SECOND> {
      *
      * @return the second
      */
-    public SECOND second() {
+    public S second() {
         return second;
     }
 }

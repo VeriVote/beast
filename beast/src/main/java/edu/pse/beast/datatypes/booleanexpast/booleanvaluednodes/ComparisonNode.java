@@ -107,7 +107,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     private String getTreeStringExtra() {
         final String simpleClassName = this.getClass().getSimpleName();
         final String text = ": Symbol ";
-        return simpleClassName.equals("ComparisonNode")
+        return "ComparisonNode".equals(simpleClassName)
                 ? "" : simpleClassName + text;
     }
 

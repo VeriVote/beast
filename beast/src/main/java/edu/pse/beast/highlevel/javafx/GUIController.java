@@ -629,6 +629,7 @@ public class GUIController {
                         Thread.sleep(Math.max(0,
                                 SIXTEEN - (System.currentTimeMillis() - time)));
                     } catch (InterruptedException e) {
+                        // Do nothing
                     }
                 }
             }
@@ -1395,6 +1396,16 @@ public class GUIController {
     }
 
     /**
+     * Open property list.
+     *
+     * @param propListFile
+     *            the prop list file
+     */
+    private void openPropertyList(final File propListFile) {
+        openPropertyListFile(propListFile);
+    }
+
+    /**
      * Open property list file.
      *
      * @param listFile
@@ -1482,16 +1493,6 @@ public class GUIController {
     }
 
     /**
-     * Open property list.
-     *
-     * @param propListFile
-     *            the prop list file
-     */
-    private void openPropertyList(final File propListFile) {
-        openPropertyListFile(propListFile);
-    }
-
-    /**
      * Open voting input.
      *
      * @param event
@@ -1543,6 +1544,16 @@ public class GUIController {
     @FXML
     public void saveAsElectionDescription(final ActionEvent event) {
         codeArea.saveAs();
+    }
+
+    /**
+     * Save as election description.
+     *
+     * @param file
+     *            the file
+     */
+    private void saveAsElectionDescription(final File file) {
+        codeArea.saveAs(file);
     }
 
     /**
@@ -1653,16 +1664,6 @@ public class GUIController {
         File projectFile = projectSaverLoader.showFileSaveDialog("");
         saveProjectFile(projectFile);
         projectSaverLoader.setSaveFile(projectFile);
-    }
-
-    /**
-     * Save as election description.
-     *
-     * @param file
-     *            the file
-     */
-    private void saveAsElectionDescription(final File file) {
-        codeArea.saveAs(file);
     }
 
     /**
@@ -2689,7 +2690,7 @@ public class GUIController {
      */
     public int getMaxUnrolls() {
         String text = maxUnrolls.getText();
-        return text.equals("") ? -1 : Integer.parseInt(maxUnrolls.getText());
+        return "".equals(text) ? -1 : Integer.parseInt(maxUnrolls.getText());
     }
 
     /**

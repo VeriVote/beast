@@ -171,7 +171,7 @@ public final class CBMCResult extends Result {
      */
     private Map<String, List<ResultValueWrapper>>
                 readVariableValue(final List<String> variablesToFind) {
-        HashMap<String, List<ResultValueWrapper>> toReturn =
+        Map<String, List<ResultValueWrapper>> toReturn =
                 new HashMap<String, List<ResultValueWrapper>>();
         if (isInitialized()) {
             for (Iterator<String> iterator = variablesToFind.iterator();

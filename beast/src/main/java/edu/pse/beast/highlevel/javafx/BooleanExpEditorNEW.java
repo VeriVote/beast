@@ -130,7 +130,7 @@ public final class BooleanExpEditorNEW implements MenuBarInterface {
     public synchronized String addSymbVar(final InternalTypeContainer container,
                                           final String toAdd,
                                           final boolean fromExisting) {
-        if (toAdd.equals("")) {
+        if ("".equals(toAdd)) {
             return "";
         }
 
@@ -350,7 +350,7 @@ public final class BooleanExpEditorNEW implements MenuBarInterface {
      */
     private PreAndPostConditionsDescription convert(final String json) {
         PreAndPostConditionsDescription newDescription = null;
-        if (!json.equals("")) {
+        if (!"".equals(json)) {
             try {
                 newDescription = propSaverLoader.createFromSaveString(json);
             } catch (JsonSyntaxException e) {

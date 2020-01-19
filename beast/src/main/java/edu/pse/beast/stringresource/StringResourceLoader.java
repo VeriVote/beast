@@ -3,6 +3,7 @@ package edu.pse.beast.stringresource;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
  */
 public class StringResourceLoader {
     /** The ids to string. */
-    private final HashMap<String, String> idsToString;
+    private final Map<String, String> idsToString;
 
     /**
      * Instantiates a new string resource loader.

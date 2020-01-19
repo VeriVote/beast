@@ -3,6 +3,7 @@ package edu.pse.beast.types.cbmctypes;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.PatternSyntaxException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -141,7 +142,7 @@ public final class CBMCxmlParser {
         try {
             String number = variableWithIndex.replaceAll("[^\\d.]", "");
             return Integer.parseInt(number);
-        } catch (Exception e) {
+        } catch (PatternSyntaxException | NumberFormatException e) {
             return 0;
         }
     }

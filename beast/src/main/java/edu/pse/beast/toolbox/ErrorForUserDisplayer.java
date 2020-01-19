@@ -40,7 +40,7 @@ public final class ErrorForUserDisplayer {
             try {
                 Thread.sleep(THOUSAND);
             } catch (InterruptedException e) {
-
+                // Do nothing
             }
         }
     }

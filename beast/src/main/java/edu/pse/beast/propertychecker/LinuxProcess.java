@@ -160,6 +160,7 @@ public final class LinuxProcess extends CBMCProcess {
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
+            // Do nothing
         }
         if (getProcess().isAlive()) {
             ErrorForUserDisplayer.displayError(

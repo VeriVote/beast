@@ -384,6 +384,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         consume(event);
     }
 
+    @Override
+    public void delete() {
+        this.delete(null);
+    }
+
     /**
      * Paste.
      *
@@ -403,6 +408,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         consume(event);
     }
 
+    @Override
+    public void paste() {
+        this.paste(null);
+    }
+
     /**
      * Cut.
      *
@@ -417,6 +427,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
                     .setContents(selection, selection);
         }
         consume(event);
+    }
+
+    @Override
+    public void cut() {
+        cut(null);
     }
 
     /**
@@ -439,6 +454,12 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         }
     }
 
+    @Override
+    public void redo() {
+        redo(null);
+        super.redo();
+    }
+
     /**
      * Undo.
      *
@@ -456,6 +477,12 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         } else {
             consume(event);
         }
+    }
+
+    @Override
+    public void undo() {
+        undo(null);
+        super.undo();
     }
 
     /**
@@ -669,6 +696,16 @@ public final class NewCodeArea extends AutoCompletionCodeArea
                 elecDescription));
     }
 
+    /**
+     * Open.
+     *
+     * @param elecDescFile
+     *            the elec desc file
+     */
+    public void open(final File elecDescFile) {
+        openJson(saverLoader.load(elecDescFile), false);
+    }
+
     @Override
     public void open() {
         String json = saverLoader.load();
@@ -699,16 +736,6 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         }
     }
 
-    /**
-     * Open.
-     *
-     * @param elecDescFile
-     *            the elec desc file
-     */
-    public void open(final File elecDescFile) {
-        openJson(saverLoader.load(elecDescFile), false);
-    }
-
     @Override
     public void save() {
         saverLoader.save("", electionSaverLoader
@@ -733,35 +760,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     }
 
     @Override
-    public void undo() {
-        undo(null);
-        super.undo();
-    }
-
-    @Override
-    public void redo() {
-        redo(null);
-        super.redo();
-    }
-
-    @Override
-    public void cut() {
-        cut(null);
-    }
-
-    @Override
     public void copy() {
         super.copy();
-    }
-
-    @Override
-    public void paste() {
-        this.paste(null);
-    }
-
-    @Override
-    public void delete() {
-        this.delete(null);
     }
 
     /**

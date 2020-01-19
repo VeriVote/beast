@@ -11,6 +11,7 @@ import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -112,7 +113,7 @@ public final class TextLineNumber extends JPanel
     private int lastLine;
 
     /** The fonts. */
-    private HashMap<String, FontMetrics> fonts;
+    private Map<String, FontMetrics> fonts;
 
     /**
      * Create a line number component for a text component. This minimum display

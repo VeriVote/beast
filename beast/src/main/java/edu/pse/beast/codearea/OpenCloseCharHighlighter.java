@@ -64,6 +64,7 @@ public final class OpenCloseCharHighlighter implements CaretListener {
             surroundingChars[0] = JTextPaneToolbox.getCharToTheLeftOfCaret(pane).charAt(0);
             surroundingChars[1] = JTextPaneToolbox.getCharToTheRightOfCaret(pane).charAt(0);
         } catch (StringIndexOutOfBoundsException ex) {
+            // Do nothing
         }
         for (int i = 0; i < surroundingChars.length; i++) {
             char c = surroundingChars[i];

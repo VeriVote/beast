@@ -67,7 +67,7 @@ public final class TimeoutValueHandler implements ChangeListener, ActionListener
     public TimeOut getTimeout() {
         TimeOut timeOut = new TimeOut();
         Integer timeoutInt;
-        if (timeoutSpinner.getValue() == "∞") {
+        if (timeoutSpinner.getValue().equals("∞")) {
             timeoutInt = 0;
         } else {
             timeoutInt = Integer.parseInt(timeoutSpinner.getValue().toString());

@@ -158,7 +158,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             prefix = "";
         }
 
-        if (!prefix.equals("")) {
+        if (!"".equals(prefix)) {
             StringBuilder builder = new StringBuilder(completeText);
             builder.delete(prefixStart, prefixEnd);
             completeText = builder.toString();
@@ -182,7 +182,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         }
 
         List<String> possibleList = new ArrayList<String>();
-        if (prefix.equals("")) {
+        if ("".equals(prefix)) {
             possibleList.addAll(possibilities);
         } else {
             // we already have started a word, so we have to filter out all

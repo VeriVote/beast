@@ -132,7 +132,7 @@ public abstract class ResultPresentationType {
      * @return the all sizes
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
-        HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
+        Map<Integer, Long> toReturn = new HashMap<Integer, Long>();
         for (Iterator<ResultValueWrapper> iterator = toExtract.iterator();
                 iterator.hasNext();) {
             ResultValueWrapper currentWrapper = iterator.next();

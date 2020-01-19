@@ -3,6 +3,7 @@ package edu.pse.beast.toolbox;
 import java.awt.Image;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The Class ImageResourceProvider.
@@ -30,7 +31,7 @@ public class ImageResourceProvider {
     private static ImageResourceProvider toolbar;
 
     /** The images. */
-    private final HashMap<String, Image> images =
+    private final Map<String, Image> images =
             new HashMap<String, Image>();
 
     /** The folder. */

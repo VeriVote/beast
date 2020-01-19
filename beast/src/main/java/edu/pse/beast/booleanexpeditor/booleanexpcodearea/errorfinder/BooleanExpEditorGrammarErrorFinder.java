@@ -52,19 +52,19 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     }
 
     /**
-     * Clear errors.
-     */
-    public void clearErrors() {
-        errors.clear();
-    }
-
-    /**
      * Gets the errors.
      *
      * @return the errors
      */
     public ArrayList<CodeError> getErrors() {
         return errors;
+    }
+
+    /**
+     * Clear errors.
+     */
+    public void clearErrors() {
+        errors.clear();
     }
 
     @Override

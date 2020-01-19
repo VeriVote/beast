@@ -87,6 +87,43 @@ public final class WindowsProcess extends CBMCProcess {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 
+    /**
+     * Find CBMC instance.
+     *
+     * @param pid
+     *            the cbmc PID
+     * @param line
+     *            the line
+     * @return the int
+     */
+    private static int findCBMCInstance(final int pid, final String line) {
+        int cbmcPID = pid;
+        // trim it down so it only has a single space in between, so
+        // we can split there
+        final String trimmedLine = line.trim().replaceAll(" +", " ");
+        if (trimmedLine.split(" ").length == 2) {
+            // filter out malformed lines
+
+            // search for the 32 and 64 bit version,
+            // so we do not have to make a whole new class for each
+            // of them
+            if (trimmedLine.split(" ")[0].equals("cbmc.exe")
+                    || trimmedLine.split(" ")[0].equals("cbmc64.exe")) {
+                if (pid == -1) {
+                    // extract the PID from the line
+                    cbmcPID = Integer.parseInt(trimmedLine.split(" ")[1]);
+                } else {
+                    ErrorLogger.log("Found multiple CBMC instances"
+                                    + " in this process tree. This"
+                                    + " is not intended, only one"
+                                    + " will be closed, please"
+                                    + " close the others by hand.");
+                }
+            }
+        }
+        return cbmcPID;
+    }
+
     @Override
     protected Process createProcess(final File toCheck, final int voters,
                                     final int candidates, final int seats,
@@ -204,7 +241,7 @@ public final class WindowsProcess extends CBMCProcess {
     @Override
     protected void stopProcess() {
         if (!getProcess().isAlive()) {
-            ErrorLogger.log("Warning, process is not alive anymore");
+            ErrorLogger.log("Warning, process is not alive anymore.");
             return;
         } else {
             // get the process id of the parent process (cmd in our case here)
@@ -252,32 +289,10 @@ public final class WindowsProcess extends CBMCProcess {
                 for (Iterator<String> iterator = children.iterator();
                         iterator.hasNext();) {
                     String line = iterator.next();
-                    // trim it down so it only has a single space in between, so
-                    // we can split there
-                    line = line.trim().replaceAll(" +", " ");
-                    if (line.split(" ").length == 2) {
-                        // filter out malformed lines
-
-                        // search for the 32 and 64 bit version,
-                        // so we do not have to make a whole new class for each
-                        // of them
-                        if (line.split(" ")[0].equals("cbmc.exe")
-                                || line.split(" ")[0].equals("cbmc64.exe")) {
-                            if (cbmcPID == -1) {
-                                // extract the PID from the line
-                                cbmcPID = Integer.parseInt(line.split(" ")[1]);
-                            } else {
-                                ErrorLogger.log("Found multiple CBMC instances"
-                                                + " in this process tree. This"
-                                                + " is not intended, only one"
-                                                + " will be closed, please"
-                                                + " close the others by hand.");
-                            }
-                        }
-                    }
+                    cbmcPID = findCBMCInstance(cbmcPID, line);
                 }
             } else {
-                ErrorLogger.log("Could not start process");
+                ErrorLogger.log("Could not start process.");
             }
             if (cbmcPID != -1) {
                 // now wrap the newly gotten process in a win32Process object to
@@ -291,6 +306,7 @@ public final class WindowsProcess extends CBMCProcess {
                     ErrorLogger.log("Unable to create a reference to the"
                                     + " CBMC process!");
                 } catch (InterruptedException e) {
+                    // Do nothing
                 }
             } else {
                 /*
@@ -302,6 +318,7 @@ public final class WindowsProcess extends CBMCProcess {
                 try {
                     Thread.sleep(WAITING_TIME_FOR_TERMINATION);
                 } catch (InterruptedException e) {
+                    // Do nothing
                 }
             }
         }

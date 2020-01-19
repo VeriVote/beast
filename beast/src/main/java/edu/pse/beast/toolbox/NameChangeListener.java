@@ -7,9 +7,9 @@ package edu.pse.beast.toolbox;
  * component's <code>addNameChangeListener</code> method. When the nameChange
  * event occurs, that object's appropriate method is invoked.
  *
- * @see NameChangeEvent
- *
  * @author Lukas Stapelbroek
+ *
+ * @see NameChangeEvent
  */
 public interface NameChangeListener {
 

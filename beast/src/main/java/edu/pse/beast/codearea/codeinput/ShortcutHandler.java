@@ -2,6 +2,7 @@ package edu.pse.beast.codearea.codeinput;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import java.util.Map;
 
 import edu.pse.beast.toolbox.UserAction;
 
@@ -40,7 +41,8 @@ public class ShortcutHandler {
     private static final int Z_CHAR = 90;
 
     /** The shortcut map. */
-    private HashMap<Integer, UserAction> shortcutMap = new HashMap<>();
+    private Map<Integer, UserAction> shortcutMap =
+            new HashMap<Integer, UserAction>();
 
     /**
      * If a useraction is mapped to the Keyevents keycode, it will be performed.

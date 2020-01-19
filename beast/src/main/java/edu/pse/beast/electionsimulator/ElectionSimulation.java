@@ -292,6 +292,24 @@ public final class ElectionSimulation implements MenuBarInterface {
     }
 
     @Override
+    public void saveAs() {
+        saverLoader.saveAs("", generateSaveString());
+    }
+
+    /**
+     * Open.
+     *
+     * @param file
+     *            the file
+     */
+    public void open(final File file) {
+        if (file.exists()) {
+            String input = saverLoader.load(file);
+            openInput(input, false);
+        }
+    }
+
+    @Override
     public void open() {
         String input = saverLoader.load();
         openInput(input, true);
@@ -307,7 +325,7 @@ public final class ElectionSimulation implements MenuBarInterface {
      */
     private void openInput(final String input, final boolean bringToFront) {
         reset();
-        if (!input.equals("")) {
+        if (!"".equals(input)) {
             String[] lines = input.split("\n");
             for (int y = 0; y < lines.length; y++) {
                 String[] values = lines[y].replaceAll("\\r", "")
@@ -328,19 +346,6 @@ public final class ElectionSimulation implements MenuBarInterface {
         }
         if (bringToFront) {
             bringToFront();
-        }
-    }
-
-    /**
-     * Open.
-     *
-     * @param file
-     *            the file
-     */
-    public void open(final File file) {
-        if (file.exists()) {
-            String input = saverLoader.load(file);
-            openInput(input, false);
         }
     }
 
@@ -386,11 +391,6 @@ public final class ElectionSimulation implements MenuBarInterface {
             }
         }
         return saveString;
-    }
-
-    @Override
-    public void saveAs() {
-        saverLoader.saveAs("", generateSaveString());
     }
 
     @Override
