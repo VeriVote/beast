@@ -120,8 +120,9 @@ public class ElectionDescription {
         while (duplicate) {
             if (code.contains(votesName)) {
                 votesName = generateRandomString(length);
-                length++; // increase the length in case all words from that
-                          // length are already taken
+                // increase the length in case all words from that
+                // length are already taken
+                length++;
             } else {
                 duplicate = false;
             }
@@ -164,8 +165,9 @@ public class ElectionDescription {
         while (duplicate) {
             if (code.contains(electName)) {
                 electName = generateRandomString(length);
-                length++; // increase the length in case all words from that
-                          // length are already taken
+                // increase the length in case all words from that
+                // length are already taken
+                length++;
             } else {
                 duplicate = false;
             }
@@ -357,9 +359,8 @@ public class ElectionDescription {
             executionValues =
                     checkIfExecutedCode(executionValues, toProc, 0,
                                         matcher.end());
-            if (!checkForTrue(executionValues)) { // the return statement was
-                                                  // NOT standing in a comment
-                                                  // block
+            if (!checkForTrue(executionValues)) {
+                // the return statement was NOT standing in a comment block
                 Tuple<String, Integer> replacement =
                         replaceSpecificReturnStatement(
                                 toProc.substring(matcher.end()),
@@ -388,18 +389,19 @@ public class ElectionDescription {
                 // append this end part again at the end
                 String trailingPart =
                         toProc.substring(
-                                (matcher.end()
-                                        + replacement.second())
+                                matcher.end()
+                                        + replacement.second()
                                 );
                 toReturn += leadingPart;
                 // now that we changed the underlying string, we have to update
                 // the matcher
                 matcher = returnPattern.matcher(trailingPart);
                 toProc = trailingPart;
-            } else { // we are in a comment, so we add the part to here and
-                   // continue on
-                toReturn += toProc.substring(0, matcher.end()); // add the
-                                                                // analysed part
+            } else {
+                // we are in a comment, so we add the part to here and
+                // continue on
+                toReturn += toProc.substring(0, matcher.end());
+                // add the analysed part
                 String trailingPart = toProc.substring(matcher.end());
                 // now that we changed the underlying string, we have to update
                 // the matcher
@@ -511,9 +513,8 @@ public class ElectionDescription {
                                                final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
-        String defaultName = "loop_index_"; // use i as the default name for a
-                                            // loop
-
+        // use i as the default name for a loop
+        String defaultName = "loop_index_";
         for (int i = 0; i < dimensions; i++) {
             String varName = defaultName + currentIndex;
             boolean duplicate = true;
@@ -521,8 +522,9 @@ public class ElectionDescription {
             while (duplicate) {
                 if (code.contains(varName) || variableName.equals(varName)) {
                     varName = generateRandomString(length) + "_" + currentIndex;
-                    length++; // increase the length in case all words from that
-                              // length are already taken
+                    // increase the length in case all words from that
+                    // length are already taken
+                    length++;
                 } else {
                     duplicate = false;
                 }
@@ -572,8 +574,8 @@ public class ElectionDescription {
                     lineComment = false; // a new line ends a line comment
                 }
                 if (currentChar == '/') {
-                    if (prevLastCharStar) { // */ ends a comment in c no matter
-                                            // what
+                    if (prevLastCharStar) {
+                        // */ ends a comment in c no matter what
                         lineComment = false;
                         multiComment = false;
                     } else {

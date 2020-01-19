@@ -291,7 +291,7 @@ public abstract class InputType extends InOutType {
                                final List<String> loopVars) {
         String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
-        return (newVotesNameAcc + " = " + origVotesNameAcc + ";");
+        return newVotesNameAcc + " = " + origVotesNameAcc + ";";
     }
 
     /**
@@ -306,8 +306,8 @@ public abstract class InputType extends InOutType {
     public String getFullVoteAccess(final String voteName,
                                     final List<String> loopVars) {
         String access = this.getAccessDimensions(loopVars);
-        return (voteName + "." + UnifiedNameContainer.getStructValueName()
-                + access);
+        return voteName + "." + UnifiedNameContainer.getStructValueName()
+                + access;
     }
 
     /**

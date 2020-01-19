@@ -197,12 +197,14 @@
       <!--See http://checkstyle.sf.net/config_javadoc.html -->
       <module name="InvalidJavadocPosition"/>
       <module name="JavadocMethod">
-        <property name="allowedAnnotations" value="Override,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName"/>
+        <property name="allowedAnnotations"
+                  value="Override,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName"/>
       </module>
       <module name="MissingJavadocMethod">
         <!--getter and setter need not necessarily be documented ... -->
         <property name="allowMissingPropertyJavadoc" value="true"/>
-        <property name="allowedAnnotations" value="Override,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName"/>
+        <property name="allowedAnnotations"
+                  value="Override,ParameterizedTest,Before,BeforeClass,BeforeEach,BeforeAll,After,AfterClass,AfterEach,AfterAll,DisplayName"/>
         <property name="scope" value="package"/>
       </module>
       <module name="JavadocType">
@@ -237,21 +239,26 @@
       <module name="AvoidStarImport"/>
       <module name="CustomImportOrder">
         <property name="customImportOrderRules"
-                  value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS"/>
-        <property name="specialImportsRegExp" value="^org\."/>
+                  value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE"/>
+        <property name="standardPackageRegExp" value="^java\."/>
+        <property name="specialImportsRegExp" value="^(javax|javafx)\."/>
+        <property name="thirdPartyPackageRegExp" value="^(org|com)\."/>
         <property name="sortImportsInGroupAlphabetically" value="true"/>
         <property name="separateLineBetweenGroups" value="true"/>
       </module>
 
       <module name="IllegalImport"/> <!--defaults to sun.* packages -->
 
-      <module name="ImportOrder">
-        <property name="groups" value="/^java\./,javax,org"/>
+      <!-- module name="ImportOrder">
+        <property name="staticGroups" value="org,java"/>
+        <property name="groups" value="/^java\./,javax,javafx,org,com"/>
+        <- property name="useContainerOrderingForStatic" value="true"/->
         <property name="ordered" value="true"/>
-        <property name="separated" value="true"/>
+        <- property name="separated" value="true"/->
+        <- property name="separatedStaticGroups" value="true"/->
         <property name="option" value="top"/>
         <property name="sortStaticImportsAlphabetically" value="true"/>
-      </module>
+      </module-->
       <module name="RedundantImport"/>
       <module name="UnusedImports">
         <property name="processJavadoc" value="false"/>
@@ -418,6 +425,8 @@
       </module>
 
       <module name="ArrayTypeStyle"/>
+      <module name="CommentsIndentation"/>
+      <module name="OuterTypeFilename"/>
       <module name="FinalParameters"/>
       <module name="TodoComment">
           <property name="format" value="(TODO)|(FIXME)"/>

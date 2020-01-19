@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Bounds;
+
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Bounds;
 
 /**
  * The Class AutoCompletionCodeArea.
@@ -183,9 +184,9 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         List<String> possibleList = new ArrayList<String>();
         if (prefix.equals("")) {
             possibleList.addAll(possibilities);
-        } else { // we already have started a word, so we have to filter out all
-                 // non fitting
-                 // words
+        } else {
+            // we already have started a word, so we have to filter out all
+            // non-fitting words
             for (Iterator<String> iterator = possibilities.iterator();
                     iterator.hasNext();) {
                 String str = iterator.next();
@@ -197,7 +198,6 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         }
         // if (possibleList.size() == 1) {
         // }
-
         return new Tuple3<List<String>, Integer, Integer>(possibleList,
                                                           prefixStart,
                                                           prefixEnd);

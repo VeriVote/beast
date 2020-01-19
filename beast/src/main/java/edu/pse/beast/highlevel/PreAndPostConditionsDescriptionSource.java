@@ -52,10 +52,10 @@ public interface PreAndPostConditionsDescriptionSource {
      */
     List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin();
 
-//  /**
-//   * references result objects together, if they belong to the same property
-//   * @param results
-//   * @return
-//   */
-//  public List<Integer> referenceResult(List<Result> results);
+    // /**
+    //  * references result objects together, if they belong to the same property
+    //  * @param results
+    //  * @return
+    //  */
+    // public List<Integer> referenceResult(List<Result> results);
 }

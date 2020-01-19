@@ -18,6 +18,13 @@ import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.scene.Node;
+import javafx.scene.control.IndexRange;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.PlainTextChange;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -37,12 +44,6 @@ import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
-import javafx.scene.Node;
-import javafx.scene.control.IndexRange;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 
 /**
  * The Class NewCodeArea.
@@ -329,8 +330,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
 
         this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             // System.out.println(event.getCode());
-            if (selectAllCombination.match(event)) { // we just want to select
-                                                     // all
+            if (selectAllCombination.match(event)) {
+                // we just want to select all
                 this.selectAll();
                 consume(event);
             } else if (backspaceCombination.match(event)) {

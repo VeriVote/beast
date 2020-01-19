@@ -6,8 +6,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;
+
+import edu.pse.beast.toolbox.Tuple3;
 
 /**
  * The Class BarCharElement.

@@ -2,6 +2,8 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
 import java.util.List;
 
+import javafx.scene.Node;
+
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
 
@@ -17,7 +19,6 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
-import javafx.scene.Node;
 
 /**
  * The Class MarginResult.

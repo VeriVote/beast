@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -23,6 +20,10 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * The Class ChildTreeItem.

@@ -6,7 +6,7 @@ booleanExpListElement : booleanExp ';' |
 
 //new part 0
                         votingListChangeExp ';'|
-                        votingTupelChangeExp ';' |
+                        votingTupleChangeExp ';' |
                         candidateListChangeExp ';';
 //end new part 0
 
@@ -15,7 +15,7 @@ votingListChangeExp : Vote ValueAssign votingListChangeContent;
 
 votingListChangeContent : concatenationExp | permutationExp; //expressions that make changes to the voting lists used
 
-votingTupelChangeExp: tuple ValueAssign splitExp;
+votingTupleChangeExp: tuple ValueAssign splitExp;
 
 candidateListChangeExp: Elect ValueAssign intersectExp;
 

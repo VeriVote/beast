@@ -5,13 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.IntFunction;
 
+import javafx.scene.Node;
+
 import org.fxmisc.richtext.LineNumberFactory;
 
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
-import javafx.scene.Node;
 
 /**
  * The Class BoundedVarCodeArea.

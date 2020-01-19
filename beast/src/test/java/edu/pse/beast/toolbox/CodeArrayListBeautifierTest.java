@@ -22,7 +22,7 @@ public class CodeArrayListBeautifierTest {
         String e = "test";
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.add(e);
-        assertEquals("test", (instance.getCodeArrayList().get(0)));
+        assertEquals("test", instance.getCodeArrayList().get(0));
         instance.add(null);
     }
 
@@ -38,7 +38,7 @@ public class CodeArrayListBeautifierTest {
         instance.addTab();
         instance.add(e);
         assertEquals(CodeArrayListBeautifier.TAB + "test",
-                     (instance.getCodeArrayList().get(0)));
+                     instance.getCodeArrayList().get(0));
     }
 
     /**
@@ -53,19 +53,19 @@ public class CodeArrayListBeautifierTest {
 
         instance.deleteTab();
         instance.add(e);
-        assertEquals("test", (instance.getCodeArrayList().get(0)));
+        assertEquals("test", instance.getCodeArrayList().get(0));
 
         instance.deleteTab();
         e = "test2";
         instance.add(e);
-        assertEquals("test2", (instance.getCodeArrayList().get(1)));
+        assertEquals("test2", instance.getCodeArrayList().get(1));
 
         e = "test3";
         instance.addTab();
         instance.add(e);
         instance.deleteTab();
         assertEquals(CodeArrayListBeautifier.TAB + "test3",
-                     (instance.getCodeArrayList().get(2)));
+                     instance.getCodeArrayList().get(2));
     }
 
     /**
@@ -77,7 +77,7 @@ public class CodeArrayListBeautifierTest {
         String e = "test";
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.add(e);
-        assertEquals("test", (instance.getCodeArrayList().get(0)));
+        assertEquals("test", instance.getCodeArrayList().get(0));
     }
 
     /**

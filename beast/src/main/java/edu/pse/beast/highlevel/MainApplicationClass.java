@@ -9,10 +9,6 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.fxmisc.wellbehaved.event.InputMap;
-
-import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -27,6 +23,11 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import org.fxmisc.wellbehaved.event.InputMap;
+
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
@@ -52,7 +53,7 @@ public final class MainApplicationClass extends Application {
     // private static final String RESOURCE =
     // "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
     private static final String RESOURCE_BUNDLE =
-    // "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+            // "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
             "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
 
     /** The Constant BEAST_ICON. */

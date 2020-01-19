@@ -100,8 +100,8 @@ public final class MinMaxSpinValueHandler implements ChangeListener {
 
     @Override
     public synchronized void stateChanged(final ChangeEvent e) {
-        String minString = (minSpinner.getValue().toString());
-        String maxString = (maxSpinner.getValue().toString());
+        String minString = minSpinner.getValue().toString();
+        String maxString = maxSpinner.getValue().toString();
         if ((minString + maxString).chars().allMatch(Character::isDigit)
                 && reacts) {
             Integer min = Integer.parseInt(minString);

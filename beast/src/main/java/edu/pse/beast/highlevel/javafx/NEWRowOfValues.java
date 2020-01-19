@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
+
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
 
 /**
  * The Class NEWRowOfValues.
@@ -94,8 +95,8 @@ public class NEWRowOfValues {
         fields = new ArrayList<>(rowSize);
         this.amountOfSeats = amountSeats;
         this.amountOfVoters = amountVoters;
-        this.isTwoDim = (elecTypeContainer.getInputType()
-                .getAmountOfDimensions() == 2);
+        this.isTwoDim = elecTypeContainer.getInputType()
+                .getAmountOfDimensions() == 2;
         this.setRowSize(1);
     }
 
@@ -177,8 +178,9 @@ public class NEWRowOfValues {
                                      final int positionInRow,
                                      final boolean block) {
         List<NEWRowOfValues> allRows = parent.getRows();
-        allRows.remove(this); // in case that this row is created before it is
-                              // saved by its parent
+        // in case that this row is created before it is
+        // saved by its parent
+        allRows.remove(this);
         allRows.add(this);
         String vettedValue = container.getInputType().vetValue(container,
                 allRows, rowIndex, positionInRow, newValue);

@@ -49,7 +49,7 @@ public final class CBMCResultValueArray implements CBMCResultValue {
 
         while (nextNode != null) {
             Element childElement = null;
-            if ((nextNode.getNodeType() != Node.ELEMENT_NODE)) {
+            if (nextNode.getNodeType() != Node.ELEMENT_NODE) {
                 System.err.println("error converting node to element");
                 continue;
             } else {
@@ -64,8 +64,8 @@ public final class CBMCResultValueArray implements CBMCResultValue {
                 );
             }
             // else {
-                // throw new RuntimeException("mismatch between indices when
-                // creating an array");
+            //     throw new RuntimeException("mismatch between indices when
+            //     creating an array");
             // }
             currentPos++;
             nextNode = childElement.getNextSibling();

@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
+
 import com.google.gson.JsonSyntaxException;
 
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGeneralErrorFinder;
@@ -19,8 +22,6 @@ import edu.pse.beast.saverloader.PropertyDescriptionSaverLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 
 /**
  * The Class BooleanExpEditorNEW.
@@ -136,7 +137,7 @@ public final class BooleanExpEditorNEW implements MenuBarInterface {
         final String addedString = toAdd.strip();
         if (CCodeHelper.isValidCName(addedString)) {
             GUIController.getController().getVariableNameField().setText("");
-            adding: if ((!containsVarName(addedString))) {
+            adding: if (!containsVarName(addedString)) {
                 // if (!fromExisting) {
                 TreeItem<String> newItem = new TreeItem<String>(addedString);
                 switch (container.getInternalType()) {

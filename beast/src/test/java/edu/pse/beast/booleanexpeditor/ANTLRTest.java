@@ -9,7 +9,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 //import edu.pse.beast.toolbox.antlr.booleanexp.ANTLRBooleanExpressionListener;
-
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 

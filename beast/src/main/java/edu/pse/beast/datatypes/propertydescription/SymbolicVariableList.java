@@ -45,7 +45,7 @@ public final class SymbolicVariableList {
             SymbolicVariable var =
                     new SymbolicVariable(id, internalTypeContainer);
             symbolicVariableList.add(var);
-            listenerList.forEach((listener) -> {
+            listenerList.forEach(listener -> {
                 listener.addedVar(var);
             });
         } else {
@@ -62,7 +62,7 @@ public final class SymbolicVariableList {
      */
     public synchronized void addSymbolicVariable(final SymbolicVariable var) {
         symbolicVariableList.add(var);
-        listenerList.forEach((listener) -> {
+        listenerList.forEach(listener -> {
             listener.addedVar(var);
         });
     }
@@ -134,7 +134,7 @@ public final class SymbolicVariableList {
             varFound = var.getId().equals(id);
             if (varFound) {
                 symbolicVariableList.remove(var);
-                listenerList.forEach((listener) -> {
+                listenerList.forEach(listener -> {
                     listener.removedVar(var);
                 });
                 break;
@@ -152,7 +152,7 @@ public final class SymbolicVariableList {
     public synchronized void removeSymbolicVariable(final int index) {
         if (index >= 0) {
             SymbolicVariable var = symbolicVariableList.get(index);
-            listenerList.forEach((l) -> {
+            listenerList.forEach(l -> {
                 l.removedVar(var);
             });
             symbolicVariableList.remove(index);
@@ -167,7 +167,7 @@ public final class SymbolicVariableList {
      */
     public synchronized void addListener(final VariableListListener listener) {
         this.listenerList.add(listener);
-        symbolicVariableList.forEach((var) -> {
+        symbolicVariableList.forEach(var -> {
             listener.addedVar(var);
         });
     }
@@ -180,7 +180,7 @@ public final class SymbolicVariableList {
      */
     public synchronized void removeListener(final VariableListListener listener) {
         this.listenerList.remove(listener);
-        symbolicVariableList.forEach((var) -> {
+        symbolicVariableList.forEach(var -> {
             listener.removedVar(var);
         });
     }

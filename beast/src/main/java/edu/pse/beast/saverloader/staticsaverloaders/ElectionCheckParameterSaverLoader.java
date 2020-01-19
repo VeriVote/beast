@@ -256,9 +256,9 @@ public final class ElectionCheckParameterSaverLoader {
                 + electionCheckParameter.getProcesses() + boundString(PROCS);
         final String argument = valString(ARG)
                 + electionCheckParameter.getArgument() + boundString(ARG);
-        return (amountVotersMin + amountVotersMax + amountCandidatesMin
+        return amountVotersMin + amountVotersMax + amountCandidatesMin
                 + amountCandidatesMax + amountSeatsMin + amountSeatsMax
-                + timeout + processes + argument);
+                + timeout + processes + argument;
     }
 
     /**

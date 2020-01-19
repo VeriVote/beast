@@ -43,8 +43,8 @@ public class SaverLoader {
     private final MinimalSaverInterface owner;
 
     /** The has changes. */
-    private boolean hasChanges = false; // small hack, update values later on
-                                        // with listeners
+    private boolean hasChanges = false;
+    // small hack, update values later on with listeners
 
     /** The has save file. */
     private boolean hasSaveFile = false;
@@ -74,8 +74,8 @@ public class SaverLoader {
     public SaverLoader(final String fileEnd, final String fileExtensionDescr,
                        final MinimalSaverInterface ownerInterface) {
         this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
-        new File(initialDir).mkdirs(); // make sure, that the initial folder
-                                       // exists
+        // make sure, that the initial folder exists
+        new File(initialDir).mkdirs();
         this.fileEnding = fileEnd;
         this.fileExtensionDescription = fileExtensionDescr;
         this.owner = ownerInterface;

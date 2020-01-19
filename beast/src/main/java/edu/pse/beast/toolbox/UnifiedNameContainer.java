@@ -9,11 +9,12 @@ import java.util.Map;
 /**
  * The Class UnifiedNameContainer.
  *
+ * <p>TODO make not static and then only
+ * accessible through electionContainer
+ *
  * @author Lukas Stapelbroek
  */
-public final class UnifiedNameContainer { // TODO make not static and then only
-                                          // accessible through
-                                          // electionContainer
+public final class UnifiedNameContainer {
     /** The listeners. */
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
 

@@ -36,7 +36,7 @@ public final class CBMCResultValueStruct implements CBMCResultValue {
 
         for (int i = 0; i < subVariables.getLength(); i++) {
             Element currentMember = null;
-            if ((subVariables.item(i).getNodeType() != Node.ELEMENT_NODE)) {
+            if (subVariables.item(i).getNodeType() != Node.ELEMENT_NODE) {
                 System.err.println("error converting node to element");
                 continue;
             } else {

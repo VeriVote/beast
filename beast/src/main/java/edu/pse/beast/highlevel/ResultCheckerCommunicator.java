@@ -28,16 +28,16 @@ public interface ResultCheckerCommunicator {
                                                List<ParentTreeItem> parentProperties,
                                                ElectionCheckParameter electionCheckParameter);
 
-//
-//    /**
-//     * starts the check for a give file
-//     * @param toCheck the file to check
-//     * @param params the parameters to give extra
-//     * @return a single unprocessedResult
-//     */
-//    public UnprocessedCBMCResult checkFile(File toCheck,
-//                                           ElectionDescription elecDescr,
-//                                           ParameterSource params);
+    //
+    // /**
+    //  * starts the check for a give file
+    //  * @param toCheck the file to check
+    //  * @param params the parameters to give extra
+    //  * @return a single unprocessedResult
+    //  */
+    // public UnprocessedCBMCResult checkFile(File toCheck,
+    //                                        ElectionDescription elecDescr,
+    //                                        ParameterSource params);
 
     /**
      * Stops checks.

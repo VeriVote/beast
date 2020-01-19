@@ -120,12 +120,12 @@ public class PropertyCombiner extends TabClass {
                         "*." + fileEnding));
         fileChooser.getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
-//
-//      fileChooser.selectedExtensionFilterProperty()
-//      fileChooser.setSelectedExtensionFilter(
-//              new FileChooser.ExtensionFilter("Extension", "*" + fileEnding));
-//      fileChooser.setSelectedExtensionFilter(
-//          new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+
+        // fileChooser.selectedExtensionFilterProperty()
+        // fileChooser.setSelectedExtensionFilter(
+        //         new FileChooser.ExtensionFilter("Extension", "*" + fileEnding));
+        // fileChooser.setSelectedExtensionFilter(
+        //         new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
         // fileChooser.setTitle("Save document");
 
         fileChooser.setInitialDirectory(new File(initialDir));

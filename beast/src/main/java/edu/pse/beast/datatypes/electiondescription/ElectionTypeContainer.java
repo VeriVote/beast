@@ -9,12 +9,13 @@ import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
 /**
  * Datatype for the Input and Output of an Election.
  *
+ * <p>TODO make this class abstract, move code
+ *    to "CBMCElectionTypeContainer"
+ *
  * @author Lukas Stapelbroek
  *
  */
-public class ElectionTypeContainer { // TODO make this class abstract, move code
-                                     // to "CBMCElectionTypeContainer"
-
+public class ElectionTypeContainer {
     /** The in type. */
     private final InputType inType;
 
@@ -53,8 +54,8 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
     private void generateStructs() {
         this.inputStruct = new CBMCStruct(inType);
         this.outputStruct = new CBMCStruct(outType);
-        if (this.inputStruct.equals(this.outputStruct)) { // they have the same
-                                                          // shape
+        if (this.inputStruct.equals(this.outputStruct)) {
+            // they have the same shape
             this.outputStruct = inputStruct;
         }
         inType.setStruct(inputStruct);

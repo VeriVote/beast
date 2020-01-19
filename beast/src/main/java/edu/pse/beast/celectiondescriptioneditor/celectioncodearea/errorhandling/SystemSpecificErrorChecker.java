@@ -130,8 +130,8 @@ public abstract class SystemSpecificErrorChecker {
         IOException exception = null;
         for (final File file : files) {
             try {
-                if (!file.getName().equals(keep)) { // Difference to original
-                                                    // method
+                if (!file.getName().equals(keep)) {
+                    // Difference to original method
                     FileUtils.forceDelete(file);
                 }
             } catch (final IOException ioe) {

@@ -506,14 +506,13 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         lhs = variableNames.pop();
         // setToPostConditionMode();
         internCode = varName + " = " + lhs;
-        final String prefix = post ? ".arr" : ""; // TODO use unified name
-                                                  // container, or defer to the
-                                                  // Types
+        // TODO use unified name container, or defer to the Types
+        final String prefix = post ? ".arr" : "";
         String preFixCopy = prefix;
         for (int i = 0; i < lhslistLevel; ++i) {
             internCode += preFixCopy + "[VAR]".replace("VAR", counter.get(i));
-            preFixCopy = ""; // TODO rewrite this with using input and output
-                             // types
+            // TODO rewrite this with using input and output types
+            preFixCopy = "";
         }
         internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
         internCode += rhs;
@@ -521,8 +520,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         preFixCopy = prefix;
         for (int i = 0; i < rhslistLevel; ++i) {
             internCode += preFixCopy + "[VAR]".replace("VAR", counter.get(i));
-            preFixCopy = ""; // TODO rewrite this with using input and output
-                             // types
+            // TODO rewrite this with using input and output types
+            preFixCopy = "";
         }
         code.add(internCode + ";");
         for (int i = 0; i < maxListLevel; ++i) {
@@ -727,9 +726,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 + ";");
         String tmpLines = "tmp_Lines" + getTmpIndex();
         code.add("unsigned int *" + tmpLines + ";");
+        // TODO maybe make this non-dynamic
         code.add(tmpLines + " = getRandomSplitLines(" + splits + ", "
-                + voteInputSize + ");"); // TODO maybe make this
-                                         // non dynamic
+                + voteInputSize + ");");
         String splitLines = "splitLines" + getTmpIndex();
         code.add("unsigned int " + splitLines + "[" + splits + "];");
         code.add("for (int i = 0; i <= " + splits + "; i++) {");
@@ -774,8 +773,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // TODO is V correct here?
         code.add("for (int i = 0; i < V; i++) {");
         if (2 <= dim) {
-            code.add("for (int j = 0; j < C; j++) {"); // TODO change to
-                                                       // dimensions
+            // TODO change to dimensions
+            code.add("for (int j = 0; j < C; j++) {");
         }
         code.add(tupleVotes.get(tupleSize - 1).toLowerCase() + ".arr[i]"
                 + (2 <= dim ? "[j]" : "") + " = " + tmp + ".arr[i]" + ""
@@ -784,7 +783,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add("  }");
         }
         code.add("}");
-        int index = (tupleSize - 1);
+        int index = tupleSize - 1;
         code.add("V" + tupleVotes.get(index).substring("votes".length()) + " = "
                 + voteInputSize + " - " + lastSplit + ";");
         // finished the split

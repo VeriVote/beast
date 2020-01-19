@@ -22,71 +22,70 @@ public class ElectionTemplateHandler {
      * Creates the template handler and sets it up for usage.
      */
     public ElectionTemplateHandler() {
+        // inputTypes.add(new ElectionTypeContainer(
+        //         new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+        //                                   InternalTypeRep.VOTER),
+        //         ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE));
+        // inputTypes.add(new ElectionTypeContainer(
+        //         new InternalTypeContainer(new InternalTypeContainer(
+        //                 new InternalTypeContainer(InternalTypeRep.INTEGER),
+        //                 InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+        //         ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE));
+        //
+        // inputTypes.add(new ElectionTypeContainer(
+        //         new InternalTypeContainer(new InternalTypeContainer(
+        //                 new InternalTypeContainer(InternalTypeRep.INTEGER),
+        //                 InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+        //         ElectionTypeContainer.ElectionInputTypeIds.APPROVAL));
+        //
+        // inputTypes.add(new ElectionTypeContainer(
+        //         new InternalTypeContainer(new InternalTypeContainer(
+        //                 new InternalTypeContainer(InternalTypeRep.INTEGER),
+        //                 InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+        //         ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL));
+        //
+        // resTypes.add(new ElectionTypeContainer(
+        //         new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+        //         ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF
+        // ));
+        //
+        // resTypes.add(new ElectionTypeContainer(
+        //         new InternalTypeContainer(
+        //                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+        //                 InternalTypeRep.SEAT
+        //         ),
+        //         ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
+        // );
     }
-//        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-//                                          InternalTypeRep.VOTER),
-//                ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE));
-//        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(
-//                    new InternalTypeContainer(InternalTypeRep.INTEGER),
-//                    InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
-//                ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE));
-//
-//        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(
-//                    new InternalTypeContainer(InternalTypeRep.INTEGER),
-//                    InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
-//                ElectionTypeContainer.ElectionInputTypeIds.APPROVAL));
-//
-//        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(
-//                    new InternalTypeContainer(InternalTypeRep.INTEGER),
-//                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
-//                ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL));
-//
-//        resTypes.add(new ElectionTypeContainer(
-//            new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-//            ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF
-//        ));
-//
-//        resTypes.add(new ElectionTypeContainer(
-//            new InternalTypeContainer(
-//                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-//                InternalTypeRep.SEAT
-//            ),
-//            ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
-//        );
-//
-//    /**
-//     * returns the election type container having the supplied id
-//     *
-//     * @param id the id of the election type container to be retrieved
-//     * @return the election type container if it exists, null otherwise
-//     */
-//    public ElectionTypeContainer getById(ElectionInputTypeIds id) {
-//        for (ElectionTypeContainer cont : inputTypes) {
-//            if (cont.getInputID() == id)
-//                return cont;
-//        }
-//
-//        return null;
-//    }
-//
-//    /**
-//     * returns the election type container having the supplied id
-//     *
-//     * @param id
-//     *            the id of the election type container to be retrieved
-//     * @return the election type container if it exists, null otherwise
-//     */
-//    public ElectionTypeContainer getById(ElectionOutputTypeIds id) {
-//        for (ElectionTypeContainer cont : resTypes) {
-//            if (cont.getOutputID() == id)
-//                return cont;
-//        }
-//        return null;
-//    }
+
+    // /**
+    //  * returns the election type container having the supplied id
+    //  *
+    //  * @param id the id of the election type container to be retrieved
+    //  * @return the election type container if it exists, null otherwise
+    //  */
+    // public ElectionTypeContainer getById(ElectionInputTypeIds id) {
+    //     for (ElectionTypeContainer cont : inputTypes) {
+    //         if (cont.getInputID() == id)
+    //             return cont;
+    //     }
+    //     return null;
+    // }
+
+    // /**
+    //  * returns the election type container having the supplied id
+    //  *
+    //  * @param id
+    //  *            the id of the election type container to be retrieved
+    //  * @return the election type container if it exists, null otherwise
+    //  */
+    // public ElectionTypeContainer getById(ElectionOutputTypeIds id) {
+    //     for (ElectionTypeContainer cont : resTypes) {
+    //         if (cont.getOutputID() == id)
+    //             return cont;
+    //     }
+    //     return null;
+    // }
 
     /**
      * Get standard input.

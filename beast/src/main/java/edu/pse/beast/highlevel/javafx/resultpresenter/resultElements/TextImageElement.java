@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.pse.beast.toolbox.RichTextInformation;
 import javafx.scene.input.MouseEvent;
+
+import edu.pse.beast.toolbox.RichTextInformation;
 
 /**
  * The Class TextImageElement.
@@ -72,22 +73,23 @@ public class TextImageElement extends ResultImageElement {
     public void drawElement(final Graphics2D graphics, final double scale) {
         // double xOffset = 0;
         // for (RichTextInformation info : richTextInfo) {
-            // TODO change richtextinfo maybe to TextStyle
-            //
-            // Font scaledFont = new Font(info.font.getName(),
-            // info.font.getStyle(),
-            // (int) (Math.round(((info.font.getSize() * scale)))));
-            //
-            // graphics.setFont(scaledFont);
-            // graphics.setColor(info.color);
-            //
-            // graphics.drawString(replaceCharacters(info.text), (float)
-            // ((super.getxPosTopLeft() * scale) + xOffset),
-            // (float) (super.getyPosBottomRight() * scale));
-            //
-            // xOffset +=
-            // scaledFont.getStringBounds(replaceCharacters(info.text),
-            // frc).getWidth();
+        //     // TODO change richtextinfo maybe to TextStyle
+        //
+        //     Font scaledFont =
+        //         new Font(info.font.getName(),
+        //                  info.font.getStyle(),
+        //                  (int) (Math.round(((info.font.getSize() * scale)))));
+        //
+        //     graphics.setFont(scaledFont);
+        //     graphics.setColor(info.color);
+        //
+        //     graphics.drawString(replaceCharacters(info.text),
+        //                         (float) (super.getxPosTopLeft() * scale + xOffset),
+        //                         (float) (super.getyPosBottomRight() * scale));
+        //
+        //     xOffset +=
+        //         scaledFont.getStringBounds(replaceCharacters(info.text),
+        //                                    frc).getWidth();
         // }
     }
 
@@ -105,11 +107,11 @@ public class TextImageElement extends ResultImageElement {
                                   final List<RichTextInformation> textInfo) {
         double maxTextWidth = 0;
         // for (Iterator<RichTextInformation> iterator = textInfo.iterator();
-                // iterator.hasNext();) {
-            // RichTextInformation info = (RichTextInformation) iterator.next();
-            // maxTextWidth +=
-            // info.font.getStringBounds(replaceCharacters(info.text),
-            // frc).getWidth();
+        //         iterator.hasNext();) {
+        //     RichTextInformation info = (RichTextInformation) iterator.next();
+        //     maxTextWidth +=
+        //         info.font.getStringBounds(replaceCharacters(info.text),
+        //                                   frc).getWidth();
         // }
         return startX + maxTextWidth;
     }
@@ -129,11 +131,12 @@ public class TextImageElement extends ResultImageElement {
         double maxTextHeight = 0;
 
         // for (Iterator<RichTextInformation> iterator = textInfo.iterator();
-                // iterator.hasNext();) {
-            // RichTextInformation info = (RichTextInformation) iterator.next();
-            // maxTextHeight = Math.max(maxTextHeight,
-            // info.font.getStringBounds(replaceCharacters(info.text),
-            // frc).getHeight());
+        //         iterator.hasNext();) {
+        //     RichTextInformation info = (RichTextInformation) iterator.next();
+        //     maxTextHeight =
+        //         Math.max(maxTextHeight,
+        //                  info.font.getStringBounds(replaceCharacters(info.text),
+        //                                            frc).getHeight());
         // }
         return startY + maxTextHeight;
     }

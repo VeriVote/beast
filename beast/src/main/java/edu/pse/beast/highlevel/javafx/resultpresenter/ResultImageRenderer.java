@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.ResultImageElement;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,6 +15,9 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.ResultImageElement;
 
 /**
  * The Class ResultImageRenderer.

@@ -3,6 +3,8 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.scene.Node;
+
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
@@ -13,7 +15,6 @@ import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
-import javafx.scene.Node;
 
 /**
  * The Class CBMCError.

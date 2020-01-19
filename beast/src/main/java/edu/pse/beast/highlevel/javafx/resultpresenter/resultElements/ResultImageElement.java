@@ -92,8 +92,8 @@ public abstract class ResultImageElement {
      * @return true, if the point is inside this rectangle
      */
     public boolean isInside(final double posX, final double posY) {
-        return ((posX <= xPosBottomRight) && (posX >= xPosTopLeft)
-                && (posY <= yPosBottomRight) && (posY >= yPosTopLeft));
+        return (posX <= xPosBottomRight) && (posX >= xPosTopLeft)
+                && (posY <= yPosBottomRight) && (posY >= yPosTopLeft);
     }
 
     // abstract methods

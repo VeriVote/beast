@@ -105,7 +105,7 @@ public class FileLoaderTest {
         }
         String result = FileLoader.getNewUniqueName(pathToDir);
         assertNotNull(result);
-        usedNames.forEach((filename) -> {
+        usedNames.forEach(filename -> {
             assertNotEquals(filename, result);
         });
     }

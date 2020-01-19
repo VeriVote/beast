@@ -164,8 +164,9 @@ public abstract class InOutType {
      * @return the size of all dimensions, null if it is 0 dimensional
      */
     public String[] getSizeOfDimensions() {
-        return sizeOfDimensions.clone(); // it is important to clone the array,
-                                         // as it should not be changed
+        // it is important to clone the array,
+        // as it should not be changed
+        return sizeOfDimensions.clone();
     }
 
     /**
@@ -249,8 +250,8 @@ public abstract class InOutType {
      */
     public final String accessValues(final ElectionTypeContainer electionContainer) {
         if (dimensions == 0) {
-            return ""; // zero-dimensional dataTypes are not represented by
-                       // structs
+            // zero-dimensional dataTypes are not represented by structs
+            return "";
         } else {
             return UnifiedNameContainer.getStructValueName();
         }

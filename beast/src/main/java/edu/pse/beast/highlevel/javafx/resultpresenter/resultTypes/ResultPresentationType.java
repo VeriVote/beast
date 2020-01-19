@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import edu.pse.beast.highlevel.javafx.AnalysisType;
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -19,6 +14,12 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+
+import edu.pse.beast.highlevel.javafx.AnalysisType;
+import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
+import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 
 /**
  * The Class ResultPresentationType.

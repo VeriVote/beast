@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.fxmisc.richtext.model.Codec;
-
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+
+import org.fxmisc.richtext.model.Codec;
 
 //TODO maybe make the same changes that were done to TextStyle (default values)
 /**

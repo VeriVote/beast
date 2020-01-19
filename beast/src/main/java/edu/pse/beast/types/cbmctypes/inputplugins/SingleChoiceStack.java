@@ -100,8 +100,9 @@ public final class SingleChoiceStack extends CBMCInputType {
                     );
             totalSum += Integer.parseInt(newValue);
             if (totalSum > rows.get(rowNumber).getAmountVoters()) {
-                return "0"; // we would exceed the limit with this addition, so
-                            // we reset to 0
+                // we would exceed the limit with this addition, so
+                // we reset to 0
+                return "0";
             } else {
                 return newValue;
             }

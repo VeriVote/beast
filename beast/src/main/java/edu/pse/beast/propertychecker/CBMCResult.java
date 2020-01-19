@@ -106,8 +106,8 @@ public final class CBMCResult extends Result {
         super.setResult(result);
         if (result != null) {
             parseResult(); // get the xml list from this list of strings
-            String[] arr = {"votes\\d", "elect\\d"}; // TODO add the
-                                                     // NameContainer here
+            // TODO add the NameContainer here
+            String[] arr = {"votes\\d", "elect\\d"};
             readVariableValue(Arrays.asList(arr));
             // already read "votes" and "elect", so the access can be faster
         }
@@ -156,8 +156,8 @@ public final class CBMCResult extends Result {
         if (valueCache.containsKey(variableMatcher)) {
             return valueCache.get(variableMatcher);
         } else {
-            readVariableValue(arg); // afterwards, variables matching are in the
-                                    // cache
+            // afterwards, variables matching are in the cache
+            readVariableValue(arg);
         }
         return valueCache.get(variableMatcher);
     }
@@ -181,8 +181,9 @@ public final class CBMCResult extends Result {
                     // the variable was requested before
                     toReturn.put(currentMatcher,
                             valueCache.get(currentMatcher));
-                    iterator.remove(); // we do not need to request for this
-                                       // value to be extracted again
+                    // we do not need to request for this
+                    // value to be extracted again
+                    iterator.remove();
                 }
             }
             List<Tuple<String, List<ResultValueWrapper>>> newValues =

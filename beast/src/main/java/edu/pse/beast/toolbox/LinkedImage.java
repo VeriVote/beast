@@ -4,9 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.fxmisc.richtext.model.Codec;
-
 import javafx.scene.Node;
+
+import org.fxmisc.richtext.model.Codec;
 
 /**
  * The Interface LinkedImage.

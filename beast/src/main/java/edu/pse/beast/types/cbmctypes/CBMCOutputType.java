@@ -39,8 +39,8 @@ public abstract class CBMCOutputType extends OutputType {
                 + UnifiedNameContainer.getVotingMethod() + "( ORIG_VOTES_SIZE, "
                 + UnifiedNameContainer.getOrigVotesName() + ");";
         code.add(definition);
-        code.add("assert(0);"); // add an assertion that never holds to be able
-                                // to extract the data
+        // add an assertion that never holds to be able to extract the data
+        code.add("assert(0);");
         code.deleteTab();
         code.add("}");
         return code;

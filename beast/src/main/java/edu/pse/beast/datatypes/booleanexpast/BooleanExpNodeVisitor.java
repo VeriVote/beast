@@ -177,10 +177,10 @@ public interface BooleanExpNodeVisitor {
     /**
      * Visit voting tuple change node.
      *
-     * @param votingTupelChangeExp
-     *            the voting tupel change exp
+     * @param votingTupleChangeExp
+     *            the voting tuple change exp
      */
-    void visitVotingTupleChangeNode(VotingTupleChangeExpNode votingTupelChangeExp);
+    void visitVotingTupleChangeNode(VotingTupleChangeExpNode votingTupleChangeExp);
 
     /**
      * Visit voting list change node.

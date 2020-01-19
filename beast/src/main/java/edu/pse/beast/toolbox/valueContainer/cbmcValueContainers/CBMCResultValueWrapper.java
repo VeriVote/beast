@@ -102,8 +102,8 @@ public final class CBMCResultValueWrapper extends ResultValueWrapper {
             System.err.println("problem parsing the node to an element");
             return;
         }
-        CDATATYPE newType = getDataType(element); // get the data type of the
-                                                  // first element
+        // get the data type of the first element
+        CDATATYPE newType = getDataType(element);
         if (initialized) {
             if (newType != dataType) {
                 throw new RuntimeException("Mismatching datatypes found"

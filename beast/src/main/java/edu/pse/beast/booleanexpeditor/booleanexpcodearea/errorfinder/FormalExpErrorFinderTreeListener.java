@@ -64,7 +64,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoterByPosExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeContentContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingTupelChangeExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingTupleChangeExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScopehandler;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -566,11 +566,11 @@ public final class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterVotingTupleChangeExp(final VotingTupelChangeExpContext ctx) {
+    public void enterVotingTupleChangeExp(final VotingTupleChangeExpContext ctx) {
     }
 
     @Override
-    public void exitVotingTupleChangeExp(final VotingTupelChangeExpContext ctx) {
+    public void exitVotingTupleChangeExp(final VotingTupleChangeExpContext ctx) {
     }
 
     @Override

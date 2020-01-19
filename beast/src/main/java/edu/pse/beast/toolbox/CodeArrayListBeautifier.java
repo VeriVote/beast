@@ -91,7 +91,7 @@ public class CodeArrayListBeautifier {
      */
     public void addList(final List<String> list) {
         if (list != null) {
-            list.forEach((singleItem) -> {
+            list.forEach(singleItem -> {
                 this.add(singleItem);
             });
         }

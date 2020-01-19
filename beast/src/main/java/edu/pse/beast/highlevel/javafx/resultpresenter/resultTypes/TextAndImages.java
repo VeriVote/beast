@@ -3,6 +3,11 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.GenericStyledArea;
 import org.fxmisc.richtext.StyledTextArea;
@@ -20,10 +25,6 @@ import edu.pse.beast.toolbox.LinkedImageOps;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.RealLinkedImage;
 import edu.pse.beast.toolbox.TextStyle;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 /**
  * The Class TextAndImages.
@@ -59,8 +60,9 @@ public final class TextAndImages extends ResultPresentationType {
     /** The area. */
     private final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
             new GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>(
-                    ParStyle.EMPTY, // default paragraph style
-                    // paragraph style setter
+                    // default paragraph style
+                    ParStyle.EMPTY,
+                // paragraph style setter
                 (paragraph, style) -> paragraph.setStyle(style.toCss()),
                     TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
                     // default segment style
@@ -68,7 +70,7 @@ public final class TextAndImages extends ResultPresentationType {
                     // segment operations
                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
                 seg -> createNode(seg,
-                            // Node creator and segment style setter
+                    // Node creator and segment style setter
                     (text, style) -> text.setStyle(style.toCss())
                             )
                     );

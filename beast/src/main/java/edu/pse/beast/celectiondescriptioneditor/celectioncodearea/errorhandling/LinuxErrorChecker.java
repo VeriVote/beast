@@ -57,8 +57,8 @@ public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
         final ProcessBuilder prossBuild =
                 new ProcessBuilder(arguments.toArray(new String[0]));
         Map<String, String> environment = prossBuild.environment();
-        environment.put("LC_ALL", "C"); // set the language for the following
-                                        // call to english
+        // set the language for the following call to english
+        environment.put("LC_ALL", "C");
         try {
             // start the process
             startedProcess = prossBuild.start();

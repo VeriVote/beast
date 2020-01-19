@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.fxmisc.richtext.model.Codec;
-
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import org.fxmisc.richtext.model.Codec;
 
 /**
  * Holds information about the style of a text fragment.

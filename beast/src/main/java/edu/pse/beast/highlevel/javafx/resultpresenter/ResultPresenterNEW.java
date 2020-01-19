@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
-import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * This class is responsible to show the result of Checks. It provides ways of
@@ -90,7 +91,7 @@ public final class ResultPresenterNEW {
      *            the new result
      */
     public void setResult(final Result resultVal) {
-        boolean changed = (this.result != resultVal);
+        boolean changed = this.result != resultVal;
         this.result = resultVal;
         if (changed) {
             getDefaultPresentation();
@@ -105,7 +106,8 @@ public final class ResultPresenterNEW {
      */
     private List<ResultPresentationType> getEligablePresentationTypes() {
         this.presentationType = null;
-        List<ResultPresentationType> eligableTypes = new ArrayList<ResultPresentationType>();
+        List<ResultPresentationType> eligableTypes =
+            new ArrayList<ResultPresentationType>();
 
         for (Iterator<ResultPresentationType> iterator =
                 ResultPresentationType.getImplementations().iterator();
@@ -115,10 +117,9 @@ public final class ResultPresenterNEW {
                 eligableTypes.add(typeToCheck);
             }
         }
-        this.setPresentationType(new CBMCOutput()); // TODO maybe find a better
-                                                    // way to find the
-                                                    // best presenter for every
-                                                    // type
+        // TODO maybe find a better way to find the best presenter
+        // for every type
+        this.setPresentationType(new CBMCOutput());
         GUIController.getController().setEligableTypes(eligableTypes);
         return eligableTypes;
     }
@@ -132,7 +133,7 @@ public final class ResultPresenterNEW {
     public void setPresentationType(final ResultPresentationType presType) {
         GUIController.getController()
                 .setPresentationTypeText(presType.getName());
-        boolean changed = (this.presentationType != presType);
+        boolean changed = this.presentationType != presType;
         this.presentationType = presType;
         if (changed) {
             showResult();

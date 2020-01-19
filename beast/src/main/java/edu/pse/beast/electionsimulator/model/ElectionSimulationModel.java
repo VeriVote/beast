@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 
 /**
  * The Class ElectionSimulationModel.
@@ -110,8 +111,8 @@ public class ElectionSimulationModel {
             this.xLabel = "";
         }
         isTwoDim =
-                (elTypeContainer.getInputType()
-                .getAmountOfDimensions() == 2);
+                elTypeContainer.getInputType()
+                .getAmountOfDimensions() == 2;
     }
 
     /**
@@ -155,8 +156,9 @@ public class ElectionSimulationModel {
             voterGridPane.add(newVoter, 0, currentRows);
             currentRows++;
             maxRows++;
-        } else { // we already have a row with for this index, so we just make it
-                 // visible again
+        } else {
+            // we already have a row with for this index, so we just make it
+            // visible again
             rows.get(currentRows).enable();
             voterGridPane.add(yDescriptors.get(currentRows), 0, currentRows);
             currentRows++;

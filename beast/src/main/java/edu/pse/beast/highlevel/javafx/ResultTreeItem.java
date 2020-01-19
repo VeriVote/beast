@@ -1,6 +1,5 @@
 package edu.pse.beast.highlevel.javafx;
 
-import edu.pse.beast.propertychecker.Result;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -13,6 +12,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * The Class ResultTreeItem.
@@ -54,7 +55,7 @@ public class ResultTreeItem extends CustomTreeItem {
      */
     private void init() {
         this.setAlignment(Pos.CENTER_LEFT);
-        button.setOnAction((event) -> {
+        button.setOnAction(event -> {
             owner.deleteResult(this);
         });
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {

@@ -33,10 +33,11 @@ import edu.pse.beast.types.OutputType;
  * a main method (including the FormalProperty), important IncludingCode and the
  * votingMethod (the ElectionDescription).
  *
+ * <p>TODO refactor this into multiple sub classes later on
+ *
  * @author Niels Hanselmann
  */
-public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
-                                 // later on
+public class CBMCCodeGenerator {
     /** The code. */
     private CodeArrayListBeautifier code;
 
@@ -448,8 +449,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
      * Adds the margin main test.
      */
     private void addMarginMainTest() {
-        int voteNumber = 1; // because we only have one vote, we hard-code the
-                            // value "one" here
+        // because we only have one vote, we hard-code the
+        // value "one" here
+        int voteNumber = 1;
         code = electionDesc.getContainer().getOutputType()
                 .addMarginMainTest(code, voteNumber);
     }
@@ -824,10 +826,10 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         String voteStruct = electionDesc.getContainer().getInputStruct()
                 .getStructAccess();
 
-        if ((electionDesc.getContainer().getInputType()
+        if (electionDesc.getContainer().getInputType()
                 .getAmountOfDimensions() == 1
                 && electionDesc.getContainer().getInputType()
-                        .getSizeOfDimensions()[0].equals("V"))) {
+                        .getSizeOfDimensions()[0].equals("V")) {
 
             code.add(voteStruct + " split(" + voteStruct + " votes, "
                     + "unsigned int start, unsigned int stop) {");
@@ -869,12 +871,12 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
             code.add("");
         }
 
-        if ((electionDesc.getContainer().getInputType()
+        if (electionDesc.getContainer().getInputType()
                 .getAmountOfDimensions() == 2
                 && electionDesc.getContainer().getInputType()
                         .getSizeOfDimensions()[0].equals("V")
                 && electionDesc.getContainer().getInputType()
-                        .getSizeOfDimensions()[1].equals("C"))) {
+                        .getSizeOfDimensions()[1].equals("C")) {
 
             code.add("//start is inclusive, stop is exclusive");
             code.add("//used for 2 dim arrays");
@@ -1029,7 +1031,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         List<SymbolicVariable> symbolicVariableList =
                 preAndPostCondDesc.getSymbolicVariablesAsList();
         code.add("//Symbolic Variables initialisation");
-        symbolicVariableList.forEach((symbVar) -> {
+        symbolicVariableList.forEach(symbVar -> {
             InternalTypeContainer internalType = symbVar
                     .getInternalTypeContainer();
             String id = symbVar.getId();
@@ -1090,8 +1092,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("//preproperties ");
         code.add("");
         visitor.setToPreConditionMode();
-        preAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
-            booleanExpressionLists.forEach((booleanNode) -> {
+        preAST.getBooleanExpressions().forEach(booleanExpressionLists -> {
+            booleanExpressionLists.forEach(booleanNode -> {
                 code.addList(visitor.generateCode(booleanNode));
             });
         });
@@ -1108,8 +1110,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("//postproperties ");
         code.add("");
         visitor.setToPostConditionMode();
-        postAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
-            booleanExpressionLists.forEach((booleanNode) -> {
+        postAST.getBooleanExpressions().forEach(booleanExpressionLists -> {
+            booleanExpressionLists.forEach(booleanNode -> {
                 code.addList(visitor.generateCode(booleanNode));
             });
         });
@@ -1202,7 +1204,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         FormalPropertyDescriptionParser p =
                 new FormalPropertyDescriptionParser(ts);
         BooleanExpScope declaredVars = new BooleanExpScope();
-        preAndPostCondDesc.getSymbolicVariablesAsList().forEach((v) -> {
+        preAndPostCondDesc.getSymbolicVariablesAsList().forEach(v -> {
             declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
         });
         return translator.generateFromSyntaxTree(
@@ -1237,8 +1239,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
                                                final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
-        String defaultName = "loop_index_"; // use i as the default name for a
-                                            // loop
+        // use i as the default name for a loop
+        String defaultName = "loop_index_";
         for (int i = 0; i < dimensions; i++) {
             String varName = defaultName + currentIndex;
             boolean duplicate = true;
@@ -1246,8 +1248,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
             while (duplicate) {
                 if (code.contains(varName) || variableName.equals(varName)) {
                     varName = generateRandomString(length) + "_" + currentIndex;
-                    length++; // increase the length in case all words from that
-                              // length are already taken
+                    // increase the length in case all words from that
+                    // length are already taken
+                    length++;
                 } else {
                     duplicate = false;
                 }

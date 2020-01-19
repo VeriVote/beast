@@ -140,7 +140,7 @@ public final class WindowsProcess extends CBMCProcess {
             boolean is64bit = false;
             if (System.getProperty("os.name").contains("Windows")) {
                 // only 64 bit windows contains this variable
-                is64bit = (System.getenv("ProgramFiles(x86)") != null);
+                is64bit = System.getenv("ProgramFiles(x86)") != null;
             } else {
                 ErrorLogger.log("The Windows procedure to call cbmc was used, "
                         + "even though this operating  system is not Windows!");
@@ -255,8 +255,9 @@ public final class WindowsProcess extends CBMCProcess {
                     // trim it down so it only has a single space in between, so
                     // we can split there
                     line = line.trim().replaceAll(" +", " ");
-                    if (line.split(" ").length == 2) { // filter out malformed
-                                                       // lines
+                    if (line.split(" ").length == 2) {
+                        // filter out malformed lines
+
                         // search for the 32 and 64 bit version,
                         // so we do not have to make a whole new class for each
                         // of them

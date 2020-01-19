@@ -73,7 +73,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoterByPosExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeContentContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingTupelChangeExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingTupleChangeExpContext;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -610,7 +610,7 @@ public final class FormalPropertySyntaxTreeToAstTranslator
      *
      */
     @Override
-    public void enterVotingTupleChangeExp(final VotingTupelChangeExpContext ctx) {
+    public void enterVotingTupleChangeExp(final VotingTupleChangeExpContext ctx) {
         InternalTypeContainer varType =
                 new InternalTypeContainer(InternalTypeRep.VOTER);
         scopeHandler.enterNewScope();
@@ -624,7 +624,7 @@ public final class FormalPropertySyntaxTreeToAstTranslator
      *
      */
     @Override
-    public void exitVotingTupleChangeExp(final VotingTupelChangeExpContext ctx) {
+    public void exitVotingTupleChangeExp(final VotingTupleChangeExpContext ctx) {
         BooleanExpressionNode node = new VotingTupleChangeExpNode(ctx.tuple(),
                 ctx.splitExp());
         nodeStack.add(node);

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.scene.layout.GridPane;
+
 import edu.pse.beast.codeareajavafx.SaverLoader;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
@@ -15,7 +17,6 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
-import javafx.scene.layout.GridPane;
 
 /**
  * The Class ElectionSimulation.
@@ -320,7 +321,7 @@ public final class ElectionSimulation implements MenuBarInterface {
                             .setText("" + values[2]);
                 } else {
                     for (int x = 0; x < values.length; x++) {
-                        model.setValue(x, (y - 1), values[x]);
+                        model.setValue(x, y - 1, values[x]);
                     }
                 }
             }

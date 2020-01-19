@@ -13,37 +13,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.wellbehaved.event.InputMap;
-import org.fxmisc.wellbehaved.event.Nodes;
-
-import com.google.gson.JsonSyntaxException;
-
-import edu.pse.beast.codeareajavafx.AutoCompleter;
-import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
-import edu.pse.beast.codeareajavafx.NewCodeArea;
-import edu.pse.beast.codeareajavafx.NewPropertyCodeArea;
-import edu.pse.beast.codeareajavafx.SaverLoader;
-import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
-import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.electionsimulator.ElectionSimulation;
-import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
-import edu.pse.beast.options.OptionsNew;
-import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
-import edu.pse.beast.saverloader.MinimalSaverInterface;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.toolbox.Tuple3;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.InternalTypeContainer;
-import edu.pse.beast.types.InternalTypeRep;
-import edu.pse.beast.types.OutputType;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -79,6 +48,38 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.wellbehaved.event.InputMap;
+import org.fxmisc.wellbehaved.event.Nodes;
+
+import com.google.gson.JsonSyntaxException;
+
+import edu.pse.beast.codeareajavafx.AutoCompleter;
+import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
+import edu.pse.beast.codeareajavafx.NewCodeArea;
+import edu.pse.beast.codeareajavafx.NewPropertyCodeArea;
+import edu.pse.beast.codeareajavafx.SaverLoader;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.electionsimulator.ElectionSimulation;
+import edu.pse.beast.highlevel.BEASTCommunicator;
+import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
+import edu.pse.beast.options.OptionsNew;
+import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
+import edu.pse.beast.saverloader.MinimalSaverInterface;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.toolbox.Tuple3;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.OutputType;
 
 /**
  * The Class GUIController.

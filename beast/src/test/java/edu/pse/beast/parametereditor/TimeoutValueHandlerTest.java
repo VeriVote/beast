@@ -44,21 +44,21 @@ public class TimeoutValueHandlerTest {
         comboBox.setSelectedIndex(0);
         handler.setValue(handler.getTimeout());
         TimeOut result = handler.getTimeout();
-        boolean minTest = (expResult.getDuration() == result.getDuration()
-                && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive());
+        boolean minTest = expResult.getDuration() == result.getDuration()
+                && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
         expResult = new TimeOut(TimeUnit.DAYS, 3653);
         spinner.setValue(3653);
         comboBox.setSelectedIndex(3);
         handler.setValue(handler.getTimeout());
         result = handler.getTimeout();
-        boolean maxTest = (expResult.getDuration() == result.getDuration()
-                && expResult.getOrigUnit().equals(result.getOrigUnit()) && result.isActive());
+        boolean maxTest = expResult.getDuration() == result.getDuration()
+                && expResult.getOrigUnit().equals(result.getOrigUnit()) && result.isActive();
         expResult = new TimeOut(TimeUnit.DAYS, 0);
         spinner.setValue(-1);
         handler.setValue(handler.getTimeout());
         result = handler.getTimeout();
-        boolean falseValueTest = (expResult.getDuration() == result.getDuration()
-                && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive());
+        boolean falseValueTest = expResult.getDuration() == result.getDuration()
+                && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
         expResult = new TimeOut(TimeUnit.SECONDS, 0);
         spinner.setValue(42);
         comboBox.setSelectedIndex(4);
@@ -69,8 +69,8 @@ public class TimeoutValueHandlerTest {
         // handler.getTimeout().getOrigUnit());
         // System.out.println(handler.hasChanged() + " max " + expResult.getDuration() +
         // " " + expResult.getOrigUnit());
-        boolean falseUnitTest = (expResult.getDuration() == result.getDuration()
-                && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive());
+        boolean falseUnitTest = expResult.getDuration() == result.getDuration()
+                && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
         assertTrue(minTest && maxTest && falseValueTest && falseUnitTest);
     }
 

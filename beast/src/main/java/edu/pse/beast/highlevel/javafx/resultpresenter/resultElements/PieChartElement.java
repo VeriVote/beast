@@ -7,8 +7,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;
+
+import edu.pse.beast.toolbox.Tuple3;
 
 /**
  * The Class PieChartElement.
@@ -100,9 +101,9 @@ public final class PieChartElement extends ResultImageElement {
                         (Tuple3<String, Double, Color>) iterator.next();
                 double neededAngle = CIRCLE_ANGLE
                         * (value.second() / totalSize);
-                if (!iterator.hasNext()) { // this is the last element, so we
-                                           // have to fill
-                    // so we have to fill the rest of the circle
+                if (!iterator.hasNext()) {
+                    // this is the last element, so we
+                    // have to fill the rest of the circle
                     neededAngle = CIRCLE_ANGLE - currentAngle;
                 }
                 graphics.setColor(value.third());

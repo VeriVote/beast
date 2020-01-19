@@ -80,11 +80,11 @@ public final class CBMCStruct extends ComplexType {
 
         if (this.getClass().equals(toCompare.getClass())) {
             CBMCStruct otherStruct = (CBMCStruct) toCompare;
-            return (this.dataType == otherStruct.dataType
+            return this.dataType == otherStruct.dataType
                     && this.dimensions == otherStruct.dimensions
                     && Arrays.equals(this.sizeOfDimensions,
                             otherStruct.sizeOfDimensions)
-                    && this.unsigned == otherStruct.unsigned);
+                    && this.unsigned == otherStruct.unsigned;
         }
         return false;
     }

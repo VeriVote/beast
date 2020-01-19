@@ -3,6 +3,8 @@ package edu.pse.beast.toolbox;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+import javafx.scene.Node;
+
 import org.fxmisc.richtext.GenericStyledArea;
 import org.fxmisc.richtext.StyledTextArea;
 import org.fxmisc.richtext.TextExt;
@@ -10,8 +12,6 @@ import org.fxmisc.richtext.model.SegmentOps;
 import org.fxmisc.richtext.model.StyledSegment;
 import org.fxmisc.richtext.model.TextOps;
 import org.reactfx.util.Either;
-
-import javafx.scene.Node;
 
 /**
  * The Class TextFieldCreator.
@@ -68,13 +68,15 @@ public final class TextFieldCreator {
                 new GenericStyledArea<ParStyle,
                                       Either<String, LinkedImage>,
                                       TextStyle>(
-                        paragraphStyle, // default paragraph style
-                        // paragraph style setter
+                        // default paragraph style
+                        paragraphStyle,
+                    // paragraph style setter
                     (paragraph, style) -> paragraph.setStyle(style.toCss()),
-                        textStyle, // default segment style
+                        // default segment style
+                        textStyle,
                         STYLED_TEXT_OPS._or(LINKED_IMAGE_OPS,
                             (s1, s2) -> Optional.empty()), // segment
-                        // operations
+                    // operations
                     seg -> createNode(seg, // Node creator and segment
                         (text, style) -> text.setStyle(style.toCss()))
                 );
