@@ -33,7 +33,6 @@
 
 -->
 <module name="Checker">
-
     <property name="charset" value="UTF-8"/>
     <property name="localeLanguage" value="en"/>
     <property name="severity" value="warning"/>
@@ -271,7 +270,9 @@
       </module>
       <module name="JavadocVariable"/>
       <module name="NonEmptyAtclauseDescription"/>
-      <module name="SingleLineJavadoc"/>
+      <module name="SingleLineJavadoc">
+          <property name="ignoreInlineTags" value="false"/>
+      </module>
       <module name="WriteTag"/>
       <module name="SummaryJavadoc"/>
 
@@ -385,15 +386,15 @@
         <property name="severity" value="warning"/>
       </module>
 
-      <module name="HideUtilityClassConstructor">
+      <!--TODO module name="HideUtilityClassConstructor">
         <property name="severity" value="warning"/>
-      </module>
+      </module -->
 
       <module name="InnerTypeLast"/>
       <module name="InterfaceIsType"/>
 
       <module name="MutableException"/>
-      <module name="OneTopLevelClass"/>
+      <!--TODO module name="OneTopLevelClass"/ -->
       <module name="ThrowsCount">
         <property name="max" value="2"/>
       </module>
@@ -466,8 +467,8 @@
         <property name="max" value="3"/>
       </module>
       <module name="NestedTryDepth"/>
-      <module name="NoClone"/>
-      <module name="NoFinalizer"/>
+      <!--TODO module name="NoClone"/ -->
+      <!--TODO module name="NoFinalizer"/ -->
       <module name="OneStatementPerLine"/>
       <module name="OverloadMethodsDeclarationOrder"/>
       <module name="PackageDeclaration"/>
@@ -478,8 +479,8 @@
         <property name="maxForVoid" value="0"/>
       </module>
       <module name="StringLiteralEquality"/>
-      <module name="SuperClone"/>
-      <module name="SuperFinalize"/>
+      <!--TODO module name="SuperClone"/ -->
+      <!--TODO module name="SuperFinalize"/ -->
       <module name="UnnecessaryParentheses"/>
       <module name="VariableDeclarationUsageDistance"/>
 
