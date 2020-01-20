@@ -27,6 +27,10 @@ public class ElectionCheckParameterSaverLoaderTest {
 
     /** The Constant THREE_HOURS_IN_MILISECONDS. */
     private static final int THREE_HOURS_IN_MILISECONDS = 10800000;
+
+    /** Argument for six loop unwindings. */
+    private static final String SIX_UNWINDINGS = "--unwind 6";
+
     /** The instance. */
     private static ElectionCheckParameter electionCheckParameter;
 
@@ -38,7 +42,7 @@ public class ElectionCheckParameterSaverLoaderTest {
                               Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
                               1, 1, 1, new TimeOut(TimeUnit.HOURS, A_FEW_HOURS),
-                              NUM_PROCESSES, "--unwind 6");
+                              NUM_PROCESSES, SIX_UNWINDINGS);
     }
 
     /**
@@ -61,7 +65,7 @@ public class ElectionCheckParameterSaverLoaderTest {
         assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(1), 2);
         assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(0), 1);
         assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(1), 2);
-        assertEquals(recreatedElectionCheckParameter.getArgument(), "--unwind 6");
+        assertEquals(recreatedElectionCheckParameter.getArgument(), SIX_UNWINDINGS);
         assertEquals((int)recreatedElectionCheckParameter.getProcesses(), NUM_PROCESSES);
         final TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
         assertEquals(recreatedTimeOut.getDuration(), THREE_HOURS_IN_MILISECONDS);

@@ -23,6 +23,17 @@ public class JTextPaneToolboxTest {
     /** The Constant ABS_POS. */
     private static final int ABS_POS = 3;
 
+    /** A test text string. */
+    private static final String TEXT = "12\n\n34\n5\n6";
+    /** The test string "abc". */
+    private static final String ABC = "abc";
+    /** The test string "a". */
+    private static final String A = "a";
+    /** The test string "b". */
+    private static final String B = "b";
+    /** The test string "c". */
+    private static final String C = "c";
+
     /**
      * Instantiates a new j text pane tool box test.
      */
@@ -51,7 +62,7 @@ public class JTextPaneToolboxTest {
     @Test
     public void testTransformToLineNumber() {
         JTextPane pane = new JTextPane();
-        pane.setText("12\n\n34\n5\n6");
+        pane.setText(TEXT);
         int lineno = JTextPaneToolbox.transformToLineNumber(pane, ABS_POS);
         assertEquals(1, lineno);
     }
@@ -81,7 +92,7 @@ public class JTextPaneToolboxTest {
     @Test
     public void testGetLinesBetween() throws Exception {
         JTextPane pane = new JTextPane();
-        pane.setText("12\n\n34\n5\n6");
+        pane.setText(TEXT);
         ArrayList<Integer> linesBetween = JTextPaneToolbox.getLinesBetween(pane, 0, 5);
         int[] lines = {0, 1, 2};
         assertEquals(lines.length, linesBetween.size());
@@ -96,19 +107,19 @@ public class JTextPaneToolboxTest {
     @Test
     public void testGetCharToTheLeftOfCaret() {
         JTextPane pane = new JTextPane();
-        pane.setText("abc");
+        pane.setText(ABC);
         pane.setCaretPosition(0);
         String lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
         assertEquals("", lhs);
         pane.setCaretPosition(1);
         lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals("a", lhs);
+        assertEquals(A, lhs);
         pane.setCaretPosition(2);
         lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals("b", lhs);
+        assertEquals(B, lhs);
         pane.setCaretPosition(ABS_POS);
         lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals("c", lhs);
+        assertEquals(C, lhs);
     }
 
     /**
@@ -117,16 +128,16 @@ public class JTextPaneToolboxTest {
     @Test
     public void testGetCharToTheRightOfCaret() {
         JTextPane pane = new JTextPane();
-        pane.setText("abc");
+        pane.setText(ABC);
         pane.setCaretPosition(0);
         String rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals("a", rhs);
+        assertEquals(A, rhs);
         pane.setCaretPosition(1);
         rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals("b", rhs);
+        assertEquals(B, rhs);
         pane.setCaretPosition(2);
         rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals("c", rhs);
+        assertEquals(C, rhs);
         pane.setCaretPosition(ABS_POS);
         rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
         assertEquals("", rhs);

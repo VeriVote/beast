@@ -17,6 +17,15 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Nikolai Schnell
  */
 public class SymbolicVarListSaverLoaderTest {
+    /** A voter test string. */
+    private static final String VOTER_ONE = "voter1";
+    /** Another voter test string. */
+    private static final String VOTER_TWO = "voter2";
+    /** A candidate test string. */
+    private static final String CANDIDATE = "candidate";
+    /** A seat test string. */
+    private static final String SEAT = "seat";
+
     /** The symbolic variable list instance. */
     private static SymbolicVariableList symbolicVariableList;
 
@@ -24,16 +33,16 @@ public class SymbolicVarListSaverLoaderTest {
     public static void setUpClass() {
         symbolicVariableList = new SymbolicVariableList();
         symbolicVariableList.addSymbolicVariable(
-                "voter1", new InternalTypeContainer(InternalTypeRep.VOTER)
+                VOTER_ONE, new InternalTypeContainer(InternalTypeRep.VOTER)
         );
         symbolicVariableList.addSymbolicVariable(
-                "voter2", new InternalTypeContainer(InternalTypeRep.VOTER)
+                VOTER_TWO, new InternalTypeContainer(InternalTypeRep.VOTER)
         );
         symbolicVariableList.addSymbolicVariable(
-                "candidate", new InternalTypeContainer(InternalTypeRep.CANDIDATE)
+                CANDIDATE, new InternalTypeContainer(InternalTypeRep.CANDIDATE)
         );
         symbolicVariableList.addSymbolicVariable(
-                "seat", new InternalTypeContainer(InternalTypeRep.SEAT)
+                SEAT, new InternalTypeContainer(InternalTypeRep.SEAT)
         );
     }
 
@@ -47,16 +56,16 @@ public class SymbolicVarListSaverLoaderTest {
         String saveString = SymbolicVarListSaverLoader.createSaveString(symbolicVariableList);
         SymbolicVariableList recreatedList
               = SymbolicVarListSaverLoader.createFromSaveString(saveString);
-        assertEquals(recreatedList.getSymbolicVariables().get(0).getId(), "voter1");
+        assertEquals(recreatedList.getSymbolicVariables().get(0).getId(), VOTER_ONE);
         assertEquals(recreatedList.getSymbolicVariables().get(0)
                          .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
-        assertEquals(recreatedList.getSymbolicVariables().get(1).getId(), "voter2");
+        assertEquals(recreatedList.getSymbolicVariables().get(1).getId(), VOTER_TWO);
         assertEquals(recreatedList.getSymbolicVariables().get(1)
                          .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
-        assertEquals(recreatedList.getSymbolicVariables().get(2).getId(), "candidate");
+        assertEquals(recreatedList.getSymbolicVariables().get(2).getId(), CANDIDATE);
         assertEquals(recreatedList.getSymbolicVariables().get(2)
                          .getInternalTypeContainer().getInternalType(), InternalTypeRep.CANDIDATE);
-        assertEquals(recreatedList.getSymbolicVariables().get(3).getId(), "seat");
+        assertEquals(recreatedList.getSymbolicVariables().get(3).getId(), SEAT);
         assertEquals(recreatedList.getSymbolicVariables().get(3)
                          .getInternalTypeContainer().getInternalType(), InternalTypeRep.SEAT);
     }

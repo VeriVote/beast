@@ -10,7 +10,8 @@ import org.junit.Test;
  * @author Niels Hanselmann
  */
 public class StringLoaderInterfaceTest {
-
+    /** A test string. */
+    private static final String TEST = "test";
     /** The instance. */
     private final StringLoaderInterface instance;
 
@@ -18,7 +19,7 @@ public class StringLoaderInterfaceTest {
      * Test setup.
      */
     public StringLoaderInterfaceTest() {
-        this.instance = new StringLoaderInterface("test");
+        this.instance = new StringLoaderInterface(TEST);
     }
 
     /**
@@ -81,7 +82,7 @@ public class StringLoaderInterfaceTest {
     @Test
     public void testSetLanguage() {
         System.out.println("setLanguage");
-        instance.setLanguage("test");
+        instance.setLanguage(TEST);
         // if there is no error message, this should be correct
     }
 }

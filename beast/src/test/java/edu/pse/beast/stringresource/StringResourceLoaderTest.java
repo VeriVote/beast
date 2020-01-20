@@ -12,6 +12,15 @@ import org.junit.Test;
  * @author Niels Hanselmann
  */
 public class StringResourceLoaderTest {
+    /** A test string. */
+    private static final String TEST = "test";
+    /** Another test string. */
+    private static final String TEST_TWO = "test2";
+    /** A test sentence string. */
+    private static final String TEST_SENTENCE = "this is a test";
+    /** Another test sentence string. */
+    private static final String TEST_SENTENCE_TWO = "also a test";
+
     /** The list. */
     private final LinkedList<String> list;
     /** The instance. */
@@ -33,12 +42,12 @@ public class StringResourceLoaderTest {
     @Test
     public void testGetStringFromID() {
         System.out.println("getStringFromID");
-        String id = "test";
-        String id2 = "test2";
+        String id = TEST;
+        String id2 = TEST_TWO;
         String result = instance.getStringFromID(id);
-        assertEquals("this is a test", result);
+        assertEquals(TEST_SENTENCE, result);
         String result2 = instance.getStringFromID(id2);
-        assertEquals("also a test", result2);
+        assertEquals(TEST_SENTENCE_TWO, result2);
         instance.getStringFromID(null);
     }
 
@@ -51,10 +60,10 @@ public class StringResourceLoaderTest {
         String s = "not in the testfile";
         String result = instance.getIdForString(s);
         assertEquals(null, result);
-        result = instance.getIdForString("this is a test");
-        assertEquals("test", result);
-        result = instance.getIdForString("also a test");
-        assertEquals("test2", result);
+        result = instance.getIdForString(TEST_SENTENCE);
+        assertEquals(TEST, result);
+        result = instance.getIdForString(TEST_SENTENCE_TWO);
+        assertEquals(TEST_TWO, result);
         instance.getStringFromID(null);
     }
 
@@ -67,9 +76,9 @@ public class StringResourceLoaderTest {
         String id = "teeeest";
         boolean result = instance.containsId(id);
         assertEquals(false, result);
-        result = instance.containsId("test");
+        result = instance.containsId(TEST);
         assertEquals(true, result);
-        result = instance.containsId("test2");
+        result = instance.containsId(TEST_TWO);
         assertEquals(true, result);
         instance.containsId(null);
     }

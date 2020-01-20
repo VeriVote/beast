@@ -40,6 +40,15 @@ public class SaverLoader {
     /** The Constant PROP_DESCR_FILE_ENDING. */
     public static final String PROP_DESCR_FILE_ENDING = ".prop";
 
+    /** The asterisk symbol. */
+    private static final String ASTERISK = "*";
+    /** The dot symbol. */
+    private static final String DOT = ".";
+    /** The right parenthesis symbol. */
+    private static final String PAREN_RIGHT = ")";
+    /** The "All (" string. */
+    private static final String ALL_PAREN_LEFT = "All (";
+
     /** The owner. */
     private final MinimalSaverInterface owner;
 
@@ -184,9 +193,11 @@ public class SaverLoader {
     public File showFileSaveDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                fileExtensionDescription, "*" + fileEnding));
+                fileExtensionDescription, ASTERISK + fileEnding));
         fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
+                .add(new FileChooser.ExtensionFilter(ALL_PAREN_LEFT + ASTERISK
+                                                     + DOT + ASTERISK + PAREN_RIGHT,
+                                                     ASTERISK + DOT + ASTERISK));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
         File selectedFile = fileChooser
@@ -204,9 +215,11 @@ public class SaverLoader {
     public File showFileLoadDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
-                fileExtensionDescription, "*" + fileEnding));
+                fileExtensionDescription, ASTERISK + fileEnding));
         fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
+                .add(new FileChooser.ExtensionFilter(ALL_PAREN_LEFT + ASTERISK
+                                                     + DOT + ASTERISK + PAREN_RIGHT,
+                                                     ASTERISK + DOT + ASTERISK));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
         File selectedFile = fileChooser

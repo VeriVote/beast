@@ -14,12 +14,16 @@ import edu.pse.beast.saverloader.staticsaverloaders.FormalPropertySaverLoader;
  * @author Nikolai Schnell
  */
 public class FormalPropertySaverLoaderTest {
+    /** A test description string. */
+    private static final String TEST_DESCRIPTION_STRING =
+        "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD";
+
     /** The description instance. */
     private static FormalPropertiesDescription description;
 
     @BeforeClass
     public static void setUpClass() {
-        description = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+        description = new FormalPropertiesDescription(TEST_DESCRIPTION_STRING);
     }
 
     /**
@@ -36,6 +40,6 @@ public class FormalPropertySaverLoaderTest {
                 FormalPropertySaverLoader.createFromSaveString(saveString);
 
         assertEquals(recreatedFormalPropertiesDescription.getCode(),
-                     "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+                     TEST_DESCRIPTION_STRING);
     }
 }

@@ -26,6 +26,13 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Niels Hanselmann
  */
 public class SymbolicVariableListTest {
+    /** A test string. */
+    private static final String TEST = "test";
+    /** Another test string. */
+    private static final String TEST_TWO = "test2";
+    /** Remove Symbolic variable string. */
+    private static final String REMOVE_SYMB_VARIABLE =
+        "removeSymbolicVariable";
 
     /**
      * Instantiates a new symbolic variable list test.
@@ -55,7 +62,7 @@ public class SymbolicVariableListTest {
     @Test
     public void testAddSymbolicVariable() {
         System.out.println("addSymbolicVariable");
-        String id = "test";
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
@@ -67,7 +74,7 @@ public class SymbolicVariableListTest {
         assertEquals(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
                 .getFirst().getId(),
-                "test");
+                TEST);
     }
 
     /**
@@ -76,13 +83,13 @@ public class SymbolicVariableListTest {
     @Test
     public void testIsVarIDAllowed() {
         System.out.println("isVarIDAllowed");
-        String id = "test";
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
-        assertTrue(instance.isVarIDAllowed("test"));
+        assertTrue(instance.isVarIDAllowed(TEST));
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assertFalse(instance.isVarIDAllowed("test"));
+        assertFalse(instance.isVarIDAllowed(TEST));
     }
 
     /**
@@ -93,12 +100,12 @@ public class SymbolicVariableListTest {
         System.out.println("setSymbolicVariableList");
         LinkedList<SymbolicVariable> symbolicVariableList =
                 new LinkedList<SymbolicVariable>();
-        String id = "test";
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
         symbolicVariableList.add(var);
-        SymbolicVariable var2 = new SymbolicVariable("test2", internalTypeContainer);
+        SymbolicVariable var2 = new SymbolicVariable(TEST_TWO, internalTypeContainer);
         symbolicVariableList.add(var2);
 
         SymbolicVariableList instance = new SymbolicVariableList();
@@ -106,8 +113,8 @@ public class SymbolicVariableListTest {
         assertEquals(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
                 .getFirst().getId(),
-                "test");
-        assertEquals(instance.getSymbolicVariables().get(1).getId(), "test2");
+                TEST);
+        assertEquals(instance.getSymbolicVariables().get(1).getId(), TEST_TWO);
     }
 
     /**
@@ -116,7 +123,7 @@ public class SymbolicVariableListTest {
     @Test
     public void testGetSymbolicVariables() {
         System.out.println("getSymbolicVariables");
-        String id = "test";
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
@@ -128,7 +135,7 @@ public class SymbolicVariableListTest {
         assertEquals(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
                 .getFirst().getId(),
-                "test");
+                TEST);
     }
 
     /**
@@ -136,14 +143,14 @@ public class SymbolicVariableListTest {
      */
     @Test
     public void testRemoveSymbolicVariableString() {
-        System.out.println("removeSymbolicVariable");
-        String id = "test";
+        System.out.println(REMOVE_SYMB_VARIABLE);
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assertTrue(instance.removeSymbolicVariable("test"));
-        assertTrue(instance.isVarIDAllowed("test"));
+        assertTrue(instance.removeSymbolicVariable(TEST));
+        assertTrue(instance.isVarIDAllowed(TEST));
     }
 
     /**
@@ -151,15 +158,15 @@ public class SymbolicVariableListTest {
      */
     @Test
     public void testRemoveSymbolicVariableInt() {
-        System.out.println("removeSymbolicVariable");
+        System.out.println(REMOVE_SYMB_VARIABLE);
         int index = 0;
-        String id = "test";
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         instance.removeSymbolicVariable(index);
-        assertTrue(instance.isVarIDAllowed("test"));
+        assertTrue(instance.isVarIDAllowed(TEST));
     }
 
     /**
@@ -175,7 +182,7 @@ public class SymbolicVariableListTest {
               );
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addListener(listener);
-        String id = "test";
+        String id = TEST;
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         instance.addSymbolicVariable(id, internalTypeContainer);

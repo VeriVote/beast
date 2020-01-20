@@ -27,6 +27,13 @@ public final class TextStyle {
     /** The Constant DEFAULT. */
     public static final TextStyle DEFAULT = new TextStyle();
 
+    /** The blank symbol. */
+    private static final String BLANK = " ";
+    /** The comma symbol. */
+    private static final String COMMA = ",";
+    /** The semicolon symbol. */
+    private static final String SEMICOLON = ";";
+
     /** The Constant TWO. */
     private static final int TWO = 2;
 
@@ -337,7 +344,7 @@ public final class TextStyle {
         int red = (int) (color.getRed() * COLOR_MASK);
         int green = (int) (color.getGreen() * COLOR_MASK);
         int blue = (int) (color.getBlue() * COLOR_MASK);
-        return "rgb(" + red + ", " + green + ", " + blue + ")";
+        return "rgb(" + red + COMMA + BLANK + green + COMMA + BLANK + blue + ")";
     }
 
     @Override
@@ -373,7 +380,7 @@ public final class TextStyle {
         Optional.of(font.getFamily()).ifPresent(s -> styles.add(s.toString()));
         Optional.of(textColor).ifPresent(c -> styles.add(c.toString()));
         Optional.of(backgroundColor).ifPresent(b -> styles.add(b.toString()));
-        return String.join(",", styles);
+        return String.join(COMMA, styles);
     }
 
     /**
@@ -413,9 +420,9 @@ public final class TextStyle {
         }
 
         sb.append("-fx-font-size: " + font.getSize() + "pt;");
-        sb.append("-fx-font-family: " + font.getFamily() + ";");
-        sb.append("-fx-fill: " + cssColor(textColor) + ";");
-        sb.append("-rtfx-background-color: " + cssColor(backgroundColor) + ";");
+        sb.append("-fx-font-family: " + font.getFamily() + SEMICOLON);
+        sb.append("-fx-fill: " + cssColor(textColor) + SEMICOLON);
+        sb.append("-rtfx-background-color: " + cssColor(backgroundColor) + SEMICOLON);
         return sb.toString();
     }
 

@@ -14,6 +14,8 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
  * @author Lukas Stapelbroek
  */
 public final class CBMCResultPresentationHelper {
+    /** The line break constant. */
+    private static final String LINE_BREAK = "\n";
 
     /**
      * The constructor.
@@ -44,7 +46,7 @@ public final class CBMCResultPresentationHelper {
      */
     public static String printSingleElement(final CBMCResultValueSingle single,
                                             final int offset) {
-        return getWhiteSpaces(offset) + single.getValue() + "\n";
+        return getWhiteSpaces(offset) + single.getValue() + LINE_BREAK;
     }
 
     /**
@@ -75,7 +77,7 @@ public final class CBMCResultPresentationHelper {
                     (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
             toReturn += singleValue.getValue() + " ";
         }
-        return toReturn + "\n";
+        return toReturn + LINE_BREAK;
     }
 
     /**

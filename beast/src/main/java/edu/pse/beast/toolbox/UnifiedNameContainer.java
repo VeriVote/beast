@@ -15,6 +15,33 @@ import java.util.Map;
  * @author Lukas Stapelbroek
  */
 public final class UnifiedNameContainer {
+    /** The candidate string. */
+    private static final String CANDIDATE = "candidate";
+    /** The voter string. */
+    private static final String VOTER = "voter";
+    /** The seats string. */
+    private static final String SEATS = "seats";
+    /** The elect string. */
+    private static final String ELECT = "elect";
+    /** The voting method string. */
+    private static final String VOTING_METHOD = "votingMethod";
+    /** The result array name string. */
+    private static final String RESULT_ARR_NAME = "result_arr_name";
+    /** The voting array string. */
+    private static final String VOTING_ARRAY = "votingArray";
+    /** The new result string. */
+    private static final String NEW_RESULT = "new_result";
+    /** The new votes string. */
+    private static final String NEW_VOTES = "new_votes";
+    /** The orig result key. */
+    private static final String ORIG_RESULT_KEY = "orig_result";
+    /** The orig result string. */
+    private static final String ORIG_RESULT = "ORIG_RESULT";
+    /** The orig votes key. */
+    private static final String ORIG_VOTES_KEY = "orig_votes";
+    /** The orig votes string. */
+    private static final String ORIG_VOTES = "ORIG_VOTES";
+
     /** The listeners. */
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
 
@@ -36,21 +63,21 @@ public final class UnifiedNameContainer {
      * Inits the.
      */
     private static void init() {
-        map.put("candidate", "C");
-        map.put("voter", "V");
-        map.put("seats", "S");
-        map.put("elect", "elect");
+        map.put(CANDIDATE, "C");
+        map.put(VOTER, "V");
+        map.put(SEATS, "S");
+        map.put(ELECT, ELECT);
 
-        map.put("votingMethod", "voting");
+        map.put(VOTING_METHOD, "voting");
 
-        map.put("result_arr_name", "arr");
+        map.put(RESULT_ARR_NAME, "arr");
 
-        map.put("votingArray", "votes");
+        map.put(VOTING_ARRAY, "votes");
 
-        map.put("new_result", "new_result");
-        map.put("new_votes", "new_votes");
-        map.put("orig_result", "ORIG_RESULT");
-        map.put("orig_votes", "ORIG_VOTES");
+        map.put(NEW_RESULT, NEW_RESULT);
+        map.put(NEW_VOTES, NEW_VOTES);
+        map.put(ORIG_RESULT_KEY, ORIG_RESULT);
+        map.put(ORIG_VOTES_KEY, ORIG_VOTES);
     }
 
     /**
@@ -96,7 +123,7 @@ public final class UnifiedNameContainer {
      * @return the candidate
      */
     public static String getCandidate() {
-        return map.get("candidate");
+        return map.get(CANDIDATE);
     }
 
     /**
@@ -105,7 +132,7 @@ public final class UnifiedNameContainer {
      * @return the voter
      */
     public static String getVoter() {
-        return map.get("voter");
+        return map.get(VOTER);
     }
 
     /**
@@ -114,7 +141,7 @@ public final class UnifiedNameContainer {
      * @return the seats
      */
     public static String getSeats() {
-        return map.get("seats");
+        return map.get(SEATS);
     }
 
     /**
@@ -123,7 +150,7 @@ public final class UnifiedNameContainer {
      * @return the elect
      */
     public static String getElect() {
-        return map.get("elect");
+        return map.get(ELECT);
     }
 
     /**
@@ -132,7 +159,7 @@ public final class UnifiedNameContainer {
      * @return the voting method
      */
     public static String getVotingMethod() {
-        return map.get("votingMethod");
+        return map.get(VOTING_METHOD);
     }
 
     /**
@@ -141,7 +168,7 @@ public final class UnifiedNameContainer {
      * @return the struct value name
      */
     public static String getStructValueName() {
-        return map.get("result_arr_name");
+        return map.get(RESULT_ARR_NAME);
     }
 
     /**
@@ -150,7 +177,7 @@ public final class UnifiedNameContainer {
      * @return the new result name
      */
     public static String getNewResultName() {
-        return map.get("new_result");
+        return map.get(NEW_RESULT);
     }
 
     /**
@@ -159,7 +186,7 @@ public final class UnifiedNameContainer {
      * @return the new votes name
      */
     public static String getNewVotesName() {
-        return map.get("new_votes");
+        return map.get(NEW_VOTES);
     }
 
     /**
@@ -168,7 +195,7 @@ public final class UnifiedNameContainer {
      * @return the orig result name
      */
     public static String getOrigResultName() {
-        return map.get("orig_result");
+        return map.get(ORIG_RESULT_KEY);
     }
 
     /**
@@ -177,7 +204,7 @@ public final class UnifiedNameContainer {
      * @return the orig votes name
      */
     public static String getOrigVotesName() {
-        return map.get("orig_votes");
+        return map.get(ORIG_VOTES_KEY);
     }
 
     /**
@@ -186,7 +213,7 @@ public final class UnifiedNameContainer {
      * @return the voting array
      */
     public static String getVotingArray() {
-        return map.get("votingArray");
+        return map.get(VOTING_ARRAY);
     }
 
     /**
@@ -195,7 +222,7 @@ public final class UnifiedNameContainer {
      * @return the candidate key
      */
     public static String getCandidateKey() {
-        return "candidate";
+        return CANDIDATE;
     }
 
     /**
@@ -204,7 +231,7 @@ public final class UnifiedNameContainer {
      * @return the voter key
      */
     public static String getVoterKey() {
-        return "voter";
+        return VOTER;
     }
 
     /**
@@ -213,7 +240,7 @@ public final class UnifiedNameContainer {
      * @return the seats key
      */
     public static String getSeatsKey() {
-        return "seats";
+        return SEATS;
     }
 
     /**
@@ -222,7 +249,7 @@ public final class UnifiedNameContainer {
      * @return the elect key
      */
     public static String getElectKey() {
-        return "elect";
+        return ELECT;
     }
 
     /**
@@ -231,7 +258,7 @@ public final class UnifiedNameContainer {
      * @return the voting method key
      */
     public static String getVotingMethodKey() {
-        return "votingMethod";
+        return VOTING_METHOD;
     }
 
     /**
@@ -240,7 +267,7 @@ public final class UnifiedNameContainer {
      * @return the struct value name key
      */
     public static String getStructValueNameKey() {
-        return "result_arr_name";
+        return RESULT_ARR_NAME;
     }
 
     /**
@@ -249,7 +276,7 @@ public final class UnifiedNameContainer {
      * @return the voting array key
      */
     public static String getVotingArrayKey() {
-        return "votingArray";
+        return VOTING_ARRAY;
     }
 
     /**
@@ -258,7 +285,7 @@ public final class UnifiedNameContainer {
      * @return the orig votes key
      */
     public static String getOrigVotesKey() {
-        return "orig_votes";
+        return ORIG_VOTES_KEY;
     }
 
     /**
@@ -268,7 +295,7 @@ public final class UnifiedNameContainer {
      *            the new candidate
      */
     public static void setCandidate(final String candidate) {
-        setInMap("candidate", candidate);
+        setInMap(CANDIDATE, candidate);
     }
 
     /**
@@ -278,7 +305,7 @@ public final class UnifiedNameContainer {
      *            the new voter
      */
     public static void setVoter(final String voter) {
-        setInMap("voter", voter);
+        setInMap(VOTER, voter);
     }
 
     // public static void setVotes(final String votes) {
@@ -292,7 +319,7 @@ public final class UnifiedNameContainer {
      *            the new seats
      */
     public static void setSeats(final String seats) {
-        setInMap("seats", seats);
+        setInMap(SEATS, seats);
     }
 
     /**
@@ -302,7 +329,7 @@ public final class UnifiedNameContainer {
      *            the new voting method
      */
     public static void setVotingMethod(final String votingMethod) {
-        setInMap("votingMethod", votingMethod);
+        setInMap(VOTING_METHOD, votingMethod);
     }
 
     /**
@@ -312,7 +339,7 @@ public final class UnifiedNameContainer {
      *            the new result arr name
      */
     public static void setResultArrName(final String resultArrName) {
-        setInMap("result_arr_name", resultArrName);
+        setInMap(RESULT_ARR_NAME, resultArrName);
     }
 
     /**
@@ -322,7 +349,7 @@ public final class UnifiedNameContainer {
      *            the new voting array
      */
     public static void setVotingArray(final String votingArray) {
-        setInMap("votingArray", votingArray);
+        setInMap(VOTING_ARRAY, votingArray);
     }
 
     /**

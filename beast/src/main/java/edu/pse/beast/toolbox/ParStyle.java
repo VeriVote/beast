@@ -54,6 +54,9 @@ public final class ParStyle {
 
     };
 
+    /** The semicolon symbol. */
+    private static final String SEMICOLON = ";";
+
     /** The alignment. */
     private final Optional<TextAlignment> alignment;
 
@@ -175,12 +178,12 @@ public final class ParStyle {
             default:
                 throw new AssertionError("unreachable code");
             }
-            sb.append("-fx-text-alignment: " + cssAlignment + ";");
+            sb.append("-fx-text-alignment: " + cssAlignment + SEMICOLON);
         });
 
         backgroundColor.ifPresent(color -> {
             sb.append("-fx-background-color: "
-                    + TextStyle.cssColor(color) + ";");
+                    + TextStyle.cssColor(color) + SEMICOLON);
         });
 
         return sb.toString();

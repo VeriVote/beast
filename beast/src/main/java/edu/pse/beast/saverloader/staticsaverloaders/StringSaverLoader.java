@@ -8,6 +8,11 @@ package edu.pse.beast.saverloader.staticsaverloaders;
  * @author Nikolai Schnell
  */
 public final class StringSaverLoader {
+    /** The ">" constant. */
+    private static final String GREATER_THAN = ">";
+    /** The ">>" constant. */
+    private static final String RIGHT_SHIFT = ">>";
+
     /**
      * Instantiates a new string saver loader.
      */
@@ -22,7 +27,7 @@ public final class StringSaverLoader {
      * @return the String
      */
     public static String createFromSaveString(final String saveString) {
-        return saveString.replace(">>", ">");
+        return saveString.replace(RIGHT_SHIFT, GREATER_THAN);
     }
 
     /**
@@ -34,6 +39,6 @@ public final class StringSaverLoader {
      * @return the saveString
      */
     public static String createSaveString(final String string) {
-        return string.replace(">", ">>");
+        return string.replace(GREATER_THAN, RIGHT_SHIFT);
     }
 }

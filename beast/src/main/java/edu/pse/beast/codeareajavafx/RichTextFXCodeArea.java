@@ -19,6 +19,15 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
  * @author Lukas Stapelbroek
  */
 public class RichTextFXCodeArea extends CodeArea {
+    /** The pipe constant. */
+    private static final String PIPE = "|";
+    /** The ">" constant. */
+    private static final String GREATER_THAN = ">";
+    /** The ")" constant. */
+    private static final String PAREN_CLOSE = ")";
+    /** The "|(?<" symbols. */
+    private static final String SYMBOLS = "|(?<";
+
     /** The Constant SAMPLE_CODE_SNIPPETS. */
     private static final String[] SAMPLE_CODE_SNIPPETS =
             new String[] {
@@ -64,7 +73,7 @@ public class RichTextFXCodeArea extends CodeArea {
 
     /** The Constant KEYWORD_PATTERN. */
     private static final String KEYWORD_PATTERN =
-            "\\b(" + String.join("|", KEYWORDS) + ")\\b";
+            "\\b(" + String.join(PIPE, KEYWORDS) + ")\\b";
 
     /** The Constant PAREN_PATTERN. */
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -84,7 +93,7 @@ public class RichTextFXCodeArea extends CodeArea {
 
     /** The Constant COMMENT_PATTERN. */
     private static final String COMMENT_PATTERN =
-            "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
+            "//[^\n]*" + PIPE + "/\\*(.|\\R)*?\\*/";
 
     /** The Constant KEYWORD_STRING. */
     private static final String KEYWORD_STRING = "KEYWORD_STRING";
@@ -109,20 +118,20 @@ public class RichTextFXCodeArea extends CodeArea {
 
     /** The Constant PATTERN. */
     private static final Pattern PATTERN = Pattern
-            .compile("(?<" + KEYWORD_STRING + ">"
-                    + KEYWORD_PATTERN + ")"
-                    + "|(?<" + PAREN_STRING + ">"
-                    + PAREN_PATTERN + ")" + "|(?<"
-                    + BRACE_STRING + ">"
-                    + BRACE_PATTERN + ")" + "|(?<"
-                    + BRACKET_STRING + ">"
-                    + BRACKET_PATTERN + ")" + "|(?<"
-                    + SEMICOLON_STRING + ">"
-                    + SEMICOLON_PATTERN + ")" + "|(?<"
-                    + STRING_STRING + ">"
-                    + STRING_PATTERN + ")" + "|(?<"
-                    + COMMENT_STRING + ">"
-                    + COMMENT_PATTERN + ")");
+            .compile("(?<" + KEYWORD_STRING + GREATER_THAN
+                    + KEYWORD_PATTERN + PAREN_CLOSE
+                    + SYMBOLS + PAREN_STRING + GREATER_THAN
+                    + PAREN_PATTERN + PAREN_CLOSE + SYMBOLS
+                    + BRACE_STRING + GREATER_THAN
+                    + BRACE_PATTERN + PAREN_CLOSE + SYMBOLS
+                    + BRACKET_STRING + GREATER_THAN
+                    + BRACKET_PATTERN + PAREN_CLOSE + SYMBOLS
+                    + SEMICOLON_STRING + GREATER_THAN
+                    + SEMICOLON_PATTERN + PAREN_CLOSE + SYMBOLS
+                    + STRING_STRING + GREATER_THAN
+                    + STRING_PATTERN + PAREN_CLOSE + SYMBOLS
+                    + COMMENT_STRING + GREATER_THAN
+                    + COMMENT_PATTERN + PAREN_CLOSE);
 
     /** The Constant RESOURCE. */
     private static final String RESOURCE = "codeAreaJAVAFXStyleSheet.css";

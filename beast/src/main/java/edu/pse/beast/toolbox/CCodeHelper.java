@@ -18,6 +18,28 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class CCodeHelper {
+    /** The BLANK symbol. */
+    private static final String BLANK = " ";
+    /** The line comment symbol(s). */
+    private static final String LINE_COMMENT = "//";
+    /** The colon symbol. */
+    private static final String COLON = ": ";
+    /** The comma symbol. */
+    private static final String COMMA = ", ";
+    /** The right parenthesis and left brace symbol. */
+    private static final String PAREN_R_BRACE_L = ") {";
+    /** The uint loop start string. */
+    private static final String UINT_LOOP_START = "(unsigned int ";
+
+    /** The RESULT constant. */
+    private static final String RESULT = "RESULT";
+    /** The VOTES constant. */
+    private static final String VOTES = "VOTES";
+    /** The "amountVotes" constant. */
+    private static final String AMOUNT_VOTES = "amountVotes";
+    /** The "_exp" string. */
+    private static final String EXP = "_exp";
+
     // String that only allows string in valid C format (they can still contain
     // identifiers)
 
@@ -91,10 +113,10 @@ public final class CCodeHelper {
     // * @return the c type
     // */
     // public static String getCType(ElectionTypeContainer electionContainer,
-    // String name) {
-    // String decl = "unsigned int " + name;
-    // decl = decl + electionContainer.getInputType().getSimpleType(true);
-    // return decl;
+    //                               String name) {
+    //     String decl = "unsigned int " + name;
+    //     decl = decl + electionContainer.getInputType().getSimpleType(true);
+    //     return decl;
     // }
     //
     // /**
@@ -107,9 +129,9 @@ public final class CCodeHelper {
     // * @return the c type
     // */
     // public static String getCTypePointer(ElectionTypeContainer
-    // electionContainer) {
-    // String decl = electionContainer.getOutputType().getSimpleType(true);
-    // return decl;
+    //                                          electionContainer) {
+    //     String decl = electionContainer.getOutputType().getSimpleType(true);
+    //     return decl;
     // }
 
     /**
@@ -142,22 +164,22 @@ public final class CCodeHelper {
      * @return the voting function declaration line
      */
     public static String generateSimpleDeclString(final ElectionTypeContainer container) {
-        String decl = "RESULT "
+        String decl = RESULT + BLANK
                 + UnifiedNameContainer.getVotingMethod()
-                + "(unsigned int amountVotes, VOTES) {";
+                + UINT_LOOP_START + AMOUNT_VOTES + COMMA + VOTES + PAREN_R_BRACE_L;
 
         String[] sizeOfDimensions =
                 container.getInputType().getSizeOfDimensions();
 
         if (sizeOfDimensions.length > 0) {
-            sizeOfDimensions[0] = "amountVotes";
+            sizeOfDimensions[0] = AMOUNT_VOTES;
         }
 
-        decl = decl.replace("RESULT",
+        decl = decl.replace(RESULT,
                 container.getInputType().getDataTypeAndSign() + container
                         .getOutputType().getDimensionDescriptor(true));
-        decl = decl.replace("VOTES",
-                container.getInputType().getDataTypeAndSign() + " "
+        decl = decl.replace(VOTES,
+                container.getInputType().getDataTypeAndSign() + BLANK
                         + UnifiedNameContainer.getVotingArray()
                         + container.getInputType()
                                 .getDimensionDescriptor(sizeOfDimensions));
@@ -177,14 +199,14 @@ public final class CCodeHelper {
      */
     public static String generateStructDeclString(final ElectionTypeContainer container,
                                                   final String voteStructName) {
-        String decl = "RESULT "
+        String decl = RESULT + BLANK
                 + UnifiedNameContainer.getVotingMethod()
-                + "(unsigned int amountVotes, VOTES) {";
+                + UINT_LOOP_START + AMOUNT_VOTES + COMMA + VOTES + PAREN_R_BRACE_L;
 
-        decl = decl.replace("RESULT",
+        decl = decl.replace(RESULT,
                 container.getOutputStruct().getStructAccess());
-        decl = decl.replace("VOTES",
-                container.getInputStruct().getStructAccess() + " "
+        decl = decl.replace(VOTES,
+                container.getInputStruct().getStructAccess() + BLANK
                         + voteStructName);
 
         return decl;
@@ -214,12 +236,12 @@ public final class CCodeHelper {
         final String inputIdInFile = container.getInputType().getInputIDinFile();
         final String outputIdInFile = container.getOutputType().getOutputIDinFile();
 
-        code.add("//" + stringResourceLoader.getStringFromID(inputIdInFile)
-                + ": "
-                + stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
-        code.add("//" + stringResourceLoader.getStringFromID(outputIdInFile)
-                + ": " + stringResourceLoader
-                        .getStringFromID(outputIdInFile + "_exp"));
+        code.add(LINE_COMMENT + stringResourceLoader.getStringFromID(inputIdInFile)
+                + COLON
+                + stringResourceLoader.getStringFromID(inputIdInFile + EXP));
+        code.add(LINE_COMMENT + stringResourceLoader.getStringFromID(outputIdInFile)
+                + COLON + stringResourceLoader
+                        .getStringFromID(outputIdInFile + EXP));
         code.add(generateSimpleDeclString(container));
         code.add("} ");
         final ElectionDescription description =

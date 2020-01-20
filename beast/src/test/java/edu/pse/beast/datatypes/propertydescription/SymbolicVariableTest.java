@@ -14,6 +14,9 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Niels Hanselmann
  */
 public class SymbolicVariableTest {
+    /** Test id string. */
+    private static final String TEST_ID_STRING = "testId";
+
     /** The instance. */
     private final SymbolicVariable instance;
 
@@ -22,7 +25,7 @@ public class SymbolicVariableTest {
      */
     public SymbolicVariableTest() {
         InternalTypeContainer cont = new InternalTypeContainer(InternalTypeRep.INTEGER);
-        this.instance = new SymbolicVariable("testId", cont);
+        this.instance = new SymbolicVariable(TEST_ID_STRING, cont);
     }
 
     /**
@@ -32,7 +35,7 @@ public class SymbolicVariableTest {
     public void testGetId() {
         System.out.println("getId");
         String result = instance.getId();
-        assertEquals("testId", result);
+        assertEquals(TEST_ID_STRING, result);
     }
 
     /**

@@ -10,6 +10,9 @@ import java.util.Map;
  * @author Holger Klein
  */
 public class SaverLoaderHelper {
+    /** BLANK string. */
+    private static final String BLANK = " ";
+
     /** The current save string. */
     private String currentSaveString;
 
@@ -24,7 +27,7 @@ public class SaverLoaderHelper {
      */
     public String getStringForAttr(final String attrName,
                                    final String content) {
-        return attrName.length() + " " + attrName + content.length() + " "
+        return attrName.length() + BLANK + attrName + content.length() + BLANK
                 + content;
     }
 
@@ -39,7 +42,7 @@ public class SaverLoaderHelper {
      */
     public String getStringForAttr(final String attrName, final int content) {
         final String contentString = String.valueOf(content);
-        return attrName.length() + " " + attrName + contentString.length() + " "
+        return attrName.length() + BLANK + attrName + contentString.length() + BLANK
                 + contentString;
     }
 

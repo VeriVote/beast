@@ -21,9 +21,10 @@ import javax.imageio.ImageIO;
  * @author Niels Hanselmann
  */
 public final class FileLoader {
-    // we want to compile all available c files, so the user does not need to
+    // We want to compile all available c files, so the user does not need to
+    // specify anything.
+
     /** The Constant C_FILE_ENDING. */
-    // specify anything
     public static final String C_FILE_ENDING = ".c";
 
     /** The Constant BAT_FILE_ENDING. */
@@ -37,6 +38,9 @@ public final class FileLoader {
 
     /** The Constant OUT_FILE_ENDING. */
     public static final String OUT_FILE_ENDING = ".out";
+
+    /** The "\"" string. */
+    private static final String QUOTE = "\"";
 
     /** The Constant HUNDRED. */
     private static final int HUNDRED = 100;
@@ -109,7 +113,7 @@ public final class FileLoader {
      */
     public static synchronized String getNewUniqueName(final String pathToDir) {
         ArrayList<String> usedNames = new ArrayList<String>();
-        File folder = new File(pathToDir.replace("\"", ""));
+        File folder = new File(pathToDir.replace(QUOTE, ""));
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
@@ -150,13 +154,13 @@ public final class FileLoader {
     public static List<String> listAllFilesFromFolder(final String pathToDir,
                                                       final String endsWith) {
         ArrayList<String> foundFiles = new ArrayList<String>();
-        File folder = new File(pathToDir.replace("\"", ""));
+        File folder = new File(pathToDir.replace(QUOTE, ""));
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile() && file.getName().endsWith(endsWith)) {
                     // surround it with quotes in case there are spaces in there
-                    foundFiles.add("\"" + file.getAbsolutePath() + "\"");
+                    foundFiles.add(QUOTE + file.getAbsolutePath() + QUOTE);
                 }
             }
         }

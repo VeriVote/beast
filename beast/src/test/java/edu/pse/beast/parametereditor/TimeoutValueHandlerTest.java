@@ -18,6 +18,14 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author Jonas Wohnig
  */
 public class TimeoutValueHandlerTest {
+    /** Test string "s". */
+    private static final String S = "s";
+    /** Test string "m". */
+    private static final String M = "m";
+    /** Test string "h". */
+    private static final String H = "h";
+    /** Test string "d". */
+    private static final String D = "d";
 
     /**
      * Test of class TimeoutValueHandler testing both input and output at different
@@ -27,10 +35,10 @@ public class TimeoutValueHandlerTest {
     public void testTimeout() {
         System.out.println("set/getTimeout");
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-        model.addElement("s");
-        model.addElement("m");
-        model.addElement("h");
-        model.addElement("d");
+        model.addElement(S);
+        model.addElement(M);
+        model.addElement(H);
+        model.addElement(D);
         model.addElement("faultyEntry");
         JComboBox<String> comboBox = new JComboBox<String>();
         JSpinner spinner = new JSpinner();
@@ -85,10 +93,10 @@ public class TimeoutValueHandlerTest {
     public void testReactsAndHasChanged() {
         System.out.println("ReactsAndHasChanged");
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-        model.addElement("s");
-        model.addElement("m");
-        model.addElement("h");
-        model.addElement("d");
+        model.addElement(S);
+        model.addElement(M);
+        model.addElement(H);
+        model.addElement(D);
         JComboBox<String> comboBox = new JComboBox<String>();
         comboBox.setModel(model);
         JSpinner spinner = new JSpinner();
