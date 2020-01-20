@@ -27,6 +27,9 @@ import edu.pse.beast.types.InternalTypeRep;
  */
 public class SymbolicVariableListTest {
 
+    /**
+     * Instantiates a new symbolic variable list test.
+     */
     public SymbolicVariableListTest() {
     }
 
@@ -88,7 +91,8 @@ public class SymbolicVariableListTest {
     @Test
     public void testSetSymbolicVariableList() {
         System.out.println("setSymbolicVariableList");
-        LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();
+        LinkedList<SymbolicVariable> symbolicVariableList =
+                new LinkedList<SymbolicVariable>();
         String id = "test";
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);

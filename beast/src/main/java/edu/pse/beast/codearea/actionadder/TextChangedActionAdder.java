@@ -18,7 +18,8 @@ package edu.pse.beast.codearea.actionadder;
 //
 ///**
 // * This class creates TextRemoved and TextAddedActions and adds them to the
-// * supplied Actionlist
+// * supplied Actionlist.
+// *
 // * @author Holger Klein
 // */
 //public class TextChangedActionAdder implements
@@ -35,9 +36,11 @@ package edu.pse.beast.codearea.actionadder;
 //    private final StoppedTypingContinuouslyMessager typingContinuouslyMessager;
 //
 //    /**
-//     * creates a TextChangedActionAdder
-//     * @param pane the JTextPane object used to communicate with the user. If the user
-//     * changes the contents of this object, a corresponding action will be created
+//     * Creates a TextChangedActionAdder.
+//     *
+//     * @param pane the JTextPane object used to communicate with the user.
+//     *             If the user changes the contents of this object, a
+//     *             corresponding action will be created.
 //     * @param list the Actionlist to which the created actions will be added
 //     * @param saveBeforeRemove used to get removed Strings if the user removes text
 //     */

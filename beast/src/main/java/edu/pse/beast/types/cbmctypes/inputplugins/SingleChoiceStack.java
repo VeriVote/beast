@@ -70,43 +70,68 @@ public final class SingleChoiceStack extends CBMCInputType {
         return true;
     }
 
+    /**
+     * Compute total sum.
+     *
+     * @param rows
+     *            the rows
+     * @param rowNumber
+     *            the row number
+     * @param positionInRow
+     *            the position in row
+     * @param newValue
+     *            the new value
+     * @return the total sum
+     */
+    private static int computeTotalSum(final List<NEWRowOfValues> rows,
+                                       final int rowNumber, final int positionInRow,
+                                       final String newValue) {
+        int totalSum = 0;
+        for (int i = 0; i < rows.size(); i++) { // Add up all values so far
+            List<String> currentValues = rows.get(i).getValues();
+            for (int j = 0; j < currentValues.size(); j++) {
+                totalSum += Integer.parseInt(currentValues.get(j));
+            }
+        }
+        totalSum -= Integer.parseInt(
+                rows.get(rowNumber).getValues().get(positionInRow)
+                );
+        totalSum += Integer.parseInt(newValue);
+        return totalSum;
+    }
+
     @Override
     public String vetValue(final ElectionTypeContainer container,
                            final List<NEWRowOfValues> rows,
                            final int rowNumber,
                            final int positionInRow,
                            final String newValue) {
+        final String value;
         if (rows.size() <= rowNumber) {
-            return newValue;
-        }
-        final int number;
-        try {
-            number = Integer.parseInt(newValue);
-        } catch (NumberFormatException e) {
-            return "0";
-        }
-        if (number < 0 || number > rows.get(rowNumber).getAmountVoters()) {
-            return "0";
+            value = newValue;
         } else {
-            int totalSum = 0;
-            for (int i = 0; i < rows.size(); i++) { // add up all values so far
-                List<String> currentValues = rows.get(i).getValues();
-                for (int j = 0; j < currentValues.size(); j++) {
-                    totalSum += Integer.parseInt(currentValues.get(j));
+            final int number;
+            try {
+                number = Integer.parseInt(newValue);
+            } catch (NumberFormatException e) {
+                return "0";
+            }
+            if (number < 0
+                    || number > rows.get(rowNumber).getAmountVoters()) {
+                value = "0";
+            } else {
+                final int totalSum =
+                        computeTotalSum(rows, rowNumber, positionInRow, newValue);
+                if (totalSum > rows.get(rowNumber).getAmountVoters()) {
+                    // we would exceed the limit with this addition, so
+                    // we reset to 0
+                    value = "0";
+                } else {
+                    value = newValue;
                 }
             }
-            totalSum -= Integer.parseInt(
-                    rows.get(rowNumber).getValues().get(positionInRow)
-                    );
-            totalSum += Integer.parseInt(newValue);
-            if (totalSum > rows.get(rowNumber).getAmountVoters()) {
-                // we would exceed the limit with this addition, so
-                // we reset to 0
-                return "0";
-            } else {
-                return newValue;
-            }
         }
+        return value;
     }
 
     @Override

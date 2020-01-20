@@ -33,6 +33,12 @@ public final class CompilerTestClass {
         }
     }
 
+    /**
+     * The main method.
+     *
+     * @param args
+     *            the arguments
+     */
     public static void main(final String[] args) {
         new CompilerTestClass();
     }

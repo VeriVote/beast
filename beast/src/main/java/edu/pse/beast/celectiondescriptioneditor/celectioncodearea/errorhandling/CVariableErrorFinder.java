@@ -33,8 +33,7 @@ public final class CVariableErrorFinder {
     public static List<CodeError> findErrors(final List<String> code,
                                              final ElectionDescription electionDesc) {
         // TODO use unified name container here later
-
-        ArrayList<String> seperated = new ArrayList<>();
+        ArrayList<String> seperated = new ArrayList<String>();
         seperated.add("#ifndef " + UnifiedNameContainer.getVoter());
         seperated.add("#define " + UnifiedNameContainer.getVoter() + " 1");
         seperated.add("#endif");

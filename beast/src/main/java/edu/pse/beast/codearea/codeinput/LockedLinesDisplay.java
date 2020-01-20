@@ -20,7 +20,7 @@ package edu.pse.beast.codearea.codeinput;
 //    private LockedLinesHandler lockedLinesHandler;
 //    private DefaultHighlighter highlighter;
 //    private DefaultHighlightPainter hPainter;
-//    private HashMap<Integer, Object> highlights = new HashMap<>();
+//    private HashMap<Integer, Object> highlights = new HashMap<Integer, Object>();
 //
 //    public LockedLinesDisplay(JTextPane pane, LockedLinesHandler lockedLinesHandler) {
 //        this.pane = pane;

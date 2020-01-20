@@ -11,28 +11,25 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 /**
- * this is the windows specific implementation to check code. It uses cl.exe
- * from the c++ pack for visual studio to check the code for errors
+ * This is the windows specific implementation to check code. It uses cl.exe
+ * from the c++ pack for visual studio to check the code for errors.
  *
  * @author Lukas Stapelbroek
  *
  */
 public final class WindowsCompilerAndRunner
         extends SystemSpecificCompilerAndExecutioner {
-    /** The Constant COMPILER_STRING. */
-    // the compiler we use on windows, because it is also needed by cbmc
+    /** The compiler we use on windows, because it is also needed by cbmc. */
     private static final String COMPILER_STRING = "cl.exe";
 
-    /** The Constant ENABLE_USER_INCLUDE. */
-    // used to enable includes from the users own written classes
+    /** Used to enable includes from the users own written classes. */
     private static final String ENABLE_USER_INCLUDE = "/I";
 
     /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // we want to compile all available c files, so the user does not need to
-    /** The Constant COMPILE_ALL_INCLUDES_IN_FOLDER. */
-    // specify anything
+    /** We want to compile all available c files, so the user does not need to
+        specify anything. */
     private static final String COMPILE_ALL_INCLUDES_IN_FOLDER = "*.c";
 
     @Override

@@ -44,14 +44,14 @@ public class SaverLoader {
     private final MinimalSaverInterface owner;
 
     /** The has changes. */
-    private boolean hasChanges = false;
+    private boolean hasChanges;
     // small hack, update values later on with listeners
 
     /** The has save file. */
-    private boolean hasSaveFile = false;
+    private boolean hasSaveFile;
 
     /** The save file. */
-    private File saveFile = null;
+    private File saveFile;
 
     /** The initial dir. */
     private final String initialDir;

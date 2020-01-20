@@ -13,12 +13,12 @@ public abstract class Options {
     /**
      * The list of suboptions that are saved by this object.
      */
-    private List<Options> subOptions = new ArrayList<>();
+    private List<Options> subOptions = new ArrayList<Options>();
 
     /**
      * The option elements that are saved by this object.
      */
-    private List<OptionElement> optElements = new ArrayList<>();
+    private List<OptionElement> optElements = new ArrayList<OptionElement>();
 
     /** The id. */
     private final String id;

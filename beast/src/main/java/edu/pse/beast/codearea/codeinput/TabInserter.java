@@ -11,7 +11,9 @@ package edu.pse.beast.codearea.codeinput;
 ///**
 // * Handles inserting and removing tabs in a given jtextpane. This is because
 // * the pane cannot by itself add tabs as spaces.
-// * TODO: make it so amount of spaces per tab can be changed after code generation
+// *
+// * <p>TODO: make it so amount of spaces per tab can be changed after code generation
+// *
 // * @author Holger Klein
 // */
 //public class TabInserter {
@@ -24,8 +26,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * inserts the required amount of spaces to move the caret psoition
-//     * to the next multiple of the amount of spaces per tab
+//     * Inserts the required amount of spaces to move the caret position
+//     * to the next multiple of the amount of spaces per tab.
+//     *
 //     * @param pos the position at which a tab should be inserted
 //     * @throws BadLocationException if the position is invalid
 //     */
@@ -44,8 +47,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * removes a tab at the position if there is nothing but spaces to the left
-//     * of it
+//     * Removes a tab at the position if there is nothing but spaces to the
+//     * left of it.
+//     *
 //     * @param pos the position at which a tab should be removed
 //     */
 //    public void removeTabAtPos(int pos) {

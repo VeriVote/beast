@@ -33,7 +33,7 @@ package edu.pse.beast.propertychecker;
 //
 //        ElectionDescription electionDescription =
 //            new ElectionDescription("name", inputType, outputType, 0);
-//        ArrayList<String> userCode = new ArrayList<>();
+//        ArrayList<String> userCode = new ArrayList<String>();
 //        userCode.add("votingcode");
 //        userCode.add("abalsdf");
 //        electionDescription.setCode(userCode);

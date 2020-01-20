@@ -14,8 +14,9 @@ package edu.pse.beast.codearea.useractions;
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * this useraction asks the given codearea to insert the currently copied string
-// * at the current position
+// * This useraction asks the given codearea to insert the currently copied string
+// * at the current position.
+// *
 // * @author Holger Klein
 // */
 //public class PasteUserAction extends UserAction {

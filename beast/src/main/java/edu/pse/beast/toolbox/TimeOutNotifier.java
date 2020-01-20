@@ -9,7 +9,7 @@ import edu.pse.beast.propertychecker.FactoryController;
  */
 public final class TimeOutNotifier implements Runnable {
     /** The disabled. */
-    private boolean disabled = false;
+    private boolean disabled;
 
     /** The to interrupt. */
     private final FactoryController toInterrupt;

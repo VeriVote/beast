@@ -35,13 +35,13 @@ public abstract class Result implements ResultInterface {
     private transient ResultTreeItem owner;
 
     /** The was started. */
-    private boolean wasStarted = false;
+    private boolean wasStarted;
 
     /** The valid. */
-    private boolean valid = false;
+    private boolean valid;
 
     /** The finished. */
-    private boolean finished = false;
+    private boolean finished;
 
     /** The result. */
     private List<String> result;
@@ -56,13 +56,13 @@ public abstract class Result implements ResultInterface {
     private List<String> lastTmpError;
 
     /** The time out. */
-    private boolean timeOut = false;
+    private boolean timeOut;
 
     /** The success. */
-    private boolean success = false;
+    private boolean success;
 
     /** The has sub result. */
-    private boolean hasSubResult = false;
+    private boolean hasSubResult;
 
     /** The num voters. */
     private int numVoters;
@@ -83,16 +83,16 @@ public abstract class Result implements ResultInterface {
     private boolean forcefulleStopped;
 
     /** The has margin. */
-    private boolean hasMargin = false;
+    private boolean hasMargin;
 
     /** The final margin. */
     private int finalMargin = -1;
 
     /** The sub result. */
-    private Result subResult = null;
+    private Result subResult;
 
     /** The is margin comp. */
-    private boolean isMarginComp = false;
+    private boolean isMarginComp;
 
     /** The status strings. */
     private List<String> statusStrings = new ArrayList<String>();

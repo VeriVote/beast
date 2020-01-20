@@ -39,10 +39,10 @@ public abstract class CheckerFactory implements Runnable {
     private Checker currentlyRunning;
 
     /** The stopped. */
-    private boolean stopped = false;
+    private boolean stopped;
 
     /** The finished. */
-    private boolean finished = false;
+    private boolean finished;
 
     /** The last result. */
     private List<String> lastResult;
@@ -81,24 +81,24 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     // public CheckerFactory(FactoryController controller,
-    // ElectionCheckParameter
-    // parameter, Result result,
-    // boolean isMargin) {
-    // this.controller = controller;
-    // this.parameter = parameter;
-    // this.result = result;
+    //                       ElectionCheckParameter parameter,
+    //                       Result result,
+    //                       boolean isMargin) {
+    //     this.controller = controller;
+    //     this.parameter = parameter;
+    //     this.result = result;
     //
-    // this.isMargin = isMargin;
+    //     this.isMargin = isMargin;
     //
-    // this.postAndPrepPropDesc = null;
-    // this.electionDesc = null;
+    //     this.postAndPrepPropDesc = null;
+    //     this.electionDesc = null;
     //
-    // // because we create a new instance with all variables null, we have to
-    // // // catch it here
-    // // if (result != null) {
-    // // result.setElectionType(getElectionDescription());
-    // // result.setProperty(postAndPrepPropDesc);
-    // // }
+    //     // because we create a new instance with all variables null, we have to
+    //     // // catch it here
+    //     // if (result != null) {
+    //     //     result.setElectionType(getElectionDescription());
+    //     //     result.setProperty(postAndPrepPropDesc);
+    //     // }
     // }
 
     // The main working thread in this CheckerFactory. It cycles through all
@@ -537,8 +537,8 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * signals to this checkerFactory that it has to stop checking. It then also
-     * stops the currently running checker
+     * Signals to this checkerFactory that it has to stop checking. It then also
+     * stops the currently running checker.
      */
     public synchronized void stopChecking() {
         stopped = true;
@@ -707,87 +707,88 @@ public abstract class CheckerFactory implements Runnable {
                          Result res);
 
     // /**
-    // * starts a new Checker with the given parameters. Implementation depends
-    // on
-    // * the extending class
-    // *
-    // * @param electionDesc
-    // * the election description
-    // * @param postAndPrepPropDesc
-    // * the property description
-    // * @param advanced
-    // * the advanced options to be passed to the checker
-    // * @param voters
-    // * the amount of voters
-    // * @param candidates
-    // * the amount of candidates
-    // * @param seats
-    // * the amount of seats
-    // * @param parent
-    // * the parent that has to be notified when the checker finished
-    // * @return the newly created Checker that is now checking the given file
-    // and
-    // * other properties
-    // */
-    // protected abstract Checker startProcessCheck(ElectionDescriptionSource
-    // electionDesc,
-    // PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int
-    // voters, int candidates, int seats,
-    // CheckerFactory parent);
+    //  * Starts a new Checker with the given parameters. Implementation depends
+    //  * on the extending class.
+    //  *
+    //  * @param electionDesc
+    //  *            the election description
+    //  * @param postAndPrepPropDesc
+    //  *            the property description
+    //  * @param advanced
+    //  *            the advanced options to be passed to the checker
+    //  * @param voters
+    //  *            the amount of voters
+    //  * @param candidates
+    //  *            the amount of candidates
+    //  * @param seats
+    //  *            the amount of seats
+    //  * @param parent
+    //  *            the parent that has to be notified when the checker finished
+    //  * @return the newly created Checker that is now checking the given file
+    //  *         and other properties.
+    //  */
+    // protected abstract Checker startProcessCheck(ElectionDescriptionSource electionDesc,
+    //                                              PreAndPostConditionsDescription
+    //                                                  postAndPrepPropDesc,
+    //                                              String advanced,
+    //                                              int voters,
+    //                                              int candidates,
+    //                                              int seats,
+    //                                              CheckerFactory parent);
     //
     // /**
-    // * starts a new Checker, which checks a given file with the given
-    // * parameters. Implementation depends on the extending class
-    // *
-    // * @param electionDesc
-    // * the election description
-    // * @param postAndPrepPropDesc
-    // * the property description
-    // * @param advanced
-    // * the advanced options to be passed to the checker
-    // * @param voters
-    // * the amount of voters
-    // * @param candidates
-    // * the amount of candidates
-    // * @param seats
-    // * the amount of seats
-    // * @param parent
-    // * the parent that has to be notified when the checker finished
-    // * @return the newly created Checker that is now checking the given file
-    // and
-    // * other properties
-    // */
-    // protected abstract Checker startProcessMargin(ElectionDescriptionSource
-    // electionDesc,
-    // PreAndPostConditionsDescription postAndPrepPropDesc, String advanced,
-    // CheckerFactory parent);
+    //  * Starts a new Checker, which checks a given file with the given
+    //  * parameters. Implementation depends on the extending class.
+    //  *
+    //  * @param electionDesc
+    //  *            the election description
+    //  * @param postAndPrepPropDesc
+    //  *            the property description
+    //  * @param advanced
+    //  *            the advanced options to be passed to the checker
+    //  * @param voters
+    //  *            the amount of voters
+    //  * @param candidates
+    //  *            the amount of candidates
+    //  * @param seats
+    //  *            the amount of seats
+    //  * @param parent
+    //  *            the parent that has to be notified when the checker finished
+    //  * @return the newly created Checker that is now checking the given file
+    //  *         and other properties.
+    //  */
+    // protected abstract Checker startProcessMargin(ElectionDescriptionSource electionDesc,
+    //                                               PreAndPostConditionsDescription
+    //                                                   postAndPrepPropDesc,
+    //                                               String advanced,
+    //                                               CheckerFactory parent);
     //
     // /**
-    // * starts a new Checker, which checks a given file with the given
-    // * parameters. Implementation depends on the extending class
-    // *
-    // * @param electionDesc
-    // * the election description
-    // * @param postAndPrepPropDesc
-    // * the property description
-    // * @param advanced
-    // * the advanced options to be passed to the checker
-    // * @param voters
-    // * the amount of voters
-    // * @param candidates
-    // * the amount of candidates
-    // * @param seats
-    // * the amount of seats
-    // * @param parent
-    // * the parent that has to be notified when the checker finished
-    // * @return the newly created Checker that is now checking the given file
-    // and
-    // * other properties
-    // */
-    // protected abstract Checker startProcessTest(ElectionDescriptionSource
-    // electionDesc,
-    // PreAndPostConditionsDescription postAndPrepPropDesc, String advanced,
-    // CheckerFactory parent);
+    //  * Starts a new Checker, which checks a given file with the given
+    //  * parameters. Implementation depends on the extending class.
+    //  *
+    //  * @param electionDesc
+    //  *            the election description
+    //  * @param postAndPrepPropDesc
+    //  *            the property description
+    //  * @param advanced
+    //  *            the advanced options to be passed to the checker
+    //  * @param voters
+    //  *            the amount of voters
+    //  * @param candidates
+    //  *            the amount of candidates
+    //  * @param seats
+    //  *            the amount of seats
+    //  * @param parent
+    //  *            the parent that has to be notified when the checker finished
+    //  * @return the newly created Checker that is now checking the given file
+    //  *         and other properties.
+    //  */
+    // protected abstract Checker startProcessTest(ElectionDescriptionSource electionDesc,
+    //                                             PreAndPostConditionsDescription
+    //                                                 postAndPrepPropDesc,
+    //                                             String advanced,
+    //                                             CheckerFactory parent);
 
     /**
      * Allows the underlying implementation of the checker to clean up after
@@ -804,25 +805,28 @@ public abstract class CheckerFactory implements Runnable {
     public abstract Result getMatchingResult();
 
     // /**
-    // *
-    // * @param controller
-    // * the factory controller that controls this checker factory
-    // * @param electionDesc
-    // * the election description source
-    // * @param postAndPrepPropDesc
-    // * a description of the given property
-    // * @param parameter
-    // * the source for the parameters
-    // * @param result
-    // * the object in which the result should be saved in later
-    // * @param isMargin
-    // * @return a new CheckerFactory
-    // */
-    // public abstract CheckerFactory getNewInstance(FactoryController
-    // controller,
-    // ElectionDescriptionSource electionDesc, PreAndPostConditionsDescription
-    // postAndPrepPropDesc,
-    // ElectionCheckParameter parameter, Result result, boolean isMargin);
+    //  * Get a new checker factory instance.
+    //  *
+    //  * @param controller
+    //  *            the factory controller that controls this checker factory
+    //  * @param electionDesc
+    //  *            the election description source
+    //  * @param postAndPrepPropDesc
+    //  *            a description of the given property
+    //  * @param parameter
+    //  *            the source for the parameters
+    //  * @param result
+    //  *            the object in which the result should be saved in later
+    //  * @param isMargin
+    //  *            whether this is a margin
+    //  * @return a new CheckerFactory
+    //  */
+    // public abstract CheckerFactory getNewInstance(FactoryController controller,
+    //                                               ElectionDescriptionSource electionDesc,
+    //                                               PreAndPostConditionsDescription
+    //                                                   postAndPrepPropDesc,
+    //                                               ElectionCheckParameter parameter,
+    //                                               Result result, boolean isMargin);
     //
 
     /**
@@ -844,21 +848,21 @@ public abstract class CheckerFactory implements Runnable {
 
     //
     // /**
-    // *
-    // * @param controller
-    // * the factory controller that controls this checker factory
-    // * @param toCheck
-    // * the file we want the Checker to check
-    // * @param paramSrc
-    // * the source for the parameters
-    // * @param result
-    // * the object in which the result should be saved in later
-    // * @return a new CheckerFactory
-    // */
-    // public abstract CheckerFactory getNewInstance(FactoryController
-    // controller,
-    // File toCheck, ParameterSource paramSrc,
-    // Result result, boolean isMargin);
+    //  *
+    //  * @param controller
+    //  *            the factory controller that controls this checker factory
+    //  * @param toCheck
+    //  *            the file we want the Checker to check
+    //  * @param paramSrc
+    //  *            the source for the parameters
+    //  * @param result
+    //  *            the object in which the result should be saved in later
+    //  * @return a new CheckerFactory
+    //  */
+    // public abstract CheckerFactory getNewInstance(FactoryController controller,
+    //                                               File toCheck,
+    //                                               ParameterSource paramSrc,
+    //                                               Result result, boolean isMargin);
 
     /**
      * This method extracts the electionType from the description.

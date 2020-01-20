@@ -5,13 +5,15 @@ package edu.pse.beast.booleanexpeditor.useractions;
 //
 ///**
 // * UserAction subclass responsible for pasting text in BooleanExpEditorCodeAreas.
+// *
 // * @author Nikolai Schnell
 // */
 //public class PasteUserAction extends UserAction {
 //    private final BooleanExpEditor editor;
 //
 //    /**
-//     * Constructor
+//     * Constructor.
+//     *
 //     * @param editor reference to the GUI controller.
 //     */
 //    public PasteUserAction(BooleanExpEditor editor) {

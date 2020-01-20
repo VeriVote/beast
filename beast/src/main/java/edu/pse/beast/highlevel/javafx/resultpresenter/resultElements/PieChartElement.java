@@ -25,13 +25,13 @@ public final class PieChartElement extends ResultImageElement {
     private List<Tuple3<String, Double, Color>> resultValues;
 
     /** The total size. */
-    private double totalSize = 0;
+    private double totalSize;
 
     /** The width. */
-    private double width = 0;
+    private double width;
 
     /** The height. */
-    private double height = 0;
+    private double height;
 
     /**
      * Instantiates a new pie chart element.

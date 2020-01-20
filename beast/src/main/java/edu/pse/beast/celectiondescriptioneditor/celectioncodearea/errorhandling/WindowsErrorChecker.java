@@ -17,7 +17,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 /**
- * this is the windows specific implementation to check code. It uses cl.exe
+ * This is the windows specific implementation to check code. It uses cl.exe
  * from the C++ pack for visual studio to check the code for errors.
  *
  * @author Lukas Stapelbroek

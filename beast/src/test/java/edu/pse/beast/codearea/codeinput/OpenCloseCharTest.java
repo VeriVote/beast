@@ -12,7 +12,9 @@ import org.junit.Test;
  * @author Holger Klein
  */
 public class OpenCloseCharTest {
-
+    /**
+     * Instantiates a new open close char test.
+     */
     public OpenCloseCharTest() {
     }
 

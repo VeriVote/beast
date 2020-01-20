@@ -254,10 +254,10 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     private ElectionDescription elecDescription;
 
     /** The locked line start. */
-    private int lockedLineStart = 0;
+    private int lockedLineStart;
 
     /** The locked line end. */
-    private int lockedLineEnd = 0;
+    private int lockedLineEnd;
 
     /** The locked brace pos. */
     private int lockedBracePos;
@@ -486,8 +486,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     }
 
     /**
-     * tries to insert text into this text pane. It will not override locked
-     * lines
+     * Tries to insert text into this text pane. It will not override locked
+     * lines.
      *
      * @param replacement
      *            the text to be inserted

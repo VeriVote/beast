@@ -98,10 +98,9 @@ public abstract class CBMCInputType extends InputType {
     public final String getVoteDescriptionString(final List<List<String>> origVotes) {
         String votesString = "";
         int voterIndex = 0;
-        // iterate over the voters
+        // Iterate over the voters
         for (Iterator<List<String>> iterator = origVotes.iterator();
                 iterator.hasNext();) {
-            List<String> list = iterator.next();
             String oneVoter = "";
             try {
                 oneVoter = GUIController.getController().getElectionSimulation()
@@ -112,9 +111,10 @@ public abstract class CBMCInputType extends InputType {
             oneVoter = oneVoter + ": ";
             voterIndex++;
             int partyIndex = 0;
-            // iterate over the candidates
-            for (Iterator<String> iterator2 = list.iterator(); iterator2
-                    .hasNext();) {
+            final List<String> list = iterator.next();
+            // Iterate over the candidates
+            for (Iterator<String> iterator2 = list.iterator();
+                    iterator2.hasNext();) {
                 String voteAmount = iterator2.next();
                 try {
                     oneVoter +=

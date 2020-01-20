@@ -11,17 +11,17 @@ package edu.pse.beast.datatypes.internal;
 //    private final InternalTypeContainer listedType;
 //
 //    /**
-//     * if the container is a list, say of votes, then the access type is the type
+//     * If the container is a list, say of votes, then the access type is the type
 //     * of symbolic variable which can be used to access elements of the list.
-//     * Example: Every voter elects one candidate: VOTES1(v) <-- access type would
-//     * be VOTER. Every voter lists candidates by preference: VOTES1(v)(c) <--- access
+//     * Example: Every voter elects one candidate: VOTES1(v) <-- Access type would
+//     * be VOTER. Every voter lists candidates by preference: VOTES1(v)(c) <--- Access
 //     * type c would be Candidate. This variable is also used to determine the size of
-//     * the list: type size VOTER V CANDIDATE C SEAT S
+//     * the list: Type size VOTER V CANDIDATE C SEAT S.
 //     */
 //    private final InternalTypeRep accessTypeIfList;
 //
 //    /**
-//     * Constructor for a listed TypeContainer
+//     * Constructor for a listed TypeContainer.
 //     *
 //     * @param listedType sets the Type of the list elements
 //     * @param accessTypeIfList sets the access type for the list elements
@@ -57,7 +57,7 @@ package edu.pse.beast.datatypes.internal;
 //    }
 //
 //    /**
-//     * getter for internalType
+//     * Getter for internalType.
 //     *
 //     * @return returns internalType
 //     */
@@ -66,7 +66,7 @@ package edu.pse.beast.datatypes.internal;
 //    }
 //
 //    /**
-//     * getter for listedType If isList is false it returns null
+//     * Getter for listedType If isList is false it returns null.
 //     *
 //     * @return returns listedType
 //     */
@@ -75,7 +75,7 @@ package edu.pse.beast.datatypes.internal;
 //    }
 //
 //    /**
-//     * returns NULL if it is not a list
+//     * Returns NULL if it is not a list.
 //     *
 //     * @return the access type of the list
 //     */
@@ -84,8 +84,9 @@ package edu.pse.beast.datatypes.internal;
 //    }
 //
 //    /**
+//     * Returns the amount levels that this container is made up of lists.
 //     *
-//     * @return the amount levels that this Container is made up of lists
+//     * @return the amount
 //     */
 //    public int getListLvl() {
 //        InternalTypeContainer cont = this;

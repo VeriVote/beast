@@ -82,7 +82,7 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /***
-//     * try to extract the single dim values from the result
+//     * Try to extract the single dim values from the result.
 //     */
 //    public void singleDim() {
 //        result.setResult(lines);
@@ -102,7 +102,7 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /**
-//     * try to extract the multi dim values from the result
+//     * Try to extract the multi dim values from the result.
 //     */
 //    public void multiDim() {
 //        result.setResult(lines);

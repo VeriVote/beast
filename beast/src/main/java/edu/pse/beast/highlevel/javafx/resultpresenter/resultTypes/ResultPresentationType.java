@@ -32,7 +32,7 @@ public abstract class ResultPresentationType {
     static final int STANDARD_SIZE = 10;
 
     /** The menu item. */
-    private MenuItem menuItem = null;
+    private MenuItem menuItem;
 
     /**
      * Present result.

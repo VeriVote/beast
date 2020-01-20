@@ -29,7 +29,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 // * This class is the interface/facade class for the CElectionDescriptionEditor
 // * interface. It provides access to the most important functionality of this
 // * package to other classes without having to know which particular classes
-// * implement said functionality
+// * implement said functionality.
 // *
 // * @author Holger Klein
 // */
@@ -43,18 +43,18 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    private final ErrorWindow errorWindow;
 //    private final CElectionDescriptionEditorChangeHandler changeHandler;
 //    private final ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners =
-//        new ArrayList<>();
+//        new ArrayList<ElectionDescriptionChangeListener>();
 //    private CElectionEditorMenubarHandler menubarHandler;
 //    private CElectionEditorToolbarHandler toolbarHandler;
 //    private StringLoaderInterface stringLoaderInterface;
 //    private final FileChooser fileChooser;
-//    private final ArrayList<UserAction> userActions = new ArrayList<>();
-//    private final ArrayList<Character> userActionChars = new ArrayList<>();
+//    private final ArrayList<UserAction> userActions = new ArrayList<UserAction>();
+//    private final ArrayList<Character> userActionChars = new ArrayList<Character>();
 //    private Boolean wasVisible;
 //    private ObjectRefsForBuilder refs;
 //
 //    /**
-//     * constructor for the election description editor
+//     * Constructor for the election description editor.
 //     *
 //     * @param codeArea
 //     *            the code area
@@ -94,8 +94,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * returns the election description in the state currently visible to the
-//     * user
+//     * Returns the election description in the state currently visible to the
+//     * user.
 //     *
 //     * @return the election desciprion as it is currently edited by the user
 //     */
@@ -106,7 +106,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * adds an user action
+//     * Adds a user action.
 //     *
 //     * @param c
 //     *            the character
@@ -139,8 +139,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * finds all errors in the currently displayed c code and displays them
-//     * listed in the error window
+//     * Finds all errors in the currently displayed c code and displays them
+//     * listed in the error window.
 //     */
 //    public void findErrorsAndDisplayThem() {
 //        ArrayList<CodeError> errors =
@@ -151,7 +151,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * sets the election editor menu bar handler
+//     * Sets the election editor menu bar handler.
 //     *
 //     * @param cElectionEditorMenubarHandler
 //     *            the reference to the handler
@@ -162,7 +162,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * sets the election editor toolbar handler
+//     * Sets the election editor toolbar handler.
 //     *
 //     * @param cElectionEditorToolbarHandler
 //     *            the election editor toolbar handler
@@ -199,7 +199,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * Getter
+//     * Getter of the code area.
 //     *
 //     * @return the CElectionCodeArea
 //     */
@@ -208,8 +208,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * presents the given election description to the user so he can edit it,
-//     * prompting him to save the current description before doing so
+//     * Presents the given election description to the user so they can edit it,
+//     * prompting them to save the current description before doing so.
 //     *
 //     * @param description
 //     *            the description to be shown to the user
@@ -234,9 +234,9 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * creates a new c-election code area object in which to display the given
+//     * Creates a new C-election code area object in which to display the given
 //     * election description. Does not ask the user to save the current description
-//     * before doing sos
+//     * before doing so.
 //     *
 //     * @param description
 //     *            the description to be displayed in the
@@ -277,7 +277,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * Getter
+//     * Getter of the view.
 //     *
 //     * @return the CCodeEditorWindow object of this class
 //     */
@@ -286,7 +286,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * Getter
+//     * Getter of the change handler.
 //     *
 //     * @return the ChangeHandler object of this class
 //     */
@@ -295,7 +295,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * adds the listener to this editor
+//     * Adds the listener to this editor.
 //     *
 //     * @param l
 //     *            this listener to add
@@ -305,7 +305,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * remove the listener from this editor
+//     * Remove the listener from this editor.
 //     *
 //     * @param l
 //     *            the listener to remove
@@ -315,7 +315,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * turns the editor visible or invisible
+//     * Turns the editor visible or invisible.
 //     *
 //     * @param vis
 //     *            true, if it should be visible, false, if invisible
@@ -325,7 +325,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * gives the reference to the file chooser
+//     * Gives the reference to the file chooser.
 //     *
 //     * @return the file chooser
 //     */
@@ -334,7 +334,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    }
 //
 //    /**
-//     * gives the reference to the stringloader interface
+//     * Gives the reference to the stringloader interface.
 //     *
 //     * @return the stringloader interface
 //     */

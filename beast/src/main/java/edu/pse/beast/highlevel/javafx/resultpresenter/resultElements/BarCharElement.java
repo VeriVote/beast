@@ -20,7 +20,7 @@ public final class BarCharElement extends ResultImageElement {
     private List<Tuple3<String, Double, Color>> resultValues;
 
     /** The total size. */
-    private double totalSize = 0;
+    private double totalSize;
 
     /**
      * Instantiates a new bar char element.

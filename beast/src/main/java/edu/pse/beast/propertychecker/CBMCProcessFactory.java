@@ -38,7 +38,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
     // be
     /** The to check. */
     // created, but the file that is already there will be reused
-    private File toCheck = null;
+    private File toCheck;
 
     /**
      * Creates a new CBMC checker factory, that determines what operating system
@@ -392,7 +392,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
                                      final PreAndPostConditionsDescription postAndPrepPropDesc,
                                      final int margin, final ElectionSimulationData origResult,
                                      final ElectionSimulationData inputData) {
-        // create a code generator, that creates a code file for this call only
+        // Create a code generator, that creates a code file for this call only
         // one time in this factory factory;
         CBMCCodeGenerator generator =
                 new CBMCCodeGenerator(electionDesc,
@@ -451,16 +451,15 @@ public final class CBMCProcessFactory extends CheckerFactory {
 
     //
     // /**
-    // * creates a new c-Code file that then can be used by all the underlying
-    // * checkers to check it with cbmc
-    // *
-    // * @param electionDescSrc the source that describes the election
-    // * @param postAndPrepPropDesc the property that this specific process
-    // factory
-    // should check
-    // * @return a file that contains the generated code from the two above
-    // variables
-    // */
+    //  * Creates a new c-Code file that then can be used by all the underlying
+    //  * checkers to check it with cbmc.
+    //  *
+    //  * @param electionDescSrc the source that describes the election
+    //  * @param postAndPrepPropDesc the property that this specific process
+    //  *                            factory should check
+    //  * @return a file that contains the generated code from the two above
+    //  *         variables
+    //  */
     // public File createCodeFile(ElectionDescriptionSource electionDescSrc,
     // PostAndPrePropertiesDescription postAndPrepPropDesc) {
     //
@@ -490,21 +489,20 @@ public final class CBMCProcessFactory extends CheckerFactory {
     // }
 
     // /**
-    // * creates a new c-Code file that then can be used by all the underlying
-    // * checkers to check it with cbmc
-    // *
-    // * @param electionDescSrc the source that describes the election
-    // * @param postAndPrepPropDesc the property that this specific process
-    // factory
-    // should check
-    // * @return a file that contains the generated code from the two above
-    // variables
-    // */
+    //  * Creates a new c-Code file that then can be used by all the underlying
+    //  * checkers to check it with cbmc.
+    //  *
+    //  * @param electionDescSrc the source that describes the election
+    //  * @param postAndPrepPropDesc the property that this specific process
+    //  *                            factory should check
+    //  * @return a file that contains the generated code from the two above
+    //  *         variables
+    //  */
     // public File createCodeFileCheck(ElectionDescriptionSource
     // electionDescSrc,
     // PostAndPrePropertiesDescription postAndPrepPropDesc) {
     //
-    // // create a code generator, that creates a code file for this call only
+    // // Create a code generator, that creates a code file for this call only
     // // one time in this factory factory;
     // CBMCCodeGenerator generator = new
     // CBMCCodeGenerator(electionDescSrc.getElectionDescription(),
@@ -530,16 +528,15 @@ public final class CBMCProcessFactory extends CheckerFactory {
     // }
     //
     // /**
-    // * creates a new c-Code file that then can be used by all the underlying
-    // * checkers to check it with cbmc
-    // *
-    // * @param electionDescSrc the source that describes the election
-    // * @param postAndPrepPropDesc the property that this specific process
-    // factory
-    // should check
-    // * @return a file that contains the generated code from the two above
-    // variables
-    // */
+    //  * Creates a new c-Code file that then can be used by all the underlying
+    //  * checkers to check it with cbmc.
+    //  *
+    //  * @param electionDescSrc the source that describes the election
+    //  * @param postAndPrepPropDesc the property that this specific process
+    //  *                            factory should check
+    //  * @return a file that contains the generated code from the two above
+    //  *         variables
+    //  */
     // public File createCodeFileMargin(ElectionDescriptionSource
     // electionDescSrc,
     // PostAndPrePropertiesDescription postAndPrepPropDesc) {
@@ -570,16 +567,15 @@ public final class CBMCProcessFactory extends CheckerFactory {
     // }
     //
     // /**
-    // * creates a new c-Code file that then can be used by all the underlying
-    // * checkers to check it with cbmc
-    // *
-    // * @param electionDescSrc the source that describes the election
-    // * @param postAndPrepPropDesc the property that this specific process
-    // factory
-    // should check
-    // * @return a file that contains the generated code from the two above
-    // variables
-    // */
+    //  * Creates a new c-Code file that then can be used by all the underlying
+    //  * checkers to check it with cbmc.
+    //  *
+    //  * @param electionDescSrc the source that describes the election
+    //  * @param postAndPrepPropDesc the property that this specific process
+    //  *                            factory should check
+    //  * @return a file that contains the generated code from the two above
+    //  *         variables
+    //  */
     // public File createCodeFileTest(ElectionDescriptionSource electionDescSrc,
     // PostAndPrePropertiesDescription postAndPrepPropDesc) {
     //

@@ -26,7 +26,7 @@ public final class CBMCResultValueSingle implements CBMCResultValue {
     private static final String WIDTH_NAME = "width";
 
     /** The parsed. */
-    private boolean parsed = false;
+    private boolean parsed;
 
     /** The type. */
     private String type = "";
@@ -35,10 +35,10 @@ public final class CBMCResultValueSingle implements CBMCResultValue {
     private String value = "";
 
     /** The width. */
-    private int width = 0;
+    private int width;
 
     /** The number value. */
-    private Number numberValue = null;
+    private Number numberValue;
 
     /**
      * Sets the value.

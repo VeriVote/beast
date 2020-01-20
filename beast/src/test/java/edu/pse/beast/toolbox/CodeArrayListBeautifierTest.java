@@ -86,7 +86,7 @@ public class CodeArrayListBeautifierTest {
     @Test
     public void testAddArrayList() {
         System.out.println("addArrayList");
-        ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add("2");
         arrayList.add("3");
         arrayList.add("test");

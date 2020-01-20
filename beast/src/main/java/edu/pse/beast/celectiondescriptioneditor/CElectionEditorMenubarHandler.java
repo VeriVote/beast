@@ -8,8 +8,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //import edu.pse.beast.toolbox.MenuBarHandler;
 //
 ///**
-// * creates and updates the menubar of a celectiondescriptioneditor. It also
-// * links the useractions to the menuitems
+// * Creates and updates the menu bar of a C election description editor. It also
+// * links the user actions to the menu items.
 // *
 // * @author Holger Klein
 // */
@@ -18,7 +18,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    private final CCodeEditorWindow cgui;
 //
 //    /**
-//     * constructor for the menu bar handler
+//     * Constructor for the menu bar handler.
+//     *
 //     * @param headingIds the ids for the headings
 //     * @param cgui the code editor gui
 //     * @param actionIdAndListener the action id listener

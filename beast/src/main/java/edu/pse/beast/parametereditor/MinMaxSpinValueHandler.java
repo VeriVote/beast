@@ -60,7 +60,7 @@ public final class MinMaxSpinValueHandler implements ChangeListener {
      * @return ArrayList of Integers representing these values
      */
     public ArrayList<Integer> getValues() {
-        ArrayList<Integer> result = new ArrayList<>();
+        ArrayList<Integer> result = new ArrayList<Integer>();
         for (int i = minBefore; i <= maxBefore; i++) {
             result.add(i);
         }

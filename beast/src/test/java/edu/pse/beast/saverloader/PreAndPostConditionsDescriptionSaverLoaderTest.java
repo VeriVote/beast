@@ -17,6 +17,9 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Nikolai Schnell
  */
 public class PreAndPostConditionsDescriptionSaverLoaderTest {
+    /** The Constant TEST_CODE_STRING. */
+    private static final String TEST_CODE_STRING =
+            "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD";
     /** The instance. */
     private static PropertyDescriptionSaverLoader preAndPostConditionsDescriptionSaverLoader;
     /** A description instance. */
@@ -25,17 +28,18 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
     @BeforeClass
     public static void setUpClass() {
         preAndPostConditionsDescriptionSaverLoader = new PropertyDescriptionSaverLoader();
-        FormalPropertiesDescription pre
-              = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
-        FormalPropertiesDescription post
-              = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();
         list.addSymbolicVariable("voter1", new InternalTypeContainer(InternalTypeRep.VOTER));
         list.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));
         list.addSymbolicVariable("candidate", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         list.addSymbolicVariable("seat", new InternalTypeContainer(InternalTypeRep.SEAT));
 
-        FormalPropertiesDescription bounded = new FormalPropertiesDescription("");
+        final FormalPropertiesDescription pre
+              = new FormalPropertiesDescription(TEST_CODE_STRING);
+        final FormalPropertiesDescription post
+              = new FormalPropertiesDescription(TEST_CODE_STRING);
+
+        final FormalPropertiesDescription bounded = new FormalPropertiesDescription("");
         description
               = new PreAndPostConditionsDescription("description1", pre, post, bounded, list);
     }
@@ -59,11 +63,11 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
         FormalPropertiesDescription recreatedPreFormalPropertiesDescription
               = recreatedPreAndPostConditionsDescription.getPreConditionsDescription();
         assertEquals(recreatedPreFormalPropertiesDescription.getCode(),
-                     "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+                     TEST_CODE_STRING);
         FormalPropertiesDescription recreatedPostFormalPropertiesDescription
               = recreatedPreAndPostConditionsDescription.getPreConditionsDescription();
         assertEquals(recreatedPostFormalPropertiesDescription.getCode(),
-                     "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+                     TEST_CODE_STRING);
 
         // check SymbolicVariableList for integrity
         SymbolicVariableList recreatedList

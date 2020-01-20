@@ -29,6 +29,9 @@ public class LockedLinesHandlerTest {
     /** A SaveTextBeforeRemove instance. */
     private SaveTextBeforeRemove beforeRemove;
 
+    /**
+     * Instantiates a new locked lines handler test.
+     */
     public LockedLinesHandlerTest() {
         this.pane = new JTextPane();
         ActionList actionlist = new ActionList();
@@ -53,6 +56,12 @@ public class LockedLinesHandlerTest {
     public void tearDown() {
     }
 
+    /**
+     * Test handles updates.
+     *
+     * @throws BadLocationException
+     *            the bad location exception
+     */
     @Test
     public void testHandlesUpdates() throws BadLocationException {
         String text = "asd\n\nasdasd\nasd\nasd\n\n\n";
@@ -66,6 +75,12 @@ public class LockedLinesHandlerTest {
         assertTrue(lockedLinesHandler.isLineLocked(5));
     }
 
+    /**
+     * Test handles update directly at.
+     *
+     * @throws BadLocationException
+     *            the bad location exception
+     */
     @Test
     public void testHandlesUpdateDirectlyAt() throws BadLocationException {
         String text = "asd\n\nasdasd\nasd\nasd\n\n\n";
@@ -80,6 +95,12 @@ public class LockedLinesHandlerTest {
         assertTrue(lockedLinesHandler.isLineLocked(3));
     }
 
+    /**
+     * Test handles removes.
+     *
+     * @throws BadLocationException
+     *            the bad location exception
+     */
     @Test
     public void testHandlesRemoves() throws BadLocationException {
         String text = "asd\n\nasdasd\nasd\nasd\n\n\n";
@@ -102,6 +123,12 @@ public class LockedLinesHandlerTest {
         assertTrue(lockedLinesHandler.isLineLocked(1));
     }
 
+    /**
+     * Test handles removes one bracket.
+     *
+     * @throws BadLocationException
+     *            the bad location exception
+     */
     @Test
     public void testHandlesRemovesOneBracket() throws BadLocationException {
         String text = "\n}\n";
@@ -113,6 +140,12 @@ public class LockedLinesHandlerTest {
         assertTrue(lockedLinesHandler.isLineLocked(1));
     }
 
+    /**
+     * Test handles add newline at end of line.
+     *
+     * @throws BadLocationException
+     *            the bad location exception
+     */
     @Test
     public void testHandlesAddNewlineAtEndOfLine() throws BadLocationException {
         String text = "asdasdasd\nasd";

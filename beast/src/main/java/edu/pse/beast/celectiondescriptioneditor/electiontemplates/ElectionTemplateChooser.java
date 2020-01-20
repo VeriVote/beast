@@ -89,8 +89,8 @@ package edu.pse.beast.celectiondescriptioneditor.electiontemplates;
 //    jLabel1 = new javax.swing.JLabel();
 //    jLabel2 = new javax.swing.JLabel();
 //    createButton = new javax.swing.JButton();
-//    inputList = new javax.swing.JComboBox<>();
-//    resultList = new javax.swing.JComboBox<>();
+//    inputList = new javax.swing.JComboBox<String>();
+//    resultList = new javax.swing.JComboBox<String>();
 //    name = new javax.swing.JLabel();
 //    nameField = new javax.swing.JTextField();
 //

@@ -11,7 +11,9 @@ import org.junit.BeforeClass;
  * @author Holger Klein
  */
 public class CElectionDescriptionEditorBuilderTest {
-
+    /**
+     * Instantiates a new c election description editor builder test.
+     */
     public CElectionDescriptionEditorBuilderTest() {
     }
 
@@ -31,8 +33,13 @@ public class CElectionDescriptionEditorBuilderTest {
     public void tearDown() {
     }
 
+    /**
+     * The main method.
+     *
+     * @param args
+     *            the arguments
+     */
     public static void main(final String[] args) {
-
     }
 
 }

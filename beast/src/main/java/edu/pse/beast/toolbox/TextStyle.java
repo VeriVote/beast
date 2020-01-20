@@ -364,7 +364,7 @@ public final class TextStyle {
 
     @Override
     public String toString() {
-        List<String> styles = new ArrayList<>();
+        List<String> styles = new ArrayList<String>();
         bold.ifPresent(b -> styles.add(b.toString()));
         italic.ifPresent(i -> styles.add(i.toString()));
         underline.ifPresent(u -> styles.add(u.toString()));

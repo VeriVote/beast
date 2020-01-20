@@ -92,25 +92,35 @@ public class ShortcutHandler {
      * @return the key code
      */
     private Integer getKeyCode(final char keyChar) {
+        final Integer keyCode;
         switch (keyChar) {
         case 'z':
-            return Z_CHAR;
+            keyCode = Z_CHAR;
+            break;
         case 'r':
-            return R_CHAR;
+            keyCode = R_CHAR;
+            break;
         case 'c':
-            return C_CHAR;
+            keyCode = C_CHAR;
+            break;
         case 'x':
-            return X_CHAR;
+            keyCode = X_CHAR;
+            break;
         case 'v':
-            return V_CHAR;
+            keyCode = V_CHAR;
+            break;
         case 's':
-            return S_CHAR;
+            keyCode = S_CHAR;
+            break;
         case 'o':
-            return O_CHAR;
+            keyCode = O_CHAR;
+            break;
         case 'n':
-            return N_CHAR;
+            keyCode = N_CHAR;
+            break;
         default:
-            return NO_CHAR;
+            keyCode = NO_CHAR;
         }
+        return keyCode;
     }
 }

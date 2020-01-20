@@ -129,7 +129,8 @@ package edu.pse.beast.parametereditor;
 //                                                        ObjectRefsForBuilder refs,
 //                                                        PSECentralObjectProvider
 //                                                            centralObjectProvider) {
-//        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
+//        ArrayList<ArrayList<ActionIdAndListener>> created =
+//            new ArrayList<ArrayList<ActionIdAndListener>>();
 //
 //        UserAction save =
 //            createSaveProjectUserAction(cElectionDescriptionEditor,
@@ -149,19 +150,20 @@ package edu.pse.beast.parametereditor;
 //        UserAction showCElectionEditor =
 //            createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
 //
-//        ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> fileList = new ArrayList<ActionIdAndListener>();
 //        fileList.add(createFromUserAction(load));
 //        fileList.add(createFromUserAction(save));
 //        fileList.add(createFromUserAction(save_as));
 //
-//        ArrayList<ActionIdAndListener> projectList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> projectList = new ArrayList<ActionIdAndListener>();
 //        projectList.add(createFromUserAction(start));
 //        projectList.add(createFromUserAction(stop));
 //
-//        ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> editorList = new ArrayList<ActionIdAndListener>();
 //        editorList.add(createFromUserAction(options));
 //
-//        ArrayList<ActionIdAndListener> showHideWindowsList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> showHideWindowsList =
+//            new ArrayList<ActionIdAndListener>();
 //        showHideWindowsList.add(createFromUserAction(showCElectionEditor));
 //        showHideWindowsList.add(createFromUserAction(showPropertyList));
 //        showHideWindowsList.add(createFromUserAction(showBooleanExpEditor));

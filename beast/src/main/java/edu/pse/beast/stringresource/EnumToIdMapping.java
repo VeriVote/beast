@@ -6,6 +6,8 @@ package edu.pse.beast.stringresource;
 //import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 //
 ///**
+// * The class EnumToIdMapping.
+// *
 // * @author Holger Klein
 // */
 //public class EnumToIdMapping {
@@ -19,7 +21,8 @@ package edu.pse.beast.stringresource;
 //    }
 //
 //    /**
-//     * used to get the string for the input type
+//     * Used to get the string for the input type.
+//     *
 //     * @param id the input type id
 //     * @return the id String that was mapped to this ID
 //     */
@@ -28,7 +31,8 @@ package edu.pse.beast.stringresource;
 //    }
 //
 //    /**
-//     * used to get the string for the output type
+//     * Used to get the string for the output type.
+//     *
 //     * @param id the input type id
 //     * @return the id String that was mapped to this ID
 //     */
@@ -46,7 +50,7 @@ package edu.pse.beast.stringresource;
 //    }
 //
 //    private static void createEnumStringsToIds() {
-//        enumStringsToIds = new HashMap<>();
+//        enumStringsToIds = new HashMap<String, String>();
 //        createElectionTypeStringMapping();
 //    }
 //

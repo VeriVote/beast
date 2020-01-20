@@ -38,10 +38,13 @@ public final class CBMCOutput extends ResultPresentationType {
             String text = iterator.next();
             area.appendText(text);
         }
+        // Wrap it in a scroll area
         VirtualizedScrollPane<GenericStyledArea<ParStyle,
                                                 Either<String, LinkedImage>,
                                                 TextStyle>> vsPane =
-            new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+            new VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                                                        Either<String, LinkedImage>,
+                                                        TextStyle>>(area);
         return vsPane;
     }
 

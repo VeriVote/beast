@@ -32,7 +32,8 @@ package edu.pse.beast.codearea.autocompletion;
 // */
 //public class AutocompletionController implements KeyListener, AncestorListener, MouseListener {
 //    private final JTextPane pane;
-//    private final ArrayList<AutocompletionOption> completionOptions = new ArrayList<>();
+//    private final ArrayList<AutocompletionOption> completionOptions =
+//        new ArrayList<AutocompletionOption>();
 //    private final FindWordsConcurrently conc;
 //    private final Thread t;
 //    private final AutocompletionFrame frame;

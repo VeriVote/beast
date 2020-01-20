@@ -14,7 +14,7 @@ public final class ErrorForUserDisplayer {
     private static final int THOUSAND = 1000;
 
     /** The currently displayed errors. */
-    private static int currentlyDisplayedErrors = 0;
+    private static int currentlyDisplayedErrors;
 
     /**
      * Instantiates a new error for user displayer.
@@ -22,8 +22,8 @@ public final class ErrorForUserDisplayer {
     private ErrorForUserDisplayer() { }
 
     /**
-     * displays the message on the users screen. if multiple messages are
-     * displayed the method will only return when all messages are read.
+     * Displays the message on the users screen. if multiple messages are
+     * displayed, the method will only return when all messages are read.
      *
      * @param message
      *            the message to be displayed

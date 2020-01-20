@@ -12,6 +12,9 @@ import org.junit.Test;
  * @author Holger Klein
  */
 public class CodeAreaBuilderTest {
+    /**
+     * Instantiates a new code area builder test.
+     */
     public CodeAreaBuilderTest() {
     }
 
@@ -38,6 +41,12 @@ public class CodeAreaBuilderTest {
     public void testCreateCodeArea() {
     }
 
+    /**
+     * The main method.
+     *
+     * @param args
+     *            the arguments
+     */
     public static void main(final String[] args) {
     }
 }

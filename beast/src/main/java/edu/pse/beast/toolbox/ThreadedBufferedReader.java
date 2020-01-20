@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * this class is a BufferedReader that runs in a separate thread. All read lines
+ * This class is a BufferedReader that runs in a separate thread. All read lines
  * are stored in a passed list. It either stops if the stream ends, or it gets
  * stopped from the outside. When it finishes normally, it also counts down a
  * latch to notify other waiting threads.
@@ -31,7 +31,7 @@ public final class ThreadedBufferedReader implements Runnable {
     private final List<String> readLines;
 
     /** The is interrupted. */
-    private volatile boolean isInterrupted = false;
+    private volatile boolean isInterrupted;
 
     /** The latch. */
     private final CountDownLatch latch;

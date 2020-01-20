@@ -18,15 +18,18 @@ package edu.pse.beast.celectiondescriptioneditor.celectioncodearea;
 //    private final SyntaxHL syntaxHL;
 //
 //    /**
-//     *  constructor
-//     * @param antlrHandler the antlr handler
-//     * @param syntaxHL the syntax highlighter
+//     * The constructor.
+//     *
+//     * @param antlrHandler
+//     *            the antlr handler
+//     * @param syntaxHL
+//     *            the syntax highlighter
 //     */
 //    public CSyntaxHl(CAntlrHandler antlrHandler, SyntaxHL syntaxHL) {
 //        this.antlrHandler = antlrHandler;
 //        this.syntaxHL = syntaxHL;
 //
-//        ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
+//        ArrayList<RegexAndColor> regexAndColorList = new ArrayList<RegexAndColor>();
 //        for (String s : antlrHandler.getTypeLiterals()) {
 //            String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
 //            // BRIGHT INDIGO

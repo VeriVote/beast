@@ -26,43 +26,46 @@ public class TimeoutValueHandlerTest {
     @Test
     public void testTimeout() {
         System.out.println("set/getTimeout");
-        JComboBox<String> comboBox = new JComboBox<String>();
-        JSpinner spinner = new JSpinner();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
         model.addElement("s");
         model.addElement("m");
         model.addElement("h");
         model.addElement("d");
         model.addElement("faultyEntry");
+        JComboBox<String> comboBox = new JComboBox<String>();
+        JSpinner spinner = new JSpinner();
         comboBox.setModel(model);
         TimeoutValueHandler handler = new TimeoutValueHandler(spinner, comboBox);
         handler.setReacts(true);
         spinner.setValue(1);
         comboBox.setSelectedIndex(2);
-        TimeOut expResult = new TimeOut(TimeUnit.SECONDS, 0);
         spinner.setValue(0);
         comboBox.setSelectedIndex(0);
         handler.setValue(handler.getTimeout());
+        TimeOut expResult = new TimeOut(TimeUnit.SECONDS, 0);
         TimeOut result = handler.getTimeout();
-        boolean minTest = expResult.getDuration() == result.getDuration()
+        final boolean minTest =
+                expResult.getDuration() == result.getDuration()
                 && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
-        expResult = new TimeOut(TimeUnit.DAYS, 3653);
         spinner.setValue(3653);
         comboBox.setSelectedIndex(3);
         handler.setValue(handler.getTimeout());
+        expResult = new TimeOut(TimeUnit.DAYS, 3653);
         result = handler.getTimeout();
-        boolean maxTest = expResult.getDuration() == result.getDuration()
+        final boolean maxTest =
+                expResult.getDuration() == result.getDuration()
                 && expResult.getOrigUnit().equals(result.getOrigUnit()) && result.isActive();
-        expResult = new TimeOut(TimeUnit.DAYS, 0);
         spinner.setValue(-1);
         handler.setValue(handler.getTimeout());
+        expResult = new TimeOut(TimeUnit.DAYS, 0);
         result = handler.getTimeout();
-        boolean falseValueTest = expResult.getDuration() == result.getDuration()
+        final boolean falseValueTest =
+                expResult.getDuration() == result.getDuration()
                 && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
-        expResult = new TimeOut(TimeUnit.SECONDS, 0);
         spinner.setValue(42);
         comboBox.setSelectedIndex(4);
         handler.setValue(handler.getTimeout());
+        expResult = new TimeOut(TimeUnit.SECONDS, 0);
         result = handler.getTimeout();
         // System.out.println(handler.hasChanged() + " max " +
         // handler.getTimeout().getDuration() + " " +
@@ -81,21 +84,21 @@ public class TimeoutValueHandlerTest {
     @Test
     public void testReactsAndHasChanged() {
         System.out.println("ReactsAndHasChanged");
-        JComboBox<String> comboBox = new JComboBox<String>();
-        JSpinner spinner = new JSpinner();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
         model.addElement("s");
         model.addElement("m");
         model.addElement("h");
         model.addElement("d");
+        JComboBox<String> comboBox = new JComboBox<String>();
         comboBox.setModel(model);
+        JSpinner spinner = new JSpinner();
         TimeoutValueHandler handler = new TimeoutValueHandler(spinner, comboBox);
-        boolean hasChangedBeforeTest = handler.hasChanged();
+        final boolean hasChangedBeforeTest = handler.hasChanged();
         handler.setReacts(true);
         spinner.setValue(11);
         comboBox.setSelectedIndex(2);
         handler.setValue(handler.getTimeout());
-        boolean hasChangedAfterInput = handler.hasChanged();
+        final boolean hasChangedAfterInput = handler.hasChanged();
         handler.setHasChanged(false);
         handler.setReacts(false);
         spinner.setValue(27);

@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalencyNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalenceNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ImplicationNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntegerComparisonNode;
@@ -77,8 +77,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /** The implication node counter. */
     private int implicationNodeCounter;
 
-    /** The aquivalency node counter. */
-    private int aquivalencyNodeCounter;
+    /** The equivalence node counter. */
+    private int equivalenceNodeCounter;
 
     /** The for all node counter. */
     private int forAllNodeCounter;
@@ -96,10 +96,10 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int voteSumCounter;
 
     /** The listlvl. */
-    private int listlvl = 0;
+    private int listlvl;
 
     /** The amt by pos var. */
-    private int amtByPosVar = 0;
+    private int amtByPosVar;
 
     /** The number vars. */
     private int numberVars;
@@ -115,7 +115,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private CodeArrayListBeautifier code;
 
     /** The tmp index. */
-    private int tmpIndex = 0;
+    private int tmpIndex;
 
     /** The election type container. */
     private final ElectionTypeContainer electionTypeContainer;
@@ -137,7 +137,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
-        aquivalencyNodeCounter = 0;
+        equivalenceNodeCounter = 0;
         forAllNodeCounter = 0;
         thereExistsNodeCounter = 0;
         notNodeCounter = 0;
@@ -187,7 +187,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      */
     public ArrayList<String> generateCode(final BooleanExpressionNode node) {
         code = new CodeArrayListBeautifier();
-        variableNames = new Stack<>();
+        variableNames = new Stack<String>();
         node.getVisited(this);
         return code.getCodeArrayList();
     }
@@ -231,9 +231,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     @Override
-    public void visitEquivalencyNode(final EquivalencyNode node) {
-        String varName = "aquivalency_" + aquivalencyNodeCounter;
-        aquivalencyNodeCounter++;
+    public void visitEquivalenceNode(final EquivalenceNode node) {
+        String varName = "equivalence_" + equivalenceNodeCounter;
+        equivalenceNodeCounter++;
         variableNames.push(varName);
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
@@ -308,7 +308,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                              final int maxListLevel,
                                              final InternalTypeContainer cont) {
         InternalTypeContainer container = cont;
-        ArrayList<String> counter = new ArrayList<>();
+        ArrayList<String> counter = new ArrayList<String>();
         // generate the for loops used to test the two types..
         //
         for (int i = 0; i < maxListLevel; ++i) {
@@ -406,7 +406,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         }
         code.add("//comparison left side");
         node.getLHSBooleanExpNode().getVisited(this);
-        int lhslistLevel = listlvl;
+        final int lhslistLevel = listlvl;
         listlvl = 0;
         for (InternalTypeContainer cont =
                 node.getRHSBooleanExpNode().getInternalTypeContainer();

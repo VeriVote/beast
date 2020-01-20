@@ -116,7 +116,7 @@ public final class ResultImageRenderer {
                 });
 
         GUIController.getController().getZoomSlider().valueProperty()
-                .addListener(new ChangeListener<>() {
+                .addListener(new ChangeListener<Number>() {
                     @Override
                     public void changed(final ObservableValue<? extends Number> observable,
                                         final Number oldValue,
@@ -156,7 +156,7 @@ public final class ResultImageRenderer {
     }
 
     /**
-     * adds an element which will be printed on the next image.
+     * Adds an element which will be printed on the next image.
      *
      * @param element
      *            the element which will be added to the list

@@ -3,27 +3,27 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
- * The Class EquivalencyNode.
+ * The Class EquivalenceNode.
  *
  * @author Lukas Stapelbroek
  */
-public final class EquivalencyNode extends BinaryRelationshipNode {
+public final class EquivalenceNode extends BinaryRelationshipNode {
     /**
-     * Instantiates a new equivalency node.
+     * Instantiates a new equivalence node.
      *
      * @param lhsExpNode
      *            the lhs node
      * @param rhsExpNode
      *            the rhs node
      */
-    public EquivalencyNode(final BooleanExpressionNode lhsExpNode,
+    public EquivalenceNode(final BooleanExpressionNode lhsExpNode,
                            final BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 
     @Override
     public void getVisited(final BooleanExpNodeVisitor visitor) {
-        visitor.visitEquivalencyNode(this);
+        visitor.visitEquivalenceNode(this);
     }
 
     @Override

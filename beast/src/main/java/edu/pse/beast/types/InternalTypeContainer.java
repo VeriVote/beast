@@ -5,12 +5,12 @@ import java.util.List;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 /**
- * The Class InternalTypeContainer.
+ * The class InternalTypeContainer.
  *
  * @author Niels Hanselmann
  */
 public final class InternalTypeContainer extends InOutType {
-    // TODO extract to another interface
+    // TODO Extract to another interface
 
     /** The Constant PRIME_ONE. */
     private static final int PRIME = 31;
@@ -33,11 +33,11 @@ public final class InternalTypeContainer extends InOutType {
     /**
      * If the container is a list, say of votes, then the access type is the
      * type of the symbolic variable which can be used to access elements of the
-     * list. Example: Every voter elects one candidate: VOTES1(v) <-- access
+     * list. Example: Every voter elects one candidate: VOTES1(v) <-- Access
      * type would be VOTER. Every voter lists candidates by preference:
-     * VOTES1(v)(c) <--- access type c would be CANDIDATE. This variable is also
-     * used to determine the size of the list: type size VOTER V CANDIDATE C
-     * SEAT S
+     * VOTES1(v)(c) <--- Access type c would be CANDIDATE. This variable is also
+     * used to determine the size of the list: Type size VOTER V CANDIDATE C
+     * SEAT S.
      */
     private final InternalTypeRep accessTypeIfList;
 
@@ -84,7 +84,7 @@ public final class InternalTypeContainer extends InOutType {
     /**
      * Getter for internalType.
      *
-     * @return returns internalType
+     * @return the internalType
      */
     public InternalTypeRep getInternalType() {
         return internalType;

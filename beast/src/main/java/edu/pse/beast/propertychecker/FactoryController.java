@@ -22,7 +22,7 @@ public final class FactoryController implements Runnable {
     private static final long POLLING_INTERVAL = 1000;
 
     /**
-     * gives access to the factory controller for the shutdown hook.
+     * Gives access to the factory controller for the shutdown hook.
      */
     private FactoryController thisObject = this;
 
@@ -43,7 +43,7 @@ public final class FactoryController implements Runnable {
     private final String checkerID;
 
     /** The stopped. */
-    private volatile boolean stopped = false;
+    private volatile boolean stopped;
 
     /** The concurrent checker. */
     private final int concurrentChecker;
@@ -228,78 +228,81 @@ public final class FactoryController implements Runnable {
     }
 
     // /**
-    // * starts the factoryController, so it then starts the needed checker
-    // */
+    //  * Starts the factoryController, so it then starts the needed checker.
+    //  */
     // @Override
     // public void run() {
-    // List<PropertyAndMarginBool> propertiesToCheckAndMargin =
-    // preAndPostConditionDescrSrc
-    // .getPreAndPostPropertiesDescriptionsCheckAndMargin();
+    //     List<PropertyAndMarginBool> propertiesToCheckAndMargin =
+    //         preAndPostConditionDescrSrc
+    //             .getPreAndPostPropertiesDescriptionsCheckAndMargin();
     //
-    // outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
-    // innerLoop: while (!stopped) {
-    // // if we can start more checkers (we have not used our
-    // // allowed pool completely), we can start a new one
-    // if (currentlyRunning.size() < concurrentChecker) {
-    // CheckerFactory factory =
-    // CheckerFactoryFactory.getCheckerFactory(checkerID,
-    // this,
-    // electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(),
-    // parmSrc,
-    // results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
+    //     outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
+    //         innerLoop: while (!stopped) {
+    //             // if we can start more checkers (we have not used our
+    //             // allowed pool completely), we can start a new one
+    //             if (currentlyRunning.size() < concurrentChecker) {
+    //                 CheckerFactory factory =
+    //                     CheckerFactoryFactory.getCheckerFactory(checkerID,
+    //                                                             this,
+    //                                                             electionDescSrc,
+    //                                                             propertiesToCheckAndMargin
+    //                                                             .get(i).getDescription(),
+    //                                                             parmSrc,
+    //                                                             results.get(i),
+    //                                                             propertiesToCheckAndMargin
+    //                                                             .get(i).getMarginStatus());
     //
-    // synchronized (this) {
-    // currentlyRunning.add(factory);
-    // }
+    //                 synchronized (this) {
+    //                     currentlyRunning.add(factory);
+    //                 }
     //
-    // new Thread(factory, "CheckerFactory Property " + i).start();
+    //                 new Thread(factory, "CheckerFactory Property " + i).start();
     //
-    // break innerLoop;
-    // } else {
-    // // ELSE, we try to sleep a bit. It is important that we
-    // // only sleep if no new checker
-    // // was started, or else we have to wait when there
-    // // is more allowed space in our thread pool
-    // try {
-    // Thread.sleep(POLLING_INTERVAL);
-    // } catch (InterruptedException e) {
-    // e.printStackTrace();
-    // }
-    // }
-    // }
+    //                 break innerLoop;
+    //             } else {
+    //                 // ELSE, we try to sleep a bit. It is important that we
+    //                 // only sleep if no new checker
+    //                 // was started, or else we have to wait when there
+    //                 // is more allowed space in our thread pool
+    //                 try {
+    //                     Thread.sleep(POLLING_INTERVAL);
+    //                 } catch (InterruptedException e) {
+    //                     e.printStackTrace();
+    //                 }
+    //             }
+    //         }
+    //         if (stopped) {
+    //             break outerLoop;
+    //         }
+    //     }
     //
-    // if (stopped) {
-    // break outerLoop;
-    // }
-    // }
+    //     while (currentlyRunning.size() > 0) {
+    //         try {
+    //             Thread.sleep(POLLING_INTERVAL);
+    //         } catch (InterruptedException e) {
+    //             ErrorLogger.log("Was interrupted while waiting for the last processes to"
+    //                             + " finish \n"
+    //                             + "The waiting will still continue. To stop the factory"
+    //                             + " properly, call \"stopChecking()\" !");
+    //         }
+    //     }
     //
-    // while (currentlyRunning.size() > 0) {
-    // try {
-    // Thread.sleep(POLLING_INTERVAL);
-    // } catch (InterruptedException e) {
-    // ErrorLogger.log("Was interrupted while waiting for the last processes to
-    // finish \n"
-    // + "The waiting will still continue. To stop the factory properly, call
-    // \"stopChecking()\" !");
-    // }
-    // }
+    //     // wait for the last running threads to finish
+    //     while (currentlyRunning.size() > 0) {
+    //         try {
+    //             Thread.sleep(POLLING_INTERVAL);
+    //         } catch (InterruptedException e) {
+    //             ErrorLogger.log("Was interrupted while waiting for the last processes to"
+    //                             + "finish \n"
+    //                             + "The waiting will still continue. To stop the factory"
+    //                             + " properly, call \"stopChecking()\" !");
+    //         }
+    //     }
     //
-    // // wait for the last running threads to finish
-    // while (currentlyRunning.size() > 0) {
-    // try {
-    // Thread.sleep(POLLING_INTERVAL);
-    // } catch (InterruptedException e) {
-    // ErrorLogger.log("Was interrupted while waiting for the last processes to
-    // finish \n"
-    // + "The waiting will still continue. To stop the factory properly, call
-    // \"stopChecking()\" !");
-    // }
-    // }
-    //
-    // if (notifier != null) {
-    // // if the notifier thread is still active, we stop it.
-    // notifier.disable();
-    // }
+    //     if (notifier != null) {
+    //         // if the notifier thread is still active, we stop it.
+    //         notifier.disable();
+    //     }
     // }
 
     // Starts the factoryController, so it then starts the needed checker.

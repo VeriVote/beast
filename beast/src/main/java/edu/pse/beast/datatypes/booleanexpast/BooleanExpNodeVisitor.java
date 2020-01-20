@@ -1,7 +1,7 @@
 package edu.pse.beast.datatypes.booleanexpast;
 
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalencyNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalenceNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ImplicationNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntegerComparisonNode;
@@ -61,12 +61,12 @@ public interface BooleanExpNodeVisitor {
     void visitImplicationNode(ImplicationNode node);
 
     /**
-     * Visit equivalency node.
+     * Visit equivalence node.
      *
      * @param node
      *            the node to visit
      */
-    void visitEquivalencyNode(EquivalencyNode node);
+    void visitEquivalenceNode(EquivalenceNode node);
 
     /**
      * Visit for all node.

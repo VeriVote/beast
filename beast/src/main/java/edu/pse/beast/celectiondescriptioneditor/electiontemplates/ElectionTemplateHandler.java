@@ -13,10 +13,12 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 public class ElectionTemplateHandler {
 
     /** The input types. */
-    private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
+    private final ArrayList<ElectionTypeContainer> inputTypes =
+            new ArrayList<ElectionTypeContainer>();
 
     /** The res types. */
-    private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
+    private final ArrayList<ElectionTypeContainer> resTypes =
+            new ArrayList<ElectionTypeContainer>();
 
     /**
      * Creates the template handler and sets it up for usage.
@@ -59,7 +61,7 @@ public class ElectionTemplateHandler {
     }
 
     // /**
-    //  * returns the election type container having the supplied id
+    //  * Returns the election type container having the supplied id.
     //  *
     //  * @param id the id of the election type container to be retrieved
     //  * @return the election type container if it exists, null otherwise
@@ -73,7 +75,7 @@ public class ElectionTemplateHandler {
     // }
 
     // /**
-    //  * returns the election type container having the supplied id
+    //  * Returns the election type container having the supplied id.
     //  *
     //  * @param id
     //  *            the id of the election type container to be retrieved

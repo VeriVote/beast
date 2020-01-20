@@ -40,8 +40,8 @@ package edu.pse.beast.electionsimulator.model;
 //    this.elementWidth = elementWidth;
 //    this.elementHeight = elementHeight;
 //    this.widthMultiplier = widthMultiplier;
-//    values = new ArrayList<>(amountOfCandidates);
-//    fields = new ArrayList<>(amountOfCandidates);
+//    values = new ArrayList<String>(amountOfCandidates);
+//    fields = new ArrayList<JTextField>(amountOfCandidates);
 //    this.setLayout(null);
 //    this.setVisible(true);
 //

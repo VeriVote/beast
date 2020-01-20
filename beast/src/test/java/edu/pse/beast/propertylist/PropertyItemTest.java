@@ -34,6 +34,9 @@ public class PropertyItemTest {
     public void tearDown() throws Exception {
     }
 
+    /**
+     * Test item equality.
+     */
     @Test
     public void testItemEquality() {
         PropertyItem it1 = new PropertyItem();

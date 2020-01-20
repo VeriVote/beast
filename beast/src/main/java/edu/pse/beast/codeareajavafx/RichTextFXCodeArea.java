@@ -19,6 +19,28 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
  * @author Lukas Stapelbroek
  */
 public class RichTextFXCodeArea extends CodeArea {
+    /** The Constant SAMPLE_CODE_SNIPPETS. */
+    private static final String[] SAMPLE_CODE_SNIPPETS =
+            new String[] {
+                "package com.example;",
+                "",
+                "import java.util.*;",
+                "",
+                "public class Foo extends Bar implements Baz {",
+                "",
+                "    /*",
+                "     * multi-line comment",
+                "     */",
+                "    public static void main(String[] args) {",
+                "        // single-line comment",
+                "        for(String arg: args) {",
+                "            if(arg.length() != 0)",
+                "                System.out.println(arg);",
+                "            else",
+                "                System.err.println(\"Warning: "
+                        + "empty string as argument\");",
+                "        }", "    }", "", "}"
+                };
 
     /** The Constant KEYWORDS. */
     private static final String[] KEYWORDS =
@@ -109,21 +131,6 @@ public class RichTextFXCodeArea extends CodeArea {
      * The constructor.
      */
     public RichTextFXCodeArea() {
-        String sampleCode =
-                String.join("\n", new String[] {
-                    "package com.example;", "", "import java.util.*;", "",
-                    "public class Foo extends Bar implements Baz {", "", "    /*",
-                    "     * multi-line comment", "     */",
-                    "    public static void main(String[] args) {",
-                    "        // single-line comment",
-                    "        for(String arg: args) {",
-                    "            if(arg.length() != 0)",
-                    "                System.out.println(arg);", "            else",
-                    "                System.err.println(\"Warning: "
-                            + "empty string as argument\");",
-                    "        }", "    }", "", "}"
-                }
-                        );
         String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
@@ -135,6 +142,8 @@ public class RichTextFXCodeArea extends CodeArea {
                 .subscribe(change -> {
                     this.setStyleSpans(0, computeHighlighting(this.getText()));
                 });
+
+        final String sampleCode = String.join("\n", SAMPLE_CODE_SNIPPETS);
         this.replaceText(0, 0, sampleCode);
     }
 

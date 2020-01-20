@@ -21,7 +21,7 @@ public class StringResourceLoaderTest {
      * Sets up a StringResourceLoader with 2 LinkedList.
      */
     public StringResourceLoaderTest() {
-        list = new LinkedList<>();
+        list = new LinkedList<String>();
         list.add("test : this is a test");
         list.add("test2 : also a test");
         instance = new StringResourceLoader(list);

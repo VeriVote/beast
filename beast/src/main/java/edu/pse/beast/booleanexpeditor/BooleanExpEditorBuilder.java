@@ -163,9 +163,10 @@ package edu.pse.beast.booleanexpeditor;
 //    private ArrayList<ArrayList<ActionIdAndListener>>
 //    createActionIdAndListenerListForMenuHandler(BooleanExpEditor editor,
 //                                                ObjectRefsForBuilder refs) {
-//        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
+//        ArrayList<ArrayList<ActionIdAndListener>> created =
+//            new ArrayList<ArrayList<ActionIdAndListener>>();
 //
-//        ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> fileList = new ArrayList<ActionIdAndListener>();
 //        UserAction newProps = createNewPropsUserAction(editor);
 //        UserAction load = createLoadPropsUserAction(editor);
 //        UserAction saveAs = createSaveAsPropsUserAction(editor);
@@ -176,7 +177,7 @@ package edu.pse.beast.booleanexpeditor;
 //        fileList.add(createFromUserAction(save));
 //        fileList.add(createFromUserAction(saveAs));
 //
-//        ArrayList<ActionIdAndListener> editList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> editList = new ArrayList<ActionIdAndListener>();
 //        UserAction undo = createUndoUserAction(editor);
 //        UserAction redo = createRedoUserAction(editor);
 //        UserAction cut = createCutUserAction(editor);
@@ -189,11 +190,11 @@ package edu.pse.beast.booleanexpeditor;
 //        editList.add(createFromUserAction(copy));
 //        editList.add(createFromUserAction(paste));
 //
-//        ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> editorList = new ArrayList<ActionIdAndListener>();
 //        UserAction presentOptions = createPresentOptionsUserAction(editor, refs);
 //        editorList.add(createFromUserAction(presentOptions));
 //
-//        ArrayList<ActionIdAndListener> macroList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> macroList = new ArrayList<ActionIdAndListener>();
 //
 //        UserAction electMacro =
 //                createMacroUserAction("elect", "ELECT", editor);
@@ -239,7 +240,7 @@ package edu.pse.beast.booleanexpeditor;
 //        macroList.add(createFromUserAction(sumVotesForCandidateMacro));
 //        macroList.add(createFromUserAction(sumVotesForUniqueCandidateMacro));
 //
-//        ArrayList<ActionIdAndListener> constantsList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> constantsList = new ArrayList<ActionIdAndListener>();
 //        UserAction votersConstant =
 //            createConstantUserAction("Voters",
 //                                     UnifiedNameContainer.getVoterKey(),
@@ -256,7 +257,7 @@ package edu.pse.beast.booleanexpeditor;
 //        constantsList.add(createFromUserAction(candidatesConstant));
 //        constantsList.add(createFromUserAction(seatsConstant));
 //
-//        ArrayList<ActionIdAndListener> codeList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> codeList = new ArrayList<ActionIdAndListener>();
 //        UserAction staticCodeAnalysis = createStaticCheckUserAction(editor);
 //        codeList.add(createFromUserAction(staticCodeAnalysis));
 //

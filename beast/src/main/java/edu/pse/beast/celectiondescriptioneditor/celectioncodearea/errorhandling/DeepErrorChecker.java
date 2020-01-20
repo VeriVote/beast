@@ -18,10 +18,10 @@ import edu.pse.beast.toolbox.ErrorLogger;
 public final class DeepErrorChecker {
 
     /** The error checker. */
-    private static SystemSpecificErrorChecker errorChecker = null;
+    private static SystemSpecificErrorChecker errorChecker;
 
     /** The initialized. */
-    private static boolean initialized = false;
+    private static boolean initialized;
 
     /**
      * Instantiates a new deep error checker.

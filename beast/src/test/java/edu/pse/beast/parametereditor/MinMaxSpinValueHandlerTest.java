@@ -24,7 +24,7 @@ public class MinMaxSpinValueHandlerTest {
         MinMaxSpinValueHandler instance
               = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
         instance.setMinAndMax(2, 15);
-        ArrayList<Integer> expResult = new ArrayList<>();
+        ArrayList<Integer> expResult = new ArrayList<Integer>();
         for (int i = 2; i <= 15; i++) {
             expResult.add(i);
         }
@@ -47,7 +47,7 @@ public class MinMaxSpinValueHandlerTest {
         instance.setMinAndMax(min, max);
         instance.setMinAndMax(badMin, max);
         instance.setMinAndMax(min, badMax);
-        ArrayList<Integer> expResult = new ArrayList<>();
+        ArrayList<Integer> expResult = new ArrayList<Integer>();
         for (int i = 3; i <= 6; i++) {
             expResult.add(i);
         }

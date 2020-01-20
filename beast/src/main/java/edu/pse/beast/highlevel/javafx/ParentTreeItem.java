@@ -60,7 +60,7 @@ public class ParentTreeItem extends CustomTreeItem {
     private boolean disabled;
 
     /** The initialized. */
-    private boolean initialized = false;
+    private boolean initialized;
 
     /** The check item. */
     private ChildTreeItem checkItem;

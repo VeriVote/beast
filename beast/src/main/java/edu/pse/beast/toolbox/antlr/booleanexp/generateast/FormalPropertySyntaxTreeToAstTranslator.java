@@ -13,7 +13,7 @@ import edu.pse.beast.datatypes.booleanexpast.ComparisonSymbol;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BinaryRelationshipNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalencyNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalenceNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ImplicationNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntegerComparisonNode;
@@ -132,16 +132,16 @@ public final class FormalPropertySyntaxTreeToAstTranslator
     private OutputType resType;
 
     /** The max vote exp. */
-    private int maxVoteExp = 0;
+    private int maxVoteExp;
 
     /** The current highest elect. */
-    private int currentHighestElect = 0;
+    private int currentHighestElect;
 
     /** The scope handler. */
     private BooleanExpScopehandler scopeHandler;
 
     /** The had binary before. */
-    private boolean hadBinaryBefore = false;
+    private boolean hadBinaryBefore;
 
     /** The node stack. */
     // Stacks
@@ -195,8 +195,8 @@ public final class FormalPropertySyntaxTreeToAstTranslator
     public void enterBooleanExpList(final BooleanExpListContext ctx) {
         generated = new BooleanExpListNode();
         maxVoteExp = 0;
-        expStack = new Stack<>();
-        nodeStack = new Stack<>();
+        expStack = new Stack<TypeExpression>();
+        nodeStack = new Stack<BooleanExpressionNode>();
     }
 
     @Override
@@ -254,7 +254,7 @@ public final class FormalPropertySyntaxTreeToAstTranslator
         } else if (symbol.equals(IMPL)) {
             node = new ImplicationNode(lhs, rhs);
         } else if (symbol.equals(EQUIV)) {
-            node = new EquivalencyNode(lhs, rhs);
+            node = new EquivalenceNode(lhs, rhs);
         }
         nodeStack.add(node);
     }

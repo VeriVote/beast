@@ -19,6 +19,12 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 public final class ANTLRTest {
     private ANTLRTest() { }
 
+    /**
+     * Show gui tree view.
+     *
+     * @param code
+     *            the code
+     */
     static void showGuiTreeView(final String code) {
         final org.antlr.v4.runtime.CharStream stream = CharStreams.fromString(code);
         final CLexer lexer = new CLexer(stream);
@@ -30,6 +36,12 @@ public final class ANTLRTest {
         view.open();
     }
 
+    /**
+     * The main method.
+     *
+     * @param args
+     *            the arguments
+     */
     public static void main(final String[] args) {
         showGuiTreeView("int i = 0;");
     }

@@ -40,7 +40,7 @@ public final class Internationalization {
     }
 
     /**
-     * get the supported Locales.
+     * Get the supported Locales.
      *
      * @return List of Locale objects.
      */
@@ -49,7 +49,7 @@ public final class Internationalization {
     }
 
     /**
-     * get the default LOCALE. This is the systems default if contained in the
+     * Get the default LOCALE. This is the systems default if contained in the
      * supported locales, english otherwise.
      *
      * @return the locale

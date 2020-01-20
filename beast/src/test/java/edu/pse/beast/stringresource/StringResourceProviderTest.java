@@ -63,7 +63,7 @@ public class StringResourceProviderTest {
         System.out.println("getStringResourceLoaderFromModuleName");
         String moduleName = "Testmodul";
         StringResourceLoader result = instance.getStringResourceLoaderFromModuleName(moduleName);
-        LinkedList<String> inputList = new LinkedList<>();
+        LinkedList<String> inputList = new LinkedList<String>();
         inputList.add("test : this is a test");
         inputList.add("test2 : also a test");
         StringResourceLoader exp = new StringResourceLoader(inputList);

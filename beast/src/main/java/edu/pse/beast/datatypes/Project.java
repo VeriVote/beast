@@ -5,6 +5,7 @@ package edu.pse.beast.datatypes;
 //import edu.pse.beast.propertylist.model.PLModel;
 //
 ///**
+// * The class Project.
 // *
 // * @author Niels Hanselmann
 // */
@@ -15,7 +16,8 @@ package edu.pse.beast.datatypes;
 //    private final ElectionDescription elecDescr;
 //
 //    /**
-//     * creates the project
+//     * Creates the project.
+//     *
 //     * @param params the params
 //     * @param propList the propertyList model
 //     * @param elecDescr the ElectionDescription
@@ -32,6 +34,7 @@ package edu.pse.beast.datatypes;
 //    }
 //
 //    /**
+//     * Get the election description.
 //     *
 //     * @return the elctionDescription
 //     */
@@ -40,6 +43,7 @@ package edu.pse.beast.datatypes;
 //    }
 //
 //    /**
+//     * Get the property list.
 //     *
 //     * @return propertyList
 //     */
@@ -48,6 +52,7 @@ package edu.pse.beast.datatypes;
 //    }
 //
 //    /**
+//     * Get the election check parameter.
 //     *
 //     * @return  ElectionCheckParameter
 //     */

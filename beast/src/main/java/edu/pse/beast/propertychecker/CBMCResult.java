@@ -82,7 +82,7 @@ public final class CBMCResult extends Result {
 
     /** The root element. */
     // the element containing all previous
-    private transient Document rootElement = null;
+    private transient Document rootElement;
 
     /**
      * Instantiates a new CBMC result.

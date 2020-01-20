@@ -19,7 +19,8 @@ public final class LanguageOptions extends Options {
     private StringLoaderInterface sli;
 
     /** The string displays. */
-    private List<DisplaysStringsToUser> stringDisplays = new ArrayList<>();
+    private List<DisplaysStringsToUser> stringDisplays =
+            new ArrayList<DisplaysStringsToUser>();
 
     /** The lang opt elem. */
     private LanguageOptionElement langOptElem;
@@ -51,9 +52,9 @@ public final class LanguageOptions extends Options {
     public LanguageOptions(final StringLoaderInterface slInterf) {
         super("lang_opts");
         this.sli = slInterf;
-        ArrayList<String> choosableLangsList = new ArrayList<>();
-        choosableLangsList.add("de");
-        langOptElem = new LanguageOptionElement(choosableLangsList, "de");
+        ArrayList<String> availableLangsList = new ArrayList<String>();
+        availableLangsList.add("de");
+        langOptElem = new LanguageOptionElement(availableLangsList, "de");
         addOptionElement(langOptElem);
     }
 

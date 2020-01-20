@@ -65,7 +65,7 @@ package edu.pse.beast.booleanexpeditor.booleanexpcodearea;
 //    }
 //
 //    private ArrayList<AutocompletionOption> createAutocompletionOptions() {
-//        ArrayList<AutocompletionOption> created = new ArrayList<>();
+//        ArrayList<AutocompletionOption> created = new ArrayList<AutocompletionOption>();
 //        created.add(new AutocompletionOption("FOR_ALL_VOTERS", "FOR_ALL_VOTERS() :", -3));
 //        created.add(new AutocompletionOption("FOR_ALL_CANDIDATES", "FOR_ALL_CANDIDATES() :", -3));
 //        created.add(new AutocompletionOption("FOR_ALL_SEATS", "FOR_ALL_SEATS() :", -3));

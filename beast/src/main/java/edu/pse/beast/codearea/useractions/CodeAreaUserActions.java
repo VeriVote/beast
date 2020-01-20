@@ -12,7 +12,7 @@ package edu.pse.beast.codearea.useractions;
 // */
 //public class CodeAreaUserActions {
 //    private CodeArea area;
-//    private ArrayList<UserAction> actions = new ArrayList<>();
+//    private ArrayList<UserAction> actions = new ArrayList<UserAction>();
 //
 //    public CodeAreaUserActions(CodeArea area) {
 //        this.area = area;

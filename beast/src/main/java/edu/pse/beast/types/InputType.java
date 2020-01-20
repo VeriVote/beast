@@ -83,20 +83,21 @@ public abstract class InputType extends InOutType {
     public abstract void addCheckerSpecificHeaders(CodeArrayListBeautifier code);
 
     // /**
-    // * extracts the voting data out of the given bounded model checker output
-    // into a wrapper object
-    // *
-    // * @param result the result of the computation from which the values
-    // * will be extracted
-    // * @param numberCandidates the number of candidates
-    // * @return a wrapper which contains the values
-    // */
-    // public final ResultValueWrapper extractVotes(List<String> result, int
-    // numberCandidates) {
-    // return this.helper.extractVariable("" +
-    // UnifiedNameContainer.getNewVotesName() + "",
-    // getDimension(),
-    // result).get(0);
+    //  * Extracts the voting data out of the given bounded model checker output
+    //  * into a wrapper object.
+    //  *
+    //  * @param result
+    //  *            the result of the computation from which the values
+    //  *            will be extracted
+    //  * @param numberCandidates
+    //  *            the number of candidates
+    //  * @return a wrapper which contains the values
+    //  */
+    // public final ResultValueWrapper extractVotes(List<String> result,
+    //                                              int numberCandidates) {
+    //     return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "",
+    //                                        getDimension(),
+    //                                        result).get(0);
     // } TODO remove unused code at the end of refactoring
 
     /**

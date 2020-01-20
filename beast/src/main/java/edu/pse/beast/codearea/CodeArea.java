@@ -34,66 +34,67 @@ package edu.pse.beast.codearea;
 // */
 //public class CodeArea implements AncestorListener {
 //    /**
-//     * the JTextpane on which the code will be presented to the user and
-//     * through which the user communicates with the codearea classes
+//     * The JTextpane on which the code will be presented to the user and
+//     * through which the user communicates with the code area classes.
 //     */
 //    protected JTextPane pane;
 //    /**
-//     * this class shows the line numbers
+//     * This class shows the line numbers.
 //     */
 //    protected TextLineNumber tln;
 //    /**
-//     * handles input processing
+//     * Handles input processing.
 //     */
 //    protected UserInputHandler userInputHandler;
 //    /**
-//     * handles mapping shortcuts to user actions
+//     * Handles mapping shortcuts to user actions.
 //     */
 //    protected ShortcutHandler shortcutHandler;
 //    /**
-//     * this class is used by the user input handler. It translates user input
-//     * into changes in the code
+//     * This class is used by the user input handler. It translates user input
+//     * into changes in the code.
 //     */
 //    protected UserInsertToCode insertToCode;
 //    /**
-//     * this class enables undoing and redoing actions
+//     * This class enables undoing and redoing actions.
 //     */
 //    protected Actionlist actionList;
 //    /**
-//     * this class controls error finding and displaying
+//     * This class controls error finding and displaying.
 //     */
 //    protected ErrorController errorCtrl;
 //    /**
-//     * this class controls finding and displaying auto-completion possibilities
+//     * This class controls finding and displaying auto-completion possibilities.
 //     */
 //    protected AutocompletionController autoComplCtrl;
 //    /**
 //     * This class provides access to and generates all user actions which can
-//     * be performed on a code area
+//     * be performed on a code area.
 //     */
 //    protected CodeAreaUserActions userActionList;
 //    /**
-//     * This class implements syntax highlighting
+//     * This class implements syntax highlighting.
 //     */
 //    protected SyntaxHL syntaxHL;
 //    /**
 //     * This class messages other classes once the user has stopped typing
-//     * continuously
+//     * continuously.
 //     */
 //    protected StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager;
 //    /**
-//     * this class highlight corresponding open/close chars
+//     * This class highlight corresponding open/close chars.
 //     */
 //    protected OpenCloseCharHighlighter openCloseCharHighlighter;
 //
 //    /**
-//     * The constructor simply sets all member variables to the supplied classes
+//     * The constructor simply sets all member variables to the supplied classes.
+//     *
 //     * @param pane the JTextpane on which the code will be presented to the user and
-//     * through which the user communicates with the code area classes
+//     *             through which the user communicates with the code area classes
 //     * @param tln shows the line numbers
 //     * @param userInputHandler handles input processing
 //     * @param insertToCode used by the user-input handler. It translates user input
-//     * into changes in the code.
+//     *                     into changes in the code.
 //     * @param actionList enables undoing and redoing actions
 //     * @param errorCtrl controls error finding and displaying
 //     * @param autoComplCtrl                     controls finding and displaying
@@ -101,7 +102,7 @@ package edu.pse.beast.codearea;
 //     * @param syntaxHL                          implements syntax highlighting
 //     * @param stoppedTypingContinuouslyMessager messages other classes once the user
 //     *                                          has stopped typing
-//     * continuously
+//     *                                          continuously
 //     */
 //    public CodeArea(
 //            JTextPane pane,
@@ -130,7 +131,8 @@ package edu.pse.beast.codearea;
 //
 //    /**
 //     * This constructor initialises all the fields with the fields of the
-//     * given codearea. Used to construct classes which inherit from codearea
+//     * given codearea. Used to construct classes which inherit from codearea.
+//     *
 //     * @param codeArea the fields of this codeare are taken to initialize the fields
 //     * of the new codearea
 //     */
@@ -155,7 +157,8 @@ package edu.pse.beast.codearea;
 //    }
 //
 //    /**
-//     * locks the given line so the user cannot edit it
+//     * Locks the given line so the user cannot edit it.
+//     *
 //     * @param line the line to be locked, starting at 0
 //     */
 //    public void lockLine(int line) {
@@ -163,8 +166,9 @@ package edu.pse.beast.codearea;
 //    }
 //
 //    /**
-//     * return the first line of the code which is locked. Throws an exception
-//     * index-out-of-bounds exception if no line is locked
+//     * Return the first line of the code which is locked. Throws an exception
+//     * index-out-of-bounds exception if no line is locked.
+//     *
 //     * @return the first locked line
 //     */
 //    public int getFirstLockedLine() {
@@ -192,7 +196,8 @@ package edu.pse.beast.codearea;
 //    }
 //
 //    /**
-//     * inserts the supplied string at the position of the caret.
+//     * Inserts the supplied string at the position of the caret.
+//     *
 //     * @param string the string to be inserted
 //     */
 //    public void insertString(String string) {
@@ -204,8 +209,9 @@ package edu.pse.beast.codearea;
 //    }
 //
 //    /**
-//     * links the supplied action to the given char. If the user presses strg + char,
-//     * the action will be performed
+//     * Links the supplied action to the given char. If the user presses strg + char,
+//     * the action will be performed.
+//     *
 //     * @param c the char of the shortcut
 //     * @param newAcc the action to be performed
 //     */

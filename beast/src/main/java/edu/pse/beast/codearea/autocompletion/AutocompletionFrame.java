@@ -55,7 +55,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -159,7 +159,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
      */
     void showUserOptions(final String[] opts) {
         jList1.removeAll();
-        DefaultListModel<String> model = new DefaultListModel<>();
+        DefaultListModel<String> model = new DefaultListModel<String>();
         for (int i = 0; i < opts.length; i++) {
             model.addElement(opts[i]);
         }

@@ -10,7 +10,7 @@ import java.io.File;
 public final class SuperFolderFinder {
 
     /** The initialized. */
-    private static boolean initialized = false;
+    private static boolean initialized;
 
     /** The super folder. */
     private static String superFolder = "";

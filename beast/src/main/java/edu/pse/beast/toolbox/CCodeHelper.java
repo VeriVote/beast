@@ -61,27 +61,32 @@ public final class CCodeHelper {
      * @return the size of the container in C Code
      */
     public static String getListSize(final InternalTypeContainer cont) {
+        final String size;
         if (cont.getAccessTypeIfList() == InternalTypeRep.CANDIDATE) {
-            return UnifiedNameContainer.getCandidate();
+            size = UnifiedNameContainer.getCandidate();
         } else if (cont.getAccessTypeIfList() == InternalTypeRep.VOTER) {
-            return UnifiedNameContainer.getVoter();
+            size = UnifiedNameContainer.getVoter();
         } else if (cont.getAccessTypeIfList() == InternalTypeRep.SEAT) {
-            return UnifiedNameContainer.getSeats();
+            size = UnifiedNameContainer.getSeats();
+        } else {
+            size = "";
         }
-        ErrorLogger.log("");
-        return "";
+        if ("".equals(size)) {
+            ErrorLogger.log("");
+        }
+        return size;
     }
     //
     // /**
-    // * creates the C-Type text representation of the given internal type
-    // container,
-    // * arrays are created as arrays: "unsigned int votes[" +
+    // * Creates the C-Type text representation of the given internal type
+    // * container.
+    // * Arrays are created as arrays: "unsigned int votes[" +
     // * UnifiedNameContainer.getVoter() + "][" +
-    // UnifiedNameContainer.getCandidate()
+    // * UnifiedNameContainer.getCandidate()
     // * + "]", for example
     // *
     // * @param electionContainer the container for which the C type should be
-    // created
+    // *                          created
     // * @param name the name of the variable
     // * @return the c type
     // */
@@ -93,12 +98,12 @@ public final class CCodeHelper {
     // }
     //
     // /**
-    // * creates the C-Type text representation of the given
-    // Internaltypecontainer,
-    // * arrays are created as pointers: "unsigned int *", for example
+    // * Creates the C-Type text representation of the given
+    // * Internaltypecontainer.
+    // * Arrays are created as pointers: "unsigned int *", for example.
     // *
     // * @param electionContainer the container for which the C type should be
-    // created
+    // *                          created
     // * @return the c type
     // */
     // public static String getCTypePointer(ElectionTypeContainer
@@ -108,7 +113,7 @@ public final class CCodeHelper {
     // }
 
     /**
-     * if the given InternaltypeContainer represents a list, it generates the
+     * If the given InternaltypeContainer represents a list, it generates the
      * String representing a corresponding C-Array. Ex return: "[" +
      * UnifiedNameContainer.getCandidate() + "]"
      *
@@ -127,10 +132,10 @@ public final class CCodeHelper {
     }
 
     /**
-     * generates the declaration String for a voting function depending on its
+     * Generates the declaration String for a voting function depending on its
      * input and result type. This is the voting method which will be presented
      * to the user, so it should not contain structs, but just simple data types
-     * (except if it cannot be helped)
+     * (except if it cannot be helped).
      *
      * @param container
      *            the input format of the voting array passed to the function
@@ -161,7 +166,7 @@ public final class CCodeHelper {
     }
 
     /**
-     * generates the declaration String for a voting function depending on its
+     * Generates the declaration String for a voting function depending on its
      * input and result type.
      *
      * @param container
@@ -205,14 +210,9 @@ public final class CCodeHelper {
                                         final String name,
                                         final ElectionTemplateHandler templateHandler,
                                         final StringResourceLoader stringResourceLoader) {
-        ElectionDescription description =
-                new ElectionDescription(name,
-                                        container.getInputType(),
-                                        container.getOutputType(),
-                                        0, 0, 0, true);
         ArrayList<String> code = new ArrayList<String>();
-        String inputIdInFile = container.getInputType().getInputIDinFile();
-        String outputIdInFile = container.getOutputType().getOutputIDinFile();
+        final String inputIdInFile = container.getInputType().getInputIDinFile();
+        final String outputIdInFile = container.getOutputType().getOutputIDinFile();
 
         code.add("//" + stringResourceLoader.getStringFromID(inputIdInFile)
                 + ": "
@@ -222,6 +222,11 @@ public final class CCodeHelper {
                         .getStringFromID(outputIdInFile + "_exp"));
         code.add(generateSimpleDeclString(container));
         code.add("} ");
+        final ElectionDescription description =
+                new ElectionDescription(name,
+                                        container.getInputType(),
+                                        container.getOutputType(),
+                                        0, 0, 0, true);
         description.setCode(code);
         return description;
     }

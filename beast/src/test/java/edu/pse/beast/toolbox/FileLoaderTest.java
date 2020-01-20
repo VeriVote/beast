@@ -28,20 +28,21 @@ public class FileLoaderTest {
     public FileLoaderTest() { }
 
     private boolean bufferedImagesEqual(final BufferedImage img1, final BufferedImage img2) {
+        boolean result = true;
         if (img1 == null) {
-            return img2 == null;
+            result = img2 == null;
         } else if (img1.getWidth() == img2.getWidth() && img1.getHeight() == img2.getHeight()) {
             for (int x = 0; x < img1.getWidth(); x++) {
                 for (int y = 0; y < img1.getHeight(); y++) {
                     if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
-                        return false;
+                        result = false;
                     }
                 }
             }
         } else {
-            return false;
+            result = false;
         }
-        return true;
+        return result;
     }
 
     /**
@@ -56,7 +57,7 @@ public class FileLoaderTest {
         String superFolder = SuperFolderFinder.getSuperFolder();
         String location = superFolder + subFolderAndFilename;
         File file = new File(location);
-        LinkedList<String> expResult = new LinkedList<>();
+        LinkedList<String> expResult = new LinkedList<String>();
         expResult.add("erste Zeile");
         expResult.add("zweite Zeile");
         expResult.add("ende");
@@ -93,7 +94,7 @@ public class FileLoaderTest {
     public void testGetNewUniqueName() {
         System.out.println("getNewUniqueName");
         String pathToDir = "/src/test/testfiles/";
-        ArrayList<String> usedNames = new ArrayList<>();
+        ArrayList<String> usedNames = new ArrayList<String>();
         File folder = new File(pathToDir);
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {

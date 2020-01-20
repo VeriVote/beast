@@ -38,7 +38,7 @@ package edu.pse.beast.propertychecker;
 //    private final ArrayList<String> userCode;
 //
 //    /**
-//     * this initializes the Attributes with easy values, that can be generated
+//     * This initializes the Attributes with easy values, that can be generated
 //     */
 //    public CBMCCodeGeneratorTest() {
 //        inputType =
@@ -53,7 +53,7 @@ package edu.pse.beast.propertychecker;
 //        electionDescription =
 //            new ElectionDescription("name", inputType,
 //                                    outputType, votingDeclLine);
-//        userCode = new ArrayList<>();
+//        userCode = new ArrayList<String>();
 //        userCode.add("votingcode");
 //        userCode.add("abalsdf");
 //        electionDescription.setCode(userCode);
@@ -64,7 +64,7 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /**
-//     * tests if the user code is in the output
+//     * Tests if the user code is in the output
 //     */
 //    @Test
 //    public void testUserCode() {
@@ -81,7 +81,7 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /**
-//     * tests if the PreCondition Description contains the right operands
+//     * Tests if the PreCondition Description contains the right operands
 //     */
 //    @Test
 //    public void testPreCondition() {
@@ -114,7 +114,7 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /**
-//     * tests if the PostCondition Description contains the right operands
+//     * Tests if the PostCondition Description contains the right operands
 //     */
 //    @Test
 //    public void testPostCondition() {
@@ -147,7 +147,7 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /**
-//     *
+//     * Tests the symbolic variable list.
 //     */
 //    @Test
 //    public void testSymbolicVariableList() {
@@ -194,8 +194,8 @@ package edu.pse.beast.propertychecker;
 //    }
 //
 //    /**
-//     * this method checks if a string is after a specific comment and before the
-//     * next use of "//"
+//     * This method checks if a string is after a specific comment and before the
+//     * next use of "//".
 //     *
 //     * @param wantedOutput the output you want in a part of the generated code
 //     * @param commentToDistinguishPart the comment which starts the codePart

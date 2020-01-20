@@ -26,7 +26,7 @@ public final class StoppedTypingContinuouslyMessager
             new ArrayList<StoppedTypingContinuouslyListener>();
 
     /** The current caret pos. */
-    private int currentCaretPos = 0;
+    private int currentCaretPos;
 
     /**
      * Instantiates a new stopped typing continuously messager.

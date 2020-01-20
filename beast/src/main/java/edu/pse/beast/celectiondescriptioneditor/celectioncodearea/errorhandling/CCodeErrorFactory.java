@@ -23,9 +23,9 @@ public final class CCodeErrorFactory {
     private CCodeErrorFactory() { }
 
     /**
-     * wraps the error from the compiler into a CodeError Object. If information
+     * Wraps the error from the compiler into a CodeError Object. If information
      * for these parts are missing, just pass "" for the strings, and 0 for the
-     * positions
+     * positions.
      *
      * @param line
      *            the line the error is in

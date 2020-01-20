@@ -38,13 +38,13 @@ public class NEWRowOfValues {
     private ElectionTypeContainer container;
 
     /** The amount of candidates. */
-    private int amountOfCandidates = 0;
+    private int amountOfCandidates;
 
     /** The amount of voters. */
-    private int amountOfVoters = 0;
+    private int amountOfVoters;
 
     /** The amount of seats. */
-    private int amountOfSeats = 0;
+    private int amountOfSeats;
 
     /** The parent. */
     private ElectionSimulationModel parent;
@@ -91,8 +91,8 @@ public class NEWRowOfValues {
         this.rowIndex = rowIdx;
         this.elementWidth = elemWidth;
         this.elementHeight = elemHeight;
-        values = new ArrayList<>(rowSize);
-        fields = new ArrayList<>(rowSize);
+        values = new ArrayList<String>(rowSize);
+        fields = new ArrayList<TextField>(rowSize);
         this.amountOfSeats = amountSeats;
         this.amountOfVoters = amountVoters;
         this.isTwoDim = elecTypeContainer.getInputType()

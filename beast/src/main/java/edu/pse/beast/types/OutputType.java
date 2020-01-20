@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 /**
- * The Class OutputType.
+ * The class OutputType.
  *
  * @author Lukas Stapelbroek
  */
@@ -59,7 +59,7 @@ public abstract class OutputType extends InOutType {
     // protected abstract void getHelper();
 
     /**
-     * Gets the output I din file.
+     * Gets the output Id in file.
      *
      * @return the ID this output type uses in the string resources
      */
@@ -73,16 +73,19 @@ public abstract class OutputType extends InOutType {
     public abstract boolean isOutputOneCandidate();
 
     // /**
-    // * extracts a variable with a given name from a checker output
-    // * @param toExtract the raw data from which the data should be extracted
-    // * @param variableMather a regex matcher of the variable to be extracted
-    // (can e.g. include trailing numbers)
-    // * @return a list cotaining the last state this variable was seen in, and
-    // all the i
-    // */
-    // public List<ResultValueWrapper> readResult(List<String> toExtract, String
-    // variableMatcher) {
-    // return helper.extractVariable(variableMatcher, toExtract);
+    //  * Extracts a variable with a given name from a checker output.
+    //  *
+    //  * @param toExtract
+    //  *            the raw data from which the data should be extracted
+    //  * @param variableMatcher
+    //  *            a regex matcher of the variable to be extracted
+    //  *            (can e.g. include trailing numbers)
+    //  * @return a list containing the last state this variable was seen in, and
+    //  *         all the i
+    //  */
+    // public List<ResultValueWrapper> readResult(List<String> toExtract,
+    //                                            String variableMatcher) {
+    //     return helper.extractVariable(variableMatcher, toExtract);
     // }
 
     /**
@@ -115,8 +118,8 @@ public abstract class OutputType extends InOutType {
     public abstract String getCArrayType();
 
     /**
-     * returns the code with the added line of the margin main test method. The
-     * method must end with an assertion that let's cbmc fail, so we can extract
+     * Returns the code with the added line of the margin main test method. The
+     * method must end with an assertion that lets cbmc fail, so we can extract
      * the result.
      *
      * @param code
@@ -129,8 +132,8 @@ public abstract class OutputType extends InOutType {
                                                               int voteNumber);
 
     // public List<ResultValueWrapper> extractVariable(String variableMatcher,
-    // List<String> lastResult) {
-    // return helper.extractVariable(variableMatcher, lastResult);
+    //                                                 List<String> lastResult) {
+    //     return helper.extractVariable(variableMatcher, lastResult);
     // } TODO remove
 
     @Override
@@ -149,7 +152,7 @@ public abstract class OutputType extends InOutType {
     public void addLastResultAsCode(final CodeArrayListBeautifier code,
                                     final ElectionSimulationData origResult,
                                     final String origResultName) {
-        // first create the declaration of the array:
+        // First create the declaration of the array:
         String declaration = getContainer().getOutputStruct().getStructAccess()
                 + " " + origResultName + " = {"
                 + printArray((CBMCResultValueWrapper) origResult.getValues())
@@ -175,6 +178,6 @@ public abstract class OutputType extends InOutType {
     public void addExtraCodeAtEndOfCodeInit(final CodeArrayListBeautifier code,
                                             final String valueName,
                                             final List<String> loopVariables) {
-        // as this is a output type, nothing has to be done
+        // As this is a output type, nothing has to be done
     }
 }

@@ -17,7 +17,7 @@ package edu.pse.beast.codearea.errorhandling;
 //    private volatile boolean keepRunning = true;
 //    private volatile boolean pause = false;
 //    private ErrorFinderList l;
-//    private ArrayList<CodeError> lastFoundErrors = new ArrayList<>();
+//    private ArrayList<CodeError> lastFoundErrors = new ArrayList<CodeError>();
 //    private Thread t;
 //    private JTextPane pane;
 //    private String lastCode;

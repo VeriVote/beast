@@ -35,16 +35,16 @@ public class ElectionDescription {
     private ElectionTypeContainer container;
 
     /** The locked line start. */
-    private int lockedLineStart = 0;
+    private int lockedLineStart;
 
     /** The locked line end. */
-    private int lockedLineEnd = 0;
+    private int lockedLineEnd;
 
     /** The locked brace pos. */
-    private int lockedBracePos = 0;
+    private int lockedBracePos;
 
     /** The is new. */
-    private boolean isNew = false;
+    private boolean isNew;
 
     /**
      * Instantiates a new election description.
@@ -108,73 +108,74 @@ public class ElectionDescription {
     }
 
     /**
+     * Generate variable name. We have to replace every return statement with
+     * a loop, which transforms the one data type into another.
+     *
+     * @param codeString
+     *            the code string
+     * @param name
+     *            the name
+     * @return the string
+     */
+    private static String generateVariableName(final String codeString,
+                                               final String name) {
+        boolean duplicate = true;
+        String nameString = name;
+        for (int length = LEN; duplicate; length++) {
+            if (codeString.contains(nameString)) {
+                // Increase the length in case all words from that
+                // length are already taken
+                nameString = generateRandomString(length);
+            } else {
+                duplicate = false;
+            }
+        }
+        return nameString;
+    }
+
+    /**
      * Gets the complex code.
      *
      * @return code of this description with structs used where applicable
      */
     public List<String> getComplexCode() {
-        String firstPart = code.substring(0, lockedLineStart);
-        boolean duplicate = true;
-        String votesName = "auto_votes";
-        int length = LEN;
-        while (duplicate) {
-            if (code.contains(votesName)) {
-                votesName = generateRandomString(length);
-                // increase the length in case all words from that
-                // length are already taken
-                length++;
-            } else {
-                duplicate = false;
-            }
-        }
-        String replacementLine =
+        final String firstPart = code.substring(0, lockedLineStart);
+        String votesName = generateVariableName(code, "auto_votes");
+        final String replacementLine =
                 CCodeHelper.generateStructDeclString(container, votesName);
-        int dimensions = container.getInputType().getAmountOfDimensions();
-        List<String> loopVariables = generateLoopVariables(dimensions, "votes");
+        final int dimensions = container.getInputType().getAmountOfDimensions();
+        final List<String> loopVariables =
+                generateLoopVariables(code, dimensions, "votes");
         String[] sizes = container.getInputType().getSizeOfDimensions();
         sizes[0] = "amountVotes";
         String forLoopStart = "";
-        for (int i = 0; i < dimensions; i++) { // add all needed loop headers
+        for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
-            forLoopEnd += "}"; // close the for loops
+            forLoopEnd += "}"; // Close the for loops
         }
         String access = "";
         for (int i = 0; i < dimensions; i++) {
             access += "[" + loopVariables.get(i) + "]";
         }
-        String assignment = UnifiedNameContainer.getVotingArray() + access
-                            + " = " + votesName + ".arr" + access + ";";
-        String switchedArray =
-                getContainer().getInputType().getDataTypeAndSign() + " "
-                + UnifiedNameContainer.getVotingArray()
+        final String assignment =
+                UnifiedNameContainer.getVotingArray() + access
+                + " = " + votesName + ".arr" + access + ";";
+        final String switchedArray =
+                " " + getContainer().getInputType().getDataTypeAndSign()
+                + " " + UnifiedNameContainer.getVotingArray()
                 + getContainer().getInputType().getDimensionDescriptor(true)
                 + ";" + forLoopStart + assignment + forLoopEnd;
-        replacementLine += " " + switchedArray;
         String middlePart = code.substring(lockedLineEnd, lockedBracePos);
-        String thirdPart = code.substring(lockedBracePos);
-        // in the second part, we have to replace every return statement with a
-        // loop
-        // which transforms the one data type into another
-        duplicate = true;
-        String electName = "toReturn";
-        length = LEN;
-        while (duplicate) {
-            if (code.contains(electName)) {
-                electName = generateRandomString(length);
-                // increase the length in case all words from that
-                // length are already taken
-                length++;
-            } else {
-                duplicate = false;
-            }
-        }
-        middlePart = replaceReturns(middlePart, electName);
+        final String thirdPart = code.substring(lockedBracePos);
+        middlePart = replaceReturns(middlePart,
+                                    generateVariableName(code, "toReturn"));
         return stringToList(
-                firstPart + replacementLine + middlePart + thirdPart);
+                firstPart + replacementLine + switchedArray
+                + middlePart + thirdPart);
     }
 
     /**
@@ -327,7 +328,7 @@ public class ElectionDescription {
      *            the to convert
      * @return the list
      */
-    private List<String> stringToList(final String toConvert) {
+    private static List<String> stringToList(final String toConvert) {
         String[] split = toConvert.split("\n");
         return new ArrayList<String>(Arrays.asList(split));
     }
@@ -465,7 +466,8 @@ public class ElectionDescription {
         String toReturn = container.getOutputStruct().getStructAccess() + " "
                             + variableName + "; ";
         int dimensions = container.getOutputType().getAmountOfDimensions();
-        List<String> loopVariables = generateLoopVariables(dimensions,
+        List<String> loopVariables = generateLoopVariables(code,
+                                                           dimensions,
                                                            variableName);
         String[] sizes = container.getInputType().getSizeOfDimensions();
         for (int i = 0; i < dimensions; i++) {
@@ -494,8 +496,8 @@ public class ElectionDescription {
      *            the max size
      * @return the string
      */
-    private String generateForLoopHeader(final String indexName,
-                                         final String maxSize) {
+    private static String generateForLoopHeader(final String indexName,
+                                                final String maxSize) {
         return "for (unsigned int " + indexName + " = 0; " + indexName + " < "
                 + maxSize + "; " + indexName + "++ ) { ";
     }
@@ -503,26 +505,30 @@ public class ElectionDescription {
     /**
      * Generate loop variables.
      *
+     * @param codeString
+     *            the code string
      * @param dimensions
      *            the dimensions
      * @param variableName
      *            the variable name
      * @return the list
      */
-    private List<String> generateLoopVariables(final int dimensions,
-                                               final String variableName) {
+    private static List<String> generateLoopVariables(final String codeString,
+                                                      final int dimensions,
+                                                      final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
-        // use i as the default name for a loop
-        String defaultName = "loop_index_";
+        // Use i as the default name for a loop
+        final String defaultName = "loop_index_";
         for (int i = 0; i < dimensions; i++) {
             String varName = defaultName + currentIndex;
             boolean duplicate = true;
             int length = 1;
             while (duplicate) {
-                if (code.contains(varName) || variableName.equals(varName)) {
+                if (codeString.contains(varName)
+                        || variableName.equals(varName)) {
                     varName = generateRandomString(length) + "_" + currentIndex;
-                    // increase the length in case all words from that
+                    // Increase the length in case all words from that
                     // length are already taken
                     length++;
                 } else {
@@ -548,7 +554,7 @@ public class ElectionDescription {
      *            the end
      * @return the tuple 3
      */
-    private Tuple3<Boolean, Boolean, Boolean>
+    private static Tuple3<Boolean, Boolean, Boolean>
                 checkIfExecutedCode(final Tuple3<Boolean, Boolean, Boolean> prevValues,
                                     final String text, final int start, final int end) {
         boolean lineComment = prevValues.first();
@@ -617,7 +623,7 @@ public class ElectionDescription {
      *            statement
      * @return true, if at least one true statement is present, false otherwise
      */
-    private boolean checkForTrue(final Tuple3<Boolean, Boolean, Boolean> toCheck) {
+    private static boolean checkForTrue(final Tuple3<Boolean, Boolean, Boolean> toCheck) {
         return toCheck.first() || toCheck.second() || toCheck.third();
     }
 
@@ -629,7 +635,7 @@ public class ElectionDescription {
      *            the String to wrap
      * @return "{toWrap}"
      */
-    private String wrapInCurlyBraces(final String toWrap) {
+    private static String wrapInCurlyBraces(final String toWrap) {
         return "{" + toWrap + "}";
     }
 
@@ -640,7 +646,7 @@ public class ElectionDescription {
      *            the length
      * @return the string
      */
-    private String generateRandomString(final int length) {
+    private static String generateRandomString(final int length) {
         return RandomStringUtils.random(length, true, false);
     }
 }

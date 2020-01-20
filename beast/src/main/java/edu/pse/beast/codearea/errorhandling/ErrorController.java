@@ -9,6 +9,7 @@ package edu.pse.beast.codearea.errorhandling;
 // * and error displays. Whenever the concurrently running error finder find
 // * a new error, it receives a message. It then asks the injected error
 // * displayer to display the codeerror on the pane.
+// *
 // * @author Holger Klein
 // */
 //public class ErrorController {
@@ -28,7 +29,7 @@ package edu.pse.beast.codearea.errorhandling;
 //    }
 //
 //    /**
-//     * stops the concurrently running error finder
+//     * Stops the concurrently running error finder.
 //     */
 //    public void stopThread() {
 //        t.stop();
@@ -47,7 +48,8 @@ package edu.pse.beast.codearea.errorhandling;
 //    }
 //
 //    /**
-//     * this function is called by error finder classes if they find new errors
+//     * This function is called by error finder classes if they find new errors.
+//     *
 //     * @param lastFoundErrors the list of newly found errors
 //     */
 //    public void foundNewErrors(ArrayList<CodeError> lastFoundErrors) {

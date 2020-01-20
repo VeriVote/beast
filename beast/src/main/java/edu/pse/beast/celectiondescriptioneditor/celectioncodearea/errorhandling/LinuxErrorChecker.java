@@ -32,35 +32,36 @@ public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
         final String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
         final String userIncludeAndPath =
                 ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
-        // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles =
+        List<String> arguments = new ArrayList<String>();
+        // Add the arguments needed for the call
+        arguments.add(COMPILER_STRING);
+        arguments.add(userIncludeAndPath);
+        arguments.add(FIND_MISSING_RETURN_OPTION);
+        // Add the path to the created file that should be checked
+        arguments.add(toCheck.getAbsolutePath());
+
+        // Get all Files from the form "*.c" so we can include them into cbmc,
+        final List<String> allFiles =
                 FileLoader.listAllFilesFromFolder(
                         "\"" + SuperFolderFinder.getSuperFolder()
                             + USER_INCLUDE_FOLDER + "\"",
                         FileLoader.C_FILE_ENDING);
-        Process startedProcess = null;
-        List<String> arguments = new ArrayList<String>();
-        // add the arguments needed for the call
-        arguments.add(COMPILER_STRING);
-        arguments.add(userIncludeAndPath);
-        arguments.add(FIND_MISSING_RETURN_OPTION);
-        // add the path to the created file that should be checked
-        arguments.add(toCheck.getAbsolutePath());
-        // iterate over all "*.c" files from the include folder, to include them
+        // Iterate over all "*.c" files from the include folder, to include them
         for (final Iterator<String> iterator = allFiles.iterator();
                 iterator.hasNext();) {
             final String toBeIncludedFile = iterator.next();
             arguments.add(toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
         }
-        // defines the position to what place the compiled files should be sent
+        // Defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);
         final ProcessBuilder prossBuild =
                 new ProcessBuilder(arguments.toArray(new String[0]));
-        Map<String, String> environment = prossBuild.environment();
-        // set the language for the following call to english
+        final Map<String, String> environment = prossBuild.environment();
+        // Set the language for the following call to English
         environment.put("LC_ALL", "C");
+        Process startedProcess = null;
         try {
-            // start the process
+            // Start the process
             startedProcess = prossBuild.start();
         } catch (IOException e) {
             e.printStackTrace();

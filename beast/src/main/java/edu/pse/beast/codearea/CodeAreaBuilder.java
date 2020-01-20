@@ -18,25 +18,25 @@ package edu.pse.beast.codearea;
 //import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 //
 ///**
-// * This class builds a codearea and inititalizes all the classes needed by the
-// * codearea.
+// * This class builds a code area and initializes all the classes needed by
+// * the code area.
 // *
 // * @author Holger Klein
 // */
 //public class CodeAreaBuilder {
 //    /**
-//     * creates a codearea object
+//     * Creates a code area object.
 //     *
 //     * @param codeArea the JTextPane used to display code
 //     * @param codeAreaScroll The Scrollpane used to scroll in the jtextpane
 //     * @param refs The references to interfaces needed to build objects
 //     * @param errorDisplayer The specific errordisplayer to be used by the
-//     * errorcontroller
+//     *                       errorcontroller
 //     * @return The created codearea object
 //     */
 //    public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll,
 //                                   ObjectRefsForBuilder refs, ErrorDisplayer errorDisplayer) {
-//        //simply create all necessary objects
+//        // Simply create all necessary objects
 //        OpenCloseCharList occL = new OpenCloseCharList();
 //        ShortcutHandler shortcutHandler = new ShortcutHandler();
 //        Actionlist actionList = new Actionlist();

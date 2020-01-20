@@ -26,7 +26,7 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     private static BooleanExpEditorGrammarErrorFinder finder;
 
     /** The errors. */
-    private final ArrayList<CodeError> errors = new ArrayList<>();
+    private final ArrayList<CodeError> errors = new ArrayList<CodeError>();
 
     /**
      * Instantiates a new boolean exp editor grammar error finder.

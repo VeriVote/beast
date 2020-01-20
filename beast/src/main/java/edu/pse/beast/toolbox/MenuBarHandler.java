@@ -23,7 +23,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         {"file", "edit", "code"};
 
     /**
-     * the JMenuBar.
+     * The JMenuBar.
      */
     private JMenuBar createdMenuBar;
 

@@ -163,8 +163,8 @@ public final class CBMCxmlParser {
     }
 
     /**
-     * removes all null objects from a list. The previous order of the elements
-     * will not be changed
+     * Removes all null objects from a list. The previous order of the elements
+     * will not be changed.
      *
      * @param toClean
      *            the to clean

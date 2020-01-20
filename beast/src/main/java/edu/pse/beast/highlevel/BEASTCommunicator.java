@@ -151,15 +151,14 @@ public final class BEASTCommunicator {
         ElectionCheckParameter parameter =
                 GUIController.getController().getParameter();
 
+        final boolean result;
         if (!hasProperties(properties)) {
             // checks if there even are any properties selected for analysis in
             // the PreAndPostConditionsSource
             GUIController.setConsoleText("No property selected!");
             // TODO: (add string resouce loading later)");
-
-            return false;
-        }
-        if (!checkForErrors(electionDesc, properties)) {
+            result = false;
+        } else if (!checkForErrors(electionDesc, properties)) {
             GUIController.setConsoleText("Starting verification ..");
             // TODO load the property checker
             PropertyChecker checker = new PropertyChecker("CBMC");
@@ -213,12 +212,14 @@ public final class BEASTCommunicator {
                     }
                 });
                 waitForResultsThread.start();
-                return !stopped;
+                result = !stopped;
             } else {
-                return false;
+                result = false;
             }
+        } else {
+            result = false;
         }
-        return false;
+        return result;
     }
 
     /**

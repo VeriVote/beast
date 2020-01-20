@@ -30,7 +30,7 @@ public class BooleanExpSyntaxHL {
      */
     public BooleanExpSyntaxHL(final BooleanExpANTLRHandler antlrHandler,
             final SyntaxHL syntaxHL) {
-        ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
+        ArrayList<RegexAndColor> regexAndColorList = new ArrayList<RegexAndColor>();
         for (String s : antlrHandler.getComparisonSymbols()) {
             regexAndColorList.add(new RegexAndColor(s, Color.RED));
         }

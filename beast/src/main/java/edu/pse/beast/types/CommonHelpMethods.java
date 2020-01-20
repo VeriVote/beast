@@ -10,12 +10,15 @@ package edu.pse.beast.types; // TODO removeS
 //public abstract class CommonHelpMethods {
 //
 //    /**
-//     * extracts a variable with given dimension for the given checker from the output
-//     * list
+//     * Extracts a variable with given dimension for the given checker from the output
+//     * list.
 //     *
-//     * @param variableNameMatcher a matcher which matches every variable to be extracted
-//     * @param dimension the dimension of the variable
-//     * @param toExtract the list to extract from
+//     * @param variableNameMatcher
+//     *            a matcher which matches every variable to be extracted
+//     * @param dimension
+//     *            the dimension of the variable
+//     * @param toExtract
+//     *            the list to extract from
 //     * @return a two dim wrapper of the voting results
 //     */
 //    public abstract List<ResultValueWrapper> extractVariable(String variableNameMatcher,

@@ -37,7 +37,7 @@ public final class CBMCResultValueWrapper extends ResultValueWrapper {
     private CDATATYPE dataType;
 
     /** The initialized. */
-    private boolean initialized = false;
+    private boolean initialized;
 
     /** The value container. */
     private CBMCResultValue valueContainer;

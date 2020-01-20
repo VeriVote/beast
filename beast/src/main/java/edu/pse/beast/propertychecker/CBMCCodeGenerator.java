@@ -171,7 +171,7 @@ public class CBMCCodeGenerator {
         addVoteSumFunc(true);
         addOtherFunctions();
         code.add("//Code of the user");
-        ArrayList<String> electionDescriptionCode = new ArrayList<>();
+        ArrayList<String> electionDescriptionCode = new ArrayList<String>();
         electionDescriptionCode.addAll(electionDesc.getComplexCode());
         code.addList(electionDescriptionCode);
         addMainMethod();
@@ -1100,7 +1100,7 @@ public class CBMCCodeGenerator {
     }
 
     /**
-     * this adds the Code of the PostProperties. It uses a Visitor it creates.
+     * This adds the Code of the postconditions. It uses a Visitor it creates.
      *
      * @param postAST
      *            the post AST

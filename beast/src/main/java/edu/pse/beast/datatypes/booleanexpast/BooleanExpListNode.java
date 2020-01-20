@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
  */
 public final class BooleanExpListNode {
     /**
-     * this list stores the subnodes by the highest number of ELECT statement
+     * This list stores the subnodes by the highest number of ELECT statement
      * appearing in them. This is important for code generation. Ex:
      * FOR_ALL_VOTERS(v) : VOTES4(v) == ELECT3; <-- would be stored in
      * boolNodesPerElectLevel.get(3) ELECT2 == ELECT5; <-- would be stored in

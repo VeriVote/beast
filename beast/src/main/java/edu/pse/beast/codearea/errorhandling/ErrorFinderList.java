@@ -4,25 +4,26 @@ import java.util.ArrayList;
 
 /**
  * This class contains a list of all error finders sorted by dependency. This
- * means that once the first error finder finds and error, letting the latteer
- * ones search is unecessary
+ * means that once the first error finder finds and error, letting the latter
+ * ones search is unnecessary.
  *
  * @author Holger Klein
  */
 public class ErrorFinderList {
 
     /** The error finder list. */
-    private ArrayList<ErrorFinder> errorFinderList = new ArrayList<>();
+    private ArrayList<ErrorFinder> errorFinderList =
+            new ArrayList<ErrorFinder>();
 
     /**
-     * starts asking all error finders to look for errors in the code. Once the
+     * Starts asking all error finders to look for errors in the code. Once the
      * first error finder finds errors, it stops the search and returns these
-     * errors
+     * errors.
      *
      * @return the list of errors found be the errorfinders
      */
     public ArrayList<CodeError> getErrors() {
-        ArrayList<CodeError> created = new ArrayList<>();
+        ArrayList<CodeError> created = new ArrayList<CodeError>();
         for (int i = 0;
                 i < errorFinderList.size() && created.size() == 0;
                 ++i) {

@@ -1,7 +1,8 @@
 package edu.pse.beast.celectiondescriptioneditor.view;
 
 ///**
-// * starts a CCodeEditorWindow
+// * Starts a CCodeEditorWindow
+// *
 // * @author Holger Klein
 // */
 //public class CEditorWindowStarter implements Runnable {

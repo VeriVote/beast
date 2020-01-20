@@ -3,7 +3,7 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The Class TimeOut.
+ * The class TimeOut.
  *
  * @author Lukas Stapelbroek
  */
@@ -38,8 +38,8 @@ public class TimeOut {
     }
 
     /**
-     * creates an "empty" timeout, that shows that the checker should run until
-     * he is finished or the user stopps the check from the outside.
+     * Creates an "empty" timeout, that shows that the checker should run until
+     * it is finished or the user stops the check from the outside.
      */
     public TimeOut() {
         amount = 0;

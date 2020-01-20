@@ -21,7 +21,7 @@ public final class CheckerFactoryFactory {
             new HashMap<String, CheckerFactory>();
 
     /** The initialized. */
-    private static boolean initialized = false;
+    private static boolean initialized;
 
     /**
      * The constructor.
@@ -89,41 +89,42 @@ public final class CheckerFactoryFactory {
     }
 
     // /**
-    // * this method returns a new checker factory to produce checkers
-    // *
-    // * @param checkerID
-    // * the id
-    // * @param controller
-    // * the controller that controls the factory
-    // * @param electionDescSrc
-    // * the electionSource
-    // * @param postAndPrepPropDesc
-    // * the properySource
-    // * @param parameter
-    // * the parameters
-    // * @param result
-    // * the result object where the result should be put in
-    // * @param
-    // * @return a new CheckerFactory if the ID was found, else null
-    // */
+    //  * This method returns a new checker factory to produce checkers.
+    //  *
+    //  * @param checkerID
+    //  *            the id
+    //  * @param controller
+    //  *            the controller that controls the factory
+    //  * @param electionDescSrc
+    //  *            the electionSource
+    //  * @param postAndPrepPropDesc
+    //  *            the properySource
+    //  * @param parameter
+    //  *            the parameters
+    //  * @param result
+    //  *            the result object where the result should be put in
+    //  * @param isMargin
+    //  *           whether this is a margin
+    //  * @return a new CheckerFactory if the ID was found, else null
+    //  */
     // public static CheckerFactory getCheckerFactory(String checkerID,
-    // FactoryController controller,
-    // ElectionDescriptionSource electionDescSrc,
-    // PreAndPostConditionsDescription
-    // postAndPrepPropDesc,
-    // ElectionCheckParameter parameter, Result result, boolean isMargin) {
-    // init();
+    //                                                FactoryController controller,
+    //                                                ElectionDescriptionSource electionDescSrc,
+    //                                                PreAndPostConditionsDescription
+    //                                                    postAndPrepPropDesc,
+    //                                                ElectionCheckParameter parameter,
+    //                                                Result result, boolean isMargin) {
+    //     init();
     //
-    // if (factories.keySet().contains(checkerID)) {
-    // return factories.get(checkerID).getNewInstance(controller,
-    // electionDescSrc,
-    // postAndPrepPropDesc,
-    // parameter, result, isMargin);
-    //
-    // } else {
-    // ErrorLogger.log("The specified checkerID was not found");
-    // return null;
-    // }
+    //     if (factories.keySet().contains(checkerID)) {
+    //         return factories.get(checkerID).getNewInstance(controller,
+    //                                                        electionDescSrc,
+    //                                                        postAndPrepPropDesc,
+    //                                                        parameter, result, isMargin);
+    //     } else {
+    //         ErrorLogger.log("The specified checkerID was not found");
+    //         return null;
+    //     }
     // }
 
     /**

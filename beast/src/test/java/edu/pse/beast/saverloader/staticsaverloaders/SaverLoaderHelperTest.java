@@ -15,12 +15,18 @@ public class SaverLoaderHelperTest {
     /** The instance. */
     private SaverLoaderHelper h = new SaverLoaderHelper();
 
+    /**
+     * Test create save string.
+     */
     @Test
     public void testCreateSaveString() {
         String s = h.getStringForAttr("name", "Jack");
         assertEquals("4 name4 Jack", s);
     }
 
+    /**
+     * Test parses save string.
+     */
     @Test
     public void testParsesSaveString() {
         Map<String, String> m = h.parseSaveString("4 name4 Jack");

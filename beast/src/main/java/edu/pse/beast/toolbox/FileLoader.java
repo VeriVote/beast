@@ -108,7 +108,7 @@ public final class FileLoader {
      * @return the unique String
      */
     public static synchronized String getNewUniqueName(final String pathToDir) {
-        ArrayList<String> usedNames = new ArrayList<>();
+        ArrayList<String> usedNames = new ArrayList<String>();
         File folder = new File(pathToDir.replace("\"", ""));
         File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {

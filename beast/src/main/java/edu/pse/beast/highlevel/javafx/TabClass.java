@@ -10,7 +10,7 @@ import javafx.scene.control.Tab;
 public abstract class TabClass {
 
     /** The has focus. */
-    private boolean hasFocus = false;
+    private boolean hasFocus;
 
     /** The associated tab. */
     private final Tab associatedTab;

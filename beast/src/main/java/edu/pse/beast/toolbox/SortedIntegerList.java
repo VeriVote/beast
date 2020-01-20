@@ -12,7 +12,7 @@ import java.util.List;
  * due to the functions for deleting an element and deleting at an index having
  * the exact same format for them. This class also adds some functionality which
  * takes advantage of the list being sorted, such as remove between. It is
- * mainly used by the code area to keep track of line breaks
+ * mainly used by the code area to keep track of line breaks.
  *
  * @author Holger Klein
  */
@@ -43,7 +43,7 @@ public final class SortedIntegerList {
     public SortedIntegerList() { }
 
     /**
-     * Gets the.
+     * Gets the index.
      *
      * @param index
      *            the position of the integer to be returned
@@ -75,7 +75,7 @@ public final class SortedIntegerList {
     }
 
     /**
-     * removes the supplied integer from container.
+     * Removes the supplied integer from container.
      *
      * @param number
      *            the integer to be removed

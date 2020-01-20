@@ -3,6 +3,7 @@ package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +145,48 @@ public abstract class SystemSpecificErrorChecker {
     }
 
     /**
+     * Creates the stream reader.
+     *
+     * @param result
+     *            the result
+     * @param latch
+     *            the latch
+     * @param checkUnwind
+     *            the check unwind
+     * @param inpStream
+     *            the input stream
+     * @return the threaded buffered reader
+     */
+    private static ThreadedBufferedReader
+                createStreamReader(final List<String> result,
+                                   final CountDownLatch latch,
+                                   final boolean checkUnwind,
+                                   final InputStream inpStream) {
+        return new ThreadedBufferedReader(
+                new BufferedReader(new InputStreamReader(inpStream)),
+                result, latch, checkUnwind
+                );
+    }
+
+    /**
+     * Wait to finish.
+     *
+     * @param process the process
+     * @param latch the latch
+     */
+    private static void waitToFinish(final Process process,
+                                     final CountDownLatch latch) {
+        try { // wait for the process to finish;
+            process.waitFor();
+            // wait for the readers to finish reading
+            latch.await();
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+    }
+
+    /**
      * Checks the code for errors.
      *
      * @param toCheck
@@ -177,32 +220,13 @@ public abstract class SystemSpecificErrorChecker {
         Process process = checkCodeFileForErrors(cFile);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader =
-                    new ThreadedBufferedReader(
-                            new BufferedReader(
-                                    new InputStreamReader(
-                                            process.getInputStream()
-                                            )
-                                    ),
-                            result, latch, true);
-            ThreadedBufferedReader errReader =
-                    new ThreadedBufferedReader(
-                            new BufferedReader(
-                                    new InputStreamReader(
-                                            process.getErrorStream())
-                                    ),
-                            errors, latch, false);
-            // wait for the process to finish;
-            try {
-                process.waitFor();
-                // wait for the readers to finish reading
-                latch.await();
-            } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            // parse the errors out of the returned lists
-            List<CodeError> toReturn = parseError(result, errors, lineOffset);
+            final ThreadedBufferedReader outReader =
+                    createStreamReader(result, latch, true,
+                                       process.getInputStream());
+            final ThreadedBufferedReader errReader =
+                    createStreamReader(errors, latch, false,
+                                       process.getErrorStream());
+            waitToFinish(process, latch);
             // deletes the temporary file, so it does not clog up the file
             // system
             if (GUIController.getController().getDeleteTmpFiles()) {
@@ -213,7 +237,8 @@ public abstract class SystemSpecificErrorChecker {
             exeFile.delete();
             outReader.finish();
             errReader.finish();
-            return toReturn;
+            // parse the errors out of the returned lists
+            return parseError(result, errors, lineOffset);
         } else {
             ErrorLogger.log("Process could not be started");
             return null;

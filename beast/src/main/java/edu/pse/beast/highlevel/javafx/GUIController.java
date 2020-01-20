@@ -441,14 +441,13 @@ public class GUIController {
 
     /** The running. */
     @FXML
+    private boolean running;
 
     // @FXML
     // private Text
     //
     // @FXML
     // private Button removeVarButton;
-
-    private boolean running = false;
 
     /** The auto complete. */
     private AutoCompleter autoComplete = new AutoCompleter();
@@ -481,7 +480,7 @@ public class GUIController {
     private TreeItem<String> seatItems;
 
     /** The last clicked. */
-    private long lastClicked = 0;
+    private long lastClicked;
 
     /** The symb var to remove. */
     private TreeItem<String> symbVarToRemove;
@@ -493,7 +492,7 @@ public class GUIController {
     private Stage mainStage;
 
     /** The name field is changeable. */
-    private boolean nameFieldIsChangeable = false;
+    private boolean nameFieldIsChangeable;
 
     /** The property list saver loader. */
     private SaverLoader propertyListSaverLoader = new SaverLoader(
@@ -605,6 +604,22 @@ public class GUIController {
                         newValue) -> setSymbVarToRemove(newValue));
         codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
+        mainTabPane.getSelectionModel().select(codePane);
+        focusedMainTab = codeArea;
+        mainTabPane.getSelectionModel().selectedItemProperty()
+                .addListener((ov, oldTab, newTab) -> {
+                    autoComplete.reset();
+                    if (newTab.equals(codePane)) {
+                        focusedMainTab = codeArea;
+                    } else if (newTab.equals(propertyPane)) {
+                        focusedMainTab = booleanExpEditor;
+                    } else if (newTab.equals(resultTab)) {
+                        focusedMainTab = resultArea;
+                    } else if (newTab.equals(inputPane)) {
+                        focusedMainTab = electionSimulation;
+                    }
+                });
+
         Thread scrollUpdater = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -634,21 +649,6 @@ public class GUIController {
                 }
             }
         });
-        mainTabPane.getSelectionModel().select(codePane);
-        focusedMainTab = codeArea;
-        mainTabPane.getSelectionModel().selectedItemProperty()
-                .addListener((ov, oldTab, newTab) -> {
-                    autoComplete.reset();
-                    if (newTab.equals(codePane)) {
-                        focusedMainTab = codeArea;
-                    } else if (newTab.equals(propertyPane)) {
-                        focusedMainTab = booleanExpEditor;
-                    } else if (newTab.equals(resultTab)) {
-                        focusedMainTab = resultArea;
-                    } else if (newTab.equals(inputPane)) {
-                        focusedMainTab = electionSimulation;
-                    }
-                });
         scrollUpdater.start();
         voterScrollPane.setPadding(new Insets(0, 0, SCROLLBAR_PADDING, 0));
         candidateScrollPane.setPadding(new Insets(0, SCROLLBAR_PADDING, 0, 0));
@@ -1406,6 +1406,55 @@ public class GUIController {
     }
 
     /**
+     * Adds the property list item.
+     *
+     * @param currentDir
+     *            the current dir
+     * @param prop
+     *            the prop
+     * @param children
+     *            the children
+     * @return true upon error
+     */
+    private boolean addPropertyListItem(final File currentDir,
+                                        final PreAndPostConditionsDescription prop,
+                                        final String[] children) {
+        TreeItem<CustomTreeItem> treeItem =
+                new TreeItem<CustomTreeItem>();
+        ParentTreeItem parentItem =
+                new ParentTreeItem(prop, false,
+                                   treeItem, false);
+        treeItems.add(treeItem);
+        properties.add(parentItem);
+        root.getChildren().add(treeItem);
+
+        boolean breakOut = false;
+        for (int j = 0; j < children.length && !breakOut; j++) {
+            final String json = childItemSaverLoader
+                    .load(new File(currentDir.getPath() + SLASH
+                            + children[j]));
+            String[] splits = children[j].split("\\.");
+            String stringIndex = splits[splits.length - 2];
+            ChildTreeItemValues values = null;
+            try {
+                values = propertyListGSON
+                        .createFromSaveString(json);
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+                breakOut = true;
+            }
+            if (!breakOut) {
+                parentItem.addChild(values,
+                                    Integer.parseInt(stringIndex));
+            }
+        }
+        if (parentItem.getCounter() != ITEM_COUNT) {
+            System.out.println("Error, ");
+        }
+        return breakOut;
+    }
+
+    /**
      * Open property list file.
      *
      * @param listFile
@@ -1419,26 +1468,26 @@ public class GUIController {
                     .removeExtension(listFile.getName());
             File parent = new File(listFile.getParentFile()
                     + Character.toString(SLASH) + folderName);
-            if (listFile != null) {
-                File[] directories = parent.listFiles(File::isDirectory);
-                if (directories != null && directories.length > 0) {
-                    for (int i = 0; i < directories.length; i++) {
-                        File currentDir = directories[i];
-                        String[] property = currentDir
-                                .list(new FilenameFilter() {
-                                    @Override
-                                    public boolean accept(final File dir,
-                                            final String name) {
-                                        return name.endsWith(
-                                                SaverLoader.PROP_DESCR_FILE_ENDING);
-                                    }
-                                });
-                        if (property.length != 1) {
-                            errorTextArea.setText(
-                                    "invalid property list save format in folder: "
-                                            + currentDir.getName());
-                            return;
-                        }
+            File[] directories = parent.listFiles(File::isDirectory);
+
+            if (directories != null && directories.length > 0) {
+                boolean breakOut = false;
+                for (int i = 0; i < directories.length && !breakOut; i++) {
+                    File currentDir = directories[i];
+                    String[] property = currentDir
+                            .list(new FilenameFilter() {
+                                @Override
+                                public boolean accept(final File dir,
+                                                      final String name) {
+                                    return name.endsWith(
+                                            SaverLoader.PROP_DESCR_FILE_ENDING);
+                                }
+                            });
+                    if (property.length != 1) {
+                        errorTextArea.setText(
+                                "invalid property list save format in folder: "
+                                        + currentDir.getName());
+                    } else {
                         PreAndPostConditionsDescription prop = booleanExpEditor
                                 .open(new File(currentDir.getPath() + SLASH
                                         + property[0]));
@@ -1446,7 +1495,7 @@ public class GUIController {
                                 .list(new FilenameFilter() {
                                     @Override
                                     public boolean accept(final File dir,
-                                            final String name) {
+                                                          final String name) {
                                         return name.endsWith(
                                                 SaverLoader.CHILD_PROP_FILE_ENDING);
                                     }
@@ -1455,40 +1504,15 @@ public class GUIController {
                             errorTextArea.setText(
                                     "invalid property list save format in folder: "
                                             + currentDir.getName());
-                            return;
-                        }
-                        TreeItem<CustomTreeItem> treeItem = new TreeItem<CustomTreeItem>();
-                        ParentTreeItem parentItem = new ParentTreeItem(prop,
-                                false, treeItem, false);
-                        treeItems.add(treeItem);
-                        properties.add(parentItem);
-                        root.getChildren().add(treeItem);
-                        for (int j = 0; j < children.length; j++) {
-                            final String json = childItemSaverLoader
-                                    .load(new File(currentDir.getPath() + SLASH
-                                            + children[j]));
-                            String[] splits = children[j].split("\\.");
-                            String stringIndex = splits[splits.length - 2];
-                            ChildTreeItemValues values = null;
-                            try {
-                                values = propertyListGSON
-                                        .createFromSaveString(json);
-                            } catch (JsonSyntaxException e) {
-                                e.printStackTrace();
-                                return;
-                            }
-                            parentItem.addChild(values,
-                                    Integer.parseInt(stringIndex));
-                        }
-                        if (parentItem.getCounter() != ITEM_COUNT) {
-                            System.out.println("fehler, ");
+                        } else {
+                            breakOut = addPropertyListItem(currentDir,
+                                                           prop, children);
                         }
                     }
                 }
             }
-            if (properties.size() > 0) {
-                setCurrentPropertyDescription(properties.get(0), false);
-            }
+        } else if (properties.size() > 0) {
+            setCurrentPropertyDescription(properties.get(0), false);
         }
     }
 
@@ -1991,12 +2015,6 @@ public class GUIController {
      * @return the parameter
      */
     public ElectionCheckParameter getParameter() {
-        List<Integer> voter = getValues(minVoter, maxVoter);
-        List<Integer> cand = getValues(minCandidates, maxCandidates);
-        List<Integer> seat = getValues(minSeats, maxSeats);
-        int marginVoters = electionSimulation.getNumVoters();
-        int marginCandidates = electionSimulation.getNumCandidates();
-        int marginSeats = electionSimulation.getNumSeats();
         Integer numberProcesses = Runtime.getRuntime().availableProcessors();
         if (!processes.getText().isEmpty()) {
             numberProcesses = Integer.parseInt(processes.getText());
@@ -2012,6 +2030,12 @@ public class GUIController {
         if (maxUnrollings > 0) {
             argument = argument + " --unwind " + maxUnrollings;
         }
+        final List<Integer> voter = getValues(minVoter, maxVoter);
+        final List<Integer> cand = getValues(minCandidates, maxCandidates);
+        final List<Integer> seat = getValues(minSeats, maxSeats);
+        final int marginVoters = electionSimulation.getNumVoters();
+        final int marginCandidates = electionSimulation.getNumCandidates();
+        final int marginSeats = electionSimulation.getNumSeats();
         ElectionCheckParameter param = new ElectionCheckParameter(voter, cand,
                 seat, marginVoters, marginCandidates, marginSeats, time,
                 numberProcesses, argument);
@@ -2027,8 +2051,8 @@ public class GUIController {
      *            the max field
      * @return the values
      */
-    private List<Integer> getValues(final TextField minfield,
-            final TextField maxField) {
+    private static List<Integer> getValues(final TextField minfield,
+                                           final TextField maxField) {
         List<Integer> toReturn = new ArrayList<Integer>();
         int valueMin = Integer.parseInt(minfield.getText());
         int valueMax = Integer.parseInt(maxField.getText());

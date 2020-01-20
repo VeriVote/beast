@@ -59,11 +59,6 @@ public final class LinuxCompilerAndRunner
         final String userIncludeAndPath =
                 ENABLE_USER_INCLUDE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
-        // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles = FileLoader.listAllFilesFromFolder(
-                "\"" + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                        + "\"",
-                C_FILE_ENDING);
         Process startedProcess = null;
         List<String> arguments = new ArrayList<String>();
         // add the arguments needed for the call
@@ -72,6 +67,11 @@ public final class LinuxCompilerAndRunner
         arguments.add(FIND_MISSING_RETURN_OPTION);
         // add the path to the created file that should be checked
         arguments.add(toCheck.getAbsolutePath());
+        // get all Files from the form "*.c" so we can include them into cbmc,
+        final List<String> allFiles = FileLoader.listAllFilesFromFolder(
+                "\"" + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
+                        + "\"",
+                C_FILE_ENDING);
         // iterate over all "*.c" files from the include folder, to include them
         for (Iterator<String> iterator = allFiles.iterator();
                 iterator.hasNext();) {

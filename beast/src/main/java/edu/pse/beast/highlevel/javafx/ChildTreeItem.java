@@ -47,7 +47,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 
     /** The disabled. */
     // private ImageView statusIcon = new ImageView();
-    private boolean disabled = false;
+    private boolean disabled;
 
     /** The result tree items. */
     private final List<TreeItem<CustomTreeItem>> resultTreeItems =

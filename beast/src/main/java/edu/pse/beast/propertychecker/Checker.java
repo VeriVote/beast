@@ -59,13 +59,13 @@ public abstract class Checker implements Runnable {
     private final Result result;
 
     /** The finished. */
-    private boolean finished = false;
+    private boolean finished;
 
     /** The success. */
-    private boolean success = false;
+    private boolean success;
 
     /** The interrupted. */
-    private volatile boolean interrupted = false;
+    private volatile boolean interrupted;
 
     /**
      * This class describes the highest abstract layer of a checker. The task of

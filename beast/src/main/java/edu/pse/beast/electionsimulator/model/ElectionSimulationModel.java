@@ -60,16 +60,16 @@ public class ElectionSimulationModel {
     private int amountSeats = 1;
 
     /** The current rows. */
-    private int currentRows = 0;
+    private int currentRows;
 
     /** The current row size. */
     private int currentRowSize;
 
     /** The max rows. */
-    private int maxRows = 0;
+    private int maxRows;
 
     /** The current candidates. */
-    private int currentCandidates = 0;
+    private int currentCandidates;
 
     /** The x label. */
     private final String xLabel;

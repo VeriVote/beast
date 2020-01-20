@@ -24,7 +24,8 @@ package edu.pse.beast.celectiondescriptioneditor.celectioncodearea;
 //    private final CSyntaxHl cSyntaxHl;
 //
 //    /**
-//     * constructor
+//     * Constructor.
+//     *
 //     * @param codeArea the code area to be associated with
 //     */
 //    public CElectionCodeArea(CodeArea codeArea) {
@@ -36,7 +37,7 @@ package edu.pse.beast.celectiondescriptioneditor.celectioncodearea;
 //    }
 //
 //    /**
-//     * displays the given code to the user in the JTextPane
+//     * Displays the given code to the user in the JTextPane.
 //     *
 //     * @param code the code to be displayed
 //     * @throws BadLocationException in case of a bad location

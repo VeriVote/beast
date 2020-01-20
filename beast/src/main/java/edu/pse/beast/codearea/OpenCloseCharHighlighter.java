@@ -37,7 +37,7 @@ public final class OpenCloseCharHighlighter implements CaretListener {
     private final DefaultHighlighter.DefaultHighlightPainter hPainter;
 
     /** The added hls. */
-    private final ArrayList<Object> addedHls = new ArrayList<>();
+    private final ArrayList<Object> addedHls = new ArrayList<Object>();
 
     /**
      * Instantiates a new open close char highlighter.
@@ -66,19 +66,19 @@ public final class OpenCloseCharHighlighter implements CaretListener {
         } catch (StringIndexOutOfBoundsException ex) {
             // Do nothing
         }
-        for (int i = 0; i < surroundingChars.length; i++) {
+        boolean done = false;
+        for (int i = 0; i < surroundingChars.length && !done; i++) {
             char c = surroundingChars[i];
-            if (c == ' ') {
-                continue;
-            }
-            if (charList.isOpenChar(c)) {
+            if (c != ' ' && charList.isOpenChar(c)) {
                 highlightChar(ce.getDot() + i);
-                highlightCorrespondingCloseChar(ce.getDot() + i, charList.getOpenCloseChar(c));
-                return;
-            } else if (charList.isCloseChar(c)) {
+                highlightCorrespondingCloseChar(ce.getDot() + i,
+                                                charList.getOpenCloseChar(c));
+                done = true;
+            } else if (c != ' ' && charList.isCloseChar(c)) {
                 highlightChar(ce.getDot() + i);
-                highlightCorrespondingOpenChar(ce.getDot() + i, charList.getOpenCloseChar(c));
-                return;
+                highlightCorrespondingOpenChar(ce.getDot() + i,
+                                               charList.getOpenCloseChar(c));
+                done = true;
             }
         }
     }

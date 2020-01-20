@@ -18,12 +18,14 @@ import org.junit.Test;
  * @author Holger Klein
  */
 public class JTextPaneToolboxTest {
-
     /** The Constant FOUR. */
     private static final int FOUR = 4;
     /** The Constant ABS_POS. */
     private static final int ABS_POS = 3;
 
+    /**
+     * Instantiates a new j text pane tool box test.
+     */
     public JTextPaneToolboxTest() {
     }
 

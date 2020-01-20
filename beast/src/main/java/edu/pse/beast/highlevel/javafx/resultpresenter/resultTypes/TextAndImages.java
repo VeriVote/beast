@@ -55,7 +55,8 @@ public final class TextAndImages extends ResultPresentationType {
             SegmentOps.styledTextOps();
 
     /** The linked image ops. */
-    private final LinkedImageOps<TextStyle> linkedImageOps = new LinkedImageOps<>();
+    private final LinkedImageOps<TextStyle> linkedImageOps =
+            new LinkedImageOps<TextStyle>();
 
     /** The area. */
     private final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
@@ -93,11 +94,38 @@ public final class TextAndImages extends ResultPresentationType {
                         LinkedImage::createNode);
     }
 
+    /**
+     * Creates the read-only-styled document.
+     *
+     * @param resultArea the result area
+     * @return the read only styled document
+     */
+    private static ReadOnlyStyledDocument<ParStyle,
+                                          Either<String, LinkedImage>,
+                                          TextStyle>
+            createRODocument(final GenericStyledArea<ParStyle,
+                                                     Either<String,
+                                                            LinkedImage>,
+                                                     TextStyle> resultArea) {
+        final RealLinkedImage image =
+                new RealLinkedImage(new Canvas(CANVAS_SIZE, CANVAS_SIZE));
+        final TextOps<Either<String, LinkedImage>, TextStyle>
+                textOps = resultArea.getSegOps();
+        return ReadOnlyStyledDocument.fromSegment(Either.right(image),
+                                                  ParStyle.EMPTY,
+                                                  TextStyle.DEFAULT,
+                                                  textOps);
+    }
+
     @Override
     public Node presentResult(final Result result) {
         // TODO still WIP, no images get created
-        GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> resultArea =
-                new GenericStyledArea<>(
+        GenericStyledArea<ParStyle,
+                          Either<String, LinkedImage>,
+                          TextStyle> resultArea =
+                new GenericStyledArea<ParStyle,
+                                      Either<String, LinkedImage>,
+                                      TextStyle>(
                         // default paragraph style paragraph style setter
                         ParStyle.EMPTY,
                     (paragraph, style) -> paragraph.setStyle(style.toCss()),
@@ -112,12 +140,10 @@ public final class TextAndImages extends ResultPresentationType {
         Canvas can = new Canvas(CANVAS_SIZE, CANVAS_SIZE);
         GraphicsContext g = can.getGraphicsContext2D();
 
-        ReadOnlyStyledDocument<ParStyle, Either<String, LinkedImage>, TextStyle> ros =
-                ReadOnlyStyledDocument.fromSegment(
-                        Either.right(new RealLinkedImage(
-                                new Canvas(CANVAS_SIZE, CANVAS_SIZE))),
-                        ParStyle.EMPTY, TextStyle.DEFAULT,
-                        resultArea.getSegOps());
+        final ReadOnlyStyledDocument<ParStyle,
+                                     Either<String, LinkedImage>,
+                                     TextStyle> document =
+                               createRODocument(resultArea);
         g.setFill(Color.RED);
         g.fillOval(OVAL_X_COORD, OVAL_Y_COORD, OVAL_SIZE, OVAL_SIZE);
         String textTest = "testasdjfklasdf\n";
@@ -125,11 +151,15 @@ public final class TextAndImages extends ResultPresentationType {
             resultArea.replaceText(resultArea.getLength(),
                                    resultArea.getLength(), textTest);
         }
-        resultArea.replace(resultArea.getLength(), resultArea.getLength(), ros);
-        VirtualizedScrollPane<GenericStyledArea<ParStyle,
-                                                Either<String, LinkedImage>,
-                                                TextStyle>> vsPane =
-            new VirtualizedScrollPane<>(resultArea); // Wrap it in a scroll area
+        resultArea.replace(resultArea.getLength(), resultArea.getLength(),
+                           document);
+        // Wrap it in a scroll area
+        final VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                                                      Either<String, LinkedImage>,
+                                                      TextStyle>> vsPane =
+            new VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                                                        Either<String, LinkedImage>,
+                                                        TextStyle>>(resultArea);
         return vsPane;
     }
 

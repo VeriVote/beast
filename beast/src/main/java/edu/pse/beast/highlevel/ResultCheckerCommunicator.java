@@ -30,7 +30,8 @@ public interface ResultCheckerCommunicator {
 
     //
     // /**
-    //  * starts the check for a give file
+    //  * Starts the check for a give file.
+    //  *
     //  * @param toCheck the file to check
     //  * @param params the parameters to give extra
     //  * @return a single unprocessedResult

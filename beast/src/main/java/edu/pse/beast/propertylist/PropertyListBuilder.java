@@ -74,8 +74,9 @@ package edu.pse.beast.propertylist;
 //
 //    private ArrayList<ArrayList<ActionIdAndListener>>
 //            createActionIdAndListenerListForMenuHandler() {
-//        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
-//        ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
+//        ArrayList<ArrayList<ActionIdAndListener>> created =
+//            new ArrayList<ArrayList<ActionIdAndListener>>();
+//        ArrayList<ActionIdAndListener> fileList = new ArrayList<ActionIdAndListener>();
 //
 //        UserAction newly = createNewPropertyList();
 //        UserAction undo = createUndoChangesPropertyList();
@@ -90,7 +91,7 @@ package edu.pse.beast.propertylist;
 //        fileList.add(createFromUserAction(saveAs));
 //        fileList.add(createFromUserAction(openSim));
 //
-//        ArrayList<ActionIdAndListener> editList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> editList = new ArrayList<ActionIdAndListener>();
 //
 //        editList.add(createFromUserAction(undo));
 //

@@ -20,6 +20,12 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 public final class ANTLRTest {
     private ANTLRTest() { }
 
+    /**
+     * Show gui tree view.
+     *
+     * @param code
+     *            the code
+     */
     static void showGuiTreeView(final String code) {
         final org.antlr.v4.runtime.CharStream stream = CharStreams.fromString(code);
         final FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(stream);
@@ -31,6 +37,12 @@ public final class ANTLRTest {
         view.open();
     }
 
+    /**
+     * The main method.
+     *
+     * @param args
+     *            the arguments
+     */
     public static void main(final String[] args) {
         showGuiTreeView("1 == 4 * 2 / (4 - 1) + 2;");
     }

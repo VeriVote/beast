@@ -11,6 +11,7 @@ package edu.pse.beast.codearea.codeinput.lineinserter;
 ///**
 // * This class chooses the right newlineinserter implementation based on the chars
 // * surrounding the caret position of the given pane.
+// *
 // * @author Holger Klein
 // */
 //public class NewlineInserterChooser {
@@ -27,11 +28,12 @@ package edu.pse.beast.codearea.codeinput.lineinserter;
 //    }
 //
 //    /**
-//     * finds the right implementation of newlineinserter depending on the characters
-//     * surrounding the panes currentcaretpositin. If the lines is locked,
-//     * it returns lockedlinenewlineinserter. If the caret is between
-//     * {}, it returns betweencurlybracesnewlineinserter. If it is none
-//     * of the above, it returns standardnewlineinserter
+//     * Finds the right implementation of new line inserter depending on the
+//     * characters surrounding the pane's current caret position. If the line
+//     * is locked, it returns locked line new line inserter. If the caret is
+//     * between {}, it returns between curly braces new line inserter. If it is
+//     * none of the above, it returns standard new line inserter.
+//     *
 //     * @return new line inserter
 //     */
 //    public NewlineInserter getNewlineInserter() {

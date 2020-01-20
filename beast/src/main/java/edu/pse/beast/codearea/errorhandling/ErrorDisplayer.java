@@ -48,7 +48,7 @@ public abstract class ErrorDisplayer
     private ArrayList<String> msges;
 
     /** The high lights. */
-    private ArrayList<Object> highLights = new ArrayList<>();
+    private ArrayList<Object> highLights = new ArrayList<Object>();
 
     /** The error popup menu. */
     private ErrorPopupMenu errorPopupMenu;
@@ -103,9 +103,9 @@ public abstract class ErrorDisplayer
     }
 
     /**
-     * removes all previously shown errors and thus gets ready to show the newly
+     * Removes all previously shown errors and thus gets ready to show the newly
      * found ones. This method must be overwritten by subclasses to do anything
-     * useful
+     * useful.
      *
      * @param errors
      *            the errors to be presented
@@ -134,7 +134,7 @@ public abstract class ErrorDisplayer
         if (startpos == endpos) {
             endpos++;
         }
-        absPosToMsg.add(new Tuple<>(startpos, endpos));
+        absPosToMsg.add(new Tuple<Integer, Integer>(startpos, endpos));
         msges.add(msg);
         try {
             highLights.add(pane.getHighlighter()
@@ -167,27 +167,26 @@ public abstract class ErrorDisplayer
         if (pos == JTextPaneToolbox.getText(pane).length()) {
             pane.setToolTipText(null);
             // errorPopupMenu.setVisible(false);
-            return;
-        } else if (Math.abs(
-                errorPopupMenu.getLocation().x - pt.getX()) < MIN_MOUSE_MOVE
-                && Math.abs(errorPopupMenu.getLocation().x
-                        - pt.getX()) < MIN_MOUSE_MOVE
-                && errorPopupMenu.isVisible()) {
-            return;
-        }
-        for (int i = 0; i < absPosToMsg.size(); ++i) {
-            if (absPosToMsg.get(i).first() <= pos
-                    && absPosToMsg.get(i).second() >= pos) {
-                pane.setToolTipText(msges.get(i));
-                // errorPopupMenu.getErrorItem().setText(msges.get(i));
-                // errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
-                return;
+        } else if (MIN_MOUSE_MOVE <= Math.abs(errorPopupMenu.getLocation().x - pt.getX())
+                || MIN_MOUSE_MOVE <= Math.abs(errorPopupMenu.getLocation().x - pt.getX())
+                || !errorPopupMenu.isVisible()) {
+            boolean showToolTip = false;
+            for (int i = 0; i < absPosToMsg.size(); ++i) {
+                if (absPosToMsg.get(i).first() <= pos
+                        && pos <= absPosToMsg.get(i).second()) {
+                    pane.setToolTipText(msges.get(i));
+                    // errorPopupMenu.getErrorItem().setText(msges.get(i));
+                    // errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
+                    showToolTip = true;
+                }
             }
+            if (!showToolTip) {
+                pane.setToolTipText(null);
+            }
+            /*
+             * if(errorPopupMenu.isVisible()) { errorPopupMenu.setVisible(false); }
+             */
         }
-        pane.setToolTipText(null);
-        /*
-         * if(errorPopupMenu.isVisible()) { errorPopupMenu.setVisible(false); }
-         */
     }
 
     @Override

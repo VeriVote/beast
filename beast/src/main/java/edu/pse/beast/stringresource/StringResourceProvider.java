@@ -15,13 +15,13 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  */
 public abstract class StringResourceProvider {
     /**
-     * languageId. Choose "de" for German
+     * LanguageId. Choose "de" for German.
      */
     private String languageId;
 
     /**
      * The constructor does not call initialize. If you make a subclass you have
-     * to call it yourself
+     * to call it yourself.
      *
      * @param langId
      *            the language. Choose "de" for German

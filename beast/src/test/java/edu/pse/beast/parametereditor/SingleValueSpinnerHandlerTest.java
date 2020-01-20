@@ -24,11 +24,11 @@ public class SingleValueSpinnerHandlerTest {
     public void testSetGetValue() {
         System.out.println("set/getValue");
         SingleValueSpinnerHandler instance = new SingleValueSpinnerHandler(new JSpinner());
-        Integer expResult = FOURTY_TWO;
         instance.setValue(FOURTY_TWO);
         instance.setValue(-1);
         instance.setValue(TEN_THOUSAND_ONE);
-        Integer result = instance.getValue();
+        final Integer expResult = FOURTY_TWO;
+        final Integer result = instance.getValue();
         assertEquals(expResult, result);
     }
 

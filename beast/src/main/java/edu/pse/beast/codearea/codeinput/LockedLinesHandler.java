@@ -40,7 +40,7 @@ public final class LockedLinesHandler implements DocumentListener {
     private SaveTextBeforeRemove saveBeforeRemove;
 
     /** The listeners. */
-    private ArrayList<LockedLinesListener> listeners = new ArrayList<>();
+    private ArrayList<LockedLinesListener> listeners = new ArrayList<LockedLinesListener>();
 
     /**
      * Instantiates a new locked lines handler.

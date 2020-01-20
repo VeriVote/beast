@@ -39,8 +39,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //import edu.pse.beast.types.OutputType;
 //
 ///**
-// * This class creates a celectiondescriptioneditor object and all useractions
-// * which can be performed on this object
+// * This class creates a C-election description editor object and all user actions
+// * which can be performed on this object.
 // *
 // * @author Holger Klein
 // */
@@ -61,7 +61,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    private UserAction paste;
 //
 //    /**
-//     * creates a CElectionDescriptionEditor object and returns it
+//     * Creates a CElectionDescriptionEditor object and returns it.
 //     *
 //     * @param objRefsForBuilder
 //     *            the references to interfaces needed to build objects
@@ -160,9 +160,10 @@ package edu.pse.beast.celectiondescriptioneditor;
 //
 //    private ArrayList<ArrayList<ActionIdAndListener>> createActionIdAndListenerList(
 //            ObjectRefsForBuilder objRefsForBuilder, CElectionDescriptionEditor editor) {
-//        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
+//        ArrayList<ArrayList<ActionIdAndListener>> created =
+//            new ArrayList<ArrayList<ActionIdAndListener>>();
 //
-//        ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> fileList = new ArrayList<ActionIdAndListener>();
 //
 //        newAcc = createNewElectionUserAction(editor);
 //        load = createLoadElectionUserAction(editor);
@@ -186,18 +187,18 @@ package edu.pse.beast.celectiondescriptioneditor;
 //        fileList.add(createFromUserAction(save));
 //        fileList.add(createFromUserAction(saveAs));
 //
-//        ArrayList<ActionIdAndListener> editList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> editList = new ArrayList<ActionIdAndListener>();
 //        editList.add(createFromUserAction(undo));
 //        editList.add(createFromUserAction(redo));
 //        editList.add(createFromUserAction(cut));
 //        editList.add(createFromUserAction(copy));
 //        editList.add(createFromUserAction(paste));
 //
-//        ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> editorList = new ArrayList<ActionIdAndListener>();
 //        options = createPresentOptionsUserAction(objRefsForBuilder, editor);
 //        editorList.add(createFromUserAction(options));
 //
-//        ArrayList<ActionIdAndListener> codeList = new ArrayList<>();
+//        ArrayList<ActionIdAndListener> codeList = new ArrayList<ActionIdAndListener>();
 //        staticErrorFinding = createStaticErrorFindingUserAction(editor);
 //        codeList.add(createFromUserAction(staticErrorFinding));
 //

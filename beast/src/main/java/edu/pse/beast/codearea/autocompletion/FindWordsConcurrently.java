@@ -14,7 +14,7 @@ package edu.pse.beast.codearea.autocompletion;
 // * @author Holger Klein
 // */
 //public class FindWordsConcurrently implements Runnable {
-//    private final ArrayList<String> words = new ArrayList<>();
+//    private final ArrayList<String> words = new ArrayList<String>();
 //    private final JTextPane pane;
 //    private volatile boolean run = true;
 //    private final AutocompletionController controller;

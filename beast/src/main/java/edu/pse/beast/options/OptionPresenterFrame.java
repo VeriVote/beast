@@ -14,6 +14,7 @@ package edu.pse.beast.options;
 //
 ///**
 // * A JFrame subclass in with which OptionElement objects can be presented to the user.
+// *
 // * @author Holger Klein
 // */
 //public class OptionPresenterFrame extends javax.swing.JFrame {
@@ -22,7 +23,8 @@ package edu.pse.beast.options;
 //    private final StringResourceLoader srl;
 //    private final Options opt;
 //    /**
-//     * Creates new form OptionPresenterFrame
+//     * Creates new form OptionPresenterFrame.
+//     *
 //     * @param opt Options the options to be presented to the user
 //     * @param srl StringResourceLoader the string resource loader used by the whole system
 //     */
@@ -38,14 +40,13 @@ package edu.pse.beast.options;
 //    }
 //
 //    /**
-//     * if the user presses the apply button, the form closes,
+//     * If the user presses the apply button, the form closes,
 //     * then saves and re-applies the given option.
 //     * options.reapply() is only called for this top level function,
-//     * meaning it has to recursively call it
-//     * on its sub-options.
+//     * meaning it has to recursively call it on its sub-options.
 //     *
 //     * @param opt this option is going to get re-applied and its settings
-//                  saved if the user presses the apply button.
+//     *            saved if the user presses the apply button.
 //     */
 //    private void initializeApplyButtonPressFunctionality(Options opt) {
 //        jButton1.addActionListener((ae) -> {
@@ -57,7 +58,7 @@ package edu.pse.beast.options;
 //    }
 //
 //    /**
-//     * displays the options recursively. For every option and contained
+//     * Displays the options recursively. For every option and contained
 //     * sub-options, it creates a new panel if the option contains one or more
 //     * option item. For each option item, it shows the user the string connected
 //     * to the option items id as well as all the choosable options.
@@ -65,6 +66,7 @@ package edu.pse.beast.options;
 //     * a panel containing a label saying "font size" in whatever language is
 //     * currently chosen and has a drop-down list next to it displaying the
 //     * possible font sizes (e.g. 5 through 50).
+//     *
 //     * @param opt this is the top level option which is displayed.
 //     *            All contained sub-options are then displayed recursively.
 //     */
@@ -81,8 +83,9 @@ package edu.pse.beast.options;
 //    }
 //
 //    /**
-//     * goes through every optionelement contained in the passed option parameter and adds
-//     * its name and all choosable options in a combobox to the passed panel
+//     * Goes through every optionelement contained in the passed option parameter and adds
+//     * its name and all choosable options in a combobox to the passed panel.
+//     *
 //     * @param opt the option containing the option elements which should be added to the panel
 //     * @param panel the panel onto which the option element information should be added
 //     */
@@ -100,14 +103,15 @@ package edu.pse.beast.options;
 //    }
 //
 //    /**
-//     * creates a combobox displaying all choosable options to the user
-//     * @param elem the optionelement supplying the choosable option string
-//     * @return a OptionelemBomboBox which displays all choosable options for
-//     * this optionelement as strings
+//     * Creates a combobox displaying all choosable options to the user.
+//     *
+//     * @param elem the optionelement supplying the available option string
+//     * @return a OptionelemBomboBox which displays all available options for
+//     *         this optionelement as strings
 //     */
 //    private OptionElemComboBox createOptionElemComboBox(OptionElement elem) {
 //        OptionElemComboBox combobox = new OptionElemComboBox(elem);
-//        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+//        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 //        addChoosableOptionsToCombobox(elem, model);
 //        selectChosenOptionInCombobox(elem, model);
 //        combobox.setModel(model);
@@ -116,8 +120,9 @@ package edu.pse.beast.options;
 //    }
 //
 //    /**
-//     * this method makes the optionelement contained in the passed combo box
-//     * handle if a new item is selected
+//     * This method makes the option element contained in the passed combo box
+//     * handle if a new item is selected.
+//     *
 //     * @param combobox the combo box containing the option element which
 //     *        should handle a new selection
 //     */

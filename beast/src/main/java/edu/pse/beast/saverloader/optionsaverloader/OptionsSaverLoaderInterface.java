@@ -92,7 +92,7 @@ package edu.pse.beast.saverloader.optionsaverloader;
 //    private static LinkedList<String>
 //                getSaveStringOnlyForOption(String id,
 //                                           LinkedList<String> saveString) {
-//        LinkedList<String> created = new LinkedList<>();
+//        LinkedList<String> created = new LinkedList<String>();
 //        int i = 0;
 //        for(; i < saveString.size() && !saveString.get(i).contains("new_option " + id); ++i) {
 //        }
@@ -111,7 +111,7 @@ package edu.pse.beast.saverloader.optionsaverloader;
 //    }
 //
 //    public static void saveOpt(Options opt) {
-//        ArrayList<String> saveString = new ArrayList<>();
+//        ArrayList<String> saveString = new ArrayList<String>();
 //        saveOptRec(opt, saveString);
 //        FileSaver.writeStringLinesToFile(saveString,
 //                                         new File(SuperFolderFinder.getSuperFolder()

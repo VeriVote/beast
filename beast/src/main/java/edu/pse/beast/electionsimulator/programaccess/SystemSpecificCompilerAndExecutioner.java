@@ -33,6 +33,28 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     /** The Constant DATA_FILE_ENDING. */
     private static final String DATA_FILE_ENDING = ".votingdata";
 
+    /** The Constant absolutePath. */
+    private static final String ABSOLUTE_PATH =
+            SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
+
+    /** The data file. */
+    private File dataFile;
+
+    /** The c file. */
+    private File cFile;
+
+    /** The object file. */
+    private File objectFile;
+
+    /** The bat file. */
+    private File batFile;
+
+    /** The executable file. */
+    private File exeFile;
+
+    /** The out file. */
+    private File outFile;
+
     /**
      * Constructor creates an error checker that compiles the c code and passes
      * it on to a system specific compiler.
@@ -52,6 +74,44 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     }
 
     /**
+     * Create the files.
+     *
+     * @param pathToFileModuloEnding
+     *            the path to file modulo ending
+     */
+    private void createFiles(final String pathToFileModuloEnding) {
+        dataFile = new File(pathToFileModuloEnding + DATA_FILE_ENDING);
+
+        // Create two links to files, so in case an object file gets created we
+        // can delete it afterwards, too
+        cFile = new File(pathToFileModuloEnding + FileLoader.C_FILE_ENDING);
+        objectFile = new File(pathToFileModuloEnding + FileLoader.OBJECT_FILE_ENDING);
+
+        // On Windows, we have to create a .bat file, so we create a reference to
+        // the file that will be created, to delete it afterwards
+        batFile = new File(pathToFileModuloEnding + FileLoader.BAT_FILE_ENDING);
+
+        // On Windows, a .exe file will be created
+        // here it will be created, to delete it afterwards
+        exeFile = new File(pathToFileModuloEnding + FileLoader.EXE_FILE_ENDING);
+
+        // The file that gets created on Linux that can then get called later
+        outFile = new File(pathToFileModuloEnding + FileLoader.OUT_FILE_ENDING);
+    }
+
+    /**
+     * Delete the temporary files, so they do not clog up the file system.
+     */
+    private void deleteFiles() {
+        cFile.delete();
+        objectFile.delete();
+        batFile.delete();
+        exeFile.delete();
+        outFile.delete();
+        dataFile.delete();
+    }
+
+    /**
      * Run analysis.
      *
      * @param code
@@ -62,29 +122,14 @@ public abstract class SystemSpecificCompilerAndExecutioner {
      */
     public List<String> runAnalysis(final List<String> code,
                                     final Result resultToStoreIn) {
-        // array that returns the result
+        // Array that returns the result
         List<String> toReturn = new ArrayList<String>();
         List<String> result = new ArrayList<String>();
         List<String> errors = new ArrayList<String>();
-        String absolutePath = SuperFolderFinder.getSuperFolder()
-                                + PATH_TO_TEMP_FOLDER;
-        String pathToNewFile = absolutePath
-                                + FileLoader.getNewUniqueName(absolutePath);
-        File dataFile = new File(pathToNewFile + DATA_FILE_ENDING);
-        // create two links to files, so in case an object file gets created we
-        // can delete it afterwards too
-        File cFile = new File(pathToNewFile + FileLoader.C_FILE_ENDING);
-        File objFile = new File(pathToNewFile + FileLoader.OBJECT_FILE_ENDING);
-        // on windows we have to create a .bat file, so we create a reference to
-        // the file
-        // that will be created, to delete it afterwards
-        File batFile = new File(pathToNewFile + FileLoader.BAT_FILE_ENDING);
-        // on windows a .exe file will be created
-        // here it will be created, to be delete it afterwards
-        File exeFile = new File(pathToNewFile + FileLoader.EXE_FILE_ENDING);
-        // the file that gets created on linux that can then get called later
-        File outFile = new File(pathToNewFile + FileLoader.OUT_FILE_ENDING);
-        // write the code to the file
+        String pathToNewFile = ABSOLUTE_PATH
+                                + FileLoader.getNewUniqueName(ABSOLUTE_PATH);
+        createFiles(pathToNewFile);
+        // Write the code to the file
         FileSaver.writeStringLinesToFile(code, cFile);
         Process process = compileCFile(cFile);
         if (process != null) {
@@ -173,18 +218,12 @@ public abstract class SystemSpecificCompilerAndExecutioner {
             ErrorLogger.log("Could not compile the source file");
             // deletes the temporary file, so it does not clog up the filesystem
         }
-        // deletes the temporary file, so it does not clog up the filesystem
-        cFile.delete();
-        objFile.delete();
-        batFile.delete();
-        exeFile.delete();
-        outFile.delete();
-        dataFile.delete();
+        deleteFiles();
         return toReturn;
     }
 
     /**
-     * checks a file for errors. Has to be implemented system specific
+     * Checks a file for errors. Has to be implemented system specific.
      *
      * @param toCheck
      *            the file to check
@@ -199,9 +238,9 @@ public abstract class SystemSpecificCompilerAndExecutioner {
      *            a String that describes what name the file to run will have.
      *            The implementation will have to add the OS specific file
      *            ending.
-     * @param dataFile
+     * @param file
      *            the data to be used by the program.
      * @return the running process that is running right now.
      */
-    protected abstract Process runWithData(String toRun, File dataFile);
+    protected abstract Process runWithData(String toRun, File file);
 }

@@ -23,7 +23,8 @@ package edu.pse.beast.codearea.codeinput;
 // * visible in the given JTextPane. It is used by the class CodeInputHandler.
 // * One of its main functions is to make sure locked lines dont get changed.
 // * It also uses several other classes to provide functionallity such as
-// * closing brackets and insert newlines
+// * closing brackets and insert newlines.
+// *
 // * @author Holger Klein
 // */
 //public class UserInsertToCode implements CaretListener, StoppedTypingContinuouslyListener {
@@ -67,15 +68,17 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * inserts a line break at the current caret position. Depending on the
+//     * Inserts a line break at the current caret position. Depending on the
 //     * position, this can have different effects. Between two curly braces,
 //     * it will add two line breaks:
 //     * {|} <-- before, the | represents the caret
 //     * {
 //     *     | <---after
 //     * }
+//     *
 //     * @throws BadLocationException should never happen since the line break
-//     * gets added at the caret position which should be valid
+//     *                              gets added at the caret position which
+//     *                              should be valid
 //     */
 //    public void insertNewline() throws BadLocationException {
 //        currentInserter.insertNewlineAtCurrentPosition(pane, tabInserter,
@@ -85,8 +88,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * inserts the given string at the current caret position unless it is in
-//     * a locked line
+//     * Inserts the given string at the current caret position unless it is in
+//     * a locked line.
+//     *
 //     * @param string the string to be inserted
 //     */
 //    public void insertString(String string) {
@@ -116,8 +120,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * removes a tab at the current caret position of the line isnt locked and
-//     * there are only spaces left of the caret position in the line
+//     * Removes a tab at the current caret position of the line isnt locked and
+//     * there are only spaces left of the caret position in the line.
+//     *
 //     * @throws BadLocationException
 //     */
 //    public void removeTab() throws BadLocationException {
@@ -138,7 +143,8 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * inserts a tab at the current position of the line isnt locked
+//     * Inserts a tab at the current position of the line is not locked.
+//     *
 //     * @throws BadLocationException
 //     */
 //    public void insertTab() throws BadLocationException {
@@ -163,9 +169,10 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * inserts the given char at the current caret position if the line isnt locked.
+//     * Inserts the given char at the current caret position if the line is not locked.
 //     * if the char has a corresponding closing char, such as { having }, the
-//     * corresponding closing char is also inserted
+//     * corresponding closing char is also inserted.
+//     *
 //     * @param insertChar the char to be inserted
 //     * @throws BadLocationException
 //     */
@@ -192,7 +199,8 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * lock the supplied line from editing
+//     * Lock the supplied line from editing.
+//     *
 //     * @param line the line to be locked, starting at 0
 //     */
 //    public void lockLine(int line) {
@@ -201,7 +209,8 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * unlocks the supplied line from editing
+//     * Unlocks the supplied line from editing.
+//     *
 //     * @param line the line to be unlocked, starting at 0
 //     */
 //    public void unlockLine(int line) {
@@ -210,8 +219,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * returns the first locked lines number. If no line is locked, an exception is
-//     * thrown
+//     * Returns the first locked lines number. If no line is locked, an
+//     * exception is thrown.
+//     *
 //     * @return The first line which is locked
 //     */
 //    public int getFirstLockedLine() {
@@ -225,8 +235,8 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * changes the current caret position so it is at the end of the line it is currently
-//     * one
+//     * Changes the current caret position so it is at the end of the line it
+//     * is currently one.
 //     */
 //    public void moveToEndOfCurrentLine() {
 //        int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, currentCaretPosition);
@@ -234,8 +244,8 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //     /**
-//     * changes the current caret position so it is at the beginning of the line it is currently
-//     * one
+//      * Changes the current caret position so it is at the beginning of the
+//     *  line it is currently one.
 //     */
 //    public void moveToStartOfCurrentLine() {
 //        int dist = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, currentCaretPosition);
@@ -243,9 +253,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * removes one char to the right of the current caret position if it doesnt
+//     * Removes one char to the right of the current caret position if it does not
 //     * change a locked line. If more text is selected, all the selected text gets
-//     * removed instead
+//     * removed instead.
 //     */
 //    public void removeToTheRight() {
 //        if (selectionIncludesLockedLines()) return;
@@ -296,9 +306,9 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * removes one char to the left of the current caret position if it doesnt
+//     * Removes one char to the left of the current caret position if it does not
 //     * change a locked line. If more text is selected, all the selecte text gets
-//     * removed instead
+//     * removed instead.
 //     */
 //    public void removeToTheLeft() {
 //        if(selectionIncludesLockedLines()) return;
@@ -375,7 +385,8 @@ package edu.pse.beast.codearea.codeinput;
 //    }
 //
 //    /**
-//     * updates the whole pane to the newest description
+//     * Updates the whole pane to the newest description.
+//     *
 //     * @param code the code that will be shown in the editor
 //     * @throws BadLocationException
 //     */

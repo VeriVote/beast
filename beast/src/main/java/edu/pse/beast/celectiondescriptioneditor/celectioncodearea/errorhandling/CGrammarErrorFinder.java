@@ -26,7 +26,7 @@ public final class CGrammarErrorFinder
     private final CAntlrHandler antlrHandler;
 
     /** The errors. */
-    private final ArrayList<CodeError> errors = new ArrayList<>();
+    private final ArrayList<CodeError> errors = new ArrayList<CodeError>();
 
     /**
      * Constructor.

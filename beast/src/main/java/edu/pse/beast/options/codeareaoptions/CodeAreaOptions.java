@@ -27,21 +27,21 @@ package edu.pse.beast.options.codeareaoptions;
 //        super("codearea_opts");
 //        String fonts[] =
 //            GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-//        ArrayList<String> possibleFonts = new ArrayList<>();
+//        ArrayList<String> possibleFonts = new ArrayList<String>();
 //        for (int i = 0; i < fonts.length; i++) {
 //            String font = fonts[i];
 //            possibleFonts.add(font);
 //        }
 //        fontType = new FontTypeOptionElement(possibleFonts, loader.getStringFromID("fonttype"));
 //
-//        ArrayList<String> possibleSizes = new ArrayList<>();
+//        ArrayList<String> possibleSizes = new ArrayList<String>();
 //        for (int i = 5; i < 30; i++) {
 //            possibleSizes.add(String.valueOf(i));
 //        }
 //
 //        fontSize = new FontSizeOptionElement(possibleSizes, loader.getStringFromID("fontsize"));
 //
-//        ArrayList<String> possibleTabSizes = new ArrayList<>();
+//        ArrayList<String> possibleTabSizes = new ArrayList<String>();
 //        for (int i = 2; i < 30; i++) {
 //            possibleTabSizes.add(String.valueOf(i));
 //        }
@@ -59,21 +59,21 @@ package edu.pse.beast.options.codeareaoptions;
 //        super("codearea_opts");
 //        String fonts[] =
 //            GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-//        ArrayList<String> possibleFonts = new ArrayList<>();
+//        ArrayList<String> possibleFonts = new ArrayList<String>();
 //        for (int i = 0; i < fonts.length; i++) {
 //            String font = fonts[i];
 //            possibleFonts.add(font);
 //        }
 //        fontType = new FontTypeOptionElement(possibleFonts, "Arial");
 //
-//        ArrayList<String> possibleSizes = new ArrayList<>();
+//        ArrayList<String> possibleSizes = new ArrayList<String>();
 //        for (int i = 5; i < 30; i++) {
 //            possibleSizes.add(String.valueOf(i));
 //        }
 //
 //        fontSize = new FontSizeOptionElement(possibleSizes, "12");
 //
-//        ArrayList<String> possibleTabSizes = new ArrayList<>();
+//        ArrayList<String> possibleTabSizes = new ArrayList<String>();
 //        for (int i = 2; i < 30; i++) {
 //            possibleTabSizes.add(String.valueOf(i));
 //        }

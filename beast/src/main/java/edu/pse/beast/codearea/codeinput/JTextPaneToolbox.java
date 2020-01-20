@@ -162,7 +162,7 @@ public final class JTextPaneToolbox {
                                                      final int end)
                                                              throws BadLocationException {
         int startingline = transformToLineNumber(pane, start);
-        ArrayList<Integer> lines = new ArrayList<>();
+        ArrayList<Integer> lines = new ArrayList<Integer>();
         lines.add(startingline);
         String code = getText(pane);
         int s = start;

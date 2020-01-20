@@ -8,8 +8,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //import edu.pse.beast.toolbox.ToolbarHandler;
 //
 ///**
-// * creates and updates the toolbar of a celectiondescriptioneditor. It also
-// * links the useractions to the buttons
+// * Creates and updates the toolbar of a C election description editor. It also
+// * links the user actions to the buttons.
 // *
 // * @author Holger Klein
 // */
@@ -18,7 +18,8 @@ package edu.pse.beast.celectiondescriptioneditor;
 //    private final CCodeEditorWindow cgui;
 //
 //    /**
-//     * constructor
+//     * Constructor.
+//     *
 //     * @param actionIdAndListener the listener
 //     * @param imageRes the image provider
 //     * @param stringif the string interface

@@ -13,7 +13,7 @@ package edu.pse.beast.codearea.autocompletion;
 // * This class represents an auto completion option. Once the user chooses a
 // * specific option, this class will insert its insert string into the given
 // * JTextPane. It also provides functionality to move the caret position
-// * afterwards
+// * afterwards.
 // *
 // * @author Holger Klein
 // */
@@ -48,8 +48,8 @@ package edu.pse.beast.codearea.autocompletion;
 //    }
 //
 //    /**
-//     * inserts the given string, char by char, into the insert-to-code thus
-//     * ensuring that all chars are entered correctly
+//     * Inserts the given string, char by char, into the insert-to-code thus
+//     * ensuring that all chars are entered correctly.
 //     *
 //     * @param pane the pane in which the string will be inserted
 //     * @param caretPosition the caretposition at which the string should be

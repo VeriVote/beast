@@ -15,7 +15,9 @@ import org.junit.Test;
  * @author Holger Klein
  */
 public class OpenCloseCharListTest {
-
+    /**
+     * Instantiates a new open close char list test.
+     */
     public OpenCloseCharListTest() {
     }
 

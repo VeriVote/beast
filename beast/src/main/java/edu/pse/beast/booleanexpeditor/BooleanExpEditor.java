@@ -41,8 +41,8 @@ package edu.pse.beast.booleanexpeditor;
 //    private final CElectionDescriptionEditor cEditor;
 //    private boolean loadedFromPropertyList;
 //    private final FileChooser fileChooser;
-//    private final ArrayList<UserAction> userActions = new ArrayList<>();
-//    private final ArrayList<Character> userActionChars = new ArrayList<>();
+//    private final ArrayList<UserAction> userActions = new ArrayList<UserAction>();
+//    private final ArrayList<Character> userActionChars = new ArrayList<Character>();
 //    private ObjectRefsForBuilder objectRefsForBuilder;
 //    private PropertyList propertyListController;
 //

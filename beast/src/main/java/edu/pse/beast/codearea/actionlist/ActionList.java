@@ -13,13 +13,14 @@ import edu.pse.beast.codearea.actionadder.ActionlistListener;
 public class ActionList {
 
     /** The last performed. */
-    private final ArrayList<Action> lastPerformed = new ArrayList<>();
+    private final ArrayList<Action> lastPerformed = new ArrayList<Action>();
 
     /** The last undone. */
-    private final ArrayList<Action> lastUndone = new ArrayList<>();
+    private final ArrayList<Action> lastUndone = new ArrayList<Action>();
 
     /** The listener. */
-    private final ArrayList<ActionlistListener> listener = new ArrayList<>();
+    private final ArrayList<ActionlistListener> listener =
+            new ArrayList<ActionlistListener>();
 
     /**
      * Instantiates a new action list.

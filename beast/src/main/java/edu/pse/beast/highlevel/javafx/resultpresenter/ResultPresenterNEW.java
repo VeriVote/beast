@@ -34,7 +34,7 @@ public final class ResultPresenterNEW {
     private final ScrollPane resultScrollPane;
 
     /** The result. */
-    private Result result = null;
+    private Result result;
 
     /**
      * Instantiates a new result presenter NEW.
@@ -44,7 +44,7 @@ public final class ResultPresenterNEW {
                 GUIController.getController().getResultScrollPane();
 
         GUIController.getController().getZoomSlider().valueProperty()
-                .addListener(new ChangeListener<>() {
+                .addListener(new ChangeListener<Number>() {
                     @Override
                     public void changed(final ObservableValue<? extends Number> observable,
                                         final Number oldValue, final Number newValue) {

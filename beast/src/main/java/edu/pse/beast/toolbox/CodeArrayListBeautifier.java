@@ -55,7 +55,7 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * adds another tab to the indenting. If you add another String after this
+     * Adds another tab to the indenting. If you add another String after this
      * it will be indented one more time
      */
     public void addTab() {

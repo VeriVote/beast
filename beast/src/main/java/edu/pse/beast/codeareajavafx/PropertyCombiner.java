@@ -29,10 +29,10 @@ public class PropertyCombiner extends TabClass {
     private final String fileExtensionDescription;
 
     /** The has save file. */
-    private boolean hasSaveFile = false;
+    private boolean hasSaveFile;
 
     /** The save file. */
-    private File saveFile = null;
+    private File saveFile;
 
     /**
      * The constructor.
@@ -175,8 +175,7 @@ public class PropertyCombiner extends TabClass {
                      final NewPropertyCodeArea postCodeArea) {
         try {
             FileInputStream fis = new FileInputStream(toLoadFrom);
-            DataInputStream dis = new DataInputStream(fis);
-            String newText = dis.readUTF();
+            final String newText = new DataInputStream(fis).readUTF();
             fis.close();
             preCodeArea.deleteText(0, preCodeArea.getLength());
             postCodeArea.deleteText(0, postCodeArea.getLength());

@@ -42,7 +42,7 @@ public final class WindowsOStoolbox {
             String searchTerm = "Microsoft Visual Studio";
             String pathToBatch = "/Common7/Tools/VsDevCmd.bat";
 
-            ArrayList<String> toSearch = new ArrayList<>();
+            ArrayList<String> toSearch = new ArrayList<String>();
             Files.list(x86).filter(Files::isReadable)
                     .filter(path -> path.toString().contains(searchTerm))
                     .forEach(VSPath -> toSearch.add(VSPath.toString()));

@@ -19,6 +19,9 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public class FormalPropertySyntaxTreeToAstTranslaterTest {
+    /**
+     * Instantiates a new formal property syntax tree to ast translater test.
+     */
     public FormalPropertySyntaxTreeToAstTranslaterTest() {
     }
 
@@ -38,6 +41,9 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     public void tearDown() {
     }
 
+    /**
+     * Test create AST comparison.
+     */
     @Test
     public void testCreateASTComparison() {
         new FormalPropertySyntaxTreeToAstTranslator();
@@ -62,6 +68,9 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
         declaredVar = new BooleanExpScope();
     }
 
+    /**
+     * Test create AST.
+     */
     @Test
     public void testCreateAST() {
         String exp
