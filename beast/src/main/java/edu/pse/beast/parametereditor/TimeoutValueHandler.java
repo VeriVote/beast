@@ -20,12 +20,13 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 public final class TimeoutValueHandler implements ChangeListener, ActionListener {
     /** The Constant ONE. */
     private static final int ONE = 1;
-
     /** The Constant TWO. */
     private static final int TWO = 2;
-
     /** The Constant THREE. */
     private static final int THREE = 3;
+
+    /** The Constant ERR_MSG. */
+    private static final String ERR_MSG = "Timeout cannot be set to this value.";
 
     /** The timeout spinner. */
     private final JSpinner timeoutSpinner;
@@ -123,8 +124,7 @@ public final class TimeoutValueHandler implements ChangeListener, ActionListener
                 timeoutUnit.setSelectedIndex(THREE);
                 break;
             default:
-                System.err.println("Timeout kann nicht auf diesen"
-                                    + " Wert gesetzt werden.");
+                System.err.println(ERR_MSG);
                 break;
             }
             timeoutBefore = getTimeout();
@@ -148,8 +148,7 @@ public final class TimeoutValueHandler implements ChangeListener, ActionListener
                 timeoutUnit.setSelectedIndex(THREE);
                 break;
             default:
-                System.err.println("Timeout kann nicht auf diesen"
-                                    + " Wert gesetzt werden.");
+                System.err.println(ERR_MSG);
                 break;
             }
         }

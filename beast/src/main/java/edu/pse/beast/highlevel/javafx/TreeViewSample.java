@@ -27,6 +27,13 @@ import javafx.util.Callback;
  * @author Lukas Stapelbroek
  */
 public final class TreeViewSample extends Application {
+    /** The Constant SALES_DEPARTMENT. */
+    private static final String SALES_DEPARTMENT = "Sales Department";
+    /** The Constant IT_SUPPORT. */
+    private static final String IT_SUPPORT = "IT Support";
+    /** The Constant ACCOUNTS_DEPARTMENT. */
+    private static final String ACCOUNTS_DEPARTMENT = "Accounts Department";
+
     /** The Constant ROOT. */
     private static final String ROOT = "root.png";
 
@@ -44,17 +51,17 @@ public final class TreeViewSample extends Application {
     /** The employees. */
     private List<Employee> employees =
             Arrays.<Employee>asList(
-                    new Employee("Ethan Williams", "Sales Department"),
-                    new Employee("Emma Jones", "Sales Department"),
-                    new Employee("Michael Brown", "Sales Department"),
-                    new Employee("Anna Black", "Sales Department"),
-                    new Employee("Rodger York", "Sales Department"),
-                    new Employee("Susan Collins", "Sales Department"),
-                    new Employee("Mike Graham", "IT Support"),
-                    new Employee("Judy Mayer", "IT Support"),
-                    new Employee("Gregory Smith", "IT Support"),
-                    new Employee("Jacob Smith", "Accounts Department"),
-                    new Employee("Isabella Johnson", "Accounts Department")
+                    new Employee("Ethan Williams", SALES_DEPARTMENT),
+                    new Employee("Emma Jones", SALES_DEPARTMENT),
+                    new Employee("Michael Brown", SALES_DEPARTMENT),
+                    new Employee("Anna Black", SALES_DEPARTMENT),
+                    new Employee("Rodger York", SALES_DEPARTMENT),
+                    new Employee("Susan Collins", SALES_DEPARTMENT),
+                    new Employee("Mike Graham", IT_SUPPORT),
+                    new Employee("Judy Mayer", IT_SUPPORT),
+                    new Employee("Gregory Smith", IT_SUPPORT),
+                    new Employee("Jacob Smith", ACCOUNTS_DEPARTMENT),
+                    new Employee("Isabella Johnson", ACCOUNTS_DEPARTMENT)
                     );
 
     /** The root node. */

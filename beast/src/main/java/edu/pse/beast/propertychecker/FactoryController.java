@@ -17,9 +17,15 @@ import edu.pse.beast.toolbox.TimeOutNotifier;
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public final class FactoryController implements Runnable {
-
     /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;
+
+    /** The Constant ERROR_MSG. */
+    private static final String ERROR_MSG =
+            "Was interrupted while waiting for the last processes "
+            + "to finish \n"
+            + "The waiting will still continue. To stop the factory "
+            + "properly, call \"stopChecking()\" !";
 
     /**
      * Gives access to the factory controller for the shutdown hook.
@@ -355,11 +361,7 @@ public final class FactoryController implements Runnable {
             try {
                 Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
-                ErrorLogger.log(
-                        "Was interrupted while waiting for the last processes "
-                                + "to finish \n"
-                                + "The waiting will still continue. To stop the factory "
-                                + "properly, call \"stopChecking()\" !");
+                ErrorLogger.log(ERROR_MSG);
             }
         }
 
@@ -368,11 +370,7 @@ public final class FactoryController implements Runnable {
             try {
                 Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
-                ErrorLogger.log(
-                        "Was interrupted while waiting for the last processes "
-                                + "to finish \n"
-                                + "The waiting will still continue. To stop the factory "
-                                + "properly, call \"stopChecking()\" !");
+                ErrorLogger.log(ERROR_MSG);
             }
         }
 

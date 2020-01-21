@@ -50,9 +50,10 @@ public final class MainApplicationClass extends Application {
     private static final String RESOURCE =
             "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
 
-    /** The Constant RESOURCE_BUNDLE. */
     // private static final String RESOURCE =
-    // "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+    //        "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+
+    /** The Constant RESOURCE_BUNDLE. */
     private static final String RESOURCE_BUNDLE =
             // "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
             "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
@@ -91,7 +92,7 @@ public final class MainApplicationClass extends Application {
         try {
             GUIController controller = new GUIController(mainStage);
             FXMLLoader loader = new FXMLLoader(
-                    new URL("file:///" + SuperFolderFinder.getSuperFolder()
+                    new URL(FILE_STRING + SuperFolderFinder.getSuperFolder()
                             + RESOURCE),
                     ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
             loader.setController(controller);

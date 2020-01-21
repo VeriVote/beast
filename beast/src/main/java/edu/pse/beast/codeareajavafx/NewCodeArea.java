@@ -1,5 +1,37 @@
 package edu.pse.beast.codeareajavafx;
 
+import static edu.pse.beast.toolbox.CCodeHelper.AUTO;
+import static edu.pse.beast.toolbox.CCodeHelper.BREAK;
+import static edu.pse.beast.toolbox.CCodeHelper.CASE;
+import static edu.pse.beast.toolbox.CCodeHelper.CHAR;
+import static edu.pse.beast.toolbox.CCodeHelper.CONST;
+import static edu.pse.beast.toolbox.CCodeHelper.CONTINUE;
+import static edu.pse.beast.toolbox.CCodeHelper.DEFAULT;
+import static edu.pse.beast.toolbox.CCodeHelper.DO;
+import static edu.pse.beast.toolbox.CCodeHelper.DOUBLE;
+import static edu.pse.beast.toolbox.CCodeHelper.ELSE;
+import static edu.pse.beast.toolbox.CCodeHelper.ENUM;
+import static edu.pse.beast.toolbox.CCodeHelper.EXTERN;
+import static edu.pse.beast.toolbox.CCodeHelper.FLOAT;
+import static edu.pse.beast.toolbox.CCodeHelper.FOR;
+import static edu.pse.beast.toolbox.CCodeHelper.GOTO;
+import static edu.pse.beast.toolbox.CCodeHelper.IF;
+import static edu.pse.beast.toolbox.CCodeHelper.INT;
+import static edu.pse.beast.toolbox.CCodeHelper.LONG;
+import static edu.pse.beast.toolbox.CCodeHelper.REGISTER;
+import static edu.pse.beast.toolbox.CCodeHelper.RETURN;
+import static edu.pse.beast.toolbox.CCodeHelper.SIGNED;
+import static edu.pse.beast.toolbox.CCodeHelper.SIZE_OF;
+import static edu.pse.beast.toolbox.CCodeHelper.STATIC;
+import static edu.pse.beast.toolbox.CCodeHelper.STRUCT;
+import static edu.pse.beast.toolbox.CCodeHelper.SWITCH;
+import static edu.pse.beast.toolbox.CCodeHelper.TYPE_DEF;
+import static edu.pse.beast.toolbox.CCodeHelper.UNION;
+import static edu.pse.beast.toolbox.CCodeHelper.UNSIGNED;
+import static edu.pse.beast.toolbox.CCodeHelper.VOID;
+import static edu.pse.beast.toolbox.CCodeHelper.VOLATILE;
+import static edu.pse.beast.toolbox.CCodeHelper.WHILE;
+
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
@@ -52,23 +84,43 @@ import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
  */
 public final class NewCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+    /** The Constant QUERY. */
+    private static final String QUERY = "?";
+    /** The Constant PIPE. */
+    private static final String PIPE = "|";
+
+    /** The Constant LT_SIGN. */
+    private static final String LT_SIGN = "<";
+    /** The Constant GT_SIGN. */
+    private static final String GT_SIGN = ">";
+    /** The Constant OPENING_PARENTHESES. */
+    private static final String OPENING_PARENTHESES = "(";
+    /** The Constant CLOSING_PARENTHESES. */
+    private static final String CLOSING_PARENTHESES = ")";
+
+    /** The Constant B_PATTERN. */
+    private static final String B_PATTERN = "\\b";
 
     /** The Constant TAB_SPACES. */
     private static final int TAB_SPACES = 4;
 
-    /** The Constant KEYWORDS. */
-    // TODO maybe change to generic styled area
+    /**
+     * The Constant KEYWORDS.
+     * TODO maybe change to generic styled area.
+     */
     private static final String[] KEYWORDS =
         {
-        "auto", "break", "case", "const",
-        "continue", "default", "do", "else",
-        "error", "const", "continue",
-        "default", "do", "else", "enum",
-        "extern", "for", "goto", "if",
-        "return", "signed", "sizeof",
-        "static", "struct", "switch",
-        "typedef", "union", "unsigned",
-        "volatile", "while"
+        AUTO, BREAK, CASE, CONST,
+        CONTINUE, DEFAULT, DO, ELSE,
+        "error", CONST, CONTINUE,
+        DEFAULT, DO, ELSE, ENUM,
+        EXTERN, FOR, GOTO, IF,
+        RETURN, SIGNED, SIZE_OF,
+        STATIC, STRUCT, SWITCH,
+        TYPE_DEF, UNION, UNSIGNED,
+        VOLATILE, WHILE
         };
 
     /** The Constant PREPROCESSOR. */
@@ -81,29 +133,35 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     /** The Constant DATATYPES. */
     private static final String[] DATATYPES =
         {
-        "char", "double", "enum",
-        "float", "int", "long",
-        "register", "void"
+        CHAR, DOUBLE, ENUM,
+        FLOAT, INT, LONG,
+        REGISTER, VOID
         };
 
     /** The Constant KEYWORD_PATTERN. */
     private static final String KEYWORD_PATTERN =
-            "\\b(" + String.join("|", KEYWORDS) + ")\\b";
+            B_PATTERN + OPENING_PARENTHESES
+            + String.join(PIPE, KEYWORDS)
+            + CLOSING_PARENTHESES + B_PATTERN;
 
     /** The Constant PREPROCESSOR_PATTERN. */
     private static final String PREPROCESSOR_PATTERN =
-            "\\b(" + String.join("|", PREPROCESSOR) + ")\\b";
+            B_PATTERN + OPENING_PARENTHESES
+            + String.join(PIPE, PREPROCESSOR)
+            + CLOSING_PARENTHESES + B_PATTERN;
 
     /** The Constant DATATYPE_PATTERN. */
     private static final String DATATYPE_PATTERN =
-            "\\b(" + String.join("|", DATATYPES) + ")\\b";
+            B_PATTERN + OPENING_PARENTHESES
+            + String.join(PIPE, DATATYPES)
+            + CLOSING_PARENTHESES + B_PATTERN;
 
     /** The Constant POINTER_PATTERN. */
     private static final String POINTER_PATTERN =
-            "\\b("
-            + String.join("|", Arrays.stream(DATATYPES)
+            B_PATTERN + OPENING_PARENTHESES
+            + String.join(PIPE, Arrays.stream(DATATYPES)
                     .map(s -> "\\*[\\s]*" + s).toArray(String[]::new))
-            + ")\\b";
+            + CLOSING_PARENTHESES + B_PATTERN;
 
     /** The Constant METHOD_PATTERN. */
     private static final String METHOD_PATTERN =
@@ -131,7 +189,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
 
     /** The Constant COMMENT_PATTERN. */
     private static final String COMMENT_PATTERN =
-            "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
+            "//[^\n]*" + PIPE + "/\\*(.|\\R)*?\\*/";
 
     /** The Constant KEYWORD_STRING. */
     private static final String KEYWORD_STRING = "KEYWORD";
@@ -171,30 +229,42 @@ public final class NewCodeArea extends AutoCompletionCodeArea
 
     /** The Constant PATTERN. */
     private static final Pattern PATTERN = Pattern
-            .compile("(?<" + KEYWORD_STRING + ">"
-                    + KEYWORD_PATTERN + ")"
-                    + "|(?<" + PREPROCESSOR_STRING + ">"
-                    + PREPROCESSOR_PATTERN
-                    + ")" + "|(?<" + DATATYPE_STRING + ">"
-                    + DATATYPE_PATTERN
-                    + ")" + "|(?<" + POINTER_STRING + ">"
-                    + POINTER_PATTERN
-                    + ")" + "|(?<" + METHOD_STRING + ">"
-                    + METHOD_PATTERN + ")"
-                    + "|(?<" + INCLUDE_STRING + ">"
-                    + INCLUDE_PATTERN + ")"
-                    + "|(?<" + PAREN_STRING + ">"
-                    + PAREN_PATTERN + ")" + "|(?<"
-                    + BRACE_STRING + ">"
-                    + BRACE_PATTERN + ")" + "|(?<"
-                    + BRACKET_STRING + ">"
-                    + BRACKET_PATTERN + ")" + "|(?<"
-                    + SEMICOLON_STRING + ">"
-                    + SEMICOLON_PATTERN + ")" + "|(?<"
-                    + STRING_STRING + ">"
-                    + STRING_PATTERN + ")" + "|(?<"
-                    + COMMENT_STRING + ">"
-                    + COMMENT_PATTERN + ")");
+            .compile(OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + KEYWORD_STRING + GT_SIGN
+                    + KEYWORD_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + PREPROCESSOR_STRING + GT_SIGN
+                    + PREPROCESSOR_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + DATATYPE_STRING + GT_SIGN
+                    + DATATYPE_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + POINTER_STRING + GT_SIGN
+                    + POINTER_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + METHOD_STRING + GT_SIGN
+                    + METHOD_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + INCLUDE_STRING + GT_SIGN
+                    + INCLUDE_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + PAREN_STRING + GT_SIGN
+                    + PAREN_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + BRACE_STRING + GT_SIGN
+                    + BRACE_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + BRACKET_STRING + GT_SIGN
+                    + BRACKET_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + SEMICOLON_STRING + GT_SIGN
+                    + SEMICOLON_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + STRING_STRING + GT_SIGN
+                    + STRING_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + COMMENT_STRING + GT_SIGN
+                    + COMMENT_PATTERN + CLOSING_PARENTHESES);
 
     /** The Constant RESOURCE. */
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
@@ -263,8 +333,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     private int lockedBracePos;
 
     /** The spaces per tab. */
-    // private int amountTabs = 0;
     private int spacesPerTab = TAB_SPACES;
+    // private int amountTabs = 0;
 
     /** The last char. */
     private String lastChar = "";
@@ -277,7 +347,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         recommendations.addAll(Arrays.asList(KEYWORDS));
         recommendations.addAll(Arrays.asList(PREPROCESSOR));
         recommendations.addAll(Arrays.asList(DATATYPES));
-        saverLoader = new SaverLoader(".elec", "BEAST election description",
+        saverLoader = new SaverLoader(SaverLoader.ELEC_DESCR_FILE_ENDING,
+                                      "BEAST election description",
                                       this);
         ElectionDescription startElecDescription =
                 new ElectionDescription("New description", new SingleChoice(),
@@ -304,7 +375,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             } else {
                 replacement = value;
                 switch (value) {
-                case "(":
+                case OPENING_PARENTHESES:
                     replacement = "()";
                     step = -1;
                     break;
@@ -340,7 +411,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             } else if (deleteCombination.match(event)) {
                 delete(event);
             } else if (enterCombination.match(event)) {
-                lockedLineSafeInsertText("\n", false, false, null);
+                lockedLineSafeInsertText(LINE_BREAK, false, false, null);
                 consume(event);
             } else if (pasteCombination.match(event)) {
                 paste(event);
@@ -545,7 +616,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
                                         || (lockedBracePos < selectionStart)));
         if (notOverlapping
                 || (selectionEnd == lockedLineStart
-                    && (r.endsWith("\n") || backspace || delete))) {
+                    && (r.endsWith(LINE_BREAK) || backspace || delete))) {
             this.replaceText(selectionStart, selectionEnd, r);
             updateLockedLineNumber(selectionEnd, r.length() - selectionLength);
             return true;
@@ -635,7 +706,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         String toDisplay = "";
         for (CodeError codeError : codeErrors) {
             toDisplay += "line: " + codeError.getLine() + "| Message: "
-                            + codeError.getMsg() + "\n";
+                            + codeError.getMsg() + LINE_BREAK;
         }
         GUIController.setErrorText(toDisplay);
     }

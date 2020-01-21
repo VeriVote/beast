@@ -26,13 +26,19 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  *
  */
 public abstract class SystemSpecificCompilerAndExecutioner {
+    /** The Constant COMMA. */
+    private static final String COMMA = ",";
+    /** The Constant EQUALS_SIGN. */
+    private static final String EQUALS_SIGN = "=";
+
+    /** The Constant COMPILATION_ERR_MSG. */
+    private static final String COMPILATION_ERR_MSG =
+            "Could not compile the source file.";
 
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
-
     /** The Constant DATA_FILE_ENDING. */
     private static final String DATA_FILE_ENDING = ".votingdata";
-
     /** The Constant absolutePath. */
     private static final String ABSOLUTE_PATH =
             SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
@@ -60,9 +66,9 @@ public abstract class SystemSpecificCompilerAndExecutioner {
      * it on to a system specific compiler.
      */
     public SystemSpecificCompilerAndExecutioner() {
-        // clear the folder where the files that get checked get saved to,
+        // Clear the folder where the files that get checked get saved to,
         // because sometimes they
-        // persist from the last time BEAST was run
+        // persist from the last time BEAST was run.
         try {
             FileUtils.cleanDirectory(
                     new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER)
@@ -83,19 +89,19 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         dataFile = new File(pathToFileModuloEnding + DATA_FILE_ENDING);
 
         // Create two links to files, so in case an object file gets created we
-        // can delete it afterwards, too
+        // can delete it afterwards, too.
         cFile = new File(pathToFileModuloEnding + FileLoader.C_FILE_ENDING);
         objectFile = new File(pathToFileModuloEnding + FileLoader.OBJECT_FILE_ENDING);
 
         // On Windows, we have to create a .bat file, so we create a reference to
-        // the file that will be created, to delete it afterwards
+        // the file that will be created, to delete it afterwards.
         batFile = new File(pathToFileModuloEnding + FileLoader.BAT_FILE_ENDING);
 
         // On Windows, a .exe file will be created
-        // here it will be created, to delete it afterwards
+        // here it will be created, to delete it afterwards.
         exeFile = new File(pathToFileModuloEnding + FileLoader.EXE_FILE_ENDING);
 
-        // The file that gets created on Linux that can then get called later
+        // The file that gets created on Linux that can then get called later.
         outFile = new File(pathToFileModuloEnding + FileLoader.OUT_FILE_ENDING);
     }
 
@@ -150,16 +156,16 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                             );
             resultToStoreIn.setLastTmpResult(result);
             resultToStoreIn.setLastTmpResult(errors);
-            // wait for the process to finish;
+            // Wait for the process to finish;
             try {
                 process.waitFor();
-                // wait for the readers to finish reading
+                // Wait for the readers to finish reading
                 latch.await();
             } catch (InterruptedException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-            // here the compilation is done
+            // Here the compilation is done
             result = new ArrayList<String>();
             errors = new ArrayList<String>();
             Process programProcess = runWithData(pathToNewFile, dataFile);
@@ -179,10 +185,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                                         ),
                                 errors, latch, false
                                 );
-                // wait for the process to finish;
+                // Wait for the process to finish;
                 try {
                     process.waitFor();
-                    // wait for the readers to finish reading
+                    // Wait for the readers to finish reading
                     latch.await();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
@@ -192,15 +198,15 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                     String error = iterator.next();
                     System.out.println(error);
                 }
-                // here the computation is done
+                // Here the computation is done
                 // the winning candidate gets printed as a number in the last
                 // line
                 // like this:
                 // winner = x (,y, z ..) ( = if seats are selected)
                 String winner = result.get(0);
-                winner = winner.split("=")[1].replaceAll("\\s+", "");
-                if (winner.contains(",")) {
-                    String[] winnerArray = winner.split(",");
+                winner = winner.split(EQUALS_SIGN)[1].replaceAll("\\s+", "");
+                if (winner.contains(COMMA)) {
+                    String[] winnerArray = winner.split(COMMA);
                     for (int i = 0; i < winnerArray.length; i++) {
                         toReturn.add(winnerArray[i]);
                     }
@@ -208,14 +214,14 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                     toReturn.add(winner);
                 }
             } else {
-                ErrorLogger.log("Could not compile the source file");
-                // deletes the temporary file, so it does not clog up the
+                ErrorLogger.log(COMPILATION_ERR_MSG);
+                // Deletes the temporary file, so it does not clog up the
                 // filesystem
             }
             outReader.finish();
             errReader.finish();
         } else {
-            ErrorLogger.log("Could not compile the source file");
+            ErrorLogger.log(COMPILATION_ERR_MSG);
             // deletes the temporary file, so it does not clog up the filesystem
         }
         deleteFiles();

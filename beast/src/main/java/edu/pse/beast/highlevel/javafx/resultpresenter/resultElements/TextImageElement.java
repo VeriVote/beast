@@ -17,6 +17,8 @@ import edu.pse.beast.toolbox.RichTextInformation;
  * @author Lukas Stapelbroek
  */
 public class TextImageElement extends ResultImageElement {
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
 
     /** The affine transform. */
     // objects needed to calculate the size of the text
@@ -150,7 +152,7 @@ public class TextImageElement extends ResultImageElement {
      */
     private static String replaceCharacters(final String toClean) {
         // 4 spaces TODO maybe extract the tabs per spaces from the codearea
-        String replacString = toClean.replace("\t", " " + " " + " " + " ");
+        String replacString = toClean.replace("\t", BLANK + BLANK + BLANK + BLANK);
         replacString = replacString.replace("\b", "");
         replacString = replacString.replace("\f", "");
         replacString = replacString.replace("\r", "");

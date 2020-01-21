@@ -18,6 +18,8 @@ import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
  * @author Lukas Stapelbroek
  */
 public class NEWRowOfValues {
+    /** The Constant ZERO. */
+    private static final String ZERO = "0";
 
     /** The element height. */
     private double elementHeight;
@@ -105,7 +107,7 @@ public class NEWRowOfValues {
      */
     public synchronized void addColumn() {
         while (values.size() <= rowSize) {
-            values.add("0");
+            values.add(ZERO);
         }
         TextField field = new TextField(values.get(rowSize));
         field.setMinSize(elementWidth, elementHeight);
@@ -230,7 +232,7 @@ public class NEWRowOfValues {
     public void setContainer(final ElectionTypeContainer electTypeContainer) {
         this.container = electTypeContainer;
         for (int i = 0; i < values.size(); i++) {
-            checkAndInsertValue("0", i, false);
+            checkAndInsertValue(ZERO, i, false);
         }
     }
 

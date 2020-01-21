@@ -1,5 +1,7 @@
 package edu.pse.beast.types.cbmctypes.cbmcstructs;
 
+import static edu.pse.beast.toolbox.CCodeHelper.STRUCT;
+
 import java.util.Arrays;
 
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -13,12 +15,13 @@ import edu.pse.beast.types.InOutType.DataType;
  * @author Lukas Stapelbroek
  */
 public final class CBMCStruct extends ComplexType {
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+
     /** The Constant PRIME_ONE. */
     private static final int PRIME = 31;
-
     /** The Constant PRIME_TWO. */
     private static final int PRIME_TWO = 1231;
-
     /** The Constant PRIME_THREE. */
     private static final int PRIME_THREE = 1237;
 
@@ -91,17 +94,20 @@ public final class CBMCStruct extends ComplexType {
 
     @Override
     public String getStructDefinition() {
-        String sign = "";
+        final String sign;
         if (inOutType.isDataTypeUnsigned()) {
-            sign = "unsigned ";
+            sign = "unsigned" + BLANK;
+        } else {
+            sign = "";
         }
-        return "struct " + structName + " { " + sign + inOutType.getDataType()
-                + " " + UnifiedNameContainer.getStructValueName()
+        return STRUCT + BLANK + structName + BLANK
+                + "{" + BLANK + sign + inOutType.getDataType()
+                + BLANK + UnifiedNameContainer.getStructValueName()
                 + inOutType.getDimensionDescriptor(true) + ";};";
     }
 
     @Override
     public String getStructAccess() {
-        return "struct " + structName;
+        return STRUCT + BLANK + structName;
     }
 }

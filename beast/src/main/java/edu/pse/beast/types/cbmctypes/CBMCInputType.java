@@ -14,9 +14,18 @@ import edu.pse.beast.types.InputType;
  * @author Lukas Stapelbroek
  */
 public abstract class CBMCInputType extends InputType {
-
     /** The Constant INT_LENGTH. */
     protected static final int INT_LENGTH = 32;
+
+    /** The Constant COLON. */
+    private static final String COLON = ":";
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+
+    /** The Constant OPENING_BRACES. */
+    private static final String OPENING_BRACES = "{";
+    /** The Constant CLOSING_BRACES. */
+    private static final String CLOSING_BRACES = "}";
 
     /**
      * The constructor.
@@ -66,17 +75,17 @@ public abstract class CBMCInputType extends InputType {
         code.add("");
         code.add("assume(0 <= changed);");
         code.add("assume(changed <= 1);");
-        code.add("if(changed) {");
+        code.add("if(changed)" + BLANK + OPENING_BRACES);
         // we changed one vote, so we keep track of it
         code.add("pos_diff++;");
         code.add("assume(" + newVotesNameAcc
                 + " != " + origVotesNameAcc + ");");
-        code.add("} else {");
+        code.add(CLOSING_BRACES + BLANK + "else" + BLANK + OPENING_BRACES);
         code.addTab();
         code.add(this.setVoteValue(newVotesName,
                                    UnifiedNameContainer.getOrigVotesName(),
                                    loopVars));
-        code.add("}");
+        code.add(CLOSING_BRACES);
     }
 
     @Override
@@ -108,7 +117,7 @@ public abstract class CBMCInputType extends InputType {
             } catch (IndexOutOfBoundsException e) {
                 oneVoter = "" + voterIndex;
             }
-            oneVoter = oneVoter + ": ";
+            oneVoter = oneVoter + COLON + BLANK;
             voterIndex++;
             int partyIndex = 0;
             final List<String> list = iterator.next();
@@ -123,7 +132,7 @@ public abstract class CBMCInputType extends InputType {
                 } catch (IndexOutOfBoundsException e) {
                     oneVoter = "" + partyIndex;
                 }
-                oneVoter += ": " + voteAmount + ", ";
+                oneVoter += COLON + BLANK + voteAmount + "," + BLANK;
                 partyIndex++;
             }
             votesString += oneVoter + "\n";

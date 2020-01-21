@@ -29,6 +29,11 @@ public abstract class InOutType {
     /** The Constant ARR. */
     private static final String ARR = "arr";
 
+    /** The Constant OPENING_BRACKETS. */
+    private static final String OPENING_BRACKETS = "[";
+    /** The Constant CLOSING_BRACKETS. */
+    private static final String CLOSING_BRACKETS = "]";
+
     /**
      * The Enum DataType.
      */
@@ -236,7 +241,7 @@ public abstract class InOutType {
      * @return e.g "[content]"
      */
     private String createSquareBrackets(final String content) {
-        return "[" + content + "]";
+        return OPENING_BRACKETS + content + CLOSING_BRACKETS;
     }
 
     /**
@@ -250,7 +255,7 @@ public abstract class InOutType {
      */
     public final String accessValues(final ElectionTypeContainer electionContainer) {
         if (dimensions == 0) {
-            // zero-dimensional dataTypes are not represented by structs
+            // Zero-dimensional dataTypes are not represented by structs.
             return "";
         } else {
             return UnifiedNameContainer.getStructValueName();
@@ -305,7 +310,7 @@ public abstract class InOutType {
     public String getAccessDimensions(final List<String> filling) {
         String dimAccess = "";
         for (int i = 0; i < this.getAmountOfDimensions(); i++) {
-            dimAccess = dimAccess + "[" + filling.get(i) + "]";
+            dimAccess = dimAccess + OPENING_BRACKETS + filling.get(i) + CLOSING_BRACKETS;
         }
         return dimAccess;
     }
@@ -340,8 +345,7 @@ public abstract class InOutType {
     public abstract String otherToString();
 
     // public abstract List<String> drawResult(ResultValueWrapper wrapper,
-    // String
-    // varName);
+    //                                         String varName);
 
     /**
      * Draw result.

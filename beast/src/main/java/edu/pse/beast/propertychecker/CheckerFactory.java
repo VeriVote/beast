@@ -19,10 +19,25 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Lukas Stapelbroek
  */
 public abstract class CheckerFactory implements Runnable {
+    /** The Constant SEMICOLON. */
+    private static final String SEMICOLON = ";";
+
+    /** The Constant ELECT_DEC. */
+    private static final String ELECT_DEC = "elect\\d";
+
+    /** The Constant FINISHED_RUN. */
+    private static final String FINISHED_RUN = "finished run ";
+    /** The Constant FOR_MARGIN. */
+    private static final String FOR_MARGIN = " for margin ";
+    /** The Constant RESULT_IS. */
+    private static final String RESULT_IS = " Result: ";
+    /** The Constant HAS_FINAL_MARGIN. */
+    private static final String HAS_FINAL_MARGIN = "finished: hasFinalMargin: ";
+    /** The Constant FINAL_MARGIN_EQUALS. */
+    private static final String FINAL_MARGIN_EQUALS = " || finalMargin = ";
 
     /** The Constant SLEEP_INTERVAL. */
     private static final long SLEEP_INTERVAL = 1000;
-
     /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;
 
@@ -106,12 +121,12 @@ public abstract class CheckerFactory implements Runnable {
     @Override
     public final void run() {
         String advanced = parameter.getArgument();
-        String[] toTrim = advanced.split(";");
+        String[] toTrim = advanced.split(SEMICOLON);
         for (int i = 0; i < toTrim.length; i++) {
             // remove all white spaces so they do not interfere later
             toTrim[i] = toTrim[i].trim();
         }
-        advanced = String.join(";", advanced.split(";"));
+        advanced = String.join(SEMICOLON, advanced.split(SEMICOLON));
         int numVotes = parameter.getMarginVotes();
         int numCandidates = parameter.getMarginCandidates();
         int numSeats = parameter.getMarginSeats();
@@ -135,28 +150,28 @@ public abstract class CheckerFactory implements Runnable {
             break;
         }
 
-        // if the correct flags for the result object have not been set yet, we
-        // set them
+        // If the correct flags for the result object have not been set yet, we
+        // set them.
         if (!finished && !stopped) {
             finished = true;
             if (lastResult != null) {
                 if (!result.isFinished()) {
-                    // we got here without any verification fails, so the
-                    // property is fulfilled
+                    // We got here without any verification fails, so the
+                    // property is fulfilled.
                     result.setSuccess();
                     result.setValid();
                     result.setFinished();
                 } else {
                     ErrorLogger.log(
                             "The Result Object indicated a finished check, even though the "
-                                    + "CheckerFactory was still running");
+                                    + "CheckerFactory was still running.");
                 }
             } else {
                 ErrorLogger.log("The last result was null! (CheckerFactory)");
             }
         }
-        // give the implementation of this class the chance to clean up after
-        // itself
+        // Give the implementation of this class the chance to clean up after
+        // itself.
         cleanUp();
         controller.notifyThatFinished(this);
     }
@@ -188,9 +203,9 @@ public abstract class CheckerFactory implements Runnable {
                                                       res.getPropertyDesctiption(),
                                                       advanced, voters, candidates,
                                                       seats, this, res);
-                            // check if the creation was successful
+                            // Check if the creation was successful
                             if (currentlyRunning == null) {
-                                // the process creation failed
+                                // The process creation failed
                                 stopped = true;
                                 res.setFinished();
                                 res.setError(
@@ -205,21 +220,21 @@ public abstract class CheckerFactory implements Runnable {
                         res.setFinished();
                         break outerLoop;
                     } else {
-                        // if it got started normally
+                        // If it got started normally
                         // the checker finished checking for these specific
                         // parameters without being stopped and
                         // without a failure from the outside
                         // set currentlyRunnign to null, so we can
-                        // catch, if the process creation failed
+                        // catch, if the process creation failed.
                         currentlyRunning = null;
-                        // if the last check was successful, we have to
-                        // keep checking the other ones
+                        // If the last check was successful, we have to
+                        // keep checking the other ones.
 
                         if (res.checkAssertionSuccess()) {
                             finished = false;
                         } else {
-                            // this was not successful for some reason, so stop
-                            // now
+                            // This was not successful for some reason, so stop
+                            // now.
                             finished = true;
                             if (res.checkAssertionFailure()) {
                                 res.setNumVoters(voters);
@@ -244,10 +259,10 @@ public abstract class CheckerFactory implements Runnable {
      * Busy waiting.
      */
     private void busyWaiting() {
-        // wait until we get stopped or the checker finished
+        // Wait until we get stopped or the checker finished.
         while (!finished && !stopped) {
             try {
-                // polling in 1 second steps to save CPU time
+                // Polling in 1 second steps to save CPU time.
                 Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
                 ErrorLogger
@@ -289,7 +304,7 @@ public abstract class CheckerFactory implements Runnable {
                 ElectionSimulationData origResult =
                         new ElectionSimulationData(
                                 numVoters, numCandidates, numSeats,
-                                res.readVariableValue("elect\\d").get(0)
+                                res.readVariableValue(ELECT_DEC).get(0)
                                 );
                 int left = 0;
                 int right = parameter.getNumVotingPoints();
@@ -312,11 +327,11 @@ public abstract class CheckerFactory implements Runnable {
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
                                        numCandidates, numSeats, origData, res);
                     res.setResult(currentlyRunning.getResultList());
-                    res.addStatusString("finished run " + currentRun
-                                        + " for margin " + margin + " Result: "
+                    res.addStatusString(FINISHED_RUN + currentRun
+                                        + FOR_MARGIN + margin + RESULT_IS
                                         + res.checkAssertionSuccess());
-                    System.out.println("finished run " + currentRun
-                                        + " for margin " + margin + " Result: "
+                    System.out.println(FINISHED_RUN + currentRun
+                                        + FOR_MARGIN + margin + RESULT_IS
                                         + res.checkAssertionSuccess());
                     currentRun++;
                     if (res.checkAssertionSuccess()) {
@@ -341,10 +356,10 @@ public abstract class CheckerFactory implements Runnable {
                 }
                 // hasMargin now is true, if there is an upper bound,
                 // and false, if there is no margin
-                System.out.println("finished: hasFinalMargin: " + hasMargin
-                                    + " || finalMargin = " + margin);
-                res.addStatusString("finished: hasFinalMargin: " + hasMargin
-                                    + " || finalMargin = " + margin);
+                System.out.println(HAS_FINAL_MARGIN + hasMargin
+                                    + FINAL_MARGIN_EQUALS + margin);
+                res.addStatusString(HAS_FINAL_MARGIN + hasMargin
+                                    + FINAL_MARGIN_EQUALS + margin);
                 res.setMarginComp(true);
                 res.setHasFinalMargin(hasMargin);
                 res.setOrigWinner(origResult);
@@ -403,7 +418,7 @@ public abstract class CheckerFactory implements Runnable {
                          final Result res) {
         synchronized (this) {
             if (!stopped) {
-                // determine the winner of this input of votes
+                // Determine the winner of this input of votes
                 currentlyRunning =
                         startProcessTest(electionDesc,
                                          res.getPropertyDesctiption(),
@@ -414,14 +429,14 @@ public abstract class CheckerFactory implements Runnable {
                 // CBMCResult dummyResult = new CBMCResult();
                 // List<String> origResult = new ArrayList<String>();
                 // origResult =
-                // getElectionDescription().getContainer().getOutputType()
-                // .getCodeToRunMargin(origResult, lastResult);
+                //     getElectionDescription().getContainer().getOutputType()
+                //         .getCodeToRunMargin(origResult, lastResult);
                 //
                 System.out.println("add namecontainer CHECKERFACTORY");
                 ElectionSimulationData origResult =
                         new ElectionSimulationData(
                                 numVoters, numCandidates, numSeats,
-                                res.readVariableValue("elect\\d").get(0)
+                                res.readVariableValue(ELECT_DEC).get(0)
                                 );
                 int left = 0;
                 // how many votes we have
@@ -466,13 +481,13 @@ public abstract class CheckerFactory implements Runnable {
                 }
                 // hasMargin now is true, if there is an upper bound,
                 // and false, if there is no margin
-                System.out.println("finished: hasFinalMargin: " + hasMargin
-                                    + " || finalMargin = " + margin);
+                System.out.println(HAS_FINAL_MARGIN + hasMargin
+                                    + FINAL_MARGIN_EQUALS + margin);
                 res.setMarginComp(true);
                 res.setHasFinalMargin(hasMargin);
                 res.setOrigWinner(origResult);
                 // result.setOrigVoting(GUIController.getController()
-                // .getElectionSimulation().getVotingDataListofList());
+                //     .getElectionSimulation().getVotingDataListofList());
                 res.setOrigVoting(GUIController.getController()
                         .getElectionSimulation().getVotingData());
                 if (hasMargin) {
@@ -488,14 +503,14 @@ public abstract class CheckerFactory implements Runnable {
                 ElectionSimulationData newResult;
                 if (hasMargin) {
                     // newResult =
-                    // getElectionDescription().getContainer().getOutputType()
-                    // .getNewResult(lastFailedRun, 0);
+                    //     getElectionDescription().getContainer().getOutputType()
+                    //         .getNewResult(lastFailedRun, 0);
                     // newVotes =
-                    // getElectionDescription().getContainer().getInputType()
-                    // .getNewVotes(lastFailedRun, 0);
+                    //     getElectionDescription().getContainer().getInputType()
+                    //         .getNewVotes(lastFailedRun, 0);
                     newResult = new ElectionSimulationData(
                             numVoters, numCandidates, numSeats,
-                            res.readVariableValue("elect\\d").get(0)
+                            res.readVariableValue(ELECT_DEC).get(0)
                             );
                     newVotes = new ElectionSimulationData(
                             numVoters, numCandidates, numSeats,
@@ -510,26 +525,26 @@ public abstract class CheckerFactory implements Runnable {
 
                     System.out.println("fix output CheckerFactory");
                     // for (Iterator<List<String>> iterator =
-                    // newVotes.iterator(); iterator.hasNext();) {
-                    // int count2 = 0;
-                    // List<String> list = (List<String>) iterator.next();
-                    // System.out.println("");
-                    // System.out.print("new_votes: " + count++ + "==");
-                    // for (Iterator<String> iterator2 = list.iterator();
-                    // iterator2.hasNext();) {
-                    // String long1 = (String) iterator2.next();
-                    // System.out.print(count2++ + ":" + long1 + "|");
-                    // }
+                    //         newVotes.iterator(); iterator.hasNext();) {
+                    //     int count2 = 0;
+                    //     List<String> list = (List<String>) iterator.next();
+                    //     System.out.println("");
+                    //     System.out.print("new_votes: " + count++ + "==");
+                    //     for (Iterator<String> iterator2 = list.iterator();
+                    //             iterator2.hasNext();) {
+                    //         String long1 = (String) iterator2.next();
+                    //         System.out.print(count2++ + ":" + long1 + "|");
+                    //     }
                     // }
                     // System.out.println("");
                     // System.out.println("===========");
                     // count = 0;
                     // for (Iterator<String> iterator = newResult.iterator();
-                    // iterator.hasNext();) {
-                    // String string1 = (String) iterator.next();
-                    // System.out.println("new_result " + count + ": " +
-                    // string1);
-                    // count = count + 1;
+                    //         iterator.hasNext();) {
+                    //     String string1 = (String) iterator.next();
+                    //     System.out.println("new_result " + count + ": "
+                    //                        + string1);
+                    //     count = count + 1;
                     // }
                 }
             }

@@ -18,18 +18,25 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  */
 public final class LinuxCompilerAndRunner
         extends SystemSpecificCompilerAndExecutioner {
-    /** The Constant COMPILER_STRING. */
-    // program that is to be used for checking
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+
+    /**
+     * The Constant COMPILER_STRING: Program that is to be used
+     * for checking.
+     */
     private static final String COMPILER_STRING = "gcc";
 
-    // this flag prohibits that file are creates by the compiler and
-    /** The Constant FIND_MISSING_RETURN_OPTION. */
-    // only the syntax is checked
+    /**
+     * The Constant FIND_MISSING_RETURN_OPTION: This flag prohibits that
+     * files are creates by the compiler and only the syntax is checked.
+     */
     private static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
 
-    // we want to compile to a specific name, so we can delete the file
-    /** The Constant SET_OUTPUT_FILE_NAME. */
-    // then later on
+    /**
+     * The Constant SET_OUTPUT_FILE_NAME: We want to compile to
+     * a specific name, so we can delete the file then later on.
+     */
     private static final String SET_OUTPUT_FILE_NAME = "-o ";
 
     /** The Constant ENABLE_USER_INCLUDE. */
@@ -38,20 +45,12 @@ public final class LinuxCompilerAndRunner
     /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // we want to compile all available c files, so the user does not need to
-    /** The Constant C_FILE_ENDING. */
-    // specify anything
-    private static final String C_FILE_ENDING = ".c";
-
-    /** The Constant OUT_FILE_ENDING. */
-    private static final String OUT_FILE_ENDING = ".out";
-
     @Override
     protected Process compileCFile(final File toCheck) {
-        // the name of the file
+        // The name of the file
         final String nameOfOutFile =
-                toCheck.getName().replace(C_FILE_ENDING,
-                                          OUT_FILE_ENDING);
+                toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                          FileLoader.OUT_FILE_ENDING);
         final File outFile =
                 new File(toCheck.getParentFile(), nameOfOutFile);
         final String compileToThis =
@@ -61,29 +60,30 @@ public final class LinuxCompilerAndRunner
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
         Process startedProcess = null;
         List<String> arguments = new ArrayList<String>();
-        // add the arguments needed for the call
+        // Add the arguments needed for the call
         arguments.add(COMPILER_STRING);
         arguments.add(userIncludeAndPath);
         arguments.add(FIND_MISSING_RETURN_OPTION);
-        // add the path to the created file that should be checked
+        // Add the path to the created file that should be checked
         arguments.add(toCheck.getAbsolutePath());
-        // get all Files from the form "*.c" so we can include them into cbmc,
+        // Get all Files from the form "*.c" so we can include them into cbmc,
         final List<String> allFiles = FileLoader.listAllFilesFromFolder(
-                "\"" + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                        + "\"",
-                C_FILE_ENDING);
-        // iterate over all "*.c" files from the include folder, to include them
+                FileLoader.QUOTE + SuperFolderFinder.getSuperFolder()
+                    + USER_INCLUDE_FOLDER + FileLoader.QUOTE,
+                FileLoader.C_FILE_ENDING);
+        // Iterate over all "*.c" files from the include folder, to include them
         for (Iterator<String> iterator = allFiles.iterator();
                 iterator.hasNext();) {
             String toBeIncludedFile = iterator.next();
             arguments.add(
-                    toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
+                    toBeIncludedFile.replace(FileLoader.QUOTE, "")
+                        .replace(BLANK, "\\ "));
         }
-        // defines the position to what place the compiled files should be sent
+        // Defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);
         ProcessBuilder prossBuild =
                 new ProcessBuilder(arguments.toArray(new String[0]));
-        try { // start the process
+        try { // Start the process
             startedProcess = prossBuild.start();
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,16 +94,16 @@ public final class LinuxCompilerAndRunner
     @Override
     protected Process runWithData(final String toRun, final File dataFile) {
         Process startedProcess = null;
-        // the list where the arguments for the call get saved in
+        // The list where the arguments for the call get saved in
         List<String> arguments = new ArrayList<String>();
-        // on linux, our executable ends with .out
+        // On Linux, our executable ends with .out
         // this argument calls the generated program
-        arguments.add("./" + toRun + OUT_FILE_ENDING);
-        // the absolute path to the file that holds
+        arguments.add("./" + toRun + FileLoader.OUT_FILE_ENDING);
+        // The absolute path to the file that holds
         arguments.add(dataFile.getAbsolutePath());
         ProcessBuilder prossBuild = new ProcessBuilder(
                 arguments.toArray(new String[0]));
-        try { // start the process
+        try { // Start the process
             startedProcess = prossBuild.start();
         } catch (IOException e) {
             e.printStackTrace();

@@ -21,6 +21,22 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  */
 public class ElectionDescription {
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+    /** The Constant SEMICOLON. */
+    private static final String SEMICOLON = ";";
+    /** The Constant EQUALS_SIGN. */
+    private static final String EQUALS_SIGN = "=";
+    /** The Constant OPENING_BRACES. */
+    private static final String OPENING_BRACES = "{";
+    /** The Constant CLOSING_BRACES. */
+    private static final String CLOSING_BRACES = "}";
+    /** The Constant OPENING_BRACKET. */
+    private static final String OPENING_BRACKET = "[";
+    /** The Constant CLOSING_BRACKET. */
+    private static final String CLOSING_BRACKET = "]";
 
     /** The Constant LEN. */
     private static final int LEN = 4;
@@ -155,20 +171,20 @@ public class ElectionDescription {
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
-            forLoopEnd += "}"; // Close the for loops
+            forLoopEnd += CLOSING_BRACES; // Close the for loops
         }
         String access = "";
         for (int i = 0; i < dimensions; i++) {
-            access += "[" + loopVariables.get(i) + "]";
+            access += OPENING_BRACKET + loopVariables.get(i) + CLOSING_BRACKET;
         }
         final String assignment =
                 UnifiedNameContainer.getVotingArray() + access
-                + " = " + votesName + ".arr" + access + ";";
+                + BLANK + EQUALS_SIGN + BLANK + votesName + ".arr" + access + SEMICOLON;
         final String switchedArray =
-                " " + getContainer().getInputType().getDataTypeAndSign()
-                + " " + UnifiedNameContainer.getVotingArray()
+                BLANK + getContainer().getInputType().getDataTypeAndSign()
+                + BLANK + UnifiedNameContainer.getVotingArray()
                 + getContainer().getInputType().getDimensionDescriptor(true)
-                + ";" + forLoopStart + assignment + forLoopEnd;
+                + SEMICOLON + forLoopStart + assignment + forLoopEnd;
         String middlePart = code.substring(lockedLineEnd, lockedBracePos);
         final String thirdPart = code.substring(lockedBracePos);
         middlePart = replaceReturns(middlePart,
@@ -212,7 +228,7 @@ public class ElectionDescription {
      *            of this description
      */
     public void setCode(final List<String> codeList) {
-        this.code = String.join("\n", codeList);
+        this.code = String.join(LINE_BREAK, codeList);
     }
 
     /**
@@ -329,7 +345,7 @@ public class ElectionDescription {
      * @return the list
      */
     private static List<String> stringToList(final String toConvert) {
-        String[] split = toConvert.split("\n");
+        String[] split = toConvert.split(LINE_BREAK);
         return new ArrayList<String>(Arrays.asList(split));
     }
 
@@ -349,7 +365,7 @@ public class ElectionDescription {
      */
     private String replaceReturns(final String toProcess,
                                   final String variableName) {
-        // change this to antLR maybe
+        // Change this to antLR maybe.
         String toProc = toProcess;
         String toReturn = "";
         Pattern returnPattern = Pattern.compile("(?:\\s|^)return");
@@ -361,7 +377,7 @@ public class ElectionDescription {
                     checkIfExecutedCode(executionValues, toProc, 0,
                                         matcher.end());
             if (!checkForTrue(executionValues)) {
-                // the return statement was NOT standing in a comment block
+                // The return statement was NOT standing in a comment block
                 Tuple<String, Integer> replacement =
                         replaceSpecificReturnStatement(
                                 toProc.substring(matcher.end()),
@@ -379,8 +395,8 @@ public class ElectionDescription {
                 // if cases or similar things
                 String toInsert =
                         wrapInCurlyBraces(
-                                replacement.first() + " return "
-                                        + variableName + "; "
+                                replacement.first() + BLANK + "return" + BLANK
+                                        + variableName + SEMICOLON + BLANK
                                 );
                 // the part which was changed
                 String leadingPart = toProc.substring(0, matcher.start())
@@ -399,7 +415,7 @@ public class ElectionDescription {
                 matcher = returnPattern.matcher(trailingPart);
                 toProc = trailingPart;
             } else {
-                // we are in a comment, so we add the part to here and
+                // We are in a comment, so we add the part to here and
                 // continue on
                 toReturn += toProc.substring(0, matcher.end());
                 // add the analysed part
@@ -410,7 +426,7 @@ public class ElectionDescription {
                 toProc = trailingPart;
             }
         }
-        toReturn += toProc; // add the last parts which were not processed
+        toReturn += toProc; // Add the last parts which were not processed.
         return toReturn;
     }
 
@@ -431,7 +447,7 @@ public class ElectionDescription {
                                                final String variableName) {
         Tuple3<Boolean, Boolean, Boolean> executionValues =
                 new Tuple3<Boolean, Boolean, Boolean>(false, false, false);
-        Pattern returnPattern = Pattern.compile(";");
+        Pattern returnPattern = Pattern.compile(SEMICOLON);
         Matcher matcher = returnPattern.matcher(toProcess);
 
         // find the first ";" which is valid
@@ -449,7 +465,7 @@ public class ElectionDescription {
             // otherwise, the found ";" is not valid, so we continue
         }
         throw new RuntimeException(
-                "no fitting return found, this should not happen");
+                "No fitting return statement found, this should not happen.");
     }
 
     /**
@@ -463,8 +479,8 @@ public class ElectionDescription {
      */
     private String wrapInStruct(final String variableName,
                                 final String valueDefinition) {
-        String toReturn = container.getOutputStruct().getStructAccess() + " "
-                            + variableName + "; ";
+        String toReturn = container.getOutputStruct().getStructAccess() + BLANK
+                            + variableName + SEMICOLON + BLANK;
         int dimensions = container.getOutputType().getAmountOfDimensions();
         List<String> loopVariables = generateLoopVariables(code,
                                                            dimensions,
@@ -476,13 +492,13 @@ public class ElectionDescription {
         }
         String arrayAccess = "";
         for (int i = 0; i < dimensions; i++) {
-            arrayAccess += "[" + loopVariables.get(i) + "]";
+            arrayAccess += OPENING_BRACKET + loopVariables.get(i) + CLOSING_BRACKET;
         }
         toReturn += variableName + "."
                     + UnifiedNameContainer.getStructValueName() + arrayAccess
-                    + " = " + valueDefinition + arrayAccess + ";";
+                    + BLANK + EQUALS_SIGN + BLANK + valueDefinition + arrayAccess + SEMICOLON;
         for (int i = 0; i < dimensions; i++) {
-            toReturn += "}"; // close the for loops
+            toReturn += CLOSING_BRACES; // close the for loops
         }
         return toReturn;
     }
@@ -498,8 +514,10 @@ public class ElectionDescription {
      */
     private static String generateForLoopHeader(final String indexName,
                                                 final String maxSize) {
-        return "for (unsigned int " + indexName + " = 0; " + indexName + " < "
-                + maxSize + "; " + indexName + "++ ) { ";
+        return "for (unsigned int" + BLANK + indexName + BLANK
+                + EQUALS_SIGN + BLANK + "0" + SEMICOLON + BLANK
+                + indexName + BLANK + "<" + BLANK + maxSize + SEMICOLON + BLANK
+                + indexName + "++ )" + BLANK + OPENING_BRACES + BLANK;
     }
 
     /**
@@ -557,6 +575,10 @@ public class ElectionDescription {
     private static Tuple3<Boolean, Boolean, Boolean>
                 checkIfExecutedCode(final Tuple3<Boolean, Boolean, Boolean> prevValues,
                                     final String text, final int start, final int end) {
+        final char quote = '"';
+        final char slash = '/';
+        final char star = '*';
+
         boolean lineComment = prevValues.first();
         boolean multiComment = prevValues.second();
         boolean isText = prevValues.third();
@@ -571,15 +593,15 @@ public class ElectionDescription {
             lastCharStar = false;
             char currentChar = text.charAt(i);
             if (isText) {
-                if (currentChar == '"') {
+                if (currentChar == quote) {
                     isText = false;
                 }
             } else if (lineComment || multiComment) {
                 // we are in a commented area
-                if (currentChar == '\n') {
+                if (currentChar == LINE_BREAK.charAt(0)) {
                     lineComment = false; // a new line ends a line comment
                 }
-                if (currentChar == '/') {
+                if (currentChar == slash) {
                     if (prevLastCharStar) {
                         // */ ends a comment in c no matter what
                         lineComment = false;
@@ -588,21 +610,21 @@ public class ElectionDescription {
                         lastCharSlash = true;
                     }
                 }
-                if (currentChar == '*') {
+                if (currentChar == star) {
                     lastCharStar = true;
                 }
             } else {
-                if (currentChar == '"') {
+                if (currentChar == quote) {
                     isText = true;
                 }
-                if (currentChar == '/') {
+                if (currentChar == slash) {
                     if (prevLastCharSlash) {
                         lineComment = true;
                     } else {
                         lastCharSlash = true;
                     }
                 }
-                if (currentChar == '*') {
+                if (currentChar == star) {
                     if (prevLastCharSlash) {
                         multiComment = true;
                     } else {
@@ -636,7 +658,7 @@ public class ElectionDescription {
      * @return "{toWrap}"
      */
     private static String wrapInCurlyBraces(final String toWrap) {
-        return "{" + toWrap + "}";
+        return OPENING_BRACES + toWrap + CLOSING_BRACES;
     }
 
     /**

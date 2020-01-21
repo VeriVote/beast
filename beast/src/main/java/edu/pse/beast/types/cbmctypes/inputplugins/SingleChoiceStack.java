@@ -21,9 +21,15 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class SingleChoiceStack extends CBMCInputType {
-
+    /** The Constant ZERO. */
+    private static final String ZERO = "0";
     /** The Constant FIVE. */
     private static final int FIVE = 5;
+
+    /** The Constant OPENING_BRACES. */
+    private static final String OPENING_BRACES = "{";
+    /** The Constant CLOSING_BRACES. */
+    private static final String CLOSING_BRACES = "}";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
@@ -47,7 +53,7 @@ public final class SingleChoiceStack extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return "0";
+        return ZERO;
     }
 
     @Override
@@ -114,18 +120,18 @@ public final class SingleChoiceStack extends CBMCInputType {
             try {
                 number = Integer.parseInt(newValue);
             } catch (NumberFormatException e) {
-                return "0";
+                return ZERO;
             }
             if (number < 0
                     || number > rows.get(rowNumber).getAmountVoters()) {
-                value = "0";
+                value = ZERO;
             } else {
                 final int totalSum =
                         computeTotalSum(rows, rowNumber, positionInRow, newValue);
                 if (totalSum > rows.get(rowNumber).getAmountVoters()) {
                     // we would exceed the limit with this addition, so
                     // we reset to 0
-                    value = "0";
+                    value = ZERO;
                 } else {
                     value = newValue;
                 }
@@ -146,11 +152,11 @@ public final class SingleChoiceStack extends CBMCInputType {
         code.add("");
         code.add("assume(abs(tmp_diff) <= MARGIN);");
         code.add("assume(0 <= (" + origVotesNameAcc + " + tmp_diff));");
-        code.add("if(tmp_diff < 0) {");
+        code.add("if(tmp_diff < 0) " + OPENING_BRACES);
         code.add("");
         code.add("assume(abs(tmp_diff) <= " + origVotesNameAcc + ");");
         code.add("");
-        code.add("}");
+        code.add(CLOSING_BRACES);
         code.add(newVotesNameAcc + " = " + origVotesNameAcc + " + tmp_diff;");
         code.add("");
         code.add("pos_diff = total_diff  + abs(tmp_diff);");
@@ -161,10 +167,10 @@ public final class SingleChoiceStack extends CBMCInputType {
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
         code.add("unsigned int tmp_restr_sum = 0;");
-        code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) {");
+        code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) " + OPENING_BRACES);
         code.add("tmp_restr_sum = tmp_restr_sum + " + voteName
                 + ".arr[loop_r_0];");
-        code.add("}");
+        code.add(CLOSING_BRACES);
         code.add("assume(tmp_restr_sum <= V);");
     }
 

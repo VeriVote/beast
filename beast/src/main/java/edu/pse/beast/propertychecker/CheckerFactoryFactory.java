@@ -15,6 +15,11 @@ import edu.pse.beast.toolbox.ErrorLogger;
  * @author Lukas Stapelbroek
  */
 public final class CheckerFactoryFactory {
+    /** The Constant CBMC_STRING. */
+    private static final String CBMC_STRING = "CBMC";
+
+    /** The Constant ERROR_MSG. */
+    private static final String ERROR_MSG = "The specified checkerID was not found.";
 
     /** The factories. */
     private static Map<String, CheckerFactory> factories =
@@ -41,7 +46,7 @@ public final class CheckerFactoryFactory {
         Map<String, CheckerFactory> foundFactories =
                 new HashMap<String, CheckerFactory>();
         // cbmc is always included, so we add it here
-        foundFactories.put("CBMC",
+        foundFactories.put(CBMC_STRING,
                            new CBMCProcessFactory(null, null, null, null));
         // TODO search for other factories
         return foundFactories;
@@ -55,7 +60,7 @@ public final class CheckerFactoryFactory {
         factories = searchForCheckers();
         if (!initialized) {
             // cbmc is always included, so we add it here
-            factories.put("CBMC",
+            factories.put(CBMC_STRING,
                           new CBMCProcessFactory(null, null, null, null));
             // TODO search for other classes
             initialized = true;
@@ -83,7 +88,7 @@ public final class CheckerFactoryFactory {
         if (factories.keySet().contains(checkerID)) {
             return new PropertyChecker(checkerID);
         } else {
-            ErrorLogger.log("The specified checkerID was not found");
+            ErrorLogger.log(ERROR_MSG);
             return null;
         }
     }
@@ -151,7 +156,7 @@ public final class CheckerFactoryFactory {
             return factories.get(checkerID)
                     .getNewInstance(controller, electionDesc, result, parameter);
         } else {
-            ErrorLogger.log("The specified checkerID was not found");
+            ErrorLogger.log(ERROR_MSG);
             return null;
         }
     }
@@ -168,7 +173,7 @@ public final class CheckerFactoryFactory {
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getMatchingResult();
         } else {
-            ErrorLogger.log("The specified checkerID was not found");
+            ErrorLogger.log(ERROR_MSG);
             return null;
         }
     }

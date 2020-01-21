@@ -24,6 +24,16 @@ import edu.pse.beast.propertychecker.Result;
  * @author Jonas Wohnig
  */
 public final class BEASTCommunicator {
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+    /** The Constant DAYS_UNIT. */
+    private static final String DAYS_UNIT = "d";
+    /** The Constant HOURS_UNIT. */
+    private static final String HOURS_UNIT = "h";
+    /** The Constant MINUTES_UNIT. */
+    private static final String MINUTES_UNIT = "m";
+    /** The Constant SECONDS_UNIT. */
+    private static final String SECONDS_UNIT = "s";
 
     /** The Constant SIXTYSEVEN. */
     private static final int SIXTYSEVEN = 67;
@@ -41,94 +51,99 @@ public final class BEASTCommunicator {
     private static final double NANO_TO_SECONDS = 1000000000.0;
 
     /** The current checkers. */
-    private static List<PropertyChecker> currentCheckers = new ArrayList<PropertyChecker>();
+    private static List<PropertyChecker> currentCheckers =
+            new ArrayList<PropertyChecker>();
+
     // public static boolean startCheck() {
-    // centralObjectProvider.getResultPresenter().resetResults();
-    // ElectionDescriptionSource electSrc =
-    // centralObjectProvider.getElectionDescriptionSource();
-    // PreAndPostConditionsDescriptionSource preAndPostSrc =
-    // centralObjectProvider.getPreAndPostConditionsSource();
-    // ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
-    // CheckStatusDisplay checkStatusDisplayer =
-    // centralObjectProvider.getCheckStatusDisplay();
+    //     centralObjectProvider.getResultPresenter().resetResults();
+    //     ElectionDescriptionSource electSrc =
+    //         centralObjectProvider.getElectionDescriptionSource();
+    //     PreAndPostConditionsDescriptionSource preAndPostSrc =
+    //         centralObjectProvider.getPreAndPostConditionsSource();
+    //     ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
+    //     CheckStatusDisplay checkStatusDisplayer =
+    //         centralObjectProvider.getCheckStatusDisplay();
     //
-    // // checks if there even are any properties selected for analysis in the
-    // PreAndPostConditionsSource
-    // if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty() &&
-    // preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
-    // GUIController.setInfoText("no property selected (add string resouce
-    // loading
-    // later");
-    // checkStatusDisplayer.displayText("noProperty", false, "");
-    // return false;
+    //     // checks if there even are any properties selected for analysis in the
+    //     // PreAndPostConditionsSource
+    //     if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty()
+    //           && preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
+    //         GUIController.setInfoText("no property selected (add string resource"
+    //             + " loading later).");
+    //         checkStatusDisplayer.displayText("noProperty", false, "");
+    //         return false;
+    //     }
+    //
+    //     if (!checkForErrors(centralObjectProvider)) {
+    //         // analysis gets started by
+    //         // CheckerCommunicator.checkPropertiesForDescription() getting called
+    //         checkStatusDisplayer.displayText("startingCheck", true, "");
+    //         resultList = centralObjectProvider.getResultCheckerCommunicator()
+    //                         .checkPropertiesForDescription(electSrc, preAndPostSrc, paramSrc);
+    //
+    //         // Thread that checks for new presentable results every 50 milliseconds
+    //         Thread waitForResultsThread = new Thread(new Runnable() {
+    //             @Override
+    //             public void run() {
+    //                 // local variables for elapsed time displaying
+    //                 String timeString = "";
+    //                 long startTime = System.nanoTime();
+    //                 long elapsedTime;
+    //                 double passedTimeSeconds = 0;
+    //
+    //                 boolean[] resultPresented =
+    //                     new boolean[
+    //                         preAndPostSrc
+    //                         .getPreAndPostPropertiesDescriptionsCheckAndMargin().size()];
+    //
+    //                 int numberOfPresentedResults = 0;
+    //
+    //                 while (numberOfPresentedResults <
+    //                     preAndPostSrc
+    //                         .getPreAndPostPropertiesDescriptionsCheckAndMargin().size()) {
+    //                     elapsedTime = System.nanoTime() - startTime;
+    //                     passedTimeSeconds = (double) elapsedTime / NANO_TO_SECONDS;
+    //                     timeString = createTimeString(passedTimeSeconds);
+    //
+    //                     checkStatusDisplayer.displayText(
+    //                         "waitingForPropertyResult", true,
+    //                         preAndPostSrc
+    //                             .getPreAndPostPropertiesDescriptionsCheckAndMargin()
+    //                             .get(numberOfPresentedResults).getDescription()
+    //                             .getName()
+    //                         + "' (" + + timeString + ")");
+    //
+    //                     try {
+    //                         Thread.sleep(50);
+    //                     } catch (InterruptedException ex) {
+    //                         Logger.getLogger(BEASTCommunicator.class.getName())
+    //                             .log(Level.SEVERE, null, ex);
+    //                     }
+    //                     for (int i = 0; i < resultPresented.length; i++) {
+    //                         ResultInterface result = resultList.get(i);
+    //                         if (result.readyToPresent() && !resultPresented[i]) {
+    //                             ResultPresenter resultPresenter =
+    //                                 centralObjectProvider.getResultPresenter();
+    //                             resultPresenter.presentResult(result, i);
+    //                             resultPresented[i] = true;
+    //                             numberOfPresentedResults++;
+    //                         }
+    //                     }
+    //                 }
+    //                 resumeReacting(centralObjectProvider);
+    //                 checkStatusDisplayer.displayText("analysisEnded", false,
+    //                                                  " " + timeString);
+    //                 checkStatusDisplayer.signalThatAnalysisEnded();
+    //             }
+    //         });
+    //         waitForResultsThread.start();
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
     // }
-    //
-    // if (!checkForErrors(centralObjectProvider)) {
-    // // analysis gets started by
-    // CheckerCommunicator.checkPropertiesForDescription() getting called
-    // checkStatusDisplayer.displayText("startingCheck", true, "");
-    // resultList = centralObjectProvider.getResultCheckerCommunicator()
-    // .checkPropertiesForDescription(electSrc, preAndPostSrc, paramSrc);
-    //
-    // // Thread that checks for new presentable results every 50 milliseconds
-    // Thread waitForResultsThread = new Thread(new Runnable() {
-    // @Override
-    // public void run() {
-    // // local variables for elapsed time displaying
-    // String timeString = "";
-    // long startTime = System.nanoTime();
-    // long elapsedTime;
-    // double passedTimeSeconds = 0;
-    //
-    // boolean[] resultPresented = new
-    // boolean[preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()];
-    //
-    // int numberOfPresentedResults = 0;
-    //
-    // while (numberOfPresentedResults <
-    // preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size())
-    // {
-    // elapsedTime = System.nanoTime() - startTime;
-    // passedTimeSeconds = (double) elapsedTime / NANO_TO_SECONDS;
-    // timeString = createTimeString(passedTimeSeconds);
-    //
-    // checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-    // preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().
-    // get(numberOfPresentedResults).getDescription().getName() + "' (" +
-    // timeString
-    // + ")");
-    //
-    // try {
-    // Thread.sleep(50);
-    // } catch (InterruptedException ex) {
-    // Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE,
-    // null,
-    // ex);
-    // }
-    // for (int i = 0; i < resultPresented.length; i++) {
-    // ResultInterface result = resultList.get(i);
-    // if (result.readyToPresent() && !resultPresented[i]) {
-    // ResultPresenter resultPresenter =
-    // centralObjectProvider.getResultPresenter();
-    // resultPresenter.presentResult(result, i);
-    // resultPresented[i] = true;
-    // numberOfPresentedResults++;
-    // }
-    // }
-    // }
-    // resumeReacting(centralObjectProvider);
-    // checkStatusDisplayer.displayText("analysisEnded", false,
-    // " " + timeString);
-    // checkStatusDisplayer.signalThatAnalysisEnded();
-    // }
-    // });
-    // waitForResultsThread.start();
-    // return true;
-    // } else {
-    // return false;
-    // }
+
     /** The stopped. */
-    // }
     private static boolean stopped;
 
     /**
@@ -153,7 +168,7 @@ public final class BEASTCommunicator {
 
         final boolean result;
         if (!hasProperties(properties)) {
-            // checks if there even are any properties selected for analysis in
+            // Checks if there even are any properties selected for analysis in
             // the PreAndPostConditionsSource
             GUIController.setConsoleText("No property selected!");
             // TODO: (add string resouce loading later)");
@@ -163,7 +178,7 @@ public final class BEASTCommunicator {
             // TODO load the property checker
             PropertyChecker checker = new PropertyChecker("CBMC");
             currentCheckers.add(checker);
-            // analysis gets started by
+            // Analysis gets started by
             // CheckerCommunicator.checkPropertiesForDescription()
             List<Result> results =
                     checker.checkPropertiesForDescription(electionDesc, properties, parameter);
@@ -174,7 +189,7 @@ public final class BEASTCommunicator {
                     // DecimalFormat df = new DecimalFormat("#.0");
                     @Override
                     public void run() {
-                        // local variables for elapsed time displaying
+                        // Local variables for elapsed time displaying
                         String timeString = "";
                         long startTime = System.nanoTime();
                         long elapsedTime;
@@ -185,7 +200,7 @@ public final class BEASTCommunicator {
                             elapsedTime = System.nanoTime() - startTime;
                             passedTimeSeconds = elapsedTime / NANO_TO_SECONDS;
                             timeString = createTimeString(passedTimeSeconds);
-                            // GUIController.setInfoText("elapsed time "
+                            // GUIController.setInfoText("Elapsed time "
                             // + df.format(passedTimeSeconds));
                             try {
                                 Thread.sleep(Math.max(0,
@@ -197,7 +212,7 @@ public final class BEASTCommunicator {
                                         .log(Level.SEVERE, null, ex);
                             }
                             frameTime = System.currentTimeMillis();
-                            // check if all results are finished already
+                            // Check if all results are finished already
                             allDone = true;
                             for (Iterator<Result> iterator =
                                     results.iterator();
@@ -252,10 +267,10 @@ public final class BEASTCommunicator {
     public static boolean checkForErrors(final ElectionDescription description,
                                          final List<ParentTreeItem> properties) {
         GUIController.setConsoleText("Searching for errors.");
-        // save the currently opened property
+        // Save the currently opened property
         GUIController.getController().getBooleanExpEditor()
                 .savePropertyTextAreasIntoDescription();
-        List<CodeError> codeErrors = CVariableErrorFinder
+        final List<CodeError> codeErrors = CVariableErrorFinder
                 .findErrors(description.getComplexCode(), description);
         if (codeErrors.size() != 0) {
             GUIController.getController().getCodeArea()
@@ -265,7 +280,7 @@ public final class BEASTCommunicator {
         boolean errorsFound = false;
         for (Iterator<ParentTreeItem> iterator = properties.iterator();
                 iterator.hasNext();) {
-            ParentTreeItem parentTreeItem = iterator.next();
+            final ParentTreeItem parentTreeItem = iterator.next();
             if (parentTreeItem.isChildSelected()) {
                 errorsFound |= BooleanExpEditorGeneralErrorFinder
                         .hasErrors(parentTreeItem);
@@ -285,7 +300,7 @@ public final class BEASTCommunicator {
         boolean hasProperties = false;
         for (Iterator<ParentTreeItem> iterator = properties.iterator();
                 iterator.hasNext();) {
-            ParentTreeItem item = iterator.next();
+            final ParentTreeItem item = iterator.next();
             hasProperties = hasProperties || item.isChildSelected();
         }
         return hasProperties;
@@ -300,8 +315,8 @@ public final class BEASTCommunicator {
      * @return the string
      */
     private static String createTimeString(final double passedTimeSeconds) {
-        DecimalFormat decimalFormat = new DecimalFormat("#.##");
-        String timeString = "";
+        final DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        final String timeString;
         if (passedTimeLongerThanDay(passedTimeSeconds)) {
             timeString = createTimeStringLongerThanDay(passedTimeSeconds,
                                                        decimalFormat);
@@ -313,7 +328,7 @@ public final class BEASTCommunicator {
                                                           decimalFormat);
         } else {
             String seconds = decimalFormat.format(passedTimeSeconds);
-            timeString = seconds + "s";
+            timeString = seconds + SECONDS_UNIT;
         }
         return timeString;
     }
@@ -329,12 +344,10 @@ public final class BEASTCommunicator {
      */
     private static String createTimeStringLongerThanMinute(final double passedTimeSeconds,
                                                            final DecimalFormat decimalFormat) {
-        String timeString;
-        int minutes = (int) passedTimeSeconds / SECONDS_IN_MINUTE;
-        double minutesRemainder = passedTimeSeconds % SECONDS_IN_MINUTE;
-        String seconds = decimalFormat.format(minutesRemainder);
-        timeString = minutes + "min " + seconds + "s";
-        return timeString;
+        final int minutes = (int) passedTimeSeconds / SECONDS_IN_MINUTE;
+        final double minutesRemainder = passedTimeSeconds % SECONDS_IN_MINUTE;
+        final String seconds = decimalFormat.format(minutesRemainder);
+        return minutes + MINUTES_UNIT + BLANK + seconds + SECONDS_UNIT;
     }
 
     /**
@@ -348,14 +361,13 @@ public final class BEASTCommunicator {
      */
     private static String createTimeStringLongerThanHour(final double passedTimeSeconds,
                                                          final DecimalFormat decimalFormat) {
-        String timeString;
-        int hours = (int) passedTimeSeconds / SECONDS_IN_HOUR;
-        double hoursRemainder = passedTimeSeconds % SECONDS_IN_HOUR;
-        int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
-        double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
-        String seconds = decimalFormat.format(minutesRemainder);
-        timeString = hours + "h " + minutes + "m " + seconds + "s";
-        return timeString;
+        final int hours = (int) passedTimeSeconds / SECONDS_IN_HOUR;
+        final double hoursRemainder = passedTimeSeconds % SECONDS_IN_HOUR;
+        final int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
+        final double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
+        final String seconds = decimalFormat.format(minutesRemainder);
+        return hours + HOURS_UNIT + BLANK + minutes + MINUTES_UNIT
+               + BLANK + seconds + SECONDS_UNIT;
     }
 
     /**
@@ -369,17 +381,15 @@ public final class BEASTCommunicator {
      */
     private static String createTimeStringLongerThanDay(final double passedTimeSeconds,
                                                         final DecimalFormat decimalFormat) {
-        String timeString;
-        int days = (int) passedTimeSeconds / SECONDS_IN_DAY;
-        double daysRemainder = passedTimeSeconds % SECONDS_IN_DAY;
-        int hours = (int) daysRemainder / SECONDS_IN_HOUR;
-        double hoursRemainder = daysRemainder % SECONDS_IN_HOUR;
-        int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
-        double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
-        String seconds = decimalFormat.format(minutesRemainder);
-        timeString = days + "d " + hours + "h " + minutes + "m "
-                    + seconds + "s";
-        return timeString;
+        final int days = (int) passedTimeSeconds / SECONDS_IN_DAY;
+        final double daysRemainder = passedTimeSeconds % SECONDS_IN_DAY;
+        final int hours = (int) daysRemainder / SECONDS_IN_HOUR;
+        final double hoursRemainder = daysRemainder % SECONDS_IN_HOUR;
+        final int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
+        final double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
+        final String seconds = decimalFormat.format(minutesRemainder);
+        return days + DAYS_UNIT + BLANK + hours + HOURS_UNIT + BLANK
+               + minutes + MINUTES_UNIT + BLANK + seconds + SECONDS_UNIT;
     }
 
     /**

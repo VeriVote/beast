@@ -25,6 +25,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class Approval extends CBMCInputType {
+    /** The Constant ZERO. */
+    private static final String ZERO = "0";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
@@ -49,7 +51,7 @@ public final class Approval extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return "0";
+        return ZERO;
     }
 
     @Override
@@ -82,10 +84,10 @@ public final class Approval extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return "0";
+            return ZERO;
         }
         if (number != 0 && number != 1) {
-            return "0";
+            return ZERO;
         } else {
             return newValue;
         }

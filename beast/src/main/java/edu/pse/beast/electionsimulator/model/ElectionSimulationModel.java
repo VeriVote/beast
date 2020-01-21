@@ -19,10 +19,11 @@ import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
  * @author Lukas Stapelbroek
  */
 public class ElectionSimulationModel {
+    /** The Constant ONE. */
+    private static final String ONE = "1";
 
     /** The Constant ELEMENT_WIDTH. */
     private static final double ELEMENT_WIDTH = 50;
-
     /** The Constant ELEMENT_HEIGHT. */
     private static final double ELEMENT_HEIGHT = 25;
 
@@ -348,9 +349,9 @@ public class ElectionSimulationModel {
      * Reset.
      */
     public void reset() {
-        GUIController.getController().getInputVoters().setText("1");
-        GUIController.getController().getInputCandidates().setText("1");
-        GUIController.getController().getInputSeats().setText("1");
+        GUIController.getController().getInputVoters().setText(ONE);
+        GUIController.getController().getInputCandidates().setText(ONE);
+        GUIController.getController().getInputSeats().setText(ONE);
 
         inputGridPane.getChildren().clear();
         voterGridPane.getChildren().clear();

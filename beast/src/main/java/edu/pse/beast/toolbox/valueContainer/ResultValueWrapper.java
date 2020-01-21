@@ -49,8 +49,8 @@ public abstract class ResultValueWrapper {
      */
     public int getMainIndex() {
         if (!isTopLevel) {
-            throw new IllegalArgumentException("This object has no"
-                                                + " valid main index.");
+            throw new IllegalArgumentException(
+                    "This object has no valid main index.");
         }
         return mainIndex;
     }
@@ -64,8 +64,8 @@ public abstract class ResultValueWrapper {
      */
     public String getName() {
         if (!isTopLevel) {
-            throw new IllegalArgumentException("This object has no"
-                                                + " valid name.");
+            throw new IllegalArgumentException(
+                    "This object has no valid name.");
         }
         return name;
     }

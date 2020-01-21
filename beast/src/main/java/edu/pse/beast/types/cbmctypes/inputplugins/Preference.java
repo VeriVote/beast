@@ -25,6 +25,19 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class Preference extends CBMCInputType {
+    /** The Constant DOT. */
+    private static final String DOT = ".";
+    /** The Constant ZERO. */
+    private static final String ZERO = "0";
+
+    /** The Constant OPENING_BRACKETS. */
+    private static final String OPENING_BRACKETS = "[";
+    /** The Constant CLOSING_BRACKETS. */
+    private static final String CLOSING_BRACKETS = "]";
+    /** The Constant OPENING_BRACES. */
+    private static final String OPENING_BRACES = "{";
+    /** The Constant CLOSING_BRACES. */
+    private static final String CLOSING_BRACES = "}";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
@@ -49,7 +62,7 @@ public final class Preference extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return "0";
+        return ZERO;
     }
 
     @Override
@@ -82,13 +95,13 @@ public final class Preference extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return "0";
+            return ZERO;
         }
         final String result;
         if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
-            result = "0";
+            result = ZERO;
         } else if (row.get(rowNumber).getValues().contains(newValue)) {
-            result = "0";
+            result = ZERO;
         } else {
             result = newValue;
         }
@@ -98,16 +111,16 @@ public final class Preference extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add("for(int loop_r_0 = 0; loop_r_0 < V; loop_r_0++) {");
-        code.add("for(int loop_r_1 = 0; loop_r_1 < C; loop_r_1++) {");
-        code.add("for(int loop_r_2 = 0; loop_r_2 < C; loop_r_2++) {");
-        code.add("if (loop_r_1 != loop_r_2) {");
+        code.add("for(int loop_r_0 = 0; loop_r_0 < V; loop_r_0++) " + OPENING_BRACES);
+        code.add("for(int loop_r_1 = 0; loop_r_1 < C; loop_r_1++) " + OPENING_BRACES);
+        code.add("for(int loop_r_2 = 0; loop_r_2 < C; loop_r_2++) " + OPENING_BRACES);
+        code.add("if (loop_r_1 != loop_r_2) " + OPENING_BRACES);
         code.add("assume(" + voteName + ".arr[loop_r_0][loop_r_1] != "
                 + voteName + ".arr[loop_r_0][loop_r_2]);");
-        code.add("}");
-        code.add("}");
-        code.add("}");
-        code.add("}");
+        code.add(CLOSING_BRACES);
+        code.add(CLOSING_BRACES);
+        code.add(CLOSING_BRACES);
+        code.add(CLOSING_BRACES);
     }
 
     @Override
@@ -136,49 +149,46 @@ public final class Preference extends CBMCInputType {
 
     // @Override
     // public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-    // List<String> origResult) {
-    // code.add("int "
-    // + UnifiedNameContainer.getNewVotesName() + "1["
-    // + UnifiedNameContainer.getVoter() + "]["
-    // + UnifiedNameContainer.getCandidate() + "];");
+    //                                List<String> origResult) {
+    //     code.add("int "
+    //         + UnifiedNameContainer.getNewVotesName() + "1["
+    //         + UnifiedNameContainer.getVoter() + "]["
+    //         + UnifiedNameContainer.getCandidate() + "];");
     //
-    // code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-    // code.addTab();
-    // code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-    // code.addTab();
-    // code.add("int changed = nondet_int();"); // determine, if we want to
-    // // changed votes for
-    // // this
-    // // voter - candidate
-    // // pair
-    // code.add("assume(0 <= changed);");
-    // code.add("assume(changed <= 1);");
-    // code.add("if(changed) {");
-    // code.addTab();
-    // code.add("total_diff++;"); // if we changed the vote, we keep track
-    // // of it
-    // code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] =
-    // nondet_int();");
-    // // set the vote to (0-100), but different from original
-    // code.add("assume(" + UnifiedNameContainer.getNewVotesName()
-    // + "1[i][j] != ORIG_VOTES[i][j]);");
-    // code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() +
-    // "1[i][j]);");
-    // code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <=
-    // 100);");
-    // code.deleteTab();
-    // code.add("} else {");
-    // code.addTab();
-    // code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] =
-    // ORIG_VOTES[i][j];");
-    // code.deleteTab();
-    // code.add("}");
-    // code.deleteTab();
-    // code.add("}");
-    // code.deleteTab();
-    // code.add("}"); // end of the double for loop
-    // code.add("assume(total_diff <= MARGIN);"); // no more changes than
-    // // margin allows
+    //     code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+    //     code.addTab();
+    //     code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+    //     code.addTab();
+    //     code.add("int changed = nondet_int();"); // determine, if we want to
+    //     // changed votes for voter - candidate pair
+    //     code.add("assume(0 <= changed);");
+    //     code.add("assume(changed <= 1);");
+    //     code.add("if(changed) {");
+    //     code.addTab();
+    //     code.add("total_diff++;"); // if we changed the vote, we keep track
+    //                                // of it
+    //     code.add("" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i][j] = nondet_int();");
+    //     // set the vote to (0-100), but different from original
+    //     code.add("assume(" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i][j] != ORIG_VOTES[i][j]);");
+    //     code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i][j]);");
+    //     code.add("assume(" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i][j] <= 100);");
+    //     code.deleteTab();
+    //     code.add("} else {");
+    //     code.addTab();
+    //     code.add("" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i][j] = ORIG_VOTES[i][j];");
+    //     code.deleteTab();
+    //     code.add("}");
+    //     code.deleteTab();
+    //     code.add("}");
+    //     code.deleteTab();
+    //     code.add("}"); // end of the double for loop
+    //     code.add("assume(total_diff <= MARGIN);"); // no more changes than
+    //     // margin allows
     // }
 
     @Override
@@ -189,17 +199,18 @@ public final class Preference extends CBMCInputType {
 
         String loopHead = "for (unsigned int " + ownLoopVar + " = 0; "
                 + ownLoopVar + " < " + loopVariables.get(1) + "; " + ownLoopVar
-                + "++) {";
+                + "++) " + OPENING_BRACES;
         code.add(loopHead);
 
-        code.add("assume (" + valueName + "."
-                + UnifiedNameContainer.getStructValueName() + "["
-                + loopVariables.get(0) + "]" + "[" + loopVariables.get(1)
-                + "] != " + valueName + "."
-                + UnifiedNameContainer.getStructValueName() + "["
-                + loopVariables.get(0) + "]" + "[" + ownLoopVar + "]);");
+        code.add("assume (" + valueName + DOT
+                + UnifiedNameContainer.getStructValueName()
+                + OPENING_BRACKETS + loopVariables.get(0) + CLOSING_BRACKETS
+                + OPENING_BRACKETS + loopVariables.get(1) + CLOSING_BRACKETS
+                + " != " + valueName + DOT + UnifiedNameContainer.getStructValueName()
+                + OPENING_BRACKETS + loopVariables.get(0) + CLOSING_BRACKETS
+                + OPENING_BRACKETS + ownLoopVar + CLOSING_BRACKETS + ");");
         code.deleteTab();
-        code.add("}");
+        code.add(CLOSING_BRACES);
     }
 
     @Override

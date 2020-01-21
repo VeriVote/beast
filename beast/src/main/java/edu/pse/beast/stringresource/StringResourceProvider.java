@@ -47,6 +47,17 @@ public abstract class StringResourceProvider {
     protected abstract void initialize();
 
     /**
+     * "The file FILENAME" for error logs.
+     *
+     * @param file
+     *            the file
+     * @return the string
+     */
+    private static String theFile(final File file) {
+        return "The file " + file.getName();
+    }
+
+    /**
      * Gets the file location string.
      *
      * @param moduleName
@@ -65,8 +76,7 @@ public abstract class StringResourceProvider {
      *            that has the wrongFormat
      */
     private void errorFileHasWrongFormat(final File file) {
-        ErrorLogger.log("The file " + file.getName()
-                        + " is not correctly formated");
+        ErrorLogger.log(theFile(file) + " is not correctly formated");
         ErrorLogger.log("You can find and correct the file in this directory "
                         + file.getAbsolutePath());
     }
@@ -78,7 +88,7 @@ public abstract class StringResourceProvider {
      *            the file
      */
     private void fileNotFound(final File file) {
-        ErrorLogger.log("The file " + file.getName() + " cannot be found");
+        ErrorLogger.log(theFile(file) + " cannot be found");
         ErrorLogger.log("The file should be in this directory "
                         + file.getAbsolutePath());
     }

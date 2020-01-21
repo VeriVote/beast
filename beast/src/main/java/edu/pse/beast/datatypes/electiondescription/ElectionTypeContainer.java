@@ -16,6 +16,9 @@ import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
  *
  */
 public class ElectionTypeContainer {
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+
     /** The in type. */
     private final InputType inType;
 
@@ -118,9 +121,9 @@ public class ElectionTypeContainer {
      */
     public String getStructDefinitions() {
         String toReturn = "";
-        toReturn = inputStruct.getStructDefinition() + "\n";
+        toReturn = inputStruct.getStructDefinition() + LINE_BREAK;
         if (!inputStruct.equals(outputStruct)) {
-            toReturn += outputStruct.getStructDefinition() + "\n";
+            toReturn += outputStruct.getStructDefinition() + LINE_BREAK;
         }
         return toReturn;
     }

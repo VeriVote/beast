@@ -14,6 +14,10 @@ import org.fxmisc.richtext.model.Codec;
  * @author Taken from the Demos from https://github.com/FXMisc/RichTextFX
  */
 public interface LinkedImage {
+    /** The Constant REPLACE_TO. */
+    String REPLACE_TO = "/";
+    /** The Constant REPLACE_TARGET. */
+    String REPLACE_TARGET = "\\";
 
     /**
      * Codec.
@@ -24,7 +28,7 @@ public interface LinkedImage {
      */
     static <S> Codec<LinkedImage> codec() {
         System.out.println("Code called! Investigate in LinkedImage,"
-                            + " as we don't use paths");
+                            + " as we do not use paths.");
 
         return new Codec<LinkedImage>() {
             @Override
@@ -38,7 +42,8 @@ public interface LinkedImage {
                 if (linkedImage.isReal()) {
                     os.writeBoolean(true);
                     String externalPath =
-                            linkedImage.getImagePath().replace("\\", "/");
+                            linkedImage.getImagePath().replace(REPLACE_TARGET,
+                                                               REPLACE_TO);
                     Codec.STRING_CODEC.encode(os, externalPath);
                 } else {
                     os.writeBoolean(false);
@@ -50,9 +55,9 @@ public interface LinkedImage {
                     throws IOException {
                 if (is.readBoolean()) {
                     String imagePath = Codec.STRING_CODEC.decode(is);
-                    imagePath = imagePath.replace("\\", "/");
-                    // maybe rewrite encoder to encode the image, and not the
-                    // path
+                    imagePath = imagePath.replace(REPLACE_TARGET, REPLACE_TO);
+                    // Maybe rewrite encoder to encode the image, and not the
+                    // path.
                     throw new AssertionError("Unreachable code");
                     // return new RealLinkedImage(imagePath);
                 } else {

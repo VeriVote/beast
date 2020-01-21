@@ -17,6 +17,15 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * @author Holger Klein
  */
 public final class CErrorDisplayer extends ErrorDisplayer {
+    /** The Constant ANTLR. */
+    private static final String ANTLR = "antlr";
+    /** The Constant COMPILER_ERROR. */
+    private static final String COMPILER_ERROR = "compilererror";
+    /** The Constant MSG. */
+    private static final String MSG = "msg";
+    /** The Constant VAR. */
+    private static final String VAR = "var";
+
     /**
      * Constructor.
      *
@@ -46,21 +55,21 @@ public final class CErrorDisplayer extends ErrorDisplayer {
      * @return the code error, formatted to a string
      */
     public String createMsg(final CodeError er) {
-        if (er.getId().equals("antlr")) {
+        if (er.getId().equals(ANTLR)) {
             int line = er.getLine();
             int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
             er.setStartPos(start);
             er.setEndPos(end);
-            return er.getExtraInfo("msg");
-        } else if (er.getId().equals("compilererror")) {
+            return er.getExtraInfo(MSG);
+        } else if (er.getId().equals(COMPILER_ERROR)) {
             int line = er.getLine();
             int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
             er.setStartPos(start);
             er.setEndPos(end);
-            String msg = er.getExtraInfo("msg");
-            String var = er.getExtraInfo("var");
+            String msg = er.getExtraInfo(MSG);
+            String var = er.getExtraInfo(VAR);
             if (!msg.contains(var)) {
                 msg = var + ": " + msg;
             }

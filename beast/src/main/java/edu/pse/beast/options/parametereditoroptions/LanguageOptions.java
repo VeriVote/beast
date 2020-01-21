@@ -15,6 +15,16 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  * @author Lukas Stapelbroek
  */
 public final class LanguageOptions extends Options {
+    /** The Constant LANG_OPTS. */
+    private static final String LANG_OPTS = "lang_opts";
+    /** The Constant LANG_ID. */
+    private static final String LANG_ID = "lang";
+
+    /** The Constant ENGLISH. */
+    private static final String ENGLISH = "en";
+    /** The Constant GERMAN. */
+    private static final String GERMAN = "de";
+
     /** The sli. */
     private StringLoaderInterface sli;
 
@@ -35,11 +45,11 @@ public final class LanguageOptions extends Options {
      */
     public LanguageOptions(final StringLoaderInterface slInterf,
                            final StringResourceLoader stringResLoader) {
-        super("lang_opts");
+        super(LANG_OPTS);
         this.sli = slInterf;
-        String chosenLang = stringResLoader.getStringFromID("lang");
-        List<String> choosableLangsList = Arrays.asList("de", "en");
-        langOptElem = new LanguageOptionElement(choosableLangsList, chosenLang);
+        String chosenLang = stringResLoader.getStringFromID(LANG_ID);
+        List<String> availableLangsList = Arrays.asList(GERMAN, ENGLISH);
+        langOptElem = new LanguageOptionElement(availableLangsList, chosenLang);
         addOptionElement(langOptElem);
     }
 
@@ -50,11 +60,11 @@ public final class LanguageOptions extends Options {
      *            the sl interf
      */
     public LanguageOptions(final StringLoaderInterface slInterf) {
-        super("lang_opts");
+        super(LANG_OPTS);
         this.sli = slInterf;
         ArrayList<String> availableLangsList = new ArrayList<String>();
-        availableLangsList.add("de");
-        langOptElem = new LanguageOptionElement(availableLangsList, "de");
+        availableLangsList.add(GERMAN);
+        langOptElem = new LanguageOptionElement(availableLangsList, GERMAN);
         addOptionElement(langOptElem);
     }
 

@@ -18,11 +18,12 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Lukas Stapelbroek
  */
 public final class LinuxProcess extends CBMCProcess {
-    /** The Constant QUOTE. */
-    private static final String QUOTE = "\"";
-
+    /** The Constant SEMICOLON. */
+    private static final String SEMICOLON = ";";
     /** The Constant EQUALS. */
     private static final String EQUALS = "=";
+    /** The Constant QUOTE. */
+    private static final String QUOTE = "\"";
 
     /** The Constant PASS_C_CONST. */
     private static final String PASS_C_CONST = "-D ";
@@ -30,9 +31,10 @@ public final class LinuxProcess extends CBMCProcess {
     /** The Constant RELATIVE_PATH_TO_CBMC_64. */
     private static final String RELATIVE_PATH_TO_CBMC_64 = "/linux/cbmcLin/cbmc";
 
-    /** The Constant WAITING_TIME. */
-    // the time in milliseconds to wait for the termination of the process on
-    // linux
+    /**
+     * The Constant WAITING_TIME: The time in milliseconds to wait for
+     * the termination of the process on linux.
+     */
     private static final long WAITING_TIME = 3000;
 
     /** The Constant ENABLE_USER_INCLUDE. */
@@ -40,11 +42,6 @@ public final class LinuxProcess extends CBMCProcess {
 
     /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
-
-    // we want to compile all available c files, so the user does not need to
-    /** The Constant C_FILE_ENDING. */
-    // specify anything
-    private static final String C_FILE_ENDING = ".c";
 
     /**
      * Creates a new CBMC Checker for the windows OS.
@@ -92,7 +89,7 @@ public final class LinuxProcess extends CBMCProcess {
         List<String> allFiles = FileLoader.listAllFilesFromFolder(
                 QUOTE + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + QUOTE,
-                C_FILE_ENDING);
+                FileLoader.C_FILE_ENDING);
         if (!new File(cbmc.replace(QUOTE, "")).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Cannot find the cbmc program in the subfolder \"linux/cbmcLin/\", "
@@ -128,9 +125,9 @@ public final class LinuxProcess extends CBMCProcess {
             // we need the trace command to track the output on the command line
             arguments.add("--xml-ui");
             if (advanced != null && advanced.length() > 0) {
-                for (int i = 0; i < advanced.split(";").length; i++) {
+                for (int i = 0; i < advanced.split(SEMICOLON).length; i++) {
                     String sanitized =
-                            sanitizeArguments(advanced.split(";")[i]);
+                            sanitizeArguments(advanced.split(SEMICOLON)[i]);
                     if (sanitized.trim().length() > 0) {
                         arguments.add(sanitized);
                     }

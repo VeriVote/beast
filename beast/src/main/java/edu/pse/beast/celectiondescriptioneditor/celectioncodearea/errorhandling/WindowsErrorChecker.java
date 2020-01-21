@@ -1,5 +1,10 @@
 package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
 
+import static edu.pse.beast.electionsimulator.programaccess.WindowsCompilerAndRunner.AMPERSAND;
+import static edu.pse.beast.electionsimulator.programaccess.WindowsCompilerAndRunner.CMD_EXE;
+import static edu.pse.beast.electionsimulator.programaccess.WindowsCompilerAndRunner.SLASH_C;
+import static edu.pse.beast.electionsimulator.programaccess.WindowsCompilerAndRunner.TWO_BACKSLASHES;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,25 +29,33 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  *
  */
 public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
+    /** The Constant COLON. */
+    private static final String COLON = ":";
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+    /** The Constant QUOTE. */
+    private static final String QUOTE = "\"";
 
-    /** The Constant COMPILER_STRING. */
-    // the compiler we use on windows, because it is also needed by cbmc
+    /**
+     * The Constant COMPILER_STRING: The compiler we use on windows, because it
+     * is also needed by cbmc.
+     */
     private static final String COMPILER_STRING =
             "cl" + FileLoader.EXE_FILE_ENDING;
 
-    /** The Constant CMD_STRING. */
-    private static final String CMD_STRING = "cmd" + FileLoader.EXE_FILE_ENDING;
-
-    /** The Constant ENABLE_USER_INCLUDE. */
-    // used to enable includes from the users own written classes
+    /**
+     * The Constant ENABLE_USER_INCLUDE: Used to enable includes from the
+     * user's own written classes.
+     */
     private static final String ENABLE_USER_INCLUDE = "/I";
 
     /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // we want to compile all available c files, so the user does not need to
-    /** The Constant COMPILE_ALL_INCLUDES_IN_FOLDER. */
-    // specify anything
+    /**
+     * The Constant COMPILE_ALL_INCLUDES_IN_FOLDER: We want to compile all
+     * available c files, so the user does not need to specify anything.
+     */
     private static final String COMPILE_ALL_INCLUDES_IN_FOLDER =
             "*" + FileLoader.C_FILE_ENDING;
 
@@ -50,14 +63,14 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
     public Process checkCodeFileForErrors(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
-        String userIncludeAndPath = ENABLE_USER_INCLUDE + "\""
+        String userIncludeAndPath = ENABLE_USER_INCLUDE + QUOTE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                + "\"";
-        // we have to compile all includes that the user puts in that folder, in
-        // case some of them are needed
-        String compileAllIncludesInIncludePath = "\""
+                + QUOTE;
+        // We have to compile all includes that the user puts in that folder, in
+        // case some of them are needed.
+        String compileAllIncludesInIncludePath = QUOTE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
+                + COMPILE_ALL_INCLUDES_IN_FOLDER + QUOTE;
 
         // try to get the vsCMD
         try {
@@ -80,24 +93,26 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // inside VScmd has to be in one giant string. Put the created
             // file in the output directory, such that it can be deleted
             // afterwards.
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + COMPILER_STRING
-                    + " " + userIncludeAndPath + " "
-                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
-                    + (" /Fo" + toCheck.getParent() + "\\ ")
-                    + (" /Fe" + toCheck.getParent() + "\\ ")
+            String clExeCall =
+                    QUOTE + vsCmd + QUOTE + BLANK
+                    + AMPERSAND + BLANK + COMPILER_STRING
+                    + BLANK + userIncludeAndPath + BLANK
+                    + (QUOTE + toCheck.getAbsolutePath() + QUOTE) + BLANK
+                    + (BLANK + "/Fo" + toCheck.getParent() + TWO_BACKSLASHES + BLANK)
+                    + (BLANK + "/Fe" + toCheck.getParent() + TWO_BACKSLASHES + BLANK)
                     + compileAllIncludesInIncludePath;
             List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
-            File batFile = new File(toCheck.getParent() + "\\"
-                    + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
-                            FileLoader.BAT_FILE_ENDING));
+            File batFile = new File(toCheck.getParent() + TWO_BACKSLASHES
+                            + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                                        FileLoader.BAT_FILE_ENDING));
             FileSaver.writeStringLinesToFile(callInList, batFile);
             // This call starts a new VScmd instance and let's cl.exe (the
             // compiler) run in it.
-            // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
-            // clExeCall);
+            // ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
+            //                                                clExeCall);
             ProcessBuilder prossBuild =
-                    new ProcessBuilder(CMD_STRING, "/c",
+                    new ProcessBuilder(CMD_EXE, SLASH_C,
                                        batFile.getAbsolutePath());
             try {
                 startedProcess = prossBuild.start();
@@ -138,17 +153,16 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     // get the error message here by splitting at a common
                     // (error/warning C[ERRORNUMBER]) identifier
                     final String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");
-                    // String msg = line.substring(line.lastIndexOf(":"));
+                    // String msg = line.substring(line.lastIndexOf(COLON));
                     // to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];
                         // the variable and compiler message is between ":"'s,
-                        // so
-                        // we split there.
-                        if (toSplit.contains(":")) {
+                        // so we split there.
+                        if (toSplit.contains(COLON)) {
                             varName =
-                                    toSplit.split(":")[0].replaceAll("\"", "");
-                            message = toSplit.split(":")[1];
+                                    toSplit.split(COLON)[0].replaceAll(QUOTE, "");
+                            message = toSplit.split(COLON)[1];
                         } else {
                             message = toSplit;
                         }
@@ -160,8 +174,8 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     ErrorLogger.log("cannot parse the current"
                                     + " error line from cl.exe");
                 }
-            } else if (line.contains(" : error LNK")) {
-                String[] splittedArray = line.split(":");
+            } else if (line.contains(BLANK + COLON + BLANK + "error LNK")) {
+                String[] splittedArray = line.split(COLON);
                 if (splittedArray.length >= 2) {
                     String subString = splittedArray[2];
                     codeErrors.add(

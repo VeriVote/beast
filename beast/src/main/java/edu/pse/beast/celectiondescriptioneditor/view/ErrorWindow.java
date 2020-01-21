@@ -14,6 +14,22 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * @author Nikolai Schnell
  */
 public class ErrorWindow {
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+    /** The Constant COLON. */
+    private static final String COLON = ":";
+
+    /** The Constant OPENING_PARENTHESES. */
+    private static final String OPENING_PARENTHESES = "(";
+    /** The Constant CLOSING_PARENTHESES. */
+    private static final String CLOSING_PARENTHESES = ")";
+
+    /** The Constant ERROR_ID. */
+    private static final String ERROR_ID = "error";
+    /** The Constant LINE_ID. */
+    private static final String LINE_ID = "line";
 
     /** The text pane. */
     private final JTextPane textPane;
@@ -48,12 +64,14 @@ public class ErrorWindow {
      */
     public void displayErrors(final ArrayList<CodeError> errors,
                               final CErrorDisplayer cErrorDisplayer) {
-        String errorsAsString = errorString + ": " + errors.size() + "\n";
+        String errorsAsString =
+                errorString + COLON + BLANK + errors.size() + LINE_BREAK;
         for (int i = 0; i < errors.size(); i++) {
-            errorsAsString += (i + 1) + ": "
-                    + cErrorDisplayer.createMsg(errors.get(i)) + " ("
-                    + lineString + " " + (errors.get(i).getLine() - 1) + ")"
-                    + "\n";
+            errorsAsString += (i + 1) + COLON + BLANK
+                    + cErrorDisplayer.createMsg(errors.get(i)) + BLANK
+                    + OPENING_PARENTHESES + lineString + BLANK
+                    + (errors.get(i).getLine() - 1)
+                    + CLOSING_PARENTHESES + LINE_BREAK;
         }
         textPane.setText(errorsAsString);
     }
@@ -67,9 +85,9 @@ public class ErrorWindow {
     public void updateStringRes(final StringLoaderInterface stringLoaderInterface) {
         errorString = stringLoaderInterface
                 .getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes().getStringFromID("error");
+                .getBooleanExpErrorStringRes().getStringFromID(ERROR_ID);
         lineString = stringLoaderInterface
                 .getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes().getStringFromID("line");
+                .getBooleanExpErrorStringRes().getStringFromID(LINE_ID);
     }
 }

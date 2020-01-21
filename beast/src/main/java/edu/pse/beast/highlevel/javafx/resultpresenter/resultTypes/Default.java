@@ -25,8 +25,13 @@ import edu.pse.beast.types.OutputType;
  *
  */
 public final class Default extends ResultPresentationType {
+    /** The Constant DECIMAL_REPLACE_SYMBOL. */
+    private static final String DECIMAL_REPLACE_SYMBOL = "\\d";
+
     /** The area. */
-    private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+    private GenericStyledArea<ParStyle,
+                              Either<String, LinkedImage>,
+                              TextStyle> area;
 
     @Override
     public Node presentResult(final Result result) {
@@ -40,20 +45,23 @@ public final class Default extends ResultPresentationType {
                 result.getElectionDescription().getContainer().getInputType();
         OutputType outType =
                 result.getElectionDescription().getContainer().getOutputType();
-        String voters = UnifiedNameContainer.getVoter() + "\\d";
+        String voters = UnifiedNameContainer.getVoter() + DECIMAL_REPLACE_SYMBOL;
         Map<Integer, Long> sizeOfVoters =
                 getAllSizes(result.readVariableValue(voters));
-        String votesNameMatcher = UnifiedNameContainer.getVotingArray() + "\\d";
+        String votesNameMatcher = UnifiedNameContainer.getVotingArray()
+                                    + DECIMAL_REPLACE_SYMBOL;
         List<String> toAdd = inType.drawResult(result, votesNameMatcher,
                                                sizeOfVoters);
 
         for (int i = 0; i < toAdd.size(); i++) {
             area.appendText(toAdd.get(i));
         }
-        String candidates = UnifiedNameContainer.getCandidate() + "\\d";
+        String candidates = UnifiedNameContainer.getCandidate()
+                            + DECIMAL_REPLACE_SYMBOL;
         Map<Integer, Long> sizeOfCandidates =
                 getAllSizes(result.readVariableValue(candidates));
-        String resultNameMatcher = UnifiedNameContainer.getElect() + "\\d";
+        String resultNameMatcher = UnifiedNameContainer.getElect()
+                                    + DECIMAL_REPLACE_SYMBOL;
         toAdd = outType.drawResult(result, resultNameMatcher, sizeOfCandidates);
 
         for (int i = 0; i < toAdd.size(); i++) {

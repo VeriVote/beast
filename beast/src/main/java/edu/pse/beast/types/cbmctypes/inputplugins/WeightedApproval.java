@@ -25,6 +25,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class WeightedApproval extends CBMCInputType {
+    /** The Constant ZERO. */
+    private static final String ZERO = "0";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
@@ -85,10 +87,10 @@ public final class WeightedApproval extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return "0";
+            return ZERO;
         }
         if (number < 0 || number > MAX_VALUE) {
-            return "0";
+            return ZERO;
         } else {
             return newValue;
         }

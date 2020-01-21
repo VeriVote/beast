@@ -24,6 +24,12 @@ import edu.pse.beast.types.InputType;
  * @author Lukas Stapelbroek
  */
 public final class ElectionSimulation implements MenuBarInterface {
+    /** The Constant ONE. */
+    private static final String ONE = "1";
+
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+
     /** The Constant CSV_SEPARATOR. */
     private static final String CSV_SEPARATOR = ",";
 
@@ -116,9 +122,9 @@ public final class ElectionSimulation implements MenuBarInterface {
                                             voterGridPane, candidateGridPane);
         model.setAmountCandidates(1);
         model.setAmountVoters(1);
-        GUIController.getController().getInputVoters().setText("1");
-        GUIController.getController().getInputCandidates().setText("1");
-        GUIController.getController().getInputSeats().setText("1");
+        GUIController.getController().getInputVoters().setText(ONE);
+        GUIController.getController().getInputCandidates().setText(ONE);
+        GUIController.getController().getInputSeats().setText(ONE);
     }
 
     /**
@@ -326,7 +332,7 @@ public final class ElectionSimulation implements MenuBarInterface {
     private void openInput(final String input, final boolean bringToFront) {
         reset();
         if (!"".equals(input)) {
-            String[] lines = input.split("\n");
+            String[] lines = input.split(LINE_BREAK);
             for (int y = 0; y < lines.length; y++) {
                 String[] values = lines[y].replaceAll("\\r", "")
                         .split(CSV_SEPARATOR);
@@ -371,7 +377,7 @@ public final class ElectionSimulation implements MenuBarInterface {
         String saveString = "";
         saveString = model.getAmountVoters() + CSV_SEPARATOR
                 + model.getAmountCandidates() + CSV_SEPARATOR
-                + model.getAmountSeats() + "\n";
+                + model.getAmountSeats() + LINE_BREAK;
         List<NEWRowOfValues> rows = model.getRows();
 
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
@@ -387,7 +393,7 @@ public final class ElectionSimulation implements MenuBarInterface {
                 }
             }
             if (iterator.hasNext()) {
-                saveString += "\n";
+                saveString += LINE_BREAK;
             }
         }
         return saveString;

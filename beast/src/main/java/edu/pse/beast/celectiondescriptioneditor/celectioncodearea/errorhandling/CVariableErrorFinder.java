@@ -15,6 +15,17 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Holger Klein
  */
 public final class CVariableErrorFinder {
+    /** The Constant BLANK. */
+    private static final String BLANK = " ";
+    /** The Constant ONE. */
+    private static final String ONE = "1";
+
+    /** The Constant "#ifndef". */
+    private static final String IF_UNDEFINED = "#ifndef";
+    /** The Constant "#define". */
+    private static final String DEFINE = "#define";
+    /** The Constant "#endif". */
+    private static final String END_IF = "#endif";
 
     /**
      * Instantiates a new c variable error finder.
@@ -34,25 +45,24 @@ public final class CVariableErrorFinder {
                                              final ElectionDescription electionDesc) {
         // TODO use unified name container here later
         ArrayList<String> seperated = new ArrayList<String>();
-        seperated.add("#ifndef " + UnifiedNameContainer.getVoter());
-        seperated.add("#define " + UnifiedNameContainer.getVoter() + " 1");
-        seperated.add("#endif");
+        seperated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getVoter());
+        seperated.add(DEFINE + BLANK + UnifiedNameContainer.getVoter() + BLANK + ONE);
+        seperated.add(END_IF);
 
-        seperated.add("#ifndef " + UnifiedNameContainer.getCandidate());
-        seperated.add("#define " + UnifiedNameContainer.getCandidate() + " 1");
-        seperated.add("#endif");
+        seperated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getCandidate());
+        seperated.add(DEFINE + BLANK + UnifiedNameContainer.getCandidate() + BLANK + ONE);
+        seperated.add(END_IF);
 
-        seperated.add("#ifndef " + UnifiedNameContainer.getSeats());
-        seperated.add("#define " + UnifiedNameContainer.getSeats() + " 1");
-        seperated.add("#endif");
+        seperated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getSeats());
+        seperated.add(DEFINE + BLANK + UnifiedNameContainer.getSeats() + BLANK + ONE);
+        seperated.add(END_IF);
 
-        // since we want to reserve the function name "verify", we define it
-        // here
+        // Since we want to reserve the function name "verify", we define it
+        // here..
         seperated.add("void verify() {}");
 
         // WORKAROUND: Will change if I think of a more elegant solution (if
-        // there is
-        // one) (look at issue 49 on github)
+        // there is one) (look at issue 49 on github)
         // Maybe it is possible to include all CBMC functions, but I will have
         // to see.
         // At least I can extract it to a file, which would make updating

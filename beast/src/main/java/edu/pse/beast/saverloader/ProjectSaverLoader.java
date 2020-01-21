@@ -15,20 +15,20 @@ public final class ProjectSaverLoader implements SaverLoader<Project> {
     /** The saver loader. */
     private static Gson saverLoader;
 
-    static { // here you have the chance to register typeAdapters
+    static { // Here you have the chance to register typeAdapters
         GsonBuilder builder = new GsonBuilder();
         saverLoader = builder.create();
     }
 
     @Override
     public Project createFromSaveString(final String toLoad) throws Exception { // TODO
-        System.out.println("TODO: save string project");
+        System.out.println("TODO: Save string project from jsonString.");
         return saverLoader.fromJson(toLoad, Project.class);
     }
 
     @Override
     public String createSaveString(final Project toSave) { // TODO
-        System.out.println("TODO: save string project");
+        System.out.println("TODO: Save string project from jsonProject.");
         return saverLoader.toJson(toSave);
     }
 }

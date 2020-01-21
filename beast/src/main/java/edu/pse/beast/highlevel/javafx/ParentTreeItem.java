@@ -30,15 +30,16 @@ import edu.pse.beast.propertychecker.Result;
  * @author Lukas Stapelbroek
  */
 public class ParentTreeItem extends CustomTreeItem {
-
     /** The Constant THREE. */
     private static final int THREE = 3;
+    /** The Constant CHECK_ALL. */
+    private static final String CHECK_ALL = "check all";
 
     /** The prop name. */
     private Label propName;
 
     /** The check all. */
-    private CheckBox checkAll = new CheckBox("check all");
+    private CheckBox checkAll = new CheckBox(CHECK_ALL);
 
     /** The context menu. */
     private ContextMenu contextMenu = new ContextMenu();
@@ -199,7 +200,7 @@ public class ParentTreeItem extends CustomTreeItem {
                 if (state) {
                     checkAll.setText("uncheck all");
                 } else {
-                    checkAll.setText("check all");
+                    checkAll.setText(CHECK_ALL);
                 }
             }
         }

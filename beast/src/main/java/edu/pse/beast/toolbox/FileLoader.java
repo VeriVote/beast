@@ -40,7 +40,7 @@ public final class FileLoader {
     public static final String OUT_FILE_ENDING = ".out";
 
     /** The "\"" string. */
-    private static final String QUOTE = "\"";
+    public static final String QUOTE = "\"";
 
     /** The Constant HUNDRED. */
     private static final int HUNDRED = 100;

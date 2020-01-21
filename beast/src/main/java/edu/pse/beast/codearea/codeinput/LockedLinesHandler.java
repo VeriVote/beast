@@ -26,6 +26,10 @@ import edu.pse.beast.toolbox.SortedIntegerList;
  * @author Holger Klein
  */
 public final class LockedLinesHandler implements DocumentListener {
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+    /** The Constant LINE_BREAK_CHAR. */
+    private static final char LINE_BREAK_CHAR = LINE_BREAK.charAt(0);
 
     /** The locked lines. */
     private SortedIntegerList lockedLines = new SortedIntegerList();
@@ -110,7 +114,7 @@ public final class LockedLinesHandler implements DocumentListener {
             int amtNewline = 0;
             String added = doc.getText(de.getOffset(), de.getLength());
             for (int i = 0; i < de.getLength(); ++i) {
-                if (added.charAt(i) == '\n') {
+                if (added.charAt(i) == LINE_BREAK_CHAR) {
                     amtNewline++;
                 }
             }
@@ -118,8 +122,8 @@ public final class LockedLinesHandler implements DocumentListener {
                     JTextPaneToolbox.transformToLineNumber(pane,
                                                            de.getOffset());
             if (lockedLines.contains(firstLineAffected)
-                    && doc.getText(de.getOffset() + 1, 1).equals("\n")
-                    && !doc.getText(de.getOffset() - 1, 1).equals("\n")) {
+                    && doc.getText(de.getOffset() + 1, 1).equals(LINE_BREAK)
+                    && !doc.getText(de.getOffset() - 1, 1).equals(LINE_BREAK)) {
                 ++firstLineAffected;
             }
 

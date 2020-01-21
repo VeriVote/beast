@@ -20,14 +20,64 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Holger Klein
  */
 public final class BooleanExpErrorFactory {
+    /** The Constant ANTLR. */
+    static final String ANTLR = "antlr";
+    /** The Constant VAR_NOT_DECL. */
+    static final String VAR_NOT_DECL = "var_not_decl";
+    /** The Constant TOO_MANY_VARS_PASSED. */
+    static final String TOO_MANY_VARS_PASSED =
+            "too_many_vars_passed";
+    /** The Constant WRONG_VAR_TYPE_PASSED. */
+    static final String WRONG_VAR_TYPE_PASSED =
+            "wrong_var_type_passed";
+    /** The Constant INCOMPARABLE_TYPES. */
+    static final String INCOMPARABLE_TYPES =
+            "incomparable_types";
+    /** The Constant INCOMPARABLE_LIST_SIZES. */
+    static final String INCOMPARABLE_LIST_SIZES =
+            "incomparable_list_sizes";
+    /** The Constant WRONG_VAR_PASSED_TO_VOTESUM. */
+    static final String WRONG_VAR_PASSED_TO_VOTESUM =
+            "wrong_var_passed_to_votesum";
+    /** The Constant WRONG_VAR_PASSED_TO_VOTESUM_UNIQUE. */
+    static final String WRONG_VAR_PASSED_TO_VOTESUM_UNIQUE =
+            "wrong_var_passed_to_votesum_unique";
+    /** The Constant NUMBER_MUST_BE_GREATER_0. */
+    static final String NUMBER_MUST_BE_GREATER_ZERO =
+            "number_must_be_greater_0";
+
+    /** The Constant VAR_NAME. */
+    static final String VAR_NAME = "var_name";
+    /** The Constant VAR_TYPE. */
+    static final String VAR_TYPE = "var_type";
+
+    /** The Constant MSG. */
+    static final String MSG = "msg";
+
+    /** The Constant PASSED_TYPE. */
+    static final String PASSED_TYPE = "passed_type";
+    /** The Constant EXPECTED_TYPE. */
+    static final String EXPECTED_TYPE = "expected_type";
+
+    /** The Constant LHS_LIST_SIZE. */
+    static final String LHS_LIST_SIZE = "lhs_list_size";
+    /** The Constant RHS_LIST_SIZE. */
+    static final String RHS_LIST_SIZE = "rhs_list_size";
+
+    /** The Constant LHS_TYPE. */
+    static final String LHS_TYPE = "lhs_type";
+    /** The Constant RHS_TYPE. */
+    static final String RHS_TYPE = "rhs_type";
 
     /** The Constant ERROR_IDS. */
     private static final String[] ERROR_IDS =
         {
-        "antlr", "var_not_decl",
-        "too_many_vars_passed", "wrong_var_type_passed",
-        "incomparable_types", "incomparable_list_sizes",
-        "wrong_var_passed_to_votesum", "number_must_be_greater_0"
+        ANTLR, VAR_NOT_DECL,
+        TOO_MANY_VARS_PASSED, WRONG_VAR_TYPE_PASSED,
+        INCOMPARABLE_TYPES, INCOMPARABLE_LIST_SIZES,
+        WRONG_VAR_PASSED_TO_VOTESUM,
+        WRONG_VAR_PASSED_TO_VOTESUM_UNIQUE,
+        NUMBER_MUST_BE_GREATER_ZERO
     };
 
     /**
@@ -59,8 +109,8 @@ public final class BooleanExpErrorFactory {
      * @return the error object that describes the problem
      */
     public static CodeError createVarNotDeclaredErr(final SymbolicVarExpContext ctx) {
-        CodeError err = generateStandardError(ctx, "var_not_decl");
-        err.setExtraInfo("var_name", ctx.Identifier().getText());
+        CodeError err = generateStandardError(ctx, VAR_NOT_DECL);
+        err.setExtraInfo(VAR_NAME, ctx.Identifier().getText());
         return err;
     }
 
@@ -79,9 +129,9 @@ public final class BooleanExpErrorFactory {
     public static CodeError createAntlrError(final int line,
                                              final int charInline,
                                              final String msg) {
-        CodeError err = new CodeError(line, charInline, "antlr",
-                                      getErrorNum("antlr"), 0, 0);
-        err.setExtraInfo("msg", msg);
+        CodeError err = new CodeError(line, charInline, ANTLR,
+                                      getErrorNum(ANTLR), 0, 0);
+        err.setExtraInfo(MSG, msg);
         return err;
     }
 
@@ -93,8 +143,8 @@ public final class BooleanExpErrorFactory {
      * @return the error object that describes the problem
      */
     public static CodeError createTooManyVarsPassedError(final PassTypeContext ctx) {
-        CodeError err = generateStandardError(ctx, "too_many_vars_passed");
-        err.setExtraInfo("var_name", ctx.getText());
+        CodeError err = generateStandardError(ctx, TOO_MANY_VARS_PASSED);
+        err.setExtraInfo(VAR_NAME, ctx.getText());
         return err;
     }
 
@@ -113,11 +163,11 @@ public final class BooleanExpErrorFactory {
                                               final FormalPropertyDescriptionParser
                                                           .PassTypeContext ctx,
                                               final TypeExpression currentVarExp) {
-        CodeError err = generateStandardError(ctx, "wrong_var_type_passed");
-        err.setExtraInfo("var_name", ctx.getText());
-        err.setExtraInfo("passed_type",
+        CodeError err = generateStandardError(ctx, WRONG_VAR_TYPE_PASSED);
+        err.setExtraInfo(VAR_NAME, ctx.getText());
+        err.setExtraInfo(PASSED_TYPE,
                          currentVarExp.getInternalTypeContainer().getInternalType().toString());
-        err.setExtraInfo("expected_type", cont.getAccessTypeIfList().toString());
+        err.setExtraInfo(EXPECTED_TYPE, cont.getAccessTypeIfList().toString());
         return err;
     }
 
@@ -135,9 +185,9 @@ public final class BooleanExpErrorFactory {
     static CodeError createCantCompareDifferentListLevels(final ComparisonExpContext ctx,
                                                           final InternalTypeContainer lhsCont,
                                                           final InternalTypeContainer rhsCont) {
-        CodeError err = generateStandardError(ctx, "incomparable_list_sizes");
-        err.setExtraInfo("lhs_list_size", String.valueOf(lhsCont.getListLvl()));
-        err.setExtraInfo("rhs_list_size", String.valueOf(rhsCont.getListLvl()));
+        CodeError err = generateStandardError(ctx, INCOMPARABLE_LIST_SIZES);
+        err.setExtraInfo(LHS_LIST_SIZE, String.valueOf(lhsCont.getListLvl()));
+        err.setExtraInfo(RHS_LIST_SIZE, String.valueOf(rhsCont.getListLvl()));
         return err;
     }
 
@@ -155,9 +205,9 @@ public final class BooleanExpErrorFactory {
     static CodeError createCantCompareTypes(final ComparisonExpContext ctx,
                                             final InternalTypeContainer lhsCont,
                                             final InternalTypeContainer rhsCont) {
-        CodeError err = generateStandardError(ctx, "incomparable_types");
-        err.setExtraInfo("lhs_type", lhsCont.getInternalType().toString());
-        err.setExtraInfo("rhs_type", rhsCont.getInternalType().toString());
+        CodeError err = generateStandardError(ctx, INCOMPARABLE_TYPES);
+        err.setExtraInfo(LHS_TYPE, lhsCont.getInternalType().toString());
+        err.setExtraInfo(RHS_TYPE, rhsCont.getInternalType().toString());
         return err;
     }
 
@@ -172,8 +222,8 @@ public final class BooleanExpErrorFactory {
      */
     static CodeError createWrongVarToVotesumError(final VoteSumExpContext ctx,
                                                   final InternalTypeContainer passedType) {
-        CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum");
-        err.setExtraInfo("var_type", passedType.getInternalType().toString());
+        CodeError err = generateStandardError(ctx, WRONG_VAR_PASSED_TO_VOTESUM);
+        err.setExtraInfo(VAR_TYPE, passedType.getInternalType().toString());
         return err;
     }
 
@@ -188,8 +238,8 @@ public final class BooleanExpErrorFactory {
      */
     static CodeError createWrongVarToVotesumError(final VoteSumUniqueExpContext ctx,
                                                   final InternalTypeContainer passedType) {
-        CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum_unique");
-        err.setExtraInfo("var_type", passedType.getInternalType().toString());
+        CodeError err = generateStandardError(ctx, WRONG_VAR_PASSED_TO_VOTESUM_UNIQUE);
+        err.setExtraInfo(VAR_TYPE, passedType.getInternalType().toString());
         return err;
     }
 
@@ -202,7 +252,7 @@ public final class BooleanExpErrorFactory {
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotesum(final ParserRuleContext ctx) {
-        CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
+        CodeError err = generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
         return err;
     }
 
@@ -214,7 +264,7 @@ public final class BooleanExpErrorFactory {
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroElect(final ElectExpContext ctx) {
-        CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
+        CodeError err = generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
         return err;
     }
 
@@ -226,7 +276,7 @@ public final class BooleanExpErrorFactory {
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotes(final VoteExpContext ctx) {
-        CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
+        CodeError err = generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
         return err;
     }
 
@@ -245,7 +295,8 @@ public final class BooleanExpErrorFactory {
         int endPos = ctx.getStop().getStopIndex();
         int line = ctx.getStart().getLine();
         int charInLine = ctx.getStart().getCharPositionInLine();
-        CodeError err = new CodeError(line, charInLine, id, getErrorNum(id), pos, endPos);
+        CodeError err = new CodeError(line, charInLine, id,
+                                      getErrorNum(id), pos, endPos);
         return err;
     }
 }

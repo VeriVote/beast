@@ -13,9 +13,23 @@ import org.w3c.dom.NamedNodeMap;
  * @author Lukas Stapelbroek
  */
 public final class CBMCResultValueSingle implements CBMCResultValue {
+    /** The Constant FLOAT. */
+    private static final String FLOAT = "float";
+    /** The Constant DOUBLE. */
+    private static final String DOUBLE = "double";
+    /** The Constant LONG. */
+    private static final String LONG = "long";
+    /** The Constant INT. */
+    private static final String INT = "int";
+    /** The Constant SHORT. */
+    private static final String SHORT = "short";
+    /** The Constant BYTE. */
+    private static final String BYTE = "byte";
+    /** The Constant CHAR. */
+    private static final String CHAR = "char";
+
     /** The Constant INT_LENGTH. */
     private static final int INT_LENGTH = 32;
-
     /** The Constant LONG_LENGTH. */
     private static final int LONG_LENGTH = 64;
 
@@ -140,12 +154,12 @@ public final class CBMCResultValueSingle implements CBMCResultValue {
     private static Number parseNumber(final String dataType,
                                       final String dataValue,
                                       final int dataWidth) {
-        if (dataType.contains("char") || dataType.contains("byte")
-                || dataType.contains("short") || dataType.contains("int")
-                || (dataType.contains("long") && (!dataType.contains("double")
-                        && !dataType.contains("float")))) {
+        if (dataType.contains(CHAR) || dataType.contains(BYTE)
+                || dataType.contains(SHORT) || dataType.contains(INT)
+                || (dataType.contains(LONG) && (!dataType.contains(DOUBLE)
+                        && !dataType.contains(FLOAT)))) {
             return parseNaturalNumber(dataValue, dataWidth);
-        } else if (dataType.contains("float") || dataType.contains("double")) {
+        } else if (dataType.contains(FLOAT) || dataType.contains(DOUBLE)) {
             return parseDecimalNumber(dataValue, dataWidth);
         } else {
             System.out.println("unknown type: " + dataType);

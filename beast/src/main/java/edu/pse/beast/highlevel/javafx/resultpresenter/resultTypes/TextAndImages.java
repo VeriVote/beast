@@ -32,6 +32,8 @@ import edu.pse.beast.toolbox.TextStyle;
  * @author Lukas Stapelbroek
  */
 public final class TextAndImages extends ResultPresentationType {
+    /** The Constant SERIF_FONT. */
+    private static final String SERIF_FONT = "Serif";
     /** The Constant DEFAULT_FONT_SIZE. */
     private static final int DEFAULT_FONT_SIZE = 12;
 
@@ -40,15 +42,13 @@ public final class TextAndImages extends ResultPresentationType {
 
     /** The Constant CANVAS_SIZE. */
     private static final int CANVAS_SIZE = 100;
+    /** The Constant OVAL_SIZE. */
+    private static final int OVAL_SIZE = 30;
 
     /** The Constant OVAL_X_COORD. */
     private static final int OVAL_X_COORD = 10;
-
     /** The Constant OVAL_Y_COORD. */
     private static final int OVAL_Y_COORD = 60;
-
-    /** The Constant OVAL_SIZE. */
-    private static final int OVAL_SIZE = 30;
 
     /** The styled text ops. */
     private final TextOps<String, TextStyle> styledTextOps =
@@ -59,15 +59,19 @@ public final class TextAndImages extends ResultPresentationType {
             new LinkedImageOps<TextStyle>();
 
     /** The area. */
-    private final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
-            new GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>(
+    private final GenericStyledArea<ParStyle,
+                                    Either<String, LinkedImage>,
+                                    TextStyle> area =
+            new GenericStyledArea<ParStyle,
+                                  Either<String, LinkedImage>,
+                                  TextStyle>(
                     // default paragraph style
                     ParStyle.EMPTY,
                 // paragraph style setter
                 (paragraph, style) -> paragraph.setStyle(style.toCss()),
                     TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
                     // default segment style
-                    .updateFontFamily("Serif").updateTextColor(Color.BLACK),
+                    .updateFontFamily(SERIF_FONT).updateTextColor(Color.BLACK),
                     // segment operations
                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
                 seg -> createNode(seg,
@@ -131,7 +135,7 @@ public final class TextAndImages extends ResultPresentationType {
                     (paragraph, style) -> paragraph.setStyle(style.toCss()),
                         TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
                         // default segment style
-                        .updateFontFamily("Serif").updateTextColor(Color.BLACK),
+                        .updateFontFamily(SERIF_FONT).updateTextColor(Color.BLACK),
                         // segment operations
                         styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
                     seg -> createNode(seg, // Node creator and segment

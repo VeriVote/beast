@@ -21,6 +21,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class SingleChoice extends CBMCInputType {
+    /** The Constant ZERO. */
+    private static final String ZERO = "0";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
@@ -42,9 +44,14 @@ public final class SingleChoice extends CBMCInputType {
         return "SINGLE_CHOICE";
     }
 
+    /**
+     * Gets the minimal value.
+     *
+     * @return the minimal value
+     */
     @Override
     public String getMinimalValue() {
-        return "0";
+        return ZERO;
     }
 
     @Override
@@ -77,11 +84,11 @@ public final class SingleChoice extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return "0";
+            return ZERO;
         }
         final String result;
         if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
-            result = "0";
+            result = ZERO;
         } else {
             result = newValue;
         }
@@ -91,7 +98,7 @@ public final class SingleChoice extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        // do not need to restrict
+        // No need to restrict.
     }
 
     @Override
@@ -120,35 +127,33 @@ public final class SingleChoice extends CBMCInputType {
 
     // @Override
     // public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-    // List<String> origResult) {
-    // code.add("int " + UnifiedNameContainer.getNewVotesName()
-    // + "1[" + UnifiedNameContainer.getVoter() + "];");
-    // code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-    // code.addTab();
-    // code.add("int changed = nondet_int();"); // determine, if we want to
-    // // changed votes for
-    // // this
-    // // voter
-    // code.add("assume(0 <= changed);");
-    // code.add("assume(changed <= 1);");
-    // code.add("if(changed) {");
-    // code.addTab();
-    // // if we changed the vote, we keep track of it
-    // code.add("total_diff++;");
-    // // flip the vote (0 -> 1 | 1 -> 0)
-    // code.add("" + UnifiedNameContainer.getNewVotesName()
-    // + "1[i] = !ORIG_VOTES[i];");
-    // code.deleteTab();
-    // code.add("} else {");
-    // code.addTab();
-    // code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] =
-    // ORIG_VOTES[i];");
-    // code.deleteTab();
-    // code.add("}");
-    // code.deleteTab();
-    // code.add("}");
-    // code.add("assume(total_diff <= MARGIN);"); // no more changes than
-    // // margin allows
+    //                                List<String> origResult) {
+    //     code.add("int " + UnifiedNameContainer.getNewVotesName()
+    //             + "1[" + UnifiedNameContainer.getVoter() + "];");
+    //     code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+    //     code.addTab();
+    //     code.add("int changed = nondet_int();"); // determine, if we want to
+    //     // changed votes for this voter
+    //     code.add("assume(0 <= changed);");
+    //     code.add("assume(changed <= 1);");
+    //     code.add("if(changed) {");
+    //     code.addTab();
+    //     // if we changed the vote, we keep track of it
+    //     code.add("total_diff++;");
+    //     // flip the vote (0 -> 1 | 1 -> 0)
+    //     code.add("" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i] = !ORIG_VOTES[i];");
+    //     code.deleteTab();
+    //     code.add("} else {");
+    //     code.addTab();
+    //     code.add("" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i] = ORIG_VOTES[i];");
+    //     code.deleteTab();
+    //     code.add("}");
+    //     code.deleteTab();
+    //     code.add("}");
+    //     code.add("assume(total_diff <= MARGIN);"); // no more changes than
+    //     // margin allows
     // }
 
     @Override

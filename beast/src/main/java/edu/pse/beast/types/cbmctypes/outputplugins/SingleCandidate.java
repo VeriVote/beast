@@ -15,6 +15,9 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
  * @author Lukas Stapelbroek
  */
 public final class SingleCandidate extends CBMCOutputType {
+    /** The Constant END_OF_STATEMENT. */
+    private static final String END_OF_STATEMENT = ");";
+
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 0;
 
@@ -50,7 +53,7 @@ public final class SingleCandidate extends CBMCOutputType {
                 + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
         code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == "
-                + UnifiedNameContainer.getOrigResultName() + ");");
+                + UnifiedNameContainer.getOrigResultName() + END_OF_STATEMENT);
         code.deleteTab();
         // end of the function
         code.add("}");
@@ -65,7 +68,7 @@ public final class SingleCandidate extends CBMCOutputType {
         code.add(electX + ";");
         code.add("elect" + voteNumber + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber
-                + ");");
+                + END_OF_STATEMENT);
         return code;
     }
 

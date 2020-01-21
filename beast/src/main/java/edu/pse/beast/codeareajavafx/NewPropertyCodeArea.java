@@ -31,6 +31,25 @@ import edu.pse.beast.toolbox.Tuple3;
  */
 public final class NewPropertyCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
+    /** The Constant PIPE. */
+    private static final String PIPE = "|";
+    /** The Constant QUERY. */
+    private static final String QUERY = "?";
+
+    /** The Constant LT_SIGN. */
+    private static final String LT_SIGN = "<";
+    /** The Constant GT_SIGN. */
+    private static final String GT_SIGN = ">";
+
+    /** The Constant OPENING_PARENTHESES. */
+    private static final String OPENING_PARENTHESES = "(";
+    /** The Constant CLOSING_PARENTHESES. */
+    private static final String CLOSING_PARENTHESES = ")";
+
+    /** The Constant OPENING_PATTERN. */
+    private static final String OPENING_PATTERN = "\\b(";
+    /** The Constant CLOSING_PATTERN. */
+    private static final String CLOSING_PATTERN = ")\\b";
 
     /** The Constant OPERATORS. */
     private static final String[] OPERATORS =
@@ -71,25 +90,25 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
 
     /** The Constant OPERATORS_PATTERN. */
     private static final String OPERATORS_PATTERN =
-            "(" + String.join("|", OPERATORS) + ")";
+            OPENING_PARENTHESES + String.join(PIPE, OPERATORS) + CLOSING_PARENTHESES;
 
     /** The Constant COMPARISON_PATTERN. */
     private static final String COMPARISON_PATTERN =
-            "(" + String.join("|", COMPARISON) + ")";
+            OPENING_PARENTHESES + String.join(PIPE, COMPARISON) + CLOSING_PARENTHESES;
 
     /** The Constant RELATION_PATTERN. */
     private static final String RELATION_PATTERN =
-            "(" + String.join("|", RELATION) + ")";
+            OPENING_PARENTHESES + String.join(PIPE, RELATION) + CLOSING_PARENTHESES;
 
     /** The Constant MACROS_PATTERN. */
     private static final String MACROS_PATTERN =
-            "\\b(" + String.join("|",
+            OPENING_PATTERN + String.join(PIPE,
                     Arrays.stream(MACROS).map(s -> s + "[0-9]+").toArray(String[]::new))
-            + ")\\b";
+            + CLOSING_PATTERN;
 
     /** The Constant QUANTIFIERS_PATTERN. */
     private static final String QUANTIFIERS_PATTERN =
-            "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
+            OPENING_PATTERN + String.join(PIPE, QUANTIFIERS) + CLOSING_PATTERN;
 
     /** The Constant PAREN_PATTERN. */
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -120,20 +139,27 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
 
     /** The Constant PATTERN. */
     private static final Pattern PATTERN =
-            Pattern.compile("(?<" + OPERATORS_STRING + ">"
-                                + OPERATORS_PATTERN + ")"
-                                + "|(?<" + RELATION_STRING + ">"
-                                + RELATION_PATTERN + ")"
-                                + "|(?<" + COMPARISON_STRING + ">"
-                                + COMPARISON_PATTERN + ")"
-                                + "|(?<" + MACROS_STRING + ">"
-                                + MACROS_PATTERN + ")"
-                                + "|(?<" + QUANTIFIERS_STRING + ">"
-                                + QUANTIFIERS_PATTERN + ")"
-                                + "|(?<" + PAREN_STRING + ">"
-                                + PAREN_PATTERN + ")"
-                                + "|(?<" + SEMICOLON_STRING + ">"
-                                + SEMICOLON_PATTERN + ")");
+            Pattern.compile(OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + OPERATORS_STRING + GT_SIGN
+                                + OPERATORS_PATTERN + CLOSING_PARENTHESES
+                                + PIPE + OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + RELATION_STRING + GT_SIGN
+                                + RELATION_PATTERN + CLOSING_PARENTHESES
+                                + PIPE + OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + COMPARISON_STRING + GT_SIGN
+                                + COMPARISON_PATTERN + CLOSING_PARENTHESES
+                                + PIPE + OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + MACROS_STRING + GT_SIGN
+                                + MACROS_PATTERN + CLOSING_PARENTHESES
+                                + PIPE + OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + QUANTIFIERS_STRING + GT_SIGN
+                                + QUANTIFIERS_PATTERN + CLOSING_PARENTHESES
+                                + PIPE + OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + PAREN_STRING + GT_SIGN
+                                + PAREN_PATTERN + CLOSING_PARENTHESES
+                                + PIPE + OPENING_PARENTHESES + QUERY
+                                + LT_SIGN + SEMICOLON_STRING + GT_SIGN
+                                + SEMICOLON_PATTERN + CLOSING_PARENTHESES);
 
     /** The Constant RESOURCE. */
     private static final String RESOURCE = "propertyAreaSyntaxHighlight.css";
