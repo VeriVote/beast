@@ -97,8 +97,8 @@ public final class CandidateList extends CBMCOutputType {
                 + CLOSING_BRACKETS + SEMICOLON);
         // Iterate over the seat array, and
         code.add(CCodeHelper.FOR + BLANK + OPENING_PARENTHESES
-                + CCodeHelper.INT + BLANK + I + BLANK
-                + EQUALS_SIGN + BLANK + ZERO + SEMICOLON + BLANK
+                + CCodeHelper.INT + BLANK + I + BLANK + EQUALS_SIGN + BLANK
+                + ZERO + SEMICOLON + BLANK
                 + I + BLANK + LT_SIGN + BLANK
                 + UnifiedNameContainer.getCandidate() + SEMICOLON
                 + BLANK + I + PLUS_PLUS + CLOSING_PARENTHESES
