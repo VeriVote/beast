@@ -486,7 +486,7 @@ public class CBMCCodeGenerator {
         List<String> loopVariables = generateLoopVariables(dimensions, "arr");
         for (int i = 0; i < dimensions; i++) { // add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
-                    sizes[i]);
+                                                  sizes[i]);
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
@@ -509,7 +509,7 @@ public class CBMCCodeGenerator {
 
         // add the specific code which differs for different input types
         electionDesc.getContainer().getInputType().addCodeForVoteSum(code,
-                unique);
+                                                                     unique);
         code.add("}");
         code.add("return sum;");
         code.add("}");
@@ -547,16 +547,16 @@ public class CBMCCodeGenerator {
                 + " toReturn;");
         code.add("  ");
         code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "C"));
-        code.add("    toReturn.arr[i] = 0;");
-        code.add("  }");
+        code.add("    " + "toReturn.arr[i] = 0;");
+        code.add("  " + "}");
         code.add("  ");
         code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "C"));
-        code.add("    if (one.arr[i] && two.arr[i]) {");
-        code.add("      toReturn.arr[i] = 1;");
-        code.add("    }");
-        code.add("  }");
+        code.add("    " + "if (one.arr[i] && two.arr[i]) {");
+        code.add("      " + "toReturn.arr[i] = 1;");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
-        code.add("  return toReturn;");
+        code.add("  " + "return toReturn;");
         code.add("}");
     }
 
@@ -605,12 +605,12 @@ public class CBMCCodeGenerator {
         code.add("assume(new_index != already_used_arr[j]);");
         code.add("}");
         code.add("    ");
-        code.add("    already_used_arr[i] = new_index;");
+        code.add("    " + "already_used_arr[i] = new_index;");
         code.add("    ");
         code.add("    " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add("      sub_arr.arr[new_index][j] = votes.arr[i][j];");
-        code.add("    }");
-        code.add("  }");
+        code.add("      " + "sub_arr.arr[new_index][j] = votes.arr[i][j];");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
         code.add(voteStruct + " toReturn;");
         code.add("    ");
@@ -618,11 +618,11 @@ public class CBMCCodeGenerator {
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add("      toReturn.arr[i][j] = sub_arr.arr[i][j];");
-        code.add("    }");
-        code.add("  }");
+        code.add("      " + "toReturn.arr[i][j] = sub_arr.arr[i][j];");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("    ");
-        code.add("  return toReturn;");
+        code.add("  " + "return toReturn;");
         code.add("}");
     }
 
@@ -643,37 +643,37 @@ public class CBMCCodeGenerator {
                 + " votes, unsigned int length) {");
         code.add(voteStruct + " sub_arr;");
         code.add("  ");
-        code.add(" unsigned int already_used_arr[V];");
+        code.add(" " + "unsigned int already_used_arr[V];");
         code.add("    ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                 + " //set all to C in the beginning");
-        code.add("    sub_arr.arr[i] = C;");
-        code.add("  }");
+        code.add("    " + "sub_arr.arr[i] = C;");
+        code.add("  " + "}");
         code.add("  ");
         code.add("  ");
         code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "length"));
-        code.add("    unsigned int new_index = nondet_uint();");
-        code.add("    assume((new_index >= 0) && (new_index < length));");
+        code.add("    " + "unsigned int new_index = nondet_uint();");
+        code.add("    " + "assume((new_index >= 0) && (new_index < length));");
         code.add("    ");
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "i"));
-        code.add("      assume(new_index != already_used_arr[j]);");
-        code.add("    }");
+        code.add("      " + "assume(new_index != already_used_arr[j]);");
+        code.add("    " + "}");
         code.add("    ");
-        code.add("    already_used_arr[i] = new_index;");
+        code.add("    " + "already_used_arr[i] = new_index;");
         code.add("    ");
-        code.add("    sub_arr.arr[new_index] = votes.arr[i];");
-        code.add("  }");
+        code.add("    " + "sub_arr.arr[new_index] = votes.arr[i];");
+        code.add("  " + "}");
         code.add("  ");
         code.add(voteStruct + " toReturn;");
         code.add("    ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-        code.add("    toReturn.arr[i] = sub_arr.arr[i];");
-        code.add("  }");
+        code.add("    " + "toReturn.arr[i] = sub_arr.arr[i];");
+        code.add("  " + "}");
         code.add("    ");
-        code.add("  return toReturn;");
+        code.add("  " + "return toReturn;");
         code.add("  ");
         code.add("}");
         code.add();
@@ -711,31 +711,31 @@ public class CBMCCodeGenerator {
                 + " //set all to C in the beginning");
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add("      sub_arr.arr[i][j] = C;");
-        code.add("    }");
-        code.add("  }");
+        code.add("      " + "sub_arr.arr[i][j] = C;");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeOne")
                 + " //limit the size to the upper bound V");
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add("      if (i < V) {");
-        code.add("        sub_arr.arr[i][j] = votesOne.arr[i][j];");
-        code.add("      }");
-        code.add("    }");
-        code.add("  }");
+        code.add("      " + "if (i < V) {");
+        code.add("        " + "sub_arr.arr[i][j] = votesOne.arr[i][j];");
+        code.add("      " + "}");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeTwo")
                 + " //limit the size to the upper bound V");
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add("      if (sizeTwo + i < V) {");
-        code.add("        sub_arr.arr[i][j] = votesTwo.arr[i][j];");
-        code.add("      }");
-        code.add("    }");
-        code.add("  }");
+        code.add("      " + "if (sizeTwo + i < V) {");
+        code.add("        " + "sub_arr.arr[i][j] = votesTwo.arr[i][j];");
+        code.add("      " + "}");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
         code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
                 + " toReturn;");
@@ -744,11 +744,11 @@ public class CBMCCodeGenerator {
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add("      toReturn.arr[i][j] = sub_arr.arr[i][j];");
-        code.add("    }");
-        code.add("  }");
+        code.add("      " + "toReturn.arr[i][j] = sub_arr.arr[i][j];");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("    ");
-        code.add("  return toReturn;");
+        code.add("  " + "return toReturn;");
         code.add("}");
     }
 
@@ -772,33 +772,33 @@ public class CBMCCodeGenerator {
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                 + " //set all to C in the beginning");
-        code.add("    sub_arr.arr[i] = C;");
-        code.add("  }");
+        code.add("    " + "sub_arr.arr[i] = C;");
+        code.add("  " + "}");
         code.add("  ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeOne")
                 + " //limit the size to the upper bound V");
-        code.add("    if (i < V) {");
-        code.add("      sub_arr.arr[i] = votesOne.arr[i];");
-        code.add("    }");
-        code.add("  }");
+        code.add("    " + "if (i < V) {");
+        code.add("      " + "sub_arr.arr[i] = votesOne.arr[i];");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeTwo")
                 + " //limit the size to the upper bound V");
-        code.add("    if (sizeOne + i < V) {");
-        code.add("      sub_arr.arr[sizeOne + i] = votesTwo.arr[i];");
-        code.add("    }");
-        code.add("  }");
+        code.add("    " + "if (sizeOne + i < V) {");
+        code.add("      " + "sub_arr.arr[sizeOne + i] = votesTwo.arr[i];");
+        code.add("    " + "}");
+        code.add("  " + "}");
         code.add("  ");
-        code.add(voteStruct + " toReturn;");
+        code.add(voteStruct + " " + "toReturn;");
         code.add("    ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-        code.add("    toReturn.arr[i] = sub_arr.arr[i];");
-        code.add("  }");
+        code.add("    " + "toReturn.arr[i] = sub_arr.arr[i];");
+        code.add("  " + "}");
         code.add("    ");
-        code.add("  return toReturn;");
+        code.add("  " + "return toReturn;");
         code.add("  ");
         code.add("}");
         code.add();
@@ -811,39 +811,37 @@ public class CBMCCodeGenerator {
         code.add("//split array");
         code.add();
         code.add("//get splits cuts through an array of size max");
-        code.add(
-                "unsigned int *getRandomSplitLines(unsigned int splits, unsigned int max) {");
-        code.add(
-                "  unsigned int *split_arr = malloc(splits * sizeof(*split_arr));");
+        code.add("unsigned int *getRandomSplitLines(unsigned int splits, unsigned int max) {");
+        code.add("  " + "unsigned int *split_arr = malloc(splits * sizeof(*split_arr));");
         code.add("  ");
-        code.add("  if (splits == 1) {");
-        code.add("    unsigned int next_split = nondet_uint();");
-        code.add("    assume(next_split >= 0);");
-        code.add("    assume(next_split <= (max / 2));");
+        code.add("  " + "if (splits == 1) {");
+        code.add("    " + "unsigned int next_split = nondet_uint();");
+        code.add("    " + "assume(next_split >= 0);");
+        code.add("    " + "assume(next_split <= (max / 2));");
         code.add("    ");
-        code.add("    split_arr[0] = next_split;");
-        code.add("  } else {");
-        code.add("    unsigned int last_split = 0;");
-        code.add("    for (int i = 0; i < splits; i++) {");
+        code.add("    " + "split_arr[0] = next_split;");
+        code.add("  " + "} else {");
+        code.add("    " + "unsigned int last_split = 0;");
+        code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "splits"));
         code.add("      ");
-        code.add("      unsigned int next_split = nondet_uint();");
-        code.add("      assume(next_split >= last_split);");
-        code.add("      assume(next_split <= max);");
+        code.add("      " + "unsigned int next_split = nondet_uint();");
+        code.add("      " + "assume(next_split >= last_split);");
+        code.add("      " + "assume(next_split <= max);");
         code.add("      ");
         code.add("      ");
         code.add("      ");
-        code.add("      split_arr[i] = next_split;");
-        code.add("      last_split = next_split;");
-        code.add("    }");
+        code.add("      " + "split_arr[i] = next_split;");
+        code.add("      " + "last_split = next_split;");
+        code.add("    " + "}");
         code.add("    ");
-        code.add("    unsigned int *splitLines;");
-        code.add("    splitLines = split_arr;");
+        code.add("    " + "unsigned int *splitLines;");
+        code.add("    " + "splitLines = split_arr;");
         code.add("    ");
-        code.add("    for (int i = 0; i < splits; i++) {");
-        code.add("      unsigned int debugrandom = splitLines[i];");
-        code.add("    }");
-        code.add("  }");
-        code.add("  return split_arr;");
+        code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "splits"));
+        code.add("      " + "unsigned int debugrandom = splitLines[i];");
+        code.add("    " + "}");
+        code.add("  " + "}");
+        code.add("  " + "return split_arr;");
         code.add("}");
         code.add();
         code.add("//start is inclusive, stop is exclusive");
@@ -860,39 +858,40 @@ public class CBMCCodeGenerator {
                     + "unsigned int start, unsigned int stop) {");
             code.add(voteStruct + " sub_arr;");
             code.add("  ");
-            code.add(
-                    "  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-            code.add("    sub_arr.arr[i] = C;");
-            code.add("  }");
+            code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
+                    + " //set all to C in the beginning");
+            code.add("    " + "sub_arr.arr[i] = C;");
+            code.add("  " + "}");
             code.add("  ");
-            code.add("  if(start == stop) { //the sub array should be empty");
-            code.add(electionDesc.getContainer().getInputStruct()
-                    .getStructAccess() + " toReturn;");
-            code.add("    ");
-            code.add("    for (int i = 0; i < V; i++) {");
-            code.add("      toReturn.arr[i] = sub_arr.arr[i];");
-            code.add("    }");
-            code.add("    ");
-            code.add("    return toReturn;");
-            code.add("  } else {");
-            code.add();
-            code.add("    "
-                    + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-            code.add("      if ((i >= start) && (i < stop)) {");
-            code.add("        sub_arr.arr[i - start] = votes.arr[i];");
-            code.add("      }");
-            code.add("    }");
-            code.add("  ");
-            code.add("    ");
+            code.add("  " + "if(start == stop) {"
+                    + " //the sub array should be empty");
             code.add(electionDesc.getContainer().getInputStruct()
                     .getStructAccess() + " toReturn;");
             code.add("    ");
             code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-            code.add("      toReturn.arr[i] = sub_arr.arr[i];");
-            code.add("    }");
+            code.add("      " + "toReturn.arr[i] = sub_arr.arr[i];");
+            code.add("    " + "}");
             code.add("    ");
-            code.add("    return toReturn;");
-            code.add("  }");
+            code.add("    " + "return toReturn;");
+            code.add("  " + "} else {");
+            code.add();
+            code.add("    "
+                    + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
+            code.add("      " + "if ((i >= start) && (i < stop)) {");
+            code.add("        " + "sub_arr.arr[i - start] = votes.arr[i];");
+            code.add("      " + "}");
+            code.add("    " + "}");
+            code.add("  ");
+            code.add("    ");
+            code.add(electionDesc.getContainer().getInputStruct()
+                    .getStructAccess() + " " + "toReturn;");
+            code.add("    ");
+            code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
+            code.add("      " + "toReturn.arr[i] = sub_arr.arr[i];");
+            code.add("    " + "}");
+            code.add("    ");
+            code.add("    " + "return toReturn;");
+            code.add("  " + "}");
             code.add("}");
             code.add();
         }
@@ -906,50 +905,50 @@ public class CBMCCodeGenerator {
 
             code.add("//start is inclusive, stop is exclusive");
             code.add("//used for 2 dim arrays");
-            code.add(voteStruct + " split(" + voteStruct + " votes, "
+            code.add(voteStruct + " " + "split(" + voteStruct + " votes, "
                     + "unsigned int start, unsigned int stop) {");
-            code.add(voteStruct + " sub_arr;");
+            code.add(voteStruct + " " + "sub_arr;");
             code.add("  ");
             code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                     + " //set all to C in the beginning");
             code.add("    " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-            code.add("      sub_arr.arr[i][j] = C;");
-            code.add("    }");
-            code.add("  }");
+            code.add("      " + "sub_arr.arr[i][j] = C;");
+            code.add("    " + "}");
+            code.add("  " + "}");
             code.add("  ");
-            code.add("  if(start == stop) { //the sub array should be empty");
+            code.add("  " + "if(start == stop) { //the sub array should be empty");
             code.add(electionDesc.getContainer().getInputStruct()
                     .getStructAccess() + " toReturn;");
             code.add("    ");
             code.add("    "
                     + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "V"));
-            code.add("        toReturn.arr[i][j] = sub_arr.arr[i][j];");
-            code.add("      }");
-            code.add("    }");
+            code.add("        " + "toReturn.arr[i][j] = sub_arr.arr[i][j];");
+            code.add("      " + "}");
+            code.add("    " + "}");
             code.add("    ");
-            code.add("    return toReturn;");
-            code.add("  } else {");
+            code.add("    " + "return toReturn;");
+            code.add("  " + "} else {");
             code.add();
             code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-            code.add("      if ((i >= start) && (i < stop)) {");
+            code.add("      " + "if ((i >= start) && (i < stop)) {");
             code.add("        " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-            code.add("          sub_arr.arr[i - start][j] = votes.arr[i][j];");
-            code.add("        }");
-            code.add("      }");
-            code.add("    }");
+            code.add("          " + "sub_arr.arr[i - start][j] = votes.arr[i][j];");
+            code.add("        " + "}");
+            code.add("      " + "}");
+            code.add("    " + "}");
             code.add("    ");
             code.add(electionDesc.getContainer().getInputStruct()
-                    .getStructAccess() + " toReturn;");
+                    .getStructAccess() + " " + "toReturn;");
             code.add("    ");
             code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-            code.add("      for(int j = 0; j < V; j++) {");
-            code.add("        toReturn.arr[i][j] = sub_arr.arr[i][j];");
-            code.add("      }");
-            code.add("    }");
+            code.add("      " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "V"));
+            code.add("        " + "toReturn.arr[i][j] = sub_arr.arr[i][j];");
+            code.add("      " + "}");
+            code.add("    " + "}");
             code.add("    ");
-            code.add("    return toReturn;");
-            code.add("  }");
+            code.add("    " + "return toReturn;");
+            code.add("  " + "}");
             code.add("}");
             code.add();
         }
@@ -1039,7 +1038,7 @@ public class CBMCCodeGenerator {
             code.add("//election number: " + i);
             String sizeOfVotes = UnifiedNameContainer.getVoter() + i;
             String electX = electionDesc.getContainer().getOutputStruct()
-                    .getStructAccess() + " elect" + i + " = "
+                    .getStructAccess() + " " + "elect" + i + " " + "=" + " "
                     + UnifiedNameContainer.getVotingMethod() + "(" + sizeOfVotes
                     + ", votes" + i + ");";
             code.add(electX);
@@ -1151,8 +1150,8 @@ public class CBMCCodeGenerator {
      *            the id
      */
     private void reportUnsupportedType(final String id) {
-        ErrorLogger.log("Der Typ der symbolischen Variable " + id
-                        + " wird nicht unterstützt.");
+        ErrorLogger.log("The type of the symbolic variable " + id
+                        + " is not supported.");
     }
 
     /**
