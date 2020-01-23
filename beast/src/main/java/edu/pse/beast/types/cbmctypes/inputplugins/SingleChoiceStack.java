@@ -1,11 +1,26 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.eq;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.leq;
+import static edu.pse.beast.toolbox.CCodeHelper.lt;
+import static edu.pse.beast.toolbox.CCodeHelper.plus;
+import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
+import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -21,15 +36,22 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class SingleChoiceStack extends CBMCInputType {
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
+    /** The Constant ABS_FUNC. */
+    private static final String ABS_FUNC = "abs";
+    /** The Constant TOTAL_DIFF. */
+    private static final String TOTAL_DIFF = "total_diff";
+    /** The Constant TMP_DIFF. */
+    private static final String TMP_DIFF = "tmp_diff";
+    /** The Constant TMP_RESTR_SUM. */
+    private static final String TMP_RESTR_SUM = "tmp_restr_sum";
+
+    /** The Constant NONDET_LONG. */
+    private static final String NONDET_LONG = "nondet_long";
+    /** The Constant MARGIN. */
+    private static final String MARGIN = "MARGIN";
+
     /** The Constant FIVE. */
     private static final int FIVE = 5;
-
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
@@ -53,7 +75,7 @@ public final class SingleChoiceStack extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return ZERO;
+        return zero();
     }
 
     @Override
@@ -120,18 +142,18 @@ public final class SingleChoiceStack extends CBMCInputType {
             try {
                 number = Integer.parseInt(newValue);
             } catch (NumberFormatException e) {
-                return ZERO;
+                return zero();
             }
             if (number < 0
                     || number > rows.get(rowNumber).getAmountVoters()) {
-                value = ZERO;
+                value = zero();
             } else {
                 final int totalSum =
                         computeTotalSum(rows, rowNumber, positionInRow, newValue);
                 if (totalSum > rows.get(rowNumber).getAmountVoters()) {
                     // we would exceed the limit with this addition, so
                     // we reset to 0
-                    value = ZERO;
+                    value = zero();
                 } else {
                     value = newValue;
                 }
@@ -147,31 +169,47 @@ public final class SingleChoiceStack extends CBMCInputType {
                          final CodeArrayListBeautifier code) {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
-        code.add("");
-        code.add("long tmp_diff = nondet_long();");
-        code.add("");
-        code.add("assume(abs(tmp_diff) <= MARGIN);");
-        code.add("assume(0 <= (" + origVotesNameAcc + " + tmp_diff));");
-        code.add("if(tmp_diff < 0) " + OPENING_BRACES);
-        code.add("");
-        code.add("assume(abs(tmp_diff) <= " + origVotesNameAcc + ");");
-        code.add("");
-        code.add(CLOSING_BRACES);
-        code.add(newVotesNameAcc + " = " + origVotesNameAcc + " + tmp_diff;");
-        code.add("");
-        code.add("pos_diff = total_diff  + abs(tmp_diff);");
-        code.add("total_diff += tmp_diff;");
+        code.add();
+        code.add(varAssignCode(CCodeHelper.LONG + CCodeHelper.BLANK + TMP_DIFF,
+                               functionCode(NONDET_LONG))
+                + CCodeHelper.SEMICOLON);
+        code.add();
+        code.add(functionCode(ASSUME,
+                              leq(functionCode(ABS_FUNC, TMP_DIFF),
+                                  MARGIN))
+                + CCodeHelper.SEMICOLON);
+        code.add(functionCode(ASSUME, leq(zero(), plus(origVotesNameAcc, TMP_DIFF)))
+                + CCodeHelper.SEMICOLON);
+        code.add(functionCode(CCodeHelper.IF, lt(TMP_DIFF, zero()))
+                + CCodeHelper.OPENING_BRACES);
+        code.add();
+        code.add(functionCode(ASSUME,
+                              leq(functionCode(ABS_FUNC, TMP_DIFF),
+                                  origVotesNameAcc))
+                + CCodeHelper.SEMICOLON);
+        code.add();
+        code.add(CCodeHelper.CLOSING_BRACES);
+        code.add(varAssignCode(newVotesNameAcc, plus(origVotesNameAcc, TMP_DIFF))
+                + CCodeHelper.SEMICOLON);
+        code.add();
+        code.add(varAssignCode(POS_DIFF,
+                               plus(TOTAL_DIFF, functionCode(ABS_FUNC, TMP_DIFF)))
+                + CCodeHelper.SEMICOLON);
+        code.add(plusEquals(TOTAL_DIFF, TMP_DIFF) + CCodeHelper.SEMICOLON);
     }
 
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add("unsigned int tmp_restr_sum = 0;");
-        code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) " + OPENING_BRACES);
-        code.add("tmp_restr_sum = tmp_restr_sum + " + voteName
-                + ".arr[loop_r_0];");
-        code.add(CLOSING_BRACES);
-        code.add("assume(tmp_restr_sum <= V);");
+        code.add(varAssignCode(varEqualsCode(TMP_RESTR_SUM), zero())
+                + CCodeHelper.SEMICOLON);
+        code.add(forLoopHeaderCode(LOOP_R_0, CCodeHelper.LT_SIGN, C));
+        code.add(plusEquals(TMP_RESTR_SUM,
+                            dotArrStructAccess(voteName, LOOP_R_0))
+                + CCodeHelper.SEMICOLON);
+        code.add(CCodeHelper.CLOSING_BRACES);
+        code.add(functionCode(ASSUME, leq(TMP_RESTR_SUM, V))
+                + CCodeHelper.SEMICOLON);
     }
 
     @Override
@@ -201,7 +239,8 @@ public final class SingleChoiceStack extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add("if(arr[i] == candidate) sum++;");
+        code.add(functionCode(CCodeHelper.IF, eq(arrAccess(ARR, I), CANDIDATE))
+                + CCodeHelper.BLANK + plusPlus(SUM) + CCodeHelper.SEMICOLON);
     }
 
     @Override
@@ -252,7 +291,7 @@ public final class SingleChoiceStack extends CBMCInputType {
         List<String> values = row.getValues();
         String value = values.get(0);
         CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
-        toReturn.setValue("int", value, INT_LENGTH);
+        toReturn.setValue(CCodeHelper.INT, value, INT_LENGTH);
         return toReturn;
     }
 

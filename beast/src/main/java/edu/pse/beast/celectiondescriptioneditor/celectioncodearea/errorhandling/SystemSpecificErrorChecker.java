@@ -61,7 +61,8 @@ public abstract class SystemSpecificErrorChecker {
     /**
      * If gcc finds that a function is missing, it gets displayed like this.
      */
-    static final String GCC_MISSING_FUNCTION_FOUND = "warning: implicit declaration of function";
+    static final String GCC_MISSING_FUNCTION_FOUND =
+            "warning: implicit declaration of function";
 
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
@@ -76,7 +77,8 @@ public abstract class SystemSpecificErrorChecker {
         // sometimes they persist from the last time when BEAST was run.
         try {
             final String dummy = "dummy.file";
-            cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER),
+            cleanDirectory(new File(SuperFolderFinder.getSuperFolder()
+                                    + PATH_TO_TEMP_FOLDER),
                            dummy);
         } catch (IOException e) {
             e.printStackTrace();

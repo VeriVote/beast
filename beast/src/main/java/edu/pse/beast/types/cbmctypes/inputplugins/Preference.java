@@ -1,5 +1,15 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.eq;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.neq;
+import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,6 +18,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -25,19 +36,10 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class Preference extends CBMCInputType {
-    /** The Constant DOT. */
-    private static final String DOT = ".";
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
-
-    /** The Constant OPENING_BRACKETS. */
-    private static final String OPENING_BRACKETS = "[";
-    /** The Constant CLOSING_BRACKETS. */
-    private static final String CLOSING_BRACKETS = "]";
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
+    /** The Constant LOOP_R_1. */
+    private static final String LOOP_R_1 = "loop_r_1";
+    /** The Constant LOOP_R_2. */
+    private static final String LOOP_R_2 = "loop_r_2";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
@@ -62,7 +64,7 @@ public final class Preference extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return ZERO;
+        return zero();
     }
 
     @Override
@@ -95,13 +97,13 @@ public final class Preference extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return ZERO;
+            return zero();
         }
         final String result;
         if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
-            result = ZERO;
+            result = zero();
         } else if (row.get(rowNumber).getValues().contains(newValue)) {
-            result = ZERO;
+            result = zero();
         } else {
             result = newValue;
         }
@@ -111,16 +113,20 @@ public final class Preference extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add("for(int loop_r_0 = 0; loop_r_0 < V; loop_r_0++) " + OPENING_BRACES);
-        code.add("for(int loop_r_1 = 0; loop_r_1 < C; loop_r_1++) " + OPENING_BRACES);
-        code.add("for(int loop_r_2 = 0; loop_r_2 < C; loop_r_2++) " + OPENING_BRACES);
-        code.add("if (loop_r_1 != loop_r_2) " + OPENING_BRACES);
-        code.add("assume(" + voteName + ".arr[loop_r_0][loop_r_1] != "
-                + voteName + ".arr[loop_r_0][loop_r_2]);");
-        code.add(CLOSING_BRACES);
-        code.add(CLOSING_BRACES);
-        code.add(CLOSING_BRACES);
-        code.add(CLOSING_BRACES);
+        code.add(forLoopHeaderCode(LOOP_R_0, CCodeHelper.LT_SIGN, V));
+        code.add(forLoopHeaderCode(LOOP_R_1, CCodeHelper.LT_SIGN, C));
+        code.add(forLoopHeaderCode(LOOP_R_2, CCodeHelper.LT_SIGN, C));
+
+        code.add(functionCode(CCodeHelper.IF, neq(LOOP_R_1, LOOP_R_2))
+                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
+        code.add(functionCode(ASSUME,
+                              neq(dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_1),
+                                  dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_2))
+                ) + CCodeHelper.SEMICOLON);
+        code.add(CCodeHelper.CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
     }
 
     @Override
@@ -196,27 +202,30 @@ public final class Preference extends CBMCInputType {
                                             final String valueName,
                                             final List<String> loopVariables) {
         String ownLoopVar = code.getNotUsedVarName("j_prime");
-
-        String loopHead = "for (unsigned int " + ownLoopVar + " = 0; "
-                + ownLoopVar + " < " + loopVariables.get(1) + "; " + ownLoopVar
-                + "++) " + OPENING_BRACES;
+        String loopHead = forLoopHeaderCode(ownLoopVar, CCodeHelper.LT_SIGN,
+                                            loopVariables.get(1));
         code.add(loopHead);
-
-        code.add("assume (" + valueName + DOT
-                + UnifiedNameContainer.getStructValueName()
-                + OPENING_BRACKETS + loopVariables.get(0) + CLOSING_BRACKETS
-                + OPENING_BRACKETS + loopVariables.get(1) + CLOSING_BRACKETS
-                + " != " + valueName + DOT + UnifiedNameContainer.getStructValueName()
-                + OPENING_BRACKETS + loopVariables.get(0) + CLOSING_BRACKETS
-                + OPENING_BRACKETS + ownLoopVar + CLOSING_BRACKETS + ");");
+        code.add(functionCode(
+                    ASSUME,
+                    neq(dotStructAccess(valueName,
+                                        UnifiedNameContainer.getStructValueName(),
+                                        loopVariables.get(0), loopVariables.get(1)),
+                        dotStructAccess(valueName,
+                                        UnifiedNameContainer.getStructValueName(),
+                                        loopVariables.get(0), ownLoopVar)))
+                + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
     }
 
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add("if(arr[i][0] == candidate) sum++;");
+        code.add(functionCode(CCodeHelper.IF,
+                              eq(arrAccess("arr", I, zero()),
+                                 "candidate")
+                ) + CCodeHelper.BLANK + plusPlus("sum")
+                + CCodeHelper.SEMICOLON);
     }
 
     @Override
@@ -265,7 +274,7 @@ public final class Preference extends CBMCInputType {
             String value = iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
-            toWrap.setValue("int", value, INT_LENGTH);
+            toWrap.setValue(CCodeHelper.INT, value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }
         final CBMCResultValueArray toReturn = new CBMCResultValueArray();

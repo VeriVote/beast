@@ -1,11 +1,18 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.eq;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -21,9 +28,6 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class SingleChoice extends CBMCInputType {
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
-
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
 
@@ -51,7 +55,7 @@ public final class SingleChoice extends CBMCInputType {
      */
     @Override
     public String getMinimalValue() {
-        return ZERO;
+        return zero();
     }
 
     @Override
@@ -84,11 +88,11 @@ public final class SingleChoice extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return ZERO;
+            return zero();
         }
         final String result;
         if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
-            result = ZERO;
+            result = zero();
         } else {
             result = newValue;
         }
@@ -159,7 +163,10 @@ public final class SingleChoice extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add("if(arr[i] == candidate) sum++;");
+        code.add(functionCode(CCodeHelper.IF,
+                              eq(arrAccess(ARR, I), CANDIDATE))
+                + CCodeHelper.BLANK + plusPlus(SUM)
+                + CCodeHelper.SEMICOLON);
     }
 
     @Override
@@ -201,7 +208,7 @@ public final class SingleChoice extends CBMCInputType {
         final List<String> values = row.getValues();
         final String value = values.get(0);
         CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
-        toReturn.setValue("int", value, INT_LENGTH);
+        toReturn.setValue(CCodeHelper.INT, value, INT_LENGTH);
         return toReturn;
     }
 

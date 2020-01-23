@@ -1,5 +1,16 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.leq;
+import static edu.pse.beast.toolbox.CCodeHelper.neq;
+import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,6 +19,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -25,9 +37,6 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
  * @author Lukas Stapelbroek
  */
 public final class Approval extends CBMCInputType {
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
-
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
 
@@ -51,12 +60,12 @@ public final class Approval extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return ZERO;
+        return CCodeHelper.zero();
     }
 
     @Override
     public String getMaximalValue() {
-        return "1";
+        return CCodeHelper.one();
     }
 
     @Override
@@ -84,10 +93,10 @@ public final class Approval extends CBMCInputType {
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
-            return ZERO;
+            return CCodeHelper.zero();
         }
         if (number != 0 && number != 1) {
-            return ZERO;
+            return CCodeHelper.zero();
         } else {
             return newValue;
         }
@@ -111,54 +120,57 @@ public final class Approval extends CBMCInputType {
 
     // @Override
     // public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-    // List<String> origResult) {
-    // code.add("int " + UnifiedNameContainer.getNewVotesName() +
-    // "1[UnifiedNameContainer.getVoter()][UnifiedNameContainer.getCandidate()];");
+    //                                List<String> origResult) {
+    //     code.add("int " + UnifiedNameContainer.getNewVotesName()
+    //             + "1[UnifiedNameContainer.getVoter()]"
+    //             + "[UnifiedNameContainer.getCandidate()];");
     //
-    // code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-    // code.addTab();
-    // code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-    // code.addTab();
-    // code.add("int changed = nondet_int();"); // determine, if we want to
-    // // changed votes for
-    // // this
-    // // voter - candidate
-    // // pair
-    // code.add("assume(0 <= changed);");
-    // code.add("assume(changed <= 1);");
-    // code.add("if(changed) {");
-    // code.addTab();
-    // code.add("total_diff++;"); // if we changed the vote, we keep track
-    // // of it
-    // code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] =
-    // !ORIG_VOTES[i][j];"); // flip the vote
-    // // (0 -> 1 |
-    // // 1 -> 0)
-    // code.deleteTab();
-    // code.add("} else {");
-    // code.addTab();
-    // code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] =
-    // ORIG_VOTES[i][j];");
-    // code.deleteTab();
-    // code.add("}");
-    // code.deleteTab();
-    // code.add("}");
-    // code.deleteTab();
-    // code.add("}"); // end of the double for loop
-    // code.add("assume(total_diff <= MARGIN);"); // no more changes than
-    // // margin allows
+    //     code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+    //     code.addTab();
+    //     code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+    //     code.addTab();
+    //     code.add("int changed = nondet_int();"); // determine, if we want to
+    //                                              // changed votes for this
+    //                                              // voter - candidate pair
+    //     code.add("assume(0 <= changed);");
+    //     code.add("assume(changed <= 1);");
+    //     code.add("if(changed) {");
+    //     code.addTab();
+    //     code.add("total_diff++;"); // if we changed the vote, we keep track
+    //     // of it
+    //     code.add("" + UnifiedNameContainer.getNewVotesName()
+    //             + "1[i][j] = !ORIG_VOTES[i][j];"); // flip the vote
+    //     // (0 -> 1 | 1 -> 0)
+    //     code.deleteTab();
+    //     code.add("} else {");
+    //     code.addTab();
+    //     code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] =
+    //     ORIG_VOTES[i][j];");
+    //     code.deleteTab();
+    //     code.add("}");
+    //     code.deleteTab();
+    //     code.add("}");
+    //     code.deleteTab();
+    //     code.add("}"); // end of the double for loop
+    //     code.add("assume(total_diff <= MARGIN);"); // no more changes than
+    //     // margin allows
     // }
 
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add("unsigned int candSum = arr[i][candidate];");
+        code.add(varEqualsCode(CAND_SUM) + arrAccess(ARR, I, CANDIDATE));
         if (unique) {
-            code.add("for(unsigned int j = 0; j < C; ++i) {");
-            code.add("if(j != candidate && arr[i][j] >= candSum) candSum = 0;");
-            code.add("}");
+            code.add(forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
+            code.add(functionCode(CCodeHelper.IF,
+                                  conjunct(neq(J, CANDIDATE),
+                                           leq(CAND_SUM,
+                                               arrAccess(ARR, I, J))))
+                    + CCodeHelper.BLANK + varAssignCode(CAND_SUM, zero())
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
         }
-        code.add("sum += candSum;");
+        code.add(plusEquals(SUM, CAND_SUM) + CCodeHelper.SEMICOLON);
     }
 
     @Override
@@ -208,7 +220,7 @@ public final class Approval extends CBMCInputType {
             final String value = iterator.next();
             final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
-            toWrap.setValue("int", value, INT_LENGTH);
+            toWrap.setValue(CCodeHelper.INT, value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }
         final CBMCResultValueArray toReturn = new CBMCResultValueArray();
@@ -227,6 +239,6 @@ public final class Approval extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        // no extra needed
+        // No extra needed
     }
 }

@@ -40,7 +40,7 @@ public class CodeArrayListBeautifier {
      */
     public void add(final String addedString) {
         if (addedString != null) {
-            if (addedString.contains("}")) {
+            if (addedString.contains(CCodeHelper.CLOSING_BRACES)) {
                 Math.max(0, numberOfTabs--);
             }
             String tabbed = "";
@@ -48,10 +48,17 @@ public class CodeArrayListBeautifier {
                 tabbed += TAB;
             }
             code.add(tabbed + addedString);
-            if (addedString.contains("{")) {
+            if (addedString.contains(CCodeHelper.OPENING_BRACES)) {
                 numberOfTabs++;
             }
         }
+    }
+
+    /**
+     * Adds an empty line to the ArrayList with the indenting.
+     */
+    public void add() {
+        add("");
     }
 
     /**

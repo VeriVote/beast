@@ -1,5 +1,15 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.eq;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,38 +27,8 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
  * @author Lukas Stapelbroek
  */
 public final class CandidateList extends CBMCOutputType {
-    /** The Constant SEMICOLON. */
-    private static final String SEMICOLON = ";";
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-    /** The Constant COMMA. */
-    private static final String COMMA = ",";
-    /** The Constant EQUALS_SIGN. */
-    private static final String EQUALS_SIGN = "=";
-    /** The Constant PLUS_PLUS. */
-    private static final String PLUS_PLUS = "++";
-    /** The Constant LT_SIGN. */
-    private static final String LT_SIGN = "<";
-
     /** The Constant I. */
     private static final String I = "i";
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
-    /** The Constant ONE. */
-    private static final String ONE = "1";
-
-    /** The Constant OPENING_PARENTHESES. */
-    private static final String OPENING_PARENTHESES = "(";
-    /** The Constant CLOSING_PARENTHESES. */
-    private static final String CLOSING_PARENTHESES = ")";
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
-    /** The Constant OPENING_BRACKETS. */
-    private static final String OPENING_BRACKETS = "[";
-    /** The Constant CLOSING_BRACKETS. */
-    private static final String CLOSING_BRACKETS = "]";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
@@ -77,81 +57,70 @@ public final class CandidateList extends CBMCOutputType {
 
     @Override
     public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
-        code.add("void verifyMain()" + BLANK + OPENING_BRACES);
+        code.add(CCodeHelper.VOID + CCodeHelper.BLANK + "verifyMain()"
+                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
         code.addTab();
-        code.add(super.getContainer().getOutputStruct().getStructAccess() + BLANK
-                + "tmp" + BLANK + EQUALS_SIGN + BLANK
-                + UnifiedNameContainer.getVotingMethod() + OPENING_PARENTHESES
-                + UnifiedNameContainer.getNewVotesName() + ONE
-                + CLOSING_PARENTHESES + SEMICOLON);
-        code.add(CCodeHelper.UNSIGNED + BLANK + CCodeHelper.INT + BLANK
-                + "*tmp_result" + BLANK + EQUALS_SIGN + BLANK + "tmp."
-                + UnifiedNameContainer.getStructValueName() + SEMICOLON);
+        code.add(varAssignCode(super.getContainer().getOutputStruct().getStructAccess()
+                                + CCodeHelper.BLANK + "tmp",
+                               functionCode(UnifiedNameContainer.getVotingMethod(),
+                                            UnifiedNameContainer.getNewVotesName() + one())
+                ) + CCodeHelper.SEMICOLON);
+        code.add(varEqualsCode("*tmp_result")
+                + "tmp." + UnifiedNameContainer.getStructValueName()
+                + CCodeHelper.SEMICOLON);
         // Create the array where the new seats will get saved
-        code.add(CCodeHelper.UNSIGNED + BLANK + CCodeHelper.INT + BLANK
-                + UnifiedNameContainer.getNewResultName() + ONE
-                + OPENING_BRACKETS + UnifiedNameContainer.getCandidate()
-                + CLOSING_BRACKETS + SEMICOLON);
+        code.add(unsignedIntVar(arrAccess(UnifiedNameContainer.getNewResultName()
+                                            + one(),
+                                          UnifiedNameContainer.getCandidate())
+                ) + CCodeHelper.SEMICOLON);
         // Iterate over the seat array, and
-        code.add(CCodeHelper.FOR + BLANK + OPENING_PARENTHESES
-                + CCodeHelper.INT + BLANK + I + BLANK + EQUALS_SIGN + BLANK
-                + ZERO + SEMICOLON + BLANK
-                + I + BLANK + LT_SIGN + BLANK
-                + UnifiedNameContainer.getCandidate() + SEMICOLON
-                + BLANK + I + PLUS_PLUS + CLOSING_PARENTHESES
-                + BLANK + OPENING_BRACES);
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, UnifiedNameContainer.getCandidate()));
         // Fill it
         code.addTab();
         // We do this, so our cbmc parser can read out the value of the
         // array
-        code.add("" + UnifiedNameContainer.getNewResultName()
-                + ONE + OPENING_BRACKETS + I + CLOSING_BRACKETS + BLANK
-                + EQUALS_SIGN + BLANK + "tmp_result"
-                + OPENING_BRACKETS + I + CLOSING_BRACKETS + SEMICOLON);
+        code.add(varAssignCode(arrAccess(UnifiedNameContainer.getNewResultName() + one(), I),
+                               arrAccess("tmp_result", I)
+                ) + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES); // Close the for-loop
+        code.add(CCodeHelper.CLOSING_BRACES); // Close the for-loop
         // Iterate over all
-        code.add(CCodeHelper.FOR + BLANK + OPENING_PARENTHESES
-                + CCodeHelper.INT + BLANK + I + BLANK
-                + EQUALS_SIGN + BLANK + ZERO + SEMICOLON + BLANK
-                + I + BLANK + LT_SIGN + BLANK
-                + UnifiedNameContainer.getCandidate() + SEMICOLON
-                + BLANK + I + PLUS_PLUS + CLOSING_PARENTHESES
-                + BLANK + OPENING_BRACES);
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, UnifiedNameContainer.getCandidate()));
         code.addTab();
         // Candidates / seats
-        code.add("assert" + OPENING_PARENTHESES
-                + UnifiedNameContainer.getNewResultName() + ONE
-                + OPENING_BRACKETS + I + CLOSING_BRACKETS + BLANK
-                + "==" + BLANK + UnifiedNameContainer.getOrigResultName()
-                + OPENING_BRACKETS + I + CLOSING_BRACKETS
-                + CLOSING_PARENTHESES + SEMICOLON);
+        code.add(functionCode("assert",
+                              eq(arrAccess(UnifiedNameContainer.getNewResultName()
+                                              + one(),
+                                           I),
+                                 arrAccess(UnifiedNameContainer.getOrigResultName(),
+                                           I)
+                              )
+                ) + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES); // End of the for loop
+        code.add(CCodeHelper.CLOSING_BRACES); // End of the for loop
         code.deleteTab();
-        code.add(CLOSING_BRACES); // End of the function
+        code.add(CCodeHelper.CLOSING_BRACES); // End of the function
         return code;
     }
 
     @Override
     public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
                                                         final int voteNumber) {
-        String electX = super.getContainer().getOutputStruct().getStructAccess()
-                + BLANK + "elect" + voteNumber + BLANK
-                + EQUALS_SIGN + BLANK
-                + UnifiedNameContainer.getVotingMethod()
-                + OPENING_PARENTHESES + "votes" + voteNumber
-                + CLOSING_PARENTHESES + SEMICOLON;
-        code.add(electX);
+        code.add(varAssignCode(
+                    super.getContainer().getOutputStruct().getStructAccess()
+                    + CCodeHelper.BLANK + ELECT + voteNumber,
+                    functionCode(UnifiedNameContainer.getVotingMethod(),
+                                 VOTES + voteNumber))
+                + CCodeHelper.SEMICOLON);
         return code;
     }
 
     @Override
     public String getCArrayType() {
-        return OPENING_BRACKETS + UnifiedNameContainer.getCandidate() + CLOSING_BRACKETS;
+        return arrAcc(UnifiedNameContainer.getCandidate());
     }
 
     // @Override TODO remove
@@ -181,20 +150,19 @@ public final class CandidateList extends CBMCOutputType {
 
     @Override
     public String getResultDescriptionString(final List<String> result) {
-        String toReturn = OPENING_BRACKETS;
+        String toReturn = "";
         for (Iterator<String> iterator = result.iterator();
                 iterator.hasNext();) {
             String currentValue = iterator.next();
             try {
                 toReturn += GUIController.getController().getElectionSimulation()
                                 .getPartyName(Integer.parseInt(currentValue))
-                            + COMMA + BLANK;
+                            + CCodeHelper.COMMA + CCodeHelper.BLANK;
             } catch (NumberFormatException e) {
-                toReturn += currentValue + COMMA + BLANK;
+                toReturn += currentValue + CCodeHelper.COMMA + CCodeHelper.BLANK;
             }
         }
-        toReturn += CLOSING_BRACKETS;
-        return toReturn;
+        return arrAcc(toReturn);
     }
 
     @Override

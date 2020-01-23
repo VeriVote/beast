@@ -1,8 +1,16 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.eq;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -15,9 +23,6 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
  * @author Lukas Stapelbroek
  */
 public final class SingleCandidate extends CBMCOutputType {
-    /** The Constant END_OF_STATEMENT. */
-    private static final String END_OF_STATEMENT = ");";
-
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 0;
 
@@ -43,38 +48,46 @@ public final class SingleCandidate extends CBMCOutputType {
 
     @Override
     public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
-        code.add("void verifyMain() {");
+        code.add(CCodeHelper.VOID + CCodeHelper.BLANK + "verifyMain()"
+                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
         code.addTab();
-        code.add("int total_diff = 0;");
-        code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = "
-                + UnifiedNameContainer.getVotingMethod() + "("
-                + UnifiedNameContainer.getNewVotesName() + "1);");
-        code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == "
-                + UnifiedNameContainer.getOrigResultName() + END_OF_STATEMENT);
+        code.add(varAssignCode(CCodeHelper.INT + CCodeHelper.BLANK + "total_diff",
+                               zero())
+                + CCodeHelper.SEMICOLON);
+        code.add(varAssignCode(CCodeHelper.INT + CCodeHelper.BLANK
+                                + UnifiedNameContainer.getNewResultName() + one(),
+                               functionCode(UnifiedNameContainer.getVotingMethod(),
+                                            UnifiedNameContainer.getNewVotesName() + one()))
+                + CCodeHelper.SEMICOLON);
+        code.add(functionCode("assert",
+                              eq(UnifiedNameContainer.getNewResultName() + one(),
+                                 UnifiedNameContainer.getOrigResultName()))
+                + CCodeHelper.SEMICOLON);
         code.deleteTab();
         // end of the function
-        code.add("}");
+        code.add(CCodeHelper.CLOSING_BRACES);
         return code;
     }
 
     @Override
     public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
                                                         final int voteNumber) {
-        String electX = "unsigned int elect" + voteNumber;
+        String electX = unsignedIntVar(ELECT + voteNumber);
         electX = electX + getCArrayType();
-        code.add(electX + ";");
-        code.add("elect" + voteNumber + " = "
-                + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber
-                + END_OF_STATEMENT);
+        code.add(electX + CCodeHelper.SEMICOLON);
+        code.add(varAssignCode(ELECT + voteNumber,
+                               functionCode(UnifiedNameContainer.getVotingMethod(),
+                                            VOTES + voteNumber))
+                + CCodeHelper.SEMICOLON);
         return code;
     }
 
     @Override
     public String getCArrayType() {
-        return ""; // we have a single candidate, so no array
+        return ""; // We have a single candidate, so no array.
     }
 
     @Override

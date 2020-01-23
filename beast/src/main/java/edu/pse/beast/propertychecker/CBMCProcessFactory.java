@@ -22,8 +22,11 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  * @author Lukas Stapelbroek
  */
 public final class CBMCProcessFactory extends CheckerFactory {
+    /** The Constant WHITESPACE. */
+    private static final String WHITESPACE = " ";
+
     /** The Constant TO_REPLACE. */
-    private static final String TO_REPLACE = " +";
+    private static final String TO_REPLACE = WHITESPACE + "+";
 
     /** The Constant CANNOT_FIND_PARENT. */
     private static final String CANNOT_FIND_PARENT =
@@ -39,22 +42,17 @@ public final class CBMCProcessFactory extends CheckerFactory {
     private static final String OS_COULD_NOT_BE_DETERMINED =
             "Warning, your OS could not be determined or is not supported yet.";
 
-    /** The Constant DOT_C. */
-    private static final String DOT_C = ".c";
-
-    /** The Constant WHITESPACE. */
-    private static final String WHITESPACE = " ";
-
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/generated_c_files/";
 
     /** The os. */
     private final OperatingSystems os;
 
-    // this file can be used for all checkers. So if it is not null, it will not
-    // be
-    /** The to check. */
-    // created, but the file that is already there will be reused
+    /**
+     * The file to check:
+     * This file can be used for all checkers.
+     * So if it is not null, it will not be created,
+     * but the file that is already there will be reused. */
     private File toCheck;
 
     /**
@@ -377,7 +375,8 @@ public final class CBMCProcessFactory extends CheckerFactory {
         String absolutePath = SuperFolderFinder.getSuperFolder()
                                 + PATH_TO_TEMP_FOLDER;
         File file = new File(new File(absolutePath),
-                             FileLoader.getNewUniqueName(absolutePath) + DOT_C);
+                             FileLoader.getNewUniqueName(absolutePath)
+                             + FileLoader.C_FILE_ENDING);
         if (file.getParentFile() == null) {
             ErrorLogger.log(CANNOT_FIND_PARENT);
         } else if (!file.getParentFile().exists()) {
@@ -419,7 +418,8 @@ public final class CBMCProcessFactory extends CheckerFactory {
         String absolutePath = SuperFolderFinder.getSuperFolder()
                                 + PATH_TO_TEMP_FOLDER;
         File file = new File(new File(absolutePath),
-                             FileLoader.getNewUniqueName(absolutePath) + DOT_C);
+                             FileLoader.getNewUniqueName(absolutePath)
+                             + FileLoader.C_FILE_ENDING);
         if (file.getParentFile() == null) {
             ErrorLogger.log(CANNOT_FIND_PARENT);
         } else if (!file.getParentFile().exists()) {
@@ -455,7 +455,8 @@ public final class CBMCProcessFactory extends CheckerFactory {
         String absolutePath = SuperFolderFinder.getSuperFolder()
                                 + PATH_TO_TEMP_FOLDER;
         File file = new File(new File(absolutePath),
-                             FileLoader.getNewUniqueName(absolutePath) + DOT_C);
+                             FileLoader.getNewUniqueName(absolutePath)
+                             + FileLoader.C_FILE_ENDING);
         if (file.getParentFile() == null) {
             ErrorLogger.log(CANNOT_FIND_PARENT);
         } else if (!file.getParentFile().exists()) {

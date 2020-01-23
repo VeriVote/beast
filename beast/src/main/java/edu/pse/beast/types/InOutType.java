@@ -29,10 +29,19 @@ public abstract class InOutType {
     /** The Constant ARR. */
     private static final String ARR = "arr";
 
+    /** The Constant DOT. */
+    private static final String DOT = ".";
+    /** The Constant COMMA. */
+    private static final String COMMA = ",";
     /** The Constant OPENING_BRACKETS. */
     private static final String OPENING_BRACKETS = "[";
     /** The Constant CLOSING_BRACKETS. */
     private static final String CLOSING_BRACKETS = "]";
+
+    /** The Constant OPENING_BRACES. */
+    private static final String OPENING_BRACES = "{";
+    /** The Constant CLOSING_BRACES. */
+    private static final String CLOSING_BRACES = "}";
 
     /**
      * The Enum DataType.
@@ -240,8 +249,19 @@ public abstract class InOutType {
      *            the content to be put in the brackets
      * @return e.g "[content]"
      */
-    private String createSquareBrackets(final String content) {
+    private static String createSquareBrackets(final String content) {
         return OPENING_BRACKETS + content + CLOSING_BRACKETS;
+    }
+
+    /**
+     * Creates the curly braces.
+     *
+     * @param content
+     *            the content to be put in the braces
+     * @return e.g "{content}"
+     */
+    private static String createCurlyBraces(final String content) {
+        return OPENING_BRACES + content + CLOSING_BRACES;
     }
 
     /**
@@ -287,12 +307,11 @@ public abstract class InOutType {
             List<CBMCResultValueWrapper> newValues = array.getValues();
             String subArray = "";
             for (int i = 0; i < array.getArraySize(); i++) {
-                subArray += printArray(newValues.get(i)) + ",";
+                subArray += printArray(newValues.get(i)) + COMMA;
             }
             // cut off the last ","
             subArray = subArray.substring(0, subArray.length() - 1);
-            subArray = "{" + subArray + "}";
-            return subArray;
+            return createCurlyBraces(subArray);
         } else {
             throw new IllegalArgumentException("Only single numbers arrays,"
                                                 + " and a struct of an array"
@@ -310,7 +329,7 @@ public abstract class InOutType {
     public String getAccessDimensions(final List<String> filling) {
         String dimAccess = "";
         for (int i = 0; i < this.getAmountOfDimensions(); i++) {
-            dimAccess = dimAccess + OPENING_BRACKETS + filling.get(i) + CLOSING_BRACKETS;
+            dimAccess += createSquareBrackets(filling.get(i));
         }
         return dimAccess;
     }
@@ -326,7 +345,7 @@ public abstract class InOutType {
      */
     public String getFullVarAccess(final String varName,
                                    final List<String> filling) {
-        return varName + "." + UnifiedNameContainer.getStructValueName()
+        return varName + DOT + UnifiedNameContainer.getStructValueName()
                 + getAccessDimensions(filling);
     }
 

@@ -1,5 +1,23 @@
 package edu.pse.beast.propertychecker;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
+import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
+import static edu.pse.beast.toolbox.CCodeHelper.disjunct;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArr;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.not;
+import static edu.pse.beast.toolbox.CCodeHelper.notNullOrEmpty;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.parenthesize;
+import static edu.pse.beast.toolbox.CCodeHelper.underscore;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
+import static edu.pse.beast.toolbox.CCodeHelper.varSubtractCode;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -103,50 +121,6 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /** The Constant SPLIT. */
     private static final String SPLIT = "split";
 
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-    /** The Constant COMMA. */
-    private static final String COMMA = ",";
-    /** The Constant SEMICOLON. */
-    private static final String SEMICOLON = ";";
-    /** The Constant AMPERSAND. */
-    private static final String AMPERSAND = "&";
-    /** The Constant EQUALS_SIGN. */
-    private static final String EQUALS_SIGN = "=";
-    /** The Constant LT_SIGN. */
-    private static final String LT_SIGN = "<";
-    /** The Constant PIPE. */
-    private static final String PIPE = "|";
-    /** The Constant MINUS. */
-    private static final String MINUS = "-";
-    /** The Constant NOT. */
-    private static final String NOT = "!";
-    /** The Constant PLUS_PLUS. */
-    private static final String PLUS_PLUS = "++";
-
-    /** The Constant OPENING_PARENTHESES. */
-    private static final String OPENING_PARENTHESES = "(";
-    /** The Constant CLOSING_PARENTHESES. */
-    private static final String CLOSING_PARENTHESES = ")";
-    /** The Constant OPENING_BRACKETS. */
-    private static final String OPENING_BRACKETS = "[";
-    /** The Constant CLOSING_BRACKETS. */
-    private static final String CLOSING_BRACKETS = "]";
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
-
-    /** The Constant UNDERSCORE. */
-    private static final String UNDERSCORE = "_";
-    /** The Constant DOT_ARR. */
-    private static final String DOT_ARR = ".arr";
-
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
-    /** The Constant ONE. */
-    private static final String ONE = "1";
-
     /**
      * This String must always be "assume" or "assert". If it is not set, it is
      * null.
@@ -240,126 +214,6 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * Determines whether the string is neither null nor empty.
-     *
-     * @param string
-     *            the string
-     * @return true, if the string is not null and not empty
-     */
-    private static boolean notNullOrEmpty(final String string) {
-        return string != null && !"".equals(string);
-    }
-
-    /**
-     * Determines whether there is at least one string in the list
-     * and this string is neither null nor empty.
-     *
-     * @param strings
-     *            the strings in a list
-     * @return true, if the string is not null and not empty
-     */
-    private static boolean notNullOrEmpty(final List<String> strings) {
-        return strings != null && !strings.isEmpty()
-                && strings.get(0) != null && !"".equals(strings.get(0));
-    }
-
-    /**
-     * Unsigned int variable.
-     *
-     * @param varName
-     *            the var name
-     * @return the string
-     */
-    private static String unsignedIntVar(final String varName) {
-        return CCodeHelper.UNSIGNED + BLANK
-                + CCodeHelper.INT + BLANK + varName;
-    }
-
-    /**
-     * Unsigned int variable equals code.
-     *
-     * @param varName
-     *            the var name
-     * @return the string
-     */
-    private static String varEqualsCode(final String varName) {
-        return unsignedIntVar(varName) + BLANK + EQUALS_SIGN + BLANK;
-    }
-
-    /**
-     * Variable assignment code.
-     *
-     * @param varName
-     *            the var name
-     * @param rhsVar
-     *            the rhs var
-     * @return the string
-     */
-    private static String varAssignCode(final String varName,
-                                        final String rhsVar) {
-        return varName + BLANK + EQUALS_SIGN + BLANK + rhsVar;
-    }
-
-    /**
-     * Variable subtract code.
-     *
-     * @param varPos
-     *            the var pos
-     * @param varNeg
-     *            the var neg
-     * @return the string
-     */
-    private static String varSubtractCode(final String varPos,
-                                          final String varNeg) {
-        return varPos + BLANK + MINUS + BLANK + varNeg;
-    }
-
-    /**
-     * Generate function code.
-     *
-     * @param function
-     *            the function
-     * @param params
-     *            the parameters
-     * @return the string
-     */
-    private static String functionCode(final String function,
-                                       final List<String> params) {
-        String functionCode = "";
-        if (notNullOrEmpty(function) && notNullOrEmpty(params)) {
-            for (final String param : params) {
-                if (notNullOrEmpty(param)
-                        && !"".equals(functionCode)) {
-                    functionCode += COMMA + BLANK;
-                }
-                functionCode += notNullOrEmpty(param) ? param : "";
-            }
-            functionCode = function + parenthesize(functionCode);
-        }
-        return functionCode;
-    }
-
-    /**
-     * Generate function code.
-     *
-     * @param function
-     *            the function
-     * @param params
-     *            the parameters
-     * @return the string
-     */
-    private static String functionCode(final String function,
-                                       final String... params) {
-        List<String> paramList = new ArrayList<String>();
-        for (final String param : params) {
-            if (notNullOrEmpty(param)) {
-                paramList.add(param);
-            }
-        }
-        return functionCode(function, paramList);
-    }
-
-    /**
      * Generate code for split function.
      *
      * @param param1
@@ -374,187 +228,6 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                             final String param2,
                                             final String param3) {
         return functionCode(SPLIT, param1, param2, param3);
-    }
-
-    /**
-     * Dis- or conjunct if not null.
-     *
-     * @param toBeAppended
-     *            the term to be appended
-     * @param originalTerm
-     *            the term which should be complemented
-     * @param junctor
-     *            the junctor symbol(s)
-     * @return the string
-     */
-    private static String disOrConjunct(final String toBeAppended,
-                                        final String originalTerm,
-                                        final String junctor) {
-        final String junction = BLANK + junctor + BLANK;
-        final String disOrConjuncted = notNullOrEmpty(toBeAppended)
-                                ? toBeAppended
-                                        + (notNullOrEmpty(originalTerm)
-                                                ? junction : "")
-                                        : "";
-        return disOrConjuncted + originalTerm;
-    }
-
-    /**
-     * Conjunct if not null.
-     *
-     * @param toBeConjuncted
-     *            the term to be conjuncted
-     * @param originalTerm
-     *            the term which should be complemented
-     * @return the string
-     */
-    private static String conjunct(final String toBeConjuncted,
-                                   final String originalTerm) {
-        final String conjunctor = AMPERSAND + AMPERSAND;
-        return disOrConjunct(toBeConjuncted, originalTerm, conjunctor);
-    }
-
-    /**
-     * Disjunct if not null.
-     *
-     * @param toBeDisjuncted
-     *            the term to be disjuncted
-     * @param originalTerm
-     *            the term which should be complemented
-     * @return the string
-     */
-    private static String disjunct(final String toBeDisjuncted,
-                                   final String originalTerm) {
-        final String disjunctor = PIPE + PIPE;
-        return disOrConjunct(toBeDisjuncted, originalTerm, disjunctor);
-    }
-
-    /**
-     * Generate the loop header code of a for-loop given the name string of
-     * the count variable, the string of the comparison symbol, and the name
-     * string of the bound constant.
-     *
-     * @param countVar
-     *            the name string of the counting variable
-     * @param comparison
-     *            the string of the comparison symbol
-     * @param boundConst
-     *            the name string of the loop bound constant
-     * @param guardReinforce
-     *            the guard reinforce
-     * @return the code string of the for-loop header
-     */
-    private static String forLoopHeaderCode(final String countVar,
-                                            final String comparison,
-                                            final String boundConst,
-                                            final String guardReinforce) {
-        final String varEqualsZero =
-                varEqualsCode(countVar) + ZERO + SEMICOLON;
-        final String boundGuard =
-                countVar + BLANK + comparison + BLANK + boundConst;
-        final String loopGuard = conjunct(guardReinforce, boundGuard)
-                                + SEMICOLON;
-        final String incrCounter = countVar + PLUS_PLUS;
-        return CCodeHelper.FOR + BLANK
-                + parenthesize(varEqualsZero + BLANK
-                                + loopGuard + BLANK
-                                + incrCounter)
-                + BLANK + OPENING_BRACES;
-    }
-
-    /**
-     * Generate the loop header code of a for-loop given the name string of
-     * the count variable, the string of the comparison symbol, and the name
-     * string of the bound constant.
-     *
-     * @param countVar
-     *            the name string of the counting variable
-     * @param comparison
-     *            the string of the comparison symbol
-     * @param boundConst
-     *            the name string of the loop bound constant
-     * @return the code string of the for-loop header
-     */
-    private static String forLoopHeaderCode(final String countVar,
-                                            final String comparison,
-                                            final String boundConst) {
-        return forLoopHeaderCode(countVar, comparison, boundConst, null);
-    }
-
-    /**
-     * Parenthesize the expression.
-     *
-     * @param expression
-     *            the expression
-     * @return the string
-     */
-    private static String parenthesize(final String expression) {
-        return notNullOrEmpty(expression)
-                ? (OPENING_PARENTHESES + expression + CLOSING_PARENTHESES)
-                        : expression;
-    }
-
-    /**
-     * Array access.
-     *
-     * @param dim
-     *            the dim
-     * @return the string
-     */
-    private static String arrAcc(final String dim) {
-        return OPENING_BRACKETS + dim + CLOSING_BRACKETS;
-    }
-
-    /**
-     * Array access.
-     *
-     * @param dim
-     *            the dim
-     * @return the string
-     */
-    private static String arrAcc(final int dim) {
-        return arrAcc(Integer.toString(dim));
-    }
-
-    /**
-     * Dot arr struct access for all given dimensions.
-     *
-     * @param owner
-     *            the owner
-     * @param dims
-     *            the dims
-     * @return the string
-     */
-    private static String dotArrStructAccess(final String owner,
-                                             final List<String> dims) {
-        String arrAccess = notNullOrEmpty(owner) ? owner : "";
-        if (notNullOrEmpty(owner) && notNullOrEmpty(dims)) {
-            arrAccess += DOT_ARR;
-            for (final String dim : dims) {
-                arrAccess += notNullOrEmpty(dim) ? arrAcc(dim) : "";
-            }
-        }
-        return arrAccess;
-    }
-
-    /**
-     * Dot arr struct access for all given dimensions.
-     *
-     * @param owner
-     *            the owner
-     * @param dims
-     *            the dims
-     * @return the string
-     */
-    private static String dotArrStructAccess(final String owner,
-                                             final String... dims) {
-        List<String> dimList = new ArrayList<String>();
-        for (final String dim : dims) {
-            if (notNullOrEmpty(dim)) {
-                dimList.add(dim);
-            }
-        }
-        return dotArrStructAccess(owner, dimList);
     }
 
     /**
@@ -607,7 +280,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private String newTempVarString(final String name) {
         final String newVarString =
                 "tmp" + (notNullOrEmpty(name)
-                        ? UNDERSCORE + name
+                        ? underscore(name)
                                 : "");
         return newVarString + getTmpIndex();
     }
@@ -667,7 +340,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                 parenthesize(variableNames.pop())
                                 )
                         )
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         testIfLast();
     }
 
@@ -683,7 +356,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                         disjunct(parenthesize(variableNames.pop()),
                                 parenthesize(variableNames.pop()))
                         )
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         testIfLast();
     }
 
@@ -698,10 +371,10 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String lhsName = variableNames.pop();
         code.add(varEqualsCode(varName)
                 + parenthesize(
-                        disjunct(NOT + parenthesize(lhsName),
+                        disjunct(not(parenthesize(lhsName)),
                                 parenthesize(rhsName))
                         )
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         testIfLast();
     }
 
@@ -722,12 +395,12 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                                 parenthesize(rhs))
                                         ),
                                 parenthesize(
-                                        conjunct(NOT + parenthesize(lhs),
-                                                parenthesize(NOT + rhs))
+                                        conjunct(not(parenthesize(lhs)),
+                                                parenthesize(not(rhs)))
                                         )
                                 )
                         )
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         testIfLast();
     }
 
@@ -736,10 +409,11 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String varName = "forAll_" + forAllNodeCounter;
         forAllNodeCounter++;
         variableNames.push(varName);
-        code.add(varEqualsCode(varName) + ONE + SEMICOLON);
+        code.add(varEqualsCode(varName) + one() + CCodeHelper.SEMICOLON);
         final String max = getMaxString(node);
         String tempString =
-                forLoopHeaderCode(SYMBVAR_TEMPLATE, LT_SIGN, MAX_TEMPLATE, FORALL_TEMPLATE);
+                forLoopHeaderCode(SYMBVAR_TEMPLATE, CCodeHelper.LT_SIGN,
+                                  MAX_TEMPLATE, FORALL_TEMPLATE);
         tempString = tempString.replaceAll(SYMBVAR_TEMPLATE,
                                            node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replace(MAX_TEMPLATE, max);
@@ -747,9 +421,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add(tempString);
         code.addTab();
         node.getFollowingExpNode().getVisited(this);
-        code.add(varAssignCode(varName, variableNames.pop()) + SEMICOLON);
+        code.add(varAssignCode(varName, variableNames.pop()) + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
         testIfLast();
     }
 
@@ -797,7 +471,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 max = UnifiedNameContainer.getCandidate();
             }
 
-            String loop = forLoopHeaderCode(VAR_TEMPLATE, LT_SIGN,
+            String loop = forLoopHeaderCode(VAR_TEMPLATE, CCodeHelper.LT_SIGN,
                                             MAX_TEMPLATE, BOOL_TEMPLATE);
             loop = loop.replaceAll(VAR_TEMPLATE, countingVar);
             loop = loop.replaceAll(MAX_TEMPLATE, max);
@@ -813,11 +487,11 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String varName = "thereExists_" + thereExistsNodeCounter;
         thereExistsNodeCounter++;
         variableNames.push(varName);
-        code.add(varEqualsCode(varName) + ZERO + SEMICOLON);
+        code.add(varEqualsCode(varName) + zero() + CCodeHelper.SEMICOLON);
         String max = getMaxString(node);
 
-        String tempString = forLoopHeaderCode(SYMBVAR_TEMPLATE, LT_SIGN,
-                                              MAX_TEMPLATE, NOT + EXISTS_TEMPLATE);
+        String tempString = forLoopHeaderCode(SYMBVAR_TEMPLATE, CCodeHelper.LT_SIGN,
+                                              MAX_TEMPLATE, not(EXISTS_TEMPLATE));
         tempString = tempString.replaceAll(SYMBVAR_TEMPLATE,
                 node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replaceAll(MAX_TEMPLATE, max);
@@ -825,9 +499,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add(tempString);
         code.addTab();
         node.getFollowingExpNode().getVisited(this);
-        code.add(varAssignCode(varName, variableNames.pop()) + SEMICOLON);
+        code.add(varAssignCode(varName, variableNames.pop()) + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
         testIfLast();
     }
 
@@ -843,8 +517,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         node.getNegatedExpNode().getVisited(this);
         code.add(varEqualsCode(varName)
-                + NOT + parenthesize(variableNames.pop())
-                + SEMICOLON);
+                + not(parenthesize(variableNames.pop()))
+                + CCodeHelper.SEMICOLON);
         testIfLast();
     }
 
@@ -891,7 +565,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         while (cont.getListLvl() != maxListLevel) {
             cont = cont.getListedType();
         }
-        String internCode = varEqualsCode(BOOL_TEMPLATE) + ONE + SEMICOLON;
+        String internCode = varEqualsCode(BOOL_TEMPLATE) + one() + CCodeHelper.SEMICOLON;
         internCode = internCode.replace(BOOL_TEMPLATE, varName);
         code.add(internCode);
         ArrayList<String> counter = computeCounter(varName, maxListLevel, cont);
@@ -947,7 +621,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // setToPostConditionMode();
         internCode = varAssignCode(varName, lhs);
         // TODO Use unified name container, or defer to the Types
-        final String prefix = post ? DOT_ARR : "";
+        final String prefix = post ? dotArr() : "";
         String preFixCopy = prefix;
         for (int i = 0; i < lhslistLevel; ++i) {
             internCode += preFixCopy
@@ -955,7 +629,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             // TODO Rewrite this with using input and output types
             preFixCopy = "";
         }
-        internCode += BLANK + node.getComparisonSymbol().getCStringRep() + BLANK;
+        internCode += CCodeHelper.BLANK
+                + node.getComparisonSymbol().getCStringRep()
+                + CCodeHelper.BLANK;
         internCode += rhs;
 
         preFixCopy = prefix;
@@ -965,9 +641,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             // TODO Rewrite this with using input and output types
             preFixCopy = "";
         }
-        code.add(internCode + SEMICOLON);
+        code.add(internCode + CCodeHelper.SEMICOLON);
         for (int i = 0; i < maxListLevel; ++i) {
-            code.add(CLOSING_BRACES);
+            code.add(CCodeHelper.CLOSING_BRACES);
         }
         testIfLast();
     }
@@ -1028,7 +704,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                VOTES + NUM_TEMPLATE,
                                UnifiedNameContainer.getVoter() + voteSumCounter,
                                CAND_TEMPLATE)
-                + SEMICOLON;
+                + CCodeHelper.SEMICOLON;
         String counter = "voteSumExp_" + voteSumCounter;
         voteSumCounter++;
         funcCallTemplate =
@@ -1046,7 +722,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitIntegerNode(final IntegerNode integerNode) {
         String varName = getNewNumberVariableName();
         code.add(varEqualsCode(varName)
-                + integerNode.getHeldInteger() + SEMICOLON);
+                + integerNode.getHeldInteger() + CCodeHelper.SEMICOLON);
         variableNames.push(varName);
     }
 
@@ -1070,8 +746,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
         String comparisonString = varEqualsCode(varNameDecl) + lhs
-                + BLANK + listComparisonNode.getComparisonSymbol().getCStringRep()
-                + BLANK + rhs + SEMICOLON;
+                + CCodeHelper.BLANK + listComparisonNode.getComparisonSymbol().getCStringRep()
+                + CCodeHelper.BLANK + rhs + CCodeHelper.SEMICOLON;
         code.add(comparisonString);
         variableNames.push(varNameDecl);
         testIfLast();
@@ -1085,9 +761,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
         String varname = getNewNumberVariableName();
-        code.add(varEqualsCode(varname) + lhs + BLANK
+        code.add(varEqualsCode(varname) + lhs + CCodeHelper.BLANK
                 + binaryIntegerValuedNode.getRelationSymbol()
-                + BLANK + rhs + SEMICOLON);
+                + CCodeHelper.BLANK + rhs + CCodeHelper.SEMICOLON);
         variableNames.push(varname);
     }
 
@@ -1095,7 +771,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitAtPosNode(final AtPosExp atPosExp) {
         atPosExp.getIntegerValuedExpression().getVisited(this);
         String varName = getAtPosVarName(atPosExp);
-        String template = varEqualsCode(VAR_TEMPLATE) + NUMBER_TEMPLATE + SEMICOLON;
+        String template = varEqualsCode(VAR_TEMPLATE) + NUMBER_TEMPLATE + CCodeHelper.SEMICOLON;
         template = template.replace(VAR_TEMPLATE, varName);
         template = template.replace(NUMBER_TEMPLATE, variableNames.pop());
         code.add(template);
@@ -1124,7 +800,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             if (assumeOrAssert != null) {
                 code.add(assumeOrAssert
                         + parenthesize(variableNames.pop())
-                        + SEMICOLON);
+                        + CCodeHelper.SEMICOLON);
             } else {
                 ErrorLogger.log(
                         "The CodeGeneration Visitor was not set to a proper mode.");
@@ -1155,9 +831,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             voteInput = newTempVarString(VOTE);
             // Create the variable
             code.add(electionTypeContainer.getInputStruct().getStructAccess()
-                    + BLANK + voteInput + SEMICOLON);
+                    + CCodeHelper.BLANK + voteInput + CCodeHelper.SEMICOLON);
             voteInputSize = newTempVarString(SIZE);
-            code.add(unsignedIntVar(voteInputSize) + SEMICOLON);
+            code.add(unsignedIntVar(voteInputSize) + CCodeHelper.SEMICOLON);
             VoteEquivalentsNode equiNode = new VoteEquivalentsNode(
                     node.getSplitExp().voteEquivalents(), voteInput,
                     voteInputSize);
@@ -1172,27 +848,27 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String splits = "splits" + getTmpIndex();
         // Determine how many splits we need
         code.add(varEqualsCode(splits) + (tupleVotes.size() - 1)
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         String tmpLines = newTempVarString("Lines");
-        code.add(unsignedIntVar("*" + tmpLines) + SEMICOLON);
+        code.add(unsignedIntVar("*" + tmpLines) + CCodeHelper.SEMICOLON);
         // TODO Maybe make this non-dynamic
         code.add(varAssignCode(tmpLines,
                                functionCode("getRandomSplitLines",
                                             splits, voteInputSize))
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         String splitLines = "splitLines" + getTmpIndex();
-        code.add(unsignedIntVar(splitLines) + arrAcc(splits) + SEMICOLON);
-        code.add(forLoopHeaderCode(I, LT_SIGN + EQUALS_SIGN, splits));
+        code.add(unsignedIntVar(splitLines) + arrAcc(splits) + CCodeHelper.SEMICOLON);
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN + CCodeHelper.EQUALS_SIGN, splits));
         code.add(varAssignCode(splitLines + arrAcc(I),
                                tmpLines + arrAcc(I))
-                + SEMICOLON);
-        code.add(CLOSING_BRACES);
+                + CCodeHelper.SEMICOLON);
+        code.add(CCodeHelper.CLOSING_BRACES);
         int tupleSize = tupleVotes.size();
         String lastSplit = "last_split" + getTmpIndex();
 
         final int dim = electionTypeContainer.getInputType()
                 .getAmountOfDimensions();
-        code.add(varEqualsCode(lastSplit) + ZERO + SEMICOLON);
+        code.add(varEqualsCode(lastSplit) + zero() + CCodeHelper.SEMICOLON);
         // Split the array and extract the votes for all but one tuple element
         String voteStruct = electionTypeContainer.getInputStruct()
                 .getStructAccess();
@@ -1200,46 +876,49 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // -1, as the last one has to take the rest
         for (int i = 0; i < tupleSize - 1; i++) {
             String tmp = newTempVarString();
-            code.add(voteStruct + BLANK
+            code.add(voteStruct + CCodeHelper.BLANK
                     + varAssignCode(tmp,
                                     splitFunctionCode(voteInput, lastSplit,
                                                       splitLines + arrAcc(i)))
-                    + SEMICOLON);
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
+                    + CCodeHelper.SEMICOLON);
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
             String secDim = "";
             if (2 <= dim) {
-                code.add(BLANK + BLANK + forLoopHeaderCode(J, LT_SIGN, C));
+                code.add(CCodeHelper.BLANK + CCodeHelper.BLANK
+                        + forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
                 secDim = arrAcc(J);
             }
-            code.add(BLANK + BLANK
+            code.add(CCodeHelper.BLANK + CCodeHelper.BLANK
                     + varAssignCode(
                             dotArrStructAccess(tupleVotes.get(i).toLowerCase(), I)
                                                 + secDim,
                                                dotArrStructAccess(tmp, I) + secDim)
-                    + SEMICOLON);
-            code.add((dim < 2 ? "" : BLANK + BLANK + CLOSING_BRACES) + "");
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add((dim < 2 ? "" : CCodeHelper.BLANK
+                    + CCodeHelper.BLANK + CCodeHelper.CLOSING_BRACES)
+                    + "");
+            code.add(CCodeHelper.CLOSING_BRACES);
 
             // Set the size value for this array to its new size:
             code.add(varAssignCode(V + tupleVotes.get(i).substring(VOTES.length()),
                         varSubtractCode(splitLines + arrAcc(i), lastSplit))
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
             code.add(varAssignCode(lastSplit, splitLines + arrAcc(i))
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
         }
         String tmp = newTempVarString();
         String votingStruct = electionTypeContainer.getInputStruct()
                 .getStructAccess();
-        code.add(votingStruct + BLANK
+        code.add(votingStruct + CCodeHelper.BLANK
                 + varAssignCode(tmp,
                                 splitFunctionCode(voteInput, lastSplit,
                                                   voteInputSize))
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         // TODO Is V correct here?
-        code.add(forLoopHeaderCode(I, LT_SIGN, V));
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
         if (2 <= dim) {
             // TODO Change to dimensions
-            code.add(forLoopHeaderCode(J, LT_SIGN, C));
+            code.add(forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
         }
         code.add(varAssignCode(dotArrStructAccess(tupleVotes.get(tupleSize - 1)
                                                     .toLowerCase(),
@@ -1247,15 +926,15 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                     + (2 <= dim ? arrAcc(J) : ""),
                                 dotArrStructAccess(tmp, I) + ""
                                     + (2 <= dim ? arrAcc(J) : ""))
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         if (2 <= dim) {
-            code.add(BLANK + BLANK + CLOSING_BRACES);
+            code.add(CCodeHelper.BLANK + CCodeHelper.BLANK + CCodeHelper.CLOSING_BRACES);
         }
-        code.add(CLOSING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES);
         int index = tupleSize - 1;
         code.add(varAssignCode(V + tupleVotes.get(index).substring(VOTES.length()),
                                 varSubtractCode(voteInputSize, lastSplit))
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
         // Finished the split
     }
 
@@ -1269,9 +948,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // Create the variable
 
         code.add(electionTypeContainer.getInputStruct().getStructAccess()
-                + BLANK + voteInput + SEMICOLON);
+                + CCodeHelper.BLANK + voteInput + CCodeHelper.SEMICOLON);
         String voteInputSize = newTempVarString(SIZE);
-        code.add(unsignedIntVar(voteInputSize) + SEMICOLON);
+        code.add(unsignedIntVar(voteInputSize) + CCodeHelper.SEMICOLON);
         if (contentContext.getChild(0) instanceof ConcatenationExpContext) {
             // We have a concatenation
             ConcatenationExpNode concNode = new ConcatenationExpNode(
@@ -1288,19 +967,20 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
         // TODO Extract this logic into InputType
         if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
             code.add(varAssignCode(dotArrStructAccess(voteToSaveInto, I),
                                    dotArrStructAccess(voteInput, I))
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
         } else { // We have two dimensions
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
-            code.add(BLANK + BLANK + forLoopHeaderCode(J, LT_SIGN, C));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
+            code.add(CCodeHelper.BLANK + CCodeHelper.BLANK
+                    + forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
             code.add(varAssignCode(dotArrStructAccess(voteToSaveInto, I, J),
                                    dotArrStructAccess(voteInput, I, J))
-                    + SEMICOLON);
-            code.add(BLANK + BLANK + CLOSING_BRACES);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.BLANK + CCodeHelper.BLANK + CCodeHelper.CLOSING_BRACES);
+            code.add(CCodeHelper.CLOSING_BRACES);
         }
     }
 
@@ -1310,22 +990,22 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             String voteInput =  newTempVarString(ELECT);
             // Create the variable
             code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                    + BLANK + voteInput + SEMICOLON);
+                    + CCodeHelper.BLANK + voteInput + CCodeHelper.SEMICOLON);
             IntersectExpNode intersectNode = new IntersectExpNode(
                     node.getIntersectExp(), voteInput);
             intersectNode.getVisited(this);
             // The value the new array shall have is now in voteInput
             String toSaveInto = node.getElect().getText().toLowerCase();
-            code.add(forLoopHeaderCode(I, LT_SIGN,
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN,
                                        UnifiedNameContainer.getCandidate()));
             String structVarAcc = "."
                     + UnifiedNameContainer.getStructValueName()
                     + arrAcc(I);
-            code.add(toSaveInto + BLANK
+            code.add(toSaveInto + CCodeHelper.BLANK
                     + varAssignCode(structVarAcc,
                                     voteInput + structVarAcc)
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
         } else {
             GUIController.setErrorText(
                     "So far only candidate lists can be intersected!");
@@ -1338,11 +1018,11 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInputOne = newTempVarString(ELECT);
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + voteInputOne + SEMICOLON);
+                + CCodeHelper.BLANK + voteInputOne + CCodeHelper.SEMICOLON);
         String voteInputTwo = newTempVarString(ELECT);
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + voteInputTwo + SEMICOLON);
+                + CCodeHelper.BLANK + voteInputTwo + CCodeHelper.SEMICOLON);
         intersectHelpMethod(context.intersectContent(0), voteInputOne,
                 context.intersectContent(1), voteInputTwo,
                 node.getVoteOutput());
@@ -1354,15 +1034,15 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInputOne = newTempVarString(ELECT);
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + voteInputOne + SEMICOLON);
+                + CCodeHelper.BLANK + voteInputOne + CCodeHelper.SEMICOLON);
         String voteInputTwo = newTempVarString(ELECT);
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + voteInputTwo + SEMICOLON);
+                + CCodeHelper.BLANK + voteInputTwo + CCodeHelper.SEMICOLON);
         String toOutputTo = newTempVarString("output");
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + toOutputTo + SEMICOLON);
+                + CCodeHelper.BLANK + toOutputTo + CCodeHelper.SEMICOLON);
         intersectHelpMethod(node.getContext().intersectContent(0), voteInputOne,
                             node.getContext().intersectContent(1), voteInputTwo,
                             toOutputTo);
@@ -1396,7 +1076,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         intersectContentNodeTwo.getVisited(this);
         code.add(varAssignCode(toOutputTo,
                 functionCode("intersect", voteInputOne, voteInputTwo))
-                + SEMICOLON);
+                + CCodeHelper.SEMICOLON);
     }
 
     @Override
@@ -1404,12 +1084,12 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInput = newTempVarString(ELECT);
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + voteInput + SEMICOLON);
+                + CCodeHelper.BLANK + voteInput + CCodeHelper.SEMICOLON);
         if (node.getIntersectContentContext().Elect() != null) {
             code.add(varAssignCode(voteInput,
                                    node.getIntersectContentContext().Elect()
                                        .getText().toLowerCase())
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
         } else {
             // We have an intersect expression
             IntersectExpNode intersectNode =
@@ -1419,11 +1099,11 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         }
         // We now have the result standing in
         String toOutputTo = node.getVoteOutput();
-        code.add(forLoopHeaderCode(I, LT_SIGN, C));
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, C));
         code.add(varAssignCode(dotArrStructAccess(toOutputTo, I),
                                dotArrStructAccess(voteInput, I))
-                + SEMICOLON);
-        code.add(CLOSING_BRACES);
+                + CCodeHelper.SEMICOLON);
+        code.add(CCodeHelper.CLOSING_BRACES);
     }
 
     @Override
@@ -1436,9 +1116,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             voteInput = newTempVarString(VOTE);
             // Create the variable
             code.add(electionTypeContainer.getInputStruct().getStructAccess()
-                    + BLANK + voteInput + SEMICOLON);
+                    + CCodeHelper.BLANK + voteInput + CCodeHelper.SEMICOLON);
             voteInputSize = newTempVarString(SIZE);
-            code.add(unsignedIntVar(voteInputSize) + SEMICOLON);
+            code.add(unsignedIntVar(voteInputSize) + CCodeHelper.SEMICOLON);
             PermutationExpNode permNode = new PermutationExpNode(
                     node.getVoteEquivalentsContext().permutationExp(),
                     voteInput, voteInputSize);
@@ -1447,7 +1127,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 .getChild(0) instanceof ConcatenationExpContext) {
             // We have a concatenation
             voteInput = electionTypeContainer.getInputStruct().getStructAccess()
-                    + BLANK + newTempVarString(VOTE);
+                    + CCodeHelper.BLANK + newTempVarString(VOTE);
             ConcatenationExpNode concNode = new ConcatenationExpNode(
                     node.getVoteEquivalentsContext().concatenationExp(),
                     voteInput, voteInputSize);
@@ -1464,21 +1144,22 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteOutputLength = node.getVoteOutputLength();
         // TODO Extract this logic into InputType
         if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
             code.add(varAssignCode(dotArrStructAccess(voteToSaveInto, I),
                                    dotArrStructAccess(voteInput, I))
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
         } else { // We have two dimensions
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
-            code.add(BLANK + BLANK + forLoopHeaderCode(J, LT_SIGN, C));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
+            code.add(CCodeHelper.BLANK + CCodeHelper.BLANK
+                    + forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
             code.add(varAssignCode(dotArrStructAccess(voteToSaveInto, I, J),
                                    dotArrStructAccess(voteInput, I, J))
-                    + SEMICOLON);
-            code.add(BLANK + BLANK + CLOSING_BRACES);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.BLANK + CCodeHelper.BLANK + CCodeHelper.CLOSING_BRACES);
+            code.add(CCodeHelper.CLOSING_BRACES);
         }
-        code.add(varAssignCode(voteOutputLength, voteInputSize) + SEMICOLON);
+        code.add(varAssignCode(voteOutputLength, voteInputSize) + CCodeHelper.SEMICOLON);
         // We fulfilled the task of writing the result of the lower variable
         // into the given output variable.
     }
@@ -1487,7 +1168,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitConcatenationExpNode(final ConcatenationExpNode node) {
         int offset = 0;
         if (node.getConcatenationExpContext().getChild(0).getText()
-                .equals(OPENING_PARENTHESES)) {
+                .equals(CCodeHelper.OPENING_PARENTHESES)) {
             // We have to skip one child if we start with "("
             offset = 1; // TODO Wieso?
             // System.out.println("Hat eine Klammer!!");
@@ -1497,17 +1178,17 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInputOne = newTempVarString(VOTE);
         // Create the variable.
         code.add(electionTypeContainer.getInputStruct().getStructAccess()
-                + BLANK + voteInputOne + SEMICOLON);
+                + CCodeHelper.BLANK + voteInputOne + CCodeHelper.SEMICOLON);
         String voteInputOneSize = newTempVarString(SIZE);
         // We have a vote equivalent.
         if (firstChild instanceof VoteEquivalentsContext) {
-            code.add(unsignedIntVar(voteInputOneSize) + SEMICOLON);
+            code.add(unsignedIntVar(voteInputOneSize) + CCodeHelper.SEMICOLON);
             VoteEquivalentsNode voteEqNode = new VoteEquivalentsNode(
                     context.voteEquivalents(0), voteInputOne, voteInputOneSize);
             voteEqNode.getVisited(this);
         } else if (firstChild instanceof PermutationExpContext) {
             // We have a permutation
-            code.add(unsignedIntVar(voteInputOneSize) + SEMICOLON);
+            code.add(unsignedIntVar(voteInputOneSize) + CCodeHelper.SEMICOLON);
             PermutationExpNode permNode = new PermutationExpNode(
                     context.permutationExp(), voteInputOne, voteInputOneSize);
             permNode.getVisited(this);
@@ -1519,9 +1200,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInputTwo = newTempVarString(VOTE);
         // Create the variable
         code.add(electionTypeContainer.getInputStruct().getStructAccess()
-                + BLANK + voteInputTwo + SEMICOLON);
+                + CCodeHelper.BLANK + voteInputTwo + CCodeHelper.SEMICOLON);
         String voteInputSecondSize = newTempVarString(SIZE);
-        code.add(unsignedIntVar(voteInputSecondSize) + SEMICOLON);
+        code.add(unsignedIntVar(voteInputSecondSize) + CCodeHelper.SEMICOLON);
         VoteEquivalentsNode voteEqNodeTwo =
                 new VoteEquivalentsNode(context.voteEquivalents(offset),
                                         voteInputTwo, voteInputSecondSize);
@@ -1534,7 +1215,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 .getStructAccess();
 
         if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
-            code.add(outputStructDesc + BLANK
+            code.add(outputStructDesc + CCodeHelper.BLANK
                     + varAssignCode(tmp,
                                     functionCode("concatOne",
                                                  voteInputOne,
@@ -1542,16 +1223,16 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                                  voteInputTwo,
                                                  voteInputSecondSize)
                             )
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
             // Result is now in tmp
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
             code.add(varAssignCode(dotArrStructAccess(toSaveInto, I),
                                    dotArrStructAccess(tmp, I))
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
         } else {
             // We have 2 dim
-            code.add(outputStructDesc + BLANK
+            code.add(outputStructDesc + CCodeHelper.BLANK
                     + varAssignCode(tmp,
                                     functionCode("concatTwo",
                                                  voteInputOne,
@@ -1559,15 +1240,15 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                                  voteInputTwo,
                                                  voteInputSecondSize)
                             )
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
             // Result is now in tmp //TODO Redo all of this later on
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
-            code.add(forLoopHeaderCode(J, LT_SIGN, C));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
+            code.add(forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
             code.add(varAssignCode(dotArrStructAccess(toSaveInto, I, J),
                                    dotArrStructAccess(tmp, I, J))
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
-            code.add(CLOSING_BRACES);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
+            code.add(CCodeHelper.CLOSING_BRACES);
         }
         // The result is now saved in "toSaveInto"
     }
@@ -1577,9 +1258,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInput = newTempVarString(VOTE);
         // Create the variable
         code.add(electionTypeContainer.getInputStruct().getStructAccess()
-                + BLANK + voteInput + SEMICOLON);
+                + CCodeHelper.BLANK + voteInput + CCodeHelper.SEMICOLON);
         String voteInputSize = newTempVarString(SIZE);
-        code.add(unsignedIntVar(voteInputSize) + SEMICOLON);
+        code.add(unsignedIntVar(voteInputSize) + CCodeHelper.SEMICOLON);
         VoteEquivalentsNode voteEqNode = new VoteEquivalentsNode(
                 node.getPermutationExpContext().voteEquivalents(), voteInput,
                 voteInputSize);
@@ -1594,55 +1275,55 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteStruct = electionTypeContainer.getInputStruct()
                 .getStructAccess();
         if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
-            code.add(voteStruct + BLANK
+            code.add(voteStruct + CCodeHelper.BLANK
                     + varAssignCode(tmp,
                                     functionCode("permutateOne",
                                                  voteInput,
                                                  voteInputSize))
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
             // Result is now in tmp
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
             code.add(varAssignCode(dotArrStructAccess(toSaveInto, I),
                                    dotArrStructAccess(tmp, I))
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
-            code.add(varAssignCode(toSaveSizeInto, voteInputSize) + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
+            code.add(varAssignCode(toSaveSizeInto, voteInputSize) + CCodeHelper.SEMICOLON);
         } else {
-            code.add(voteStruct + BLANK
+            code.add(voteStruct + CCodeHelper.BLANK
                     + varAssignCode(tmp,
                                     functionCode("permutateTwo",
                                                  voteInput,
                                                  voteInputSize)
                             )
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
             // Result is now in tmp
-            code.add(forLoopHeaderCode(I, LT_SIGN, V));
-            code.add(forLoopHeaderCode(J, LT_SIGN, C));
+            code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, V));
+            code.add(forLoopHeaderCode(J, CCodeHelper.LT_SIGN, C));
             code.add(varAssignCode(dotArrStructAccess(toSaveInto, I, J),
                                    dotArrStructAccess(tmp, I, J))
-                    + SEMICOLON);
-            code.add(CLOSING_BRACES);
-            code.add(CLOSING_BRACES);
-            code.add(varAssignCode(toSaveSizeInto, voteInputSize) + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
+            code.add(CCodeHelper.CLOSING_BRACES);
+            code.add(CCodeHelper.CLOSING_BRACES);
+            code.add(varAssignCode(toSaveSizeInto, voteInputSize) + CCodeHelper.SEMICOLON);
         }
     }
 
     @Override
     public void visitNotEmptyExpNode(final NotEmptyExpressionNode node) {
         String notEmpty = "not_empty" + getTmpIndex();
-        code.add(unsignedIntVar(notEmpty) + SEMICOLON);
+        code.add(unsignedIntVar(notEmpty) + CCodeHelper.SEMICOLON);
         // We will save the result in this variable.
         // 0 for false, everything else for true
         variableNames.push(notEmpty);
         String subResult = newTempVarString("bool");
-        code.add(varEqualsCode(subResult) + ZERO + SEMICOLON);
+        code.add(varEqualsCode(subResult) + zero() + CCodeHelper.SEMICOLON);
         NotEmptyContentNode notEmptyNode = new NotEmptyContentNode(
                 node.getContext().notEmptyContent(), subResult);
         notEmptyNode.getVisited(this);
         // The result is now saved in votingInput
-        code.add(varAssignCode(notEmpty, subResult) + SEMICOLON);
+        code.add(varAssignCode(notEmpty, subResult) + CCodeHelper.SEMICOLON);
         if (node.isTop()) {
-            code.add(functionCode(assumeOrAssert, notEmpty) + SEMICOLON);
+            code.add(functionCode(assumeOrAssert, notEmpty) + CCodeHelper.SEMICOLON);
         }
     }
 
@@ -1651,7 +1332,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String subResult = newTempVarString(ELECT);
         // Create the variable
         code.add(electionTypeContainer.getOutputStruct().getStructAccess()
-                + BLANK + subResult + SEMICOLON);
+                + CCodeHelper.BLANK + subResult + CCodeHelper.SEMICOLON);
         // We have an intersect beneath
         if (node.getContext().intersectExp() != null) {
             IntersectExpNode intersectNode =
@@ -1662,13 +1343,13 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             // We only have an elect
             code.add(varAssignCode(subResult,
                                    node.getContext().Elect().getText().toLowerCase())
-                    + SEMICOLON);
+                    + CCodeHelper.SEMICOLON);
         }
         String toReturn = node.getVotingOutput();
         // The value is now saved in subResult
-        code.add(forLoopHeaderCode(I, LT_SIGN, C));
-        code.add(toReturn + BLANK + "+" + EQUALS_SIGN + BLANK
-                + dotArrStructAccess(subResult, I) + SEMICOLON);
-        code.add(CLOSING_BRACES);
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, C));
+        code.add(toReturn + CCodeHelper.BLANK + "+" + CCodeHelper.EQUALS_SIGN + CCodeHelper.BLANK
+                + dotArrStructAccess(subResult, I) + CCodeHelper.SEMICOLON);
+        code.add(CCodeHelper.CLOSING_BRACES);
     }
 }

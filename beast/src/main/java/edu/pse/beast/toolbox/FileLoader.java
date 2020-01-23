@@ -26,6 +26,8 @@ public final class FileLoader {
 
     /** The Constant C_FILE_ENDING. */
     public static final String C_FILE_ENDING = ".c";
+    /** The Constant H_FILE_ENDING. */
+    public static final String H_FILE_ENDING = ".h";
 
     /** The Constant BAT_FILE_ENDING. */
     public static final String BAT_FILE_ENDING = ".bat";

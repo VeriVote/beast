@@ -1,5 +1,16 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArr;
+import static edu.pse.beast.toolbox.CCodeHelper.eq;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,40 +28,10 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
  * @author Lukas Stapelbroek
  */
 public final class ParliamentStack extends CBMCOutputType {
-    /** The Constant COLON. */
-    private static final String COLON = ":";
-    /** The Constant SEMICOLON. */
-    private static final String SEMICOLON = ";";
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-    /** The Constant COMMA. */
-    private static final String COMMA = ",";
-    /** The Constant EQUALS_SIGN. */
-    private static final String EQUALS_SIGN = "=";
-    /** The Constant PLUS_PLUS. */
-    private static final String PLUS_PLUS = "++";
-    /** The Constant LT_SIGN. */
-    private static final String LT_SIGN = "<";
-
     /** The Constant I. */
     private static final String I = "i";
-    /** The Constant ZERO. */
-    private static final String ZERO = "0";
-    /** The Constant ONE. */
-    private static final String ONE = "1";
-
-    /** The Constant OPENING_PARENTHESES. */
-    private static final String OPENING_PARENTHESES = "(";
-    /** The Constant CLOSING_PARENTHESES. */
-    private static final String CLOSING_PARENTHESES = ")";
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
-    /** The Constant OPENING_BRACKETS. */
-    private static final String OPENING_BRACKETS = "[";
-    /** The Constant CLOSING_BRACKETS. */
-    private static final String CLOSING_BRACKETS = "]";
+    /** The Constant TMP_STRING. */
+    private static final String TMP_STRING = "tmp";
 
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
@@ -79,59 +60,50 @@ public final class ParliamentStack extends CBMCOutputType {
 
     @Override
     public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
-        code.add("void" + BLANK + "verifyMain()" + BLANK + OPENING_BRACES);
+        code.add(CCodeHelper.VOID + CCodeHelper.BLANK + "verifyMain()"
+                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
         code.addTab();
-        code.add(CCodeHelper.STRUCT + BLANK + "stack_result" + BLANK + "tmp" + BLANK
-                + EQUALS_SIGN + BLANK
-                + UnifiedNameContainer.getVotingMethod() + OPENING_PARENTHESES
-                + UnifiedNameContainer.getNewVotesName() + ONE
-                + CLOSING_PARENTHESES + SEMICOLON);
-        code.add(CCodeHelper.UNSIGNED + BLANK + CCodeHelper.INT + BLANK
-                + "*tmp_result" + BLANK + EQUALS_SIGN + BLANK + "tmp.arr" + SEMICOLON);
-        // create the array where the new seats will get saved
-        code.add(CCodeHelper.UNSIGNED + BLANK + CCodeHelper.INT + BLANK
-                + UnifiedNameContainer.getNewResultName() + ONE
-                + OPENING_BRACKETS + UnifiedNameContainer.getSeats()
-                + CLOSING_BRACKETS + SEMICOLON);
+        code.add(varAssignCode(CCodeHelper.STRUCT + CCodeHelper.BLANK + "stack_result"
+                                    + CCodeHelper.BLANK + TMP_STRING,
+                               functionCode(UnifiedNameContainer.getVotingMethod(),
+                                            UnifiedNameContainer.getNewVotesName()
+                                            + one())
+                ) + CCodeHelper.SEMICOLON);
+        code.add(varEqualsCode("*tmp_result") + TMP_STRING + dotArr() + CCodeHelper.SEMICOLON);
+        // Create the array where the new seats will get saved
+        code.add(unsignedIntVar(
+                arrAccess(UnifiedNameContainer.getNewResultName() + one(),
+                          UnifiedNameContainer.getSeats())
+                ) + CCodeHelper.SEMICOLON);
         // iterate over the seat array, and fill it
-        code.add(CCodeHelper.FOR + BLANK + OPENING_PARENTHESES + CCodeHelper.INT + BLANK
-                + I + BLANK + EQUALS_SIGN + BLANK + ZERO + SEMICOLON + BLANK
-                + I + BLANK + LT_SIGN + BLANK + UnifiedNameContainer.getSeats() + SEMICOLON
-                + BLANK + I + PLUS_PLUS + CLOSING_PARENTHESES
-                + BLANK + OPENING_BRACES);
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, UnifiedNameContainer.getSeats()));
         code.addTab();
-        // we do this, so our cbmc parser can read out the value of the
+        // We do this, so our cbmc parser can read out the value of the
         // array
-        code.add("" + UnifiedNameContainer.getNewResultName() + ONE
-                + OPENING_BRACKETS + I + CLOSING_BRACKETS + BLANK
-                + EQUALS_SIGN + BLANK + "tmp_result"
-                + OPENING_BRACKETS + I + CLOSING_BRACKETS + SEMICOLON);
+        code.add(varAssignCode(
+                    arrAccess(UnifiedNameContainer.getNewResultName() + one(), I),
+                    arrAccess("tmp_result", I)
+                ) + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES); // close the for loop
+        code.add(CCodeHelper.CLOSING_BRACES); // Close the for loop
         // iterate over all
-        code.add(CCodeHelper.FOR + BLANK + OPENING_PARENTHESES
-                + CCodeHelper.INT + BLANK + I + BLANK
-                + EQUALS_SIGN + BLANK + ZERO + SEMICOLON + BLANK
-                + I + BLANK + LT_SIGN + BLANK
-                + UnifiedNameContainer.getSeats() + SEMICOLON
-                + BLANK + I + PLUS_PLUS + CLOSING_PARENTHESES
-                + BLANK + OPENING_BRACES);
+        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, UnifiedNameContainer.getSeats()));
         code.addTab();
         // candidates / seats
-        code.add("assert" + OPENING_PARENTHESES
-                + UnifiedNameContainer.getNewResultName() + ONE + OPENING_BRACKETS
-                + I + CLOSING_BRACKETS + BLANK + "==" + BLANK
-                + UnifiedNameContainer.getOrigResultName() + BLANK
-                + OPENING_BRACKETS + I + CLOSING_BRACKETS
-                + CLOSING_PARENTHESES + SEMICOLON);
+        code.add(functionCode("assert",
+                              eq(arrAccess(
+                                      UnifiedNameContainer.getNewResultName() + one(), I),
+                                 arrAccess(
+                                      UnifiedNameContainer.getOrigResultName(), I))
+                ) + CCodeHelper.SEMICOLON);
         code.deleteTab();
-        code.add(CLOSING_BRACES); // end of the for loop
+        code.add(CCodeHelper.CLOSING_BRACES); // End of the for loop
         code.deleteTab();
-        code.add(CLOSING_BRACES); // end of the function
+        code.add(CCodeHelper.CLOSING_BRACES); // End of the function
         CodeArrayListBeautifier c = new CodeArrayListBeautifier();
         c.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
         return c;
@@ -140,18 +112,17 @@ public final class ParliamentStack extends CBMCOutputType {
     @Override
     public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
                                                         final int voteNumber) {
-        String electX = super.getContainer().getOutputStruct().getStructAccess()
-                + BLANK + "elect" + voteNumber + BLANK
-                + EQUALS_SIGN + BLANK + UnifiedNameContainer.getVotingMethod()
-                + OPENING_PARENTHESES + "votes" + voteNumber
-                + CLOSING_PARENTHESES + SEMICOLON;
-        code.add(electX);
+        code.add(varAssignCode(super.getContainer().getOutputStruct().getStructAccess()
+                                + CCodeHelper.BLANK + ELECT + voteNumber,
+                               functionCode(UnifiedNameContainer.getVotingMethod(),
+                                            VOTES + voteNumber)
+                ) + CCodeHelper.SEMICOLON);
         return code;
     }
 
     @Override
     public String getCArrayType() {
-        return OPENING_BRACKETS + UnifiedNameContainer.getCandidate() + CLOSING_BRACKETS;
+        return arrAcc(UnifiedNameContainer.getCandidate());
     }
 
     @Override
@@ -164,22 +135,24 @@ public final class ParliamentStack extends CBMCOutputType {
 
     @Override
     public String getResultDescriptionString(final List<String> result) {
-        String toReturn = OPENING_BRACKETS;
+        String toReturn = "";
         int index = 0;
         for (Iterator<String> iterator = result.iterator(); iterator
                 .hasNext();) {
             String currentValue = iterator.next();
             try {
                 toReturn += GUIController.getController()
-                        .getElectionSimulation().getPartyName(index) + COLON + BLANK
-                        + currentValue + COMMA + BLANK;
+                        .getElectionSimulation().getPartyName(index)
+                        + CCodeHelper.COLON + CCodeHelper.BLANK
+                        + currentValue + CCodeHelper.COMMA + CCodeHelper.BLANK;
             } catch (NumberFormatException e) {
-                toReturn += index + COLON + BLANK + currentValue + COMMA + BLANK;
+                toReturn += index + CCodeHelper.COLON + CCodeHelper.BLANK
+                            + currentValue + CCodeHelper.COMMA
+                            + CCodeHelper.BLANK;
             }
             index++;
         }
-        toReturn = toReturn + CLOSING_BRACKETS;
-        return toReturn;
+        return arrAcc(toReturn);
     }
 
     @Override

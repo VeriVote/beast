@@ -1,5 +1,8 @@
 package edu.pse.beast.propertychecker;
 
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +17,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -191,16 +195,16 @@ public class CBMCCodeGenerator {
                 .getComplexCode());
         // add the code which defines the votes
         String origVotes = electionDesc.getContainer().getInputStruct()
-                .getStructAccess() + " "
+                .getStructAccess() + CCodeHelper.BLANK
                 + UnifiedNameContainer.getOrigVotesName() + " = "
                 + getVotingResultCode(
                         (CBMCResultValueWrapper) votingData.getValues())
-                + ";";
+                + CCodeHelper.SEMICOLON;
         String sizeOfVote = "" + electionDesc.getContainer().getInputType()
                 .getSizesInOrder(votingData.getVoters(),
                         votingData.getCandidates(), votingData.getSeats())
                 .get(0);
-        String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + ";";
+        String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + CCodeHelper.SEMICOLON;
 
         code.add(origVotesSize);
 
@@ -222,17 +226,19 @@ public class CBMCCodeGenerator {
                 .getComplexCode());
         // add the code which defines the votes
         String origVotes = electionDesc.getContainer().getInputStruct()
-                .getStructAccess() + " "
+                .getStructAccess() + CCodeHelper.BLANK
                 + UnifiedNameContainer.getOrigVotesName() + " = "
                 + getVotingResultCode(
                         (CBMCResultValueWrapper) votingData.getValues())
-                + ";";
+                + CCodeHelper.SEMICOLON;
         code.add(origVotes);
         String sizeOfVote = "" + electionDesc.getContainer().getInputType()
                 .getSizesInOrder(votingData.getVoters(),
                         votingData.getCandidates(), votingData.getSeats())
                 .get(0);
-        String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + ";";
+        String origVotesSize = CCodeHelper.INT + CCodeHelper.BLANK
+                                + "ORIG_VOTES_SIZE = " + CCodeHelper.BLANK
+                                + sizeOfVote + CCodeHelper.SEMICOLON;
         code.add(origVotesSize);
         addMarginMainTest(); // TODO add gcc ability here
     }
@@ -260,7 +266,9 @@ public class CBMCCodeGenerator {
         // https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 
         // add the main method
-        code.add("int main() {");
+        code.add(CCodeHelper.INT + CCodeHelper.BLANK
+                + functionCode("main") + CCodeHelper.BLANK
+                + CCodeHelper.OPENING_PARENTHESES);
         addMarginCompMethod(code, electionDesc.getContainer().getInputType(),
                 electionDesc.getContainer().getOutputType(), origResultName);
         code.add("}");
@@ -303,8 +311,8 @@ public class CBMCCodeGenerator {
                                           final String voteName) {
         codeList.add("int total_diff = 0;");
         codeList.add("int pos_diff = 0;");
-        String voteContainer = inType.getStruct().getStructAccess() + " "
-                                + voteName + ";";
+        String voteContainer = inType.getStruct().getStructAccess() + CCodeHelper.BLANK
+                                + voteName + CCodeHelper.SEMICOLON;
         codeList.add(voteContainer);
 
         // addInitialisedValue(voteName, inType,
@@ -369,17 +377,18 @@ public class CBMCCodeGenerator {
                                            final String newVotesName,
                                            final String origResultName) {
         String resultName = UnifiedNameContainer.getNewResultName();
-        String resultContainer = outType.getStruct().getStructAccess() + " "
+        String resultContainer = outType.getStruct().getStructAccess() + CCodeHelper.BLANK
                 + resultName;
         String resultAssignment = resultContainer + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES_SIZE,"
-                + newVotesName + ");";
+                + newVotesName + ")" + CCodeHelper.SEMICOLON;
         codeList.add(resultAssignment);
         List<String> loopVars = addNestedForLoopTop(codeList,
                 outType.getSizeOfDimensionsAsList(), new ArrayList<String>());
         String newResultAcc = outType.getFullVarAccess(resultName, loopVars);
         String origResultAcc = outType.getFullVarAccess(origResultName, loopVars);
-        codeList.add("assert(" + newResultAcc + " == " + origResultAcc + ");");
+        codeList.add(functionCode("assert", newResultAcc + " == " + origResultAcc)
+                    + CCodeHelper.SEMICOLON);
         addNestedForrLoopBot(codeList, loopVars.size());
     }
 
@@ -401,8 +410,7 @@ public class CBMCCodeGenerator {
             String name = "loop_" + nameOfLoopVariables.size();
             name = code.getNotUsedVarName(name);
             nameOfLoopVariables.add(name);
-            code.add("for (int " + name + " = 0; " + name + " < "
-                    + dimensions.get(0) + "; " + name + "++) {");
+            code.add(forLoopHeaderCode(name, CCodeHelper.LT_SIGN, dimensions.get(0)));
             code.addTab();
             return addNestedForLoopTop(code,
                                        dimensions.subList(1, dimensions.size()),
@@ -435,13 +443,13 @@ public class CBMCCodeGenerator {
     private void addMarginHeaders(final ElectionSimulationData votingData) {
         code = addHeader(code);
         code.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define "
-                + UnifiedNameContainer.getVoter() + " " + votingData.getVoters()
+                + UnifiedNameContainer.getVoter() + CCodeHelper.BLANK + votingData.getVoters()
                 + "\n #endif");
         code.add("#ifndef " + UnifiedNameContainer.getCandidate()
-                + " \n #define " + UnifiedNameContainer.getCandidate() + " "
+                + " \n #define " + UnifiedNameContainer.getCandidate() + CCodeHelper.BLANK
                 + votingData.getCandidates() + "\n #endif");
         code.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define "
-                + UnifiedNameContainer.getSeats() + " " + votingData.getSeats()
+                + UnifiedNameContainer.getSeats() + CCodeHelper.BLANK + votingData.getSeats()
                 + "\n #endif");
     }
 
@@ -491,13 +499,13 @@ public class CBMCCodeGenerator {
         String dataDef = electionDesc.getContainer().getInputType()
                 .getDataTypeAndSign();
         String definition = dataDef + " arr" + electionDesc.getContainer()
-                .getInputType().getDimensionDescriptor(true) + ";";
+                .getInputType().getDimensionDescriptor(true) + CCodeHelper.SEMICOLON;
         code.add(definition);
         String assignment = forLoopStart + "arr" + access + " = "
-                + " tmp_struct.arr" + access + ";" + forLoopEnd + "\n";
+                + " tmp_struct.arr" + access + CCodeHelper.SEMICOLON + forLoopEnd + "\n";
         code.add(assignment);
         code.add("unsigned int sum = 0;");
-        code.add("for(unsigned int i = 0; i < amountVotes; i++) {");
+        code.add(forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "amountVotes"));
 
         // add the specific code which differs for different input types
         electionDesc.getContainer().getInputType().addCodeForVoteSum(code,
@@ -538,11 +546,11 @@ public class CBMCCodeGenerator {
         code.add(electionDesc.getContainer().getOutputStruct().getStructAccess()
                 + " toReturn;");
         code.add("  ");
-        code.add("  for (int i = 0; i < C; i++) {");
+        code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "C"));
         code.add("    toReturn.arr[i] = 0;");
         code.add("  }");
         code.add("  ");
-        code.add("  for (int i = 0; i < C; i++) {");
+        code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "C"));
         code.add("    if (one.arr[i] && two.arr[i]) {");
         code.add("      toReturn.arr[i] = 1;");
         code.add("    }");
@@ -581,33 +589,35 @@ public class CBMCCodeGenerator {
         code.add("  ");
         code.add("unsigned int already_used_arr[V];");
         code.add("    ");
-        code.add(
-                "for(int i = 0; i < V; i++) { //set all to C in the beginning");
-        code.add("for(int j = 0; j < C; j++) {");
+        code.add(forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
+                + " //set all to C in the beginning");
+        code.add(forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("sub_arr.arr[i][j] = C;");
         code.add("}");
         code.add("}");
-        code.add("");
+        code.add();
         code.add("  ");
-        code.add("for(int i = 0; i < length; i++) {");
+        code.add(forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "length"));
         code.add("unsigned int new_index = nondet_uint();");
         code.add("assume((new_index >= 0) && (new_index < length));");
-        code.add("");
-        code.add("for(int j = 0; j < i; j++) {");
+        code.add();
+        code.add(forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "i"));
         code.add("assume(new_index != already_used_arr[j]);");
         code.add("}");
         code.add("    ");
         code.add("    already_used_arr[i] = new_index;");
         code.add("    ");
-        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("    " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      sub_arr.arr[new_index][j] = votes.arr[i][j];");
         code.add("    }");
         code.add("  }");
         code.add("  ");
         code.add(voteStruct + " toReturn;");
         code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
-        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
+        code.add("    "
+                + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      toReturn.arr[i][j] = sub_arr.arr[i][j];");
         code.add("    }");
         code.add("  }");
@@ -635,17 +645,19 @@ public class CBMCCodeGenerator {
         code.add("  ");
         code.add(" unsigned int already_used_arr[V];");
         code.add("    ");
-        code.add(
-                "  for(int i = 0; i < V; i++) { //set all to C in the beginning");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
+                + " //set all to C in the beginning");
         code.add("    sub_arr.arr[i] = C;");
         code.add("  }");
         code.add("  ");
         code.add("  ");
-        code.add("  for(int i = 0; i < length; i++) {");
+        code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "length"));
         code.add("    unsigned int new_index = nondet_uint();");
         code.add("    assume((new_index >= 0) && (new_index < length));");
         code.add("    ");
-        code.add("    for(int j = 0; j < i; j++) {");
+        code.add("    "
+                + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "i"));
         code.add("      assume(new_index != already_used_arr[j]);");
         code.add("    }");
         code.add("    ");
@@ -656,14 +668,15 @@ public class CBMCCodeGenerator {
         code.add("  ");
         code.add(voteStruct + " toReturn;");
         code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
         code.add("    toReturn.arr[i] = sub_arr.arr[i];");
         code.add("  }");
         code.add("    ");
         code.add("  return toReturn;");
         code.add("  ");
         code.add("}");
-        code.add("");
+        code.add();
     }
 
     /**
@@ -693,25 +706,31 @@ public class CBMCCodeGenerator {
                 + " votesTwo, unsigned int sizeTwo) {");
         code.add(voteStruct + " sub_arr;");
         code.add("  ");
-        code.add(
-                "  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
+                + " //set all to C in the beginning");
+        code.add("    "
+                + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      sub_arr.arr[i][j] = C;");
         code.add("    }");
         code.add("  }");
         code.add("  ");
-        code.add(
-                "  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
-        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeOne")
+                + " //limit the size to the upper bound V");
+        code.add("    "
+                + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      if (i < V) {");
         code.add("        sub_arr.arr[i][j] = votesOne.arr[i][j];");
         code.add("      }");
         code.add("    }");
         code.add("  }");
         code.add("  ");
-        code.add(
-                "  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
-        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeTwo")
+                + " //limit the size to the upper bound V");
+        code.add("    "
+                + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      if (sizeTwo + i < V) {");
         code.add("        sub_arr.arr[i][j] = votesTwo.arr[i][j];");
         code.add("      }");
@@ -721,8 +740,10 @@ public class CBMCCodeGenerator {
         code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
                 + " toReturn;");
         code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
-        code.add("    for (int j = 0; j < C; j++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
+        code.add("    "
+                + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      toReturn.arr[i][j] = sub_arr.arr[i][j];");
         code.add("    }");
         code.add("  }");
@@ -748,20 +769,23 @@ public class CBMCCodeGenerator {
                 + " votesTwo, unsigned int sizeTwo) {");
         code.add(voteStruct + " sub_arr;");
         code.add("  ");
-        code.add(
-                "  for(int i = 0; i < V; i++) { //set all to C in the beginning");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
+                + " //set all to C in the beginning");
         code.add("    sub_arr.arr[i] = C;");
         code.add("  }");
         code.add("  ");
-        code.add(
-                "  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeOne")
+                + " //limit the size to the upper bound V");
         code.add("    if (i < V) {");
         code.add("      sub_arr.arr[i] = votesOne.arr[i];");
         code.add("    }");
         code.add("  }");
         code.add("  ");
-        code.add(
-                "  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "sizeTwo")
+                + " //limit the size to the upper bound V");
         code.add("    if (sizeOne + i < V) {");
         code.add("      sub_arr.arr[sizeOne + i] = votesTwo.arr[i];");
         code.add("    }");
@@ -769,14 +793,15 @@ public class CBMCCodeGenerator {
         code.add("  ");
         code.add(voteStruct + " toReturn;");
         code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
+        code.add("  "
+                + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
         code.add("    toReturn.arr[i] = sub_arr.arr[i];");
         code.add("  }");
         code.add("    ");
         code.add("  return toReturn;");
         code.add("  ");
         code.add("}");
-        code.add("");
+        code.add();
     }
 
     /**
@@ -784,7 +809,7 @@ public class CBMCCodeGenerator {
      */
     private void addSplitArrayFunctions() {
         code.add("//split array");
-        code.add("");
+        code.add();
         code.add("//get splits cuts through an array of size max");
         code.add(
                 "unsigned int *getRandomSplitLines(unsigned int splits, unsigned int max) {");
@@ -820,9 +845,9 @@ public class CBMCCodeGenerator {
         code.add("  }");
         code.add("  return split_arr;");
         code.add("}");
-        code.add("");
+        code.add();
         code.add("//start is inclusive, stop is exclusive");
-        code.add("");
+        code.add();
         String voteStruct = electionDesc.getContainer().getInputStruct()
                 .getStructAccess();
 
@@ -850,8 +875,9 @@ public class CBMCCodeGenerator {
             code.add("    ");
             code.add("    return toReturn;");
             code.add("  } else {");
-            code.add("");
-            code.add("    for (int i = 0; i < V; i++) {");
+            code.add();
+            code.add("    "
+                    + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      if ((i >= start) && (i < stop)) {");
             code.add("        sub_arr.arr[i - start] = votes.arr[i];");
             code.add("      }");
@@ -861,14 +887,14 @@ public class CBMCCodeGenerator {
             code.add(electionDesc.getContainer().getInputStruct()
                     .getStructAccess() + " toReturn;");
             code.add("    ");
-            code.add("    for (int i = 0; i < V; i++) {");
+            code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      toReturn.arr[i] = sub_arr.arr[i];");
             code.add("    }");
             code.add("    ");
             code.add("    return toReturn;");
             code.add("  }");
             code.add("}");
-            code.add("");
+            code.add();
         }
 
         if (electionDesc.getContainer().getInputType()
@@ -884,9 +910,9 @@ public class CBMCCodeGenerator {
                     + "unsigned int start, unsigned int stop) {");
             code.add(voteStruct + " sub_arr;");
             code.add("  ");
-            code.add(
-                    "  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-            code.add("    for(int j = 0; j < C; j++) {");
+            code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
+                    + " //set all to C in the beginning");
+            code.add("    " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
             code.add("      sub_arr.arr[i][j] = C;");
             code.add("    }");
             code.add("  }");
@@ -895,18 +921,19 @@ public class CBMCCodeGenerator {
             code.add(electionDesc.getContainer().getInputStruct()
                     .getStructAccess() + " toReturn;");
             code.add("    ");
-            code.add("    for (int i = 0; i < V; i++) {");
-            code.add("      for(int j = 0; j < V; j++) {");
+            code.add("    "
+                    + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
+            code.add("      " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "V"));
             code.add("        toReturn.arr[i][j] = sub_arr.arr[i][j];");
             code.add("      }");
             code.add("    }");
             code.add("    ");
             code.add("    return toReturn;");
             code.add("  } else {");
-            code.add("");
-            code.add("    for (int i = 0; i < V; i++) {");
+            code.add();
+            code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      if ((i >= start) && (i < stop)) {");
-            code.add("        for(int j = 0; j < C; j++) {");
+            code.add("        " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
             code.add("          sub_arr.arr[i - start][j] = votes.arr[i][j];");
             code.add("        }");
             code.add("      }");
@@ -915,7 +942,7 @@ public class CBMCCodeGenerator {
             code.add(electionDesc.getContainer().getInputStruct()
                     .getStructAccess() + " toReturn;");
             code.add("    ");
-            code.add("    for (int i = 0; i < V; i++) {");
+            code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      for(int j = 0; j < V; j++) {");
             code.add("        toReturn.arr[i][j] = sub_arr.arr[i][j];");
             code.add("      }");
@@ -924,7 +951,7 @@ public class CBMCCodeGenerator {
             code.add("    return toReturn;");
             code.add("  }");
             code.add("}");
-            code.add("");
+            code.add();
         }
     }
 
@@ -967,17 +994,17 @@ public class CBMCCodeGenerator {
         // init all voting vars for the voters
         for (int i = 1; i <= numberOfTimesVoted; i++) {
             code.add("unsigned int " + UnifiedNameContainer.getVoter() + i
-                    + " = " + UnifiedNameContainer.getVoter() + ";");
+                    + " = " + UnifiedNameContainer.getVoter() + CCodeHelper.SEMICOLON);
         }
         // init all voting vars for the candidates
         for (int i = 1; i <= numberOfTimesVoted; i++) {
             code.add("unsigned int " + UnifiedNameContainer.getCandidate() + i
-                    + " = " + UnifiedNameContainer.getCandidate() + ";");
+                    + " = " + UnifiedNameContainer.getCandidate() + CCodeHelper.SEMICOLON);
         }
         // init all voting vars for the seats
         for (int i = 1; i <= numberOfTimesVoted; i++) {
             code.add("unsigned int " + UnifiedNameContainer.getSeats() + i
-                    + " = " + UnifiedNameContainer.getSeats() + ";");
+                    + " = " + UnifiedNameContainer.getSeats() + CCodeHelper.SEMICOLON);
         }
         List<String> boundedVars = preAndPostCondDesc.getBoundedVarDescription()
                 .getCodeAsList();
@@ -1077,7 +1104,7 @@ public class CBMCCodeGenerator {
                 reportUnsupportedType(id);
             }
         });
-        code.add("");
+        code.add();
     }
 
     /**
@@ -1088,9 +1115,9 @@ public class CBMCCodeGenerator {
      *            the pre AST
      */
     private void addPreProperties(final BooleanExpListNode preAST) {
-        code.add("");
+        code.add();
         code.add("//preproperties ");
-        code.add("");
+        code.add();
         visitor.setToPreConditionMode();
         preAST.getBooleanExpressions().forEach(booleanExpressionLists -> {
             booleanExpressionLists.forEach(booleanNode -> {
@@ -1106,9 +1133,9 @@ public class CBMCCodeGenerator {
      *            the post AST
      */
     private void addPostProperties(final BooleanExpListNode postAST) {
-        code.add("");
+        code.add();
         code.add("//postproperties ");
-        code.add("");
+        code.add();
         visitor.setToPostConditionMode();
         postAST.getBooleanExpressions().forEach(booleanExpressionLists -> {
             booleanExpressionLists.forEach(booleanNode -> {
@@ -1170,7 +1197,8 @@ public class CBMCCodeGenerator {
                                      final String maxValue) {
         code.add("// init of variable " + valueName);
         String declaration =
-                complexType.getStructAccess() + " " + valueName + ";";
+                complexType.getStructAccess() + CCodeHelper.BLANK
+                + valueName + CCodeHelper.SEMICOLON;
         code.add(declaration);
         List<String> loopVariables =
                 addNestedForLoopTop(this.code,
@@ -1283,7 +1311,6 @@ public class CBMCCodeGenerator {
      */
     private String generateForLoopHeader(final String indexName,
                                          final String maxSize) {
-        return "for (unsigned int " + indexName + " = 0; " + indexName + " < "
-                + maxSize + "; " + indexName + "++ ) { ";
+        return forLoopHeaderCode(indexName, CCodeHelper.LT_SIGN, maxSize);
     }
 }
