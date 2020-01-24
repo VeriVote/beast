@@ -382,6 +382,20 @@ public final class CCodeHelper {
     }
 
     /**
+     * Variable add code.
+     *
+     * @param varOne
+     *            the first variable
+     * @param varTwo
+     *            the second variable
+     * @return the string
+     */
+    public static String varAddCode(final String varOne,
+                                    final String varTwo) {
+        return varOne + BLANK + MINUS + BLANK + varTwo;
+    }
+
+    /**
      * Variable less code.
      *
      * @param lhsExpr
