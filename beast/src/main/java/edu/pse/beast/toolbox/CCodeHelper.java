@@ -657,8 +657,8 @@ public final class CCodeHelper {
      *            the dims
      * @return the string
      */
-    private static String arrAccess(final String arr,
-                                    final List<String> dims) {
+    public static String arrAccess(final String arr,
+                                   final List<String> dims) {
         String arrAccess = notNullOrEmpty(arr) ? arr : "";
         if (notNullOrEmpty(arr) && notNullOrEmpty(dims)) {
             arrAccess += arr;
@@ -735,6 +735,20 @@ public final class CCodeHelper {
             }
         }
         return dotStructAccess(owner, structName, dimList);
+    }
+
+    /**
+     * Dot arr struct access for all given dimensions.
+     *
+     * @param owner
+     *            the owner
+     * @param dimList
+     *            the dims
+     * @return the string
+     */
+    public static String dotArrStructAccess(final String owner,
+                                            final List<String> dimList) {
+        return dotStructAccess(owner, null, dimList);
     }
 
     /**

@@ -3,6 +3,7 @@ package edu.pse.beast.propertychecker;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
@@ -522,9 +523,9 @@ public class CBMCCodeGenerator {
         for (int i = 0; i < dimensions; i++) {
             forLoopEnd += CCodeHelper.CLOSING_BRACES; // Close the for-loops
         }
-        String access = "";
+        List<String> access = new ArrayList<String>();
         for (int i = 0; i < dimensions; i++) {
-            access += arrAcc(loopVariables.get(i));
+            access.add(loopVariables.get(i));
         }
         String dataDef = electionDesc.getContainer().getInputType()
                 .getDataTypeAndSign();
@@ -533,7 +534,8 @@ public class CBMCCodeGenerator {
         code.add(definition);
         String assignment =
                 forLoopStart
-                + varAssignCode("arr" + access, CCodeHelper.BLANK + "tmp_struct.arr" + access)
+                + varAssignCode(arrAccess("arr", access),
+                                dotArrStructAccess("tmp_struct", access))
                 + CCodeHelper.SEMICOLON
                 + forLoopEnd + "\n";
         code.add(assignment);
@@ -582,16 +584,17 @@ public class CBMCCodeGenerator {
         code.add("  ");
         code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "C"));
         code.add("    "
-                + varAssignCode("toReturn.arr[i]", zero())
+                + varAssignCode(dotArrStructAccess("toReturn", "i"), zero())
                 + CCodeHelper.SEMICOLON);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
         code.add("  ");
         code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "C"));
         code.add("    "
-                + functionCode(CCodeHelper.IF, conjunct("one.arr[i]", "two.arr[i]"))
+                + functionCode(CCodeHelper.IF, conjunct(dotArrStructAccess("one", "i"),
+                                                        dotArrStructAccess("two", "i")))
                 + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
         code.add("      "
-                + varAssignCode("toReturn.arr[i]", one())
+                + varAssignCode(dotArrStructAccess("toReturn", "i"), one())
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -637,7 +640,7 @@ public class CBMCCodeGenerator {
         code.add(forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                 + " // Set all to C in the beginning");
         code.add(forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-        code.add(varAssignCode("sub_arr.arr[i][j]", "C")
+        code.add(varAssignCode(dotArrStructAccess("sub_arr", "i", "j"), "C")
                 + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add(CCodeHelper.CLOSING_BRACES);
@@ -662,8 +665,8 @@ public class CBMCCodeGenerator {
         code.add("    ");
         code.add("    " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      "
-                + varAssignCode("sub_arr.arr[new_index][j]",
-                                "votes.arr[i][j]")
+                + varAssignCode(dotArrStructAccess("sub_arr", "new_index", "j"),
+                                dotArrStructAccess("votes", "i", "j"))
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -675,8 +678,8 @@ public class CBMCCodeGenerator {
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      "
-                + varAssignCode("toReturn.arr[i][j]",
-                                "sub_arr.arr[i][j]")
+                + varAssignCode(dotArrStructAccess("toReturn", "i", "j"),
+                                dotArrStructAccess("sub_arr", "i", "j"))
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -714,7 +717,7 @@ public class CBMCCodeGenerator {
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                 + " // Set all to C in the beginning");
         code.add("    "
-                + varAssignCode("sub_arr.arr[i]", "C")
+                + varAssignCode(dotArrStructAccess("sub_arr", "i"), "C")
                 + CCodeHelper.SEMICOLON);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
         code.add("  ");
@@ -739,7 +742,8 @@ public class CBMCCodeGenerator {
         code.add("    " + varAssignCode("already_used_arr[i]", "new_index")
                + CCodeHelper.SEMICOLON);
         code.add("    ");
-        code.add("    " + varAssignCode("sub_arr.arr[new_index]", "votes.arr[i]")
+        code.add("    " + varAssignCode(dotArrStructAccess("sub_arr", "new_index"),
+                                        dotArrStructAccess("votes", "i"))
                + CCodeHelper.SEMICOLON);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
         code.add("  ");
@@ -747,7 +751,8 @@ public class CBMCCodeGenerator {
         code.add("    ");
         code.add("  "
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-        code.add("    " + varAssignCode("toReturn.arr[i]", "sub_arr.arr[i]")
+        code.add("    " + varAssignCode(dotArrStructAccess("toReturn", "i"),
+                                        dotArrStructAccess("sub_arr", "i"))
                 + CCodeHelper.SEMICOLON);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
         code.add("    ");
@@ -795,7 +800,7 @@ public class CBMCCodeGenerator {
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      "
-                + varAssignCode("sub_arr.arr[i][j]", "C")
+                + varAssignCode(dotArrStructAccess("sub_arr", "i", "j"), "C")
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -809,7 +814,8 @@ public class CBMCCodeGenerator {
                 + functionCode(CCodeHelper.IF, lt("i", "V"))
                 + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
         code.add("        "
-                + varAssignCode("sub_arr.arr[i][j]", "votesOne.arr[i][j]")
+                + varAssignCode(dotArrStructAccess("sub_arr", "i", "j"),
+                                dotArrStructAccess("votesOne", "i", "j"))
                 + CCodeHelper.SEMICOLON);
         code.add("      " + CCodeHelper.CLOSING_BRACES);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
@@ -824,7 +830,8 @@ public class CBMCCodeGenerator {
                 + functionCode(CCodeHelper.IF,
                                lt(varAddCode("sizeTwo", "i"), "V"))
                 + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
-        code.add("        " + varAssignCode("sub_arr.arr[i][j]", "votesTwo.arr[i][j]")
+        code.add("        " + varAssignCode(dotArrStructAccess("sub_arr", "i", "j"),
+                                            dotArrStructAccess("votesTwo", "i", "j"))
                 + CCodeHelper.SEMICOLON);
         code.add("      " + CCodeHelper.CLOSING_BRACES);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
@@ -838,7 +845,8 @@ public class CBMCCodeGenerator {
         code.add("    "
                 + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
         code.add("      "
-                + varAssignCode("toReturn.arr[i][j]", "sub_arr.arr[i][j]")
+                + varAssignCode(dotArrStructAccess("toReturn", "i", "j"),
+                                dotArrStructAccess("sub_arr", "i", "j"))
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -873,7 +881,7 @@ public class CBMCCodeGenerator {
                 + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                 + " // Set all to C in the beginning");
         code.add("    "
-                + varAssignCode("sub_arr.arr[i]", "C")
+                + varAssignCode(dotArrStructAccess("sub_arr", "i"), "C")
                 + CCodeHelper.SEMICOLON);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
         code.add("  ");
@@ -882,7 +890,8 @@ public class CBMCCodeGenerator {
                 + " // Limit the size to the upper bound V");
         code.add("    " + functionCode(CCodeHelper.IF, lt("i", "V"))
                 + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
-        code.add("      " + varAssignCode("sub_arr.arr[i]", "votesOne.arr[i]")
+        code.add("      " + varAssignCode(dotArrStructAccess("sub_arr", "i"),
+                                          dotArrStructAccess("votesOne", "i"))
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -893,7 +902,8 @@ public class CBMCCodeGenerator {
         code.add("    " + functionCode(CCodeHelper.IF, lt("sizeOne + i", "V"))
                 + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
         code.add("      "
-                + varAssignCode("sub_arr.arr[sizeOne + i]", "votesTwo.arr[i]")
+                + varAssignCode(dotArrStructAccess("sub_arr", varAddCode("sizeOne", "i")),
+                                dotArrStructAccess("votesTwo", "i"))
                 + CCodeHelper.SEMICOLON);
         code.add("    " + CCodeHelper.CLOSING_BRACES);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -901,7 +911,9 @@ public class CBMCCodeGenerator {
         code.add(voteStruct + CCodeHelper.BLANK + "toReturn" + CCodeHelper.SEMICOLON);
         code.add("    ");
         code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-        code.add("    " + eq("toReturn.arr[i]", "sub_arr.arr[i]") + CCodeHelper.SEMICOLON);
+        code.add("    " + eq(dotArrStructAccess("toReturn", "i"),
+                             dotArrStructAccess("sub_arr", "i"))
+                + CCodeHelper.SEMICOLON);
         code.add("  " + CCodeHelper.CLOSING_BRACES);
         code.add("    ");
         code.add("  " + CCodeHelper.RETURN + CCodeHelper.BLANK
@@ -990,7 +1002,7 @@ public class CBMCCodeGenerator {
             code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                     + " // Set all to C in the beginning");
             code.add("    "
-                    + varAssignCode("sub_arr.arr[i]", "C")
+                    + varAssignCode(dotArrStructAccess("sub_arr", "i"), "C")
                     + CCodeHelper.SEMICOLON);
             code.add("  " + CCodeHelper.CLOSING_BRACES);
             code.add("  ");
@@ -1003,7 +1015,8 @@ public class CBMCCodeGenerator {
             code.add("    ");
             code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      "
-                    + varAssignCode("toReturn.arr[i]", "sub_arr.arr[i]")
+                    + varAssignCode(dotArrStructAccess("toReturn", "i"),
+                                    dotArrStructAccess("sub_arr", "i"))
                     + CCodeHelper.SEMICOLON);
             code.add("    " + CCodeHelper.CLOSING_BRACES);
             code.add("    ");
@@ -1020,10 +1033,8 @@ public class CBMCCodeGenerator {
                                             "(" + lt("i", "stop") + ")"))
                     + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
             code.add("        "
-                    + varAssignCode("sub_arr.arr["
-                                        + varSubtractCode("i", "start")
-                                        + "]",
-                                    "votes.arr[i]")
+                    + varAssignCode(dotArrStructAccess("sub_arr", varSubtractCode("i", "start")),
+                                    dotArrStructAccess("votes", "i"))
                     + CCodeHelper.SEMICOLON);
             code.add("      " + CCodeHelper.CLOSING_BRACES);
             code.add("    " + CCodeHelper.CLOSING_BRACES);
@@ -1033,7 +1044,8 @@ public class CBMCCodeGenerator {
                     + CCodeHelper.BLANK + "toReturn" + CCodeHelper.SEMICOLON);
             code.add("    ");
             code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
-            code.add("      " + varAssignCode("toReturn.arr[i]", "sub_arr.arr[i]")
+            code.add("      " + varAssignCode(dotArrStructAccess("toReturn", "i"),
+                                              dotArrStructAccess("sub_arr", "i"))
                     + CCodeHelper.SEMICOLON);
             code.add("    " + CCodeHelper.CLOSING_BRACES);
             code.add("    ");
@@ -1063,7 +1075,7 @@ public class CBMCCodeGenerator {
             code.add("  " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V")
                     + " // Set all to C in the beginning");
             code.add("    " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-            code.add("      " + varAssignCode("sub_arr.arr[i][j]", "C")
+            code.add("      " + varAssignCode(dotArrStructAccess("sub_arr", "i", "j"), "C")
                     + CCodeHelper.SEMICOLON);
             code.add("    " + CCodeHelper.CLOSING_BRACES);
             code.add("  " + CCodeHelper.CLOSING_BRACES);
@@ -1077,12 +1089,13 @@ public class CBMCCodeGenerator {
             code.add("    "
                     + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "V"));
-            code.add("        " + varAssignCode("toReturn.arr[i][j]", "sub_arr.arr[i][j]")
+            code.add("        " + varAssignCode(dotArrStructAccess("toReturn", "i", "j"),
+                                                dotArrStructAccess("sub_arr", "i", "j"))
                     + CCodeHelper.SEMICOLON);
             code.add("      " + CCodeHelper.CLOSING_BRACES);
             code.add("    " + CCodeHelper.CLOSING_BRACES);
             code.add("    ");
-            code.add("    " +CCodeHelper.RETURN + CCodeHelper.BLANK
+            code.add("    " + CCodeHelper.RETURN + CCodeHelper.BLANK
                     + "toReturn" + CCodeHelper.SEMICOLON);
             code.add("  " + "} else {");
             code.add();
@@ -1091,10 +1104,10 @@ public class CBMCCodeGenerator {
                                              conjunct(leq("start", "i"), lt("i", "stop")))
                     + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
             code.add("        " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "C"));
-            code.add("          " + varAssignCode("sub_arr.arr["
-                                                    + varSubtractCode("i", "start")
-                                                    + "][j]",
-                                                  "votes.arr[i][j]")
+            code.add("          " + varAssignCode(dotArrStructAccess("sub_arr",
+                                                                     varSubtractCode("i", "start"),
+                                                                     "j"),
+                                                  dotArrStructAccess("votes", "i", "j"))
                     + CCodeHelper.SEMICOLON);
             code.add("        " + CCodeHelper.CLOSING_BRACES);
             code.add("      " + CCodeHelper.CLOSING_BRACES);
@@ -1105,7 +1118,8 @@ public class CBMCCodeGenerator {
             code.add("    ");
             code.add("    " + forLoopHeaderCode("i", CCodeHelper.LT_SIGN, "V"));
             code.add("      " + forLoopHeaderCode("j", CCodeHelper.LT_SIGN, "V"));
-            code.add("        " + varAssignCode("toReturn.arr[i][j]", "sub_arr.arr[i][j]")
+            code.add("        " + varAssignCode(dotArrStructAccess("toReturn", "i", "j"),
+                                                dotArrStructAccess("sub_arr", "i", "j"))
                     + CCodeHelper.SEMICOLON);
             code.add("      " + CCodeHelper.CLOSING_BRACES);
             code.add("    " + CCodeHelper.CLOSING_BRACES);
