@@ -113,6 +113,8 @@ public final class CCodeHelper {
 
     /** The BLANK symbol. */
     public static final String BLANK = " ";
+    /** The Constant LINE_BREAK. */
+    public static final String LINE_BREAK = "\n";
     /** The Constant SEMICOLON. */
     public static final String SEMICOLON = ";";
     /** The Constant EQUALS_SIGN. */
@@ -137,7 +139,13 @@ public final class CCodeHelper {
     public static final String COLON = ":";
     /** The Constant DOT. */
     private static final String DOT = ".";
+    /** The Constant DOT. */
+    private static final String STAR = "*";
 
+    /** The Constant ifndef. */
+    private static final String IFNDEF = "#ifndef";
+    /** The Constant endif. */
+    private static final String ENDIF = "#endif";
     /** The Constant AMPERSAND. */
     private static final String AMPERSAND = "&";
     /** The Constant PIPE. */
@@ -146,8 +154,10 @@ public final class CCodeHelper {
     private static final String MINUS = "-";
     /** The Constant NOT. */
     private static final String NOT = "!";
-    /** The Constant PLUS_PLUS. */
+    /** The Constant PLUS. */
     private static final String PLUS = "+";
+    /** The Constant DIV. */
+    private static final String DIV = "/";
     /** The Constant PLUS_PLUS. */
     private static final String PLUS_PLUS = PLUS + PLUS;
 
@@ -165,6 +175,8 @@ public final class CCodeHelper {
     private static final String ZERO = "0";
     /** The Constant ONE. */
     private static final String ONE = "1";
+    /** The Constant TWO. */
+    private static final String TWO = "2";
 
     /** The line comment symbol(s). */
     private static final String LINE_COMMENT = "//";
@@ -265,6 +277,43 @@ public final class CCodeHelper {
     }
 
     /**
+     * Produces the given number of spaces.
+     *
+     * @param numberOfSpaces
+     *            the number of spaces
+     */
+    public static String spaces(final int numberOfSpaces) {
+        String spaces = "";
+        if (0 <= numberOfSpaces) {
+            for (int remSpaces = numberOfSpaces; 0 < remSpaces; remSpaces--) {
+                spaces += " ";
+            }
+        }
+        return spaces;
+    }
+
+    /**
+     * Generate line comment.
+     *
+     * @param text
+     *            the text
+     * @return the string
+     */
+    public static String lineComment(final String text) {
+        return LINE_COMMENT + BLANK + text;
+    }
+
+    /**
+     * Generate code for pointer to reference.
+     *
+     * @param reference the reference
+     * @return the string
+     */
+    public static String pointer(final String reference) {
+        return STAR + reference;
+    }
+
+    /**
      * Generate increment expression.
      *
      * @param expr
@@ -319,6 +368,15 @@ public final class CCodeHelper {
      */
     public static String one() {
         return ONE;
+    }
+
+    /**
+     * Generate code for two.
+     *
+     * @return the string
+     */
+    public static String two() {
+        return TWO;
     }
 
     /**
@@ -393,6 +451,34 @@ public final class CCodeHelper {
     public static String varAddCode(final String varOne,
                                     final String varTwo) {
         return varOne + BLANK + MINUS + BLANK + varTwo;
+    }
+
+    /**
+     * Variable subtract code.
+     *
+     * @param varPos
+     *            the var pos
+     * @param varNeg
+     *            the var neg
+     * @return the string
+     */
+    public static String varDivideCode(final String varPos,
+                                       final String varNeg) {
+        return varPos + BLANK + DIV + BLANK + varNeg;
+    }
+
+    /**
+     * Variable subtract code.
+     *
+     * @param varPos
+     *            the var pos
+     * @param varNeg
+     *            the var neg
+     * @return the string
+     */
+    public static String varMultiplyCode(final String varPos,
+                                         final String varNeg) {
+        return varPos + BLANK + STAR + BLANK + varNeg;
     }
 
     /**
@@ -561,6 +647,66 @@ public final class CCodeHelper {
                                   final String originalTerm) {
         final String disjunctor = PIPE + PIPE;
         return disOrConjunct(toBeDisjuncted, originalTerm, disjunctor);
+    }
+
+    /**
+     * Generate code for definition.
+     *
+     * @param name
+     *            the definition name
+     * @param argument
+     *            the argument
+     * @return the string
+     */
+    public static String define(final String name,
+                                final String argument) {
+        return DEFINE + CCodeHelper.BLANK + name
+                + CCodeHelper.BLANK + argument;
+    }
+
+    /**
+     * Generate code for definition.
+     *
+     * @param name
+     *            the definition name
+     * @param argument
+     *            the argument
+     * @return the string
+     */
+    public static String define(final String name,
+                                final int argument) {
+        return DEFINE + CCodeHelper.BLANK + name
+                + CCodeHelper.BLANK + Integer.toString(argument);
+    }
+
+    /**
+     * Generate code for definition if not defined.
+     *
+     * @param name
+     *            the definition name
+     * @param argument
+     *            the argument
+     * @return the string
+     */
+    public static String defineIfNonDef(final String name,
+                                        final String argument) {
+        return IFNDEF + CCodeHelper.BLANK + name + LINE_BREAK
+                + CCodeHelper.BLANK + define(name, argument) + LINE_BREAK
+                + CCodeHelper.BLANK + ENDIF;
+    }
+
+    /**
+     * Generate code for definition if not defined.
+     *
+     * @param name
+     *            the definition name
+     * @param argument
+     *            the argument
+     * @return the string
+     */
+    public static String defineIfNonDef(final String name,
+                                        final int argument) {
+        return defineIfNonDef(name, Integer.toString(argument));
     }
 
     /**
@@ -935,12 +1081,12 @@ public final class CCodeHelper {
         final String inputIdInFile = container.getInputType().getInputIDinFile();
         final String outputIdInFile = container.getOutputType().getOutputIDinFile();
 
-        code.add(LINE_COMMENT + stringResourceLoader.getStringFromID(inputIdInFile)
-                + COLON + BLANK
-                + stringResourceLoader.getStringFromID(inputIdInFile + EXP));
-        code.add(LINE_COMMENT + stringResourceLoader.getStringFromID(outputIdInFile)
-                + COLON + BLANK + stringResourceLoader
-                        .getStringFromID(outputIdInFile + EXP));
+        code.add(lineComment(
+                    stringResourceLoader.getStringFromID(inputIdInFile) + COLON + BLANK
+                    + stringResourceLoader.getStringFromID(inputIdInFile + EXP)));
+        code.add(lineComment(
+                    stringResourceLoader.getStringFromID(outputIdInFile) + COLON + BLANK
+                    + stringResourceLoader.getStringFromID(outputIdInFile + EXP)));
         code.add(generateSimpleDeclString(container));
         code.add(CLOSING_BRACES + BLANK);
         final ElectionDescription description =

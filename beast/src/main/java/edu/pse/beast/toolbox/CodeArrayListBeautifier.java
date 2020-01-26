@@ -33,7 +33,7 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * Adds a String to the ArrayList with the indenting.
+     * Adds a String to the ArrayList with indenting.
      *
      * @param addedString
      *            the String which is added to the ArrayList
@@ -55,10 +55,26 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * Adds an empty line to the ArrayList with the indenting.
+     * Adds an empty line to the ArrayList with indenting.
      */
     public void add() {
         add("");
+    }
+
+    /**
+     * Adds the given number of spaces to the ArrayList with indenting.
+     *
+     * @param numberOfSpaces
+     *            the number of spaces
+     */
+    public void addSpaces(final int numberOfSpaces) {
+        if (0 <= numberOfSpaces) {
+            String spaces = "";
+            for (int remSpaces = numberOfSpaces; 0 < remSpaces; remSpaces--) {
+                spaces += " ";
+            }
+            add(spaces);
+        }
     }
 
     /**
