@@ -54,9 +54,9 @@ public final class CGrammarErrorFinder
                             final int charPosInLine,
                             final String msg,
             final RecognitionException e) {
-        CodeError err = new CodeError(line, charPosInLine, "antlr", 0,
-                                      ((Token) offendingSymbol).getStartIndex(),
-                                      ((Token) offendingSymbol).getStopIndex());
+        final CodeError err = new CodeError(line, charPosInLine, "antlr", 0,
+                                            ((Token) offendingSymbol).getStartIndex(),
+                                            ((Token) offendingSymbol).getStopIndex());
         err.setExtraInfo("msg", msg);
         errors.add(err);
     }

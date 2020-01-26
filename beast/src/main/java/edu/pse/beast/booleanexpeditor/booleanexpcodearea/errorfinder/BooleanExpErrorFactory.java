@@ -109,7 +109,7 @@ public final class BooleanExpErrorFactory {
      * @return the error object that describes the problem
      */
     public static CodeError createVarNotDeclaredErr(final SymbolicVarExpContext ctx) {
-        CodeError err = generateStandardError(ctx, VAR_NOT_DECL);
+        final CodeError err = generateStandardError(ctx, VAR_NOT_DECL);
         err.setExtraInfo(VAR_NAME, ctx.Identifier().getText());
         return err;
     }
@@ -129,8 +129,8 @@ public final class BooleanExpErrorFactory {
     public static CodeError createAntlrError(final int line,
                                              final int charInline,
                                              final String msg) {
-        CodeError err = new CodeError(line, charInline, ANTLR,
-                                      getErrorNum(ANTLR), 0, 0);
+        final CodeError err = new CodeError(line, charInline, ANTLR,
+                                            getErrorNum(ANTLR), 0, 0);
         err.setExtraInfo(MSG, msg);
         return err;
     }
@@ -143,7 +143,7 @@ public final class BooleanExpErrorFactory {
      * @return the error object that describes the problem
      */
     public static CodeError createTooManyVarsPassedError(final PassTypeContext ctx) {
-        CodeError err = generateStandardError(ctx, TOO_MANY_VARS_PASSED);
+        final CodeError err = generateStandardError(ctx, TOO_MANY_VARS_PASSED);
         err.setExtraInfo(VAR_NAME, ctx.getText());
         return err;
     }
@@ -163,7 +163,7 @@ public final class BooleanExpErrorFactory {
                                               final FormalPropertyDescriptionParser
                                                           .PassTypeContext ctx,
                                               final TypeExpression currentVarExp) {
-        CodeError err = generateStandardError(ctx, WRONG_VAR_TYPE_PASSED);
+        final CodeError err = generateStandardError(ctx, WRONG_VAR_TYPE_PASSED);
         err.setExtraInfo(VAR_NAME, ctx.getText());
         err.setExtraInfo(PASSED_TYPE,
                          currentVarExp.getInternalTypeContainer().getInternalType().toString());
@@ -185,7 +185,7 @@ public final class BooleanExpErrorFactory {
     static CodeError createCantCompareDifferentListLevels(final ComparisonExpContext ctx,
                                                           final InternalTypeContainer lhsCont,
                                                           final InternalTypeContainer rhsCont) {
-        CodeError err = generateStandardError(ctx, INCOMPARABLE_LIST_SIZES);
+        final CodeError err = generateStandardError(ctx, INCOMPARABLE_LIST_SIZES);
         err.setExtraInfo(LHS_LIST_SIZE, String.valueOf(lhsCont.getListLvl()));
         err.setExtraInfo(RHS_LIST_SIZE, String.valueOf(rhsCont.getListLvl()));
         return err;
@@ -205,7 +205,7 @@ public final class BooleanExpErrorFactory {
     static CodeError createCantCompareTypes(final ComparisonExpContext ctx,
                                             final InternalTypeContainer lhsCont,
                                             final InternalTypeContainer rhsCont) {
-        CodeError err = generateStandardError(ctx, INCOMPARABLE_TYPES);
+        final CodeError err = generateStandardError(ctx, INCOMPARABLE_TYPES);
         err.setExtraInfo(LHS_TYPE, lhsCont.getInternalType().toString());
         err.setExtraInfo(RHS_TYPE, rhsCont.getInternalType().toString());
         return err;
@@ -222,7 +222,7 @@ public final class BooleanExpErrorFactory {
      */
     static CodeError createWrongVarToVotesumError(final VoteSumExpContext ctx,
                                                   final InternalTypeContainer passedType) {
-        CodeError err = generateStandardError(ctx, WRONG_VAR_PASSED_TO_VOTESUM);
+        final CodeError err = generateStandardError(ctx, WRONG_VAR_PASSED_TO_VOTESUM);
         err.setExtraInfo(VAR_TYPE, passedType.getInternalType().toString());
         return err;
     }
@@ -238,7 +238,7 @@ public final class BooleanExpErrorFactory {
      */
     static CodeError createWrongVarToVotesumError(final VoteSumUniqueExpContext ctx,
                                                   final InternalTypeContainer passedType) {
-        CodeError err = generateStandardError(ctx, WRONG_VAR_PASSED_TO_VOTESUM_UNIQUE);
+        final CodeError err = generateStandardError(ctx, WRONG_VAR_PASSED_TO_VOTESUM_UNIQUE);
         err.setExtraInfo(VAR_TYPE, passedType.getInternalType().toString());
         return err;
     }
@@ -252,8 +252,7 @@ public final class BooleanExpErrorFactory {
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotesum(final ParserRuleContext ctx) {
-        CodeError err = generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
-        return err;
+        return generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
     }
 
     /**
@@ -264,8 +263,7 @@ public final class BooleanExpErrorFactory {
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroElect(final ElectExpContext ctx) {
-        CodeError err = generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
-        return err;
+        return generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
     }
 
     /**
@@ -276,8 +274,7 @@ public final class BooleanExpErrorFactory {
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotes(final VoteExpContext ctx) {
-        CodeError err = generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
-        return err;
+        return generateStandardError(ctx, NUMBER_MUST_BE_GREATER_ZERO);
     }
 
     /**
@@ -291,12 +288,12 @@ public final class BooleanExpErrorFactory {
      */
     private static CodeError generateStandardError(final ParserRuleContext ctx,
                                                    final String id) {
-        int pos = ctx.getStart().getStartIndex();
-        int endPos = ctx.getStop().getStopIndex();
-        int line = ctx.getStart().getLine();
-        int charInLine = ctx.getStart().getCharPositionInLine();
-        CodeError err = new CodeError(line, charInLine, id,
-                                      getErrorNum(id), pos, endPos);
+        final int pos = ctx.getStart().getStartIndex();
+        final int endPos = ctx.getStop().getStopIndex();
+        final int line = ctx.getStart().getLine();
+        final int charInLine = ctx.getStart().getCharPositionInLine();
+        final CodeError err = new CodeError(line, charInLine, id,
+                                            getErrorNum(id), pos, endPos);
         return err;
     }
 }

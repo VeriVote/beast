@@ -43,7 +43,7 @@ public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
     @Override
     public String getTreeString(final int depth) {
         StringBuilder b = new StringBuilder();
-        String tabs = TABS.substring(0, depth + 1);
+        final String tabs = TABS.substring(0, depth + 1);
         b.append("BinaryIntNode: Symbol " + relationSymbol + LINE_BREAK);
         b.append(tabs + LHS + getLhs().getTreeString(depth + 1));
         b.append(tabs + RHS + getRhs().getTreeString(depth + 1));
@@ -82,7 +82,7 @@ public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
         if (!super.equals(o)) {
             return false;
         }
-        BinaryIntegerValuedNode that = (BinaryIntegerValuedNode) o;
+        final BinaryIntegerValuedNode that = (BinaryIntegerValuedNode) o;
         if (getLhs() != null ? !getLhs().equals(that.getLhs())
                 : that.getLhs() != null) {
             return false;

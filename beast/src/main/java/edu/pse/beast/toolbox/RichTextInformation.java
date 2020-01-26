@@ -59,7 +59,7 @@ public class RichTextInformation {
      * @return the size
      */
     public Bounds getSize() {
-        Text textField = new Text(this.text);
+        final Text textField = new Text(this.text);
         textField.setFont(this.font);
         return textField.getBoundsInLocal();
     }

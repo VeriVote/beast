@@ -91,7 +91,7 @@ public class PropertyCombiner extends TabClass {
         PrintWriter out = null;
         try {
             out = new PrintWriter(toSaveIn);
-            String combined = "pre:" + preText + "|postText" + postText;
+            final String combined = "pre:" + preText + "|postText" + postText;
             out.write(combined);
         } catch (IOException ioE) {
             ioE.printStackTrace();
@@ -114,7 +114,7 @@ public class PropertyCombiner extends TabClass {
      */
     public void saveAs(final String fileName, final String preText,
                        final String postText) {
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter(
                         fileExtensionDescription + " (*" + fileEnding + ")",
@@ -131,7 +131,7 @@ public class PropertyCombiner extends TabClass {
 
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile =
+        final File selectedFile =
                 fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
         if (selectedFile != null) {
             save(selectedFile, preText, postText);
@@ -148,12 +148,12 @@ public class PropertyCombiner extends TabClass {
      */
     public void load(final NewPropertyCodeArea preCodeArea,
                      final NewPropertyCodeArea postCodeArea) {
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         // fileChooser.setTitle("Load document");
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(
                 "Arbitrary RTFX file", "*" + fileEnding));
-        File selectedFile =
+        final File selectedFile =
                 fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
         if (selectedFile != null) {
             load(selectedFile, preCodeArea, postCodeArea);
@@ -174,7 +174,7 @@ public class PropertyCombiner extends TabClass {
                      final NewPropertyCodeArea preCodeArea,
                      final NewPropertyCodeArea postCodeArea) {
         try {
-            FileInputStream fis = new FileInputStream(toLoadFrom);
+            final FileInputStream fis = new FileInputStream(toLoadFrom);
             final String newText = new DataInputStream(fis).readUTF();
             fis.close();
             preCodeArea.deleteText(0, preCodeArea.getLength());

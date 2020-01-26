@@ -40,9 +40,9 @@ public class StringResourceProviderTest {
     @Test
     public void testChangeLanguage() {
         System.out.println("changeLanguage");
-        String languageId = TEST_TWO;
+        final String languageId = TEST_TWO;
         instance.changeLanguage(languageId);
-        StringResourceLoader result = instance.getStringRes();
+        final StringResourceLoader result = instance.getStringRes();
         assertTrue(result.containsId(TEST_THREE));
         assertTrue(result.containsId(TEST_FOUR));
         assertEquals("es un testo", result.getStringFromID(TEST_THREE));
@@ -57,7 +57,7 @@ public class StringResourceProviderTest {
     public void testInitialize() {
         System.out.println("initialize");
         instance.initialize();
-        StringResourceLoader result = instance.getStringRes();
+        final StringResourceLoader result = instance.getStringRes();
         assertTrue(result.containsId(TEST));
         assertTrue(result.containsId(TEST_TWO));
         assertEquals("this is a test", result.getStringFromID(TEST));
@@ -71,12 +71,12 @@ public class StringResourceProviderTest {
     @Test
     public void testGetStringResourceLoaderFromModuleName() {
         System.out.println("getStringResourceLoaderFromModuleName");
-        String moduleName = TEST_MODULE;
-        StringResourceLoader result = instance.getStringResourceLoaderFromModuleName(moduleName);
-        LinkedList<String> inputList = new LinkedList<String>();
+        final StringResourceLoader result =
+                instance.getStringResourceLoaderFromModuleName(TEST_MODULE);
+        final LinkedList<String> inputList = new LinkedList<String>();
         inputList.add("test : this is a test");
         inputList.add("test2 : also a test");
-        StringResourceLoader exp = new StringResourceLoader(inputList);
+        final StringResourceLoader exp = new StringResourceLoader(inputList);
         assertEquals(exp.containsId(TEST), result.containsId(TEST));
         assertEquals(exp.containsId(TEST_TWO), result.containsId(TEST_TWO));
         assertEquals(exp.getIdForString(TEST), result.getIdForString(TEST));

@@ -124,9 +124,9 @@ public final class TextAndImages extends ResultPresentationType {
     @Override
     public Node presentResult(final Result result) {
         // TODO still WIP, no images get created
-        GenericStyledArea<ParStyle,
-                          Either<String, LinkedImage>,
-                          TextStyle> resultArea =
+        final GenericStyledArea<ParStyle,
+                                Either<String, LinkedImage>,
+                                TextStyle> resultArea =
                 new GenericStyledArea<ParStyle,
                                       Either<String, LinkedImage>,
                                       TextStyle>(
@@ -141,8 +141,8 @@ public final class TextAndImages extends ResultPresentationType {
                     seg -> createNode(seg, // Node creator and segment
                         (text, style) -> text.setStyle(style.toCss())));
         resultArea.setEditable(false);
-        Canvas can = new Canvas(CANVAS_SIZE, CANVAS_SIZE);
-        GraphicsContext g = can.getGraphicsContext2D();
+        final Canvas can = new Canvas(CANVAS_SIZE, CANVAS_SIZE);
+        final GraphicsContext g = can.getGraphicsContext2D();
 
         final ReadOnlyStyledDocument<ParStyle,
                                      Either<String, LinkedImage>,
@@ -150,7 +150,7 @@ public final class TextAndImages extends ResultPresentationType {
                                createRODocument(resultArea);
         g.setFill(Color.RED);
         g.fillOval(OVAL_X_COORD, OVAL_Y_COORD, OVAL_SIZE, OVAL_SIZE);
-        String textTest = "testasdjfklasdf\n";
+        final String textTest = "testasdjfklasdf\n";
         for (int i = 0; i < THOUSAND; i++) {
             resultArea.replaceText(resultArea.getLength(),
                                    resultArea.getLength(), textTest);

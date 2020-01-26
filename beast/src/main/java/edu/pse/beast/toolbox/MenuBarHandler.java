@@ -91,15 +91,15 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         createdMenuBar = new JMenuBar();
         createdMenus = new JMenu[headingIds.length];
         for (int i = 0; i < headingIds.length; ++i) {
-            JMenu currentMenu =
+            final JMenu currentMenu =
                     new JMenu(currentResourceLoader.getStringFromID(headingIds[i]));
             createdMenus[i] = currentMenu;
             createdItems.add(new ArrayList<JMenuItem>());
             for (int j = 0; j < actionIDAndListener.get(i).size(); ++j) {
-                ActionIdAndListener currentAccIdAndL =
+                final ActionIdAndListener currentAccIdAndL =
                         actionIDAndListener.get(i).get(j);
-                String currentAcId = currentAccIdAndL.getId();
-                JMenuItem currentItem = new JMenuItem(
+                final String currentAcId = currentAccIdAndL.getId();
+                final JMenuItem currentItem = new JMenuItem(
                         currentResourceLoader.getStringFromID(currentAcId));
                 currentItem.addActionListener(currentAccIdAndL.getListener());
                 createdItems.get(i).add(currentItem);

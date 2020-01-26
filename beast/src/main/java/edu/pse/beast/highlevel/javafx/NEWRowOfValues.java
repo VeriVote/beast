@@ -109,7 +109,7 @@ public class NEWRowOfValues {
         while (values.size() <= rowSize) {
             values.add(ZERO);
         }
-        TextField field = new TextField(values.get(rowSize));
+        final TextField field = new TextField(values.get(rowSize));
         field.setMinSize(elementWidth, elementHeight);
         field.setMaxSize(elementWidth, elementHeight);
         field.setPrefSize(elementWidth, elementHeight);
@@ -151,7 +151,7 @@ public class NEWRowOfValues {
         if (!disabled) {
             for (Iterator<TextField> iterator = fields.iterator();
                     iterator.hasNext();) {
-                TextField textField = iterator.next();
+                final TextField textField = iterator.next();
                 parent.getInputGridPane().getChildren().remove(textField);
             }
             int iterations = 1;
@@ -159,7 +159,7 @@ public class NEWRowOfValues {
                 iterations = rowSize;
             }
             for (int i = 0; i < iterations; i++) {
-                TextField field = fields.get(i);
+                final TextField field = fields.get(i);
                 field.setText(values.get(i));
                 parent.getInputGridPane().add(field, i, rowIndex);
             }
@@ -179,13 +179,14 @@ public class NEWRowOfValues {
     private void checkAndInsertValue(final String newValue,
                                      final int positionInRow,
                                      final boolean block) {
-        List<NEWRowOfValues> allRows = parent.getRows();
+        final List<NEWRowOfValues> allRows = parent.getRows();
         // in case that this row is created before it is
         // saved by its parent
         allRows.remove(this);
         allRows.add(this);
-        String vettedValue = container.getInputType().vetValue(container,
-                allRows, rowIndex, positionInRow, newValue);
+        final String vettedValue =
+                container.getInputType().vetValue(container, allRows, rowIndex,
+                                                  positionInRow, newValue);
         values.set(positionInRow, vettedValue);
         if (positionInRow < fields.size()) {
             fields.get(positionInRow).setText(vettedValue);
@@ -353,9 +354,9 @@ public class NEWRowOfValues {
      */
     public void disable() {
         this.disabled = true;
-        for (Iterator<TextField> iterator = fields.iterator(); iterator
-                .hasNext();) {
-            TextField textField = iterator.next();
+        for (Iterator<TextField> iterator = fields.iterator();
+                iterator.hasNext();) {
+            final TextField textField = iterator.next();
             parent.getInputGridPane().getChildren().remove(textField);
         }
     }

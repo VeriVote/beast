@@ -29,7 +29,8 @@ public class StringLoaderInterfaceTest {
     @Test
     public void testGetPropertyListStringResProvider() {
         System.out.println("getPropertyListStringResProvider");
-        PropertyListStringResProvider result = instance.getPropertyListStringResProvider();
+        final PropertyListStringResProvider result =
+                instance.getPropertyListStringResProvider();
         assertNotNull(result);
     }
 
@@ -40,7 +41,8 @@ public class StringLoaderInterfaceTest {
     @Test
     public void testGetBooleanExpEditorStringResProvider() {
         System.out.println("getBooleanExpEditorStringResProvider");
-        BooleanExpEditorStringResProvider result = instance.getBooleanExpEditorStringResProvider();
+        final BooleanExpEditorStringResProvider result =
+                instance.getBooleanExpEditorStringResProvider();
         assertNotNull(result);
     }
 
@@ -51,7 +53,8 @@ public class StringLoaderInterfaceTest {
     @Test
     public void testGetCElectionEditorStringResProvider() {
         System.out.println("getCElectionEditorStringResProvider");
-        CElectionEditorStringResProvider result = instance.getCElectionEditorStringResProvider();
+        final CElectionEditorStringResProvider result =
+                instance.getCElectionEditorStringResProvider();
         assertNotNull(result);
     }
 
@@ -62,7 +65,8 @@ public class StringLoaderInterfaceTest {
     @Test
     public void testGetParameterEditorStringResProvider() {
         System.out.println("getParameterEditorStringResProvider");
-        ParameterEditorStringResProvider result = instance.getParameterEditorStringResProvider();
+        final ParameterEditorStringResProvider result =
+                instance.getParameterEditorStringResProvider();
         assertNotNull(result);
     }
 
@@ -72,7 +76,7 @@ public class StringLoaderInterfaceTest {
     @Test
     public void testGetOptionStringResProvider() {
         System.out.println("getOptionStringResProvider");
-        OptionStringResProvider result = instance.getOptionStringResProvider();
+        final OptionStringResProvider result = instance.getOptionStringResProvider();
         assertNotNull(result);
     }
 

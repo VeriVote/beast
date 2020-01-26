@@ -156,13 +156,13 @@ public class ElectionDescription {
      */
     public List<String> getComplexCode() {
         final String firstPart = code.substring(0, lockedLineStart);
-        String votesName = generateVariableName(code, "auto_votes");
+        final String votesName = generateVariableName(code, "auto_votes");
         final String replacementLine =
                 CCodeHelper.generateStructDeclString(container, votesName);
         final int dimensions = container.getInputType().getAmountOfDimensions();
         final List<String> loopVariables =
                 generateLoopVariables(code, dimensions, "votes");
-        String[] sizes = container.getInputType().getSizeOfDimensions();
+        final String[] sizes = container.getInputType().getSizeOfDimensions();
         sizes[0] = "amountVotes";
         String forLoopStart = "";
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
@@ -267,7 +267,7 @@ public class ElectionDescription {
      * @return the deep copy
      */
     public ElectionDescription getDeepCopy() {
-        ElectionDescription deepCopy =
+        final ElectionDescription deepCopy =
                 new ElectionDescription(name, container.getInputType(),
                                         container.getOutputType(),
                                         lockedLineStart, lockedLineEnd,
@@ -345,7 +345,7 @@ public class ElectionDescription {
      * @return the list
      */
     private static List<String> stringToList(final String toConvert) {
-        String[] split = toConvert.split(LINE_BREAK);
+        final String[] split = toConvert.split(LINE_BREAK);
         return new ArrayList<String>(Arrays.asList(split));
     }
 
@@ -368,7 +368,7 @@ public class ElectionDescription {
         // Change this to antLR maybe.
         String toProc = toProcess;
         String toReturn = "";
-        Pattern returnPattern = Pattern.compile("(?:\\s|^)return");
+        final Pattern returnPattern = Pattern.compile("(?:\\s|^)return");
         Tuple3<Boolean, Boolean, Boolean> executionValues =
                 new Tuple3<Boolean, Boolean, Boolean>(false, false, false);
         Matcher matcher = returnPattern.matcher(toProc);
@@ -378,7 +378,7 @@ public class ElectionDescription {
                                         matcher.end());
             if (!checkForTrue(executionValues)) {
                 // The return statement was NOT standing in a comment block
-                Tuple<String, Integer> replacement =
+                final Tuple<String, Integer> replacement =
                         replaceSpecificReturnStatement(
                                 toProc.substring(matcher.end()),
                                 variableName
@@ -393,18 +393,18 @@ public class ElectionDescription {
                 // the whole segment is put in curly braces, as the user could
                 // use single line
                 // if cases or similar things
-                String toInsert =
+                final String toInsert =
                         wrapInCurlyBraces(
                                 replacement.first() + BLANK + "return" + BLANK
                                         + variableName + SEMICOLON + BLANK
                                 );
                 // the part which was changed
-                String leadingPart = toProc.substring(0, matcher.start())
-                                    + toInsert;
+                final String leadingPart = toProc.substring(0, matcher.start())
+                                            + toInsert;
                 // replacement.second contains the position after the ";",
                 // therefore we have to
                 // append this end part again at the end
-                String trailingPart =
+                final String trailingPart =
                         toProc.substring(
                                 matcher.end()
                                         + replacement.second()
@@ -419,7 +419,7 @@ public class ElectionDescription {
                 // continue on
                 toReturn += toProc.substring(0, matcher.end());
                 // add the analysed part
-                String trailingPart = toProc.substring(matcher.end());
+                final String trailingPart = toProc.substring(matcher.end());
                 // now that we changed the underlying string, we have to update
                 // the matcher
                 matcher = returnPattern.matcher(trailingPart);
@@ -447,15 +447,15 @@ public class ElectionDescription {
                                                final String variableName) {
         Tuple3<Boolean, Boolean, Boolean> executionValues =
                 new Tuple3<Boolean, Boolean, Boolean>(false, false, false);
-        Pattern returnPattern = Pattern.compile(SEMICOLON);
-        Matcher matcher = returnPattern.matcher(toProcess);
+        final Pattern returnPattern = Pattern.compile(SEMICOLON);
+        final Matcher matcher = returnPattern.matcher(toProcess);
 
         // find the first ";" which is valid
         while (matcher.find()) {
             executionValues = checkIfExecutedCode(executionValues, toProcess, 0,
                                                   matcher.end());
             if (!checkForTrue(executionValues)) { // the found ";" is valid
-                String wrapped =
+                final String wrapped =
                         wrapInStruct(variableName,
                                      toProcess.substring(0, matcher.end() - 1));
                 // ignore the last char, as it will be a ";"
@@ -481,11 +481,11 @@ public class ElectionDescription {
                                 final String valueDefinition) {
         String toReturn = container.getOutputStruct().getStructAccess() + BLANK
                             + variableName + SEMICOLON + BLANK;
-        int dimensions = container.getOutputType().getAmountOfDimensions();
-        List<String> loopVariables = generateLoopVariables(code,
-                                                           dimensions,
-                                                           variableName);
-        String[] sizes = container.getInputType().getSizeOfDimensions();
+        final int dimensions = container.getOutputType().getAmountOfDimensions();
+        final List<String> loopVariables = generateLoopVariables(code,
+                                                                 dimensions,
+                                                                 variableName);
+        final String[] sizes = container.getInputType().getSizeOfDimensions();
         for (int i = 0; i < dimensions; i++) {
             toReturn += // add all needed loop headers
                     generateForLoopHeader(loopVariables.get(i), sizes[i]);
@@ -534,7 +534,7 @@ public class ElectionDescription {
     private static List<String> generateLoopVariables(final String codeString,
                                                       final int dimensions,
                                                       final String variableName) {
-        List<String> generatedVariables = new ArrayList<String>(dimensions);
+        final List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
         // Use i as the default name for a loop
         final String defaultName = "loop_index_";
@@ -587,11 +587,11 @@ public class ElectionDescription {
         boolean lastCharStar = false;
 
         for (int i = start; i < end; i++) {
-            boolean prevLastCharSlash = lastCharSlash;
-            boolean prevLastCharStar = lastCharStar;
+            final boolean prevLastCharSlash = lastCharSlash;
+            final boolean prevLastCharStar = lastCharStar;
             lastCharSlash = false;
             lastCharStar = false;
-            char currentChar = text.charAt(i);
+            final char currentChar = text.charAt(i);
             if (isText) {
                 if (currentChar == quote) {
                     isText = false;

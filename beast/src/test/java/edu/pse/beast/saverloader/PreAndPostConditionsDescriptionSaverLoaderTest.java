@@ -49,7 +49,7 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
     @BeforeClass
     public static void setUpClass() {
         preAndPostConditionsDescriptionSaverLoader = new PropertyDescriptionSaverLoader();
-        SymbolicVariableList list = new SymbolicVariableList();
+        final SymbolicVariableList list = new SymbolicVariableList();
         list.addSymbolicVariable(VOTER_ONE, new InternalTypeContainer(InternalTypeRep.VOTER));
         list.addSymbolicVariable(VOTER_TWO, new InternalTypeContainer(InternalTypeRep.VOTER));
         list.addSymbolicVariable(CANDIDATE, new InternalTypeContainer(InternalTypeRep.CANDIDATE));
@@ -74,27 +74,27 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
-        String saveString
-              = preAndPostConditionsDescriptionSaverLoader.createSaveString(description);
-        PreAndPostConditionsDescription recreatedPreAndPostConditionsDescription
-            = (PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader
+        final String saveString =
+                preAndPostConditionsDescriptionSaverLoader.createSaveString(description);
+        final PreAndPostConditionsDescription recreatedPreAndPostConditionsDescription =
+                (PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader
                 .createFromSaveString(saveString);
         assertEquals(recreatedPreAndPostConditionsDescription.getName(),
                      TEST_DESCRIPTION_STRING);
 
         // check FormalPropertiesDescriptions for integrity
-        FormalPropertiesDescription recreatedPreFormalPropertiesDescription
-              = recreatedPreAndPostConditionsDescription.getPreConditionsDescription();
+        final FormalPropertiesDescription recreatedPreFormalPropertiesDescription =
+                recreatedPreAndPostConditionsDescription.getPreConditionsDescription();
         assertEquals(recreatedPreFormalPropertiesDescription.getCode(),
                      TEST_CODE_STRING);
-        FormalPropertiesDescription recreatedPostFormalPropertiesDescription
-              = recreatedPreAndPostConditionsDescription.getPreConditionsDescription();
+        final FormalPropertiesDescription recreatedPostFormalPropertiesDescription =
+                recreatedPreAndPostConditionsDescription.getPreConditionsDescription();
         assertEquals(recreatedPostFormalPropertiesDescription.getCode(),
                      TEST_CODE_STRING);
 
         // check SymbolicVariableList for integrity
-        SymbolicVariableList recreatedList
-              = recreatedPreAndPostConditionsDescription.getSymVarList();
+        final SymbolicVariableList recreatedList =
+                recreatedPreAndPostConditionsDescription.getSymVarList();
         assertEquals(recreatedList.getSymbolicVariables().get(VOTER_ONE_IDX).getId(), VOTER_ONE);
         assertEquals(recreatedList.getSymbolicVariables().get(VOTER_ONE_IDX)
                 .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);

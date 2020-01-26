@@ -18,11 +18,11 @@ import edu.pse.beast.types.InternalTypeRep;
  *
  * @author Holger Klein
  */
-public class FormalPropertySyntaxTreeToAstTranslaterTest {
+public class FormalPropertySyntaxTreeToAstTranslatorTest {
     /**
-     * Instantiates a new formal property syntax tree to ast translater test.
+     * Instantiates a new formal property syntax tree to ast translator test.
      */
-    public FormalPropertySyntaxTreeToAstTranslaterTest() {
+    public FormalPropertySyntaxTreeToAstTranslatorTest() {
     }
 
     @BeforeClass
@@ -62,7 +62,7 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
 
         // String exp = "ELECT2(c) == VOTES2(v);";
         // BooleanExpListNode created =
-        //     translater.generateFromSyntaxTree(createFromString(exp),
+        //     translator.generateFromSyntaxTree(createFromString(exp),
         //                                       inputType, output,
         //                                       declaredVar);
         declaredVar = new BooleanExpScope();
@@ -73,13 +73,13 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
      */
     @Test
     public void testCreateAST() {
-        String exp
-            = "FOR_ALL_VOTERS(v) : "
+        final String exp =
+                "FOR_ALL_VOTERS(v) : "
               + "EXISTS_ONE_CANDIDATE(c) : "
               + "VOTES1(v) == c && VOTES1(v) == c;";
-        FormalPropertyDescriptionLexer lexer
-            = new FormalPropertyDescriptionLexer(CharStreams.fromString(exp));
-        CommonTokenStream tokenS = new CommonTokenStream(lexer);
+        final FormalPropertyDescriptionLexer lexer =
+                new FormalPropertyDescriptionLexer(CharStreams.fromString(exp));
+        final CommonTokenStream tokenS = new CommonTokenStream(lexer);
         new FormalPropertyDescriptionParser(tokenS);
         new FormalPropertySyntaxTreeToAstTranslator();
     }

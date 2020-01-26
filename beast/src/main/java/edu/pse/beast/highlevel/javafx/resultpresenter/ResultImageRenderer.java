@@ -130,11 +130,11 @@ public final class ResultImageRenderer {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(final MouseEvent event) {
-                        double clickX = event.getX();
-                        double clickY = event.getY();
+                        final double clickX = event.getX();
+                        final double clickY = event.getY();
                         for (ResultImageElement element : elementList) {
                             if (element.isInside(clickX, clickY)) {
-                                MouseEvent tmpEvent =
+                                final MouseEvent tmpEvent =
                                         (MouseEvent) event.clone();
                                 element.isClicked(tmpEvent);
                                 tmpEvent.consume();
@@ -189,7 +189,7 @@ public final class ResultImageRenderer {
             }
         }
 
-        Graphics2D graphics = (Graphics2D) image.getGraphics();
+        final Graphics2D graphics = (Graphics2D) image.getGraphics();
         graphics.setColor(backgroundColor);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
         // anti-aliasing
@@ -201,7 +201,7 @@ public final class ResultImageRenderer {
         for (Iterator<ResultImageElement> iterator =
                 elementList.iterator();
                 iterator.hasNext();) {
-            ResultImageElement element = iterator.next();
+            final ResultImageElement element = iterator.next();
             element.drawElement((Graphics2D) graphics.create(), currentScale);
         }
         graphics.dispose();

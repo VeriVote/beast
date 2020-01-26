@@ -63,12 +63,14 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
     public Process checkCodeFileForErrors(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
-        String userIncludeAndPath = ENABLE_USER_INCLUDE + QUOTE
+        final String userIncludeAndPath =
+                ENABLE_USER_INCLUDE + QUOTE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
                 + QUOTE;
         // We have to compile all includes that the user puts in that folder, in
         // case some of them are needed.
-        String compileAllIncludesInIncludePath = QUOTE
+        final String compileAllIncludesInIncludePath =
+                QUOTE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
                 + COMPILE_ALL_INCLUDES_IN_FOLDER + QUOTE;
 
@@ -93,7 +95,7 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // inside VScmd has to be in one giant string. Put the created
             // file in the output directory, such that it can be deleted
             // afterwards.
-            String clExeCall =
+            final String clExeCall =
                     QUOTE + vsCmd + QUOTE + BLANK
                     + AMPERSAND + BLANK + COMPILER_STRING
                     + BLANK + userIncludeAndPath + BLANK
@@ -101,9 +103,10 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     + (BLANK + "/Fo" + toCheck.getParent() + TWO_BACKSLASHES + BLANK)
                     + (BLANK + "/Fe" + toCheck.getParent() + TWO_BACKSLASHES + BLANK)
                     + compileAllIncludesInIncludePath;
-            List<String> callInList = new ArrayList<String>();
+            final List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
-            File batFile = new File(toCheck.getParent() + TWO_BACKSLASHES
+            final File batFile =
+                    new File(toCheck.getParent() + TWO_BACKSLASHES
                             + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
                                                         FileLoader.BAT_FILE_ENDING));
             FileSaver.writeStringLinesToFile(callInList, batFile);
@@ -111,7 +114,7 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // compiler) run in it.
             // ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
             //                                                clExeCall);
-            ProcessBuilder prossBuild =
+            final ProcessBuilder prossBuild =
                     new ProcessBuilder(CMD_EXE, SLASH_C,
                                        batFile.getAbsolutePath());
             try {
@@ -127,11 +130,11 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
     protected List<CodeError> parseError(final List<String> result,
                                          final List<String> errors,
                                          final int lineOffset) {
-        List<CodeError> codeErrors = new ArrayList<CodeError>();
+        final List<CodeError> codeErrors = new ArrayList<CodeError>();
 
         // errors are displayed like "(LINENUMBER)" where line number is a whole
         // number
-        Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
+        final Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
         // cl.exe prints out the results in the result list
         for (final Iterator<String> iterator = result.iterator();
@@ -156,7 +159,7 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     // String msg = line.substring(line.lastIndexOf(COLON));
                     // to prevent exceptions
                     if (varAndMessage.length > 1) {
-                        String toSplit = varAndMessage[1];
+                        final String toSplit = varAndMessage[1];
                         // the variable and compiler message is between ":"'s,
                         // so we split there.
                         if (toSplit.contains(COLON)) {
@@ -175,9 +178,9 @@ public final class WindowsErrorChecker extends SystemSpecificErrorChecker {
                                     + " error line from cl.exe");
                 }
             } else if (line.contains(BLANK + COLON + BLANK + "error LNK")) {
-                String[] splittedArray = line.split(COLON);
+                final String[] splittedArray = line.split(COLON);
                 if (splittedArray.length >= 2) {
-                    String subString = splittedArray[2];
+                    final String subString = splittedArray[2];
                     codeErrors.add(
                             CCodeErrorFactory.generateCompilerError(
                                     -1, -1, "", subString

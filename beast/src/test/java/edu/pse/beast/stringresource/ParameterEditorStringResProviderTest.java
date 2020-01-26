@@ -26,7 +26,7 @@ public class ParameterEditorStringResProviderTest {
     @Test
     public void testGetMenuStringRes() {
         System.out.println("getMenuStringRes");
-        StringResourceLoader result = instance.getMenuStringRes();
+        final StringResourceLoader result = instance.getMenuStringRes();
         assertEquals("Neues Projekt", result.getStringFromID("new"));
     }
 
@@ -37,7 +37,7 @@ public class ParameterEditorStringResProviderTest {
     @Test
     public void testGetToolbarTipStringRes() {
         System.out.println("getToolbarTipStringRes");
-        StringResourceLoader result = instance.getToolbarTipStringRes();
+        final StringResourceLoader result = instance.getToolbarTipStringRes();
         assertEquals("Stoppe Analyse", result.getStringFromID("stop"));
 
     }
@@ -48,7 +48,7 @@ public class ParameterEditorStringResProviderTest {
     @Test
     public void testGetOtherStringRes() {
         System.out.println("getOtherStringRes");
-        StringResourceLoader result = instance.getOtherStringRes();
+        final StringResourceLoader result = instance.getOtherStringRes();
         assertEquals("Dauer", result.getStringFromID("timeout"));
     }
 

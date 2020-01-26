@@ -42,7 +42,7 @@ public final class SymbolicVariableList {
                 addSymbolicVariable(final String id,
                                     final InternalTypeContainer internalTypeContainer) {
         if (id != null && internalTypeContainer != null) {
-            SymbolicVariable var =
+            final SymbolicVariable var =
                     new SymbolicVariable(id, internalTypeContainer);
             symbolicVariableList.add(var);
             listenerList.forEach(listener -> {
@@ -151,7 +151,7 @@ public final class SymbolicVariableList {
      */
     public synchronized void removeSymbolicVariable(final int index) {
         if (index >= 0) {
-            SymbolicVariable var = symbolicVariableList.get(index);
+            final SymbolicVariable var = symbolicVariableList.get(index);
             listenerList.forEach(l -> {
                 l.removedVar(var);
             });
@@ -202,7 +202,7 @@ public final class SymbolicVariableList {
         for (Iterator<SymbolicVariable> iterator =
                 allSymbolicVariables.getSymbolicVariables().iterator();
                 iterator.hasNext();) {
-            SymbolicVariable var = iterator.next();
+            final SymbolicVariable var = iterator.next();
             this.addSymbolicVariable(var);
         }
     }
@@ -213,12 +213,12 @@ public final class SymbolicVariableList {
      * @return a clone of the symbVarList
      */
     private synchronized List<SymbolicVariable> cloneSymbVars() {
-        List<SymbolicVariable> clonedSymbVariables =
+        final List<SymbolicVariable> clonedSymbVariables =
                 new LinkedList<SymbolicVariable>();
         for (Iterator<SymbolicVariable> iterator =
                 symbolicVariableList.iterator();
                 iterator.hasNext();) {
-            SymbolicVariable symbolicVariable = iterator.next();
+            final SymbolicVariable symbolicVariable = iterator.next();
             clonedSymbVariables.add(symbolicVariable.clone());
         }
         return clonedSymbVariables;
@@ -244,7 +244,7 @@ public final class SymbolicVariableList {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        SymbolicVariableList other = (SymbolicVariableList) obj;
+        final SymbolicVariableList other = (SymbolicVariableList) obj;
         if (symbolicVariableList == null) {
             if (other.symbolicVariableList != null) {
                 return false;

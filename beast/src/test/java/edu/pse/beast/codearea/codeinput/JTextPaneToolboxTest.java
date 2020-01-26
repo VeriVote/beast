@@ -77,10 +77,9 @@ public class JTextPaneToolboxTest {
      */
     @Test
     public void testTransformToLineNumber() {
-        JTextPane pane = new JTextPane();
+        final JTextPane pane = new JTextPane();
         pane.setText(TEXT);
-        int lineno = JTextPaneToolbox.transformToLineNumber(pane, ABS_POS);
-        assertEquals(ONE, lineno);
+        assertEquals(ONE, JTextPaneToolbox.transformToLineNumber(pane, ABS_POS));
     }
 
     /**
@@ -88,16 +87,13 @@ public class JTextPaneToolboxTest {
      */
     @Test
     public void testGetDistanceToClosestLineBeginning() {
-        JTextPane pane = new JTextPane();
+        final JTextPane pane = new JTextPane();
         pane.setText(TEXT_TWO);
         pane.setCaretPosition(ABS_POS);
-        int dist = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, FOUR);
-        assertEquals(FOUR, dist);
+        assertEquals(FOUR, JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, FOUR));
         pane.setText(TEXT_THREE);
-        dist = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, FOUR);
-        assertEquals(ZERO, dist);
-        dist = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, SIX);
-        assertEquals(TWO, dist);
+        assertEquals(ZERO, JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, FOUR));
+        assertEquals(TWO, JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, SIX));
     }
 
     /**
@@ -107,11 +103,11 @@ public class JTextPaneToolboxTest {
      */
     @Test
     public void testGetLinesBetween() throws Exception {
-        JTextPane pane = new JTextPane();
+        final JTextPane pane = new JTextPane();
         pane.setText(TEXT);
-        ArrayList<Integer> linesBetween =
+        final ArrayList<Integer> linesBetween =
                 JTextPaneToolbox.getLinesBetween(pane, ZERO, FIVE);
-        int[] lines = {ZERO, ONE, TWO};
+        final int[] lines = {ZERO, ONE, TWO};
         assertEquals(lines.length, linesBetween.size());
         for (int i = ZERO; i < lines.length; i++) {
             assertEquals(lines[i], (int) linesBetween.get(i));
@@ -123,20 +119,16 @@ public class JTextPaneToolboxTest {
      */
     @Test
     public void testGetCharToTheLeftOfCaret() {
-        JTextPane pane = new JTextPane();
+        final JTextPane pane = new JTextPane();
         pane.setText(ABC);
         pane.setCaretPosition(ZERO);
-        String lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals("", lhs);
+        assertEquals("", JTextPaneToolbox.getCharToTheLeftOfCaret(pane));
         pane.setCaretPosition(ONE);
-        lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals(A, lhs);
+        assertEquals(A, JTextPaneToolbox.getCharToTheLeftOfCaret(pane));
         pane.setCaretPosition(TWO);
-        lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals(B, lhs);
+        assertEquals(B, JTextPaneToolbox.getCharToTheLeftOfCaret(pane));
         pane.setCaretPosition(ABS_POS);
-        lhs = JTextPaneToolbox.getCharToTheLeftOfCaret(pane);
-        assertEquals(C, lhs);
+        assertEquals(C, JTextPaneToolbox.getCharToTheLeftOfCaret(pane));
     }
 
     /**
@@ -144,19 +136,15 @@ public class JTextPaneToolboxTest {
      */
     @Test
     public void testGetCharToTheRightOfCaret() {
-        JTextPane pane = new JTextPane();
+        final JTextPane pane = new JTextPane();
         pane.setText(ABC);
         pane.setCaretPosition(ZERO);
-        String rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals(A, rhs);
+        assertEquals(A, JTextPaneToolbox.getCharToTheRightOfCaret(pane));
         pane.setCaretPosition(ONE);
-        rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals(B, rhs);
+        assertEquals(B, JTextPaneToolbox.getCharToTheRightOfCaret(pane));
         pane.setCaretPosition(TWO);
-        rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals(C, rhs);
+        assertEquals(C, JTextPaneToolbox.getCharToTheRightOfCaret(pane));
         pane.setCaretPosition(ABS_POS);
-        rhs = JTextPaneToolbox.getCharToTheRightOfCaret(pane);
-        assertEquals("", rhs);
+        assertEquals("", JTextPaneToolbox.getCharToTheRightOfCaret(pane));
     }
 }

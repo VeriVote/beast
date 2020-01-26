@@ -103,7 +103,7 @@ public final class CBMCResultValueWrapper extends ResultValueWrapper {
             return;
         }
         // get the data type of the first element
-        CDATATYPE newType = getDataType(element);
+        final CDATATYPE newType = getDataType(element);
         if (initialized) {
             if (newType != dataType) {
                 throw new RuntimeException("Mismatching datatypes found"
@@ -171,7 +171,7 @@ public final class CBMCResultValueWrapper extends ResultValueWrapper {
      * @return the data type
      */
     private static CDATATYPE getDataType(final Node node) {
-        String nodeTagName = node.getNodeName();
+        final String nodeTagName = node.getNodeName();
         CDATATYPE type = null;
         switch (nodeTagName.toLowerCase()) {
         case "array":
@@ -184,7 +184,7 @@ public final class CBMCResultValueWrapper extends ResultValueWrapper {
             type = CDATATYPE.POINTER;
             break;
         default:
-            NodeList children = node.getChildNodes();
+            final NodeList children = node.getChildNodes();
             if (children.getLength() != 1) {
                 System.err.println("Parsing the XML encounterd a"
                                     + " 'single' element, which"

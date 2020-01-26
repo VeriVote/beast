@@ -37,7 +37,7 @@ public final class CBMCResultValueArray implements CBMCResultValue {
         values.clear();
         // we have an object with tag "array", the children are of the form:
         // <element index="n"\>
-        NodeList children = element.getElementsByTagName(ELEMENT_TAG);
+        final NodeList children = element.getElementsByTagName(ELEMENT_TAG);
 
         if (children.getLength() == 0) {
             System.err.println("no element found inside an array");
@@ -55,7 +55,7 @@ public final class CBMCResultValueArray implements CBMCResultValue {
             } else {
                 childElement = (Element) nextNode;
             }
-            int index =
+            final int index =
                     Integer.parseInt(childElement.getAttributes()
                             .getNamedItem(INDEX_NAME).getNodeValue());
             if (index == currentPos) {

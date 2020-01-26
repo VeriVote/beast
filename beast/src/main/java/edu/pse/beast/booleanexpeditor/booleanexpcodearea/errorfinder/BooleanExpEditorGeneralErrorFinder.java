@@ -28,7 +28,7 @@ public final class BooleanExpEditorGeneralErrorFinder {
      * @return true, if there are errors, else false
      */
     public static boolean hasErrors(final ParentTreeItem parentTreeItem) {
-        List<CodeError> combinedErrors = getErrors(parentTreeItem);
+        final List<CodeError> combinedErrors = getErrors(parentTreeItem);
         if (combinedErrors.size() > 0) {
             parentTreeItem.addErrors(combinedErrors);
             return true;
@@ -45,7 +45,7 @@ public final class BooleanExpEditorGeneralErrorFinder {
      * @return the errors
      */
     public static List<CodeError> getErrors(final ParentTreeItem parentTreeItem) {
-        List<CodeError> combinedErrors = new ArrayList<CodeError>();
+        final List<CodeError> combinedErrors = new ArrayList<CodeError>();
         final PreAndPostConditionsDescription property =
                 parentTreeItem.getPreAndPostProperties();
         // precondition error finder

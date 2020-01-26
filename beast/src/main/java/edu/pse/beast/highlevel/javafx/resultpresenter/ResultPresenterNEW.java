@@ -60,11 +60,11 @@ public final class ResultPresenterNEW {
      * Gets the default presentation.
      */
     private void getDefaultPresentation() {
-        List<ResultPresentationType> types = getEligablePresentationTypes();
-        for (Iterator<ResultPresentationType> iterator =
+        final List<ResultPresentationType> types = getEligablePresentationTypes();
+        for (final Iterator<ResultPresentationType> iterator =
                 types.iterator();
                 iterator.hasNext();) {
-            ResultPresentationType type = iterator.next();
+            final ResultPresentationType type = iterator.next();
             if (!result.isValid()) {
                 setPresentationType(new CBMCOutput());
             } else if (type.isDefault()) {
@@ -91,7 +91,7 @@ public final class ResultPresenterNEW {
      *            the new result
      */
     public void setResult(final Result resultVal) {
-        boolean changed = this.result != resultVal;
+        final boolean changed = this.result != resultVal;
         this.result = resultVal;
         if (changed) {
             getDefaultPresentation();
@@ -106,13 +106,13 @@ public final class ResultPresenterNEW {
      */
     private List<ResultPresentationType> getEligablePresentationTypes() {
         this.presentationType = null;
-        List<ResultPresentationType> eligableTypes =
+        final List<ResultPresentationType> eligableTypes =
             new ArrayList<ResultPresentationType>();
 
-        for (Iterator<ResultPresentationType> iterator =
+        for (final Iterator<ResultPresentationType> iterator =
                 ResultPresentationType.getImplementations().iterator();
                 iterator.hasNext();) {
-            ResultPresentationType typeToCheck = iterator.next();
+            final ResultPresentationType typeToCheck = iterator.next();
             if (typeToCheck.supports(result.getAnalysisType())) {
                 eligableTypes.add(typeToCheck);
             }
@@ -133,7 +133,7 @@ public final class ResultPresenterNEW {
     public void setPresentationType(final ResultPresentationType presType) {
         GUIController.getController()
                 .setPresentationTypeText(presType.getName());
-        boolean changed = this.presentationType != presType;
+        final boolean changed = this.presentationType != presType;
         this.presentationType = presType;
         if (changed) {
             showResult();
@@ -148,7 +148,7 @@ public final class ResultPresenterNEW {
         if (result == null) {
             return;
         }
-        Node finishedResult = presentationType.presentResult(result);
+        final Node finishedResult = presentationType.presentResult(result);
         GUIController.getController()
                 .disableZoomSlider(!presentationType.supportsZoom());
         this.setResultNode(finishedResult);

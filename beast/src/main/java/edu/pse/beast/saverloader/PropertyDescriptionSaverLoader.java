@@ -19,7 +19,7 @@ public final class PropertyDescriptionSaverLoader
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         // builder.registerTypeAdapter(VariableListListener.class, new
         // VariableListListenerAdapter());
         saverLoader = builder.create();

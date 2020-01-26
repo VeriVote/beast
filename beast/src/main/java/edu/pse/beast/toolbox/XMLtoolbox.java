@@ -24,16 +24,16 @@ public final class XMLtoolbox {
      *            the node which child items should be cleaned
      */
     public static void clean(final Node node) {
-        NodeList childNodes = node.getChildNodes();
+        final NodeList childNodes = node.getChildNodes();
 
         for (int n = childNodes.getLength() - 1; n >= 0; n--) {
-            Node child = childNodes.item(n);
-            short nodeType = child.getNodeType();
+            final Node child = childNodes.item(n);
+            final short nodeType = child.getNodeType();
 
             if (nodeType == Node.ELEMENT_NODE) {
                 clean(child);
             } else if (nodeType == Node.TEXT_NODE) {
-                String trimmedNodeVal = child.getNodeValue().trim();
+                final String trimmedNodeVal = child.getNodeValue().trim();
                 if (trimmedNodeVal.length() == 0) {
                     node.removeChild(child);
                 } else {

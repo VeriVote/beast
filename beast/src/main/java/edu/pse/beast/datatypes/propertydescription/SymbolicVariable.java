@@ -76,7 +76,7 @@ public final class SymbolicVariable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        SymbolicVariable other = (SymbolicVariable) obj;
+        final SymbolicVariable other = (SymbolicVariable) obj;
         if (id == null) {
             if (other.id != null) {
                 return false;

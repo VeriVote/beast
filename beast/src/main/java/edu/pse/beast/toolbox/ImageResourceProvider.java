@@ -53,7 +53,7 @@ public class ImageResourceProvider {
         this.folder = folderString;
         this.ids = idStrings;
         for (final String s : this.ids) {
-            File toRead =
+            final File toRead =
                     new File(SuperFolderFinder.getSuperFolder()
                     + this.folder + s + PNG_FILE_ENDING);
             Image img = null;
@@ -69,8 +69,7 @@ public class ImageResourceProvider {
      */
     public static ImageResourceProvider getToolbarImages() {
         if (toolbar == null) {
-            String[] ids = IDS;
-            toolbar = new ImageResourceProvider(RESOURCE, ids);
+            toolbar = new ImageResourceProvider(RESOURCE, IDS);
         }
         return toolbar;
     }

@@ -86,7 +86,7 @@ public final class VoteSumForCandExp extends IntegerValuedExpression {
         if (!super.equals(o)) {
             return false;
         }
-        VoteSumForCandExp that = (VoteSumForCandExp) o;
+        final VoteSumForCandExp that = (VoteSumForCandExp) o;
 
         if (unique != that.unique) {
             return false;

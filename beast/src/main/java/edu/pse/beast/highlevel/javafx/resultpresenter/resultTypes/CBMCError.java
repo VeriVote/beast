@@ -32,16 +32,16 @@ public final class CBMCError extends ResultPresentationType {
                     TextStyle.fontSize(STANDARD_SIZE), ParStyle.EMPTY);
             area.setEditable(false);
         }
-        List<String> errorText = result.getErrorText();
-        for (Iterator<String> iterator = errorText.iterator();
+        final List<String> errorText = result.getErrorText();
+        for (final Iterator<String> iterator = errorText.iterator();
                 iterator.hasNext();) {
-            String text = iterator.next();
+            final String text = iterator.next();
             area.appendText(text);
         }
         // Wrap it in a scroll area
-        VirtualizedScrollPane<GenericStyledArea<ParStyle,
-                                                Either<String, LinkedImage>,
-                                                TextStyle>> vsPane =
+        final VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                                                      Either<String, LinkedImage>,
+                                                      TextStyle>> vsPane =
             new VirtualizedScrollPane<GenericStyledArea<ParStyle,
                                                         Either<String, LinkedImage>,
                                                         TextStyle>>(area);

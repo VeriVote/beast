@@ -31,14 +31,14 @@ public final class InputTypeAdapter
     public InputType deserialize(final JsonElement json, final Type typeOf,
                                  final JsonDeserializationContext context)
             throws JsonParseException {
-        JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get(TYPE).getAsString();
-        JsonElement element = jsonObject.get(PROPERTIES);
+        final JsonObject jsonObject = json.getAsJsonObject();
+        final String type = jsonObject.get(TYPE).getAsString();
+        final JsonElement element = jsonObject.get(PROPERTIES);
         try {
             for (Iterator<InputType> iterator =
                     InputType.getInputTypes().iterator();
                     iterator.hasNext();) {
-                InputType inType = (InputType) iterator.next();
+                final InputType inType = (InputType) iterator.next();
                 if (inType.getClass().getSimpleName().equals(type)) {
                     return context.deserialize(
                             element,
@@ -55,7 +55,7 @@ public final class InputTypeAdapter
     @Override
     public JsonElement serialize(final InputType src, final Type typeOfSrc,
                                  final JsonSerializationContext context) {
-        JsonObject result = new JsonObject();
+        final JsonObject result = new JsonObject();
         result.add(TYPE, new JsonPrimitive(src.getClass().getSimpleName()));
         result.add(PROPERTIES, context.serialize(src, src.getClass()));
         return result;

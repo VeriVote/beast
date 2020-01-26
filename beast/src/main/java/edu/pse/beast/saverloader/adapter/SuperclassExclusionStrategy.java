@@ -15,9 +15,8 @@ public final class SuperclassExclusionStrategy implements ExclusionStrategy {
 
     @Override
     public boolean shouldSkipField(final FieldAttributes fieldAttributes) {
-        String fieldName = fieldAttributes.getName();
-        Class<?> theClass = fieldAttributes.getDeclaringClass();
-
+        final String fieldName = fieldAttributes.getName();
+        final Class<?> theClass = fieldAttributes.getDeclaringClass();
         return isFieldInSuperclass(theClass, fieldName);
     }
 

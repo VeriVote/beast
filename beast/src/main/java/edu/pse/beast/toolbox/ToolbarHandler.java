@@ -65,8 +65,8 @@ public abstract class ToolbarHandler {
         this.toolbar = jToolbar;
 
         for (int i = 0; i < actionIdsAndListeners.length; ++i) {
-            String id = actionIdsAndListeners[i].getId();
-            JButton currentButton = new JButton();
+            final String id = actionIdsAndListeners[i].getId();
+            final JButton currentButton = new JButton();
             currentButton
                     .addActionListener(actionIdsAndListeners[i].getListener());
             currentButton.setIcon(
@@ -97,7 +97,7 @@ public abstract class ToolbarHandler {
      */
     private void updateToolbar() {
         for (int i = 0; i < actionIdsAndListener.length; ++i) {
-            String id = actionIdsAndListener[i].getId();
+            final String id = actionIdsAndListener[i].getId();
             buttons[i].setToolTipText(stringRes.getStringFromID(id));
         }
     }
@@ -120,8 +120,8 @@ public abstract class ToolbarHandler {
         @Override
         public int compare(final ActionIdAndListener lhs,
                            final ActionIdAndListener rhs) {
-            Integer lhsPos = findInArr(lhs.getId());
-            int rhsPos = findInArr(rhs.getId());
+            final Integer lhsPos = findInArr(lhs.getId());
+            final int rhsPos = findInArr(rhs.getId());
             return lhsPos.compareTo(rhsPos);
         }
 

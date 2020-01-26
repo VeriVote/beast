@@ -85,7 +85,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     public void processAutoCompletion(final List<String> content,
                                       final Integer startIdx,
                                       final Integer endIdx) {
-        Tuple<Integer, Integer> position = getAbsolutCaretPosition();
+        final Tuple<Integer, Integer> position = getAbsolutCaretPosition();
         this.start = startIdx;
         this.end = endIdx;
         if (content.size() == 1) {
@@ -135,14 +135,13 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     protected Tuple3<List<String>, Integer, Integer>
                 getCompletions(final Set<String> recommendations) {
         String completeText = this.getText();
-        int prefixEnd = caretPositionProperty().getValue();
+        final int prefixEnd = caretPositionProperty().getValue();
         int prefixStart = prefixEnd;
         String prefix = "";
 
         if (prefixEnd > 0) {
             for (int i = prefixEnd - 1; i >= 0; i--) {
-                char tmp = completeText.charAt(i);
-
+                final char tmp = completeText.charAt(i);
                 if (tmp == ' ' | ("" + tmp).matches(SPECIAL_CHARACTER_REGEX)
                         | ("" + tmp).matches(CONTROL_CHARACTERS)) {
                     if (!prefix.matches(WORD)) {
@@ -159,7 +158,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         }
 
         if (!"".equals(prefix)) {
-            StringBuilder builder = new StringBuilder(completeText);
+            final StringBuilder builder = new StringBuilder(completeText);
             builder.delete(prefixStart, prefixEnd);
             completeText = builder.toString();
         }
@@ -169,11 +168,11 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
                 completeText.replaceAll(SPECIAL_CHARACTER_REGEX, WHITESPACE);
         completeText = completeText.replaceAll("\\s+", WHITESPACE);
 
-        Set<String> possibilities = new TreeSet<String>(recommendations);
+        final Set<String> possibilities = new TreeSet<String>(recommendations);
         possibilities.addAll(GUIController.getController().getBooleanExpEditor()
                 .getSymbolicVariableNames());
         // split on white spaces to extract the words
-        String[] split = completeText.split(WHITESPACE);
+        final String[] split = completeText.split(WHITESPACE);
 
         for (int i = 0; i < split.length; i++) {
             if (split[i].matches(WORD)) {
@@ -181,7 +180,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             }
         }
 
-        List<String> possibleList = new ArrayList<String>();
+        final List<String> possibleList = new ArrayList<String>();
         if ("".equals(prefix)) {
             possibleList.addAll(possibilities);
         } else {
@@ -189,7 +188,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             // non-fitting words
             for (Iterator<String> iterator = possibilities.iterator();
                     iterator.hasNext();) {
-                String str = iterator.next();
+                final String str = iterator.next();
                 if (str != null
                         && str.toLowerCase().startsWith(prefix.toLowerCase())) {
                     possibleList.add(str);

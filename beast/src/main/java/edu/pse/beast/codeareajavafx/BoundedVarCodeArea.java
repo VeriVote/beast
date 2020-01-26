@@ -32,13 +32,13 @@ public final class BoundedVarCodeArea extends AutoCompletionCodeArea
      * The constructor.
      */
     public BoundedVarCodeArea() {
-        List<String> code = new ArrayList<String>();
+        final List<String> code = new ArrayList<String>();
         code.add("");
-        String sampleCode = "";
-        String stylesheet =
+        final String sampleCode = "";
+        final String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
-        IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
+        final IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
         this.replaceText(0, 0, sampleCode);
     }
@@ -53,7 +53,7 @@ public final class BoundedVarCodeArea extends AutoCompletionCodeArea
         String toDisplay = "";
         for (Iterator<CodeError> iterator = codeErrors.iterator();
                 iterator.hasNext();) {
-            CodeError codeError = (CodeError) iterator.next();
+            final CodeError codeError = (CodeError) iterator.next();
             toDisplay += "line: " + codeError.getLine()
                         + "| Message: " + codeError.getMsg() + "\n";
         }

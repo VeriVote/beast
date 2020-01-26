@@ -80,13 +80,13 @@ public final class TextStyle {
 
         @Override
         public TextStyle decode(final DataInputStream is) throws IOException {
-            byte bius = is.readByte();
-            Optional<Integer> fontSize = decodeOptionalUint(is.readInt());
-            Optional<String> fontFamily = optStringCodec.decode(is);
-            Optional<Color> textColor = optColorCodec.decode(is);
-            Optional<Color> bgrColor = optColorCodec.decode(is);
+            final byte bius = is.readByte();
+            final Optional<Integer> fontSize = decodeOptionalUint(is.readInt());
+            final Optional<String> fontFamily = optStringCodec.decode(is);
+            final Optional<Color> textColor = optColorCodec.decode(is);
+            final Optional<Color> bgrColor = optColorCodec.decode(is);
 
-            Font decodedFont =
+            final Font decodedFont =
                     new Font(fontFamily.orElse(getDefaultFont().getFamily()),
                              fontSize.orElse((int) getDefaultFont().getSize()));
 
@@ -341,9 +341,9 @@ public final class TextStyle {
      * @return the string
      */
     static String cssColor(final Color color) {
-        int red = (int) (color.getRed() * COLOR_MASK);
-        int green = (int) (color.getGreen() * COLOR_MASK);
-        int blue = (int) (color.getBlue() * COLOR_MASK);
+        final int red = (int) (color.getRed() * COLOR_MASK);
+        final int green = (int) (color.getGreen() * COLOR_MASK);
+        final int blue = (int) (color.getBlue() * COLOR_MASK);
         return "rgb(" + red + COMMA + BLANK + green + COMMA + BLANK + blue + ")";
     }
 
@@ -356,7 +356,7 @@ public final class TextStyle {
     @Override
     public boolean equals(final Object other) {
         if (other instanceof TextStyle) {
-            TextStyle that = (TextStyle) other;
+            final TextStyle that = (TextStyle) other;
             return Objects.equals(this.bold, that.bold)
                     && Objects.equals(this.italic, that.italic)
                     && Objects.equals(this.underline, that.underline)
@@ -371,7 +371,7 @@ public final class TextStyle {
 
     @Override
     public String toString() {
-        List<String> styles = new ArrayList<String>();
+        final List<String> styles = new ArrayList<String>();
         bold.ifPresent(b -> styles.add(b.toString()));
         italic.ifPresent(i -> styles.add(i.toString()));
         underline.ifPresent(u -> styles.add(u.toString()));
@@ -389,7 +389,7 @@ public final class TextStyle {
      * @return the string
      */
     public String toCss() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         if (bold.isPresent()) {
             if (bold.get()) {
                 sb.append("-fx-font-weight: bold;");

@@ -50,9 +50,9 @@ public final class BarCharElement extends ResultImageElement {
         double tmpSize = 0;
         // iterate over the values, adding up their sizes, therefore getting the
         // total size of the pie chart;
-        List<Tuple3<String, Double, Color>> remove =
+        final List<Tuple3<String, Double, Color>> remove =
                 new LinkedList<Tuple3<String, Double, Color>>();
-        for (Tuple3<String, Double, Color> value : resultValues) {
+        for (final Tuple3<String, Double, Color> value : resultValues) {
             if (value.second() == 0) {
                 System.err.println("You are not allowed to have fields "
                                     + "with zero size in this chart");

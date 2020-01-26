@@ -28,9 +28,8 @@ public class CodeArrayListBeautifierTest {
     @Test
     public void testAdd() {
         System.out.println(ADD);
-        String e = TEST;
-        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-        instance.add(e);
+        final CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.add(TEST);
         assertEquals(TEST, instance.getCodeArrayList().get(0));
         instance.add(null);
     }
@@ -42,10 +41,9 @@ public class CodeArrayListBeautifierTest {
     public void testAddTab() {
         System.out.println("addTab");
         System.out.println(ADD);
-        String e = TEST;
-        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        final CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addTab();
-        instance.add(e);
+        instance.add(TEST);
         assertEquals(CodeArrayListBeautifier.TAB + TEST,
                      instance.getCodeArrayList().get(0));
     }
@@ -56,22 +54,19 @@ public class CodeArrayListBeautifierTest {
     @Test
     public void testDeleteTab() {
         System.out.println("deleteTab");
-        String e = TEST;
-        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        final CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addTab();
 
         instance.deleteTab();
-        instance.add(e);
+        instance.add(TEST);
         assertEquals(TEST, instance.getCodeArrayList().get(0));
 
         instance.deleteTab();
-        e = TEST_TWO;
-        instance.add(e);
+        instance.add(TEST_TWO);
         assertEquals(TEST_TWO, instance.getCodeArrayList().get(1));
 
-        e = TEST_THREE;
         instance.addTab();
-        instance.add(e);
+        instance.add(TEST_THREE);
         instance.deleteTab();
         assertEquals(CodeArrayListBeautifier.TAB + TEST_THREE,
                      instance.getCodeArrayList().get(2));
@@ -83,9 +78,8 @@ public class CodeArrayListBeautifierTest {
     @Test
     public void testGetCodeArrayList() {
         System.out.println("getCodeArrayList");
-        String e = TEST;
-        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-        instance.add(e);
+        final CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.add(TEST);
         assertEquals(TEST, instance.getCodeArrayList().get(0));
     }
 
@@ -95,13 +89,13 @@ public class CodeArrayListBeautifierTest {
     @Test
     public void testAddArrayList() {
         System.out.println("addArrayList");
-        ArrayList<String> arrayList = new ArrayList<String>();
+        final ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add("2");
         arrayList.add("3");
         arrayList.add(TEST);
-        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        final CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addList(arrayList);
-        ArrayList<String> resultList = instance.getCodeArrayList();
+        final ArrayList<String> resultList = instance.getCodeArrayList();
         if (resultList.size() == arrayList.size()) {
             for (int i = 0; i < arrayList.size(); i++) {
                 assertEquals(resultList.get(i), arrayList.get(i));

@@ -69,9 +69,9 @@ public final class FileLoader {
      */
     public static LinkedList<String> loadFileAsString(final File file)
             throws FileNotFoundException, IOException {
-        LinkedList<String> stringlist;
-        InputStream inputStream = new FileInputStream(file);
-        BufferedReader br =
+        final LinkedList<String> stringlist;
+        final InputStream inputStream = new FileInputStream(file);
+        final BufferedReader br =
                 new BufferedReader(
                         new InputStreamReader(inputStream, "UTF-8")
                 );
@@ -114,9 +114,9 @@ public final class FileLoader {
      * @return the unique String
      */
     public static synchronized String getNewUniqueName(final String pathToDir) {
-        ArrayList<String> usedNames = new ArrayList<String>();
-        File folder = new File(pathToDir.replace(QUOTE, ""));
-        File[] listOfFiles = folder.listFiles();
+        final ArrayList<String> usedNames = new ArrayList<String>();
+        final File folder = new File(pathToDir.replace(QUOTE, ""));
+        final File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
@@ -139,7 +139,7 @@ public final class FileLoader {
      * @return the random name
      */
     private static String getRandomName(final int wordSize) {
-        SecureRandom random = new SecureRandom();
+        final SecureRandom random = new SecureRandom();
         return new java.math.BigInteger(wordSize, random).toString(INT_LENGTH);
     }
 
@@ -155,9 +155,9 @@ public final class FileLoader {
      */
     public static List<String> listAllFilesFromFolder(final String pathToDir,
                                                       final String endsWith) {
-        ArrayList<String> foundFiles = new ArrayList<String>();
-        File folder = new File(pathToDir.replace(QUOTE, ""));
-        File[] listOfFiles = folder.listFiles();
+        final ArrayList<String> foundFiles = new ArrayList<String>();
+        final File folder = new File(pathToDir.replace(QUOTE, ""));
+        final File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile() && file.getName().endsWith(endsWith)) {

@@ -70,13 +70,13 @@ public abstract class ResultPresentationType {
      * @return all implementations of this class
      */
     public static List<ResultPresentationType> getImplementations() {
-        ServiceLoader<ResultPresentationType> loader =
+        final ServiceLoader<ResultPresentationType> loader =
                 ServiceLoader.load(ResultPresentationType.class);
-        List<ResultPresentationType> implementations =
+        final List<ResultPresentationType> implementations =
                 new ArrayList<ResultPresentationType>();
         for (Iterator<ResultPresentationType> iterator = loader.iterator();
                 iterator.hasNext();) {
-            ResultPresentationType implementation = iterator.next();
+            final ResultPresentationType implementation = iterator.next();
             implementations.add(implementation);
         }
         return implementations;
@@ -91,8 +91,8 @@ public abstract class ResultPresentationType {
         if (menuItem != null) {
             return menuItem;
         } else {
-            CustomMenuItem item = new CustomMenuItem(new Label(getName()));
-            Tooltip tip = new Tooltip(getToolTipDescription());
+            final CustomMenuItem item = new CustomMenuItem(new Label(getName()));
+            final Tooltip tip = new Tooltip(getToolTipDescription());
             Tooltip.install(item.getContent(), tip);
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -132,12 +132,12 @@ public abstract class ResultPresentationType {
      * @return the all sizes
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
-        Map<Integer, Long> toReturn = new HashMap<Integer, Long>();
-        for (Iterator<ResultValueWrapper> iterator = toExtract.iterator();
+        final Map<Integer, Long> toReturn = new HashMap<Integer, Long>();
+        for (final Iterator<ResultValueWrapper> iterator = toExtract.iterator();
                 iterator.hasNext();) {
-            ResultValueWrapper currentWrapper = iterator.next();
-            int index = currentWrapper.getMainIndex();
-            CBMCResultValueSingle singleValue =
+            final ResultValueWrapper currentWrapper = iterator.next();
+            final int index = currentWrapper.getMainIndex();
+            final CBMCResultValueSingle singleValue =
                     (CBMCResultValueSingle) currentWrapper.getResultValue();
             toReturn.put(index, (Long) singleValue.getNumberValue());
         }

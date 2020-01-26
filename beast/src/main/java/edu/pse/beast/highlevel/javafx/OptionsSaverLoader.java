@@ -33,7 +33,7 @@ public final class OptionsSaverLoader extends edu.pse.beast.codeareajavafx.Saver
     }
 
     static { // here you have the chance to register typeAdapters
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         saverLoader = builder.create();
     }
 

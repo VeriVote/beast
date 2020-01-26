@@ -350,15 +350,15 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         saverLoader = new SaverLoader(SaverLoader.ELEC_DESCR_FILE_ENDING,
                                       "BEAST election description",
                                       this);
-        ElectionDescription startElecDescription =
+        final ElectionDescription startElecDescription =
                 new ElectionDescription("New description", new SingleChoice(),
                                         new SingleCandidate(), 0, 0, 0, true);
         this.setNewElectionDescription(startElecDescription);
         saverLoader.resetHasSaveFile();
-        List<String> code = new ArrayList<String>();
+        final List<String> code = new ArrayList<String>();
         code.add("");
         // code.add(source.getContainer().getInputType().);
-        String stylesheet =
+        final String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         final IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
@@ -366,7 +366,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         this.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             consume(event);
             String replacement = "";
-            String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
+            final String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
 
             int step = 0;
 
@@ -418,7 +418,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             } else if (cutCombination.match(event)) {
                 cut(event);
             } else if (tabulatorCombination.match(event)) {
-                String whitespaces =
+                final String whitespaces =
                         new String(new char[spacesPerTab]).replace("\0", " ");
                 lockedLineSafeInsertText(whitespaces, false, false, null);
                 consume(event);
@@ -491,9 +491,9 @@ public final class NewCodeArea extends AutoCompletionCodeArea
      *            the event
      */
     private void cut(final KeyEvent event) {
-        String selectedText = this.getSelectedText();
+        final String selectedText = this.getSelectedText();
         if (lockedLineSafeInsertText("", true, false, null)) {
-            StringSelection selection = new StringSelection(selectedText);
+            final StringSelection selection = new StringSelection(selectedText);
             Toolkit.getDefaultToolkit().getSystemClipboard()
                     .setContents(selection, selection);
         }
@@ -512,11 +512,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
      *            the event
      */
     private void redo(final KeyEvent event) {
-        LiveList<?> redoList =
+        final LiveList<?> redoList =
                 this.getUndoManager().nextRedoProperty().asList();
         if (redoList.size() == 1) {
-            List<?> list = (List<?>) redoList.get(0);
-            PlainTextChange change = (PlainTextChange) list.get(0);
+            final List<?> list = (List<?>) redoList.get(0);
+            final PlainTextChange change = (PlainTextChange) list.get(0);
             System.out.println("redo length:  " + change.getNetLength());
             updateLockedLineNumber(change.getRemovalEnd(),
                                    change.getRemoved().length());
@@ -538,11 +538,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
      *            the event
      */
     private void undo(final KeyEvent event) {
-        LiveList<?> undoList =
+        final LiveList<?> undoList =
                 this.getUndoManager().nextUndoProperty().asList();
         if (undoList.size() == 1) {
-            List<?> list = (List<?>) undoList.get(0);
-            PlainTextChange change = (PlainTextChange) list.get(0);
+            final List<?> list = (List<?>) undoList.get(0);
+            final PlainTextChange change = (PlainTextChange) list.get(0);
             updateLockedLineNumber(change.getInsertionEnd(),
                                    -1 * change.getNetLength());
         } else {
@@ -582,7 +582,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             selectionStart = tuple.first();
             selectionEnd = tuple.second();
         } else {
-            IndexRange selectionRange = this.getSelection();
+            final IndexRange selectionRange = this.getSelection();
             selectionStart = selectionRange.getStart();
             selectionEnd = selectionRange.getEnd();
         }
@@ -610,10 +610,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         // if (selectionEnd - selectionStart > 0) { // we have a selected range
         // // find out, if the selected range overlaps with a locked line
         // anywhere
-        boolean notOverlapping = ((selectionEnd < lockedLineStart)
-                                    || (lockedLineEnd <= selectionStart))
-                                && (((selectionEnd <= lockedBracePos)
-                                        || (lockedBracePos < selectionStart)));
+        final boolean notOverlapping =
+                ((selectionEnd < lockedLineStart)
+                        || (lockedLineEnd <= selectionStart))
+                && (((selectionEnd <= lockedBracePos)
+                        || (lockedBracePos < selectionStart)));
         if (notOverlapping
                 || (selectionEnd == lockedLineStart
                     && (r.endsWith(LINE_BREAK) || backspace || delete))) {
@@ -653,9 +654,9 @@ public final class NewCodeArea extends AutoCompletionCodeArea
      * @return the style spans
      */
     private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
-        Matcher matcher = PATTERN.matcher(text);
+        final Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder =
+        final StyleSpansBuilder<Collection<String>> spansBuilder =
                 new StyleSpansBuilder<Collection<String>>();
         while (matcher.find()) {
             final String[] styleClasses =
@@ -720,8 +721,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     public void setNewElectionDescription(final ElectionDescription newDescription) {
         this.elecDescription = newDescription;
         if (newDescription.isNew()) {
-            String declarationString = CCodeHelper
-                    .generateSimpleDeclString(newDescription.getContainer());
+            final String declarationString =
+                    CCodeHelper.generateSimpleDeclString(newDescription.getContainer());
             lockedLineStart = 0;
             lockedLineEnd = lockedLineStart + declarationString.length();
             this.replaceText(declarationString + "\n\n}");
@@ -741,11 +742,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         saverLoader.resetHasSaveFile();
         // force the undo manager to not be able to return to previous text
         this.getUndoManager().forgetHistory();
-        String inputInfo =
+        final String inputInfo =
                 elecDescription.getContainer().getInputType().getInfo();
-        String outputInfo =
+        final String outputInfo =
                 elecDescription.getContainer().getOutputType().getInfo();
-        String combined = inputInfo + "\n\n\n" + outputInfo;
+        final String combined = inputInfo + "\n\n\n" + outputInfo;
         GUIController.setInfoText(combined);
     }
 
@@ -779,7 +780,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
 
     @Override
     public void open() {
-        String json = saverLoader.load();
+        final String json = saverLoader.load();
         openJson(json, true);
     }
 
@@ -844,7 +845,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
 
     @Override
     public void autoComplete() {
-        Tuple3<List<String>, Integer, Integer> completions =
+        final Tuple3<List<String>, Integer, Integer> completions =
                 getCompletions(recommendations);
         processAutoCompletion(completions);
     }

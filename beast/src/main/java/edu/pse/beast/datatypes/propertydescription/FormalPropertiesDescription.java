@@ -49,7 +49,7 @@ public final class FormalPropertiesDescription {
      * @return the code as list
      */
     public List<String> getCodeAsList() {
-        String[] split = code.split("\n");
+        final String[] split = code.split("\n");
         return Arrays.asList(split);
     }
 

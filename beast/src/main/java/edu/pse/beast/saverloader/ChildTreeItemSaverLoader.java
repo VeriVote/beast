@@ -28,7 +28,7 @@ public final class ChildTreeItemSaverLoader
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         builder.addDeserializationExclusionStrategy(
                 new SuperclassExclusionStrategy());
         builder.addSerializationExclusionStrategy(

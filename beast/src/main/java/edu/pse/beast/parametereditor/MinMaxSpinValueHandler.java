@@ -60,7 +60,7 @@ public final class MinMaxSpinValueHandler implements ChangeListener {
      * @return ArrayList of Integers representing these values
      */
     public ArrayList<Integer> getValues() {
-        ArrayList<Integer> result = new ArrayList<Integer>();
+        final ArrayList<Integer> result = new ArrayList<Integer>();
         for (int i = minBefore; i <= maxBefore; i++) {
             result.add(i);
         }
@@ -87,8 +87,8 @@ public final class MinMaxSpinValueHandler implements ChangeListener {
             minSpinner.setValue(minBefore);
             maxSpinner.setValue(maxBefore);
         }
-        Integer minAfter = Integer.parseInt(minSpinner.getValue().toString());
-        Integer maxAfter = Integer.parseInt(maxSpinner.getValue().toString());
+        final Integer minAfter = Integer.parseInt(minSpinner.getValue().toString());
+        final Integer maxAfter = Integer.parseInt(maxSpinner.getValue().toString());
         if (minBefore == null || !(minBefore.equals(minAfter)
                 && maxBefore.equals(maxAfter))) {
             minBefore = minAfter;
@@ -100,8 +100,8 @@ public final class MinMaxSpinValueHandler implements ChangeListener {
 
     @Override
     public synchronized void stateChanged(final ChangeEvent e) {
-        String minString = minSpinner.getValue().toString();
-        String maxString = maxSpinner.getValue().toString();
+        final String minString = minSpinner.getValue().toString();
+        final String maxString = maxSpinner.getValue().toString();
         if ((minString + maxString).chars().allMatch(Character::isDigit)
                 && reacts) {
             Integer min = Integer.parseInt(minString);

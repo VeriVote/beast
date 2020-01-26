@@ -42,12 +42,9 @@ public class StringResourceLoaderTest {
     @Test
     public void testGetStringFromID() {
         System.out.println("getStringFromID");
-        String id = TEST;
-        String id2 = TEST_TWO;
-        String result = instance.getStringFromID(id);
-        assertEquals(TEST_SENTENCE, result);
-        String result2 = instance.getStringFromID(id2);
-        assertEquals(TEST_SENTENCE_TWO, result2);
+        assertEquals(TEST_SENTENCE, instance.getStringFromID(TEST));
+        assertEquals(TEST_SENTENCE_TWO,
+                     instance.getStringFromID(TEST_TWO));
         instance.getStringFromID(null);
     }
 
@@ -57,13 +54,10 @@ public class StringResourceLoaderTest {
     @Test
     public void testGetIdForString() {
         System.out.println("getIdForString");
-        String s = "not in the testfile";
-        String result = instance.getIdForString(s);
-        assertEquals(null, result);
-        result = instance.getIdForString(TEST_SENTENCE);
-        assertEquals(TEST, result);
-        result = instance.getIdForString(TEST_SENTENCE_TWO);
-        assertEquals(TEST_TWO, result);
+        final String s = "not in the testfile";
+        assertEquals(null, instance.getIdForString(s));
+        assertEquals(TEST, instance.getIdForString(TEST_SENTENCE));
+        assertEquals(TEST_TWO, instance.getIdForString(TEST_SENTENCE_TWO));
         instance.getStringFromID(null);
     }
 
@@ -73,13 +67,10 @@ public class StringResourceLoaderTest {
     @Test
     public void testContainsId() {
         System.out.println("containsId");
-        String id = "teeeest";
-        boolean result = instance.containsId(id);
-        assertEquals(false, result);
-        result = instance.containsId(TEST);
-        assertEquals(true, result);
-        result = instance.containsId(TEST_TWO);
-        assertEquals(true, result);
+        final String id = "teeeest";
+        assertEquals(false, instance.containsId(id));
+        assertEquals(true, instance.containsId(TEST));
+        assertEquals(true, instance.containsId(TEST_TWO));
         instance.containsId(null);
     }
 

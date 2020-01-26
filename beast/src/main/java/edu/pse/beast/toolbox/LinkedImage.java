@@ -41,7 +41,7 @@ public interface LinkedImage {
                                final LinkedImage linkedImage) throws IOException {
                 if (linkedImage.isReal()) {
                     os.writeBoolean(true);
-                    String externalPath =
+                    final String externalPath =
                             linkedImage.getImagePath().replace(REPLACE_TARGET,
                                                                REPLACE_TO);
                     Codec.STRING_CODEC.encode(os, externalPath);

@@ -139,7 +139,7 @@ public class CodeArrayListBeautifier {
      */
     public boolean contains(final String name) {
         for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
-            String line = iterator.next();
+            final String line = iterator.next();
             if (line.contains(name)) {
                 return true;
             }

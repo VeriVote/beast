@@ -38,12 +38,12 @@ public final class BooleanExpEditorVariableErrorFinder {
     public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler,
                                                  final SymbolicVariableList list,
                                                  final NewCodeArea codeArea) {
-        FormalExpErrorFinderTreeListener listener =
+        final FormalExpErrorFinderTreeListener listener =
                 new FormalExpErrorFinderTreeListener(
                         list, codeArea,
                         codeArea.getElectionDescription());
-        ParseTree tree = antlrHandler.getParseTree();
-        ParseTreeWalker walker = new ParseTreeWalker();
+        final ParseTree tree = antlrHandler.getParseTree();
+        final ParseTreeWalker walker = new ParseTreeWalker();
         try {
             walker.walk(listener, tree);
         } catch (RecognitionException e) {

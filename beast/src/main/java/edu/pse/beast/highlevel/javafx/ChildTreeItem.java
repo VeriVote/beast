@@ -75,7 +75,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         for (Iterator<Result> iterator =
                 values.getResults().iterator();
                 iterator.hasNext();) {
-            Result result = (Result) iterator.next();
+            final Result result = (Result) iterator.next();
             addResult(result);
         }
         init();
@@ -165,9 +165,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
      *            the result
      */
     public void addResult(final Result result) {
-        ResultTreeItem resultItem = new ResultTreeItem(result, this);
+        final ResultTreeItem resultItem = new ResultTreeItem(result, this);
         results.add(resultItem);
-        TreeItem<CustomTreeItem> reference =
+        final TreeItem<CustomTreeItem> reference =
                 new TreeItem<CustomTreeItem>(resultItem);
         this.getTreeItemReference().getChildren().add(reference);
         // this.getChildren().add(resultItem);
@@ -256,10 +256,10 @@ public abstract class ChildTreeItem extends CustomTreeItem {
      * @return the values
      */
     public ChildTreeItemValues getValues() {
-        ArrayList<Result> tmpList = new ArrayList<Result>();
+        final ArrayList<Result> tmpList = new ArrayList<Result>();
         for (Iterator<ResultTreeItem> iterator = results.iterator();
                 iterator.hasNext();) {
-            ResultTreeItem result = (ResultTreeItem) iterator.next();
+            final ResultTreeItem result = (ResultTreeItem) iterator.next();
             tmpList.add(result.getResult());
         }
         return new ChildTreeItemValues(propName.getText(),
@@ -272,15 +272,15 @@ public abstract class ChildTreeItem extends CustomTreeItem {
      */
     public void addChildrenToStage() {
         resultTreeItems.clear();
-        TreeItem<CustomTreeItem> item2 = this.getTreeItemReference();
+        final TreeItem<CustomTreeItem> item2 = this.getTreeItemReference();
         item2.isExpanded();
-        ObservableList<TreeItem<CustomTreeItem>> children2 =
+        final ObservableList<TreeItem<CustomTreeItem>> children2 =
                 item2.getChildren();
         children2.size();
         this.getTreeItemReference().getChildren().clear();
         for (Iterator<ResultTreeItem> iterator = results.iterator();
                 iterator.hasNext();) {
-            ResultTreeItem item = (ResultTreeItem) iterator.next();
+            final ResultTreeItem item = (ResultTreeItem) iterator.next();
             item.setPresentable();
             resultTreeItems.add(new TreeItem<CustomTreeItem>(item));
         }

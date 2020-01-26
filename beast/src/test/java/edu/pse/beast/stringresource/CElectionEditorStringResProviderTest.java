@@ -26,7 +26,7 @@ public class CElectionEditorStringResProviderTest {
     @Test
     public void testGetMenuStringRes() {
         System.out.println("getMenuStringRes");
-        StringResourceLoader result = instance.getMenuStringRes();
+        final StringResourceLoader result = instance.getMenuStringRes();
         assertEquals("Datei", result.getStringFromID("file"));
     }
 
@@ -37,7 +37,7 @@ public class CElectionEditorStringResProviderTest {
     @Test
     public void testGetToolbarTipStringRes() {
         System.out.println("getToolbarTipStringRes");
-        StringResourceLoader result = instance.getToolbarTipStringRes();
+        final StringResourceLoader result = instance.getToolbarTipStringRes();
         assertEquals("Speichern", result.getStringFromID("save"));
     }
 
@@ -47,7 +47,7 @@ public class CElectionEditorStringResProviderTest {
     @Test
     public void testGetCErrorStringRes() {
         System.out.println("getCErrorStringRes");
-        StringResourceLoader result = instance.getCErrorStringRes();
+        final StringResourceLoader result = instance.getCErrorStringRes();
         assertEquals("Zeile", result.getStringFromID("line"));
 
     }
@@ -69,7 +69,7 @@ public class CElectionEditorStringResProviderTest {
     @Test
     public void testGetElectionStringRes() {
         System.out.println("getElectionStringRes");
-        StringResourceLoader result = instance.getElectionStringRes();
+        final StringResourceLoader result = instance.getElectionStringRes();
         assertEquals("Erstellen", result.getStringFromID("create"));
     }
 

@@ -73,7 +73,7 @@ public final class CBMCResultValueSingle implements CBMCResultValue {
 
     @Override
     public void setValue(final Element element) {
-        NamedNodeMap attributes = element.getAttributes();
+        final NamedNodeMap attributes = element.getAttributes();
         this.type = attributes.getNamedItem(TYPE_NAME).getNodeValue();
         this.value = // the value is saved in the first child
                 element.getFirstChild().getNodeValue();

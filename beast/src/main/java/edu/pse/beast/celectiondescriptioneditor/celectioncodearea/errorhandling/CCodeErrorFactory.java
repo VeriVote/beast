@@ -42,7 +42,7 @@ public final class CCodeErrorFactory {
                                                   final int posInLine,
                                                   final String varName,
                                                   final String message) {
-        CodeError toReturn = new CodeError(line, posInLine, IDS[0], 0, -1, -1);
+        final CodeError toReturn = new CodeError(line, posInLine, IDS[0], 0, -1, -1);
         toReturn.setExtraInfo("var", varName);
         toReturn.setExtraInfo("msg", message);
         return toReturn;

@@ -35,10 +35,9 @@ public class StringResourceLoader {
             final String line = iterator.next();
 
             if (line.length() != 0) {
-                String[] split = line.split(":", 2);
-                String id = split[0].trim();
-                String displayedText = split[1].trim();
-
+                final String[] split = line.split(":", 2);
+                final String id = split[0].trim();
+                final String displayedText = split[1].trim();
                 idsToString.put(id.toLowerCase(), displayedText);
             }
         }

@@ -35,8 +35,8 @@ public class TimeOutSaverLoaderTest {
      */
     @Test
     public void testSaverLoader() {
-        String saveString = TimeOutSaverLoader.createSaveString(timeOut);
-        TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
+        final String saveString = TimeOutSaverLoader.createSaveString(timeOut);
+        final TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
         assertEquals(recreatedTimeOut.getDuration(), A_LONG_WHILE);
         assertEquals(recreatedTimeOut.getOrigUnit(), TimeUnit.HOURS);
     }

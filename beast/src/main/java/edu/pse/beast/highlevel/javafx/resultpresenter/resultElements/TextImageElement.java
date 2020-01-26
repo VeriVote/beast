@@ -107,7 +107,7 @@ public class TextImageElement extends ResultImageElement {
     @Deprecated
     private static double getMaxX(final double startX,
                                   final List<RichTextInformation> textInfo) {
-        double maxTextWidth = 0;
+        final double maxTextWidth = 0;
         // for (Iterator<RichTextInformation> iterator = textInfo.iterator();
         //         iterator.hasNext();) {
         //     RichTextInformation info = (RichTextInformation) iterator.next();
@@ -130,7 +130,7 @@ public class TextImageElement extends ResultImageElement {
     @Deprecated
     private static double getMaxY(final double startY,
                                   final List<RichTextInformation> textInfo) {
-        double maxTextHeight = 0;
+        final double maxTextHeight = 0;
 
         // for (Iterator<RichTextInformation> iterator = textInfo.iterator();
         //         iterator.hasNext();) {

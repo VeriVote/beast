@@ -599,7 +599,7 @@ public final class CCodeHelper {
      */
     public static String functionCode(final String function,
                                        final String... params) {
-        List<String> paramList = new ArrayList<String>();
+        final List<String> paramList = new ArrayList<String>();
         for (final String param : params) {
             if (notNullOrEmpty(param)) {
                 paramList.add(param);
@@ -838,7 +838,7 @@ public final class CCodeHelper {
      */
     public static String arrAccess(final String arr,
                                    final String... dims) {
-        List<String> dimList = new ArrayList<String>();
+        final List<String> dimList = new ArrayList<String>();
         for (final String dim : dims) {
             if (notNullOrEmpty(dim)) {
                 dimList.add(dim);
@@ -886,7 +886,7 @@ public final class CCodeHelper {
     public static String dotStructAccess(final String owner,
                                          final String structName,
                                          final String... dims) {
-        List<String> dimList = new ArrayList<String>();
+        final List<String> dimList = new ArrayList<String>();
         for (final String dim : dims) {
             if (notNullOrEmpty(dim)) {
                 dimList.add(dim);
@@ -920,7 +920,7 @@ public final class CCodeHelper {
      */
     public static String dotArrStructAccess(final String owner,
                                              final String... dims) {
-        List<String> dimList = new ArrayList<String>();
+        final List<String> dimList = new ArrayList<String>();
         for (final String dim : dims) {
             if (notNullOrEmpty(dim)) {
                 dimList.add(dim);
@@ -1024,10 +1024,8 @@ public final class CCodeHelper {
         String decl = RESULT + BLANK
                 + UnifiedNameContainer.getVotingMethod()
                 + UINT_LOOP_START + AMOUNT_VOTES + COMMA + BLANK + VOTES + PAREN_R_BRACE_L;
-
-        String[] sizeOfDimensions =
+        final String[] sizeOfDimensions =
                 container.getInputType().getSizeOfDimensions();
-
         if (sizeOfDimensions.length > 0) {
             sizeOfDimensions[0] = AMOUNT_VOTES;
         }
@@ -1089,7 +1087,7 @@ public final class CCodeHelper {
                                         final String name,
                                         final ElectionTemplateHandler templateHandler,
                                         final StringResourceLoader stringResourceLoader) {
-        ArrayList<String> code = new ArrayList<String>();
+        final ArrayList<String> code = new ArrayList<String>();
         final String inputIdInFile = container.getInputType().getInputIDinFile();
         final String outputIdInFile = container.getOutputType().getOutputIDinFile();
 

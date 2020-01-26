@@ -26,7 +26,7 @@ public class BooleanExpEditorStringResProviderTest {
     @Test
     public void testGetMenuStringRes() {
         System.out.println("getMenuStringRes");
-        StringResourceLoader result = instance.getMenuStringRes();
+        final StringResourceLoader result = instance.getMenuStringRes();
         assertEquals("Datei", result.getStringFromID("fileMenu"));
     }
 
@@ -37,7 +37,7 @@ public class BooleanExpEditorStringResProviderTest {
     @Test
     public void testGetBooleanExpEditorSymbVarListRes() {
         System.out.println("getBooleanExpEditorSymbVarListRes");
-        StringResourceLoader result = instance.getBooleanExpEditorSymbVarListRes();
+        final StringResourceLoader result = instance.getBooleanExpEditorSymbVarListRes();
         assertEquals("Wähler", result.getStringFromID("VOTER"));
 
     }
@@ -49,7 +49,7 @@ public class BooleanExpEditorStringResProviderTest {
     @Test
     public void testGetToolbarTipStringRes() {
         System.out.println("getToolbarTipStringRes");
-        StringResourceLoader result = instance.getToolbarTipStringRes();
+        final StringResourceLoader result = instance.getToolbarTipStringRes();
         assertEquals("Neue Eigenschaft", result.getStringFromID("new"));
     }
 
@@ -60,7 +60,7 @@ public class BooleanExpEditorStringResProviderTest {
     @Test
     public void testGetBooleanExpErrorStringRes() {
         System.out.println("getBooleanExpErrorStringRes");
-        StringResourceLoader result = instance.getBooleanExpErrorStringRes();
+        final StringResourceLoader result = instance.getBooleanExpErrorStringRes();
         assertEquals("Fehler", result.getStringFromID("error"));
     }
 
@@ -71,7 +71,7 @@ public class BooleanExpEditorStringResProviderTest {
     @Test
     public void testGetBooleanExpEditorWindowStringRes() {
         System.out.println("getBooleanExpEditorWindowStringRes");
-        StringResourceLoader result = instance.getBooleanExpEditorWindowStringRes();
+        final StringResourceLoader result = instance.getBooleanExpEditorWindowStringRes();
         assertEquals("Eigenschafteneditor", result.getStringFromID("windowTitle"));
     }
 

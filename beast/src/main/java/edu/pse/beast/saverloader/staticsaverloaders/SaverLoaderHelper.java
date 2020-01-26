@@ -70,7 +70,7 @@ public class SaverLoaderHelper {
      * @return the map
      */
     public Map<String, String> parseSaveString(final String saveFile) {
-        Map<String, String> attrNameToContent = new HashMap<String, String>();
+        final Map<String, String> attrNameToContent = new HashMap<String, String>();
         currentSaveString = saveFile;
         try {
             while (currentSaveString.length() > 0) {

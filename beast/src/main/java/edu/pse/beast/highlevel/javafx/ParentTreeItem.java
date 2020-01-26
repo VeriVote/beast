@@ -126,7 +126,7 @@ public class ParentTreeItem extends CustomTreeItem {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
-                MouseButton button = event.getButton();
+                final MouseButton button = event.getButton();
                 if (button == MouseButton.PRIMARY) {
                     wasClicked(true);
                 }
@@ -162,7 +162,7 @@ public class ParentTreeItem extends CustomTreeItem {
     public void addChildrenToStage() {
         for (Iterator<ChildTreeItem> iterator = subItems.iterator();
                 iterator.hasNext();) {
-            CustomTreeItem item = iterator.next();
+            final CustomTreeItem item = iterator.next();
             // TreeItem<CustomTreeItem> reference = new
             // TreeItem<CustomTreeItem>(item);
             childTreeItems.add(item.getTreeItemReference());
@@ -193,7 +193,7 @@ public class ParentTreeItem extends CustomTreeItem {
         if (initialized) {
             for (Iterator<ChildTreeItem> iterator = subItems
                     .iterator(); iterator.hasNext();) {
-                ChildTreeItem childTreeItem = iterator.next();
+                final ChildTreeItem childTreeItem = iterator.next();
                 if (!disabled) {
                     childTreeItem.setSelected(state);
                 }
@@ -243,7 +243,7 @@ public class ParentTreeItem extends CustomTreeItem {
         for (Iterator<ChildTreeItem> iterator =
                 subItems.iterator();
                 iterator.hasNext();) {
-            ChildTreeItem item = iterator.next();
+            final ChildTreeItem item = iterator.next();
             acc = acc && item.isSelected();
         }
         if (acc) {
@@ -327,9 +327,9 @@ public class ParentTreeItem extends CustomTreeItem {
      * so we have have to check all to update the GUI.
      */
     public void update() {
-        for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator
-                .hasNext();) {
-            ChildTreeItem child = iterator.next();
+        for (Iterator<ChildTreeItem> iterator = subItems.iterator();
+                    iterator.hasNext();) {
+            final ChildTreeItem child = iterator.next();
             child.update();
         }
     }
@@ -343,7 +343,7 @@ public class ParentTreeItem extends CustomTreeItem {
         boolean selected = false;
         for (Iterator<ChildTreeItem> iterator = subItems.iterator();
                 iterator.hasNext();) {
-            ChildTreeItem childItem = iterator.next();
+            final ChildTreeItem childItem = iterator.next();
             selected = selected || childItem.isSelected();
         }
         return selected;
@@ -359,9 +359,9 @@ public class ParentTreeItem extends CustomTreeItem {
         String errorText = "";
         for (Iterator<CodeError> iterator = combinedErrors.iterator();
                 iterator.hasNext();) {
-            CodeError codeError = iterator.next();
-            String error = codeError.getLine() + " : " + codeError.getMsg()
-                            + "\n";
+            final CodeError codeError = iterator.next();
+            final String error =
+                    codeError.getLine() + " : " + codeError.getMsg() + "\n";
             errorText += error;
         }
         GUIController.setErrorText(errorText);

@@ -14,16 +14,15 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  */
 public final class CompilerTestClass {
     private CompilerTestClass() {
-        ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<String>();
 
         // String location = "/Beast/core/c_tempfiles/qbg5bq3g53ndi52q7oc.c";
         // InputStream in = getClass().getClassLoader().getResourceAsStream(location);
         // List<String> toTest = null;
-
-        List<CodeError> toTest = DeepErrorChecker.checkCodeForErrors(list, 0);
+        final List<CodeError> toTest = DeepErrorChecker.checkCodeForErrors(list, 0);
 
         for (Iterator<CodeError> iterator = toTest.iterator(); iterator.hasNext();) {
-            CodeError codeError = (CodeError) iterator.next();
+            final CodeError codeError = (CodeError) iterator.next();
             System.out.println(
                     "line: " + codeError.getLine()
                     + " | posinline " + codeError.getPosInLine()

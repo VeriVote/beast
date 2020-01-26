@@ -33,9 +33,9 @@ public final class VariableListListenerAdapter
                                             final Type typeOfT,
                                             final JsonDeserializationContext context)
             throws JsonParseException {
-        JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get(TYPE).getAsString();
-        JsonElement element = jsonObject.get(PROPERTIES);
+        final JsonObject jsonObject = json.getAsJsonObject();
+        final String type = jsonObject.get(TYPE).getAsString();
+        final JsonElement element = jsonObject.get(PROPERTIES);
         try {
             if (FormalExpErrorFinderTreeListener.class.getSimpleName().equals(type)) {
                 return context.deserialize(element, Class.forName(
@@ -54,7 +54,7 @@ public final class VariableListListenerAdapter
     public JsonElement serialize(final VariableListListener src,
                                  final Type typeOfSrc,
                                  final JsonSerializationContext context) {
-        JsonObject result = new JsonObject();
+        final JsonObject result = new JsonObject();
         result.add(TYPE, new JsonPrimitive(src.getClass().getSimpleName()));
         result.add(PROPERTIES, context.serialize(src, src.getClass()));
         return result;

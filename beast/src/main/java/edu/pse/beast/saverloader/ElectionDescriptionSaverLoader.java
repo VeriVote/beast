@@ -23,7 +23,7 @@ public final class ElectionDescriptionSaverLoader
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(InOutType.class, new InOutTypeAdapter());
         builder.registerTypeAdapter(InputType.class, new InputTypeAdapter());
         builder.registerTypeAdapter(OutputType.class, new OutputTypeAdapter());

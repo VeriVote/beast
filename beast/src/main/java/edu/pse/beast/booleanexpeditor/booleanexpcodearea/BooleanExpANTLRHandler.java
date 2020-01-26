@@ -33,7 +33,7 @@ public class BooleanExpANTLRHandler {
     public BooleanExpANTLRHandler(final String inputString) {
         this.input = inputString;
         lexer = new FormalPropertyDescriptionLexer(CharStreams.fromString(inputString));
-        CommonTokenStream ts = new CommonTokenStream(lexer);
+        final CommonTokenStream ts = new CommonTokenStream(lexer);
         parser = new FormalPropertyDescriptionParser(ts);
     }
 
@@ -46,7 +46,7 @@ public class BooleanExpANTLRHandler {
      */
     public FormalPropertyDescriptionParser.BooleanExpListContext getParseTree() {
         lexer.setInputStream(CharStreams.fromString(input));
-        CommonTokenStream ts = new CommonTokenStream(lexer);
+        final CommonTokenStream ts = new CommonTokenStream(lexer);
         parser.setTokenStream(ts);
         return parser.booleanExpList();
     }

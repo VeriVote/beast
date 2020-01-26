@@ -139,7 +139,7 @@ public final class ParStyle {
     @Override
     public boolean equals(final Object other) {
         if (other instanceof ParStyle) {
-            ParStyle that = (ParStyle) other;
+            final ParStyle that = (ParStyle) other;
             return Objects.equals(this.alignment, that.alignment) && Objects
                     .equals(this.backgroundColor, that.backgroundColor);
         } else {
@@ -158,10 +158,9 @@ public final class ParStyle {
      * @return the string
      */
     public String toCss() {
-        StringBuilder sb = new StringBuilder();
-
+        final StringBuilder sb = new StringBuilder();
         alignment.ifPresent(al -> {
-            String cssAlignment;
+            final String cssAlignment;
             switch (al) {
             case LEFT:
                 cssAlignment = "left";
@@ -185,7 +184,6 @@ public final class ParStyle {
             sb.append("-fx-background-color: "
                     + TextStyle.cssColor(color) + SEMICOLON);
         });
-
         return sb.toString();
     }
 

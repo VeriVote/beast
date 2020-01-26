@@ -140,11 +140,11 @@ public class RichTextFXCodeArea extends CodeArea {
      * The constructor.
      */
     public RichTextFXCodeArea() {
-        String stylesheet =
+        final String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         // IntFunction<String> format = (digits -> " %" + digits + "d ");
-        IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
+        final IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
         this.richChanges()
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
@@ -164,12 +164,12 @@ public class RichTextFXCodeArea extends CodeArea {
      * @return the style spans
      */
     private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
-        Matcher matcher = PATTERN.matcher(text);
+        final Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder =
+        final StyleSpansBuilder<Collection<String>> spansBuilder =
                 new StyleSpansBuilder<Collection<String>>();
         while (matcher.find()) {
-            String styleClass =
+            final String styleClass =
                     matcher.group(KEYWORD_STRING) != null
                     ? KEYWORD_STRING.toLowerCase() : matcher.group(PAREN_STRING) != null
                     ? PAREN_STRING.toLowerCase() : matcher.group(BRACE_STRING) != null

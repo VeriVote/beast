@@ -36,10 +36,10 @@ public final class TimeOutSaverLoader {
      * @return the saveString
      */
     public static String createSaveString(final TimeOut timeOut) {
-        String amount = DURATION_START + LINE_BREAK + timeOut.getDuration()
-                    + LINE_BREAK + DURATION_END + LINE_BREAK;
-        String timeunit = TIME_UNIT_START + LINE_BREAK + timeOut.getOrigUnit().name()
-                    + LINE_BREAK + TIME_UNIT_END + LINE_BREAK;
+        final String amount = DURATION_START + LINE_BREAK + timeOut.getDuration()
+                            + LINE_BREAK + DURATION_END + LINE_BREAK;
+        final String timeunit = TIME_UNIT_START + LINE_BREAK + timeOut.getOrigUnit().name()
+                                + LINE_BREAK + TIME_UNIT_END + LINE_BREAK;
         return amount + timeunit;
     }
 
@@ -56,7 +56,7 @@ public final class TimeOutSaverLoader {
         Long duration = Long.parseLong(split[0].replace(DURATION_START + LINE_BREAK, ""));
         split = split[1].split(LINE_BREAK + TIME_UNIT_END + LINE_BREAK);
         TimeUnit timeUnit = TimeUnit.MINUTES;
-        String timeunit = split[0].replace(TIME_UNIT_START + LINE_BREAK, "");
+        final String timeunit = split[0].replace(TIME_UNIT_START + LINE_BREAK, "");
         switch (timeunit) {
         case "MILLISECONDS":
             timeUnit = TimeUnit.MILLISECONDS;

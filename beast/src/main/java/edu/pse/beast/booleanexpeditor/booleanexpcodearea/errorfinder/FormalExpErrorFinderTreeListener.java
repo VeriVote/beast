@@ -164,7 +164,7 @@ public final class FormalExpErrorFinderTreeListener
 
     @Override
     public void enterQuantifierExp(final QuantifierExpContext ctx) {
-        String quantifierTypeString = ctx.Quantifier().getText();
+        final String quantifierTypeString = ctx.Quantifier().getText();
         InternalTypeContainer varType = null;
         final InternalTypeRep[] internalTypeReps =
                 new InternalTypeRep[] {
@@ -257,8 +257,8 @@ public final class FormalExpErrorFinderTreeListener
     @Override
     public void exitNumberExpression(final NumberExpressionContext ctx) {
         if (ctx.Mult() != null || ctx.Add() != null) {
-            IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
-            IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
+            final IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
+            final IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
             final BinaryIntegerValuedNode expNode =
                     new BinaryIntegerValuedNode(lsh, rhs,
                                                 ctx.Mult() != null
@@ -312,7 +312,7 @@ public final class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitInteger(final IntegerContext ctx) {
-        int heldInteger = Integer.valueOf(ctx.getText());
+        final int heldInteger = Integer.valueOf(ctx.getText());
         expStack.push(new IntegerNode(heldInteger));
     }
 
@@ -330,7 +330,7 @@ public final class FormalExpErrorFinderTreeListener
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
-        String numberString = ctx.Elect().getText().substring("ELECT".length());
+        final String numberString = ctx.Elect().getText().substring("ELECT".length());
         if (Integer.valueOf(numberString).intValue() == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
         }
@@ -351,7 +351,7 @@ public final class FormalExpErrorFinderTreeListener
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
-        String numberString = ctx.Vote().getText().substring("VOTES".length());
+        final String numberString = ctx.Vote().getText().substring("VOTES".length());
         if (Integer.valueOf(numberString).intValue() == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
         }
@@ -376,7 +376,7 @@ public final class FormalExpErrorFinderTreeListener
      */
     private void testIfTooManyVarsPassed(final List<PassTypeContext> ctx,
                                          final InternalTypeContainer cont) {
-        int amountPassedVariables = ctx.size();
+        final int amountPassedVariables = ctx.size();
         int listDepth = 0;
         InternalTypeContainer c = cont;
         while (c.isList()) {
@@ -398,15 +398,15 @@ public final class FormalExpErrorFinderTreeListener
      */
     private void testIfWrongTypePassed(final List<PassTypeContext> ctx,
                                        final InternalTypeContainer cont) {
-        int amtPassed = ctx.size();
-        Stack<TypeExpression> passedTypes = new Stack<TypeExpression>();
+        final int amtPassed = ctx.size();
+        final Stack<TypeExpression> passedTypes = new Stack<TypeExpression>();
         for (int i = 0; i < amtPassed; ++i) {
             passedTypes.add(expStack.pop());
         }
         int i = 0;
         InternalTypeContainer c = cont;
         while (c.isList() && i < ctx.size()) {
-            TypeExpression currentVarExp = passedTypes.pop();
+            final TypeExpression currentVarExp = passedTypes.pop();
             if (c.getAccessTypeIfList()
                     != currentVarExp.getInternalTypeContainer().getInternalType()) {
                 final CodeError codeError =
@@ -445,7 +445,7 @@ public final class FormalExpErrorFinderTreeListener
         final Class<VoteSumUniqueExpContext> cu = VoteSumUniqueExpContext.class;
         final Class<VoteSumExpContext> c = VoteSumExpContext.class;
 
-        TypeExpression passedVar = expStack.pop();
+        final TypeExpression passedVar = expStack.pop();
         if (passedVar.getInternalTypeContainer().getInternalType()
                 != InternalTypeRep.CANDIDATE) {
             final CodeError ce = unique
@@ -459,7 +459,7 @@ public final class FormalExpErrorFinderTreeListener
                 unique ? cu.cast(ctx).VotesumUnique() : c.cast(ctx).Votesum();
         final String expStr =
                 unique ? "VOTE_SUM_FOR_UNIQUE_CANDIDATE" : "VOTE_SUM_FOR_CANDIDATE";
-        String numberString = tn.getText().substring(expStr.length());
+        final String numberString = tn.getText().substring(expStr.length());
 
         final int number = Integer.valueOf(numberString);
         if (number == 0) {
@@ -512,7 +512,7 @@ public final class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitSymbolicVarExp(final SymbolicVarExpContext ctx) {
-        String name = ctx.getText();
+        final String name = ctx.getText();
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
         if (type == null) {
             created.add(BooleanExpErrorFactory.createVarNotDeclaredErr(ctx));

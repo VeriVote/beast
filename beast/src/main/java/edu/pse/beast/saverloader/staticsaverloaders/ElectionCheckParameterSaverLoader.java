@@ -199,7 +199,7 @@ public final class ElectionCheckParameterSaverLoader {
      */
     private static ArrayList<Integer> toIntList(final int start,
                                                 final int end) {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        final ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = start; i <= end; i++) {
             list.add(i);
         }

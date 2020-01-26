@@ -35,8 +35,8 @@ public final class BEASTCommunicator {
     /** The Constant SECONDS_UNIT. */
     private static final String SECONDS_UNIT = "s";
 
-    /** The Constant SIXTYSEVEN. */
-    private static final int SIXTYSEVEN = 67;
+    /** The Constant SIXTY_SEVEN. */
+    private static final int SIXTY_SEVEN = 67;
 
     /** The Constant SECONDS_IN_MINUTE. */
     private static final int SECONDS_IN_MINUTE = 60;
@@ -159,11 +159,11 @@ public final class BEASTCommunicator {
      */
     public static synchronized boolean startCheckNEW() {
         stopped = false;
-        ElectionDescription electionDesc =
+        final ElectionDescription electionDesc =
                 GUIController.getController().getElectionDescription();
-        List<ParentTreeItem> properties =
+        final List<ParentTreeItem> properties =
                 GUIController.getController().getProperties();
-        ElectionCheckParameter parameter =
+        final ElectionCheckParameter parameter =
                 GUIController.getController().getParameter();
 
         final boolean result;
@@ -176,22 +176,24 @@ public final class BEASTCommunicator {
         } else if (!checkForErrors(electionDesc, properties)) {
             GUIController.setConsoleText("Starting verification ..");
             // TODO load the property checker
-            PropertyChecker checker = new PropertyChecker("CBMC");
+            final PropertyChecker checker = new PropertyChecker("CBMC");
             currentCheckers.add(checker);
             // Analysis gets started by
             // CheckerCommunicator.checkPropertiesForDescription()
-            List<Result> results =
-                    checker.checkPropertiesForDescription(electionDesc, properties, parameter);
+            final List<Result> results =
+                    checker.checkPropertiesForDescription(electionDesc,
+                                                          properties,
+                                                          parameter);
             if (results != null) {
                 // Thread that checks for new presentable results every n
                 // milliseconds
-                Thread waitForResultsThread = new Thread(new Runnable() {
+                final Thread waitForResultsThread = new Thread(new Runnable() {
                     // DecimalFormat df = new DecimalFormat("#.0");
                     @Override
                     public void run() {
                         // Local variables for elapsed time displaying
                         String timeString = "";
-                        long startTime = System.nanoTime();
+                        final long startTime = System.nanoTime();
                         long elapsedTime;
                         double passedTimeSeconds = 0;
                         long frameTime = System.currentTimeMillis();
@@ -204,7 +206,7 @@ public final class BEASTCommunicator {
                             // + df.format(passedTimeSeconds));
                             try {
                                 Thread.sleep(Math.max(0,
-                                        SIXTYSEVEN - (System.currentTimeMillis()
+                                        SIXTY_SEVEN - (System.currentTimeMillis()
                                                 - frameTime)));
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(
@@ -214,10 +216,9 @@ public final class BEASTCommunicator {
                             frameTime = System.currentTimeMillis();
                             // Check if all results are finished already
                             allDone = true;
-                            for (Iterator<Result> iterator =
-                                    results.iterator();
+                            for (Iterator<Result> iterator = results.iterator();
                                     iterator.hasNext();) {
-                                Result result = iterator.next();
+                                final Result result = iterator.next();
                                 allDone = allDone && result.isFinished();
                             }
                         }
@@ -247,7 +248,7 @@ public final class BEASTCommunicator {
         for (Iterator<PropertyChecker> iterator =
                 currentCheckers.iterator();
                 iterator.hasNext();) {
-            PropertyChecker checker = iterator.next();
+            final PropertyChecker checker = iterator.next();
             checker.abortChecking();
             System.out.println("Aborting.");
         }
@@ -327,7 +328,7 @@ public final class BEASTCommunicator {
             timeString = createTimeStringLongerThanMinute(passedTimeSeconds,
                                                           decimalFormat);
         } else {
-            String seconds = decimalFormat.format(passedTimeSeconds);
+            final String seconds = decimalFormat.format(passedTimeSeconds);
             timeString = seconds + SECONDS_UNIT;
         }
         return timeString;

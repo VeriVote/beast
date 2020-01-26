@@ -64,7 +64,7 @@ public final class TextFieldCreator {
     public static GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>
                     getGenericStyledAreaInstance(final TextStyle textStyle,
                                                  final ParStyle paragraphStyle) {
-        GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
+        final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
                 new GenericStyledArea<ParStyle,
                                       Either<String, LinkedImage>,
                                       TextStyle>(

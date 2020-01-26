@@ -31,18 +31,18 @@ public final class WindowsOStoolbox {
      *             in case the VScmd could not be found this gets thrown
      */
     public static String getVScmdPath() throws IOException {
-        File file = new File(
-                SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_VS_CMD);
+        final File file =
+                new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_VS_CMD);
         if (Files.isExecutable(file.toPath())) {
             return file.getPath();
         } else { // we were unable to locate the command prompt in the resources
             // and search now for it in the common install directories
-            Path x86 = new File("C:/Program Files (x86)").toPath();
-            Path x64 = new File("C:/Program Files").toPath();
-            String searchTerm = "Microsoft Visual Studio";
-            String pathToBatch = "/Common7/Tools/VsDevCmd.bat";
+            final Path x86 = new File("C:/Program Files (x86)").toPath();
+            final Path x64 = new File("C:/Program Files").toPath();
+            final String searchTerm = "Microsoft Visual Studio";
+            final String pathToBatch = "/Common7/Tools/VsDevCmd.bat";
 
-            ArrayList<String> toSearch = new ArrayList<String>();
+            final ArrayList<String> toSearch = new ArrayList<String>();
             Files.list(x86).filter(Files::isReadable)
                     .filter(path -> path.toString().contains(searchTerm))
                     .forEach(VSPath -> toSearch.add(VSPath.toString()));
@@ -52,7 +52,7 @@ public final class WindowsOStoolbox {
 
             for (final Iterator<String> iterator = toSearch.iterator();
                     iterator.hasNext();) {
-                String toCheck = (iterator.next()) + pathToBatch;
+                final String toCheck = (iterator.next()) + pathToBatch;
                 if (Files.isReadable(new File(toCheck).toPath())) {
                     return toCheck;
                 }

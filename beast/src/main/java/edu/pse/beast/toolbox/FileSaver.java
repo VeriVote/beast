@@ -46,7 +46,7 @@ public final class FileSaver {
         }
         for (Iterator<String> iterator = text.iterator();
                 iterator.hasNext();) {
-            String line = iterator.next();
+            final String line = iterator.next();
             writer.println(line);
         }
         writer.close();

@@ -177,7 +177,7 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
      * The constructor.
      */
     public NewPropertyCodeArea() {
-        NewPropertyCodeArea reference = this;
+        final NewPropertyCodeArea reference = this;
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(final ObservableValue<? extends Boolean>
@@ -192,11 +192,11 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
         // add all standard recommendations
         recommendations.addAll(Arrays.asList(MACROS));
         recommendations.addAll(Arrays.asList(QUANTIFIERS));
-        String stylesheet =
+        final String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();
 
         this.getStylesheets().add(stylesheet);
-        IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
+        final IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
         this.richChanges()
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
@@ -214,12 +214,12 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
      * @return the style spans
      */
     private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
-        Matcher matcher = PATTERN.matcher(text);
+        final Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder =
+        final StyleSpansBuilder<Collection<String>> spansBuilder =
                 new StyleSpansBuilder<Collection<String>>();
         while (matcher.find()) {
-            String styleClass =
+            final String styleClass =
                     matcher.group(OPERATORS_STRING) != null
                     ? OPERATORS_STRING.toLowerCase() : matcher.group(COMPARISON_STRING) != null
                     ? COMPARISON_STRING.toLowerCase() : matcher.group(RELATION_STRING) != null
@@ -267,7 +267,7 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
 
     @Override
     public void autoComplete() {
-        Tuple3<List<String>, Integer, Integer> completion =
+        final Tuple3<List<String>, Integer, Integer> completion =
                 getCompletions(recommendations);
         processAutoCompletion(completion.first(), completion.second(),
                               completion.third());
@@ -321,7 +321,7 @@ public final class NewPropertyCodeArea extends AutoCompletionCodeArea
 
     @Override
     public void delete() {
-        IndexRange selectionRange = this.getSelection();
+        final IndexRange selectionRange = this.getSelection();
         this.replaceText(selectionRange, "");
     }
 

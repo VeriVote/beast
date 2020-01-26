@@ -51,7 +51,7 @@ public final class ConstantExp extends IntegerValuedExpression {
         if (!super.equals(o)) {
             return false;
         }
-        ConstantExp that = (ConstantExp) o;
+        final ConstantExp that = (ConstantExp) o;
         return constant != null
                 ? constant.equals(that.constant) : that.constant == null;
     }

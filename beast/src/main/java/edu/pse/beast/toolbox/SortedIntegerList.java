@@ -231,7 +231,7 @@ public final class SortedIntegerList {
      * @return this List in array form
      */
     public int[] getArr() {
-        int[] ret = new int[container.size()];
+        final int[] ret = new int[container.size()];
         for (int j = 0; j < ret.length; j++) {
             ret[j] = container.get(j);
         }
@@ -253,7 +253,7 @@ public final class SortedIntegerList {
      * @return the copied list
      */
     public List<Integer> getCopiedList() {
-        List<Integer> toReturn = new ArrayList<Integer>();
+        final List<Integer> toReturn = new ArrayList<Integer>();
         Collections.copy(toReturn, container);
 
         return toReturn;

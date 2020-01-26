@@ -58,7 +58,7 @@ public class LockedLinesHandlerTest {
      */
     public LockedLinesHandlerTest() {
         this.pane = new JTextPane();
-        ActionList actionlist = new ActionList();
+        final ActionList actionlist = new ActionList();
         beforeRemove = new SaveTextBeforeRemove(pane, actionlist);
 
         this.lockedLinesHandler = new LockedLinesHandler(pane, beforeRemove);

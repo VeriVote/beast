@@ -35,14 +35,14 @@ public class MinMaxSpinValueHandlerTest {
     @Test
     public void testGetValues() {
         System.out.println("getValues");
-        MinMaxSpinValueHandler instance
+        final MinMaxSpinValueHandler instance
               = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
         instance.setMinAndMax(TEST_MIN, TEST_MAX);
-        ArrayList<Integer> expResult = new ArrayList<Integer>();
+        final ArrayList<Integer> expResult = new ArrayList<Integer>();
         for (int i = TEST_MIN; i <= TEST_MAX; i++) {
             expResult.add(i);
         }
-        ArrayList<Integer> result = instance.getValues();
+        final ArrayList<Integer> result = instance.getValues();
         assertTrue(expResult.equals(result));
     }
 
@@ -52,16 +52,16 @@ public class MinMaxSpinValueHandlerTest {
     @Test
     public void testSetMinAndMax() {
         System.out.println("setMinAndMax");
-        MinMaxSpinValueHandler instance
+        final MinMaxSpinValueHandler instance
               = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
         instance.setMinAndMax(MIN, MAX);
         instance.setMinAndMax(BAD_MIN, MAX);
         instance.setMinAndMax(MIN, BAD_MAX);
-        ArrayList<Integer> expResult = new ArrayList<Integer>();
+        final ArrayList<Integer> expResult = new ArrayList<Integer>();
         for (int i = MAX; i <= MIN; i++) {
             expResult.add(i);
         }
-        ArrayList<Integer> result = instance.getValues();
+        final ArrayList<Integer> result = instance.getValues();
         assertTrue(expResult.equals(result));
     }
 }

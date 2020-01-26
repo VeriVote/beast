@@ -86,18 +86,18 @@ public final class MainApplicationClass extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        Locale locale = Locale.ENGLISH;
+        final Locale locale = Locale.ENGLISH;
         mainStage = stage;
 
         try {
-            GUIController controller = new GUIController(mainStage);
-            FXMLLoader loader = new FXMLLoader(
+            final GUIController controller = new GUIController(mainStage);
+            final FXMLLoader loader = new FXMLLoader(
                     new URL(FILE_STRING + SuperFolderFinder.getSuperFolder()
                             + RESOURCE),
                     ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
             loader.setController(controller);
-            Parent root = loader.load();
-            Scene scene = new Scene(root, MAIN_SCENE_WIDTH, MAIN_SCENE_HEIGHT);
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root, MAIN_SCENE_WIDTH, MAIN_SCENE_HEIGHT);
             stage.setTitle(TITLE);
             stage.getIcons().add(new Image(FILE_STRING
                     + SuperFolderFinder.getSuperFolder() + BEAST_ICON));
@@ -110,7 +110,7 @@ public final class MainApplicationClass extends Application {
                 }
             });
             // specify the short cuts the program should ignore
-            InputMap<Event> shortcutsToConsume = InputMap.consume(anyOf(
+            final InputMap<Event> shortcutsToConsume = InputMap.consume(anyOf(
             // prevent selection via (CTRL + ) SHIFT + [LEFT, UP, DOWN]
             // ignore the save shortcut
             // keyPressed(KeyCode.S,

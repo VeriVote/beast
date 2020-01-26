@@ -163,7 +163,7 @@ public class SaverLoader {
      *            the text
      */
     public void saveAs(final String fileName, final String text) {
-        File selectedFile = showFileSaveDialog(fileName);
+        final File selectedFile = showFileSaveDialog(fileName);
         if (selectedFile != null) {
             saveToDisk(selectedFile, text);
         }
@@ -191,7 +191,7 @@ public class SaverLoader {
      * @return the file
      */
     public File showFileSaveDialog(final String fileName) {
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
                 fileExtensionDescription, ASTERISK + fileEnding));
         fileChooser.getExtensionFilters()
@@ -200,8 +200,8 @@ public class SaverLoader {
                                                      ASTERISK + DOT + ASTERISK));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser
-                .showSaveDialog(MainApplicationClass.getMainStage());
+        final File selectedFile =
+                fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
         return selectedFile;
     }
 
@@ -213,7 +213,7 @@ public class SaverLoader {
      * @return the file
      */
     public File showFileLoadDialog(final String fileName) {
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
                 fileExtensionDescription, ASTERISK + fileEnding));
         fileChooser.getExtensionFilters()
@@ -222,8 +222,8 @@ public class SaverLoader {
                                                      ASTERISK + DOT + ASTERISK));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser
-                .showOpenDialog(MainApplicationClass.getMainStage());
+        final File selectedFile =
+                fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
         return selectedFile;
     }
 
@@ -233,7 +233,7 @@ public class SaverLoader {
      * @return the string
      */
     public String load() {
-        File selectedFile = showFileLoadDialog("");
+        final File selectedFile = showFileLoadDialog("");
         if (selectedFile != null) {
             return load(selectedFile);
         }
@@ -270,7 +270,7 @@ public class SaverLoader {
      */
     private static String readFile(final File file, final Charset encoding)
             throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
+        final byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         return new String(encoded, encoding);
     }
 

@@ -82,7 +82,7 @@ public final class TreeViewSample extends Application {
     public void start(final Stage stage) {
         rootNode.setExpanded(true);
         for (final Employee employee : employees) {
-            TreeItem<String> empLeaf = new TreeItem<String>(employee.getName());
+            final TreeItem<String> empLeaf = new TreeItem<String>(employee.getName());
             boolean found = false;
             for (TreeItem<String> depNode : rootNode.getChildren()) {
                 if (depNode.getValue()
@@ -93,7 +93,7 @@ public final class TreeViewSample extends Application {
                 }
             }
             if (!found) {
-                TreeItem<String> depNode =
+                final TreeItem<String> depNode =
                         new TreeItem<String>(employee.getDepartment(),
                                              new ImageView(depIcon));
                 rootNode.getChildren().add(depNode);
@@ -102,11 +102,11 @@ public final class TreeViewSample extends Application {
         }
 
         stage.setTitle("Tree View Sample");
-        VBox box = new VBox();
+        final VBox box = new VBox();
         final Scene scene = new Scene(box, 400, 300);
         scene.setFill(Color.LIGHTGRAY);
 
-        TreeView<String> treeView = new TreeView<String>(rootNode);
+        final TreeView<String> treeView = new TreeView<String>(rootNode);
         treeView.setEditable(true);
         treeView.setCellFactory(
                 new Callback<TreeView<String>, TreeCell<String>>() {

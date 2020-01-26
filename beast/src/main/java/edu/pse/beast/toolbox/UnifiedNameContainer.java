@@ -97,7 +97,7 @@ public final class UnifiedNameContainer {
         for (Iterator<NameChangeListener> iterator =
                     listeners.iterator();
                 iterator.hasNext();) {
-            NameChangeListener nameChangeListener = iterator.next();
+            final NameChangeListener nameChangeListener = iterator.next();
             nameChangeListener.notifyNameChange();
         }
     }

@@ -56,20 +56,20 @@ public final class CErrorDisplayer extends ErrorDisplayer {
      */
     public String createMsg(final CodeError er) {
         if (er.getId().equals(ANTLR)) {
-            int line = er.getLine();
-            int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
-            int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
+            final int line = er.getLine();
+            final int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
+            final int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
             er.setStartPos(start);
             er.setEndPos(end);
             return er.getExtraInfo(MSG);
         } else if (er.getId().equals(COMPILER_ERROR)) {
-            int line = er.getLine();
-            int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
-            int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
+            final int line = er.getLine();
+            final int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
+            final int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
             er.setStartPos(start);
             er.setEndPos(end);
             String msg = er.getExtraInfo(MSG);
-            String var = er.getExtraInfo(VAR);
+            final String var = er.getExtraInfo(VAR);
             if (!msg.contains(var)) {
                 msg = var + ": " + msg;
             }

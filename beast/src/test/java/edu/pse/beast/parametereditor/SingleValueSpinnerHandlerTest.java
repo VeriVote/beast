@@ -14,8 +14,8 @@ import org.junit.Test;
 public class SingleValueSpinnerHandlerTest {
     /** The Constant TEN_THOUSAND_ONE. */
     private static final int TEN_THOUSAND_ONE = 10001;
-    /** The Constant FOURTY_TWO. */
-    private static final int FOURTY_TWO = 42;
+    /** The Constant FORTY_TWO. */
+    private static final int FORTY_TWO = 42;
 
     /**
      * Test of setValue and getValue methods, of class SingleValueSpinnerHandler.
@@ -23,11 +23,12 @@ public class SingleValueSpinnerHandlerTest {
     @Test
     public void testSetGetValue() {
         System.out.println("set/getValue");
-        SingleValueSpinnerHandler instance = new SingleValueSpinnerHandler(new JSpinner());
-        instance.setValue(FOURTY_TWO);
+        final SingleValueSpinnerHandler instance =
+                new SingleValueSpinnerHandler(new JSpinner());
+        instance.setValue(FORTY_TWO);
         instance.setValue(-1);
         instance.setValue(TEN_THOUSAND_ONE);
-        final Integer expResult = FOURTY_TWO;
+        final Integer expResult = FORTY_TWO;
         final Integer result = instance.getValue();
         assertEquals(expResult, result);
     }

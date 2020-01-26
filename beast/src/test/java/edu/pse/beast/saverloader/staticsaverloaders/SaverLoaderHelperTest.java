@@ -33,7 +33,7 @@ public class SaverLoaderHelperTest {
      */
     @Test
     public void testCreateSaveString() {
-        String s = h.getStringForAttr(NAME, TEST_NAME);
+        final String s = h.getStringForAttr(NAME, TEST_NAME);
         assertEquals(SAVE_TEST_NAME, s);
     }
 

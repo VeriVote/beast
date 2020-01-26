@@ -44,22 +44,22 @@ public final class CVariableErrorFinder {
     public static List<CodeError> findErrors(final List<String> code,
                                              final ElectionDescription electionDesc) {
         // TODO use unified name container here later
-        ArrayList<String> seperated = new ArrayList<String>();
-        seperated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getVoter());
-        seperated.add(DEFINE + BLANK + UnifiedNameContainer.getVoter() + BLANK + ONE);
-        seperated.add(END_IF);
+        final ArrayList<String> separated = new ArrayList<String>();
+        separated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getVoter());
+        separated.add(DEFINE + BLANK + UnifiedNameContainer.getVoter() + BLANK + ONE);
+        separated.add(END_IF);
 
-        seperated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getCandidate());
-        seperated.add(DEFINE + BLANK + UnifiedNameContainer.getCandidate() + BLANK + ONE);
-        seperated.add(END_IF);
+        separated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getCandidate());
+        separated.add(DEFINE + BLANK + UnifiedNameContainer.getCandidate() + BLANK + ONE);
+        separated.add(END_IF);
 
-        seperated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getSeats());
-        seperated.add(DEFINE + BLANK + UnifiedNameContainer.getSeats() + BLANK + ONE);
-        seperated.add(END_IF);
+        separated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getSeats());
+        separated.add(DEFINE + BLANK + UnifiedNameContainer.getSeats() + BLANK + ONE);
+        separated.add(END_IF);
 
         // Since we want to reserve the function name "verify", we define it
         // here..
-        seperated.add("void verify() {}");
+        separated.add("void verify() {}");
 
         // WORKAROUND: Will change if I think of a more elegant solution (if
         // there is one) (look at issue 49 on github)
@@ -68,33 +68,33 @@ public final class CVariableErrorFinder {
         // At least I can extract it to a file, which would make updating
         // easier.
 
-        seperated.add("void __CPROVER_assert(int x, int y) {}");
-        seperated.add("void __CPROVER_assume(int x) {}");
+        separated.add("void __CPROVER_assert(int x, int y) {}");
+        separated.add("void __CPROVER_assume(int x) {}");
 
-        seperated.addAll(Arrays.asList(electionDesc.getContainer()
+        separated.addAll(Arrays.asList(electionDesc.getContainer()
                 .getStructDefinitions().split("\\n"))); // add all used structs
 
-        seperated.add("void assume(int x) {}");
-        seperated.add("void assert(int x) {}");
-        seperated.add("void assert2(int x, int y) {}");
+        separated.add("void assume(int x) {}");
+        separated.add("void assert(int x) {}");
+        separated.add("void assert2(int x, int y) {}");
 
-        seperated.add("int nondet_int() {return 0;}");
-        seperated.add("unsigned int nondet_uint() {return 0;}");
-        seperated.add("unsigned char nondet_uchar() {return 0;}");
-        seperated.add("char nondet_char() {return 0;}");
+        separated.add("int nondet_int() {return 0;}");
+        separated.add("unsigned int nondet_uint() {return 0;}");
+        separated.add("unsigned char nondet_uchar() {return 0;}");
+        separated.add("char nondet_char() {return 0;}");
 
         // WORKAROUND end
 
-        seperated.addAll(code);
+        separated.addAll(code);
 
-        seperated.add("int main() {");
-        seperated.add("}");
+        separated.add("int main() {");
+        separated.add("}");
 
-        int lineOffset = seperated.size() + 1;
+        final int lineOffset = separated.size() + 1;
 
         final ArrayList<CodeError> found =
                 new ArrayList<CodeError>(
-                        DeepErrorChecker.checkCodeForErrors(seperated, lineOffset)
+                        DeepErrorChecker.checkCodeForErrors(separated, lineOffset)
                 );
         return found;
     }

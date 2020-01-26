@@ -29,7 +29,8 @@ public final class ShowHelpUserAction extends UserAction
 
     @Override
     public void perform() {
-        File f = new File(SuperFolderFinder.getSuperFolder() + "/" + pathToHelpFile);
+        final File f = new File(SuperFolderFinder.getSuperFolder()
+                                + "/" + pathToHelpFile);
         try {
             Desktop.getDesktop().browse(f.toURI());
         } catch (IOException e) {

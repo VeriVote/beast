@@ -32,9 +32,9 @@ public final class CustomTreeItemAdapter implements
                                       final Type typeOfT,
                                       final JsonDeserializationContext context)
             throws JsonParseException {
-        JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get(TYPE).getAsString();
-        JsonElement element = jsonObject.get(PROPERTIES);
+        final JsonObject jsonObject = json.getAsJsonObject();
+        final String type = jsonObject.get(TYPE).getAsString();
+        final JsonElement element = jsonObject.get(PROPERTIES);
         if (type.equals(ChildTreeItem.class.getSimpleName())) {
             return context.deserialize(element, ChildTreeItem.class);
         } else {
@@ -46,7 +46,7 @@ public final class CustomTreeItemAdapter implements
     @Override
     public JsonElement serialize(final CustomTreeItem src, final Type typeOfSrc,
                                  final JsonSerializationContext context) {
-        JsonObject result = new JsonObject();
+        final JsonObject result = new JsonObject();
         result.add(TYPE, new JsonPrimitive(src.getClass().getSimpleName()));
         result.add(PROPERTIES, context.serialize(src, src.getClass()));
         return result;

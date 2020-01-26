@@ -26,7 +26,7 @@ public class OptionStringResProviderTest {
     @Test
     public void testGetOptionStringRes() {
         System.out.println("getOptionStringRes");
-        StringResourceLoader result = instance.getOptionStringRes();
+        final StringResourceLoader result = instance.getOptionStringRes();
         assertEquals("Sprache", result.getStringFromID("lang"));
     }
 

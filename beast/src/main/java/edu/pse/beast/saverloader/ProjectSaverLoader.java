@@ -16,7 +16,7 @@ public final class ProjectSaverLoader implements SaverLoader<Project> {
     private static Gson saverLoader;
 
     static { // Here you have the chance to register typeAdapters
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         saverLoader = builder.create();
     }
 

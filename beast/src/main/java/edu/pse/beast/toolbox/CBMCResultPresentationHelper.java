@@ -30,7 +30,7 @@ public final class CBMCResultPresentationHelper {
      * @return the white spaces
      */
     private static String getWhiteSpaces(final int amount) {
-        char[] spaces = new char[amount];
+        final char[] spaces = new char[amount];
         Arrays.fill(spaces, ' ');
         return new String(spaces);
     }
@@ -63,7 +63,7 @@ public final class CBMCResultPresentationHelper {
     public static String printOneDimResult(final CBMCResultValueArray array,
                                            final long size, final int offset) {
         String toReturn = getWhiteSpaces(offset);
-        List<CBMCResultValueWrapper> arrayValues = array.getValues();
+        final List<CBMCResultValueWrapper> arrayValues = array.getValues();
 
         final long s;
         if (size < 0) {
@@ -73,7 +73,7 @@ public final class CBMCResultPresentationHelper {
         }
 
         for (int i = 0; i < s; i++) {
-            CBMCResultValueSingle singleValue =
+            final CBMCResultValueSingle singleValue =
                     (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
             toReturn += singleValue.getValue() + " ";
         }
@@ -94,8 +94,8 @@ public final class CBMCResultPresentationHelper {
     public static List<String> printTwoDimResult(final CBMCResultValueArray array,
                                                  final long size,
                                                  final int offset) {
-        List<String> toReturn = new ArrayList<String>();
-        List<CBMCResultValueWrapper> arrayValues = array.getValues();
+        final List<String> toReturn = new ArrayList<String>();
+        final List<CBMCResultValueWrapper> arrayValues = array.getValues();
 
         final long s;
         if (size < 0) {
@@ -105,7 +105,7 @@ public final class CBMCResultPresentationHelper {
         }
 
         for (int i = 0; i < s; i++) {
-            CBMCResultValueArray currentArray =
+            final CBMCResultValueArray currentArray =
                     (CBMCResultValueArray) arrayValues.get(i).getResultValue();
             toReturn.add(printOneDimResult(currentArray, -1, offset));
         }

@@ -41,27 +41,27 @@ public final class Default extends ResultPresentationType {
             area.setEditable(false);
         }
         area.clear();
-        InputType inType =
+        final InputType inType =
                 result.getElectionDescription().getContainer().getInputType();
-        OutputType outType =
+        final OutputType outType =
                 result.getElectionDescription().getContainer().getOutputType();
-        String voters = UnifiedNameContainer.getVoter() + DECIMAL_REPLACE_SYMBOL;
-        Map<Integer, Long> sizeOfVoters =
+        final String voters = UnifiedNameContainer.getVoter() + DECIMAL_REPLACE_SYMBOL;
+        final Map<Integer, Long> sizeOfVoters =
                 getAllSizes(result.readVariableValue(voters));
-        String votesNameMatcher = UnifiedNameContainer.getVotingArray()
-                                    + DECIMAL_REPLACE_SYMBOL;
+        final String votesNameMatcher = UnifiedNameContainer.getVotingArray()
+                                        + DECIMAL_REPLACE_SYMBOL;
         List<String> toAdd = inType.drawResult(result, votesNameMatcher,
                                                sizeOfVoters);
 
         for (int i = 0; i < toAdd.size(); i++) {
             area.appendText(toAdd.get(i));
         }
-        String candidates = UnifiedNameContainer.getCandidate()
-                            + DECIMAL_REPLACE_SYMBOL;
-        Map<Integer, Long> sizeOfCandidates =
+        final String candidates = UnifiedNameContainer.getCandidate()
+                                + DECIMAL_REPLACE_SYMBOL;
+        final Map<Integer, Long> sizeOfCandidates =
                 getAllSizes(result.readVariableValue(candidates));
-        String resultNameMatcher = UnifiedNameContainer.getElect()
-                                    + DECIMAL_REPLACE_SYMBOL;
+        final String resultNameMatcher = UnifiedNameContainer.getElect()
+                                        + DECIMAL_REPLACE_SYMBOL;
         toAdd = outType.drawResult(result, resultNameMatcher, sizeOfCandidates);
 
         for (int i = 0; i < toAdd.size(); i++) {

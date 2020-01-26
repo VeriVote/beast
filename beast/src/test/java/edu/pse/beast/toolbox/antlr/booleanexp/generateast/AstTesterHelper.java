@@ -29,8 +29,8 @@ public final class AstTesterHelper {
         assertEquals(lhs.getHighestElect(), rhs.getHighestElect());
         assertEquals(lhs.getMaxVoteLevel(), rhs.getMaxVoteLevel());
         for (int i = 0; i < lhs.getBooleanExpressions().size(); i++) {
-            List<BooleanExpressionNode> lhsList = lhs.getBooleanExpressions().get(i);
-            List<BooleanExpressionNode> rhsList = rhs.getBooleanExpressions().get(i);
+            final List<BooleanExpressionNode> lhsList = lhs.getBooleanExpressions().get(i);
+            final List<BooleanExpressionNode> rhsList = rhs.getBooleanExpressions().get(i);
             areTheSame(lhsList, rhsList);
         }
     }

@@ -106,9 +106,9 @@ public abstract class Result implements ResultInterface {
      * @return list of result types
      */
     public static List<Result> getResultTypes() {
-        ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
-        List<Result> types = new ArrayList<Result>();
-        for (Result type : loader) {
+        final ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
+        final List<Result> types = new ArrayList<Result>();
+        for (final Result type : loader) {
             types.add(type);
         }
         return types;
@@ -652,7 +652,7 @@ public abstract class Result implements ResultInterface {
      * @return the list
      */
     private List<String> addNewLineToList(final List<String> toConvert) {
-        List<String> toReturn = new ArrayList<String>();
+        final List<String> toReturn = new ArrayList<String>();
         for (int i = 0; i < toConvert.size(); i++) {
             toReturn.add(toConvert.get(i) + "\n");
         }

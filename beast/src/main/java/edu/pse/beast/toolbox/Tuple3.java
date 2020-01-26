@@ -43,7 +43,7 @@ public final class Tuple3<F, S, T> {
         if (!(o instanceof Tuple3)) {
             return false;
         }
-        Tuple3<?, ?, ?> p = (Tuple3<?, ?, ?>) o;
+        final Tuple3<?, ?, ?> p = (Tuple3<?, ?, ?>) o;
         return first().equals(p.first()) && second().equals(p.second())
                 && third().equals(p.third());
     }

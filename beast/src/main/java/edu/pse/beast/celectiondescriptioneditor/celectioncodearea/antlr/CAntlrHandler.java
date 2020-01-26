@@ -36,7 +36,7 @@ public class CAntlrHandler {
     public CAntlrHandler(final JTextPane textPane) {
         this.pane = textPane;
         lexer = new CLexer(CharStreams.fromString(textPane.getText()));
-        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+        final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         cParser = new CParser(commonTokenStream);
     }
 
@@ -47,10 +47,10 @@ public class CAntlrHandler {
      */
     public ParseTree getCParseTree() {
         try {
-            String code =
+            final String code =
                     pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
             lexer.setInputStream(CharStreams.fromString(code));
-            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+            final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
             return cParser.compilationUnit();
         } catch (BadLocationException ex) {
@@ -64,10 +64,10 @@ public class CAntlrHandler {
      */
     public void updateParser() {
         try {
-            String code =
+            final String code =
                     pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
             lexer.setInputStream(CharStreams.fromString(code));
-            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+            final CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
         } catch (BadLocationException ex) {
             Logger.getLogger(CAntlrHandler.class.getName()).log(Level.SEVERE, null, ex);

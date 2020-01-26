@@ -19,10 +19,10 @@ public class FormalPropertiesDescriptionTest {
     @Test
     public void testGetCode() {
         System.out.println("getCode");
-        FormalPropertiesDescription instance = new FormalPropertiesDescription(TEST);
-        String expResult = TEST;
-        String result = instance.getCode();
-        assertEquals(expResult, result);
+        final FormalPropertiesDescription instance =
+                new FormalPropertiesDescription(TEST);
+        final String result = instance.getCode();
+        assertEquals(TEST, result);
     }
 
     /**
@@ -31,10 +31,10 @@ public class FormalPropertiesDescriptionTest {
     @Test
     public void testSetCode() {
         System.out.println("setCode");
-        String code = TEST;
-        FormalPropertiesDescription instance = new FormalPropertiesDescription(null);
-        instance.setCode(code);
-        String result = instance.getCode();
+        final FormalPropertiesDescription instance =
+                new FormalPropertiesDescription(null);
+        instance.setCode(TEST);
+        final String result = instance.getCode();
         assertEquals(TEST, result);
     }
 }

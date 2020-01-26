@@ -66,8 +66,8 @@ public final class AboutWindow extends javax.swing.JFrame
 
         jLabel1.setText("B.E.A.S.T.");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-                getContentPane());
+        final javax.swing.GroupLayout layout =
+                new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout
                 .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +164,7 @@ public final class AboutWindow extends javax.swing.JFrame
 
     @Override
     public void updateStringRes(final StringLoaderInterface stringResIF) {
-        StringResourceLoader other =
+        final StringResourceLoader other =
                 stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
         setTitle(other.getStringFromID("title_about"));
         versionLabel.setText(other.getStringFromID("version"));

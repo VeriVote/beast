@@ -34,7 +34,7 @@ public final class SymbolicVarListSaverLoader {
      */
     public static String createSaveString(final SymbolicVariableList list) {
         String created = "";
-        for (SymbolicVariable var : list.getSymbolicVariables()) {
+        for (final SymbolicVariable var : list.getSymbolicVariables()) {
             created += "symbolic_variable: ";
             created += createSaveStringForVar(var) + ";\n";
         }
@@ -62,9 +62,9 @@ public final class SymbolicVarListSaverLoader {
      * @return the SymbolicVariableList object
      */
     public static SymbolicVariableList createFromSaveString(final String s) {
-        SymbolicVariableList created = new SymbolicVariableList();
-        String newString = s.replaceAll("\n", "");
-        String[] var = newString.split(";");
+        final SymbolicVariableList created = new SymbolicVariableList();
+        final String newString = s.replaceAll("\n", "");
+        final String[] var = newString.split(";");
         for (int i = 0; i < var.length; ++i) {
             createSymbVarFromSaveString(
                     var[i].replace("symbolic_variable:", ""),
@@ -87,10 +87,10 @@ public final class SymbolicVarListSaverLoader {
         if (s == null || s.length() == 0) {
             return;
         }
-        String[] data = s.split(" ");
-        String id = data[ID_LEN];
-        String typeString = data[TYPE_LEN];
-        InternalTypeRep type = InternalTypeRep.valueOf(typeString);
+        final String[] data = s.split(" ");
+        final String id = data[ID_LEN];
+        final String typeString = data[TYPE_LEN];
+        final InternalTypeRep type = InternalTypeRep.valueOf(typeString);
         list.addSymbolicVariable(id, new InternalTypeContainer(type));
     }
 }

@@ -39,8 +39,8 @@ public class PropertyItemTest {
      */
     @Test
     public void testItemEquality() {
-        PropertyItem it1 = new PropertyItem();
-        PropertyItem it2 = new PropertyItem();
+        final PropertyItem it1 = new PropertyItem();
+        final PropertyItem it2 = new PropertyItem();
         assertFalse(it1.equals(null));
         assertFalse(it1.equals(it2));
         it2.getDescription().setName(it1.getDescription().getName());

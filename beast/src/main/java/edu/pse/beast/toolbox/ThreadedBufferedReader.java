@@ -79,7 +79,7 @@ public final class ThreadedBufferedReader implements Runnable {
                         // we are still unwinding, so we check the line now
                         // to see how much we are unwinding
                         try {
-                            int iteration =
+                            final int iteration =
                                     Integer.parseInt(
                                             line.split("iteration")[1].split("file")[0]
                                                     .replace(" ", "")

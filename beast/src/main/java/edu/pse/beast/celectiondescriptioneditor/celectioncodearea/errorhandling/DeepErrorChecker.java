@@ -35,8 +35,7 @@ public final class DeepErrorChecker {
      * and then creates the correlating one.
      */
     private static void init() {
-        OperatingSystems os = determineOS();
-
+        final OperatingSystems os = determineOS();
         switch (os) {
         case Linux:
             errorChecker = new LinuxErrorChecker();
@@ -80,7 +79,7 @@ public final class DeepErrorChecker {
      * @return the OperatingSystem as the enum
      */
     private static OperatingSystems determineOS() {
-        String environment = System.getProperty("os.name");
+        final String environment = System.getProperty("os.name");
         OperatingSystems determinedOS = null;
         if (environment.toLowerCase().contains("linux")) {
             determinedOS = OperatingSystems.Linux;

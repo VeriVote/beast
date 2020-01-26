@@ -43,16 +43,16 @@ public final class MarginResult extends ResultPresentationType {
             area.appendText("Final Margin: " + result.getFinalMargin());
             area.appendText(
                     "\n=================================================");
-            InputType inType = result.getElectionDescription().getContainer()
-                    .getInputType();
-            OutputType outType = result.getElectionDescription().getContainer()
-                    .getOutputType();
-            CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
+            final InputType inType =
+                    result.getElectionDescription().getContainer().getInputType();
+            final OutputType outType =
+                    result.getElectionDescription().getContainer().getOutputType();
+            final CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
             structVotes.setValue(
                     (CBMCResultValueWrapper) result.getOrigVoting().getValues(),
                     UnifiedNameContainer.getStructValueName());
-            ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(
-                    structVotes);
+            final ResultValueWrapper structVotesWrapped =
+                    new CBMCResultValueWrapper(structVotes);
             List<String> toAdd = inType.drawResult(structVotesWrapped,
                     "\norig votes: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {

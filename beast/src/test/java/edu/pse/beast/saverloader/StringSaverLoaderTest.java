@@ -27,8 +27,8 @@ public class StringSaverLoaderTest {
      */
     @Test
     public void testSaverLoader() {
-        String saveString = StringSaverLoader.createSaveString(testString);
-        String recreatedString = StringSaverLoader.createFromSaveString(saveString);
+        final String saveString = StringSaverLoader.createSaveString(testString);
+        final String recreatedString = StringSaverLoader.createFromSaveString(saveString);
         assertEquals(recreatedString, testString);
     }
 }

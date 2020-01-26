@@ -62,9 +62,10 @@ public class SymbolicVarListSaverLoaderTest {
      */
     @Test
     public void testSaverLoader() {
-        String saveString = SymbolicVarListSaverLoader.createSaveString(symbolicVariableList);
-        SymbolicVariableList recreatedList
-              = SymbolicVarListSaverLoader.createFromSaveString(saveString);
+        final String saveString =
+                SymbolicVarListSaverLoader.createSaveString(symbolicVariableList);
+        final SymbolicVariableList recreatedList =
+                SymbolicVarListSaverLoader.createFromSaveString(saveString);
         assertEquals(recreatedList.getSymbolicVariables().get(VOTER_ONE_IDX).getId(), VOTER_ONE);
         assertEquals(recreatedList.getSymbolicVariables().get(VOTER_ONE_IDX)
                          .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);

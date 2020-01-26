@@ -55,7 +55,7 @@ public final class Internationalization {
      * @return the locale
      */
     public static Locale getDefaultLocale() {
-        Locale sysDefault = Locale.getDefault();
+        final Locale sysDefault = Locale.getDefault();
         return getSupportedLocales().contains(sysDefault)
                 ? sysDefault : Locale.ENGLISH;
     }
@@ -101,7 +101,7 @@ public final class Internationalization {
      * @return localized formatted string
      */
     public static String get(final String key, final Object... args) {
-        ResourceBundle bundle =
+        final ResourceBundle bundle =
                 ResourceBundle.getBundle("messages", getLocale());
         return MessageFormat.format(bundle.getString(key), args);
     }
@@ -141,7 +141,7 @@ public final class Internationalization {
      * @return Label
      */
     public static Label labelForValue(final Callable<String> func) {
-        Label label = new Label();
+        final Label label = new Label();
         label.textProperty().bind(createStringBinding(func));
         return label;
     }
@@ -156,7 +156,7 @@ public final class Internationalization {
      * @return Button
      */
     public static Button buttonForKey(final String key, final Object... args) {
-        Button button = new Button();
+        final Button button = new Button();
         button.textProperty().bind(createStringBinding(key, args));
         return button;
     }
@@ -172,7 +172,7 @@ public final class Internationalization {
      */
     public static Tooltip tooltipForKey(final String key,
                                         final Object... args) {
-        Tooltip tooltip = new Tooltip();
+        final Tooltip tooltip = new Tooltip();
         tooltip.textProperty().bind(createStringBinding(key, args));
         return tooltip;
     }
