@@ -4,6 +4,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.Arrays;
@@ -165,7 +166,7 @@ public final class SingleChoice extends CBMCInputType {
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF,
                               eq(arrAccess(ARR, I), CANDIDATE))
-                + CCodeHelper.BLANK + plusPlus(SUM)
+                + space() + plusPlus(SUM)
                 + CCodeHelper.SEMICOLON);
     }
 

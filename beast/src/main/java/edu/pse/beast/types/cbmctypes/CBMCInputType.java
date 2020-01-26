@@ -6,6 +6,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
@@ -57,9 +58,6 @@ public abstract class CBMCInputType extends InputType {
     protected static final String CANDIDATE = "candidate";
     /** The Constant CAND_SUM. */
     protected static final String CAND_SUM = "candSum";
-
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
 
     /** The Constant CPROVER_ASSUME. */
     private static final String CPROVER_ASSUME = "__CPROVER_assume";
@@ -122,20 +120,20 @@ public abstract class CBMCInputType extends InputType {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add();
-        code.add(CCodeHelper.INT + CCodeHelper.BLANK
+        code.add(CCodeHelper.INT + space()
                 + varAssignCode(CHANGED, functionCode(NONDET_INT))
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(functionCode(ASSUME, leq(zero(), CHANGED)) + CCodeHelper.SEMICOLON);
         code.add(functionCode(ASSUME, leq(CHANGED, one())) + CCodeHelper.SEMICOLON);
         code.add(functionCode(CCodeHelper.IF, CHANGED)
-                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
+                + space() + CCodeHelper.OPENING_BRACES);
         // we changed one vote, so we keep track of it
         code.add(plusPlus(POS_DIFF) + CCodeHelper.SEMICOLON);
         code.add(functionCode(ASSUME, neq(newVotesNameAcc, origVotesNameAcc))
                 + CCodeHelper.SEMICOLON);
-        code.add(CCodeHelper.CLOSING_BRACES + CCodeHelper.BLANK
-                + CCodeHelper.ELSE + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
+        code.add(CCodeHelper.CLOSING_BRACES + space()
+                + CCodeHelper.ELSE + space() + CCodeHelper.OPENING_BRACES);
         code.addTab();
         code.add(this.setVoteValue(newVotesName,
                                    UnifiedNameContainer.getOrigVotesName(),
@@ -150,19 +148,19 @@ public abstract class CBMCInputType extends InputType {
         code.add(include("stdint"));
         code.add(include("assert"));
         code.add();
-        code.add(CCodeHelper.UNSIGNED + CCodeHelper.BLANK
-                + CCodeHelper.INT + CCodeHelper.BLANK
+        code.add(CCodeHelper.UNSIGNED + space()
+                + CCodeHelper.INT + space()
                 + functionCode(NONDET_UINT) + CCodeHelper.SEMICOLON);
-        code.add(CCodeHelper.UNSIGNED + CCodeHelper.BLANK
-                + CCodeHelper.INT + CCodeHelper.BLANK
+        code.add(CCodeHelper.UNSIGNED + space()
+                + CCodeHelper.INT + space()
                 + functionCode(NONDET_INT) + CCodeHelper.SEMICOLON);
         code.add();
 
-        code.add(CCodeHelper.DEFINE + CCodeHelper.BLANK
-                + functionCode(ASSERT2, X, Y) + CCodeHelper.BLANK
+        code.add(CCodeHelper.DEFINE + space()
+                + functionCode(ASSERT2, X, Y) + space()
                 + functionCode(CPROVER_ASSERT, X, Y));
-        code.add(CCodeHelper.DEFINE + CCodeHelper.BLANK
-                + functionCode(ASSUME, X) + CCodeHelper.BLANK
+        code.add(CCodeHelper.DEFINE + space()
+                + functionCode(ASSUME, X) + space()
                 + functionCode(CPROVER_ASSUME, X));
         code.add();
     }
@@ -181,7 +179,7 @@ public abstract class CBMCInputType extends InputType {
             } catch (IndexOutOfBoundsException e) {
                 oneVoter = "" + voterIndex;
             }
-            oneVoter = oneVoter + CCodeHelper.COLON + CCodeHelper.BLANK;
+            oneVoter = oneVoter + CCodeHelper.COLON + space();
             voterIndex++;
             int partyIndex = 0;
             final List<String> list = iterator.next();
@@ -197,11 +195,11 @@ public abstract class CBMCInputType extends InputType {
                     oneVoter = "" + partyIndex;
                 }
                 oneVoter += CCodeHelper.COLON
-                        + CCodeHelper.BLANK + voteAmount + CCodeHelper.COMMA
-                        + CCodeHelper.BLANK;
+                        + space() + voteAmount + CCodeHelper.COMMA
+                        + space();
                 partyIndex++;
             }
-            votesString += oneVoter + LINE_BREAK;
+            votesString += oneVoter + CCodeHelper.LINE_BREAK;
         }
         return votesString;
     }

@@ -22,6 +22,25 @@ import edu.pse.beast.codearea.actionlist.ActionList;
  * @author Holger Klein
  */
 public class LockedLinesHandlerTest {
+    /** The Constant ZERO. */
+    private static final int ZERO = 0;
+    /** The Constant ONE. */
+    private static final int ONE = 1;
+    /** The Constant TWO. */
+    private static final int TWO = 2;
+    /** The Constant THREE. */
+    private static final int THREE = 3;
+    /** The Constant FOUR. */
+    private static final int FOUR = 4;
+    /** The Constant FIVE. */
+    private static final int FIVE = 5;
+    /** The Constant EIGHT. */
+    private static final int EIGHT = 8;
+    /** The Constant NINE. */
+    private static final int NINE = 9;
+    /** The Constant ELEVEN. */
+    private static final int ELEVEN = 11;
+
     /** The line break string. */
     private static final String LINE_BREAK = "\n";
     /** A test text string. */
@@ -69,14 +88,14 @@ public class LockedLinesHandlerTest {
      */
     @Test
     public void testHandlesUpdates() throws BadLocationException {
-        pane.getStyledDocument().insertString(0, TEXT, null);
-        lockedLinesHandler.lockLine(1);
-        assertTrue(lockedLinesHandler.isLineLocked(1));
-        pane.getStyledDocument().insertString(0, LINE_BREAK, null);
-        assertFalse(lockedLinesHandler.isLineLocked(1));
-        assertTrue(lockedLinesHandler.isLineLocked(2));
-        pane.getStyledDocument().insertString(0, "asdasd\nasd\n\nasdasd", null);
-        assertTrue(lockedLinesHandler.isLineLocked(5));
+        pane.getStyledDocument().insertString(ZERO, TEXT, null);
+        lockedLinesHandler.lockLine(ONE);
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
+        pane.getStyledDocument().insertString(ZERO, LINE_BREAK, null);
+        assertFalse(lockedLinesHandler.isLineLocked(ONE));
+        assertTrue(lockedLinesHandler.isLineLocked(TWO));
+        pane.getStyledDocument().insertString(ZERO, "asdasd\nasd\n\nasdasd", null);
+        assertTrue(lockedLinesHandler.isLineLocked(FIVE));
     }
 
     /**
@@ -87,15 +106,15 @@ public class LockedLinesHandlerTest {
      */
     @Test
     public void testHandlesUpdateDirectlyAt() throws BadLocationException {
-        pane.getStyledDocument().insertString(0, TEXT, null);
-        lockedLinesHandler.lockLine(1);
-        assertTrue(lockedLinesHandler.isLineLocked(1));
-        pane.getStyledDocument().insertString(5, LINE_BREAK, null);
-        assertTrue(lockedLinesHandler.isLineLocked(1));
-        pane.getStyledDocument().insertString(4, LINE_BREAK, null);
-        assertTrue(lockedLinesHandler.isLineLocked(2));
-        pane.getStyledDocument().insertString(5, LINE_BREAK, null);
-        assertTrue(lockedLinesHandler.isLineLocked(3));
+        pane.getStyledDocument().insertString(ZERO, TEXT, null);
+        lockedLinesHandler.lockLine(ONE);
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
+        pane.getStyledDocument().insertString(FIVE, LINE_BREAK, null);
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
+        pane.getStyledDocument().insertString(FOUR, LINE_BREAK, null);
+        assertTrue(lockedLinesHandler.isLineLocked(TWO));
+        pane.getStyledDocument().insertString(FIVE, LINE_BREAK, null);
+        assertTrue(lockedLinesHandler.isLineLocked(THREE));
     }
 
     /**
@@ -106,23 +125,23 @@ public class LockedLinesHandlerTest {
      */
     @Test
     public void testHandlesRemoves() throws BadLocationException {
-        pane.getStyledDocument().insertString(0, TEXT, null);
-        lockedLinesHandler.lockLine(1);
-        assertTrue(lockedLinesHandler.isLineLocked(1));
+        pane.getStyledDocument().insertString(ZERO, TEXT, null);
+        lockedLinesHandler.lockLine(ONE);
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
         beforeRemove.save();
-        pane.getStyledDocument().remove(3, 1);
-        assertTrue(lockedLinesHandler.isLineLocked(0));
-        lockedLinesHandler.lockLine(2);
+        pane.getStyledDocument().remove(THREE, ONE);
+        assertTrue(lockedLinesHandler.isLineLocked(ZERO));
+        lockedLinesHandler.lockLine(TWO);
         // String text = "asd\nasdasd\nasd\nasd\n\n\n";
         beforeRemove.save();
-        pane.getStyledDocument().remove(8, 3);
-        assertTrue(lockedLinesHandler.isLineLocked(0));
-        assertTrue(lockedLinesHandler.isLineLocked(1));
+        pane.getStyledDocument().remove(EIGHT, THREE);
+        assertTrue(lockedLinesHandler.isLineLocked(ZERO));
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
         // text = "asd\nasdaasd\nasd\n\n\n";
         beforeRemove.save();
-        pane.getStyledDocument().remove(11, 1);
-        assertTrue(lockedLinesHandler.isLineLocked(0));
-        assertTrue(lockedLinesHandler.isLineLocked(1));
+        pane.getStyledDocument().remove(ELEVEN, ONE);
+        assertTrue(lockedLinesHandler.isLineLocked(ZERO));
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
     }
 
     /**
@@ -134,12 +153,12 @@ public class LockedLinesHandlerTest {
     @Test
     public void testHandlesRemovesOneBracket() throws BadLocationException {
         final String text = "\n}\n";
-        pane.getStyledDocument().insertString(0, text, null);
-        lockedLinesHandler.lockLine(1);
+        pane.getStyledDocument().insertString(ZERO, text, null);
+        lockedLinesHandler.lockLine(ONE);
         beforeRemove.save();
-        pane.getStyledDocument().remove(2, 1);
-        assertEquals("\n}", pane.getStyledDocument().getText(0, 2));
-        assertTrue(lockedLinesHandler.isLineLocked(1));
+        pane.getStyledDocument().remove(TWO, ONE);
+        assertEquals("\n}", pane.getStyledDocument().getText(ZERO, TWO));
+        assertTrue(lockedLinesHandler.isLineLocked(ONE));
     }
 
     /**
@@ -151,12 +170,12 @@ public class LockedLinesHandlerTest {
     @Test
     public void testHandlesAddNewlineAtEndOfLine() throws BadLocationException {
         final String text = "asdasdasd\nasd";
-        pane.getStyledDocument().insertString(0, text, null);
-        lockedLinesHandler.lockLine(0);
-        lockedLinesHandler.lockLine(1);
-        pane.getStyledDocument().insertString(9, LINE_BREAK, null);
-        assertTrue(lockedLinesHandler.isLineLocked(0));
-        assertFalse(lockedLinesHandler.isLineLocked(1));
-        assertTrue(lockedLinesHandler.isLineLocked(2));
+        pane.getStyledDocument().insertString(ZERO, text, null);
+        lockedLinesHandler.lockLine(ZERO);
+        lockedLinesHandler.lockLine(ONE);
+        pane.getStyledDocument().insertString(NINE, LINE_BREAK, null);
+        assertTrue(lockedLinesHandler.isLineLocked(ZERO));
+        assertFalse(lockedLinesHandler.isLineLocked(ONE));
+        assertTrue(lockedLinesHandler.isLineLocked(TWO));
     }
 }

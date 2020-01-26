@@ -26,6 +26,15 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
     /** A seat test string. */
     private static final String SEAT = "seat";
 
+    /** The Constant VOTER_ONE_IDX. */
+    private static final int VOTER_ONE_IDX = 0;
+    /** The Constant VOTER_TWO_IDX. */
+    private static final int VOTER_TWO_IDX = 1;
+    /** The Constant CANDIDATE_IDX. */
+    private static final int CANDIDATE_IDX = 2;
+    /** The Constant SEAT_IDX. */
+    private static final int SEAT_IDX = 3;
+
     /** The Constant TEST_CODE_STRING. */
     private static final String TEST_CODE_STRING =
             "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD";
@@ -86,17 +95,17 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
         // check SymbolicVariableList for integrity
         SymbolicVariableList recreatedList
               = recreatedPreAndPostConditionsDescription.getSymVarList();
-        assertEquals(recreatedList.getSymbolicVariables().get(0).getId(), VOTER_ONE);
-        assertEquals(recreatedList.getSymbolicVariables().get(0)
+        assertEquals(recreatedList.getSymbolicVariables().get(VOTER_ONE_IDX).getId(), VOTER_ONE);
+        assertEquals(recreatedList.getSymbolicVariables().get(VOTER_ONE_IDX)
                 .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
-        assertEquals(recreatedList.getSymbolicVariables().get(1).getId(), VOTER_TWO);
-        assertEquals(recreatedList.getSymbolicVariables().get(1)
+        assertEquals(recreatedList.getSymbolicVariables().get(VOTER_TWO_IDX).getId(), VOTER_TWO);
+        assertEquals(recreatedList.getSymbolicVariables().get(VOTER_TWO_IDX)
                 .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
-        assertEquals(recreatedList.getSymbolicVariables().get(2).getId(), CANDIDATE);
-        assertEquals(recreatedList.getSymbolicVariables().get(2)
+        assertEquals(recreatedList.getSymbolicVariables().get(CANDIDATE_IDX).getId(), CANDIDATE);
+        assertEquals(recreatedList.getSymbolicVariables().get(CANDIDATE_IDX)
                 .getInternalTypeContainer().getInternalType(), InternalTypeRep.CANDIDATE);
-        assertEquals(recreatedList.getSymbolicVariables().get(3).getId(), SEAT);
-        assertEquals(recreatedList.getSymbolicVariables().get(3)
+        assertEquals(recreatedList.getSymbolicVariables().get(SEAT_IDX).getId(), SEAT);
+        assertEquals(recreatedList.getSymbolicVariables().get(SEAT_IDX)
                 .getInternalTypeContainer().getInternalType(), InternalTypeRep.SEAT);
     }
 }

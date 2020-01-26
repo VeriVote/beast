@@ -7,6 +7,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
@@ -191,7 +192,7 @@ public final class WeightedApproval extends CBMCInputType {
             code.add(functionCode(CCodeHelper.IF,
                                   conjunct(neq(J, CANDIDATE),
                                            leq(CAND_SUM, arrAccess(ARR, I, J))))
-                    + CCodeHelper.BLANK + varAssignCode(CAND_SUM, zero())
+                    + space() + varAssignCode(CAND_SUM, zero())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);
         }

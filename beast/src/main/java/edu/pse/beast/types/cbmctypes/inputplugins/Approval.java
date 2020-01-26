@@ -166,7 +166,7 @@ public final class Approval extends CBMCInputType {
                                   conjunct(neq(J, CANDIDATE),
                                            leq(CAND_SUM,
                                                arrAccess(ARR, I, J))))
-                    + CCodeHelper.BLANK + varAssignCode(CAND_SUM, zero())
+                    + CCodeHelper.space() + varAssignCode(CAND_SUM, zero())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);
         }

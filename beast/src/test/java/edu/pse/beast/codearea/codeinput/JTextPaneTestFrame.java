@@ -8,6 +8,12 @@ import javax.swing.JScrollPane;
  * @author Holger Klein
  */
 public final class JTextPaneTestFrame extends javax.swing.JFrame {
+    /** The Constant PREFERRED_SIZE_88. */
+    private static final int PREFERRED_SIZE_88 = 88;
+    /** The Constant PREFERRED_SIZE_201. */
+    private static final int PREFERRED_SIZE_201 = 201;
+    /** The Constant PREFERRED_SIZE_380. */
+    private static final int PREFERRED_SIZE_380 = 380;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,15 +54,15 @@ public final class JTextPaneTestFrame extends javax.swing.JFrame {
                 .addGroup(
                         layout.createSequentialGroup().addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                      380, Short.MAX_VALUE)
+                                      PREFERRED_SIZE_380, Short.MAX_VALUE)
                         .addContainerGap()));
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(
                         layout.createSequentialGroup().addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                      201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(88, Short.MAX_VALUE)));
+                                      PREFERRED_SIZE_201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(PREFERRED_SIZE_88, Short.MAX_VALUE)));
         pack();
     } // </editor-fold>//GEN-END:initComponents
 

@@ -18,6 +18,27 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author Jonas Wohnig
  */
 public class TimeoutValueHandlerTest {
+    /** The Constant ZERO. */
+    private static final int ZERO = 0;
+    /** The Constant ONE. */
+    private static final int ONE = 1;
+    /** The Constant TWO. */
+    private static final int TWO = 2;
+    /** The Constant THREE. */
+    private static final int THREE = 3;
+    /** The Constant FOUR. */
+    private static final int FOUR = 4;
+    /** The Constant ELEVEN. */
+    private static final int ELEVEN = 11;
+    /** The Constant TWENTY_SEVEN. */
+    private static final int TWENTY_SEVEN = 27;
+    /** The Constant FORTY_TWO. */
+    private static final int FORTY_TWO = 42;
+    /** The Constant THREE_THOUSAND_SIX_HUNDRED_FIFTY_THREE. */
+    private static final int THREE_THOUSAND_SIX_HUNDRED_FIFTY_THREE = 3653;
+    /** The Constant MINUS_ONE. */
+    private static final int MINUS_ONE = -ONE;
+
     /** Test string "s". */
     private static final String S = "s";
     /** Test string "m". */
@@ -45,35 +66,35 @@ public class TimeoutValueHandlerTest {
         comboBox.setModel(model);
         TimeoutValueHandler handler = new TimeoutValueHandler(spinner, comboBox);
         handler.setReacts(true);
-        spinner.setValue(1);
-        comboBox.setSelectedIndex(2);
-        spinner.setValue(0);
-        comboBox.setSelectedIndex(0);
+        spinner.setValue(ONE);
+        comboBox.setSelectedIndex(TWO);
+        spinner.setValue(ZERO);
+        comboBox.setSelectedIndex(ZERO);
         handler.setValue(handler.getTimeout());
-        TimeOut expResult = new TimeOut(TimeUnit.SECONDS, 0);
+        TimeOut expResult = new TimeOut(TimeUnit.SECONDS, ZERO);
         TimeOut result = handler.getTimeout();
         final boolean minTest =
                 expResult.getDuration() == result.getDuration()
                 && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
-        spinner.setValue(3653);
-        comboBox.setSelectedIndex(3);
+        spinner.setValue(THREE_THOUSAND_SIX_HUNDRED_FIFTY_THREE);
+        comboBox.setSelectedIndex(THREE);
         handler.setValue(handler.getTimeout());
-        expResult = new TimeOut(TimeUnit.DAYS, 3653);
+        expResult = new TimeOut(TimeUnit.DAYS, THREE_THOUSAND_SIX_HUNDRED_FIFTY_THREE);
         result = handler.getTimeout();
         final boolean maxTest =
                 expResult.getDuration() == result.getDuration()
                 && expResult.getOrigUnit().equals(result.getOrigUnit()) && result.isActive();
-        spinner.setValue(-1);
+        spinner.setValue(MINUS_ONE);
         handler.setValue(handler.getTimeout());
-        expResult = new TimeOut(TimeUnit.DAYS, 0);
+        expResult = new TimeOut(TimeUnit.DAYS, ZERO);
         result = handler.getTimeout();
         final boolean falseValueTest =
                 expResult.getDuration() == result.getDuration()
                 && expResult.getOrigUnit().equals(result.getOrigUnit()) && !result.isActive();
-        spinner.setValue(42);
-        comboBox.setSelectedIndex(4);
+        spinner.setValue(FORTY_TWO);
+        comboBox.setSelectedIndex(FOUR);
         handler.setValue(handler.getTimeout());
-        expResult = new TimeOut(TimeUnit.SECONDS, 0);
+        expResult = new TimeOut(TimeUnit.SECONDS, ZERO);
         result = handler.getTimeout();
         // System.out.println(handler.hasChanged() + " max " +
         // handler.getTimeout().getDuration() + " " +
@@ -103,14 +124,14 @@ public class TimeoutValueHandlerTest {
         TimeoutValueHandler handler = new TimeoutValueHandler(spinner, comboBox);
         final boolean hasChangedBeforeTest = handler.hasChanged();
         handler.setReacts(true);
-        spinner.setValue(11);
-        comboBox.setSelectedIndex(2);
+        spinner.setValue(ELEVEN);
+        comboBox.setSelectedIndex(TWO);
         handler.setValue(handler.getTimeout());
         final boolean hasChangedAfterInput = handler.hasChanged();
         handler.setHasChanged(false);
         handler.setReacts(false);
-        spinner.setValue(27);
-        comboBox.setSelectedIndex(1);
+        spinner.setValue(TWENTY_SEVEN);
+        comboBox.setSelectedIndex(ONE);
         boolean hasChangedAfterStopReact = handler.hasChanged();
         assertTrue(!hasChangedBeforeTest && hasChangedAfterInput && !hasChangedAfterStopReact);
     }

@@ -8,6 +8,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public final class Preference extends CBMCInputType {
         code.add(forLoopHeaderCode(LOOP_R_2, CCodeHelper.LT_SIGN, C));
 
         code.add(functionCode(CCodeHelper.IF, neq(LOOP_R_1, LOOP_R_2))
-                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
+                + space() + CCodeHelper.OPENING_BRACES);
         code.add(functionCode(ASSUME,
                               neq(dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_1),
                                   dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_2))
@@ -224,7 +225,7 @@ public final class Preference extends CBMCInputType {
         code.add(functionCode(CCodeHelper.IF,
                               eq(arrAccess("arr", I, zero()),
                                  "candidate")
-                ) + CCodeHelper.BLANK + plusPlus("sum")
+                ) + space() + plusPlus("sum")
                 + CCodeHelper.SEMICOLON);
     }
 

@@ -16,12 +16,17 @@ import edu.pse.beast.saverloader.staticsaverloaders.TimeOutSaverLoader;
  * @author Nikolai Schnell
  */
 public class TimeOutSaverLoaderTest {
+    /** The Constant THREE_POINT_TWO. */
+    private static final long THREE_POINT_TWO = (long) 3.2;
+    /** The Constant A_LONG_WHILE. */
+    private static final int A_LONG_WHILE = 10800000;
+
     /** The time out instance. */
     private static TimeOut timeOut;
 
     @BeforeClass
     public static void setUpClass() {
-        timeOut = new TimeOut(TimeUnit.HOURS, (long) 3.2);
+        timeOut = new TimeOut(TimeUnit.HOURS, THREE_POINT_TWO);
     }
 
     /**
@@ -32,7 +37,7 @@ public class TimeOutSaverLoaderTest {
     public void testSaverLoader() {
         String saveString = TimeOutSaverLoader.createSaveString(timeOut);
         TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
-        assertEquals(recreatedTimeOut.getDuration(), 10800000);
+        assertEquals(recreatedTimeOut.getDuration(), A_LONG_WHILE);
         assertEquals(recreatedTimeOut.getOrigUnit(), TimeUnit.HOURS);
     }
 }

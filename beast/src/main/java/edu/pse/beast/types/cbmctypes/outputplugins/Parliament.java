@@ -6,6 +6,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
@@ -57,8 +58,8 @@ public final class Parliament extends CBMCOutputType {
 
     @Override
     public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
-        code.add(CCodeHelper.VOID + CCodeHelper.BLANK + "verifyMain()"
-                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
+        code.add(CCodeHelper.VOID + space() + "verifyMain()"
+                + space() + CCodeHelper.OPENING_BRACES);
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
@@ -70,7 +71,7 @@ public final class Parliament extends CBMCOutputType {
                     functionCode(UnifiedNameContainer.getVotingMethod(),
                                  UnifiedNameContainer.getNewVotesName() + one())
                 ) + CCodeHelper.SEMICOLON);
-        code.add(varEqualsCode("*tmp_result") + CCodeHelper.BLANK
+        code.add(varEqualsCode("*tmp_result") + space()
                 + "tmp." + UnifiedNameContainer.getStructValueName()
                 + CCodeHelper.SEMICOLON);
         // Create the array where the new seats will get saved
@@ -109,7 +110,7 @@ public final class Parliament extends CBMCOutputType {
                                                         final int voteNumber) {
         code.add(varAssignCode(
                         super.getContainer().getOutputStruct().getStructAccess()
-                            + CCodeHelper.BLANK + ELECT + voteNumber,
+                            + space() + ELECT + voteNumber,
                         functionCode(UnifiedNameContainer.getVotingMethod(),
                                      VOTES + voteNumber)
                         ) + CCodeHelper.SEMICOLON);
@@ -138,10 +139,10 @@ public final class Parliament extends CBMCOutputType {
             try {
                 toReturn += GUIController.getController().getElectionSimulation()
                         .getPartyName(Integer.parseInt(currentValue))
-                        + CCodeHelper.COMMA + CCodeHelper.BLANK;
+                        + CCodeHelper.COMMA + space();
             } catch (NumberFormatException e) {
                 toReturn += currentValue
-                        + CCodeHelper.COMMA + CCodeHelper.BLANK;
+                        + CCodeHelper.COMMA + space();
             }
         }
         return arrAcc(toReturn);

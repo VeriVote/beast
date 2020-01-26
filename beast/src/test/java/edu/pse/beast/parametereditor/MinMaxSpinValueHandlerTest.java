@@ -14,6 +14,20 @@ import org.junit.Test;
  * @author Jonas Wohnig
  */
 public class MinMaxSpinValueHandlerTest {
+    /** The Constant MIN. */
+    private static final Integer MIN = 6;
+    /** The Constant MAX. */
+    private static final Integer MAX = 3;
+    /** The Constant BAD_MIN. */
+    private static final Integer BAD_MIN = 0;
+    /** The Constant BAD_MAX. */
+    private static final Integer BAD_MAX = 10001;
+
+    /** The Constant TEST_MIN. */
+    private static final Integer TEST_MIN = 2;
+    /** The Constant TEST_MAX. */
+    private static final Integer TEST_MAX = 15;
+
     /**
      * Test of getValues method, of class MinMaxSpinValueHandler with a simple
      * example.
@@ -23,9 +37,9 @@ public class MinMaxSpinValueHandlerTest {
         System.out.println("getValues");
         MinMaxSpinValueHandler instance
               = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
-        instance.setMinAndMax(2, 15);
+        instance.setMinAndMax(TEST_MIN, TEST_MAX);
         ArrayList<Integer> expResult = new ArrayList<Integer>();
-        for (int i = 2; i <= 15; i++) {
+        for (int i = TEST_MIN; i <= TEST_MAX; i++) {
             expResult.add(i);
         }
         ArrayList<Integer> result = instance.getValues();
@@ -38,17 +52,13 @@ public class MinMaxSpinValueHandlerTest {
     @Test
     public void testSetMinAndMax() {
         System.out.println("setMinAndMax");
-        Integer min = 6;
-        Integer max = 3;
-        Integer badMin = 0;
-        Integer badMax = 10001;
         MinMaxSpinValueHandler instance
               = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
-        instance.setMinAndMax(min, max);
-        instance.setMinAndMax(badMin, max);
-        instance.setMinAndMax(min, badMax);
+        instance.setMinAndMax(MIN, MAX);
+        instance.setMinAndMax(BAD_MIN, MAX);
+        instance.setMinAndMax(MIN, BAD_MAX);
         ArrayList<Integer> expResult = new ArrayList<Integer>();
-        for (int i = 3; i <= 6; i++) {
+        for (int i = MAX; i <= MIN; i++) {
             expResult.add(i);
         }
         ArrayList<Integer> result = instance.getValues();

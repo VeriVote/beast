@@ -3,6 +3,7 @@ package edu.pse.beast.types.cbmctypes.outputplugins;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
@@ -48,16 +49,16 @@ public final class SingleCandidate extends CBMCOutputType {
 
     @Override
     public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
-        code.add(CCodeHelper.VOID + CCodeHelper.BLANK + "verifyMain()"
-                + CCodeHelper.BLANK + CCodeHelper.OPENING_BRACES);
+        code.add(CCodeHelper.VOID + space() + "verifyMain()"
+                + space() + CCodeHelper.OPENING_BRACES);
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
         code.addTab();
-        code.add(varAssignCode(CCodeHelper.INT + CCodeHelper.BLANK + "total_diff",
+        code.add(varAssignCode(CCodeHelper.INT + space() + "total_diff",
                                zero())
                 + CCodeHelper.SEMICOLON);
-        code.add(varAssignCode(CCodeHelper.INT + CCodeHelper.BLANK
+        code.add(varAssignCode(CCodeHelper.INT + space()
                                 + UnifiedNameContainer.getNewResultName() + one(),
                                functionCode(UnifiedNameContainer.getVotingMethod(),
                                             UnifiedNameContainer.getNewVotesName() + one()))

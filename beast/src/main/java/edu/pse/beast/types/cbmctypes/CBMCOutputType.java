@@ -2,6 +2,7 @@ package edu.pse.beast.types.cbmctypes;
 
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
@@ -44,8 +45,8 @@ public abstract class CBMCOutputType extends OutputType {
     @Override
     public final CodeArrayListBeautifier addMarginMainTest(final CodeArrayListBeautifier code,
                                                            final int voteNumber) {
-        code.add(CCodeHelper.INT + CCodeHelper.BLANK
-                + functionCode("main") + CCodeHelper.BLANK
+        code.add(CCodeHelper.INT + space()
+                + functionCode("main") + space()
                 + CCodeHelper.OPENING_BRACES);
         code.addTab();
         String definition =

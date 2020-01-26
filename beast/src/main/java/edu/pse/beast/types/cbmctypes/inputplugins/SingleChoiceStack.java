@@ -10,6 +10,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.plus;
 import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
@@ -170,7 +171,7 @@ public final class SingleChoiceStack extends CBMCInputType {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add();
-        code.add(varAssignCode(CCodeHelper.LONG + CCodeHelper.BLANK + TMP_DIFF,
+        code.add(varAssignCode(CCodeHelper.LONG + space() + TMP_DIFF,
                                functionCode(NONDET_LONG))
                 + CCodeHelper.SEMICOLON);
         code.add();
@@ -240,7 +241,7 @@ public final class SingleChoiceStack extends CBMCInputType {
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF, eq(arrAccess(ARR, I), CANDIDATE))
-                + CCodeHelper.BLANK + plusPlus(SUM) + CCodeHelper.SEMICOLON);
+                + space() + plusPlus(SUM) + CCodeHelper.SEMICOLON);
     }
 
     @Override

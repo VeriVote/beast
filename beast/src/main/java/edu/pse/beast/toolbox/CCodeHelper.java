@@ -111,8 +111,6 @@ public final class CCodeHelper {
     /** The Constant THREAD_LOCAL. */
     public static final String THREAD_LOCAL = "_Thread_local";
 
-    /** The BLANK symbol. */
-    public static final String BLANK = " ";
     /** The Constant LINE_BREAK. */
     public static final String LINE_BREAK = "\n";
     /** The Constant SEMICOLON. */
@@ -123,6 +121,8 @@ public final class CCodeHelper {
     public static final String LT_SIGN = "<";
     /** The Constant GT_SIGN. */
     public static final String GT_SIGN = ">";
+    /** The Constant PLUS. */
+    public static final String PLUS = "+";
 
     /** The Constant OPENING_PARENTHESES. */
     public static final String OPENING_PARENTHESES = "(";
@@ -137,6 +137,9 @@ public final class CCodeHelper {
     public static final String COMMA = ",";
     /** The colon symbol. */
     public static final String COLON = ":";
+
+    /** The BLANK symbol. */
+    private static final String BLANK = " ";
     /** The Constant DOT. */
     private static final String DOT = ".";
     /** The Constant DOT. */
@@ -154,8 +157,6 @@ public final class CCodeHelper {
     private static final String MINUS = "-";
     /** The Constant NOT. */
     private static final String NOT = "!";
-    /** The Constant PLUS. */
-    private static final String PLUS = "+";
     /** The Constant DIV. */
     private static final String DIV = "/";
     /** The Constant PLUS_PLUS. */
@@ -281,15 +282,26 @@ public final class CCodeHelper {
      *
      * @param numberOfSpaces
      *            the number of spaces
+     *
+     * @return the spaces
      */
     public static String spaces(final int numberOfSpaces) {
         String spaces = "";
         if (0 <= numberOfSpaces) {
             for (int remSpaces = numberOfSpaces; 0 < remSpaces; remSpaces--) {
-                spaces += " ";
+                spaces += CCodeHelper.BLANK;
             }
         }
         return spaces;
+    }
+
+    /**
+     * Produces a space.
+     *
+     * @return a space
+     */
+    public static String space() {
+        return CCodeHelper.BLANK;
     }
 
     /**
