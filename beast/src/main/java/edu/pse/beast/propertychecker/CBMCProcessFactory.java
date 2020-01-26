@@ -315,8 +315,8 @@ public final class CBMCProcessFactory extends CheckerFactory {
      *
      * @return the operating systems
      */
-    public static OperatingSystems determineOS() { // TODO extract to UTIl
-        String environment = System.getProperty("os.name");
+    public static OperatingSystems determineOS() { // TODO Extract to UTIl
+        final String environment = System.getProperty("os.name");
         OperatingSystems determinedOS = null;
         if (environment.toLowerCase().contains("linux")) {
             determinedOS = OperatingSystems.Linux;
@@ -367,16 +367,16 @@ public final class CBMCProcessFactory extends CheckerFactory {
 
     public File createCodeFileCheck(final ElectionDescription electionDesc,
                                     final PreAndPostConditionsDescription postAndPrepPropDesc) {
-        // create a code generator, that creates a code file for this call only
+        // Create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator =
+        final CBMCCodeGenerator generator =
                 new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc);
-        ArrayList<String> code = generator.getCode();
-        String absolutePath = SuperFolderFinder.getSuperFolder()
-                                + PATH_TO_TEMP_FOLDER;
-        File file = new File(new File(absolutePath),
-                             FileLoader.getNewUniqueName(absolutePath)
-                             + FileLoader.C_FILE_ENDING);
+        final ArrayList<String> code = generator.getCode();
+        final String absolutePath = SuperFolderFinder.getSuperFolder()
+                                    + PATH_TO_TEMP_FOLDER;
+        final File file = new File(new File(absolutePath),
+                                   FileLoader.getNewUniqueName(absolutePath)
+                                       + FileLoader.C_FILE_ENDING);
         if (file.getParentFile() == null) {
             ErrorLogger.log(CANNOT_FIND_PARENT);
         } else if (!file.getParentFile().exists()) {
@@ -410,16 +410,16 @@ public final class CBMCProcessFactory extends CheckerFactory {
                                      final ElectionSimulationData inputData) {
         // Create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator =
+        final CBMCCodeGenerator generator =
                 new CBMCCodeGenerator(electionDesc,
                                       postAndPrepPropDesc, margin,
                                       origResult, inputData);
-        ArrayList<String> code = generator.getCode();
-        String absolutePath = SuperFolderFinder.getSuperFolder()
-                                + PATH_TO_TEMP_FOLDER;
-        File file = new File(new File(absolutePath),
-                             FileLoader.getNewUniqueName(absolutePath)
-                             + FileLoader.C_FILE_ENDING);
+        final ArrayList<String> code = generator.getCode();
+        final String absolutePath = SuperFolderFinder.getSuperFolder()
+                                    + PATH_TO_TEMP_FOLDER;
+        final File file = new File(new File(absolutePath),
+                                   FileLoader.getNewUniqueName(absolutePath)
+                                       + FileLoader.C_FILE_ENDING);
         if (file.getParentFile() == null) {
             ErrorLogger.log(CANNOT_FIND_PARENT);
         } else if (!file.getParentFile().exists()) {
@@ -446,17 +446,17 @@ public final class CBMCProcessFactory extends CheckerFactory {
     public File createCodeFileTest(final ElectionDescription electionDesc,
                                    final PreAndPostConditionsDescription postAndPrepPropDesc,
                                    final ElectionSimulationData inputData) {
-        // create a code generator, that creates a code file for this call only
+        // Create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator =
+        final CBMCCodeGenerator generator =
                 new CBMCCodeGenerator(electionDesc,
                                       postAndPrepPropDesc, inputData);
-        ArrayList<String> code = generator.getCode();
-        String absolutePath = SuperFolderFinder.getSuperFolder()
-                                + PATH_TO_TEMP_FOLDER;
-        File file = new File(new File(absolutePath),
-                             FileLoader.getNewUniqueName(absolutePath)
-                             + FileLoader.C_FILE_ENDING);
+        final ArrayList<String> code = generator.getCode();
+        final String absolutePath = SuperFolderFinder.getSuperFolder()
+                                    + PATH_TO_TEMP_FOLDER;
+        final File file = new File(new File(absolutePath),
+                                   FileLoader.getNewUniqueName(absolutePath)
+                                       + FileLoader.C_FILE_ENDING);
         if (file.getParentFile() == null) {
             ErrorLogger.log(CANNOT_FIND_PARENT);
         } else if (!file.getParentFile().exists()) {
@@ -637,7 +637,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
                                         final int candidates,
                                         final int seats, final CheckerFactory parent,
                                         final Result result) {
-        String userOptions = advanced.trim().replaceAll(TO_REPLACE, WHITESPACE);
+        final String userOptions = advanced.trim().replaceAll(TO_REPLACE, WHITESPACE);
         // Remove all unnecessary white spaces.
         // Create the file in which the code is saved if it does not exist
         // already.
@@ -674,7 +674,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
                                          final ElectionSimulationData origResult,
                                          final ElectionSimulationData votingData,
                                          final Result result) {
-        String userOptions = advanced.trim().replaceAll(TO_REPLACE, WHITESPACE);
+        final String userOptions = advanced.trim().replaceAll(TO_REPLACE, WHITESPACE);
         // remove all unnecessary white spaces
         // create the file in which the code is saved
         toCheck = createCodeFileMargin(electionDesc, postAndPrepPropDesc,

@@ -194,14 +194,15 @@ public final class FactoryController implements Runnable {
         for (Iterator<ParentTreeItem> parentIterator =
                 parentProperties.iterator();
                 parentIterator.hasNext();) {
-            ParentTreeItem parentTreeItem =
+            final ParentTreeItem parentTreeItem =
                     (ParentTreeItem) parentIterator.next();
             for (Iterator<ChildTreeItem> childIterator =
                     parentTreeItem.getSubItems().iterator();
                     childIterator.hasNext();) {
-                ChildTreeItem child = childIterator.next();
+                final ChildTreeItem child = childIterator.next();
                 if (child.isSelected()) {
-                    Result result = CheckerFactoryFactory
+                    final Result result =
+                            CheckerFactoryFactory
                             .getMatchingResult(checkerIdString);
                     result.setProperty(
                             parentTreeItem.getPreAndPostProperties());
@@ -327,17 +328,14 @@ public final class FactoryController implements Runnable {
                     // results.get(i),
                     // propertiesToCheckAndMargin.get(i).getMarginStatus());
 
-                    CheckerFactory factory =
+                    final CheckerFactory factory =
                             CheckerFactoryFactory
                             .getCheckerFactory(checkerID, this, elecDesc,
                                                results.get(i), parameter);
-
                     synchronized (this) {
                         currentlyRunning.add(factory);
                     }
-
                     new Thread(factory, "CheckerFactory Property " + i).start();
-
                     break innerLoop;
                 } else {
                     // ELSE, we try to sleep a bit. It is important that we
@@ -351,7 +349,6 @@ public final class FactoryController implements Runnable {
                     }
                 }
             }
-
             if (stopped) {
                 break outerLoop;
             }
@@ -394,7 +391,7 @@ public final class FactoryController implements Runnable {
             for (Iterator<CheckerFactory> iterator =
                     currentlyRunning.iterator();
                     iterator.hasNext();) {
-                CheckerFactory toStop = iterator.next();
+                final CheckerFactory toStop = iterator.next();
                 toStop.stopChecking();
             }
             // set all not finished results to finished, to indicate that they
@@ -402,7 +399,7 @@ public final class FactoryController implements Runnable {
             // ready to be presented
             for (Iterator<Result> iterator = results.iterator();
                     iterator.hasNext();) {
-                Result result = (Result) iterator.next();
+                final Result result = (Result) iterator.next();
                 if (!result.isFinished()) {
                     result.setTimeoutFlag();
                 }

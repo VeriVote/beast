@@ -51,7 +51,7 @@ public final class IntegerNode extends IntegerValuedExpression {
         if (!super.equals(o)) {
             return false;
         }
-        IntegerNode that = (IntegerNode) o;
+        final IntegerNode that = (IntegerNode) o;
         return heldInteger == that.heldInteger;
     }
 

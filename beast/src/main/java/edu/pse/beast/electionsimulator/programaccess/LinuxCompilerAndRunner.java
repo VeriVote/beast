@@ -59,7 +59,7 @@ public final class LinuxCompilerAndRunner
                 ENABLE_USER_INCLUDE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
         Process startedProcess = null;
-        List<String> arguments = new ArrayList<String>();
+        final List<String> arguments = new ArrayList<String>();
         // Add the arguments needed for the call
         arguments.add(COMPILER_STRING);
         arguments.add(userIncludeAndPath);
@@ -74,14 +74,14 @@ public final class LinuxCompilerAndRunner
         // Iterate over all "*.c" files from the include folder, to include them
         for (Iterator<String> iterator = allFiles.iterator();
                 iterator.hasNext();) {
-            String toBeIncludedFile = iterator.next();
+            final String toBeIncludedFile = iterator.next();
             arguments.add(
                     toBeIncludedFile.replace(FileLoader.QUOTE, "")
                         .replace(BLANK, "\\ "));
         }
         // Defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);
-        ProcessBuilder prossBuild =
+        final ProcessBuilder prossBuild =
                 new ProcessBuilder(arguments.toArray(new String[0]));
         try { // Start the process
             startedProcess = prossBuild.start();
@@ -95,14 +95,14 @@ public final class LinuxCompilerAndRunner
     protected Process runWithData(final String toRun, final File dataFile) {
         Process startedProcess = null;
         // The list where the arguments for the call get saved in
-        List<String> arguments = new ArrayList<String>();
+        final List<String> arguments = new ArrayList<String>();
         // On Linux, our executable ends with .out
         // this argument calls the generated program
         arguments.add("./" + toRun + FileLoader.OUT_FILE_ENDING);
         // The absolute path to the file that holds
         arguments.add(dataFile.getAbsolutePath());
-        ProcessBuilder prossBuild = new ProcessBuilder(
-                arguments.toArray(new String[0]));
+        final ProcessBuilder prossBuild =
+                new ProcessBuilder(arguments.toArray(new String[0]));
         try { // Start the process
             startedProcess = prossBuild.start();
         } catch (IOException e) {

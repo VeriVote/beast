@@ -46,7 +46,7 @@ public abstract class QuantifierNode extends BooleanExpressionNode {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        QuantifierNode that = (QuantifierNode) o;
+        final QuantifierNode that = (QuantifierNode) o;
         if (declSymbVar != null ? !declSymbVar.equals(that.declSymbVar)
                 : that.declSymbVar != null) {
             return false;

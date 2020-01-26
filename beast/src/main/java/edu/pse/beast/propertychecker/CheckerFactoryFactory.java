@@ -43,12 +43,12 @@ public final class CheckerFactoryFactory {
      * @return the map
      */
     private static Map<String, CheckerFactory> searchForCheckers() {
-        Map<String, CheckerFactory> foundFactories =
+        final Map<String, CheckerFactory> foundFactories =
                 new HashMap<String, CheckerFactory>();
-        // cbmc is always included, so we add it here
+        // CBMC is always included, so we add it here.
         foundFactories.put(CBMC_STRING,
                            new CBMCProcessFactory(null, null, null, null));
-        // TODO search for other factories
+        // TODO Search for other factories.
         return foundFactories;
     }
 
@@ -59,10 +59,10 @@ public final class CheckerFactoryFactory {
         factories.clear();
         factories = searchForCheckers();
         if (!initialized) {
-            // cbmc is always included, so we add it here
+            // CBMC is always included, so we add it here.
             factories.put(CBMC_STRING,
                           new CBMCProcessFactory(null, null, null, null));
-            // TODO search for other classes
+            // TODO Search for other classes.
             initialized = true;
         }
     }
@@ -189,7 +189,7 @@ public final class CheckerFactoryFactory {
      */
     public static List<Result> getMatchingUnprocessedResult(final String checkerID,
                                                             final int amount) {
-        List<Result> results = new ArrayList<Result>();
+        final List<Result> results = new ArrayList<Result>();
         for (int i = 0; i < amount; i++) {
             // results.add(new UnprocessedCBMCResult()); TODO find all classes
             // which extend

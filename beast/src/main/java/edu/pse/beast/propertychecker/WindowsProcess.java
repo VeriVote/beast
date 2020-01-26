@@ -139,22 +139,27 @@ public final class WindowsProcess extends CBMCProcess {
         // generated.
         userCommands = userCommands + BLANK + "--xml-ui";
         // Set the values for the voters, candidates and seats.
-        String arguments = userCommands + PASS_C_CONST
-                + UnifiedNameContainer.getVoter() + EQUALS + voters + PASS_C_CONST
+        final String arguments =
+                userCommands + PASS_C_CONST
+                + UnifiedNameContainer.getVoter() + EQUALS + voters
+                + PASS_C_CONST
                 + UnifiedNameContainer.getCandidate() + EQUALS + candidates
-                + PASS_C_CONST + UnifiedNameContainer.getSeats() + EQUALS + seats;
+                + PASS_C_CONST
+                + UnifiedNameContainer.getSeats() + EQUALS + seats;
         // Enable the usage of includes in cbmc.
-        String userIncludeAndPath = QUOTE + ENABLE_USER_INCLUDE
-                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                + QUOTE;
+        final String userIncludeAndPath =
+                QUOTE + ENABLE_USER_INCLUDE
+                + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + QUOTE;
         // Get all Files from the form "*.c" so we can include them into cbmc.
-        List<String> allFiles = FileLoader.listAllFilesFromFolder(
-                QUOTE + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                        + QUOTE,
-                FileLoader.C_FILE_ENDING);
+        final List<String> allFiles =
+                FileLoader.listAllFilesFromFolder(
+                        QUOTE + SuperFolderFinder.getSuperFolder()
+                            + USER_INCLUDE_FOLDER + QUOTE,
+                        FileLoader.C_FILE_ENDING);
         // We have to give all available "*c" files to cbmc, in case the user
         // used their own includes, so we combine them here.
-        String compileAllIncludesInIncludePath =
+        final String compileAllIncludesInIncludePath =
                 StringUtils.join(allFiles, BLANK);
         String vsCmd = null;
         Process startedProcess = null;
@@ -218,22 +223,26 @@ public final class WindowsProcess extends CBMCProcess {
                 cbmcEXE = QUOTE + cbmcEXE + QUOTE;
                 // Because Windows is weird the whole call that will get placed
                 // inside VScmd has to be in one giant string
-                String cbmcCall = vsCmd + BLANK + "&" + BLANK + cbmcEXE + BLANK
+                final String cbmcCall =
+                        vsCmd + BLANK + "&" + BLANK + cbmcEXE + BLANK
                         + userIncludeAndPath + BLANK + QUOTE
                         + toCheck.getAbsolutePath() + QUOTE + BLANK
                         + compileAllIncludesInIncludePath + BLANK + arguments;
-                List<String> callInList = new ArrayList<String>();
+                final List<String> callInList = new ArrayList<String>();
                 callInList.add(cbmcCall);
-                File batFile = new File(toCheck.getParent() + "\\"
-                        + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
-                                                    FileLoader.BAT_FILE_ENDING));
+                final File batFile =
+                        new File(toCheck.getParent() + "\\"
+                                    + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                                                FileLoader.BAT_FILE_ENDING));
                 FileSaver.writeStringLinesToFile(callInList, batFile);
                 // This call starts a new VScmd instance and lets cbmc run in it.
                 // ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE,
                 //                                                SLASH_C,
                 //                                                cbmcCall);
-                ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
-                        QUOTE + batFile.getAbsolutePath() + QUOTE);
+                final ProcessBuilder prossBuild =
+                        new ProcessBuilder(CMD_EXE, SLASH_C,
+                                           QUOTE + batFile.getAbsolutePath()
+                                               + QUOTE);
                 try {
                     startedProcess = prossBuild.start();
                 } catch (IOException e) {
@@ -252,17 +261,17 @@ public final class WindowsProcess extends CBMCProcess {
             return;
         } else {
             // Get the process id of the parent process (cmd in our case here).
-            int pid = getWindowsProcessId(getProcess());
+            final int pid = getWindowsProcessId(getProcess());
             // Generate a call to cmd to get all child processes of our
             // processID.
-            String cmdCall = "wmic process where (ParentProcessId=" + pid
-                            + ") get Caption,ProcessId";
-            List<String> children = new ArrayList<String>();
+            final String cmdCall = "wmic process where (ParentProcessId=" + pid
+                                    + ") get Caption,ProcessId";
+            final List<String> children = new ArrayList<String>();
             // Latch to synchronize on, so we can be sure that every
             // child process is found and written to this List that contains the
             // children.
-            CountDownLatch latch = new CountDownLatch(1);
-            ProcessBuilder prossBuild =
+            final CountDownLatch latch = new CountDownLatch(1);
+            final ProcessBuilder prossBuild =
                     new ProcessBuilder(CMD_EXE, SLASH_C, cmdCall);
             Process cbmcFinder = null;
             int cbmcPID = -1;
@@ -295,7 +304,7 @@ public final class WindowsProcess extends CBMCProcess {
                 // Traverse all children.
                 for (Iterator<String> iterator = children.iterator();
                         iterator.hasNext();) {
-                    String line = iterator.next();
+                    final String line = iterator.next();
                     cbmcPID = findCBMCInstance(cbmcPID, line);
                 }
             } else {
@@ -304,7 +313,7 @@ public final class WindowsProcess extends CBMCProcess {
             if (cbmcPID != -1) {
                 // Now wrap the newly gotten process in a win32Process object to
                 // terminate it then.
-                Win32Process cbmcProcess;
+                final Win32Process cbmcProcess;
                 try {
                     cbmcProcess = new Win32Process(cbmcPID);
                     cbmcProcess.terminate();
@@ -363,18 +372,18 @@ public final class WindowsProcess extends CBMCProcess {
             /* Determine the pid on windows plattforms */
             try {
                 // Get the handle by reflection
-                Field f = proc.getClass().getDeclaredField("handle");
+                final Field f = proc.getClass().getDeclaredField("handle");
                 f.setAccessible(true);
-                long handLong = f.getLong(proc);
-                Kernel32 kernel = Kernel32.INSTANCE;
-                WinNT.HANDLE handle = new WinNT.HANDLE();
+                final long handLong = f.getLong(proc);
+                final Kernel32 kernel = Kernel32.INSTANCE;
+                final WinNT.HANDLE handle = new WinNT.HANDLE();
                 // Get the immutable value and set it accessible so we do not
                 // run into errors.
-                Field toSet = handle.getClass().getDeclaredField("immutable");
+                final Field toSet = handle.getClass().getDeclaredField("immutable");
                 toSet.setAccessible(true);
-                boolean savedState = toSet.getBoolean(handle);
+                final boolean savedState = toSet.getBoolean(handle);
                 handle.setPointer(Pointer.createConstant(handLong));
-                int pid = kernel.GetProcessId(handle);
+                final int pid = kernel.GetProcessId(handle);
                 // Set it back to the original value and make it unaccessible
                 // again.
                 toSet.setBoolean(handle, savedState);

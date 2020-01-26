@@ -129,7 +129,7 @@ public abstract class ErrorDisplayer
      *            the msg
      */
     protected void showError(final CodeError er, final String msg) {
-        int startpos = er.getStartPos();
+        final int startpos = er.getStartPos();
         int endpos = er.getEndPos();
         if (startpos == endpos) {
             endpos++;
@@ -162,8 +162,8 @@ public abstract class ErrorDisplayer
 
     @Override
     public final void mouseMoved(final MouseEvent e) {
-        Point pt = new Point(e.getX(), e.getY());
-        int pos = pane.viewToModel2D(pt);
+        final Point pt = new Point(e.getX(), e.getY());
+        final int pos = pane.viewToModel2D(pt);
         if (pos == JTextPaneToolbox.getText(pane).length()) {
             pane.setToolTipText(null);
             // errorPopupMenu.setVisible(false);

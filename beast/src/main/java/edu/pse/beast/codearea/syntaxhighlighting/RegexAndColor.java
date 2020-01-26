@@ -29,7 +29,7 @@ public class RegexAndColor {
      *            the color
      */
     public RegexAndColor(final String regExStr, final Color color) {
-        StyleContext styleContext = StyleContext.getDefaultStyleContext();
+        final StyleContext styleContext = StyleContext.getDefaultStyleContext();
         this.regEx = regExStr;
         this.attributeSetForColor =
                 styleContext.addAttribute(

@@ -129,15 +129,15 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     public List<String> runAnalysis(final List<String> code,
                                     final Result resultToStoreIn) {
         // Array that returns the result
-        List<String> toReturn = new ArrayList<String>();
+        final List<String> toReturn = new ArrayList<String>();
         List<String> result = new ArrayList<String>();
         List<String> errors = new ArrayList<String>();
-        String pathToNewFile = ABSOLUTE_PATH
-                                + FileLoader.getNewUniqueName(ABSOLUTE_PATH);
+        final String pathToNewFile =
+                ABSOLUTE_PATH + FileLoader.getNewUniqueName(ABSOLUTE_PATH);
         createFiles(pathToNewFile);
         // Write the code to the file
         FileSaver.writeStringLinesToFile(code, cFile);
-        Process process = compileCFile(cFile);
+        final Process process = compileCFile(cFile);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
             ThreadedBufferedReader outReader =
@@ -168,7 +168,7 @@ public abstract class SystemSpecificCompilerAndExecutioner {
             // Here the compilation is done
             result = new ArrayList<String>();
             errors = new ArrayList<String>();
-            Process programProcess = runWithData(pathToNewFile, dataFile);
+            final Process programProcess = runWithData(pathToNewFile, dataFile);
             if (programProcess != null) {
                 latch = new CountDownLatch(2);
                 outReader =
@@ -195,7 +195,7 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                 }
                 for (Iterator<String> iterator = errors.iterator();
                         iterator.hasNext();) {
-                    String error = iterator.next();
+                    final String error = iterator.next();
                     System.out.println(error);
                 }
                 // Here the computation is done
@@ -206,7 +206,7 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                 String winner = result.get(0);
                 winner = winner.split(EQUALS_SIGN)[1].replaceAll("\\s+", "");
                 if (winner.contains(COMMA)) {
-                    String[] winnerArray = winner.split(COMMA);
+                    final String[] winnerArray = winner.split(COMMA);
                     for (int i = 0; i < winnerArray.length; i++) {
                         toReturn.add(winnerArray[i]);
                     }

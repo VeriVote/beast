@@ -47,8 +47,8 @@ public final class LanguageOptions extends Options {
                            final StringResourceLoader stringResLoader) {
         super(LANG_OPTS);
         this.sli = slInterf;
-        String chosenLang = stringResLoader.getStringFromID(LANG_ID);
-        List<String> availableLangsList = Arrays.asList(GERMAN, ENGLISH);
+        final String chosenLang = stringResLoader.getStringFromID(LANG_ID);
+        final List<String> availableLangsList = Arrays.asList(GERMAN, ENGLISH);
         langOptElem = new LanguageOptionElement(availableLangsList, chosenLang);
         addOptionElement(langOptElem);
     }
@@ -62,7 +62,7 @@ public final class LanguageOptions extends Options {
     public LanguageOptions(final StringLoaderInterface slInterf) {
         super(LANG_OPTS);
         this.sli = slInterf;
-        ArrayList<String> availableLangsList = new ArrayList<String>();
+        final ArrayList<String> availableLangsList = new ArrayList<String>();
         availableLangsList.add(GERMAN);
         langOptElem = new LanguageOptionElement(availableLangsList, GERMAN);
         addOptionElement(langOptElem);

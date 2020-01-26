@@ -49,7 +49,7 @@ public abstract class CBMCOutputType extends OutputType {
                 + functionCode("main") + space()
                 + CCodeHelper.OPENING_BRACES);
         code.addTab();
-        String definition =
+        final String definition =
                 getContainer().getOutputStruct().getStructAccess()
                 + varAssignCode(UnifiedNameContainer.getElect() + one(),
                                 functionCode(UnifiedNameContainer.getVotingMethod(),

@@ -37,17 +37,16 @@ public final class NotNode extends BooleanExpressionNode {
 
     @Override
     public String getTreeString(final int depth) {
-        String tabs = TABS.substring(0, depth + 1);
+        final String tabs = TABS.substring(0, depth + 1);
         return "NOT" + LINE_BREAK + tabs + "following: "
                 + followingNode.getTreeString(depth + 1);
     }
 
     @Override
     public int hashCode() {
-        int result = 1;
-        result = PRIME * result
-                + ((followingNode == null) ? 0 : followingNode.hashCode());
-        return result;
+        return PRIME
+                + ((followingNode == null)
+                        ? 0 : followingNode.hashCode());
     }
 
     @Override
@@ -58,7 +57,7 @@ public final class NotNode extends BooleanExpressionNode {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        NotNode notNode = (NotNode) o;
+        final NotNode notNode = (NotNode) o;
         return followingNode != null
                 ? followingNode.equals(notNode.followingNode)
                 : notNode.followingNode == null;

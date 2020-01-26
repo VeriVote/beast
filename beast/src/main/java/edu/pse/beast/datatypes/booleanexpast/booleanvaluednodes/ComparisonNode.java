@@ -88,7 +88,7 @@ public class ComparisonNode extends BooleanExpressionNode {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ComparisonNode that = (ComparisonNode) o;
+        final ComparisonNode that = (ComparisonNode) o;
         if (getLhsTypeExp() != null
                 ? !getLhsTypeExp().equals(that.getLhsTypeExp())
                 : that.getLhsTypeExp() != null) {
@@ -113,8 +113,8 @@ public class ComparisonNode extends BooleanExpressionNode {
 
     @Override
     public final String getTreeString(final int depth) {
-        StringBuilder b = new StringBuilder();
-        String tabs = TABS.substring(0, depth);
+        final StringBuilder b = new StringBuilder();
+        final String tabs = TABS.substring(0, depth);
         b.append(tabs + getTreeStringExtra()
                 + comparisonSymbol.getCStringRep() + LINE_BREAK);
         b.append(tabs + TAB + LHS

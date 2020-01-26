@@ -42,7 +42,7 @@ public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder();
         final String tabs = TABS.substring(0, depth + 1);
         b.append("BinaryIntNode: Symbol " + relationSymbol + LINE_BREAK);
         b.append(tabs + LHS + getLhs().getTreeString(depth + 1));

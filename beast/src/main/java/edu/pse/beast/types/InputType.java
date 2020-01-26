@@ -45,11 +45,12 @@ public abstract class InputType extends InOutType {
      * @return the input types
      */
     public static List<InputType> getInputTypes() {
-        ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
-        List<InputType> types = new ArrayList<InputType>();
+        final ServiceLoader<InputType> loader =
+                ServiceLoader.load(InputType.class);
+        final List<InputType> types = new ArrayList<InputType>();
         for (Iterator<InputType> iterator = loader.iterator();
                 iterator.hasNext();) {
-            InputType type = iterator.next();
+            final InputType type = iterator.next();
             types.add(type);
         }
         return types;
@@ -136,7 +137,7 @@ public abstract class InputType extends InOutType {
      */
     public String[] wrongInputTypeArray(final int amountCandidates,
                                         final int amountVoters) {
-        String[] toReturn = new String[amountCandidates];
+        final String[] toReturn = new String[amountCandidates];
         Arrays.fill(toReturn, "wrong input type");
         return toReturn;
     }
@@ -290,8 +291,8 @@ public abstract class InputType extends InOutType {
     public String setVoteValue(final String newVotesName,
                                final String origVotesName,
                                final List<String> loopVars) {
-        String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
-        String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+        final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+        final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         return newVotesNameAcc + " = " + origVotesNameAcc + ";";
     }
 
@@ -306,8 +307,9 @@ public abstract class InputType extends InOutType {
      */
     public String getFullVoteAccess(final String voteName,
                                     final List<String> loopVars) {
-        String access = this.getAccessDimensions(loopVars);
-        return voteName + "." + UnifiedNameContainer.getStructValueName()
+        final String access = this.getAccessDimensions(loopVars);
+        return voteName + "."
+                + UnifiedNameContainer.getStructValueName()
                 + access;
     }
 
@@ -374,11 +376,11 @@ public abstract class InputType extends InOutType {
                                              final int amountCandidates,
                                              final int amountSeats,
                                              final List<String> sizesOfDimensions) {
-        List<Integer> toReturn = new ArrayList<Integer>();
+        final List<Integer> toReturn = new ArrayList<Integer>();
         if (sizesOfDimensions.size() == 0) {
             return toReturn;
         } else {
-            String sizeOfDim = sizesOfDimensions.get(0);
+            final String sizeOfDim = sizesOfDimensions.get(0);
             if (sizeOfDim.contentEquals("V")) {
                 toReturn.add(amountVoters);
             } else if (sizeOfDim.contentEquals("C")) {

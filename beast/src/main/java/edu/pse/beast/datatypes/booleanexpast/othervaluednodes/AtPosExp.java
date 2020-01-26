@@ -63,7 +63,7 @@ public final class AtPosExp extends TypeExpression {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AtPosExp atPosExp = (AtPosExp) o;
+        final AtPosExp atPosExp = (AtPosExp) o;
         return integerValuedExpression != null
                 ? integerValuedExpression
                         .equals(atPosExp.integerValuedExpression)

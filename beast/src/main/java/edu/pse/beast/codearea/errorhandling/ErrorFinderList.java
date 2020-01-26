@@ -23,7 +23,7 @@ public class ErrorFinderList {
      * @return the list of errors found be the errorfinders
      */
     public ArrayList<CodeError> getErrors() {
-        ArrayList<CodeError> created = new ArrayList<CodeError>();
+        final ArrayList<CodeError> created = new ArrayList<CodeError>();
         for (int i = 0;
                 i < errorFinderList.size() && created.size() == 0;
                 ++i) {

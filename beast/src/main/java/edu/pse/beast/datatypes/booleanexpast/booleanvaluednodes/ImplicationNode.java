@@ -28,7 +28,7 @@ public final class ImplicationNode extends BinaryRelationshipNode {
 
     @Override
     public String getTreeString(final int depth) {
-        String tabs = TABS.substring(0, depth + 1);
+        final String tabs = TABS.substring(0, depth + 1);
         return "==>" + LINE_BREAK + tabs + LHS
                 + getLHSBooleanExpNode().getTreeString(depth + 1) + tabs
                 + RHS + getRHSBooleanExpNode().getTreeString(depth + 1);

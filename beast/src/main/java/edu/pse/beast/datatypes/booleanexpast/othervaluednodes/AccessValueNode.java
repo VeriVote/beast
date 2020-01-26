@@ -68,7 +68,7 @@ public abstract class AccessValueNode extends TypeExpression {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AccessValueNode that = (AccessValueNode) o;
+        final AccessValueNode that = (AccessValueNode) o;
         if (count != that.count) {
             return false;
         }

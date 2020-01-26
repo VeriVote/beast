@@ -121,16 +121,17 @@ public abstract class CheckerFactory implements Runnable {
     @Override
     public final void run() {
         String advanced = parameter.getArgument();
-        String[] toTrim = advanced.split(SEMICOLON);
+        final String[] toTrim = advanced.split(SEMICOLON);
         for (int i = 0; i < toTrim.length; i++) {
             // remove all white spaces so they do not interfere later
             toTrim[i] = toTrim[i].trim();
         }
         advanced = String.join(SEMICOLON, advanced.split(SEMICOLON));
-        int numVotes = parameter.getMarginVotes();
-        int numCandidates = parameter.getMarginCandidates();
-        int numSeats = parameter.getMarginSeats();
-        ElectionSimulationData votingData = GUIController.getController()
+        final int numVotes = parameter.getMarginVotes();
+        final int numCandidates = parameter.getMarginCandidates();
+        final int numSeats = parameter.getMarginSeats();
+        final ElectionSimulationData votingData =
+                GUIController.getController()
                 .getElectionSimulation().getVotingData();
 
         result.setStarted();
@@ -185,17 +186,18 @@ public abstract class CheckerFactory implements Runnable {
      *            the result
      */
     private void runCheck(final String advanced, final Result res) {
-        outerLoop: for (Iterator<Integer> voteIterator = parameter
-                .getAmountVoters().iterator(); voteIterator.hasNext();) {
-            int voters = voteIterator.next();
+        outerLoop: for (Iterator<Integer> voteIterator =
+                            parameter.getAmountVoters().iterator();
+                voteIterator.hasNext();) {
+            final int voters = voteIterator.next();
             for (Iterator<Integer> candidateIterator =
                     parameter.getAmountCandidates().iterator();
                     candidateIterator.hasNext();) {
-                int candidates = candidateIterator.next();
+                final int candidates = candidateIterator.next();
                 for (Iterator<Integer> seatsIterator =
                         parameter.getAmountSeats().iterator();
                         seatsIterator.hasNext();) {
-                    int seats = seatsIterator.next();
+                    final int seats = seatsIterator.next();
                     synchronized (this) {
                         if (!stopped) {
                             currentlyRunning =
@@ -301,7 +303,7 @@ public abstract class CheckerFactory implements Runnable {
                                          numCandidates, numSeats,
                                          this, origData, res);
                 busyWaiting();
-                ElectionSimulationData origResult =
+                final ElectionSimulationData origResult =
                         new ElectionSimulationData(
                                 numVoters, numCandidates, numSeats,
                                 res.readVariableValue(ELECT_DEC).get(0)
@@ -344,7 +346,7 @@ public abstract class CheckerFactory implements Runnable {
                         lastFailedRun = currentlyRunning.getResultList();
                     }
                 }
-                // so far, we have not found an upper bound for the
+                // So far, we have not found an upper bound for the
                 // margin, so we must check the last computed margin now:
                 if (!hasUpperBound) {
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
@@ -355,7 +357,7 @@ public abstract class CheckerFactory implements Runnable {
                     }
                 }
                 // hasMargin now is true, if there is an upper bound,
-                // and false, if there is no margin
+                // and false, if there is no margin.
                 System.out.println(HAS_FINAL_MARGIN + hasMargin
                                     + FINAL_MARGIN_EQUALS + margin);
                 res.addStatusString(HAS_FINAL_MARGIN + hasMargin
@@ -372,11 +374,11 @@ public abstract class CheckerFactory implements Runnable {
                     res.setResult(currentlyRunning.getResultList());
                     res.setFinalMargin(-1);
                 }
-                ElectionSimulationData newVotes;
-                ElectionSimulationData newResult;
+                final ElectionSimulationData newVotes;
+                final ElectionSimulationData newResult;
                 if (hasMargin) {
-                    String voteName = UnifiedNameContainer.getNewVotesName();
-                    String newResName = UnifiedNameContainer.getNewResultName();
+                    final String voteName = UnifiedNameContainer.getNewVotesName();
+                    final String newResName = UnifiedNameContainer.getNewResultName();
                     newVotes = new ElectionSimulationData(
                             numVoters, numCandidates, numSeats,
                             res.readVariableValue(voteName).get(0)
@@ -433,7 +435,7 @@ public abstract class CheckerFactory implements Runnable {
                 //         .getCodeToRunMargin(origResult, lastResult);
                 //
                 System.out.println("add namecontainer CHECKERFACTORY");
-                ElectionSimulationData origResult =
+                final ElectionSimulationData origResult =
                         new ElectionSimulationData(
                                 numVoters, numCandidates, numSeats,
                                 res.readVariableValue(ELECT_DEC).get(0)
@@ -499,8 +501,8 @@ public abstract class CheckerFactory implements Runnable {
                 }
                 // List<List<String>> newVotes = new ArrayList<List<String>>();
                 // List<String> newResult = new ArrayList<String>();
-                ElectionSimulationData newVotes;
-                ElectionSimulationData newResult;
+                final ElectionSimulationData newVotes;
+                final ElectionSimulationData newResult;
                 if (hasMargin) {
                     // newResult =
                     //     getElectionDescription().getContainer().getOutputType()

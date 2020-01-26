@@ -39,16 +39,16 @@ public final class SquigglePainter
     public Shape paintLayer(final Graphics g, final int offs0, final int offs1,
                             final Shape bounds, final JTextComponent c,
                             final View view) {
-        Rectangle r = getDrawingArea(offs0, offs1, bounds, view);
+        final Rectangle r = getDrawingArea(offs0, offs1, bounds, view);
         if (r == null) {
             return null;
         }
         // Do your custom painting
-        Color color = getColor();
+        final Color color = getColor();
         g.setColor(color == null ? c.getSelectionColor() : color);
         // Draw the squiggles
         final int twoSquiggles = SQUIGGLE * 2;
-        int y = r.y + r.height - SQUIGGLE;
+        final int y = r.y + r.height - SQUIGGLE;
         for (int x = r.x; x <= r.x + r.width - twoSquiggles;
                 x += twoSquiggles) {
             g.drawArc(x, y, SQUIGGLE, SQUIGGLE, 0, ARC);
@@ -75,7 +75,7 @@ public final class SquigglePainter
                                      final Shape bounds, final View view) {
         // Contained in view, can just use bounds.
         if (offs0 == view.getStartOffset() && offs1 == view.getEndOffset()) {
-            Rectangle alloc;
+            final Rectangle alloc;
             if (bounds instanceof Rectangle) {
                 alloc = (Rectangle) bounds;
             } else {
@@ -86,11 +86,11 @@ public final class SquigglePainter
             // Should only render part of View.
             try {
                 // --- determine locations ---
-                Shape shape =
+                final Shape shape =
                         view.modelToView(offs0, Position.Bias.Forward,
                                          offs1, Position.Bias.Backward,
                                          bounds);
-                Rectangle r = (shape instanceof Rectangle)
+                final Rectangle r = (shape instanceof Rectangle)
                         ? (Rectangle) shape : shape.getBounds();
                 return r;
             } catch (BadLocationException e) {

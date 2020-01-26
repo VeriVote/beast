@@ -63,7 +63,7 @@ public class OpenCloseChar {
      */
     public void insertIntoDocument(final JTextPane pane, final int pos)
             throws BadLocationException {
-        String stringToInsert =
+        final String stringToInsert =
                 Character.toString(open) + Character.toString(close);
         pane.getStyledDocument().insertString(pos, stringToInsert, null);
         pane.setCaretPosition(pos + 1);

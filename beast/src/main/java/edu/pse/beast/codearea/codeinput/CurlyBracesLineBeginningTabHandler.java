@@ -37,7 +37,7 @@ public final class CurlyBracesLineBeginningTabHandler
     @Override
     public int getTabsForLine(final int caretPos) {
         int amt = 0;
-        String code = JTextPaneToolbox.getText(pane);
+        final String code = JTextPaneToolbox.getText(pane);
         int pos = caretPos - 1;
         while (0 <= pos) {
             if (code.charAt(pos) == BRACE_LEFT) {

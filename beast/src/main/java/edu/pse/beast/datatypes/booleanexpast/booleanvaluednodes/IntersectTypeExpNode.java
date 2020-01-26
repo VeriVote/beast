@@ -63,7 +63,7 @@ public final class IntersectTypeExpNode extends TypeExpression {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        IntersectTypeExpNode that = (IntersectTypeExpNode) o;
+        final IntersectTypeExpNode that = (IntersectTypeExpNode) o;
         return context != null ? context.equals(that.context)
                 : that.context == null;
     }

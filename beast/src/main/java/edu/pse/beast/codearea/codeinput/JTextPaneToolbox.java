@@ -55,7 +55,7 @@ public final class JTextPaneToolbox {
      */
     public static int getDistanceToClosestLineBeginning(final JTextPane pane,
                                                         final int pos) {
-        String code = getText(pane);
+        final String code = getText(pane);
         for (int i = pos - 1; i >= 0; --i) {
             if (code.charAt(i) == '\n') {
                 return pos - i - 1;
@@ -109,7 +109,7 @@ public final class JTextPaneToolbox {
      * @return the absolute position of the line beginning of line
      */
     public static int getLineBeginning(final JTextPane pane, final int line) {
-        String code = getText(pane);
+        final String code = getText(pane);
         int absPos = 0;
         int lineNumber = 0;
         for (; absPos < code.length() && lineNumber < line; ++absPos) {
@@ -132,7 +132,7 @@ public final class JTextPaneToolbox {
      */
     public static int getClosestLineBeginningAfter(final JTextPane pane,
                                                    final int absPos) {
-        String code = getText(pane);
+        final String code = getText(pane);
         int pos = absPos;
         ++pos;
         for (; pos < code.length(); ++pos) {
@@ -162,9 +162,9 @@ public final class JTextPaneToolbox {
                                                      final int end)
                                                              throws BadLocationException {
         int startingline = transformToLineNumber(pane, start);
-        ArrayList<Integer> lines = new ArrayList<Integer>();
+        final ArrayList<Integer> lines = new ArrayList<Integer>();
         lines.add(startingline);
-        String code = getText(pane);
+        final String code = getText(pane);
         int s = start;
         for (; s < end; ++s) {
             if (code.charAt(s) == '\n') {
@@ -184,8 +184,8 @@ public final class JTextPaneToolbox {
      * @return the first char to the left of the caret position
      */
     public static String getCharToTheLeftOfCaret(final JTextPane pane) {
-        String code = getText(pane);
-        int caretPos = pane.getCaretPosition();
+        final String code = getText(pane);
+        final int caretPos = pane.getCaretPosition();
         if (caretPos == 0) {
             return "";
         } else {
@@ -202,8 +202,8 @@ public final class JTextPaneToolbox {
      * @return the first char to the right of the caret position
      */
     public static String getCharToTheRightOfCaret(final JTextPane pane) {
-        String code = getText(pane);
-        int caretPos = pane.getCaretPosition();
+        final String code = getText(pane);
+        final int caretPos = pane.getCaretPosition();
         if (caretPos == code.length()) {
             return "";
         } else {
@@ -225,7 +225,7 @@ public final class JTextPaneToolbox {
      */
     public static int getFirstCharPosInLine(final JTextPane pane,
                                             final int line) {
-        String code = getText(pane);
+        final String code = getText(pane);
         int absPos = getLineBeginning(pane, line);
         while (absPos < code.length() && code.charAt(absPos) == ' '
                 && code.charAt(absPos) != '\n') {

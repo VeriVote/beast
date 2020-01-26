@@ -105,7 +105,7 @@ public final class ParliamentStack extends CBMCOutputType {
         code.add(CCodeHelper.CLOSING_BRACES); // End of the for loop
         code.deleteTab();
         code.add(CCodeHelper.CLOSING_BRACES); // End of the function
-        CodeArrayListBeautifier c = new CodeArrayListBeautifier();
+        final CodeArrayListBeautifier c = new CodeArrayListBeautifier();
         c.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
         return c;
     }
@@ -140,7 +140,7 @@ public final class ParliamentStack extends CBMCOutputType {
         int index = 0;
         for (Iterator<String> iterator = result.iterator(); iterator
                 .hasNext();) {
-            String currentValue = iterator.next();
+            final String currentValue = iterator.next();
             try {
                 toReturn += GUIController.getController()
                         .getElectionSimulation().getPartyName(index)

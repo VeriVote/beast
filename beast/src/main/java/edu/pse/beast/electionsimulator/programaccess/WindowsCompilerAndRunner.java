@@ -51,14 +51,16 @@ public final class WindowsCompilerAndRunner
     protected Process compileCFile(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
-        String userIncludeAndPath = ENABLE_USER_INCLUDE + FileLoader.QUOTE
+        final String userIncludeAndPath =
+                ENABLE_USER_INCLUDE + FileLoader.QUOTE
                 + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
                 + FileLoader.QUOTE;
         // We must compile all includes that the user puts in that folder, in
         // case some of them are needed.
-        String compileAllIncludesInIncludePath = FileLoader.QUOTE
-                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
-                + COMPILE_ALL_INCLUDES_IN_FOLDER + FileLoader.QUOTE;
+        final String compileAllIncludesInIncludePath =
+                FileLoader.QUOTE + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER
+                + FileLoader.QUOTE;
 
         // Try to get the vsCMD.
         try {
@@ -82,7 +84,8 @@ public final class WindowsCompilerAndRunner
             // Because windows is weird the whole call that will get placed inside
             // VScmd has to be in one giant string. Put the created file in the
             // output directory, so it can be deleted afterwards.
-            String clExeCall = FileLoader.QUOTE + vsCmd + FileLoader.QUOTE
+            final String clExeCall =
+                    FileLoader.QUOTE + vsCmd + FileLoader.QUOTE
                     + BLANK + AMPERSAND + BLANK + COMPILER_STRING + BLANK
                     + userIncludeAndPath + BLANK
                     + (FileLoader.QUOTE + toCheck.getAbsolutePath() + FileLoader.QUOTE)
@@ -90,19 +93,20 @@ public final class WindowsCompilerAndRunner
                     + (BLANK + "/Fe" + toCheck.getParent() + TWO_BACKSLASHES + BLANK)
                     + compileAllIncludesInIncludePath;
 
-            List<String> callInList = new ArrayList<String>();
+            final List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
-            File batFile = new File(toCheck.getParent() + TWO_BACKSLASHES
-                    + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
-                                                FileLoader.BAT_FILE_ENDING));
+            final File batFile =
+                    new File(toCheck.getParent() + TWO_BACKSLASHES
+                            + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                                        FileLoader.BAT_FILE_ENDING));
             FileSaver.writeStringLinesToFile(callInList, batFile);
 
             // this call starts a new VScmd instance and lets cl.exe (the
             // compiler) run in it
             // ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
             // clExeCall);
-            ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
-                                                           batFile.getAbsolutePath());
+            final ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
+                                                                 batFile.getAbsolutePath());
 
             try {
                 startedProcess = prossBuild.start();
@@ -120,8 +124,8 @@ public final class WindowsCompilerAndRunner
         String callString = toRun + FileLoader.EXE_FILE_ENDING;
         // the absolute path to the file that holds
         callString += BLANK + dataFile.getAbsolutePath();
-        ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
-                                                       callString);
+        final ProcessBuilder prossBuild = new ProcessBuilder(CMD_EXE, SLASH_C,
+                                                             callString);
         try {
             // start the process
             startedProcess = prossBuild.start();

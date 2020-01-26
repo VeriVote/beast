@@ -116,15 +116,15 @@ public final class WeightedApproval extends CBMCInputType {
     public String[] getVotePoints(final String[][] votes,
                                   final int amountCandidates,
                                   final int amountVoters) {
-        Long[] result = new Long[amountCandidates];
+        final Long[] result = new Long[amountCandidates];
         Arrays.fill(result, 0L);
         for (int i = 0; i < amountVoters; i++) {
-            String[] vote = votes[i];
+            final String[] vote = votes[i];
             for (int j = 0; j < amountCandidates; j++) {
                 result[j] += Long.parseLong(vote[j]);
             }
         }
-        String[] toReturn = new String[amountCandidates];
+        final String[] toReturn = new String[amountCandidates];
         for (int i = 0; i < result.length; i++) {
             toReturn[i] = "" + result[i];
         }
@@ -249,17 +249,18 @@ public final class WeightedApproval extends CBMCInputType {
 
     @Override
     public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
-        List<String> values = row.getValues();
-        List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
+        final List<String> values = row.getValues();
+        final List<CBMCResultValueWrapper> wrappedValues =
+                new ArrayList<CBMCResultValueWrapper>();
         for (Iterator<String> iterator = values.iterator();
                 iterator.hasNext();) {
-            String value = iterator.next();
-            CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
-            CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
+            final String value = iterator.next();
+            final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
+            final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue(CCodeHelper.INT, value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }
-        CBMCResultValueArray toReturn = new CBMCResultValueArray();
+        final CBMCResultValueArray toReturn = new CBMCResultValueArray();
         toReturn.setValue(wrappedValues);
         return toReturn;
     }

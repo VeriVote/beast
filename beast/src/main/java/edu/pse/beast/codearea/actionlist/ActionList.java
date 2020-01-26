@@ -48,7 +48,7 @@ public class ActionList {
         if (lastPerformed.isEmpty()) {
             return;
         }
-        Action latestAcc = lastPerformed.get(lastPerformed.size() - 1);
+        final Action latestAcc = lastPerformed.get(lastPerformed.size() - 1);
         lastPerformed.remove(lastPerformed.size() - 1);
         latestAcc.undo();
         lastUndone.add(latestAcc);
@@ -63,7 +63,7 @@ public class ActionList {
         if (lastUndone.isEmpty()) {
             return;
         }
-        Action latestUndoneAcc = lastUndone.get(lastUndone.size() - 1);
+        final Action latestUndoneAcc = lastUndone.get(lastUndone.size() - 1);
         lastUndone.remove(lastUndone.size() - 1);
         latestUndoneAcc.redo();
         lastPerformed.add(latestUndoneAcc);

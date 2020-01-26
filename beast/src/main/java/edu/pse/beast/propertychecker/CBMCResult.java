@@ -49,46 +49,37 @@ enum CDATATYPE {
  * @author Lukas Stapelbroek
  */
 public final class CBMCResult extends Result {
-
     /** The Constant WIN_OFFSET. */
     private static final int WIN_OFFSET = 8;
 
-    /**
-     * This xml tag contains the result of the cbmc run.
-     */
+    /** This xml tag contains the result of the cbmc run. */
     private static final transient String RESULT_TAG = "cprover-status";
 
-    /**
-     * This will be printed in the above mentioned tag, if it was successful.
-     */
+    /** This will be printed in the above mentioned tag, if it was successful. */
     private static final transient String SUCCESS_IDENTIFIER = "SUCCESS";
 
-    /**
-     * This will be printed in the above mentioned tag, if it failed.
-     */
+    /** This will be printed in the above mentioned tag, if it failed. */
     private static final transient String FAILURE_IDENTIFIER = "FAILURE";
 
-    // the charset in which we want to present the data to the xml parser
+    // The charset in which we want to present the data to the xml parser
     // private transient Charset charSet = new UTF_16();
 
     /** The char set. */
     private transient Charset charSet = Charset.forName("UTF-8");
-    // TODO check if this charset is fitting for
+    // TODO Check if this charset is fitting for
 
-    /** The value cache. */
-    // both windows and linux
+    /** The value cache: Both windows and linux. */
     private transient Map<String, List<ResultValueWrapper>> valueCache =
             new HashMap<String, List<ResultValueWrapper>>();
 
-    /** The root element. */
-    // the element containing all previous
+    /** The root element: The element containing all previous. */
     private transient Document rootElement;
 
     /**
      * Instantiates a new CBMC result.
      */
     public CBMCResult() {
-        // empty constructor
+        // Empty constructor
     }
 
     /**
@@ -105,11 +96,11 @@ public final class CBMCResult extends Result {
         reset();
         super.setResult(result);
         if (result != null) {
-            parseResult(); // get the xml list from this list of strings
-            // TODO add the NameContainer here
-            String[] arr = {"votes\\d", "elect\\d"};
+            parseResult(); // Get the xml list from this list of strings.
+            // TODO Add the NameContainer here.
+            final String[] arr = {"votes\\d", "elect\\d"};
             readVariableValue(Arrays.asList(arr));
-            // already read "votes" and "elect", so the access can be faster
+            // Already read "votes" and "elect", so the access can be faster.
         }
     }
 
@@ -117,8 +108,8 @@ public final class CBMCResult extends Result {
      * Parses the result.
      */
     private void parseResult() {
-        int offset = 0; // TODO beautify
-        OperatingSystems os = CBMCProcessFactory.determineOS();
+        int offset = 0; // TODO Beautify
+        final OperatingSystems os = CBMCProcessFactory.determineOS();
         switch (os) {
         case Windows:
             offset = WIN_OFFSET;
@@ -130,7 +121,7 @@ public final class CBMCResult extends Result {
             break;
         }
 
-        InputStream xmlStream =
+        final InputStream xmlStream =
                 IOUtils.toInputStream(
                         String.join(
                                 "",
@@ -138,7 +129,7 @@ public final class CBMCResult extends Result {
                                 ),
                         charSet
                         );
-        DocumentBuilder builder;
+        final DocumentBuilder builder;
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             this.rootElement = builder.parse(xmlStream);
@@ -151,12 +142,12 @@ public final class CBMCResult extends Result {
 
     @Override
     public List<ResultValueWrapper> readVariableValue(final String variableMatcher) {
-        List<String> arg = new LinkedList<String>();
+        final List<String> arg = new LinkedList<String>();
         arg.add(variableMatcher);
         if (valueCache.containsKey(variableMatcher)) {
             return valueCache.get(variableMatcher);
         } else {
-            // afterwards, variables matching are in the cache
+            // Afterwards, variables matching are in the cache.
             readVariableValue(arg);
         }
         return valueCache.get(variableMatcher);
@@ -171,22 +162,21 @@ public final class CBMCResult extends Result {
      */
     private Map<String, List<ResultValueWrapper>>
                 readVariableValue(final List<String> variablesToFind) {
-        Map<String, List<ResultValueWrapper>> toReturn =
+        final Map<String, List<ResultValueWrapper>> toReturn =
                 new HashMap<String, List<ResultValueWrapper>>();
         if (isInitialized()) {
             for (Iterator<String> iterator = variablesToFind.iterator();
                     iterator.hasNext();) {
-                String currentMatcher = iterator.next();
+                final String currentMatcher = iterator.next();
                 if (valueCache.containsKey(currentMatcher)) {
-                    // the variable was requested before
+                    // The variable was requested before.
                     toReturn.put(currentMatcher,
                             valueCache.get(currentMatcher));
-                    // we do not need to request for this
-                    // value to be extracted again
+                    // We do not need to request for this value to be extracted again.
                     iterator.remove();
                 }
             }
-            List<Tuple<String, List<ResultValueWrapper>>> newValues =
+            final List<Tuple<String, List<ResultValueWrapper>>> newValues =
                     CBMCxmlParser.extractVariables(rootElement, variablesToFind);
             for (int i = 0; i < newValues.size(); i++) {
                 valueCache.put(newValues.get(i).first(),
@@ -238,7 +228,7 @@ public final class CBMCResult extends Result {
      */
     private boolean checkAssertion(final String identifier) {
         if (isInitialized()) {
-            NodeList resultElements =
+            final NodeList resultElements =
                     rootElement.getElementsByTagName(RESULT_TAG);
             if (resultElements.getLength() == 0) {
                 return false; // no result tag found, so it cannot hold

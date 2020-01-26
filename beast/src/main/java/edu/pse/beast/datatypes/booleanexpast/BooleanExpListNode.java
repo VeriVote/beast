@@ -80,7 +80,7 @@ public final class BooleanExpListNode {
 
     @Override
     public String toString() {
-        StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder();
         boolNodesPerElectLevel
                 .forEach(l -> l.forEach(n -> b.append(n.toString())));
         return b.toString();
@@ -92,7 +92,7 @@ public final class BooleanExpListNode {
      * @return the tree string
      */
     public String getTreeString() {
-        StringBuilder b = new StringBuilder();
+        final StringBuilder b = new StringBuilder();
         boolNodesPerElectLevel
                 .forEach(l -> l.forEach(n -> b.append(n.getTreeString(0))));
         return b.toString();

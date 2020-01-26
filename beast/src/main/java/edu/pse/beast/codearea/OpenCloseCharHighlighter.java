@@ -59,7 +59,7 @@ public final class OpenCloseCharHighlighter implements CaretListener {
     @Override
     public void caretUpdate(final CaretEvent ce) {
         removeAllHighlights();
-        char[] surroundingChars = {' ', ' '};
+        final char[] surroundingChars = {' ', ' '};
         try {
             surroundingChars[0] = JTextPaneToolbox.getCharToTheLeftOfCaret(pane).charAt(0);
             surroundingChars[1] = JTextPaneToolbox.getCharToTheRightOfCaret(pane).charAt(0);
@@ -68,7 +68,7 @@ public final class OpenCloseCharHighlighter implements CaretListener {
         }
         boolean done = false;
         for (int i = 0; i < surroundingChars.length && !done; i++) {
-            char c = surroundingChars[i];
+            final char c = surroundingChars[i];
             if (c != ' ' && charList.isOpenChar(c)) {
                 highlightChar(ce.getDot() + i);
                 highlightCorrespondingCloseChar(ce.getDot() + i,
@@ -93,13 +93,13 @@ public final class OpenCloseCharHighlighter implements CaretListener {
      */
     private void highlightCorrespondingOpenChar(final int pos,
                                                 final OpenCloseChar openCloseChar) {
-        char open = openCloseChar.getOpen();
-        char close = openCloseChar.getClose();
-        String code = JTextPaneToolbox.getText(pane);
+        final char open = openCloseChar.getOpen();
+        final char close = openCloseChar.getClose();
+        final String code = JTextPaneToolbox.getText(pane);
         int lvl = 1;
         int p = pos - 2;
         for (; p >= 0 && lvl > 0; --p) {
-            char c = code.charAt(p);
+            final char c = code.charAt(p);
             if (c == close) {
                 lvl++;
             } else if (c == open) {
@@ -121,13 +121,13 @@ public final class OpenCloseCharHighlighter implements CaretListener {
      */
     private void highlightCorrespondingCloseChar(final int pos,
                                                  final OpenCloseChar openCloseChar) {
-        char open = openCloseChar.getOpen();
-        char close = openCloseChar.getClose();
-        String code = JTextPaneToolbox.getText(pane);
+        final char open = openCloseChar.getOpen();
+        final char close = openCloseChar.getClose();
+        final String code = JTextPaneToolbox.getText(pane);
         int lvl = 1;
         int p = pos;
         for (; p < code.length() && lvl > 0; ++p) {
-            char c = code.charAt(p);
+            final char c = code.charAt(p);
             if (c == open) {
                 lvl++;
             } else if (c == close) {

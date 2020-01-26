@@ -141,7 +141,7 @@ public class ElectionSimulationModel {
      */
     private synchronized void addRow() {
         if (currentRows == maxRows) {
-            NEWRowOfValues toAdd =
+            final NEWRowOfValues toAdd =
                     new NEWRowOfValues(this, container,
                                        this.getAmountCandidates(),
                                        this.getAmountVoters(),
@@ -149,7 +149,7 @@ public class ElectionSimulationModel {
                                        currentRows, ELEMENT_WIDTH,
                                        ELEMENT_HEIGHT);
             rows.add(toAdd);
-            TextField newVoter = new TextField(yLabel + currentRows);
+            final TextField newVoter = new TextField(yLabel + currentRows);
             yDescriptors.add(newVoter);
             newVoter.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
             newVoter.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
@@ -158,8 +158,8 @@ public class ElectionSimulationModel {
             currentRows++;
             maxRows++;
         } else {
-            // we already have a row with for this index, so we just make it
-            // visible again
+            // We already have a row with for this index, so we just make it
+            // visible again.
             rows.get(currentRows).enable();
             voterGridPane.add(yDescriptors.get(currentRows), 0, currentRows);
             currentRows++;
@@ -187,7 +187,7 @@ public class ElectionSimulationModel {
         this.container = elTypeContainer;
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
                 iterator.hasNext();) {
-            NEWRowOfValues currentRow = iterator.next();
+            final NEWRowOfValues currentRow = iterator.next();
             currentRow.setContainer(elTypeContainer);
         }
     }
@@ -224,11 +224,12 @@ public class ElectionSimulationModel {
      * Update.
      */
     private void update() {
-        List<Integer> list = container.getInputType()
+        final List<Integer> list =
+                container.getInputType()
                 .getSizesInOrder(amountVoters, amountCandidates, amountSeats);
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
                 iterator.hasNext();) {
-            NEWRowOfValues row = iterator.next();
+            final NEWRowOfValues row = iterator.next();
             row.setVoters(getAmountVoters());
             row.setCandidates(getAmountCandidates());
             row.setSeats(getAmountSeats());
@@ -327,7 +328,7 @@ public class ElectionSimulationModel {
      * @return the rows
      */
     public List<NEWRowOfValues> getRows() {
-        List<NEWRowOfValues> toReturn = new ArrayList<NEWRowOfValues>();
+        final List<NEWRowOfValues> toReturn = new ArrayList<NEWRowOfValues>();
         if (rows.size() == 0) {
             toReturn.addAll(rows);
         } else {
@@ -407,7 +408,7 @@ public class ElectionSimulationModel {
     private void updateX(final int size) {
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
                 iterator.hasNext();) {
-            NEWRowOfValues row = iterator.next();
+            final NEWRowOfValues row = iterator.next();
             row.setRowSize(size);
         }
 
@@ -418,7 +419,7 @@ public class ElectionSimulationModel {
                         candidateGridPane.add(xDescriptors.get(currentRowSize),
                                               currentRowSize, 0);
                     } else {
-                        TextField candToAdd =
+                        final TextField candToAdd =
                                 new TextField(xLabel + currentCandidates);
                         candToAdd.setEditable(true);
                         candToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
@@ -438,7 +439,7 @@ public class ElectionSimulationModel {
             }
         } else {
             if (xDescriptors.size() == 0) {
-                TextField descriptorToAdd = new TextField("Values");
+                final TextField descriptorToAdd = new TextField("Values");
                 descriptorToAdd.setEditable(false);
                 descriptorToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
                 descriptorToAdd.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
@@ -455,7 +456,7 @@ public class ElectionSimulationModel {
     private void updateVetting() {
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
                 iterator.hasNext();) {
-            NEWRowOfValues row = iterator.next();
+            final NEWRowOfValues row = iterator.next();
             row.updateVetting();
         }
     }

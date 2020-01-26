@@ -72,9 +72,8 @@ public abstract class SystemSpecificErrorChecker {
      * it on to a system specific compiler.
      */
     public SystemSpecificErrorChecker() {
-        // clear the folder where the files that get checked get saved to,
-        // because
-        // sometimes they persist from the last time when BEAST was run.
+        // Clear the folder where the files that get checked get saved to,
+        // because sometimes they persist from the last time when BEAST was run.
         try {
             final String dummy = "dummy.file";
             cleanDirectory(new File(SuperFolderFinder.getSuperFolder()
@@ -199,10 +198,10 @@ public abstract class SystemSpecificErrorChecker {
      */
     public List<CodeError> checkCodeForErrors(final List<String> toCheck,
                                               final int lineOffset) {
-        List<String> result = new ArrayList<String>();
-        List<String> errors = new ArrayList<String>();
-        String absolutePath = SuperFolderFinder.getSuperFolder()
-                                + PATH_TO_TEMP_FOLDER;
+        final List<String> result = new ArrayList<String>();
+        final List<String> errors = new ArrayList<String>();
+        final String absolutePath =
+                SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
         final String pathToNewFile =
                 absolutePath + FileLoader.getNewUniqueName(absolutePath);
         // pathToNewFile = pathToNewFile.replaceAll("%20", " ");
@@ -219,9 +218,9 @@ public abstract class SystemSpecificErrorChecker {
         final File exeFile = new File(pathToNewFile + FileLoader.EXE_FILE_ENDING);
         // write the code to the file
         FileSaver.writeStringLinesToFile(toCheck, cFile);
-        Process process = checkCodeFileForErrors(cFile);
+        final Process process = checkCodeFileForErrors(cFile);
         if (process != null) {
-            CountDownLatch latch = new CountDownLatch(2);
+            final CountDownLatch latch = new CountDownLatch(2);
             final ThreadedBufferedReader outReader =
                     createStreamReader(result, latch, true,
                                        process.getInputStream());

@@ -77,19 +77,23 @@ public final class LinuxProcess extends CBMCProcess {
     public Process createProcess(final File toCheck, final int voters,
                                  final int candidates, final int seats,
                                  final String advanced) {
-        List<String> arguments = new ArrayList<String>();
-        String cbmc = QUOTE + new File(
-                SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC_64).getPath()
+        final List<String> arguments = new ArrayList<String>();
+        final String cbmc =
+                QUOTE
+                + new File(SuperFolderFinder.getSuperFolder()
+                            + RELATIVE_PATH_TO_CBMC_64).getPath()
                 + QUOTE;
-        // enable the usage of includes in cbmc
-        String userIncludeAndPath = QUOTE + ENABLE_USER_INCLUDE
+        // Enable the usage of includes in cbmc.
+        final String userIncludeAndPath =
+                QUOTE + ENABLE_USER_INCLUDE
                 + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + QUOTE;
-        // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles = FileLoader.listAllFilesFromFolder(
-                QUOTE + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + QUOTE,
-                FileLoader.C_FILE_ENDING);
+        // Get all Files from the form "*.c" so we can include them into cbmc.
+        final List<String> allFiles =
+                FileLoader.listAllFilesFromFolder(
+                        QUOTE + SuperFolderFinder.getSuperFolder()
+                            + USER_INCLUDE_FOLDER + QUOTE,
+                        FileLoader.C_FILE_ENDING);
         if (!new File(cbmc.replace(QUOTE, "")).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Cannot find the cbmc program in the subfolder \"linux/cbmcLin/\", "
@@ -105,28 +109,28 @@ public final class LinuxProcess extends CBMCProcess {
         } else {
             arguments.add(cbmc.replace(QUOTE, ""));
             arguments.add(userIncludeAndPath.replace(QUOTE, ""));
-            // wrap it in quotes, in case the path has spaces in it
+            // Wrap it in quotes, in case the path has spaces in it.
             arguments.add(toCheck.getAbsolutePath().replace(QUOTE, ""));
-            // iterate over all "*.c" files from the include folder, to include
+            // Iterate over all "*.c" files from the include folder, to include
             // them
             for (Iterator<String> iterator = allFiles.iterator();
                     iterator.hasNext();) {
-                String toBeIncludedFile = iterator.next();
+                final String toBeIncludedFile = iterator.next();
                 arguments.add(toBeIncludedFile.replace(QUOTE, ""));
             }
-            // here we supply this call with the correct values for the voters,
-            // candidates and seats
+            // Here we supply this call with the correct values for the voters,
+            // candidates and seats.
             arguments.add(PASS_C_CONST + UnifiedNameContainer.getVoter()
                             + EQUALS + voters);
             arguments.add(PASS_C_CONST + UnifiedNameContainer.getCandidate()
                             + EQUALS + candidates);
             arguments.add(PASS_C_CONST + UnifiedNameContainer.getSeats()
                             + EQUALS + seats);
-            // we need the trace command to track the output on the command line
+            // We need the trace command to track the output on the command line
             arguments.add("--xml-ui");
             if (advanced != null && advanced.length() > 0) {
                 for (int i = 0; i < advanced.split(SEMICOLON).length; i++) {
-                    String sanitized =
+                    final String sanitized =
                             sanitizeArguments(advanced.split(SEMICOLON)[i]);
                     if (sanitized.trim().length() > 0) {
                         arguments.add(sanitized);
@@ -134,7 +138,7 @@ public final class LinuxProcess extends CBMCProcess {
                 }
             }
             Process startedProcess = null;
-            ProcessBuilder prossBuild =
+            final ProcessBuilder prossBuild =
                     new ProcessBuilder(arguments.toArray(new String[0]));
             try {
                 startedProcess = prossBuild.start();

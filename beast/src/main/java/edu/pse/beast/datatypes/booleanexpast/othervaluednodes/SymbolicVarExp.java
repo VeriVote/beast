@@ -64,7 +64,7 @@ public final class SymbolicVarExp extends TypeExpression {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SymbolicVarExp that = (SymbolicVarExp) o;
+        final SymbolicVarExp that = (SymbolicVarExp) o;
         return symbVar != null ? symbVar.equals(that.symbVar)
                 : that.symbVar == null;
     }

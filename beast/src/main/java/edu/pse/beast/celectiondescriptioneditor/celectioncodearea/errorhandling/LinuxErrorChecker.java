@@ -54,7 +54,7 @@ public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
         final String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
         final String userIncludeAndPath =
                 ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
-        List<String> arguments = new ArrayList<String>();
+        final List<String> arguments = new ArrayList<String>();
         // Add the arguments needed for the call
         arguments.add(COMPILER_STRING);
         arguments.add(userIncludeAndPath);
@@ -96,7 +96,7 @@ public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
     protected List<CodeError> parseError(final List<String> result,
                                          final List<String> errors,
                                          final int lineOffset) {
-        List<CodeError> codeErrors = new ArrayList<CodeError>();
+        final List<CodeError> codeErrors = new ArrayList<CodeError>();
         // gcc gives the errors out in the error stream so we traverse it
         for (final Iterator<String> iterator = errors.iterator();
                 iterator.hasNext();) {
@@ -151,7 +151,7 @@ public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
                 // We want the format :line:position: ... error:
                 // so we need at least 4 ":" in the string to be sure to find a
                 // line and the position and the error.
-                String[] splittedLine = line.split(COLON);
+                final String[] splittedLine = line.split(COLON);
                 if (splittedLine.length >= FOUR) {
                     try {
                         // the output has the form"FILENANE:LINE:COLUMN

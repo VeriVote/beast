@@ -154,7 +154,7 @@ public final class CandidateList extends CBMCOutputType {
         String toReturn = "";
         for (Iterator<String> iterator = result.iterator();
                 iterator.hasNext();) {
-            String currentValue = iterator.next();
+            final String currentValue = iterator.next();
             try {
                 toReturn += GUIController.getController().getElectionSimulation()
                                 .getPartyName(Integer.parseInt(currentValue))

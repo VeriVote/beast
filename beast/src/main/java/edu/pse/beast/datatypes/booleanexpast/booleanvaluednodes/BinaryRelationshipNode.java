@@ -62,7 +62,7 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        BinaryRelationshipNode that = (BinaryRelationshipNode) o;
+        final BinaryRelationshipNode that = (BinaryRelationshipNode) o;
         if (lhsExpNode != null ? !lhsExpNode.equals(that.lhsExpNode)
                 : that.lhsExpNode != null) {
             return false;

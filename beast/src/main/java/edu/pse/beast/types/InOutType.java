@@ -178,8 +178,7 @@ public abstract class InOutType {
      * @return the size of all dimensions, null if it is 0 dimensional
      */
     public String[] getSizeOfDimensions() {
-        // it is important to clone the array,
-        // as it should not be changed
+        // It is important to clone the array, as it should not be changed.
         return sizeOfDimensions.clone();
     }
 
@@ -214,7 +213,7 @@ public abstract class InOutType {
     public String getDimensionDescriptor(final String[] sizes) {
         String toReturn = "";
         for (int i = 0; i < dimensions; i++) {
-            String content = sizes[i];
+            final String content = sizes[i];
             toReturn += createSquareBrackets(content);
         }
         return toReturn;
@@ -226,9 +225,11 @@ public abstract class InOutType {
      * @return the data type and sign
      */
     public String getDataTypeAndSign() {
-        String sign = "";
+        final String sign;
         if (unsigned) {
             sign = "unsigned ";
+        } else {
+            sign = "";
         }
         return sign + this.dataType;
     }
@@ -290,21 +291,22 @@ public abstract class InOutType {
      * @return the string
      */
     public String printArray(final CBMCResultValueWrapper wrapper) {
-        ResultValue resultValue = wrapper.getResultValue();
-
+        final ResultValue resultValue = wrapper.getResultValue();
         if (resultValue.getResultType() == ResultType.STRUCT) {
-            CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
+            final CBMCResultValueStruct struct =
+                    (CBMCResultValueStruct) resultValue;
             return printArray(
                     struct.getResultVariable(
                             UnifiedNameContainer.getStructValueName()
                     )
             );
         } else if (resultValue.getResultType() == ResultType.SINGLE) {
-            CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
+            final CBMCResultValueSingle single =
+                    (CBMCResultValueSingle) resultValue;
             return single.getValue();
         } else if (resultValue.getResultType() == ResultType.ARRAY) {
-            CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
-            List<CBMCResultValueWrapper> newValues = array.getValues();
+            final CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
+            final List<CBMCResultValueWrapper> newValues = array.getValues();
             String subArray = "";
             for (int i = 0; i < array.getArraySize(); i++) {
                 subArray += printArray(newValues.get(i)) + COMMA;
@@ -380,24 +382,25 @@ public abstract class InOutType {
     public List<String> drawResult(final Result result,
                                    final String varNameMatcher,
                                    final Map<Integer, Long> sizes) {
-        List<String> toReturn = new ArrayList<String>();
-        List<ResultValueWrapper> votes = // TODO name container
+        final List<String> toReturn = new ArrayList<String>();
+        final List<ResultValueWrapper> votes = // TODO name container
                 result.readVariableValue(varNameMatcher);
 
         for (final ResultValueWrapper currentVar : votes) {
-            long size = sizes.get(currentVar.getMainIndex());
-            String name = currentVar.getName();
+            final long size = sizes.get(currentVar.getMainIndex());
+            final String name = currentVar.getName();
             toReturn.add(name + LINE_BREAK);
-            CBMCResultValueStruct struct =
+            final CBMCResultValueStruct struct =
                     (CBMCResultValueStruct) currentVar.getResultValue();
             if (getAmountOfDimensions() == 2) {
-                CBMCResultValueArray arr =
+                final CBMCResultValueArray arr =
                         (CBMCResultValueArray) struct
                             .getResultVariable(ARR).getResultValue();
                 toReturn.addAll(CBMCResultPresentationHelper
                         .printTwoDimResult(arr, size, name.length()));
             } else if (getAmountOfDimensions() == 1) {
-                CBMCResultValueArray arr = (CBMCResultValueArray) struct
+                final CBMCResultValueArray arr =
+                        (CBMCResultValueArray) struct
                         .getResultVariable(ARR).getResultValue();
                 toReturn.add(
                         CBMCResultPresentationHelper.printOneDimResult(
@@ -431,13 +434,13 @@ public abstract class InOutType {
     public List<String> drawResult(final ResultValueWrapper wrapper,
                                    final String varName,
                                    final Long size) {
-        List<String> toReturn = new ArrayList<String>();
+        final List<String> toReturn = new ArrayList<String>();
         toReturn.add(varName);
-        CBMCResultValueStruct struct =
+        final CBMCResultValueStruct struct =
                 (CBMCResultValueStruct) wrapper.getResultValue();
 
         if (getAmountOfDimensions() == 2) {
-            CBMCResultValueArray arr =
+            final CBMCResultValueArray arr =
                     (CBMCResultValueArray) struct.getResultVariable(ARR).getResultValue();
             toReturn.addAll(
                     CBMCResultPresentationHelper.printTwoDimResult(
@@ -445,7 +448,7 @@ public abstract class InOutType {
                     )
             );
         } else if (getAmountOfDimensions() == 1) {
-            CBMCResultValueArray arr =
+            final CBMCResultValueArray arr =
                     (CBMCResultValueArray) struct.getResultVariable(ARR).getResultValue();
             toReturn.add(
                     CBMCResultPresentationHelper.printOneDimResult(

@@ -35,7 +35,7 @@ public final class CopyUserAction extends UserAction {
 
     @Override
     public void perform() {
-        StringSelection stringSelection =
+        final StringSelection stringSelection =
                 new StringSelection(pane.getSelectedText());
         clipboard.setContents(stringSelection, null);
     }

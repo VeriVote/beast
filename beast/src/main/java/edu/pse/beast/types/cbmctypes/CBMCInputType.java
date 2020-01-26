@@ -186,7 +186,7 @@ public abstract class CBMCInputType extends InputType {
             // Iterate over the candidates
             for (Iterator<String> iterator2 = list.iterator();
                     iterator2.hasNext();) {
-                String voteAmount = iterator2.next();
+                final String voteAmount = iterator2.next();
                 try {
                     oneVoter +=
                             GUIController.getController()

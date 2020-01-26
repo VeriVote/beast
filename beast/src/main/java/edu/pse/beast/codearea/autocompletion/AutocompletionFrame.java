@@ -52,13 +52,11 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jMenuItem1 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<String>();
 
         jMenuItem1.setText("jMenuItem1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
@@ -66,10 +64,8 @@ public class AutocompletionFrame extends javax.swing.JFrame {
                 formKeyPressed(evt);
             }
         });
-
         jScrollPane1.setViewportView(jList1);
-
-        javax.swing.GroupLayout layout =
+        final javax.swing.GroupLayout layout =
                 new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,7 +155,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
      */
     void showUserOptions(final String[] opts) {
         jList1.removeAll();
-        DefaultListModel<String> model = new DefaultListModel<String>();
+        final DefaultListModel<String> model = new DefaultListModel<String>();
         for (int i = 0; i < opts.length; i++) {
             model.addElement(opts[i]);
         }

@@ -29,7 +29,8 @@ public abstract class OutputType extends InOutType {
      * @param sizeOfDimensions
      *            the size of dimensions
      */
-    public OutputType(final boolean unsigned, final DataType dataType,
+    public OutputType(final boolean unsigned,
+                      final DataType dataType,
                       final int dimensions,
                       final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
@@ -41,11 +42,11 @@ public abstract class OutputType extends InOutType {
      * @return the output types
      */
     public static List<OutputType> getOutputTypes() {
-        ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
-        List<OutputType> types = new ArrayList<OutputType>();
+        final ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
+        final List<OutputType> types = new ArrayList<OutputType>();
         for (Iterator<OutputType> iterator = loader.iterator();
                 iterator.hasNext();) {
-            OutputType type = iterator.next();
+            final OutputType type = iterator.next();
             types.add(type);
         }
         return types;
@@ -153,7 +154,8 @@ public abstract class OutputType extends InOutType {
                                     final ElectionSimulationData origResult,
                                     final String origResultName) {
         // First create the declaration of the array:
-        String declaration = getContainer().getOutputStruct().getStructAccess()
+        final String declaration =
+                getContainer().getOutputStruct().getStructAccess()
                 + " " + origResultName + " = {"
                 + printArray((CBMCResultValueWrapper) origResult.getValues())
                 + "};";

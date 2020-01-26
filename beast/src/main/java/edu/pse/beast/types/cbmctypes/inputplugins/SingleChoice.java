@@ -117,13 +117,13 @@ public final class SingleChoice extends CBMCInputType {
     public String[] getVotePoints(final String[] votes,
                                   final int amountCandidates,
                                   final int amountVoters) {
-        Long[] result = new Long[amountCandidates];
+        final Long[] result = new Long[amountCandidates];
         Arrays.fill(result, 0L);
         for (int i = 0; i < amountVoters; i++) {
-            int vote = Integer.parseInt(votes[i]);
+            final int vote = Integer.parseInt(votes[i]);
             result[vote]++;
         }
-        String[] toReturn = new String[amountCandidates];
+        final String[] toReturn = new String[amountCandidates];
         for (int i = 0; i < result.length; i++) {
             toReturn[i] = "" + result[i];
         }
@@ -208,7 +208,7 @@ public final class SingleChoice extends CBMCInputType {
     public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
         final List<String> values = row.getValues();
         final String value = values.get(0);
-        CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
+        final CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
         toReturn.setValue(CCodeHelper.INT, value, INT_LENGTH);
         return toReturn;
     }

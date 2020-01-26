@@ -143,9 +143,7 @@ public final class InternalTypeContainer extends InOutType {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
-        InternalTypeContainer other = (InternalTypeContainer) obj;
-
+        final InternalTypeContainer other = (InternalTypeContainer) obj;
         if (accessTypeIfList != other.accessTypeIfList) {
             return false;
         }

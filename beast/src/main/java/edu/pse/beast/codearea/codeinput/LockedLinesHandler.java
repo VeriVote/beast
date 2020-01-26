@@ -112,7 +112,7 @@ public final class LockedLinesHandler implements DocumentListener {
     public void insertUpdate(final DocumentEvent de) {
         try {
             int amtNewline = 0;
-            String added = doc.getText(de.getOffset(), de.getLength());
+            final String added = doc.getText(de.getOffset(), de.getLength());
             for (int i = 0; i < de.getLength(); ++i) {
                 if (added.charAt(i) == LINE_BREAK_CHAR) {
                     amtNewline++;
@@ -147,7 +147,7 @@ public final class LockedLinesHandler implements DocumentListener {
 
     @Override
     public void removeUpdate(final DocumentEvent de) {
-        String removed =
+        final String removed =
                 saveBeforeRemove.getRemoveString(de.getOffset(),
                                                  de.getLength());
         int amtNewline = 0;
@@ -156,7 +156,7 @@ public final class LockedLinesHandler implements DocumentListener {
                 amtNewline++;
             }
         }
-        int firstLineAffected =
+        final int firstLineAffected =
                 JTextPaneToolbox.transformToLineNumber(
                         saveBeforeRemove.getPrevText(),
                         de.getOffset() + de.getLength()

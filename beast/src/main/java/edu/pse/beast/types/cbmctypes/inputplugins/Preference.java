@@ -134,13 +134,13 @@ public final class Preference extends CBMCInputType {
     public String[] getVotePoints(final String[][] votes,
                                   final int amountCandidates,
                                   final int amountVoters) {
-        String[] result = new String[amountCandidates];
+        final String[] result = new String[amountCandidates];
         Arrays.fill(result, 0L);
         for (int i = 0; i < amountVoters; i++) {
-            String[] vote = votes[i];
+            final String[] vote = votes[i];
             for (int j = 0; j < amountCandidates; j++) {
-                String chosenCandidate = vote[j];
-                int iChosenCandidate = Integer.parseInt(chosenCandidate);
+                final String chosenCandidate = vote[j];
+                final int iChosenCandidate = Integer.parseInt(chosenCandidate);
                 result[iChosenCandidate] += amountCandidates - 1 - j;
             }
         }
@@ -202,9 +202,9 @@ public final class Preference extends CBMCInputType {
     public void addExtraCodeAtEndOfCodeInit(final CodeArrayListBeautifier code,
                                             final String valueName,
                                             final List<String> loopVariables) {
-        String ownLoopVar = code.getNotUsedVarName("j_prime");
-        String loopHead = forLoopHeaderCode(ownLoopVar, CCodeHelper.LT_SIGN,
-                                            loopVariables.get(1));
+        final String ownLoopVar = code.getNotUsedVarName("j_prime");
+        final String loopHead = forLoopHeaderCode(ownLoopVar, CCodeHelper.LT_SIGN,
+                                                  loopVariables.get(1));
         code.add(loopHead);
         code.add(functionCode(
                     ASSUME,
@@ -272,9 +272,9 @@ public final class Preference extends CBMCInputType {
                 new ArrayList<CBMCResultValueWrapper>();
         for (final Iterator<String> iterator = values.iterator();
                 iterator.hasNext();) {
-            String value = iterator.next();
-            CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
-            CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
+            final String value = iterator.next();
+            final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
+            final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue(CCodeHelper.INT, value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }

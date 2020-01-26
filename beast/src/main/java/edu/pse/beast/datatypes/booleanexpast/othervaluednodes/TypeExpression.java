@@ -53,7 +53,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        TypeExpression that = (TypeExpression) o;
+        final TypeExpression that = (TypeExpression) o;
         return type != null ? type.equals(that.type) : that.type == null;
     }
 
