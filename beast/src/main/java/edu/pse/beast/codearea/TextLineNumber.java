@@ -431,7 +431,7 @@ public final class TextLineNumber extends JPanel
         // Get the bounding rectangle of the row.
         final Rectangle2D r = component.modelToView2D(rowStartOffset);
         final double lineHeight = fontMetrics.getHeight();
-        final final Double y = r.getY() + r.getHeight();
+        final Double y = r.getY() + r.getHeight();
         int descent = 0;
 
         // The text needs to be positioned above the bottom of the bounding

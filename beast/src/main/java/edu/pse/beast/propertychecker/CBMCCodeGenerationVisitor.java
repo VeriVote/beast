@@ -1188,7 +1188,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         }
         final ConcatenationExpContext context = node.getConcatenationExpContext();
         final ParseTree firstChild = context.getChild(0 + offset);
-        final String voteInputOne = newTempVarString(VOTE);
+        String voteInputOne = newTempVarString(VOTE);
         // Create the variable.
         code.add(electionTypeContainer.getInputStruct().getStructAccess()
                 + space() + voteInputOne + CCodeHelper.SEMICOLON);
