@@ -1,5 +1,8 @@
 package edu.pse.beast.electionsimulator;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,12 +27,6 @@ import edu.pse.beast.types.InputType;
  * @author Lukas Stapelbroek
  */
 public final class ElectionSimulation implements MenuBarInterface {
-    /** The Constant ONE. */
-    private static final String ONE = "1";
-
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
-
     /** The Constant CSV_SEPARATOR. */
     private static final String CSV_SEPARATOR = ",";
 
@@ -122,9 +119,9 @@ public final class ElectionSimulation implements MenuBarInterface {
                                             voterGridPane, candidateGridPane);
         model.setAmountCandidates(1);
         model.setAmountVoters(1);
-        GUIController.getController().getInputVoters().setText(ONE);
-        GUIController.getController().getInputCandidates().setText(ONE);
-        GUIController.getController().getInputSeats().setText(ONE);
+        GUIController.getController().getInputVoters().setText(one());
+        GUIController.getController().getInputCandidates().setText(one());
+        GUIController.getController().getInputSeats().setText(one());
     }
 
     /**
@@ -333,7 +330,7 @@ public final class ElectionSimulation implements MenuBarInterface {
     private void openInput(final String input, final boolean bringToFront) {
         reset();
         if (!"".equals(input)) {
-            final String[] lines = input.split(LINE_BREAK);
+            final String[] lines = input.split(lineBreak());
             for (int y = 0; y < lines.length; y++) {
                 final String[] values =
                         lines[y].replaceAll("\\r", "").split(CSV_SEPARATOR);
@@ -376,9 +373,10 @@ public final class ElectionSimulation implements MenuBarInterface {
      */
     private String generateSaveString() {
         String saveString = "";
-        saveString = model.getAmountVoters() + CSV_SEPARATOR
-                + model.getAmountCandidates() + CSV_SEPARATOR
-                + model.getAmountSeats() + LINE_BREAK;
+        saveString =
+                lineBreak(model.getAmountVoters() + CSV_SEPARATOR
+                            + model.getAmountCandidates() + CSV_SEPARATOR
+                            + model.getAmountSeats());
         final List<NEWRowOfValues> rows = model.getRows();
 
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
@@ -394,7 +392,7 @@ public final class ElectionSimulation implements MenuBarInterface {
                 }
             }
             if (iterator.hasNext()) {
-                saveString += LINE_BREAK;
+                saveString += lineBreak(saveString);
             }
         }
         return saveString;

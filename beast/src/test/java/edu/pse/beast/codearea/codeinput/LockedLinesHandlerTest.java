@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
@@ -41,8 +43,6 @@ public class LockedLinesHandlerTest {
     /** The Constant ELEVEN. */
     private static final int ELEVEN = 11;
 
-    /** The line break string. */
-    private static final String LINE_BREAK = "\n";
     /** A test text string. */
     private static final String TEXT = "asd\n\nasdasd\nasd\nasd\n\n\n";
 
@@ -91,7 +91,7 @@ public class LockedLinesHandlerTest {
         pane.getStyledDocument().insertString(ZERO, TEXT, null);
         lockedLinesHandler.lockLine(ONE);
         assertTrue(lockedLinesHandler.isLineLocked(ONE));
-        pane.getStyledDocument().insertString(ZERO, LINE_BREAK, null);
+        pane.getStyledDocument().insertString(ZERO, lineBreak(), null);
         assertFalse(lockedLinesHandler.isLineLocked(ONE));
         assertTrue(lockedLinesHandler.isLineLocked(TWO));
         pane.getStyledDocument().insertString(ZERO, "asdasd\nasd\n\nasdasd", null);
@@ -109,11 +109,11 @@ public class LockedLinesHandlerTest {
         pane.getStyledDocument().insertString(ZERO, TEXT, null);
         lockedLinesHandler.lockLine(ONE);
         assertTrue(lockedLinesHandler.isLineLocked(ONE));
-        pane.getStyledDocument().insertString(FIVE, LINE_BREAK, null);
+        pane.getStyledDocument().insertString(FIVE, lineBreak(), null);
         assertTrue(lockedLinesHandler.isLineLocked(ONE));
-        pane.getStyledDocument().insertString(FOUR, LINE_BREAK, null);
+        pane.getStyledDocument().insertString(FOUR, lineBreak(), null);
         assertTrue(lockedLinesHandler.isLineLocked(TWO));
-        pane.getStyledDocument().insertString(FIVE, LINE_BREAK, null);
+        pane.getStyledDocument().insertString(FIVE, lineBreak(), null);
         assertTrue(lockedLinesHandler.isLineLocked(THREE));
     }
 
@@ -173,7 +173,7 @@ public class LockedLinesHandlerTest {
         pane.getStyledDocument().insertString(ZERO, text, null);
         lockedLinesHandler.lockLine(ZERO);
         lockedLinesHandler.lockLine(ONE);
-        pane.getStyledDocument().insertString(NINE, LINE_BREAK, null);
+        pane.getStyledDocument().insertString(NINE, lineBreak(), null);
         assertTrue(lockedLinesHandler.isLineLocked(ZERO));
         assertFalse(lockedLinesHandler.isLineLocked(ONE));
         assertTrue(lockedLinesHandler.isLineLocked(TWO));

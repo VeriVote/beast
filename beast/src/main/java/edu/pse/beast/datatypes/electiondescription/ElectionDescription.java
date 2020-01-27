@@ -1,5 +1,9 @@
 package edu.pse.beast.datatypes.electiondescription;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,12 +25,6 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  */
 public class ElectionDescription {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
-    /** The Constant SEMICOLON. */
-    private static final String SEMICOLON = ";";
     /** The Constant EQUALS_SIGN. */
     private static final String EQUALS_SIGN = "=";
     /** The Constant OPENING_BRACES. */
@@ -179,12 +177,13 @@ public class ElectionDescription {
         }
         final String assignment =
                 UnifiedNameContainer.getVotingArray() + access
-                + BLANK + EQUALS_SIGN + BLANK + votesName + ".arr" + access + SEMICOLON;
+                + space() + EQUALS_SIGN + space() + votesName + ".arr" + access
+                + CCodeHelper.SEMICOLON;
         final String switchedArray =
-                BLANK + getContainer().getInputType().getDataTypeAndSign()
-                + BLANK + UnifiedNameContainer.getVotingArray()
+                space() + getContainer().getInputType().getDataTypeAndSign()
+                + space() + UnifiedNameContainer.getVotingArray()
                 + getContainer().getInputType().getDimensionDescriptor(true)
-                + SEMICOLON + forLoopStart + assignment + forLoopEnd;
+                + CCodeHelper.SEMICOLON + forLoopStart + assignment + forLoopEnd;
         String middlePart = code.substring(lockedLineEnd, lockedBracePos);
         final String thirdPart = code.substring(lockedBracePos);
         middlePart = replaceReturns(middlePart,
@@ -228,7 +227,7 @@ public class ElectionDescription {
      *            of this description
      */
     public void setCode(final List<String> codeList) {
-        this.code = String.join(LINE_BREAK, codeList);
+        this.code = String.join(lineBreak(), codeList);
     }
 
     /**
@@ -345,7 +344,7 @@ public class ElectionDescription {
      * @return the list
      */
     private static List<String> stringToList(final String toConvert) {
-        final String[] split = toConvert.split(LINE_BREAK);
+        final String[] split = toConvert.split(lineBreak());
         return new ArrayList<String>(Arrays.asList(split));
     }
 
@@ -395,8 +394,10 @@ public class ElectionDescription {
                 // if cases or similar things
                 final String toInsert =
                         wrapInCurlyBraces(
-                                replacement.first() + BLANK + "return" + BLANK
-                                        + variableName + SEMICOLON + BLANK
+                                replacement.first() + space()
+                                + CCodeHelper.RETURN + space()
+                                + variableName
+                                + CCodeHelper.SEMICOLON + space()
                                 );
                 // the part which was changed
                 final String leadingPart = toProc.substring(0, matcher.start())
@@ -447,7 +448,7 @@ public class ElectionDescription {
                                                final String variableName) {
         Tuple3<Boolean, Boolean, Boolean> executionValues =
                 new Tuple3<Boolean, Boolean, Boolean>(false, false, false);
-        final Pattern returnPattern = Pattern.compile(SEMICOLON);
+        final Pattern returnPattern = Pattern.compile(CCodeHelper.SEMICOLON);
         final Matcher matcher = returnPattern.matcher(toProcess);
 
         // find the first ";" which is valid
@@ -479,8 +480,8 @@ public class ElectionDescription {
      */
     private String wrapInStruct(final String variableName,
                                 final String valueDefinition) {
-        String toReturn = container.getOutputStruct().getStructAccess() + BLANK
-                            + variableName + SEMICOLON + BLANK;
+        String toReturn = container.getOutputStruct().getStructAccess() + space()
+                            + variableName + CCodeHelper.SEMICOLON + space();
         final int dimensions = container.getOutputType().getAmountOfDimensions();
         final List<String> loopVariables = generateLoopVariables(code,
                                                                  dimensions,
@@ -496,7 +497,8 @@ public class ElectionDescription {
         }
         toReturn += variableName + "."
                     + UnifiedNameContainer.getStructValueName() + arrayAccess
-                    + BLANK + EQUALS_SIGN + BLANK + valueDefinition + arrayAccess + SEMICOLON;
+                    + space() + EQUALS_SIGN + space() + valueDefinition + arrayAccess
+                    + CCodeHelper.SEMICOLON;
         for (int i = 0; i < dimensions; i++) {
             toReturn += CLOSING_BRACES; // close the for loops
         }
@@ -514,10 +516,10 @@ public class ElectionDescription {
      */
     private static String generateForLoopHeader(final String indexName,
                                                 final String maxSize) {
-        return "for (unsigned int" + BLANK + indexName + BLANK
-                + EQUALS_SIGN + BLANK + "0" + SEMICOLON + BLANK
-                + indexName + BLANK + "<" + BLANK + maxSize + SEMICOLON + BLANK
-                + indexName + "++ )" + BLANK + OPENING_BRACES + BLANK;
+        return "for (unsigned int" + space() + indexName + space()
+                + EQUALS_SIGN + space() + zero() + CCodeHelper.SEMICOLON + space()
+                + indexName + space() + "<" + space() + maxSize + CCodeHelper.SEMICOLON + space()
+                + indexName + "++ )" + space() + OPENING_BRACES + space();
     }
 
     /**
@@ -598,7 +600,7 @@ public class ElectionDescription {
                 }
             } else if (lineComment || multiComment) {
                 // we are in a commented area
-                if (currentChar == LINE_BREAK.charAt(0)) {
+                if (currentChar == lineBreak().charAt(0)) {
                     lineComment = false; // a new line ends a line comment
                 }
                 if (currentChar == slash) {

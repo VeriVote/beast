@@ -31,6 +31,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.UNSIGNED;
 import static edu.pse.beast.toolbox.CCodeHelper.VOID;
 import static edu.pse.beast.toolbox.CCodeHelper.VOLATILE;
 import static edu.pse.beast.toolbox.CCodeHelper.WHILE;
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
@@ -84,8 +85,6 @@ import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
  */
 public final class NewCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
     /** The Constant QUERY. */
     private static final String QUERY = "?";
     /** The Constant PIPE. */
@@ -411,7 +410,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             } else if (deleteCombination.match(event)) {
                 delete(event);
             } else if (enterCombination.match(event)) {
-                lockedLineSafeInsertText(LINE_BREAK, false, false, null);
+                lockedLineSafeInsertText(lineBreak(), false, false, null);
                 consume(event);
             } else if (pasteCombination.match(event)) {
                 paste(event);
@@ -617,7 +616,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
                         || (lockedBracePos < selectionStart)));
         if (notOverlapping
                 || (selectionEnd == lockedLineStart
-                    && (r.endsWith(LINE_BREAK) || backspace || delete))) {
+                    && (r.endsWith(lineBreak()) || backspace || delete))) {
             this.replaceText(selectionStart, selectionEnd, r);
             updateLockedLineNumber(selectionEnd, r.length() - selectionLength);
             return true;
@@ -707,7 +706,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         String toDisplay = "";
         for (CodeError codeError : codeErrors) {
             toDisplay += "line: " + codeError.getLine() + "| Message: "
-                            + codeError.getMsg() + LINE_BREAK;
+                            + codeError.getMsg() + lineBreak();
         }
         GUIController.setErrorText(toDisplay);
     }

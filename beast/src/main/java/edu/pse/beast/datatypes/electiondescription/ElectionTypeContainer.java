@@ -1,5 +1,7 @@
 package edu.pse.beast.datatypes.electiondescription;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InputType;
@@ -16,9 +18,6 @@ import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
  *
  */
 public class ElectionTypeContainer {
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
-
     /** The in type. */
     private final InputType inType;
 
@@ -58,7 +57,7 @@ public class ElectionTypeContainer {
         this.inputStruct = new CBMCStruct(inType);
         this.outputStruct = new CBMCStruct(outType);
         if (this.inputStruct.equals(this.outputStruct)) {
-            // they have the same shape
+            // They have the same shape.
             this.outputStruct = inputStruct;
         }
         inType.setStruct(inputStruct);
@@ -121,9 +120,9 @@ public class ElectionTypeContainer {
      */
     public String getStructDefinitions() {
         String toReturn = "";
-        toReturn = inputStruct.getStructDefinition() + LINE_BREAK;
+        toReturn = lineBreak(inputStruct.getStructDefinition());
         if (!inputStruct.equals(outputStruct)) {
-            toReturn += outputStruct.getStructDefinition() + LINE_BREAK;
+            toReturn += lineBreak(outputStruct.getStructDefinition());
         }
         return toReturn;
     }

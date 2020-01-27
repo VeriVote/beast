@@ -1,5 +1,10 @@
 package edu.pse.beast.booleanexpeditor.view;
 
+import static edu.pse.beast.toolbox.CCodeHelper.colon;
+import static edu.pse.beast.toolbox.CCodeHelper.comma;
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+import static edu.pse.beast.toolbox.CCodeHelper.parenthesize;
+
 import java.util.ArrayList;
 
 import javax.swing.JTextPane;
@@ -17,16 +22,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 public class ErrorWindow {
     /** The Constant BLANK. */
     private static final String BLANK = " ";
-    /** The Constant PARENR_STRING. */
-    private static final String PARENR = ")";
-    /** The Constant COMMA_STRING. */
-    private static final String COMMA = ",";
-    /** The Constant PARENL_STRING. */
-    private static final String PARENL = "(";
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
-    /** The Constant COLON_STRING. */
-    private static final String COLON = ":" + BLANK;
 
     /** The Constant ERROR. */
     private static final String ERROR = "error";
@@ -88,23 +83,25 @@ public class ErrorWindow {
         final int numberOfErrors =
                 postConditionErrors.size() + preConditionErrors.size();
         String errorsAsString =
-                errorString + COLON + BLANK + numberOfErrors + LINE_BREAK;
+                lineBreak(colon(errorString, Integer.toString(numberOfErrors)));
 
         for (int i = 0; i < preConditionErrors.size(); i++) {
-            errorsAsString += i + 1 + COLON + BLANK
-                    + booleanExpErrorDisplayer
-                            .createMsg(preConditionErrors.get(i))
-                    + BLANK + PARENL + lineString + BLANK
-                    + preConditionErrors.get(i).getLine() + COMMA
-                    + BLANK + preConditionsString + PARENR + LINE_BREAK;
+            errorsAsString +=
+                    lineBreak(colon(Integer.toString(i + 1),
+                                    booleanExpErrorDisplayer
+                                        .createMsg(preConditionErrors.get(i))) + BLANK
+                            + parenthesize(lineString + BLANK
+                                            + comma(preConditionErrors.get(i).getLine())
+                                            + preConditionsString));
         }
         for (int i = 0; i < postConditionErrors.size(); i++) {
-            errorsAsString += i + 1 + COLON + BLANK
-                    + booleanExpErrorDisplayer
-                            .createMsg(postConditionErrors.get(i))
-                    + BLANK + PARENL + lineString + BLANK
-                    + postConditionErrors.get(i).getLine() + COMMA
-                    + BLANK  + postConditionsString + PARENR + LINE_BREAK;
+            errorsAsString +=
+                    lineBreak(colon(Integer.toString(i + 1),
+                                    booleanExpErrorDisplayer
+                                        .createMsg(postConditionErrors.get(i))) + BLANK
+                            + parenthesize(lineString + BLANK
+                                            + comma(postConditionErrors.get(i).getLine())
+                                            + postConditionsString));
         }
         textPane.setText(errorsAsString);
     }

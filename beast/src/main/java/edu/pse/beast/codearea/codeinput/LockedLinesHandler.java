@@ -1,5 +1,7 @@
 package edu.pse.beast.codearea.codeinput;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,21 +18,16 @@ import edu.pse.beast.toolbox.SortedIntegerList;
 
 /**
  * This class handles keeping track of the position of lines locked by the user.
- * It listens to removed and insert updates from the styleddocument of the
- * JTExtPane in which the lines are locked. If a linebreak is inserted before a
+ * It listens to removed and insert updates from the styled document of the
+ * JTExtPane in which the lines are locked. If a line break is inserted before a
  * locked line, the line gets unlocked and the next one locked. Conversely, if a
- * linebreak is removed in front of a locked line, said line gets unlocked and
+ * line break is removed in front of a locked line, said line gets unlocked and
  * the line before it locked Every time a line gets locked/unlocked, it messages
  * all registered LockedLinesListener of this fact
  *
  * @author Holger Klein
  */
 public final class LockedLinesHandler implements DocumentListener {
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
-    /** The Constant LINE_BREAK_CHAR. */
-    private static final char LINE_BREAK_CHAR = LINE_BREAK.charAt(0);
-
     /** The locked lines. */
     private SortedIntegerList lockedLines = new SortedIntegerList();
 
@@ -114,7 +111,7 @@ public final class LockedLinesHandler implements DocumentListener {
             int amtNewline = 0;
             final String added = doc.getText(de.getOffset(), de.getLength());
             for (int i = 0; i < de.getLength(); ++i) {
-                if (added.charAt(i) == LINE_BREAK_CHAR) {
+                if (added.charAt(i) == lineBreak().charAt(0)) {
                     amtNewline++;
                 }
             }
@@ -122,8 +119,8 @@ public final class LockedLinesHandler implements DocumentListener {
                     JTextPaneToolbox.transformToLineNumber(pane,
                                                            de.getOffset());
             if (lockedLines.contains(firstLineAffected)
-                    && doc.getText(de.getOffset() + 1, 1).equals(LINE_BREAK)
-                    && !doc.getText(de.getOffset() - 1, 1).equals(LINE_BREAK)) {
+                    && doc.getText(de.getOffset() + 1, 1).equals(lineBreak())
+                    && !doc.getText(de.getOffset() - 1, 1).equals(lineBreak())) {
                 ++firstLineAffected;
             }
 

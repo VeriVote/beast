@@ -1,11 +1,13 @@
 package edu.pse.beast.types.cbmctypes;
 
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.intVar;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -45,12 +47,11 @@ public abstract class CBMCOutputType extends OutputType {
     @Override
     public final CodeArrayListBeautifier addMarginMainTest(final CodeArrayListBeautifier code,
                                                            final int voteNumber) {
-        code.add(CCodeHelper.INT + space()
-                + functionCode("main") + space()
-                + CCodeHelper.OPENING_BRACES);
+        code.add(intVar(functionCode(CBMCCodeGenerator.MAIN))
+                + space() + CCodeHelper.OPENING_BRACES);
         code.addTab();
         final String definition =
-                getContainer().getOutputStruct().getStructAccess()
+                getContainer().getOutputStruct().getStructAccess() + space()
                 + varAssignCode(UnifiedNameContainer.getElect() + one(),
                                 functionCode(UnifiedNameContainer.getVotingMethod(),
                                              ORIG_VOTES_SIZE,
@@ -58,7 +59,7 @@ public abstract class CBMCOutputType extends OutputType {
                 + CCodeHelper.SEMICOLON;
         code.add(definition);
         // Add an assertion that never holds to be able to extract the data.
-        code.add(functionCode("assert", zero()) + CCodeHelper.SEMICOLON);
+        code.add(functionCode(CBMCCodeGenerator.ASSERT, zero()) + CCodeHelper.SEMICOLON);
         code.deleteTab();
         code.add(CCodeHelper.CLOSING_BRACES);
         return code;

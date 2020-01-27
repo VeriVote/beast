@@ -1,5 +1,7 @@
 package edu.pse.beast.saverloader.staticsaverloaders;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+
 import java.util.concurrent.TimeUnit;
 
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
@@ -19,8 +21,6 @@ public final class TimeOutSaverLoader {
     private static final String TIME_UNIT_START = "<timeunit>";
     /** The end time unit constant. */
     private static final String TIME_UNIT_END = "</timeunit>";
-    /** The line break constant. */
-    private static final String LINE_BREAK = "\n";
 
     /**
      * Instantiates a new time out saver loader.
@@ -36,10 +36,10 @@ public final class TimeOutSaverLoader {
      * @return the saveString
      */
     public static String createSaveString(final TimeOut timeOut) {
-        final String amount = DURATION_START + LINE_BREAK + timeOut.getDuration()
-                            + LINE_BREAK + DURATION_END + LINE_BREAK;
-        final String timeunit = TIME_UNIT_START + LINE_BREAK + timeOut.getOrigUnit().name()
-                                + LINE_BREAK + TIME_UNIT_END + LINE_BREAK;
+        final String amount = DURATION_START + lineBreak() + timeOut.getDuration()
+                            + lineBreak() + DURATION_END + lineBreak();
+        final String timeunit = TIME_UNIT_START + lineBreak() + timeOut.getOrigUnit().name()
+                                + lineBreak() + TIME_UNIT_END + lineBreak();
         return amount + timeunit;
     }
 
@@ -52,11 +52,11 @@ public final class TimeOutSaverLoader {
      * @return the TimeOut object
      */
     public static TimeOut createFromSaveString(final String s) {
-        String[] split = s.split(LINE_BREAK + DURATION_END + LINE_BREAK);
-        Long duration = Long.parseLong(split[0].replace(DURATION_START + LINE_BREAK, ""));
-        split = split[1].split(LINE_BREAK + TIME_UNIT_END + LINE_BREAK);
+        String[] split = s.split(lineBreak() + DURATION_END + lineBreak());
+        Long duration = Long.parseLong(split[0].replace(DURATION_START + lineBreak(), ""));
+        split = split[1].split(lineBreak() + TIME_UNIT_END + lineBreak());
         TimeUnit timeUnit = TimeUnit.MINUTES;
-        final String timeunit = split[0].replace(TIME_UNIT_START + LINE_BREAK, "");
+        final String timeunit = split[0].replace(TIME_UNIT_START + lineBreak(), "");
         switch (timeunit) {
         case "MILLISECONDS":
             timeUnit = TimeUnit.MILLISECONDS;

@@ -2,6 +2,7 @@ package edu.pse.beast.types.cbmctypes.outputplugins;
 
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.intVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
@@ -11,6 +12,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.zero;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -55,15 +57,13 @@ public final class SingleCandidate extends CBMCOutputType {
         // UnifiedNameContainer.getVoter() + "], diff[" +
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
         code.addTab();
-        code.add(varAssignCode(CCodeHelper.INT + space() + "total_diff",
-                               zero())
+        code.add(intVarEqualsCode("total_diff") + zero()
                 + CCodeHelper.SEMICOLON);
-        code.add(varAssignCode(CCodeHelper.INT + space()
-                                + UnifiedNameContainer.getNewResultName() + one(),
-                               functionCode(UnifiedNameContainer.getVotingMethod(),
-                                            UnifiedNameContainer.getNewVotesName() + one()))
+        code.add(intVarEqualsCode(UnifiedNameContainer.getNewResultName() + one())
+                + functionCode(UnifiedNameContainer.getVotingMethod(),
+                               UnifiedNameContainer.getNewVotesName() + one())
                 + CCodeHelper.SEMICOLON);
-        code.add(functionCode("assert",
+        code.add(functionCode(CBMCCodeGenerator.ASSERT,
                               eq(UnifiedNameContainer.getNewResultName() + one(),
                                  UnifiedNameContainer.getOrigResultName()))
                 + CCodeHelper.SEMICOLON);

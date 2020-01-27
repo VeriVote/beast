@@ -2,20 +2,24 @@ package edu.pse.beast.types.cbmctypes.outputplugins;
 
 import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.colon;
+import static edu.pse.beast.toolbox.CCodeHelper.comma;
 import static edu.pse.beast.toolbox.CCodeHelper.dotArr;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
+import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
 
 import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -74,14 +78,14 @@ public final class ParliamentStack extends CBMCOutputType {
                                             UnifiedNameContainer.getNewVotesName()
                                             + one())
                 ) + CCodeHelper.SEMICOLON);
-        code.add(varEqualsCode("*tmp_result") + TMP_STRING + dotArr() + CCodeHelper.SEMICOLON);
+        code.add(uintVarEqualsCode("*tmp_result") + TMP_STRING + dotArr() + CCodeHelper.SEMICOLON);
         // Create the array where the new seats will get saved
         code.add(unsignedIntVar(
                 arrAccess(UnifiedNameContainer.getNewResultName() + one(),
                           UnifiedNameContainer.getSeats())
                 ) + CCodeHelper.SEMICOLON);
         // iterate over the seat array, and fill it
-        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, UnifiedNameContainer.getSeats()));
+        code.add(forLoopHeaderCode(I, lt(), UnifiedNameContainer.getSeats()));
         code.addTab();
         // We do this, so our cbmc parser can read out the value of the
         // array
@@ -92,10 +96,10 @@ public final class ParliamentStack extends CBMCOutputType {
         code.deleteTab();
         code.add(CCodeHelper.CLOSING_BRACES); // Close the for loop
         // iterate over all
-        code.add(forLoopHeaderCode(I, CCodeHelper.LT_SIGN, UnifiedNameContainer.getSeats()));
+        code.add(forLoopHeaderCode(I, lt(), UnifiedNameContainer.getSeats()));
         code.addTab();
         // candidates / seats
-        code.add(functionCode("assert",
+        code.add(functionCode(CBMCCodeGenerator.ASSERT,
                               eq(arrAccess(
                                       UnifiedNameContainer.getNewResultName() + one(), I),
                                  arrAccess(
@@ -142,14 +146,11 @@ public final class ParliamentStack extends CBMCOutputType {
                 .hasNext();) {
             final String currentValue = iterator.next();
             try {
-                toReturn += GUIController.getController()
-                        .getElectionSimulation().getPartyName(index)
-                        + CCodeHelper.COLON + space()
-                        + currentValue + CCodeHelper.COMMA + space();
+                toReturn += comma(colon(GUIController.getController()
+                                            .getElectionSimulation().getPartyName(index),
+                                        currentValue));
             } catch (NumberFormatException e) {
-                toReturn += index + CCodeHelper.COLON + space()
-                            + currentValue + CCodeHelper.COMMA
-                            + space();
+                toReturn += comma(colon(Integer.toString(index), currentValue));
             }
             index++;
         }

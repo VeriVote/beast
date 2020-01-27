@@ -1,5 +1,7 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
@@ -12,7 +14,7 @@ public abstract class BooleanExpressionNode {
     protected static final int PRIME = 31;
 
     /** The Constant LINE_BREAK. */
-    protected static final String LINE_BREAK = "\n";
+    protected static final String LINE_BREAK = lineBreak();
 
     /** The Constant TAB. */
     protected static final String TAB = "\t";

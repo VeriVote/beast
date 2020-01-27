@@ -6,13 +6,14 @@ import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
+import static edu.pse.beast.toolbox.CCodeHelper.longVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.plus;
 import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
+import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.Arrays;
@@ -171,8 +172,7 @@ public final class SingleChoiceStack extends CBMCInputType {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add();
-        code.add(varAssignCode(CCodeHelper.LONG + space() + TMP_DIFF,
-                               functionCode(NONDET_LONG))
+        code.add(longVarEqualsCode(TMP_DIFF) + functionCode(NONDET_LONG)
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(functionCode(ASSUME,
@@ -202,9 +202,9 @@ public final class SingleChoiceStack extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add(varAssignCode(varEqualsCode(TMP_RESTR_SUM), zero())
+        code.add(varAssignCode(uintVarEqualsCode(TMP_RESTR_SUM), zero())
                 + CCodeHelper.SEMICOLON);
-        code.add(forLoopHeaderCode(LOOP_R_0, CCodeHelper.LT_SIGN, C));
+        code.add(forLoopHeaderCode(LOOP_R_0, lt(), C));
         code.add(plusEquals(TMP_RESTR_SUM,
                             dotArrStructAccess(voteName, LOOP_R_0))
                 + CCodeHelper.SEMICOLON);

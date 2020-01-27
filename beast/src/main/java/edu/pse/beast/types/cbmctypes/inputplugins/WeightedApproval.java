@@ -5,11 +5,12 @@ import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
+import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
+import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.ArrayList;
@@ -184,10 +185,10 @@ public final class WeightedApproval extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add(varEqualsCode(CAND_SUM) + arrAccess(ARR, I, CANDIDATE)
+        code.add(uintVarEqualsCode(CAND_SUM) + arrAccess(ARR, I, CANDIDATE)
                 + CCodeHelper.SEMICOLON);
         if (unique) {
-            code.add(forLoopHeaderCode(J, CCodeHelper.LT_SIGN,
+            code.add(forLoopHeaderCode(J, lt(),
                                        UnifiedNameContainer.getCandidate()));
             code.add(functionCode(CCodeHelper.IF,
                                   conjunct(neq(J, CANDIDATE),

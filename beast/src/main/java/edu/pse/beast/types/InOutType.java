@@ -1,5 +1,7 @@
 package edu.pse.beast.types;
 
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +26,6 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
  * @author Lukas Stapelbroek
  */
 public abstract class InOutType {
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
     /** The Constant ARR. */
     private static final String ARR = "arr";
 
@@ -389,7 +389,7 @@ public abstract class InOutType {
         for (final ResultValueWrapper currentVar : votes) {
             final long size = sizes.get(currentVar.getMainIndex());
             final String name = currentVar.getName();
-            toReturn.add(name + LINE_BREAK);
+            toReturn.add(lineBreak(name));
             final CBMCResultValueStruct struct =
                     (CBMCResultValueStruct) currentVar.getResultValue();
             if (getAmountOfDimensions() == 2) {

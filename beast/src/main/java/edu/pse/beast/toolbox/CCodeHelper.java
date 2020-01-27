@@ -111,44 +111,41 @@ public final class CCodeHelper {
     /** The Constant THREAD_LOCAL. */
     public static final String THREAD_LOCAL = "_Thread_local";
 
-    /** The Constant LINE_BREAK. */
-    public static final String LINE_BREAK = "\n";
-    /** The Constant SEMICOLON. */
-    public static final String SEMICOLON = ";";
-    /** The Constant EQUALS_SIGN. */
-    public static final String EQUALS_SIGN = "=";
-    /** The Constant LT_SIGN. */
-    public static final String LT_SIGN = "<";
-    /** The Constant GT_SIGN. */
-    public static final String GT_SIGN = ">";
-    /** The Constant PLUS. */
-    public static final String PLUS = "+";
-
     /** The Constant OPENING_PARENTHESES. */
     public static final String OPENING_PARENTHESES = "(";
     /** The Constant CLOSING_PARENTHESES. */
     public static final String CLOSING_PARENTHESES = ")";
-
     /** The Constant OPENING_BRACES. */
     public static final String OPENING_BRACES = "{";
     /** The Constant CLOSING_BRACES. */
     public static final String CLOSING_BRACES = "}";
-    /** The comma symbol. */
-    public static final String COMMA = ",";
-    /** The colon symbol. */
-    public static final String COLON = ":";
+    /** The Constant SEMICOLON. */
+    public static final String SEMICOLON = ";";
+
+    /** The Constant LINE_BREAK. */
+    private static final String LINE_BREAK = "\n";
+    /** The Constant EQUALS_SIGN. */
+    private static final String EQUALS_SIGN = "=";
+    /** The Constant LT_SIGN. */
+    private static final String LT_SIGN = "<";
+    /** The Constant LEQ_SIGN. */
+    private static final String LEQ_SIGN = LT_SIGN + EQUALS_SIGN;
+    /** The Constant GT_SIGN. */
+    private static final String GT_SIGN = ">";
+    /** The Constant PLUS. */
+    private static final String PLUS = "+";
 
     /** The BLANK symbol. */
     private static final String BLANK = " ";
+    /** The comma symbol. */
+    private static final String COMMA = ",";
+    /** The colon symbol. */
+    private static final String COLON = ":";
     /** The Constant DOT. */
     private static final String DOT = ".";
     /** The Constant DOT. */
     private static final String STAR = "*";
 
-    /** The Constant ifndef. */
-    private static final String IFNDEF = "#ifndef";
-    /** The Constant endif. */
-    private static final String ENDIF = "#endif";
     /** The Constant AMPERSAND. */
     private static final String AMPERSAND = "&";
     /** The Constant PIPE. */
@@ -170,7 +167,14 @@ public final class CCodeHelper {
     /** The Constant UNDERSCORE. */
     private static final String UNDERSCORE = "_";
     /** The Constant DOT_ARR. */
-    private static final String DOT_ARR = DOT + "arr";
+    private static final String ARR = "arr";
+    /** The Constant DOT_ARR. */
+    private static final String DOT_ARR = DOT + ARR;
+
+    /** The Constant ifndef. */
+    private static final String IFNDEF = "#ifndef";
+    /** The Constant endif. */
+    private static final String ENDIF = "#endif";
 
     /** The Constant ZERO. */
     private static final String ZERO = "0";
@@ -278,6 +282,22 @@ public final class CCodeHelper {
     }
 
     /**
+     * Generate colon expression.
+     *
+     * @param lhs
+     *            the lhs expr
+     * @param rhs
+     *            the rhs expr
+     * @return the string
+     */
+    public static String colon(final String lhs,
+                               final String rhs) {
+        return lhs + COLON + BLANK + rhs;
+    }
+
+    //COLON
+
+    /**
      * Produces the given number of spaces.
      *
      * @param numberOfSpaces
@@ -289,7 +309,7 @@ public final class CCodeHelper {
         String spaces = "";
         if (0 <= numberOfSpaces) {
             for (int remSpaces = numberOfSpaces; 0 < remSpaces; remSpaces--) {
-                spaces += CCodeHelper.BLANK;
+                spaces += BLANK;
             }
         }
         return spaces;
@@ -301,7 +321,7 @@ public final class CCodeHelper {
      * @return a space
      */
     public static String space() {
-        return CCodeHelper.BLANK;
+        return BLANK;
     }
 
     /**
@@ -365,6 +385,48 @@ public final class CCodeHelper {
     }
 
     /**
+     * Add comma and space.
+     *
+     * @param exp
+     *            the exp
+     * @return the string
+     */
+    public static String comma(final String exp) {
+        return exp + COMMA + BLANK;
+    }
+
+    /**
+     * Add comma and space.
+     *
+     * @param exp
+     *            the exp
+     * @return the string
+     */
+    public static String comma(final int exp) {
+        return comma(Integer.toString(exp));
+    }
+
+    /**
+     * Add linebreak.
+     *
+     * @param exp
+     *            the exp
+     * @return the string
+     */
+    public static String lineBreak(final String exp) {
+        return exp + LINE_BREAK;
+    }
+
+    /**
+     * Generate linebreak.
+     *
+     * @return the string
+     */
+    public static String lineBreak() {
+        return lineBreak("");
+    }
+
+    /**
      * Generate code for zero.
      *
      * @return the string
@@ -401,6 +463,28 @@ public final class CCodeHelper {
     }
 
     /**
+     * Generate code for long variable.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String longVar(final String varName) {
+        return CCodeHelper.LONG + BLANK + varName;
+    }
+
+    /**
+     * Generate code for (signed) int variable.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String intVar(final String varName) {
+        return CCodeHelper.INT + BLANK + varName;
+    }
+
+    /**
      * Generate code for unsigned int variable.
      *
      * @param varName
@@ -408,8 +492,29 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String unsignedIntVar(final String varName) {
-        return CCodeHelper.UNSIGNED + BLANK
-                + CCodeHelper.INT + BLANK + varName;
+        return CCodeHelper.UNSIGNED + BLANK + intVar(varName);
+    }
+
+    /**
+     * Long variable equals code.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String longVarEqualsCode(final String varName) {
+        return longVar(varName) + BLANK + EQUALS_SIGN + BLANK;
+    }
+
+    /**
+     * (Signed) int variable equals code.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String intVarEqualsCode(final String varName) {
+        return intVar(varName) + BLANK + EQUALS_SIGN + BLANK;
     }
 
     /**
@@ -419,7 +524,7 @@ public final class CCodeHelper {
      *            the var name
      * @return the string
      */
-    public static String varEqualsCode(final String varName) {
+    public static String uintVarEqualsCode(final String varName) {
         return unsignedIntVar(varName) + BLANK + EQUALS_SIGN + BLANK;
     }
 
@@ -508,6 +613,15 @@ public final class CCodeHelper {
     }
 
     /**
+     * Variable less code.
+     *
+     * @return the string
+     */
+    public static String lt() {
+        return LT_SIGN;
+    }
+
+    /**
      * Variable less-equal code.
      *
      * @param lhsExpr
@@ -519,6 +633,15 @@ public final class CCodeHelper {
     public static String leq(final String lhsExpr,
                              final String rhsExpr) {
         return lhsExpr + BLANK + LT_SIGN + EQUALS_SIGN + BLANK + rhsExpr;
+    }
+
+    /**
+     * Variable less-equal code.
+     *
+     * @return the string
+     */
+    public static String leq() {
+        return LEQ_SIGN;
     }
 
     /**
@@ -578,7 +701,7 @@ public final class CCodeHelper {
             for (final String param : params) {
                 if (notNullOrEmpty(param)
                         && !"".equals(functionCode)) {
-                    functionCode += COMMA + BLANK;
+                    functionCode = comma(functionCode);
                 }
                 functionCode += notNullOrEmpty(param) ? param : "";
             }
@@ -702,8 +825,8 @@ public final class CCodeHelper {
      */
     public static String defineIfNonDef(final String name,
                                         final String argument) {
-        return IFNDEF + CCodeHelper.BLANK + name + LINE_BREAK
-                + CCodeHelper.BLANK + define(name, argument) + LINE_BREAK
+        return lineBreak(IFNDEF + CCodeHelper.BLANK + name)
+                + lineBreak(CCodeHelper.BLANK + define(name, argument))
                 + CCodeHelper.BLANK + ENDIF;
     }
 
@@ -752,7 +875,7 @@ public final class CCodeHelper {
                                            final String boundConst,
                                            final String guardReinforce) {
         final String varEqualsZero =
-                varEqualsCode(countVar) + zero() + SEMICOLON;
+                uintVarEqualsCode(countVar) + zero() + SEMICOLON;
         final String boundGuard =
                 countVar + BLANK + comparison + BLANK + boundConst;
         final String loopGuard = conjunct(guardReinforce, boundGuard)
@@ -1091,12 +1214,10 @@ public final class CCodeHelper {
         final String inputIdInFile = container.getInputType().getInputIDinFile();
         final String outputIdInFile = container.getOutputType().getOutputIDinFile();
 
-        code.add(lineComment(
-                    stringResourceLoader.getStringFromID(inputIdInFile) + COLON + BLANK
-                    + stringResourceLoader.getStringFromID(inputIdInFile + EXP)));
-        code.add(lineComment(
-                    stringResourceLoader.getStringFromID(outputIdInFile) + COLON + BLANK
-                    + stringResourceLoader.getStringFromID(outputIdInFile + EXP)));
+        code.add(lineComment(colon(stringResourceLoader.getStringFromID(inputIdInFile),
+                                   stringResourceLoader.getStringFromID(inputIdInFile + EXP))));
+        code.add(lineComment(colon(stringResourceLoader.getStringFromID(outputIdInFile),
+                                   stringResourceLoader.getStringFromID(outputIdInFile + EXP))));
         code.add(generateSimpleDeclString(container));
         code.add(CLOSING_BRACES + BLANK);
         final ElectionDescription description =

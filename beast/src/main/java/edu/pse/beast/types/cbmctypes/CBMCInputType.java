@@ -1,12 +1,18 @@
 package edu.pse.beast.types.cbmctypes;
 
+import static edu.pse.beast.toolbox.CCodeHelper.colon;
+import static edu.pse.beast.toolbox.CCodeHelper.comma;
+import static edu.pse.beast.toolbox.CCodeHelper.define;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.include;
+import static edu.pse.beast.toolbox.CCodeHelper.intVar;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.one;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
@@ -14,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -29,14 +36,16 @@ public abstract class CBMCInputType extends InputType {
     protected static final int INT_LENGTH = 32;
 
     /** The Constant ASSUME. */
-    protected static final String ASSUME = "assume";
+    protected static final String ASSUME = CBMCCodeGenerator.ASSUME;
+    /** The Constant ASSERT. */
+    protected static final String ASSERT = CBMCCodeGenerator.ASSERT;
     /** The Constant ARR. */
-    protected static final String ARR = "arr";
+    protected static final String ARR = CBMCCodeGenerator.ARR;
 
     /** The Constant NONDET_INT. */
-    protected static final String NONDET_INT = "nondet_int";
+    protected static final String NONDET_INT = CBMCCodeGenerator.NONDET_INT;
     /** The Constant NONDET_UINT. */
-    protected static final String NONDET_UINT = "nondet_uint";
+    protected static final String NONDET_UINT = CBMCCodeGenerator.NONDET_UINT;
 
     /** The Constant "i". */
     protected static final String I = "i";
@@ -48,9 +57,9 @@ public abstract class CBMCInputType extends InputType {
     protected static final String POS_DIFF = "pos_diff";
 
     /** The Constant C. */
-    protected static final String C = "C";
+    protected static final String C = CBMCCodeGenerator.C;
     /** The Constant V. */
-    protected static final String V = "V";
+    protected static final String V = CBMCCodeGenerator.V;
 
     /** The Constant SUM. */
     protected static final String SUM = "sum";
@@ -60,19 +69,18 @@ public abstract class CBMCInputType extends InputType {
     protected static final String CAND_SUM = "candSum";
 
     /** The Constant CPROVER_ASSUME. */
-    private static final String CPROVER_ASSUME = "__CPROVER_assume";
+    private static final String CPROVER_ASSUME = CBMCCodeGenerator.CPROVER_ASSUME;
     /** The Constant CPROVER_ASSERT. */
-    private static final String CPROVER_ASSERT = "__CPROVER_assert";
+    private static final String CPROVER_ASSERT = CBMCCodeGenerator.CPROVER_ASSERT;
 
     /** The Constant ASSERT2. */
-    private static final String ASSERT2 = "assert2";
+    private static final String ASSERT2 = CBMCCodeGenerator.ASSERT2;
 
     /** The Constant CHANGED. */
     private static final String CHANGED = "changed";
 
     /** The Constant X. */
     private static final String X = "x";
-
     /** The Constant Y. */
     private static final String Y = "y";
 
@@ -120,8 +128,7 @@ public abstract class CBMCInputType extends InputType {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add();
-        code.add(CCodeHelper.INT + space()
-                + varAssignCode(CHANGED, functionCode(NONDET_INT))
+        code.add(intVar(varAssignCode(CHANGED, functionCode(NONDET_INT)))
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(functionCode(ASSUME, leq(zero(), CHANGED)) + CCodeHelper.SEMICOLON);
@@ -146,22 +153,16 @@ public abstract class CBMCInputType extends InputType {
         // add the headers CBMC needs;
         code.add(include("stdlib"));
         code.add(include("stdint"));
-        code.add(include("assert"));
+        code.add(include(ASSERT));
         code.add();
-        code.add(CCodeHelper.UNSIGNED + space()
-                + CCodeHelper.INT + space()
-                + functionCode(NONDET_UINT) + CCodeHelper.SEMICOLON);
-        code.add(CCodeHelper.UNSIGNED + space()
-                + CCodeHelper.INT + space()
-                + functionCode(NONDET_INT) + CCodeHelper.SEMICOLON);
+        code.add(unsignedIntVar(functionCode(NONDET_UINT)) + CCodeHelper.SEMICOLON);
+        code.add(intVar(functionCode(NONDET_INT)) + CCodeHelper.SEMICOLON);
         code.add();
 
-        code.add(CCodeHelper.DEFINE + space()
-                + functionCode(ASSERT2, X, Y) + space()
-                + functionCode(CPROVER_ASSERT, X, Y));
-        code.add(CCodeHelper.DEFINE + space()
-                + functionCode(ASSUME, X) + space()
-                + functionCode(CPROVER_ASSUME, X));
+        code.add(define(functionCode(ASSERT2, X, Y),
+                        functionCode(CPROVER_ASSERT, X, Y)));
+        code.add(define(functionCode(ASSUME, X),
+                        functionCode(CPROVER_ASSUME, X)));
         code.add();
     }
 
@@ -179,7 +180,7 @@ public abstract class CBMCInputType extends InputType {
             } catch (IndexOutOfBoundsException e) {
                 oneVoter = "" + voterIndex;
             }
-            oneVoter = oneVoter + CCodeHelper.COLON + space();
+            oneVoter = colon(oneVoter, "");
             voterIndex++;
             int partyIndex = 0;
             final List<String> list = iterator.next();
@@ -194,12 +195,10 @@ public abstract class CBMCInputType extends InputType {
                 } catch (IndexOutOfBoundsException e) {
                     oneVoter = "" + partyIndex;
                 }
-                oneVoter += CCodeHelper.COLON
-                        + space() + voteAmount + CCodeHelper.COMMA
-                        + space();
+                oneVoter = comma(colon(oneVoter, voteAmount));
                 partyIndex++;
             }
-            votesString += oneVoter + CCodeHelper.LINE_BREAK;
+            votesString += lineBreak(oneVoter);
         }
         return votesString;
     }

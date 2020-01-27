@@ -6,6 +6,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
@@ -114,9 +115,9 @@ public final class Preference extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add(forLoopHeaderCode(LOOP_R_0, CCodeHelper.LT_SIGN, V));
-        code.add(forLoopHeaderCode(LOOP_R_1, CCodeHelper.LT_SIGN, C));
-        code.add(forLoopHeaderCode(LOOP_R_2, CCodeHelper.LT_SIGN, C));
+        code.add(forLoopHeaderCode(LOOP_R_0, lt(), V));
+        code.add(forLoopHeaderCode(LOOP_R_1, lt(), C));
+        code.add(forLoopHeaderCode(LOOP_R_2, lt(), C));
 
         code.add(functionCode(CCodeHelper.IF, neq(LOOP_R_1, LOOP_R_2))
                 + space() + CCodeHelper.OPENING_BRACES);
@@ -203,7 +204,7 @@ public final class Preference extends CBMCInputType {
                                             final String valueName,
                                             final List<String> loopVariables) {
         final String ownLoopVar = code.getNotUsedVarName("j_prime");
-        final String loopHead = forLoopHeaderCode(ownLoopVar, CCodeHelper.LT_SIGN,
+        final String loopHead = forLoopHeaderCode(ownLoopVar, lt(),
                                                   loopVariables.get(1));
         code.add(loopHead);
         code.add(functionCode(

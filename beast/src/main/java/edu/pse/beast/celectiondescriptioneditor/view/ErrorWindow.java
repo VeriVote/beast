@@ -1,5 +1,9 @@
 package edu.pse.beast.celectiondescriptioneditor.view;
 
+import static edu.pse.beast.toolbox.CCodeHelper.colon;
+import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+import static edu.pse.beast.toolbox.CCodeHelper.parenthesize;
+
 import java.util.ArrayList;
 
 import javax.swing.JTextPane;
@@ -16,15 +20,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 public class ErrorWindow {
     /** The Constant BLANK. */
     private static final String BLANK = " ";
-    /** The Constant LINE_BREAK. */
-    private static final String LINE_BREAK = "\n";
-    /** The Constant COLON. */
-    private static final String COLON = ":";
-
-    /** The Constant OPENING_PARENTHESES. */
-    private static final String OPENING_PARENTHESES = "(";
-    /** The Constant CLOSING_PARENTHESES. */
-    private static final String CLOSING_PARENTHESES = ")";
 
     /** The Constant ERROR_ID. */
     private static final String ERROR_ID = "error";
@@ -65,13 +60,13 @@ public class ErrorWindow {
     public void displayErrors(final ArrayList<CodeError> errors,
                               final CErrorDisplayer cErrorDisplayer) {
         String errorsAsString =
-                errorString + COLON + BLANK + errors.size() + LINE_BREAK;
+                lineBreak(colon(errorString, Integer.toString(errors.size())));
         for (int i = 0; i < errors.size(); i++) {
-            errorsAsString += (i + 1) + COLON + BLANK
-                    + cErrorDisplayer.createMsg(errors.get(i)) + BLANK
-                    + OPENING_PARENTHESES + lineString + BLANK
-                    + (errors.get(i).getLine() - 1)
-                    + CLOSING_PARENTHESES + LINE_BREAK;
+            errorsAsString +=
+                    lineBreak(colon(Integer.toString(i + 1),
+                                    cErrorDisplayer.createMsg(errors.get(i))) + BLANK
+                    + parenthesize(lineString + BLANK
+                                    + (errors.get(i).getLine() - 1)));
         }
         textPane.setText(errorsAsString);
     }
