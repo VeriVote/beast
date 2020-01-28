@@ -91,8 +91,8 @@ public abstract class Result implements ResultInterface {
     /** The sub result. */
     private Result subResult;
 
-    /** The is margin comp. */
-    private boolean isMarginComp;
+    // /** The is margin comp. */
+    // private boolean isMarginComp; FIXME: Purpose?
 
     /** The status strings. */
     private List<String> statusStrings = new ArrayList<String>();
@@ -139,7 +139,7 @@ public abstract class Result implements ResultInterface {
      *            the new margin comp
      */
     public void setMarginComp(final boolean isMarginComputation) {
-        this.isMarginComp = isMarginComputation;
+        // this.isMarginComp = isMarginComputation; Purpose?
     }
 
     @Override

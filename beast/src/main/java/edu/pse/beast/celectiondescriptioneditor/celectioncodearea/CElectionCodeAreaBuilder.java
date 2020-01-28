@@ -59,9 +59,9 @@ package edu.pse.beast.celectiondescriptioneditor.celectioncodearea;
 //
 //    private ArrayList<AutocompletionOption> createAutocompletionOptions() {
 //        ArrayList<AutocompletionOption> created = new ArrayList<AutocompletionOption>();
-//        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < V; ++i) {\n"));
-//        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < C; ++i) {\n"));
-//        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < S; ++i) {\n"));
+//        created.add(new AutocompletionOption("for", "for (unsigned int i = 0; i < V; ++i) {\n"));
+//        created.add(new AutocompletionOption("for", "for (unsigned int i = 0; i < C; ++i) {\n"));
+//        created.add(new AutocompletionOption("for", "for (unsigned int i = 0; i < S; ++i) {\n"));
 //        CAntlrHandler antlrHandler = new CAntlrHandler(new JTextPane());
 //        for (String s : antlrHandler.getTypeLiterals()) {
 //            created.add(new AutocompletionOption(s, s));

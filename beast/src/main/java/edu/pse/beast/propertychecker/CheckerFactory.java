@@ -450,7 +450,7 @@ public abstract class CheckerFactory implements Runnable {
                                     + "which does not make any sense");
                 }
                 int margin = 0;
-                List<String> lastFailedRun = new ArrayList<String>();
+                // List<String> lastFailedRun = new ArrayList<String>(); FIXME: Purpose?
                 boolean hasUpperBound = false;
                 boolean hasMargin = false;
                 while ((left < right) && !stopped) {
@@ -468,7 +468,7 @@ public abstract class CheckerFactory implements Runnable {
                     } else {
                         hasUpperBound = true;
                         right = margin;
-                        lastFailedRun = lastResult;
+                        // lastFailedRun = lastResult; FIXME
                     }
                 }
                 // so far, we have not found an upper bound for the
@@ -477,9 +477,9 @@ public abstract class CheckerFactory implements Runnable {
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
                                        numCandidates, numSeats, origData, res);
                     hasMargin = res.checkAssertionFailure();
-                    if (hasMargin) {
-                        lastFailedRun = lastResult;
-                    }
+                    // if (hasMargin) { FIXME: What is this for?
+                    //     lastFailedRun = lastResult;
+                    // }
                 }
                 // hasMargin now is true, if there is an upper bound,
                 // and false, if there is no margin

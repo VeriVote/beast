@@ -24,6 +24,11 @@ public class StringResourceProviderTest {
     /** A test module name string. */
     private static final String TEST_MODULE = "Testmodul";
 
+    /** The Constant TEST_STRING_ONE. */
+    private static final String TEST_STRING_ONE = "test : this is a test";
+    /** The Constant TEST_STRING_TWO. */
+    private static final String TEST_STRING_TWO = "test2 : also a test";
+
     /** The instance. */
     private final StringResourceProviderImpl instance;
 
@@ -74,8 +79,8 @@ public class StringResourceProviderTest {
         final StringResourceLoader result =
                 instance.getStringResourceLoaderFromModuleName(TEST_MODULE);
         final LinkedList<String> inputList = new LinkedList<String>();
-        inputList.add("test : this is a test");
-        inputList.add("test2 : also a test");
+        inputList.add(TEST_STRING_ONE);
+        inputList.add(TEST_STRING_TWO);
         final StringResourceLoader exp = new StringResourceLoader(inputList);
         assertEquals(exp.containsId(TEST), result.containsId(TEST));
         assertEquals(exp.containsId(TEST_TWO), result.containsId(TEST_TWO));

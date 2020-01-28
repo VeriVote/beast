@@ -1,9 +1,12 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.i;
+import static edu.pse.beast.toolbox.CCodeHelper.j;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
@@ -20,6 +23,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -160,13 +164,13 @@ public final class Approval extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add(uintVarEqualsCode(CAND_SUM) + arrAccess(ARR, I, CANDIDATE));
+        code.add(uintVarEqualsCode(CAND_SUM) + arrAccess(arr(), i(), CANDIDATE));
         if (unique) {
-            code.add(forLoopHeaderCode(J, lt(), C));
+            code.add(forLoopHeaderCode(j(), lt(), CBMCCodeGenerator.C));
             code.add(functionCode(CCodeHelper.IF,
-                                  conjunct(neq(J, CANDIDATE),
+                                  conjunct(neq(j(), CANDIDATE),
                                            leq(CAND_SUM,
-                                               arrAccess(ARR, I, J))))
+                                               arrAccess(arr(), i(), j()))))
                     + CCodeHelper.space() + varAssignCode(CAND_SUM, zero())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);

@@ -1,5 +1,6 @@
 package edu.pse.beast.propertychecker;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
@@ -9,9 +10,11 @@ import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.i;
 import static edu.pse.beast.toolbox.CCodeHelper.include;
 import static edu.pse.beast.toolbox.CCodeHelper.intVar;
 import static edu.pse.beast.toolbox.CCodeHelper.intVarEqualsCode;
+import static edu.pse.beast.toolbox.CCodeHelper.j;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 import static edu.pse.beast.toolbox.CCodeHelper.lineComment;
@@ -30,6 +33,8 @@ import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varDivideCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varMultiplyCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varSubtractCode;
+import static edu.pse.beast.toolbox.CCodeHelper.x;
+import static edu.pse.beast.toolbox.CCodeHelper.y;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.ArrayList;
@@ -71,15 +76,17 @@ import edu.pse.beast.types.OutputType;
  * @author Niels Hanselmann
  */
 public class CBMCCodeGenerator {
-    /** The Constant ARR. */
-    public static final String ARR = "arr";
-
     /** The Constant C. */
     public static final String C = "C";
     /** The Constant S. */
     public static final String S = "S";
     /** The Constant V. */
     public static final String V = "V";
+
+    /** The Constant STD_LIB. */
+    public static final String STD_LIB = "stdlib";
+    /** The Constant STD_INT. */
+    public static final String STD_INT = "stdint";
 
     /** The Constant CPROVER_ASSUME. */
     public static final String CPROVER_ASSUME = "__CPROVER_assume";
@@ -96,6 +103,12 @@ public class CBMCCodeGenerator {
     public static final String NONDET_INT = "nondet_int";
     /** The Constant NONDET_UINT. */
     public static final String NONDET_UINT = "nondet_uint";
+    /** The Constant NONDET_LONG. */
+    public static final String NONDET_LONG = "nondet_long";
+    /** The Constant NONDET_CHAR. */
+    public static final String NONDET_CHAR = "nondet_char";
+    /** The Constant NONDET_UCHAR. */
+    public static final String NONDET_UCHAR = "nondet_uchar";
 
     /** The Constant MAIN. */
     public static final String MAIN = "main";
@@ -119,20 +132,6 @@ public class CBMCCodeGenerator {
     private static final String SUB_ARR = "sub_arr";
     /** The Constant LENGTH. */
     private static final String LENGTH = "length";
-
-    /** The Constant STD_LIB. */
-    private static final String STD_LIB = "stdlib";
-    /** The Constant STD_INT. */
-    private static final String STD_INT = "stdint";
-
-    /** The Constant I. */
-    private static final String I = "i";
-    /** The Constant J. */
-    private static final String J = "j";
-    /** The Constant X. */
-    private static final String X = "x";
-    /** The Constant Y. */
-    private static final String Y = "y";
 
     /** The Constant VOTES. */
     private static final String VOTES = "votes";
@@ -524,7 +523,7 @@ public class CBMCCodeGenerator {
 
         // addConditionalValue(voteName, inType);
         // The votes have to be valid afterwards
-        addNestedForrLoopBot(codeList, inType.getAmountOfDimensions());
+        addNestedForLoopBot(codeList, inType.getAmountOfDimensions());
 
         // No more changes than margin allows
         codeList.add(functionCode(ASSUME, leq(POS_DIFF, MARGIN))
@@ -533,18 +532,20 @@ public class CBMCCodeGenerator {
                     + CCodeHelper.SEMICOLON);
     }
 
-    /**
-     * Adds the conditional value.
-     *
-     * @param voteName
-     *            the vote name
-     * @param inType
-     *            the in type
-     */
-    private void addConditionalValue(final String voteName,
-                                     final InputType inType) {
-        inType.restrictVotes(voteName, code);
-    }
+    // /**
+    //  * Adds the conditional value.
+    //  *
+    //  * <p>FIXME: Purpose? Remove?
+    //  *
+    //  * @param voteName
+    //  *            the vote name
+    //  * @param inType
+    //  *            the in type
+    //  */
+    // private void addConditionalValue(final String voteName,
+    //                                  final InputType inType) {
+    //     inType.restrictVotes(voteName, code);
+    // }
 
     /**
      * Adds the margin comp method output.
@@ -580,7 +581,7 @@ public class CBMCCodeGenerator {
         final String origResultAcc = outType.getFullVarAccess(origResultName, loopVars);
         codeList.add(functionCode(ASSERT, eq(newResultAcc, origResultAcc))
                     + CCodeHelper.SEMICOLON);
-        addNestedForrLoopBot(codeList, loopVars.size());
+        addNestedForLoopBot(codeList, loopVars.size());
     }
 
     /**
@@ -618,8 +619,8 @@ public class CBMCCodeGenerator {
      * @param dimensions
      *            the dimensions
      */
-    public static void addNestedForrLoopBot(final CodeArrayListBeautifier code,
-                                            final int dimensions) {
+    public static void addNestedForLoopBot(final CodeArrayListBeautifier code,
+                                           final int dimensions) {
         for (int i = 0; i < dimensions; i++) {
             code.add(CCodeHelper.CLOSING_BRACES);
         }
@@ -677,7 +678,7 @@ public class CBMCCodeGenerator {
                 electionDesc.getContainer().getInputType().getSizeOfDimensions();
         sizes[0] = AMOUNT_VOTES;
         String forLoopStart = "";
-        final List<String> loopVariables = generateLoopVariables(dimensions, ARR);
+        final List<String> loopVariables = generateLoopVariables(dimensions, arr());
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
@@ -693,20 +694,20 @@ public class CBMCCodeGenerator {
         final String dataDef =
                 electionDesc.getContainer().getInputType().getDataTypeAndSign();
         final String definition =
-                dataDef + space() + ARR
+                dataDef + space() + arr()
                 + electionDesc.getContainer()
                     .getInputType().getDimensionDescriptor(true)
                 + CCodeHelper.SEMICOLON;
         code.add(definition);
         final String assignment =
                 forLoopStart
-                + varAssignCode(arrAccess(ARR, access),
+                + varAssignCode(arrAccess(arr(), access),
                                 dotArrStructAccess(TMP_STRUCT, access))
                 + CCodeHelper.SEMICOLON
                 + lineBreak(forLoopEnd);
         code.add(assignment);
         code.add(uintVarEqualsCode(SUM) + zero() + CCodeHelper.SEMICOLON);
-        code.add(forLoopHeaderCode(I, lt(), AMOUNT_VOTES));
+        code.add(forLoopHeaderCode(i(), lt(), AMOUNT_VOTES));
 
         // Add the specific code which differs for different input types
         electionDesc.getContainer().getInputType().addCodeForVoteSum(code,
@@ -749,20 +750,20 @@ public class CBMCCodeGenerator {
                 + space() + TO_RETURN + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), C));
+                + forLoopHeaderCode(i(), lt(), C));
         code.add(spaces(SPACES_PER_TAB)
-                + varAssignCode(dotArrStructAccess(TO_RETURN, I), zero())
+                + varAssignCode(dotArrStructAccess(TO_RETURN, i()), zero())
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), C));
+                + forLoopHeaderCode(i(), lt(), C));
         code.add(spaces(SPACES_PER_TAB)
-                + functionCode(CCodeHelper.IF, conjunct(dotArrStructAccess(one(), I),
-                                                        dotArrStructAccess(two(), I)))
+                + functionCode(CCodeHelper.IF, conjunct(dotArrStructAccess(one(), i()),
+                                                        dotArrStructAccess(two(), i())))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(TO_RETURN, I), one())
+                + varAssignCode(dotArrStructAccess(TO_RETURN, i()), one())
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -805,16 +806,16 @@ public class CBMCCodeGenerator {
         code.add(unsignedIntVar(arrAccess(ALREADY_USED_ARR, V))
                 + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
-        code.add(forLoopHeaderCode(I, lt(), V)
+        code.add(forLoopHeaderCode(i(), lt(), V)
                 + space() + lineComment(COMMENT_SET_BEGINNING));
-        code.add(forLoopHeaderCode(J, lt(), C));
-        code.add(varAssignCode(dotArrStructAccess(SUB_ARR, I, J), C)
+        code.add(forLoopHeaderCode(j(), lt(), C));
+        code.add(varAssignCode(dotArrStructAccess(SUB_ARR, i(), j()), C)
                 + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add();
         code.addSpaces(SPACES_PER_HALF_TAB);
-        code.add(forLoopHeaderCode(I, lt(), LENGTH));
+        code.add(forLoopHeaderCode(i(), lt(), LENGTH));
         code.add(varAssignCode(unsignedIntVar(NEW_INDEX),
                                functionCode(NONDET_UINT))
                 + CCodeHelper.SEMICOLON);
@@ -822,20 +823,20 @@ public class CBMCCodeGenerator {
                                                  lt(NEW_INDEX, LENGTH)))
                 + CCodeHelper.SEMICOLON);
         code.add();
-        code.add(forLoopHeaderCode(J, lt(), I));
+        code.add(forLoopHeaderCode(j(), lt(), i()));
         code.add(functionCode(ASSUME,
-                              neq(NEW_INDEX, arrAccess(ALREADY_USED_ARR, J)))
+                              neq(NEW_INDEX, arrAccess(ALREADY_USED_ARR, j())))
                 + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_TAB)
-                + varAssignCode(arrAccess(ALREADY_USED_ARR, I), NEW_INDEX)
+                + varAssignCode(arrAccess(ALREADY_USED_ARR, i()), NEW_INDEX)
                 + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
-        code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(J, lt(), C));
+        code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, NEW_INDEX, J),
-                                dotArrStructAccess(VOTES, I, J))
+                + varAssignCode(dotArrStructAccess(SUB_ARR, NEW_INDEX, j()),
+                                dotArrStructAccess(VOTES, i(), j()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -843,12 +844,12 @@ public class CBMCCodeGenerator {
         code.add(voteStruct + space() + TO_RETURN + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V));
+                + forLoopHeaderCode(i(), lt(), V));
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(J, lt(), C));
+                + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(TO_RETURN, I, J),
-                                dotArrStructAccess(SUB_ARR, I, J))
+                + varAssignCode(dotArrStructAccess(TO_RETURN, i(), j()),
+                                dotArrStructAccess(SUB_ARR, i(), j()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -883,16 +884,16 @@ public class CBMCCodeGenerator {
                 + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V)
+                + forLoopHeaderCode(i(), lt(), V)
                 + space() + lineComment(COMMENT_SET_BEGINNING));
         code.add(spaces(SPACES_PER_TAB)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, I), C)
+                + varAssignCode(dotArrStructAccess(SUB_ARR, i()), C)
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), LENGTH));
+                + forLoopHeaderCode(i(), lt(), LENGTH));
         code.add(spaces(SPACES_PER_TAB)
                 + uintVarEqualsCode(NEW_INDEX)
                 + functionCode(NONDET_UINT)
@@ -903,29 +904,29 @@ public class CBMCCodeGenerator {
                 + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(J, lt(), I));
+                + forLoopHeaderCode(j(), lt(), i()));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + functionCode(ASSUME, neq(NEW_INDEX, arrAccess(ALREADY_USED_ARR, J)))
+                + functionCode(ASSUME, neq(NEW_INDEX, arrAccess(ALREADY_USED_ARR, j())))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_TAB)
-                + varAssignCode(arrAccess(ALREADY_USED_ARR, I), NEW_INDEX)
+                + varAssignCode(arrAccess(ALREADY_USED_ARR, i()), NEW_INDEX)
                + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_TAB)
                 + varAssignCode(dotArrStructAccess(SUB_ARR, NEW_INDEX),
-                                dotArrStructAccess(VOTES, I))
+                                dotArrStructAccess(VOTES, i()))
                + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(voteStruct + space() + TO_RETURN + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V));
+                + forLoopHeaderCode(i(), lt(), V));
         code.add(spaces(SPACES_PER_TAB)
-                + varAssignCode(dotArrStructAccess(TO_RETURN, I),
-                                dotArrStructAccess(SUB_ARR, I))
+                + varAssignCode(dotArrStructAccess(TO_RETURN, i()),
+                                dotArrStructAccess(SUB_ARR, i()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_TAB);
@@ -968,44 +969,44 @@ public class CBMCCodeGenerator {
         code.add(voteStruct + space() + SUB_ARR + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V)
+                + forLoopHeaderCode(i(), lt(), V)
                 + space() + lineComment(COMMENT_SET_BEGINNING));
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(J, lt(), C));
+                + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, I, J), C)
+                + varAssignCode(dotArrStructAccess(SUB_ARR, i(), j()), C)
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), SIZE_ONE)
+                + forLoopHeaderCode(i(), lt(), SIZE_ONE)
                 + space() + lineComment(COMMENT_LIMIT_UPPER_BOUND));
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(J, lt(), C));
+                + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + functionCode(CCodeHelper.IF, lt(I, V))
+                + functionCode(CCodeHelper.IF, lt(i(), V))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_TWO_TABS)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, I, J),
-                                dotArrStructAccess(VOTES_ONE, I, J))
+                + varAssignCode(dotArrStructAccess(SUB_ARR, i(), j()),
+                                dotArrStructAccess(VOTES_ONE, i(), j()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), SIZE_TWO)
+                + forLoopHeaderCode(i(), lt(), SIZE_TWO)
                 + space() + lineComment(COMMENT_LIMIT_UPPER_BOUND));
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(J, lt(), C));
+                + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
                 + functionCode(CCodeHelper.IF,
-                               lt(varAddCode(SIZE_TWO, I), V))
+                               lt(varAddCode(SIZE_TWO, i()), V))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_TWO_TABS)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, I, J),
-                                dotArrStructAccess(VOTES_TWO, I, J))
+                + varAssignCode(dotArrStructAccess(SUB_ARR, i(), j()),
+                                dotArrStructAccess(VOTES_TWO, i(), j()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1015,12 +1016,12 @@ public class CBMCCodeGenerator {
                 + space() + TO_RETURN + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V));
+                + forLoopHeaderCode(i(), lt(), V));
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(J, lt(), C));
+                + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(TO_RETURN, I, J),
-                                dotArrStructAccess(SUB_ARR, I, J))
+                + varAssignCode(dotArrStructAccess(TO_RETURN, i(), j()),
+                                dotArrStructAccess(SUB_ARR, i(), j()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1052,35 +1053,35 @@ public class CBMCCodeGenerator {
         code.add(voteStruct + space() + SUB_ARR + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V)
+                + forLoopHeaderCode(i(), lt(), V)
                 + space() + lineComment(COMMENT_SET_BEGINNING));
         code.add(spaces(SPACES_PER_TAB)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, I), C)
+                + varAssignCode(dotArrStructAccess(SUB_ARR, i()), C)
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), SIZE_ONE)
+                + forLoopHeaderCode(i(), lt(), SIZE_ONE)
                 + space() + lineComment(COMMENT_LIMIT_UPPER_BOUND));
-        code.add(spaces(SPACES_PER_TAB) + functionCode(CCodeHelper.IF, lt(I, V))
+        code.add(spaces(SPACES_PER_TAB) + functionCode(CCodeHelper.IF, lt(i(), V))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, I),
-                                dotArrStructAccess(VOTES_ONE, I))
+                + varAssignCode(dotArrStructAccess(SUB_ARR, i()),
+                                dotArrStructAccess(VOTES_ONE, i()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), SIZE_TWO)
+                + forLoopHeaderCode(i(), lt(), SIZE_TWO)
                 + space() + lineComment(COMMENT_LIMIT_UPPER_BOUND));
         code.add(spaces(SPACES_PER_TAB)
                 + functionCode(CCodeHelper.IF,
-                               lt(varAddCode(SIZE_ONE, I), V))
+                               lt(varAddCode(SIZE_ONE, i()), V))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(SUB_ARR, varAddCode(SIZE_ONE, I)),
-                                dotArrStructAccess(VOTES_TWO, I))
+                + varAssignCode(dotArrStructAccess(SUB_ARR, varAddCode(SIZE_ONE, i())),
+                                dotArrStructAccess(VOTES_TWO, i()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1088,9 +1089,9 @@ public class CBMCCodeGenerator {
         code.add(voteStruct + space() + TO_RETURN + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB)
-                + forLoopHeaderCode(I, lt(), V));
-        code.add(spaces(SPACES_PER_TAB) + eq(dotArrStructAccess(TO_RETURN, I),
-                                             dotArrStructAccess(SUB_ARR, I))
+                + forLoopHeaderCode(i(), lt(), V));
+        code.add(spaces(SPACES_PER_TAB) + eq(dotArrStructAccess(TO_RETURN, i()),
+                                             dotArrStructAccess(SUB_ARR, i()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
         code.addSpaces(SPACES_PER_TAB);
@@ -1140,7 +1141,7 @@ public class CBMCCodeGenerator {
         code.add(spaces(SPACES_PER_TAB)
                 + uintVarEqualsCode(LAST_SPLIT) + zero()
                 + CCodeHelper.SEMICOLON);
-        code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(I, lt(), SPLITS));
+        code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(i(), lt(), SPLITS));
         code.addSpaces(SPACES_PER_ONE_AND_HALF_TABS);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + uintVarEqualsCode(NEXT_SPLIT)
                 + functionCode(NONDET_UINT)
@@ -1155,7 +1156,7 @@ public class CBMCCodeGenerator {
         code.addSpaces(SPACES_PER_ONE_AND_HALF_TABS);
         code.addSpaces(SPACES_PER_ONE_AND_HALF_TABS);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(arrAccess(SPLIT_ARR, I), NEXT_SPLIT)
+                + varAssignCode(arrAccess(SPLIT_ARR, i()), NEXT_SPLIT)
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
                 + varAssignCode(LAST_SPLIT, NEXT_SPLIT)
@@ -1169,9 +1170,9 @@ public class CBMCCodeGenerator {
                 + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_TAB)
-                + forLoopHeaderCode(I, lt(), SPLITS));
+                + forLoopHeaderCode(i(), lt(), SPLITS));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + uintVarEqualsCode("debugrandom") + arrAccess(SPLIT_LINES, I)
+                + uintVarEqualsCode("debugrandom") + arrAccess(SPLIT_LINES, i())
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1196,10 +1197,10 @@ public class CBMCCodeGenerator {
                     + space() + CCodeHelper.OPENING_BRACES);
             code.add(voteStruct + space() + SUB_ARR + CCodeHelper.SEMICOLON);
             code.addSpaces(SPACES_PER_HALF_TAB);
-            code.add(spaces(SPACES_PER_HALF_TAB) + forLoopHeaderCode(I, lt(), V)
+            code.add(spaces(SPACES_PER_HALF_TAB) + forLoopHeaderCode(i(), lt(), V)
                     + space() + lineComment(COMMENT_SET_BEGINNING));
             code.add(spaces(SPACES_PER_TAB)
-                    + varAssignCode(dotArrStructAccess(SUB_ARR, I), C)
+                    + varAssignCode(dotArrStructAccess(SUB_ARR, i()), C)
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
             code.addSpaces(SPACES_PER_HALF_TAB);
@@ -1210,10 +1211,10 @@ public class CBMCCodeGenerator {
             code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
                     + space() + TO_RETURN + CCodeHelper.SEMICOLON);
             code.addSpaces(SPACES_PER_TAB);
-            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(I, lt(), V));
+            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(i(), lt(), V));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                    + varAssignCode(dotArrStructAccess(TO_RETURN, I),
-                                    dotArrStructAccess(SUB_ARR, I))
+                    + varAssignCode(dotArrStructAccess(TO_RETURN, i()),
+                                    dotArrStructAccess(SUB_ARR, i()))
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
             code.addSpaces(SPACES_PER_TAB);
@@ -1224,15 +1225,15 @@ public class CBMCCodeGenerator {
                     + CCodeHelper.ELSE + space() + CCodeHelper.OPENING_BRACES);
             code.add();
             code.add(spaces(SPACES_PER_TAB)
-                    + forLoopHeaderCode(I, lt(), V));
+                    + forLoopHeaderCode(i(), lt(), V));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
                     + functionCode(CCodeHelper.IF,
-                                   conjunct(parenthesize(leq(START, I)),
-                                            parenthesize(lt(I, STOP))))
+                                   conjunct(parenthesize(leq(START, i())),
+                                            parenthesize(lt(i(), STOP))))
                     + space() + CCodeHelper.OPENING_BRACES);
             code.add(spaces(SPACES_PER_TWO_TABS)
-                    + varAssignCode(dotArrStructAccess(SUB_ARR, varSubtractCode(I, START)),
-                                    dotArrStructAccess(VOTES, I))
+                    + varAssignCode(dotArrStructAccess(SUB_ARR, varSubtractCode(i(), START)),
+                                    dotArrStructAccess(VOTES, i()))
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + CCodeHelper.CLOSING_BRACES);
             code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1241,10 +1242,10 @@ public class CBMCCodeGenerator {
             code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
                     + space() + TO_RETURN + CCodeHelper.SEMICOLON);
             code.addSpaces(SPACES_PER_TAB);
-            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(I, lt(), V));
+            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(i(), lt(), V));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                    + varAssignCode(dotArrStructAccess(TO_RETURN, I),
-                                    dotArrStructAccess(SUB_ARR, I))
+                    + varAssignCode(dotArrStructAccess(TO_RETURN, i()),
+                                    dotArrStructAccess(SUB_ARR, i()))
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
             code.addSpaces(SPACES_PER_TAB);
@@ -1272,11 +1273,11 @@ public class CBMCCodeGenerator {
                     + space() + CCodeHelper.OPENING_BRACES);
             code.add(voteStruct + space() + SUB_ARR + CCodeHelper.SEMICOLON);
             code.addSpaces(SPACES_PER_HALF_TAB);
-            code.add(spaces(SPACES_PER_HALF_TAB) + forLoopHeaderCode(I, lt(), V)
+            code.add(spaces(SPACES_PER_HALF_TAB) + forLoopHeaderCode(i(), lt(), V)
                     + space() + lineComment(COMMENT_SET_BEGINNING));
-            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(J, lt(), C));
+            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(j(), lt(), C));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                    + varAssignCode(dotArrStructAccess(SUB_ARR, I, J), C)
+                    + varAssignCode(dotArrStructAccess(SUB_ARR, i(), j()), C)
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
             code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1288,12 +1289,12 @@ public class CBMCCodeGenerator {
                     + space() + TO_RETURN + CCodeHelper.SEMICOLON);
             code.addSpaces(SPACES_PER_TAB);
             code.add(spaces(SPACES_PER_TAB)
-                    + forLoopHeaderCode(I, lt(), V));
+                    + forLoopHeaderCode(i(), lt(), V));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                    + forLoopHeaderCode(J, lt(), V));
+                    + forLoopHeaderCode(j(), lt(), V));
             code.add(spaces(SPACES_PER_TWO_TABS)
-                    + varAssignCode(dotArrStructAccess(TO_RETURN, I, J),
-                                    dotArrStructAccess(SUB_ARR, I, J))
+                    + varAssignCode(dotArrStructAccess(TO_RETURN, i(), j()),
+                                    dotArrStructAccess(SUB_ARR, i(), j()))
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + CCodeHelper.CLOSING_BRACES);
             code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1303,16 +1304,16 @@ public class CBMCCodeGenerator {
             code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES + space()
                     + CCodeHelper.ELSE + space() + CCodeHelper.OPENING_BRACES);
             code.add();
-            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(I, lt(), V));
+            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(i(), lt(), V));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + functionCode(CCodeHelper.IF,
-                                             conjunct(leq(START, I), lt(I, STOP)))
+                                             conjunct(leq(START, i()), lt(i(), STOP)))
                     + space() + CCodeHelper.OPENING_BRACES);
-            code.add(spaces(SPACES_PER_TWO_TABS) + forLoopHeaderCode(J, lt(), C));
+            code.add(spaces(SPACES_PER_TWO_TABS) + forLoopHeaderCode(j(), lt(), C));
             code.add(spaces(SPACES_PER_TWO_AND_HALF_TABS)
                     + varAssignCode(dotArrStructAccess(SUB_ARR,
-                                                       varSubtractCode(I, START),
-                                                       J),
-                                    dotArrStructAccess(VOTES, I, J))
+                                                       varSubtractCode(i(), START),
+                                                       j()),
+                                    dotArrStructAccess(VOTES, i(), j()))
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_TWO_TABS) + CCodeHelper.CLOSING_BRACES);
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + CCodeHelper.CLOSING_BRACES);
@@ -1321,12 +1322,12 @@ public class CBMCCodeGenerator {
             code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
                     + space() + TO_RETURN + CCodeHelper.SEMICOLON);
             code.addSpaces(SPACES_PER_TAB);
-            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(I, lt(), V));
+            code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(i(), lt(), V));
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                    + forLoopHeaderCode(J, lt(), V));
+                    + forLoopHeaderCode(j(), lt(), V));
             code.add(spaces(SPACES_PER_TWO_TABS)
-                    + varAssignCode(dotArrStructAccess(TO_RETURN, I, J),
-                                    dotArrStructAccess(SUB_ARR, I, J))
+                    + varAssignCode(dotArrStructAccess(TO_RETURN, i(), j()),
+                                    dotArrStructAccess(SUB_ARR, i(), j()))
                     + CCodeHelper.SEMICOLON);
             code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + CCodeHelper.CLOSING_BRACES);
             code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -1355,10 +1356,10 @@ public class CBMCCodeGenerator {
                 + CCodeHelper.SEMICOLON);
         codeLst.add(intVar(functionCode(NONDET_INT)) + CCodeHelper.SEMICOLON);
         codeLst.add();
-        codeLst.add(define(functionCode(ASSERT2, X, Y),
-                           functionCode(CPROVER_ASSERT, X, Y)));
-        codeLst.add(define(functionCode(ASSUME, X),
-                           functionCode(CPROVER_ASSUME, X)));
+        codeLst.add(define(functionCode(ASSERT2, x(), y()),
+                           functionCode(CPROVER_ASSERT, x(), y())));
+        codeLst.add(define(functionCode(ASSUME, x()),
+                           functionCode(CPROVER_ASSUME, x())));
         codeLst.add();
         codeLst.addAll(Arrays.asList(electionDesc.getContainer()
                 .getStructDefinitions().split("\\n")));
@@ -1615,7 +1616,7 @@ public class CBMCCodeGenerator {
                                                parenthesize(leq(assignment, maxValue))))
                 + CCodeHelper.SEMICOLON);
         inOutType.addExtraCodeAtEndOfCodeInit(code, valueName, loopVariables);
-        addNestedForrLoopBot(this.code, inOutType.getAmountOfDimensions());
+        addNestedForLoopBot(this.code, inOutType.getAmountOfDimensions());
     }
 
     /**

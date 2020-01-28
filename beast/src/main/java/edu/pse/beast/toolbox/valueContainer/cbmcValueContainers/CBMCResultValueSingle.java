@@ -2,7 +2,6 @@ package edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -123,22 +122,24 @@ public final class CBMCResultValueSingle implements CBMCResultValue {
         return numberValue;
     }
 
-    /**
-     * Check index.
-     *
-     * @param indices
-     *            the indices
-     * @throws IndexOutOfBoundsException
-     *            if the index list is not empty.
-     */
-    private void checkIndex(final List<Integer> indices) {
-        if (indices.size() != 0) {
-            throw new IndexOutOfBoundsException("ResultValueSingle objects"
-                                                + " only contain one element,"
-                                                + " therefore the index list"
-                                                + " must be empty.");
-        }
-    }
+    // /**
+    //  * Check index.
+    //  *
+    //  * <p>FIXME: Purpose? Remove?
+    //  *
+    //  * @param indices
+    //  *            the indices
+    //  * @throws IndexOutOfBoundsException
+    //  *            if the index list is not empty.
+    //  */
+    // private void checkIndex(final List<Integer> indices) {
+    //     if (indices.size() != 0) {
+    //         throw new IndexOutOfBoundsException("ResultValueSingle objects"
+    //                                             + " only contain one element,"
+    //                                             + " therefore the index list"
+    //                                             + " must be empty.");
+    //     }
+    // }
 
     /**
      * Parses the number.

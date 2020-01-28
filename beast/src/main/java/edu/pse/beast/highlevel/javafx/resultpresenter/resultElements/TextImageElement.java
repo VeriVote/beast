@@ -1,8 +1,6 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 
 import java.awt.Graphics2D;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,19 +15,16 @@ import edu.pse.beast.toolbox.RichTextInformation;
  * @author Lukas Stapelbroek
  */
 public class TextImageElement extends ResultImageElement {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-
-    /** The affine transform. */
+    // /** The affine transform. */
     // objects needed to calculate the size of the text
-    private static AffineTransform affineTransform = new AffineTransform();
+    // private static AffineTransform affineTransform = new AffineTransform(); FIXME
 
-    /** The frc. */
-    private static FontRenderContext frc =
-            new FontRenderContext(affineTransform, true, true);
+    // /** The frc. */
+    // private static FontRenderContext frc = FIXME
+    //         new FontRenderContext(affineTransform, true, true);
 
-    /** The rich text info. */
-    private List<RichTextInformation> richTextInfo;
+    // /** The rich text info. */
+    // private List<RichTextInformation> richTextInfo; FIXME: Purpose?
 
     /**
      * Draws a String which starts at the specified location. All special
@@ -44,9 +39,11 @@ public class TextImageElement extends ResultImageElement {
      */
     public TextImageElement(final double xPosTopLeft, final double yPosTopLeft,
                             final List<RichTextInformation> richTextInfoList) {
-        super(xPosTopLeft, yPosTopLeft, getMaxX(xPosTopLeft, richTextInfoList),
-              getMaxY(yPosTopLeft, richTextInfoList));
-        this.richTextInfo = richTextInfoList;
+        super(xPosTopLeft, yPosTopLeft,
+              getMaxX(xPosTopLeft, richTextInfoList),
+              getMaxY(yPosTopLeft, richTextInfoList)
+        );
+        // this.richTextInfo = richTextInfoList; FIXME: Purpose?
     }
 
     /**
@@ -143,20 +140,22 @@ public class TextImageElement extends ResultImageElement {
         return startY + maxTextHeight;
     }
 
-    /**
-     * Replace characters.
-     *
-     * @param toClean
-     *            the to clean
-     * @return the string
-     */
-    private static String replaceCharacters(final String toClean) {
-        // 4 spaces TODO maybe extract the tabs per spaces from the codearea
-        String replacString = toClean.replace("\t", BLANK + BLANK + BLANK + BLANK);
-        replacString = replacString.replace("\b", "");
-        replacString = replacString.replace("\f", "");
-        replacString = replacString.replace("\r", "");
-        replacString = replacString.replace("\n", "");
-        return replacString;
-    }
+    // /**
+    //  * Replace characters.
+    //  *
+    //  * <p>FIXME: Purpose? Remove?
+    //  *
+    //  * @param toClean
+    //  *            the to clean
+    //  * @return the string
+    //  */
+    // private static String replaceCharacters(final String toClean) {
+    //     // 4 spaces TODO maybe extract the tabs per spaces from the codearea
+    //     String replacString = toClean.replace("\t", BLANK + BLANK + BLANK + BLANK);
+    //     replacString = replacString.replace("\b", "");
+    //     replacString = replacString.replace("\f", "");
+    //     replacString = replacString.replace("\r", "");
+    //     replacString = replacString.replace("\n", "");
+    //     return replacString;
+    // }
 }

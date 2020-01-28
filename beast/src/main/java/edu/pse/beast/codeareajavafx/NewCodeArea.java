@@ -40,7 +40,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -342,7 +341,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
      * The constructor.
      */
     public NewCodeArea() {
-        // add all standard recommendations
+        // Add all standard recommendations
         recommendations.addAll(Arrays.asList(KEYWORDS));
         recommendations.addAll(Arrays.asList(PREPROCESSOR));
         recommendations.addAll(Arrays.asList(DATATYPES));
@@ -354,8 +353,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea
                                         new SingleCandidate(), 0, 0, 0, true);
         this.setNewElectionDescription(startElecDescription);
         saverLoader.resetHasSaveFile();
-        final List<String> code = new ArrayList<String>();
-        code.add("");
+        // final List<String> code = new ArrayList<String>();
+        // code.add(""); FIXME: What is this for? Can probably be removed.
         // code.add(source.getContainer().getInputType().);
         final String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();

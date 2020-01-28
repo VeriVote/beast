@@ -21,17 +21,32 @@ import org.junit.Test;
  * @author Niels Hanselmann
  */
 public class FileLoaderTest {
+    /** The Constant SUB_FOLDER_AND_FILENAME. */
+    private static final String SUB_FOLDER_AND_FILENAME =
+            "/src/test/testfiles/fileLoaderFileAsStringTest.txt";
+    /** The Constant TEST_STRING_ONE. */
+    private static final String TEST_STRING_ONE = "erste Zeile";
+    /** The Constant TEST_STRING_TWO. */
+    private static final String TEST_STRING_TWO = "zweite Zeile";
+    /** The Constant TEST_STRING_THREE. */
+    private static final String TEST_STRING_THREE = "ende";
+    /** The Constant TEST_FILE_IMAGE. */
+    private static final String TEST_FILE_IMAGE = "/src/test/testfiles/eye.png";
+    /** The Constant TEST_PATH. */
+    private static final String TEST_PATH = "/src/test/testfiles/";
 
     /**
      * File LoaderTest.
      */
     public FileLoaderTest() { }
 
-    private boolean bufferedImagesEqual(final BufferedImage img1, final BufferedImage img2) {
+    private boolean bufferedImagesEqual(final BufferedImage img1,
+                                        final BufferedImage img2) {
         boolean result = true;
         if (img1 == null) {
             result = img2 == null;
-        } else if (img1.getWidth() == img2.getWidth() && img1.getHeight() == img2.getHeight()) {
+        } else if (img1.getWidth() == img2.getWidth()
+                && img1.getHeight() == img2.getHeight()) {
             for (int x = 0; x < img1.getWidth(); x++) {
                 for (int y = 0; y < img1.getHeight(); y++) {
                     if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
@@ -53,14 +68,13 @@ public class FileLoaderTest {
     @Test
     public void testLoadFileAsString() throws Exception {
         System.out.println("loadFileAsString");
-        final String subFolderAndFilename = "/src/test/testfiles/fileLoaderFileAsStringTest.txt";
         final String superFolder = SuperFolderFinder.getSuperFolder();
-        final String location = superFolder + subFolderAndFilename;
+        final String location = superFolder + SUB_FOLDER_AND_FILENAME;
         final File file = new File(location);
         final LinkedList<String> expResult = new LinkedList<String>();
-        expResult.add("erste Zeile");
-        expResult.add("zweite Zeile");
-        expResult.add("ende");
+        expResult.add(TEST_STRING_ONE);
+        expResult.add(TEST_STRING_TWO);
+        expResult.add(TEST_STRING_THREE);
         final LinkedList<String> result = FileLoader.loadFileAsString(file);
         assertEquals(expResult.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
@@ -75,15 +89,14 @@ public class FileLoaderTest {
     public void testLoadFileAsImage() {
         System.out.println("loadFileAsImage");
         final File toRead =
-                new File(SuperFolderFinder.getSuperFolder()
-                            + "/src/test/testfiles/eye.png");
+                new File(SuperFolderFinder.getSuperFolder() + TEST_FILE_IMAGE);
         BufferedImage expResult = null;
         final BufferedImage result = FileLoader.loadFileAsImage(toRead);
         assertNotNull(result);
         try {
             expResult = ImageIO.read(toRead);
         } catch (IOException e) {
-            System.out.println("the Testfile eye.png could not be found");
+            System.out.println("The Testfile eye.png could not be found.");
         }
         assertTrue(bufferedImagesEqual(result, expResult));
     }
@@ -94,9 +107,8 @@ public class FileLoaderTest {
     @Test
     public void testGetNewUniqueName() {
         System.out.println("getNewUniqueName");
-        final String pathToDir = "/src/test/testfiles/";
         final ArrayList<String> usedNames = new ArrayList<String>();
-        final File folder = new File(pathToDir);
+        final File folder = new File(TEST_PATH);
         final File[] listOfFiles = folder.listFiles();
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
@@ -105,7 +117,7 @@ public class FileLoaderTest {
                 }
             }
         }
-        final String result = FileLoader.getNewUniqueName(pathToDir);
+        final String result = FileLoader.getNewUniqueName(TEST_PATH);
         assertNotNull(result);
         usedNames.forEach(filename -> {
             assertNotEquals(filename, result);

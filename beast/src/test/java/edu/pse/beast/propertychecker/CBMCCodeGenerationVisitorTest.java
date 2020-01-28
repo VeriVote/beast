@@ -132,7 +132,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testGenerateForAllCode() {
 //        String expression = "FOR_ALL_VOTERS(v) : v == v;";
 //        String expected = "unsigned int forAll_0 = 1;\n"
-//                + "for(unsigned int v = 0; v < V && forAll_0; v++) {\n"
+//                + "for (unsigned int v = 0; v < V && forAll_0; v++) {\n"
 //                + "\tunsigned int comparison_0 = 1;\n"
 //                + "\tcomparison_0 = v == v;\n"
 //                + "\tforAll_0 = comparison_0;\n"
@@ -154,7 +154,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testGenerateThereExists() {
 //        String expression = "EXISTS_ONE_SEAT(s) : s == s;";
 //        String expected = "unsigned int thereExists_0 = 0;\n"
-//                + "for(unsigned int s = 0; s < S && !thereExists_0; s++) {\n"
+//                + "for (unsigned int s = 0; s < S && !thereExists_0; s++) {\n"
 //                + "\tunsigned int comparison_0 = 1;\n"
 //                + "\tcomparison_0 = s == s;\n"
 //                + "\tthereExists_0 = comparison_0;\n"
@@ -237,7 +237,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testCompareExpressionList1Deep() {
 //        String expression = "VOTES1 == VOTES2;";
 //        String expected = "unsigned int comparison_0 = 1;\n" +
-//                "for(unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
+//                "for (unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
 //                "\tcomparison_0 = votes1[count_0] == votes2[count_0];\n" +
 //                "}\n" +
 //                "assume(comparison_0);\n";
@@ -260,7 +260,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testCompareList2Deep() {
 //        String expression = "VOTES1 == VOTES2;";
 //        String expected = "unsigned int comparison_0 = 1;\n" +
-//                "for(unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
+//                "for (unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
 //                "\tfor(unsigned int count_1 = 0; count_1 < C && comparison_0; ++count_1) {\n" +
 //                "\t\tcomparison_0 = votes1[count_0][count_1] == votes2[count_0][count_1];\n" +
 //                "\t}\n" +
@@ -286,7 +286,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testAnonymityPreForWeightedApproval() {
 //        String expression = "FOR_ALL_VOTERS(i) : (i != v && i != w) ==> VOTES1(i) == VOTES2(i);";
 //        String expected = "unsigned int forAll_0 = 1;\n" +
-//                "for(unsigned int i = 0; i < V && forAll_0; i++) {\n" +
+//                "for (unsigned int i = 0; i < V && forAll_0; i++) {\n" +
 //                "\tunsigned int comparison_0 = 1;\n" +
 //                "\tcomparison_0 = i != v;\n" +
 //                "\tunsigned int comparison_1 = 1;\n" +
@@ -323,7 +323,7 @@ public class CBMCCodeGenerationVisitorTest {
 //            + "==> (VOTE_SUM_FOR_CANDIDATE1(c) > VOTE_SUM_FOR_CANDIDATE1(i)))) "
 //            + "==> ELECT1 == c;";
 //        String expected = "unsigned int forAll_0 = 1;\n" +
-//                "for(unsigned int i = 0; i < C && forAll_0; i++) {\n" +
+//                "for (unsigned int i = 0; i < C && forAll_0; i++) {\n" +
 //                "\tunsigned int comparison_0 = 1;\n" +
 //                "\tcomparison_0 = i != c;\n" +
 //                "\tunsigned int voteSumExp_0 = voteSumForCandidate(votes1, c);\n" +
@@ -357,7 +357,7 @@ public class CBMCCodeGenerationVisitorTest {
 //        String expression =
 //                "ELECT1 == ELECT2;";
 //        String expected = "unsigned int comparison_0 = 1;\n" +
-//                "for(unsigned int count_0 = 0; count_0 < S && comparison_0; ++count_0) {\n" +
+//                "for (unsigned int count_0 = 0; count_0 < S && comparison_0; ++count_0) {\n" +
 //                "\tcomparison_0 = elect1[count_0] == elect2[count_0];\n" +
 //                "}\n" +
 //                "assume(comparison_0);\n";

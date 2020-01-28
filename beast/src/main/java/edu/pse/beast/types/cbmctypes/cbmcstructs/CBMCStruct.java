@@ -1,9 +1,11 @@
 package edu.pse.beast.types.cbmctypes.cbmcstructs;
 
 import static edu.pse.beast.toolbox.CCodeHelper.STRUCT;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 
 import java.util.Arrays;
 
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InOutType;
@@ -15,9 +17,6 @@ import edu.pse.beast.types.InOutType.DataType;
  * @author Lukas Stapelbroek
  */
 public final class CBMCStruct extends ComplexType {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-
     /** The Constant PRIME_ONE. */
     private static final int PRIME = 31;
     /** The Constant PRIME_TWO. */
@@ -96,18 +95,21 @@ public final class CBMCStruct extends ComplexType {
     public String getStructDefinition() {
         final String sign;
         if (inOutType.isDataTypeUnsigned()) {
-            sign = "unsigned" + BLANK;
+            sign = CCodeHelper.UNSIGNED + space();
         } else {
             sign = "";
         }
-        return STRUCT + BLANK + structName + BLANK
-                + "{" + BLANK + sign + inOutType.getDataType()
-                + BLANK + UnifiedNameContainer.getStructValueName()
-                + inOutType.getDimensionDescriptor(true) + ";};";
+        return STRUCT + space() + structName + space()
+                + CCodeHelper.OPENING_BRACES + space()
+                + sign + inOutType.getDataType()
+                + space() + UnifiedNameContainer.getStructValueName()
+                + inOutType.getDimensionDescriptor(true)
+                + CCodeHelper.SEMICOLON + CCodeHelper.CLOSING_BRACES
+                + CCodeHelper.SEMICOLON;
     }
 
     @Override
     public String getStructAccess() {
-        return STRUCT + BLANK + structName;
+        return STRUCT + space() + structName;
     }
 }

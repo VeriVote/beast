@@ -1,5 +1,9 @@
 package edu.pse.beast.types;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
+import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
+import static edu.pse.beast.toolbox.CCodeHelper.comma;
+import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 
 import java.util.ArrayList;
@@ -10,6 +14,7 @@ import java.util.Map;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
@@ -26,23 +31,6 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
  * @author Lukas Stapelbroek
  */
 public abstract class InOutType {
-    /** The Constant ARR. */
-    private static final String ARR = "arr";
-
-    /** The Constant DOT. */
-    private static final String DOT = ".";
-    /** The Constant COMMA. */
-    private static final String COMMA = ",";
-    /** The Constant OPENING_BRACKETS. */
-    private static final String OPENING_BRACKETS = "[";
-    /** The Constant CLOSING_BRACKETS. */
-    private static final String CLOSING_BRACKETS = "]";
-
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
-
     /**
      * The Enum DataType.
      */
@@ -251,7 +239,7 @@ public abstract class InOutType {
      * @return e.g "[content]"
      */
     private static String createSquareBrackets(final String content) {
-        return OPENING_BRACKETS + content + CLOSING_BRACKETS;
+        return arrAcc(content);
     }
 
     /**
@@ -262,7 +250,7 @@ public abstract class InOutType {
      * @return e.g "{content}"
      */
     private static String createCurlyBraces(final String content) {
-        return OPENING_BRACES + content + CLOSING_BRACES;
+        return CCodeHelper.OPENING_BRACES + content + CCodeHelper.CLOSING_BRACES;
     }
 
     /**
@@ -292,33 +280,38 @@ public abstract class InOutType {
      */
     public String printArray(final CBMCResultValueWrapper wrapper) {
         final ResultValue resultValue = wrapper.getResultValue();
-        if (resultValue.getResultType() == ResultType.STRUCT) {
-            final CBMCResultValueStruct struct =
-                    (CBMCResultValueStruct) resultValue;
-            return printArray(
-                    struct.getResultVariable(
-                            UnifiedNameContainer.getStructValueName()
-                    )
-            );
-        } else if (resultValue.getResultType() == ResultType.SINGLE) {
-            final CBMCResultValueSingle single =
-                    (CBMCResultValueSingle) resultValue;
-            return single.getValue();
-        } else if (resultValue.getResultType() == ResultType.ARRAY) {
+        final ResultType resultType = resultValue.getResultType();
+        final String printedResultArray;
+
+        switch(resultType) {
+        case STRUCT:
+            final CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
+            final CBMCResultValueWrapper wrapperRec =
+                    struct.getResultVariable(UnifiedNameContainer.getStructValueName());
+            printedResultArray = printArray(wrapperRec);
+            break;
+        case SINGLE:
+            final CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
+            printedResultArray = single.getValue();
+            break;
+        case ARRAY:
             final CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
             final List<CBMCResultValueWrapper> newValues = array.getValues();
             String subArray = "";
             for (int i = 0; i < array.getArraySize(); i++) {
-                subArray += printArray(newValues.get(i)) + COMMA;
+                subArray += comma(printArray(newValues.get(i)));
             }
             // cut off the last ","
             subArray = subArray.substring(0, subArray.length() - 1);
-            return createCurlyBraces(subArray);
-        } else {
+            printedResultArray = createCurlyBraces(subArray);
+            break;
+        default:
+            printedResultArray = null;
             throw new IllegalArgumentException("Only single numbers arrays,"
                                                 + " and a struct of an array"
                                                 + " are allowed here");
         }
+        return printedResultArray;
     }
 
     /**
@@ -347,8 +340,8 @@ public abstract class InOutType {
      */
     public String getFullVarAccess(final String varName,
                                    final List<String> filling) {
-        return varName + DOT + UnifiedNameContainer.getStructValueName()
-                + getAccessDimensions(filling);
+        return dotStructAccess(varName, UnifiedNameContainer.getStructValueName(),
+                               filling);
     }
 
     /**
@@ -392,29 +385,36 @@ public abstract class InOutType {
             toReturn.add(lineBreak(name));
             final CBMCResultValueStruct struct =
                     (CBMCResultValueStruct) currentVar.getResultValue();
-            if (getAmountOfDimensions() == 2) {
-                final CBMCResultValueArray arr =
-                        (CBMCResultValueArray) struct
-                            .getResultVariable(ARR).getResultValue();
+            final int amountOfDimensions = getAmountOfDimensions();
+            final CBMCResultValueArray arr;
+
+            switch(amountOfDimensions) {
+            case 2:
+                arr = (CBMCResultValueArray) struct
+                        .getResultVariable(arr()).getResultValue();
                 toReturn.addAll(CBMCResultPresentationHelper
                         .printTwoDimResult(arr, size, name.length()));
-            } else if (getAmountOfDimensions() == 1) {
-                final CBMCResultValueArray arr =
-                        (CBMCResultValueArray) struct
-                        .getResultVariable(ARR).getResultValue();
+                break;
+            case 1:
+                arr = (CBMCResultValueArray) struct
+                        .getResultVariable(arr()).getResultValue();
                 toReturn.add(
                         CBMCResultPresentationHelper.printOneDimResult(
                                 arr, size, name.length()
-                        )
+                                )
                 );
-            } else if (getAmountOfDimensions() == 0) {
+                break;
+            case 0:
                 toReturn.add(
                         CBMCResultPresentationHelper.printSingleElement(
                                 (CBMCResultValueSingle)
-                                    struct.getResultVariable(ARR).getResultValue(),
+                                    struct.getResultVariable(arr()).getResultValue(),
                                 name.length()
                         )
                 );
+                break;
+            default:
+                arr = null;
             }
         }
         return toReturn;
@@ -441,7 +441,7 @@ public abstract class InOutType {
 
         if (getAmountOfDimensions() == 2) {
             final CBMCResultValueArray arr =
-                    (CBMCResultValueArray) struct.getResultVariable(ARR).getResultValue();
+                    (CBMCResultValueArray) struct.getResultVariable(arr()).getResultValue();
             toReturn.addAll(
                     CBMCResultPresentationHelper.printTwoDimResult(
                             arr, size, varName.length()
@@ -449,7 +449,7 @@ public abstract class InOutType {
             );
         } else if (getAmountOfDimensions() == 1) {
             final CBMCResultValueArray arr =
-                    (CBMCResultValueArray) struct.getResultVariable(ARR).getResultValue();
+                    (CBMCResultValueArray) struct.getResultVariable(arr()).getResultValue();
             toReturn.add(
                     CBMCResultPresentationHelper.printOneDimResult(
                             arr, size, varName.length()
@@ -459,7 +459,7 @@ public abstract class InOutType {
             toReturn.add(
                     CBMCResultPresentationHelper.printSingleElement(
                             (CBMCResultValueSingle) struct
-                                    .getResultVariable(ARR).getResultValue(),
+                                    .getResultVariable(arr()).getResultValue(),
                             varName.length()));
         }
         return toReturn;

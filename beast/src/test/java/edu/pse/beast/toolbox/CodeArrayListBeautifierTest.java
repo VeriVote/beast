@@ -13,6 +13,11 @@ import org.junit.Test;
  * @author Niels Hanselmann
  */
 public class CodeArrayListBeautifierTest {
+    /** The Constant TWO. */
+    private static final String TWO = "2";
+    /** The Constant THREE. */
+    private static final String THREE = "3";
+
     /** Add string. */
     private static final String ADD = "add";
     /** A test name string. */
@@ -90,8 +95,8 @@ public class CodeArrayListBeautifierTest {
     public void testAddArrayList() {
         System.out.println("addArrayList");
         final ArrayList<String> arrayList = new ArrayList<String>();
-        arrayList.add("2");
-        arrayList.add("3");
+        arrayList.add(TWO);
+        arrayList.add(THREE);
         arrayList.add(TEST);
         final CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addList(arrayList);

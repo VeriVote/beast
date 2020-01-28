@@ -1,10 +1,12 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.i;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.longVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
@@ -22,6 +24,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -47,8 +50,6 @@ public final class SingleChoiceStack extends CBMCInputType {
     /** The Constant TMP_RESTR_SUM. */
     private static final String TMP_RESTR_SUM = "tmp_restr_sum";
 
-    /** The Constant NONDET_LONG. */
-    private static final String NONDET_LONG = "nondet_long";
     /** The Constant MARGIN. */
     private static final String MARGIN = "MARGIN";
 
@@ -172,19 +173,21 @@ public final class SingleChoiceStack extends CBMCInputType {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add();
-        code.add(longVarEqualsCode(TMP_DIFF) + functionCode(NONDET_LONG)
+        code.add(longVarEqualsCode(TMP_DIFF)
+                + functionCode(CBMCCodeGenerator.NONDET_LONG)
                 + CCodeHelper.SEMICOLON);
         code.add();
-        code.add(functionCode(ASSUME,
+        code.add(functionCode(CBMCCodeGenerator.ASSUME,
                               leq(functionCode(ABS_FUNC, TMP_DIFF),
                                   MARGIN))
                 + CCodeHelper.SEMICOLON);
-        code.add(functionCode(ASSUME, leq(zero(), plus(origVotesNameAcc, TMP_DIFF)))
+        code.add(functionCode(CBMCCodeGenerator.ASSUME,
+                              leq(zero(), plus(origVotesNameAcc, TMP_DIFF)))
                 + CCodeHelper.SEMICOLON);
         code.add(functionCode(CCodeHelper.IF, lt(TMP_DIFF, zero()))
                 + CCodeHelper.OPENING_BRACES);
         code.add();
-        code.add(functionCode(ASSUME,
+        code.add(functionCode(CBMCCodeGenerator.ASSUME,
                               leq(functionCode(ABS_FUNC, TMP_DIFF),
                                   origVotesNameAcc))
                 + CCodeHelper.SEMICOLON);
@@ -204,12 +207,13 @@ public final class SingleChoiceStack extends CBMCInputType {
                               final CodeArrayListBeautifier code) {
         code.add(varAssignCode(uintVarEqualsCode(TMP_RESTR_SUM), zero())
                 + CCodeHelper.SEMICOLON);
-        code.add(forLoopHeaderCode(LOOP_R_0, lt(), C));
+        code.add(forLoopHeaderCode(LOOP_R_0, lt(), CBMCCodeGenerator.C));
         code.add(plusEquals(TMP_RESTR_SUM,
                             dotArrStructAccess(voteName, LOOP_R_0))
                 + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES);
-        code.add(functionCode(ASSUME, leq(TMP_RESTR_SUM, V))
+        code.add(functionCode(CBMCCodeGenerator.ASSUME,
+                              leq(TMP_RESTR_SUM, CBMCCodeGenerator.V))
                 + CCodeHelper.SEMICOLON);
     }
 
@@ -240,7 +244,7 @@ public final class SingleChoiceStack extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add(functionCode(CCodeHelper.IF, eq(arrAccess(ARR, I), CANDIDATE))
+        code.add(functionCode(CCodeHelper.IF, eq(arrAccess(arr(), i()), CANDIDATE))
                 + space() + plusPlus(SUM) + CCodeHelper.SEMICOLON);
     }
 

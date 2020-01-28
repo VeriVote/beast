@@ -1,8 +1,13 @@
 package edu.pse.beast.datatypes.electiondescription;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
-import static edu.pse.beast.toolbox.CCodeHelper.zero;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,17 +30,6 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  */
 public class ElectionDescription {
-    /** The Constant EQUALS_SIGN. */
-    private static final String EQUALS_SIGN = "=";
-    /** The Constant OPENING_BRACES. */
-    private static final String OPENING_BRACES = "{";
-    /** The Constant CLOSING_BRACES. */
-    private static final String CLOSING_BRACES = "}";
-    /** The Constant OPENING_BRACKET. */
-    private static final String OPENING_BRACKET = "[";
-    /** The Constant CLOSING_BRACKET. */
-    private static final String CLOSING_BRACKET = "]";
-
     /** The Constant LEN. */
     private static final int LEN = 4;
 
@@ -169,15 +163,16 @@ public class ElectionDescription {
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
-            forLoopEnd += CLOSING_BRACES; // Close the for loops
+            forLoopEnd += CCodeHelper.CLOSING_BRACES; // Close the for loops
         }
-        String access = "";
+        final List<String> access = new ArrayList<String>();
         for (int i = 0; i < dimensions; i++) {
-            access += OPENING_BRACKET + loopVariables.get(i) + CLOSING_BRACKET;
+            access.add(loopVariables.get(i));
         }
         final String assignment =
-                UnifiedNameContainer.getVotingArray() + access
-                + space() + EQUALS_SIGN + space() + votesName + ".arr" + access
+                varAssignCode(arrAccess(UnifiedNameContainer.getVotingArray(),
+                                        access),
+                              dotArrStructAccess(votesName, access))
                 + CCodeHelper.SEMICOLON;
         final String switchedArray =
                 space() + getContainer().getInputType().getDataTypeAndSign()
@@ -397,7 +392,7 @@ public class ElectionDescription {
                                 replacement.first() + space()
                                 + CCodeHelper.RETURN + space()
                                 + variableName
-                                + CCodeHelper.SEMICOLON + space()
+                                + CCodeHelper.SEMICOLON
                                 );
                 // the part which was changed
                 final String leadingPart = toProc.substring(0, matcher.start())
@@ -491,16 +486,18 @@ public class ElectionDescription {
             toReturn += // add all needed loop headers
                     generateForLoopHeader(loopVariables.get(i), sizes[i]);
         }
-        String arrayAccess = "";
+        final List<String> arrayAccess = new ArrayList<String>();
         for (int i = 0; i < dimensions; i++) {
-            arrayAccess += OPENING_BRACKET + loopVariables.get(i) + CLOSING_BRACKET;
+            arrayAccess.add(loopVariables.get(i));
         }
-        toReturn += variableName + "."
-                    + UnifiedNameContainer.getStructValueName() + arrayAccess
-                    + space() + EQUALS_SIGN + space() + valueDefinition + arrayAccess
-                    + CCodeHelper.SEMICOLON;
+        toReturn +=
+                varAssignCode(dotStructAccess(variableName,
+                                              UnifiedNameContainer.getStructValueName(),
+                                              arrayAccess),
+                              arrAccess(valueDefinition, arrayAccess))
+                + CCodeHelper.SEMICOLON;
         for (int i = 0; i < dimensions; i++) {
-            toReturn += CLOSING_BRACES; // close the for loops
+            toReturn += CCodeHelper.CLOSING_BRACES; // close the for loops
         }
         return toReturn;
     }
@@ -516,10 +513,7 @@ public class ElectionDescription {
      */
     private static String generateForLoopHeader(final String indexName,
                                                 final String maxSize) {
-        return "for (unsigned int" + space() + indexName + space()
-                + EQUALS_SIGN + space() + zero() + CCodeHelper.SEMICOLON + space()
-                + indexName + space() + "<" + space() + maxSize + CCodeHelper.SEMICOLON + space()
-                + indexName + "++ )" + space() + OPENING_BRACES + space();
+        return forLoopHeaderCode(indexName, lt(), maxSize);
     }
 
     /**
@@ -660,7 +654,8 @@ public class ElectionDescription {
      * @return "{toWrap}"
      */
     private static String wrapInCurlyBraces(final String toWrap) {
-        return OPENING_BRACES + toWrap + CLOSING_BRACES;
+        return space() + CCodeHelper.OPENING_BRACES + toWrap
+                + CCodeHelper.CLOSING_BRACES + space();
     }
 
     /**

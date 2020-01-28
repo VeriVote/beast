@@ -21,6 +21,11 @@ public class StringResourceLoaderTest {
     /** Another test sentence string. */
     private static final String TEST_SENTENCE_TWO = "also a test";
 
+    /** The Constant TEST_STRING_ONE. */
+    private static final String TEST_STRING_ONE = "test : this is a test";
+    /** The Constant TEST_STRING_TWO. */
+    private static final String TEST_STRING_TWO = "test2 : also a test";
+
     /** The list. */
     private final LinkedList<String> list;
     /** The instance. */
@@ -31,8 +36,8 @@ public class StringResourceLoaderTest {
      */
     public StringResourceLoaderTest() {
         list = new LinkedList<String>();
-        list.add("test : this is a test");
-        list.add("test2 : also a test");
+        list.add(TEST_STRING_ONE);
+        list.add(TEST_STRING_TWO);
         instance = new StringResourceLoader(list);
     }
 

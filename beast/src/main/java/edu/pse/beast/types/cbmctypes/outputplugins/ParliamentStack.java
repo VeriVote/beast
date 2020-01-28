@@ -38,6 +38,10 @@ public final class ParliamentStack extends CBMCOutputType {
     /** The Constant TMP_STRING. */
     private static final String TMP_STRING = "tmp";
 
+    /** The Constant SEEMINGLY_IMPORTANT_CODE_LINE. */
+    private static final String SEEMINGLY_IMPORTANT_CODE_LINE =
+            "IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693";
+
     /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
 
@@ -110,7 +114,7 @@ public final class ParliamentStack extends CBMCOutputType {
         code.deleteTab();
         code.add(CCodeHelper.CLOSING_BRACES); // End of the function
         final CodeArrayListBeautifier c = new CodeArrayListBeautifier();
-        c.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
+        c.add(SEEMINGLY_IMPORTANT_CODE_LINE);
         return c;
     }
 

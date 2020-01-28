@@ -1,5 +1,8 @@
 package edu.pse.beast.types;
 
+import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
+import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,6 +11,7 @@ import java.util.ServiceLoader;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -293,7 +297,7 @@ public abstract class InputType extends InOutType {
                                final List<String> loopVars) {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
-        return newVotesNameAcc + " = " + origVotesNameAcc + ";";
+        return varAssignCode(newVotesNameAcc, origVotesNameAcc) + CCodeHelper.SEMICOLON;
     }
 
     /**
@@ -307,10 +311,9 @@ public abstract class InputType extends InOutType {
      */
     public String getFullVoteAccess(final String voteName,
                                     final List<String> loopVars) {
-        final String access = this.getAccessDimensions(loopVars);
-        return voteName + "."
-                + UnifiedNameContainer.getStructValueName()
-                + access;
+        return dotStructAccess(voteName,
+                               UnifiedNameContainer.getStructValueName(),
+                               loopVars);
     }
 
     /**

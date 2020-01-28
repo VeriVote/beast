@@ -14,6 +14,8 @@ import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
+import static edu.pse.beast.toolbox.CCodeHelper.x;
+import static edu.pse.beast.toolbox.CCodeHelper.y;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.Iterator;
@@ -35,31 +37,10 @@ public abstract class CBMCInputType extends InputType {
     /** The Constant INT_LENGTH. */
     protected static final int INT_LENGTH = 32;
 
-    /** The Constant ASSUME. */
-    protected static final String ASSUME = CBMCCodeGenerator.ASSUME;
-    /** The Constant ASSERT. */
-    protected static final String ASSERT = CBMCCodeGenerator.ASSERT;
-    /** The Constant ARR. */
-    protected static final String ARR = CBMCCodeGenerator.ARR;
-
-    /** The Constant NONDET_INT. */
-    protected static final String NONDET_INT = CBMCCodeGenerator.NONDET_INT;
-    /** The Constant NONDET_UINT. */
-    protected static final String NONDET_UINT = CBMCCodeGenerator.NONDET_UINT;
-
-    /** The Constant "i". */
-    protected static final String I = "i";
-    /** The Constant "j". */
-    protected static final String J = "j";
     /** The Constant LOOP_R_0. */
     protected static final String LOOP_R_0 = "loop_r_0";
     /** The Constant POS_DIFF. */
     protected static final String POS_DIFF = "pos_diff";
-
-    /** The Constant C. */
-    protected static final String C = CBMCCodeGenerator.C;
-    /** The Constant V. */
-    protected static final String V = CBMCCodeGenerator.V;
 
     /** The Constant SUM. */
     protected static final String SUM = "sum";
@@ -68,21 +49,8 @@ public abstract class CBMCInputType extends InputType {
     /** The Constant CAND_SUM. */
     protected static final String CAND_SUM = "candSum";
 
-    /** The Constant CPROVER_ASSUME. */
-    private static final String CPROVER_ASSUME = CBMCCodeGenerator.CPROVER_ASSUME;
-    /** The Constant CPROVER_ASSERT. */
-    private static final String CPROVER_ASSERT = CBMCCodeGenerator.CPROVER_ASSERT;
-
-    /** The Constant ASSERT2. */
-    private static final String ASSERT2 = CBMCCodeGenerator.ASSERT2;
-
     /** The Constant CHANGED. */
     private static final String CHANGED = "changed";
-
-    /** The Constant X. */
-    private static final String X = "x";
-    /** The Constant Y. */
-    private static final String Y = "y";
 
     /**
      * The constructor.
@@ -120,7 +88,8 @@ public abstract class CBMCInputType extends InputType {
      * makes a re-implementation and whether this is really necessary.
      */
     @Override
-    public void flipVote(final String newVotesName, final String origVotesName,
+    public void flipVote(final String newVotesName,
+                         final String origVotesName,
                          final List<String> loopVars,
                          final CodeArrayListBeautifier code) {
         // TODO: Check whether this makes sense and why flipVote in
@@ -128,17 +97,20 @@ public abstract class CBMCInputType extends InputType {
         final String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         final String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         code.add();
-        code.add(intVar(varAssignCode(CHANGED, functionCode(NONDET_INT)))
+        code.add(intVar(varAssignCode(CHANGED, functionCode(CBMCCodeGenerator.NONDET_INT)))
                 + CCodeHelper.SEMICOLON);
         code.add();
-        code.add(functionCode(ASSUME, leq(zero(), CHANGED)) + CCodeHelper.SEMICOLON);
-        code.add(functionCode(ASSUME, leq(CHANGED, one())) + CCodeHelper.SEMICOLON);
+        code.add(functionCode(CBMCCodeGenerator.ASSUME, leq(zero(), CHANGED))
+                    + CCodeHelper.SEMICOLON);
+        code.add(functionCode(CBMCCodeGenerator.ASSUME, leq(CHANGED, one()))
+                    + CCodeHelper.SEMICOLON);
         code.add(functionCode(CCodeHelper.IF, CHANGED)
                 + space() + CCodeHelper.OPENING_BRACES);
         // we changed one vote, so we keep track of it
         code.add(plusPlus(POS_DIFF) + CCodeHelper.SEMICOLON);
-        code.add(functionCode(ASSUME, neq(newVotesNameAcc, origVotesNameAcc))
-                + CCodeHelper.SEMICOLON);
+        code.add(functionCode(CBMCCodeGenerator.ASSUME,
+                              neq(newVotesNameAcc, origVotesNameAcc))
+                    + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES + space()
                 + CCodeHelper.ELSE + space() + CCodeHelper.OPENING_BRACES);
         code.addTab();
@@ -151,18 +123,20 @@ public abstract class CBMCInputType extends InputType {
     @Override
     public final void addCheckerSpecificHeaders(final CodeArrayListBeautifier code) {
         // add the headers CBMC needs;
-        code.add(include("stdlib"));
-        code.add(include("stdint"));
-        code.add(include(ASSERT));
+        code.add(include(CBMCCodeGenerator.STD_LIB));
+        code.add(include(CBMCCodeGenerator.STD_INT));
+        code.add(include(CBMCCodeGenerator.ASSERT));
         code.add();
-        code.add(unsignedIntVar(functionCode(NONDET_UINT)) + CCodeHelper.SEMICOLON);
-        code.add(intVar(functionCode(NONDET_INT)) + CCodeHelper.SEMICOLON);
+        code.add(unsignedIntVar(functionCode(CBMCCodeGenerator.NONDET_UINT))
+                    + CCodeHelper.SEMICOLON);
+        code.add(intVar(functionCode(CBMCCodeGenerator.NONDET_INT))
+                    + CCodeHelper.SEMICOLON);
         code.add();
 
-        code.add(define(functionCode(ASSERT2, X, Y),
-                        functionCode(CPROVER_ASSERT, X, Y)));
-        code.add(define(functionCode(ASSUME, X),
-                        functionCode(CPROVER_ASSUME, X)));
+        code.add(define(functionCode(CBMCCodeGenerator.ASSERT2, x(), y()),
+                        functionCode(CBMCCodeGenerator.CPROVER_ASSERT, x(), y())));
+        code.add(define(functionCode(CBMCCodeGenerator.ASSUME, x()),
+                        functionCode(CBMCCodeGenerator.CPROVER_ASSUME, x())));
         code.add();
     }
 

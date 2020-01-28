@@ -1,9 +1,9 @@
 package edu.pse.beast.booleanexpeditor.view;
 
 import static edu.pse.beast.toolbox.CCodeHelper.colon;
-import static edu.pse.beast.toolbox.CCodeHelper.comma;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
-import static edu.pse.beast.toolbox.CCodeHelper.parenthesize;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * @author Nikolai Schnell
  */
 public class ErrorWindow {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-
     /** The Constant ERROR. */
     private static final String ERROR = "error";
 
@@ -87,21 +84,21 @@ public class ErrorWindow {
 
         for (int i = 0; i < preConditionErrors.size(); i++) {
             errorsAsString +=
-                    lineBreak(colon(Integer.toString(i + 1),
-                                    booleanExpErrorDisplayer
-                                        .createMsg(preConditionErrors.get(i))) + BLANK
-                            + parenthesize(lineString + BLANK
-                                            + comma(preConditionErrors.get(i).getLine())
-                                            + preConditionsString));
+                    lineBreak(functionCode(colon(Integer.toString(i + 1),
+                                                 booleanExpErrorDisplayer
+                                                 .createMsg(preConditionErrors.get(i))),
+                                           lineString + space()
+                                               + preConditionErrors.get(i).getLine(),
+                                           preConditionsString));
         }
         for (int i = 0; i < postConditionErrors.size(); i++) {
             errorsAsString +=
-                    lineBreak(colon(Integer.toString(i + 1),
-                                    booleanExpErrorDisplayer
-                                        .createMsg(postConditionErrors.get(i))) + BLANK
-                            + parenthesize(lineString + BLANK
-                                            + comma(postConditionErrors.get(i).getLine())
-                                            + postConditionsString));
+                    lineBreak(functionCode(colon(Integer.toString(i + 1),
+                                                 booleanExpErrorDisplayer
+                                                 .createMsg(postConditionErrors.get(i))),
+                                           lineString + space()
+                                               + postConditionErrors.get(i).getLine(),
+                                            postConditionsString));
         }
         textPane.setText(errorsAsString);
     }

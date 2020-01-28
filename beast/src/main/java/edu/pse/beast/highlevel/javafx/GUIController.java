@@ -504,11 +504,11 @@ public class GUIController {
     /** The symb var to remove. */
     private TreeItem<String> symbVarToRemove;
 
-    /** The property to remove. */
-    private TreeItem<CustomTreeItem> propertyToRemove;
+    // /** The property to remove. */
+    // private TreeItem<CustomTreeItem> propertyToRemove; FIXME
 
-    /** The main stage. */
-    private Stage mainStage;
+    // /** The main stage. */
+    // private Stage mainStage; FIXME
 
     /** The name field is changeable. */
     private boolean nameFieldIsChangeable;
@@ -563,7 +563,7 @@ public class GUIController {
      *            the main jfx stage
      */
     public GUIController(final Stage mainJfxStage) {
-        this.mainStage = mainJfxStage;
+        // this.mainStage = mainJfxStage; FIXME
     }
 
     // Initial setup
@@ -1798,11 +1798,11 @@ public class GUIController {
                         new File(folder.getParentFile()
                                 + Character.toString(SLASH) + file.getName()),
                         "");
-                String listFileContent = "";
+                // String listFileContent = ""; FIXME: What is this for? Remove?
 
                 int counter = 0;
                 for (ParentTreeItem parentItem : properties) {
-                    listFileContent += (0 < counter) ? "\n" : 0;
+                    // listFileContent += (0 < counter) ? "\n" : 0; FIXME
                     String name = parentItem.getPreAndPostProperties()
                             .getName();
                     File saveFolder = new File(
@@ -1811,7 +1811,7 @@ public class GUIController {
                     // We want to save the parentTreeItem into this folder
                     saveFolder = createFolderWithName(saveFolder, true);
                     name = saveFolder.getName();
-                    listFileContent += name;
+                    // listFileContent += name; FIXME
                     booleanExpEditor.saveAs(
                             parentItem.getPreAndPostProperties(),
                             new File(saveFolder + Character.toString(SLASH)

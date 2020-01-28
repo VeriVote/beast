@@ -1,8 +1,10 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.i;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.zero;
@@ -165,7 +167,7 @@ public final class SingleChoice extends CBMCInputType {
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF,
-                              eq(arrAccess(ARR, I), CANDIDATE))
+                              eq(arrAccess(arr(), i()), CANDIDATE))
                 + space() + plusPlus(SUM)
                 + CCodeHelper.SEMICOLON);
     }

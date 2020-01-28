@@ -29,8 +29,8 @@ public abstract class ToolbarHandler {
         "cut", "copy", "paste"
         };
 
-    /** The toolbar. */
-    private JToolBar toolbar;
+    // /** The toolbar. */
+    // private JToolBar toolbar; FIXME: Purpose? Remove?
 
     /** The string res. */
     private StringResourceLoader stringRes;
@@ -62,7 +62,7 @@ public abstract class ToolbarHandler {
         this.actionIdsAndListener = actionIdsAndListeners;
         this.imageRes = imRes;
         this.buttons = new JButton[actionIdsAndListeners.length];
-        this.toolbar = jToolbar;
+        // this.toolbar = jToolbar; FIXME
 
         for (int i = 0; i < actionIdsAndListeners.length; ++i) {
             final String id = actionIdsAndListeners[i].getId();

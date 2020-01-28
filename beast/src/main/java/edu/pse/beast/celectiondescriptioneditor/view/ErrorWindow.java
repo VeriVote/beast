@@ -1,8 +1,9 @@
 package edu.pse.beast.celectiondescriptioneditor.view;
 
 import static edu.pse.beast.toolbox.CCodeHelper.colon;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
-import static edu.pse.beast.toolbox.CCodeHelper.parenthesize;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * @author Nikolai Schnell
  */
 public class ErrorWindow {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-
     /** The Constant ERROR_ID. */
     private static final String ERROR_ID = "error";
     /** The Constant LINE_ID. */
@@ -63,10 +61,9 @@ public class ErrorWindow {
                 lineBreak(colon(errorString, Integer.toString(errors.size())));
         for (int i = 0; i < errors.size(); i++) {
             errorsAsString +=
-                    lineBreak(colon(Integer.toString(i + 1),
-                                    cErrorDisplayer.createMsg(errors.get(i))) + BLANK
-                    + parenthesize(lineString + BLANK
-                                    + (errors.get(i).getLine() - 1)));
+                    lineBreak(functionCode(colon(Integer.toString(i + 1),
+                                                 cErrorDisplayer.createMsg(errors.get(i))),
+                                           lineString + space() + (errors.get(i).getLine() - 1)));
         }
         textPane.setText(errorsAsString);
     }

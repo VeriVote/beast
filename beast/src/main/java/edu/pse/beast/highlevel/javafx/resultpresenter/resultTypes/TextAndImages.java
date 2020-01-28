@@ -58,27 +58,27 @@ public final class TextAndImages extends ResultPresentationType {
     private final LinkedImageOps<TextStyle> linkedImageOps =
             new LinkedImageOps<TextStyle>();
 
-    /** The area. */
-    private final GenericStyledArea<ParStyle,
-                                    Either<String, LinkedImage>,
-                                    TextStyle> area =
-            new GenericStyledArea<ParStyle,
-                                  Either<String, LinkedImage>,
-                                  TextStyle>(
-                    // default paragraph style
-                    ParStyle.EMPTY,
-                // paragraph style setter
-                (paragraph, style) -> paragraph.setStyle(style.toCss()),
-                    TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
-                    // default segment style
-                    .updateFontFamily(SERIF_FONT).updateTextColor(Color.BLACK),
-                    // segment operations
-                    styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
-                seg -> createNode(seg,
-                    // Node creator and segment style setter
-                    (text, style) -> text.setStyle(style.toCss())
-                            )
-                    );
+    // /** The area. */
+    // private final GenericStyledArea<ParStyle,
+    //                                 Either<String, LinkedImage>,
+    //                                 TextStyle> area = FIXME: What is this for? Remove?
+    //             new GenericStyledArea<ParStyle,
+    //                                   Either<String, LinkedImage>,
+    //                                   TextStyle>(
+    //                     // default paragraph style
+    //                     ParStyle.EMPTY,
+    //                 // paragraph style setter
+    //                 (paragraph, style) -> paragraph.setStyle(style.toCss()),
+    //                     TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
+    //                     // default segment style
+    //                     .updateFontFamily(SERIF_FONT).updateTextColor(Color.BLACK),
+    //                     // segment operations
+    //                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
+    //                 seg -> createNode(seg,
+    //                     // Node creator and segment style setter
+    //                     (text, style) -> text.setStyle(style.toCss())
+    //                             )
+    //                     );
 
     /**
      * Creates the node.

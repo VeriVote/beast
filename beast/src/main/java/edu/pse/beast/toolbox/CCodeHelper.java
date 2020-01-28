@@ -176,6 +176,15 @@ public final class CCodeHelper {
     /** The Constant endif. */
     private static final String ENDIF = "#endif";
 
+    /** The Constant I. */
+    private static final String I = "i";
+    /** The Constant J. */
+    private static final String J = "j";
+    /** The Constant X. */
+    private static final String X = "x";
+    /** The Constant Y. */
+    private static final String Y = "y";
+
     /** The Constant ZERO. */
     private static final String ZERO = "0";
     /** The Constant ONE. */
@@ -427,6 +436,42 @@ public final class CCodeHelper {
     }
 
     /**
+     * Generate common counter variable "i".
+     *
+     * @return the string
+     */
+    public static String i() {
+        return I;
+    }
+
+    /**
+     * Generate common counter variable "j".
+     *
+     * @return the string
+     */
+    public static String j() {
+        return J;
+    }
+
+    /**
+     * Generate common counter variable "x".
+     *
+     * @return the string
+     */
+    public static String x() {
+        return X;
+    }
+
+    /**
+     * Generate common counter variable "y".
+     *
+     * @return the string
+     */
+    public static String y() {
+        return Y;
+    }
+
+    /**
      * Generate code for zero.
      *
      * @return the string
@@ -454,6 +499,15 @@ public final class CCodeHelper {
     }
 
     /**
+     * Generate "arr" code.
+     *
+     * @return the string
+     */
+    public static String arr() {
+        return ARR;
+    }
+
+    /**
      * Generate ".arr" code.
      *
      * @return the string
@@ -470,7 +524,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String longVar(final String varName) {
-        return CCodeHelper.LONG + BLANK + varName;
+        return LONG + BLANK + varName;
     }
 
     /**
@@ -481,7 +535,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String intVar(final String varName) {
-        return CCodeHelper.INT + BLANK + varName;
+        return INT + BLANK + varName;
     }
 
     /**
@@ -492,7 +546,29 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String unsignedIntVar(final String varName) {
-        return CCodeHelper.UNSIGNED + BLANK + intVar(varName);
+        return UNSIGNED + BLANK + intVar(varName);
+    }
+
+    /**
+     * Generate code for (signed) char variable.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String charVar(final String varName) {
+        return CHAR + BLANK + varName;
+    }
+
+    /**
+     * Generate code for unsigned char variable.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String unsignedCharVar(final String varName) {
+        return UNSIGNED + BLANK + charVar(varName);
     }
 
     /**
@@ -540,6 +616,20 @@ public final class CCodeHelper {
     public static String varAssignCode(final String varName,
                                         final String rhsVar) {
         return varName + BLANK + EQUALS_SIGN + BLANK + rhsVar;
+    }
+
+    /**
+     * Constant assignment code.
+     *
+     * @param constName
+     *            the constant's name
+     * @param constValue
+     *            the constant's value
+     * @return the string
+     */
+    public static String constAssignCode(final String constName,
+                                         final int constValue) {
+        return constName + EQUALS_SIGN + Integer.toString(constValue);
     }
 
     /**
@@ -795,8 +885,7 @@ public final class CCodeHelper {
      */
     public static String define(final String name,
                                 final String argument) {
-        return DEFINE + CCodeHelper.BLANK + name
-                + CCodeHelper.BLANK + argument;
+        return DEFINE + BLANK + name + BLANK + argument;
     }
 
     /**
@@ -810,8 +899,7 @@ public final class CCodeHelper {
      */
     public static String define(final String name,
                                 final int argument) {
-        return DEFINE + CCodeHelper.BLANK + name
-                + CCodeHelper.BLANK + Integer.toString(argument);
+        return DEFINE + BLANK + name + BLANK + Integer.toString(argument);
     }
 
     /**
@@ -825,9 +913,9 @@ public final class CCodeHelper {
      */
     public static String defineIfNonDef(final String name,
                                         final String argument) {
-        return lineBreak(IFNDEF + CCodeHelper.BLANK + name)
-                + lineBreak(CCodeHelper.BLANK + define(name, argument))
-                + CCodeHelper.BLANK + ENDIF;
+        return lineBreak(IFNDEF + BLANK + name)
+                + lineBreak(BLANK + define(name, argument))
+                + BLANK + ENDIF;
     }
 
     /**
@@ -851,8 +939,9 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String include(final String pkgName) {
-        return CCodeHelper.INCLUDE + CCodeHelper.BLANK
-                + LT_SIGN + pkgName + FileLoader.H_FILE_ENDING + GT_SIGN;
+        return INCLUDE + BLANK + LT_SIGN
+                + pkgName + FileLoader.H_FILE_ENDING
+                + GT_SIGN;
     }
 
     /**
@@ -881,7 +970,7 @@ public final class CCodeHelper {
         final String loopGuard = conjunct(guardReinforce, boundGuard)
                                 + SEMICOLON;
         final String incrCounter = plusPlus(countVar);
-        return CCodeHelper.FOR + BLANK
+        return FOR + BLANK
                 + parenthesize(varEqualsZero + BLANK
                                 + loopGuard + BLANK
                                 + incrCounter)
@@ -971,6 +1060,24 @@ public final class CCodeHelper {
     }
 
     /**
+     * Array access for all given dimensions.
+     *
+     * @param arr
+     *            the array
+     * @param dims
+     *            the dims
+     * @return the string
+     */
+    public static String arrAccess(final String arr,
+                                   final int... dims) {
+        final List<String> dimList = new ArrayList<String>();
+        for (final int dim : dims) {
+            dimList.add(Integer.toString(dim));
+        }
+        return arrAccess(arr, dimList);
+    }
+
+    /**
      * Dot arr struct access for all given dimensions.
      *
      * @param owner
@@ -981,9 +1088,9 @@ public final class CCodeHelper {
      *            the dims
      * @return the string
      */
-    private static String dotStructAccess(final String owner,
-                                          final String structName,
-                                          final List<String> dims) {
+    public static String dotStructAccess(final String owner,
+                                         final String structName,
+                                         final List<String> dims) {
         String arrAccess = notNullOrEmpty(owner) ? owner : "";
         if (notNullOrEmpty(owner) && notNullOrEmpty(dims)) {
             arrAccess += notNullOrEmpty(structName)

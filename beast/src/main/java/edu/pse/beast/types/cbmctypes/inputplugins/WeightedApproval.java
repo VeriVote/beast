@@ -1,9 +1,12 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.i;
+import static edu.pse.beast.toolbox.CCodeHelper.j;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
@@ -185,14 +188,14 @@ public final class WeightedApproval extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add(uintVarEqualsCode(CAND_SUM) + arrAccess(ARR, I, CANDIDATE)
+        code.add(uintVarEqualsCode(CAND_SUM) + arrAccess(arr(), i(), CANDIDATE)
                 + CCodeHelper.SEMICOLON);
         if (unique) {
-            code.add(forLoopHeaderCode(J, lt(),
+            code.add(forLoopHeaderCode(j(), lt(),
                                        UnifiedNameContainer.getCandidate()));
             code.add(functionCode(CCodeHelper.IF,
-                                  conjunct(neq(J, CANDIDATE),
-                                           leq(CAND_SUM, arrAccess(ARR, I, J))))
+                                  conjunct(neq(j(), CANDIDATE),
+                                           leq(CAND_SUM, arrAccess(arr(), i(), j()))))
                     + space() + varAssignCode(CAND_SUM, zero())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);

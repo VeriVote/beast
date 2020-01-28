@@ -1,11 +1,13 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import static edu.pse.beast.toolbox.CCodeHelper.arr;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
 import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.i;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
 import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
@@ -20,6 +22,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -115,13 +118,13 @@ public final class Preference extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add(forLoopHeaderCode(LOOP_R_0, lt(), V));
-        code.add(forLoopHeaderCode(LOOP_R_1, lt(), C));
-        code.add(forLoopHeaderCode(LOOP_R_2, lt(), C));
+        code.add(forLoopHeaderCode(LOOP_R_0, lt(), CBMCCodeGenerator.V));
+        code.add(forLoopHeaderCode(LOOP_R_1, lt(), CBMCCodeGenerator.C));
+        code.add(forLoopHeaderCode(LOOP_R_2, lt(), CBMCCodeGenerator.C));
 
         code.add(functionCode(CCodeHelper.IF, neq(LOOP_R_1, LOOP_R_2))
                 + space() + CCodeHelper.OPENING_BRACES);
-        code.add(functionCode(ASSUME,
+        code.add(functionCode(CBMCCodeGenerator.ASSUME,
                               neq(dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_1),
                                   dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_2))
                 ) + CCodeHelper.SEMICOLON);
@@ -208,7 +211,7 @@ public final class Preference extends CBMCInputType {
                                                   loopVariables.get(1));
         code.add(loopHead);
         code.add(functionCode(
-                    ASSUME,
+                    CBMCCodeGenerator.ASSUME,
                     neq(dotStructAccess(valueName,
                                         UnifiedNameContainer.getStructValueName(),
                                         loopVariables.get(0), loopVariables.get(1)),
@@ -224,9 +227,9 @@ public final class Preference extends CBMCInputType {
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF,
-                              eq(arrAccess("arr", I, zero()),
-                                 "candidate")
-                ) + space() + plusPlus("sum")
+                              eq(arrAccess(arr(), i(), zero()),
+                                 CANDIDATE)
+                ) + space() + plusPlus(SUM)
                 + CCodeHelper.SEMICOLON);
     }
 

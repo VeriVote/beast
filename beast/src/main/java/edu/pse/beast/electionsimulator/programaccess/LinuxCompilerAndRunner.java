@@ -1,5 +1,7 @@
 package edu.pse.beast.electionsimulator.programaccess;
 
+import static edu.pse.beast.toolbox.CCodeHelper.space;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +20,6 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  */
 public final class LinuxCompilerAndRunner
         extends SystemSpecificCompilerAndExecutioner {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-
     /**
      * The Constant COMPILER_STRING: Program that is to be used
      * for checking.
@@ -77,7 +76,7 @@ public final class LinuxCompilerAndRunner
             final String toBeIncludedFile = iterator.next();
             arguments.add(
                     toBeIncludedFile.replace(FileLoader.QUOTE, "")
-                        .replace(BLANK, "\\ "));
+                        .replace(space(), "\\ "));
         }
         // Defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);

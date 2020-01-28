@@ -1,6 +1,5 @@
 package edu.pse.beast.codeareajavafx;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.IntFunction;
@@ -32,8 +31,8 @@ public final class BoundedVarCodeArea extends AutoCompletionCodeArea
      * The constructor.
      */
     public BoundedVarCodeArea() {
-        final List<String> code = new ArrayList<String>();
-        code.add("");
+        // final List<String> code = new ArrayList<String>();
+        // code.add(""); FIXME: What is this for? Can probably be removed.
         final String sampleCode = "";
         final String stylesheet =
                 this.getClass().getResource(RESOURCE).toExternalForm();

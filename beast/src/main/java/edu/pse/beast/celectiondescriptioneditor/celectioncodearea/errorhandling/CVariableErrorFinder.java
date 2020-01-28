@@ -1,11 +1,25 @@
 package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
 
+import static edu.pse.beast.toolbox.CCodeHelper.charVar;
+import static edu.pse.beast.toolbox.CCodeHelper.defineIfNonDef;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
+import static edu.pse.beast.toolbox.CCodeHelper.intVar;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
+import static edu.pse.beast.toolbox.CCodeHelper.space;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedCharVar;
+import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
+import static edu.pse.beast.toolbox.CCodeHelper.x;
+import static edu.pse.beast.toolbox.CCodeHelper.y;
+import static edu.pse.beast.toolbox.CCodeHelper.zero;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
@@ -15,18 +29,6 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Holger Klein
  */
 public final class CVariableErrorFinder {
-    /** The Constant BLANK. */
-    private static final String BLANK = " ";
-    /** The Constant ONE. */
-    private static final String ONE = "1";
-
-    /** The Constant "#ifndef". */
-    private static final String IF_UNDEFINED = "#ifndef";
-    /** The Constant "#define". */
-    private static final String DEFINE = "#define";
-    /** The Constant "#endif". */
-    private static final String END_IF = "#endif";
-
     /**
      * Instantiates a new c variable error finder.
      */
@@ -43,23 +45,16 @@ public final class CVariableErrorFinder {
      */
     public static List<CodeError> findErrors(final List<String> code,
                                              final ElectionDescription electionDesc) {
-        // TODO use unified name container here later
+        // TODO Use unified name container here later.
         final ArrayList<String> separated = new ArrayList<String>();
-        separated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getVoter());
-        separated.add(DEFINE + BLANK + UnifiedNameContainer.getVoter() + BLANK + ONE);
-        separated.add(END_IF);
-
-        separated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getCandidate());
-        separated.add(DEFINE + BLANK + UnifiedNameContainer.getCandidate() + BLANK + ONE);
-        separated.add(END_IF);
-
-        separated.add(IF_UNDEFINED + BLANK + UnifiedNameContainer.getSeats());
-        separated.add(DEFINE + BLANK + UnifiedNameContainer.getSeats() + BLANK + ONE);
-        separated.add(END_IF);
+        separated.add(defineIfNonDef(UnifiedNameContainer.getVoter(), one()));
+        separated.add(defineIfNonDef(UnifiedNameContainer.getCandidate(), one()));
+        separated.add(defineIfNonDef(UnifiedNameContainer.getSeats(), one()));
 
         // Since we want to reserve the function name "verify", we define it
         // here..
-        separated.add("void verify() {}");
+        separated.add(CCodeHelper.VOID + space() + functionCode("verify") + space()
+                        + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
 
         // WORKAROUND: Will change if I think of a more elegant solution (if
         // there is one) (look at issue 49 on github)
@@ -68,34 +63,55 @@ public final class CVariableErrorFinder {
         // At least I can extract it to a file, which would make updating
         // easier.
 
-        separated.add("void __CPROVER_assert(int x, int y) {}");
-        separated.add("void __CPROVER_assume(int x) {}");
+        separated.add(CCodeHelper.VOID + space()
+                        + functionCode(CBMCCodeGenerator.CPROVER_ASSERT,
+                                       intVar(x()), intVar(y()))
+                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+        separated.add(CCodeHelper.VOID + space()
+                        + functionCode(CBMCCodeGenerator.CPROVER_ASSUME, intVar(x()))
+                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
 
-        separated.addAll(Arrays.asList(electionDesc.getContainer()
-                .getStructDefinitions().split("\\n"))); // add all used structs
+        separated.addAll(Arrays.asList(electionDesc.getContainer() // Add all used structs
+                            .getStructDefinitions().split("\\n")));
 
-        separated.add("void assume(int x) {}");
-        separated.add("void assert(int x) {}");
-        separated.add("void assert2(int x, int y) {}");
+        separated.add(CCodeHelper.VOID + space()
+                        + functionCode(CBMCCodeGenerator.ASSUME, intVar(x()))
+                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+        separated.add(CCodeHelper.VOID + space()
+                        + functionCode(CBMCCodeGenerator.ASSERT, intVar(x()))
+                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+        separated.add(CCodeHelper.VOID + space()
+                        + functionCode(CBMCCodeGenerator.ASSERT2, intVar(x()), intVar(y()))
+                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
 
-        separated.add("int nondet_int() {return 0;}");
-        separated.add("unsigned int nondet_uint() {return 0;}");
-        separated.add("unsigned char nondet_uchar() {return 0;}");
-        separated.add("char nondet_char() {return 0;}");
+        separated.add(intVar(functionCode(CBMCCodeGenerator.NONDET_INT)
+                        + space() + CCodeHelper.OPENING_BRACES
+                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                        + CCodeHelper.CLOSING_BRACES));
+        separated.add(unsignedIntVar(functionCode(CBMCCodeGenerator.NONDET_UINT)
+                        + space() + CCodeHelper.OPENING_BRACES
+                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                        + CCodeHelper.CLOSING_BRACES));
+
+        separated.add(unsignedCharVar(functionCode(CBMCCodeGenerator.NONDET_UCHAR)
+                        + space() + CCodeHelper.OPENING_BRACES
+                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                        + CCodeHelper.CLOSING_BRACES));
+        separated.add(charVar(functionCode(CBMCCodeGenerator.NONDET_CHAR)
+                        + space() + CCodeHelper.OPENING_BRACES
+                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                        + CCodeHelper.CLOSING_BRACES));
 
         // WORKAROUND end
 
         separated.addAll(code);
-
-        separated.add("int main() {");
-        separated.add("}");
-
+        separated.add(intVar(functionCode(CBMCCodeGenerator.MAIN))
+                        + space() + CCodeHelper.OPENING_BRACES);
+        separated.add(CCodeHelper.CLOSING_BRACES);
         final int lineOffset = separated.size() + 1;
 
-        final ArrayList<CodeError> found =
-                new ArrayList<CodeError>(
-                        DeepErrorChecker.checkCodeForErrors(separated, lineOffset)
+        return new ArrayList<CodeError>(
+                DeepErrorChecker.checkCodeForErrors(separated, lineOffset)
                 );
-        return found;
     }
 }
