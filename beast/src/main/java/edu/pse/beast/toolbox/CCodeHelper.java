@@ -770,9 +770,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String parenthesize(final String expression) {
-        return notNullOrEmpty(expression)
-                ? (OPENING_PARENTHESES + expression + CLOSING_PARENTHESES)
-                        : expression;
+        return OPENING_PARENTHESES + expression + CLOSING_PARENTHESES;
     }
 
     /**
@@ -899,7 +897,7 @@ public final class CCodeHelper {
      */
     public static String define(final String name,
                                 final int argument) {
-        return DEFINE + BLANK + name + BLANK + Integer.toString(argument);
+        return define(name, Integer.toString(argument));
     }
 
     /**
@@ -915,7 +913,7 @@ public final class CCodeHelper {
                                         final String argument) {
         return lineBreak(IFNDEF + BLANK + name)
                 + lineBreak(BLANK + define(name, argument))
-                + BLANK + ENDIF;
+                + ENDIF;
     }
 
     /**
@@ -1091,11 +1089,13 @@ public final class CCodeHelper {
                                          final String structName,
                                          final List<String> dims) {
         String arrAccess = notNullOrEmpty(owner) ? owner : "";
-        if (notNullOrEmpty(owner) && notNullOrEmpty(dims)) {
+        if (notNullOrEmpty(owner)) {
             arrAccess += notNullOrEmpty(structName)
                     ? (DOT + structName) : dotArr();
-            for (final String dim : dims) {
-                arrAccess += notNullOrEmpty(dim) ? arrAcc(dim) : "";
+            if (notNullOrEmpty(dims)) {
+                for (final String dim : dims) {
+                    arrAccess += notNullOrEmpty(dim) ? arrAcc(dim) : "";
+                }
             }
         }
         return arrAccess;
