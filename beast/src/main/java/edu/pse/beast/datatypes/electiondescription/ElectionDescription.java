@@ -371,22 +371,19 @@ public class ElectionDescription {
                     checkIfExecutedCode(executionValues, toProc, 0,
                                         matcher.end());
             if (!checkForTrue(executionValues)) {
-                // The return statement was NOT standing in a comment block
+                // The return statement was NOT standing in a comment block.
                 final Tuple<String, Integer> replacement =
                         replaceSpecificReturnStatement(
                                 toProc.substring(matcher.end()),
                                 variableName
                                 );
-                // replacement now contains one or multiple lines which assign
-                // the fitting
-                // return value to "variableName"
-                // at first we have to add the assignment lines, afterwards we
-                // just have to add
-                // "return variablename"
+                // Replacement now contains one or multiple lines which assign
+                // the fitting return value to "variableName".
+                // At first we have to add the assignment lines, afterwards we
+                // just have to add "return variablename".
 
-                // the whole segment is put in curly braces, as the user could
-                // use single line
-                // if cases or similar things
+                // The whole segment is put in curly braces, as the user could
+                // use single line if cases or similar things.
                 final String toInsert =
                         wrapInCurlyBraces(
                                 replacement.first() + space()
@@ -394,30 +391,28 @@ public class ElectionDescription {
                                 + variableName
                                 + CCodeHelper.SEMICOLON
                                 );
-                // the part which was changed
+                // The part which was changed.
                 final String leadingPart = toProc.substring(0, matcher.start())
                                             + toInsert;
-                // replacement.second contains the position after the ";",
-                // therefore we have to
-                // append this end part again at the end
+                // Replacement.second contains the position after the ";",
+                // therefore we have to append this end part again at the end.
                 final String trailingPart =
                         toProc.substring(
                                 matcher.end()
                                         + replacement.second()
                                 );
                 toReturn += leadingPart;
-                // now that we changed the underlying string, we have to update
-                // the matcher
+                // Now that we changed the underlying string, we have to update
+                // the matcher.
                 matcher = returnPattern.matcher(trailingPart);
                 toProc = trailingPart;
             } else {
-                // We are in a comment, so we add the part to here and
-                // continue on
+                // We are in a comment, so we add the part to here and continue on.
                 toReturn += toProc.substring(0, matcher.end());
                 // add the analysed part
                 final String trailingPart = toProc.substring(matcher.end());
-                // now that we changed the underlying string, we have to update
-                // the matcher
+                // Now that we changed the underlying string, we have to update
+                // the matcher.
                 matcher = returnPattern.matcher(trailingPart);
                 toProc = trailingPart;
             }
@@ -446,19 +441,18 @@ public class ElectionDescription {
         final Pattern returnPattern = Pattern.compile(CCodeHelper.SEMICOLON);
         final Matcher matcher = returnPattern.matcher(toProcess);
 
-        // find the first ";" which is valid
+        // Find the first ";" which is valid.
         while (matcher.find()) {
             executionValues = checkIfExecutedCode(executionValues, toProcess, 0,
                                                   matcher.end());
-            if (!checkForTrue(executionValues)) { // the found ";" is valid
+            if (!checkForTrue(executionValues)) { // The found ";" is valid.
                 final String wrapped =
                         wrapInStruct(variableName,
                                      toProcess.substring(0, matcher.end() - 1));
-                // ignore the last char, as it will be a ";"
-
+                // Ignore the last char, as it will be a ";".
                 return new Tuple<String, Integer>(wrapped, matcher.end());
             }
-            // otherwise, the found ";" is not valid, so we continue
+            // Otherwise, the found ";" is not valid, so we continue.
         }
         throw new RuntimeException(
                 "No fitting return statement found, this should not happen.");
@@ -483,7 +477,7 @@ public class ElectionDescription {
                                                                  variableName);
         final String[] sizes = container.getInputType().getSizeOfDimensions();
         for (int i = 0; i < dimensions; i++) {
-            toReturn += // add all needed loop headers
+            toReturn += // Add all needed loop headers
                     generateForLoopHeader(loopVariables.get(i), sizes[i]);
         }
         final List<String> arrayAccess = new ArrayList<String>();
@@ -497,7 +491,7 @@ public class ElectionDescription {
                               arrAccess(valueDefinition, arrayAccess))
                 + CCodeHelper.SEMICOLON;
         for (int i = 0; i < dimensions; i++) {
-            toReturn += CCodeHelper.CLOSING_BRACES; // close the for loops
+            toReturn += CCodeHelper.CLOSING_BRACES; // Close the for loops
         }
         return toReturn;
     }

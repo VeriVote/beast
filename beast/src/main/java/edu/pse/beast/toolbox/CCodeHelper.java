@@ -1031,7 +1031,6 @@ public final class CCodeHelper {
                                    final List<String> dims) {
         String arrAccess = notNullOrEmpty(arr) ? arr : "";
         if (notNullOrEmpty(arr) && notNullOrEmpty(dims)) {
-            arrAccess += arr;
             for (final String dim : dims) {
                 arrAccess += notNullOrEmpty(dim) ? arrAcc(dim) : "";
             }
