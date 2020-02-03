@@ -1434,7 +1434,7 @@ public class CBMCCodeGenerator {
                         electionDesc.getContainer().getOutputStruct().getStructAccess()
                             + space() + ELECT + i,
                         functionCode(UnifiedNameContainer.getVotingMethod(),
-                                     sizeOfVotes, VOTES))
+                                     sizeOfVotes, VOTES + i))
                     + CCodeHelper.SEMICOLON;
             code.add(electX);
         }
