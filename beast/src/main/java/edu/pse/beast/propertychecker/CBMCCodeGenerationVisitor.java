@@ -682,6 +682,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         visitAccessingNodesReverseOrder(exp);
         String tempCode = (VOTES + NUMBER_TEMPLATE)
                             .replace(NUMBER_TEMPLATE, String.valueOf(exp.getCount()));
+        // TODO: Is the following correct for all vote expressions or only for
+        //       single-choice ballots?
+        tempCode += (0 < exp.getAccessingVars().length) ? dotArr() : "";
         for (int i = 0; i < exp.getAccessingVars().length; ++i) {
             tempCode += arrAcc(VAR_TEMPLATE).replace(VAR_TEMPLATE, variableNames.pop());
             listlvl--;
@@ -779,7 +782,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitAtPosNode(final AtPosExp atPosExp) {
         atPosExp.getIntegerValuedExpression().getVisited(this);
         final String varName = getAtPosVarName(atPosExp);
-        String template = uintVarEqualsCode(VAR_TEMPLATE) + NUMBER_TEMPLATE + CCodeHelper.SEMICOLON;
+        String template = uintVarEqualsCode(VAR_TEMPLATE)
+                            + NUMBER_TEMPLATE + CCodeHelper.SEMICOLON;
         template = template.replace(VAR_TEMPLATE, varName);
         template = template.replace(NUMBER_TEMPLATE, variableNames.pop());
         code.add(template);

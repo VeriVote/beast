@@ -82,6 +82,17 @@ import edu.pse.beast.types.InternalTypeRep;
  */
 public final class FormalExpErrorFinderTreeListener
         implements FormalPropertyDescriptionListener, VariableListListener {
+    private static final String UNDERSCORE = "_";
+    private static final String VOTES = "VOTES";
+    private static final String CANDIDATE = "CANDIDATE";
+    private static final String VOTE_SUM_FOR_ = "VOTE_SUM_FOR_";
+    private static final String UNIQUE = "UNIQUE";
+    private static final String VOTE_SUM_FOR_CANDIDATE =
+            VOTE_SUM_FOR_ + CANDIDATE;
+    private static final String VOTE_SUM_FOR_UNIQUE_CANDIDATE =
+            VOTE_SUM_FOR_ + UNIQUE + UNDERSCORE + CANDIDATE;
+    private static final String ELECT = "ELECT";
+
     /** The created. */
     private final ArrayList<CodeError> created = new ArrayList<CodeError>();
 
@@ -330,7 +341,7 @@ public final class FormalExpErrorFinderTreeListener
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
-        final String numberString = ctx.Elect().getText().substring("ELECT".length());
+        final String numberString = ctx.Elect().getText().substring(ELECT.length());
         if (Integer.valueOf(numberString).intValue() == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
         }
@@ -351,7 +362,7 @@ public final class FormalExpErrorFinderTreeListener
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
-        final String numberString = ctx.Vote().getText().substring("VOTES".length());
+        final String numberString = ctx.Vote().getText().substring(VOTES.length());
         if (Integer.valueOf(numberString).intValue() == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
         }
@@ -458,7 +469,7 @@ public final class FormalExpErrorFinderTreeListener
         final TerminalNode tn =
                 unique ? cu.cast(ctx).VotesumUnique() : c.cast(ctx).Votesum();
         final String expStr =
-                unique ? "VOTE_SUM_FOR_UNIQUE_CANDIDATE" : "VOTE_SUM_FOR_CANDIDATE";
+                unique ? VOTE_SUM_FOR_UNIQUE_CANDIDATE : VOTE_SUM_FOR_CANDIDATE;
         final String numberString = tn.getText().substring(expStr.length());
 
         final int number = Integer.valueOf(numberString);
