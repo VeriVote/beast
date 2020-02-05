@@ -82,15 +82,23 @@ import edu.pse.beast.types.InternalTypeRep;
  */
 public final class FormalExpErrorFinderTreeListener
         implements FormalPropertyDescriptionListener, VariableListListener {
+    /** The Constant UNDERSCORE. */
     private static final String UNDERSCORE = "_";
+    /** The Constant VOTES. */
     private static final String VOTES = "VOTES";
+    /** The Constant CANDIDATE. */
     private static final String CANDIDATE = "CANDIDATE";
-    private static final String VOTE_SUM_FOR_ = "VOTE_SUM_FOR_";
+    /** The Constant VOTE_SUM_FOR_. */
+    private static final String VOTE_SUM_FOR = "VOTE_SUM_FOR_";
+    /** The Constant UNIQUE. */
     private static final String UNIQUE = "UNIQUE";
+    /** The Constant VOTE_SUM_FOR_CANDIDATE. */
     private static final String VOTE_SUM_FOR_CANDIDATE =
-            VOTE_SUM_FOR_ + CANDIDATE;
+            VOTE_SUM_FOR + CANDIDATE;
+    /** The Constant VOTE_SUM_FOR_UNIQUE_CANDIDATE. */
     private static final String VOTE_SUM_FOR_UNIQUE_CANDIDATE =
-            VOTE_SUM_FOR_ + UNIQUE + UNDERSCORE + CANDIDATE;
+            VOTE_SUM_FOR + UNIQUE + UNDERSCORE + CANDIDATE;
+    /** The Constant ELECT. */
     private static final String ELECT = "ELECT";
 
     /** The created. */
