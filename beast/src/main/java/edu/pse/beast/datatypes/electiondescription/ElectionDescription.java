@@ -30,8 +30,22 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  */
 public class ElectionDescription {
+    /** The Constant UNDERSCORE. */
+    private static final String UNDERSCORE = "_";
+    /** The Constant DEFAULT_LOOP_INDEX_NAME. */
+    private static final String DEFAULT_LOOP_INDEX_NAME = "loop_index";
+    /** The Constant AUTO_VOTES. */
+    private static final String AUTO_VOTES = "auto_votes";
+    /** The Constant AMOUNT_VOTES. */
+    private static final String AMOUNT_VOTES = "amountVotes";
+    /** The Constant VOTES. */
+    private static final String VOTES = "votes";
+
     /** The Constant LEN. */
     private static final int LEN = 4;
+
+    /** The Constant TO_RETURN. */
+    private static final String TO_RETURN = "toReturn";
 
     /** The name. */
     private String name;
@@ -148,14 +162,14 @@ public class ElectionDescription {
      */
     public List<String> getComplexCode() {
         final String firstPart = code.substring(0, lockedLineStart);
-        final String votesName = generateVariableName(code, "auto_votes");
+        final String votesName = generateVariableName(code, AUTO_VOTES);
         final String replacementLine =
                 CCodeHelper.generateStructDeclString(container, votesName);
         final int dimensions = container.getInputType().getAmountOfDimensions();
         final List<String> loopVariables =
-                generateLoopVariables(code, dimensions, "votes");
+                generateLoopVariables(code, dimensions, VOTES);
         final String[] sizes = container.getInputType().getSizeOfDimensions();
-        sizes[0] = "amountVotes";
+        sizes[0] = AMOUNT_VOTES;
         String forLoopStart = "";
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
@@ -182,7 +196,7 @@ public class ElectionDescription {
         String middlePart = code.substring(lockedLineEnd, lockedBracePos);
         final String thirdPart = code.substring(lockedBracePos);
         middlePart = replaceReturns(middlePart,
-                                    generateVariableName(code, "toReturn"));
+                                    generateVariableName(code, TO_RETURN));
         return stringToList(
                 firstPart + replacementLine + switchedArray
                 + middlePart + thirdPart);
@@ -527,7 +541,7 @@ public class ElectionDescription {
         final List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
         // Use i as the default name for a loop
-        final String defaultName = "loop_index_";
+        final String defaultName = DEFAULT_LOOP_INDEX_NAME + UNDERSCORE;
         for (int i = 0; i < dimensions; i++) {
             String varName = defaultName + currentIndex;
             boolean duplicate = true;
@@ -535,7 +549,7 @@ public class ElectionDescription {
             while (duplicate) {
                 if (codeString.contains(varName)
                         || variableName.equals(varName)) {
-                    varName = generateRandomString(length) + "_" + currentIndex;
+                    varName = generateRandomString(length) + UNDERSCORE + currentIndex;
                     // Increase the length in case all words from that
                     // length are already taken
                     length++;

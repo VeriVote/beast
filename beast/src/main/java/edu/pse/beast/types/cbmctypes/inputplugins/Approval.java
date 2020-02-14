@@ -164,7 +164,9 @@ public final class Approval extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
-        code.add(uintVarEqualsCode(CAND_SUM) + arrAccess(arr(), i(), CANDIDATE));
+        code.add(uintVarEqualsCode(CAND_SUM)
+                + arrAccess(arr(), i(), CANDIDATE)
+                + CCodeHelper.SEMICOLON);
         if (unique) {
             code.add(forLoopHeaderCode(j(), lt(), CBMCCodeGenerator.C));
             code.add(functionCode(CCodeHelper.IF,
