@@ -186,25 +186,17 @@ public abstract class CheckerFactory implements Runnable {
      *            the result
      */
     private void runCheck(final String advanced, final Result res) {
-        outerLoop: for (Iterator<Integer> voteIterator =
-                            parameter.getAmountVoters().iterator();
-                voteIterator.hasNext();) {
-            final int voters = voteIterator.next();
-            for (Iterator<Integer> candidateIterator =
-                    parameter.getAmountCandidates().iterator();
-                    candidateIterator.hasNext();) {
-                final int candidates = candidateIterator.next();
-                for (Iterator<Integer> seatsIterator =
-                        parameter.getAmountSeats().iterator();
-                        seatsIterator.hasNext();) {
-                    final int seats = seatsIterator.next();
+        outerLoop:
+        for (final int voters : parameter.getAmountVoters()) {
+            for (final int candidates : parameter.getAmountCandidates()) {
+                for (final int seats : parameter.getAmountSeats()) {
                     synchronized (this) {
                         if (!stopped) {
                             currentlyRunning =
                                     startProcessCheck(electionDesc,
-                                                      res.getPropertyDesctiption(),
-                                                      advanced, voters, candidates,
-                                                      seats, this, res);
+                                            res.getPropertyDesctiption(),
+                                            advanced, voters, candidates,
+                                            seats, this, res);
                             // Check if the creation was successful
                             if (currentlyRunning == null) {
                                 // The process creation failed
