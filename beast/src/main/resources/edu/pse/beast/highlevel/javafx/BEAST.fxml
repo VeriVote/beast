@@ -32,6 +32,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
+<?import org.fxmisc.richtext.CodeArea?>
+<?import edu.pse.beast.codeareajavafx.BoundedVarCodeArea?>
 <VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -493,6 +495,21 @@
                                  </children></AnchorPane>
                   </content>
                 </Tab>
+                <Tab fx:id="ballotTab" text="%key.ballotTab" >
+                    <content>
+                        <SplitPane orientation="HORIZONTAL">
+                            <items>
+
+                                <BoundedVarCodeArea fx:id="ballotModification">
+
+                                </BoundedVarCodeArea>
+                                <BoundedVarCodeArea fx:id="equalsFunction">
+
+                                </BoundedVarCodeArea>
+                            </items>
+                        </SplitPane>
+                    </content>
+                </Tab>
                 <Tab fx:id="resultTab" onSelectionChanged="#resultPaneClicked" text="%key.result">
                            <content>
                               <BorderPane>
@@ -529,6 +546,7 @@
                                  </center>
                               </BorderPane>
                            </content></Tab>
+
               </tabs>
             </TabPane>
             <TabPane fx:id="subTabPane" tabClosingPolicy="UNAVAILABLE">
@@ -561,36 +579,36 @@
             </TabPane>
           </items>
         </SplitPane>
-            <BorderPane>
-               <bottom>
-                  <ToolBar BorderPane.alignment="CENTER">
-                    <items>
-                      <Button fx:id="newPropButton" mnemonicParsing="false" onAction="#newProperty" text="New">
-                           <tooltip>
-                              <Tooltip text="%key.newProp" />
-                           </tooltip></Button>
-                        <Button fx:id="loadPropButton" mnemonicParsing="false" onAction="#loadProperty" text="Load Property">
-                           <tooltip>
-                              <Tooltip text="%key.loadProp" />
-                           </tooltip></Button>
-                        <Button fx:id="loadPropListButton" mnemonicParsing="false" onAction="#loadPropertyList" text="Load Multiple Properties">
-                           <tooltip>
-                              <Tooltip text="%key.loadPropList" />
-                           </tooltip>
-                        </Button>
-                        <Separator orientation="VERTICAL" />
-                        <CheckBox mnemonicParsing="false" />
-                        <Label text="Ignore Specification" />
-                        <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
-                        <Pane HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#resetPropList" text="Reset List" />
-                    </items>
-                  </ToolBar>
-               </bottom>
-               <center>
-                  <TreeView fx:id="treeView" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
+        <BorderPane>
+           <bottom>
+              <ToolBar BorderPane.alignment="CENTER">
+                <items>
+                  <Button fx:id="newPropButton" mnemonicParsing="false" onAction="#newProperty" text="New">
+                       <tooltip>
+                          <Tooltip text="%key.newProp" />
+                       </tooltip></Button>
+                    <Button fx:id="loadPropButton" mnemonicParsing="false" onAction="#loadProperty" text="Load Property">
+                       <tooltip>
+                          <Tooltip text="%key.loadProp" />
+                       </tooltip></Button>
+                    <Button fx:id="loadPropListButton" mnemonicParsing="false" onAction="#loadPropertyList" text="Load Multiple Properties">
+                       <tooltip>
+                          <Tooltip text="%key.loadPropList" />
+                       </tooltip>
+                    </Button>
+                    <Separator orientation="VERTICAL" />
+                    <CheckBox mnemonicParsing="false" />
+                    <Label text="Ignore Specification" />
+                    <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
+                    <Pane HBox.hgrow="ALWAYS" />
+                    <Button mnemonicParsing="false" onAction="#resetPropList" text="Reset List" />
+                </items>
+              </ToolBar>
+           </bottom>
+           <center>
+              <TreeView fx:id="treeView" BorderPane.alignment="CENTER" />
+           </center>
+        </BorderPane>
       </items>
     </SplitPane>
   </children>

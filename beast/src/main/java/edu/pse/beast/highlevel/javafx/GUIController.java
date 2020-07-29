@@ -317,7 +317,6 @@ public class GUIController {
     /** The result tab. */
     @FXML // fx:id="resultPane"
     private Tab resultTab;
-
     /** The input pane. */
     @FXML // fx:id="inputPane"
     private Tab inputPane;
@@ -474,6 +473,8 @@ public class GUIController {
     /** The code area. */
     private NewCodeArea codeArea;
 
+    /** The ballots change area */
+    private BoundedVarCodeArea ballotChange;
     /** The bounded var area. */
     private BoundedVarCodeArea boundedVarArea;
 
@@ -554,6 +555,7 @@ public class GUIController {
     /** The option saver loader. */
     private OptionsSaverLoader optionSaverLoader = new OptionsSaverLoader(
             SaverLoader.OPT_FILE_ENDING, "BEAST option file");
+
     // private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
     /**
