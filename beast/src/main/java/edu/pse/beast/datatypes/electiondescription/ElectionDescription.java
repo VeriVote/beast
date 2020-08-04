@@ -289,6 +289,8 @@ public class ElectionDescription {
                                         lockedLineStart, lockedLineEnd,
                                         lockedBracePos, isNew);
         deepCopy.setCode(code);
+        deepCopy.setEqualsFunction(equalsFunction);
+        deepCopy.setBallotModifier(ballotModifier);
         return deepCopy;
     }
 
