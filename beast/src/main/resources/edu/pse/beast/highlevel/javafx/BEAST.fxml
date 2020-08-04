@@ -34,6 +34,7 @@
 
 <?import org.fxmisc.richtext.CodeArea?>
 <?import edu.pse.beast.codeareajavafx.BoundedVarCodeArea?>
+<?import edu.pse.beast.codeareajavafx.EqualsCodeArea?>
 <VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -497,15 +498,10 @@
                 </Tab>
                 <Tab fx:id="ballotTab" text="%key.ballotTab" >
                     <content>
-                        <SplitPane orientation="HORIZONTAL">
+                        <SplitPane fx:id="ballotTabSplitPane" orientation="HORIZONTAL">
                             <items>
 
-                                <BoundedVarCodeArea fx:id="ballotModification">
 
-                                </BoundedVarCodeArea>
-                                <BoundedVarCodeArea fx:id="equalsFunction">
-
-                                </BoundedVarCodeArea>
                             </items>
                         </SplitPane>
                     </content>

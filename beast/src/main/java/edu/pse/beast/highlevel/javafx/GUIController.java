@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.pse.beast.codeareajavafx.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,26 +23,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
@@ -57,11 +41,6 @@ import org.fxmisc.wellbehaved.event.Nodes;
 
 import com.google.gson.JsonSyntaxException;
 
-import edu.pse.beast.codeareajavafx.AutoCompleter;
-import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
-import edu.pse.beast.codeareajavafx.NewCodeArea;
-import edu.pse.beast.codeareajavafx.NewPropertyCodeArea;
-import edu.pse.beast.codeareajavafx.SaverLoader;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -461,6 +440,8 @@ public class GUIController {
     @FXML
     private boolean running;
 
+    @FXML
+    private SplitPane ballotTabSplitPane;
     // @FXML
     // private Text
     //
@@ -473,8 +454,6 @@ public class GUIController {
     /** The code area. */
     private NewCodeArea codeArea;
 
-    /** The ballots change area */
-    private BoundedVarCodeArea ballotChange;
     /** The bounded var area. */
     private BoundedVarCodeArea boundedVarArea;
 
@@ -611,6 +590,12 @@ public class GUIController {
         final TreeItem<String> symbVarRoot = new TreeItem<String>();
         symbVarRoot.setExpanded(true);
         variableTreeView.setRoot(symbVarRoot);
+
+        // ballot modifier tab
+        ballotTabSplitPane.getItems().add(new EqualsCodeArea(codeArea));
+
+        ballotTabSplitPane.getItems().add(new BallotModifierCodeArea(codeArea));
+
         this.voterItems = new TreeItem<String>("Voters");
         this.candidateItems = new TreeItem<String>("Candidates");
         this.seatItems = new TreeItem<String>("Seats");

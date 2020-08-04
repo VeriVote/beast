@@ -313,6 +313,7 @@ public final class FactoryController implements Runnable {
     // }
 
     // Starts the factoryController, so it then starts the needed checker.
+    // TODO: this is just a threadpool, fix that
     @Override
     public void run() {
         outerLoop: for (int i = 0; i < results.size(); i++) {

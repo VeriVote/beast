@@ -53,6 +53,14 @@ public class ElectionDescription {
     /** The code. */
     private String code = "";
 
+
+    /** Function that decides whether two election results are equal */
+    private String equalsFunction = "";
+
+
+    /** Ballot modification: code that uses allows the changing of a ballot to another
+     * this will be used for margin calculation*/
+    private String ballotModifier = "";
     /** The container. */
     private ElectionTypeContainer container;
 
@@ -302,6 +310,7 @@ public class ElectionDescription {
         return lockedLineStart;
     }
 
+
     /**
      * Gets the locked line end.
      *
@@ -318,6 +327,22 @@ public class ElectionDescription {
      */
     public int getLockedBracePos() {
         return lockedBracePos;
+    }
+
+    public String getEqualsFunction() {
+        return equalsFunction;
+    }
+
+    public void setEqualsFunction(String equalsFunction) {
+        this.equalsFunction = equalsFunction;
+    }
+
+    public String getBallotModifier() {
+        return ballotModifier;
+    }
+
+    public void setBallotModifier(String ballotModifier) {
+        this.ballotModifier = ballotModifier;
     }
 
     /**

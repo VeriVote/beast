@@ -18,7 +18,7 @@ import edu.pse.beast.highlevel.javafx.MenuBarInterface;
  *
  * @author Lukas Stapelbroek
  */
-public final class BoundedVarCodeArea extends AutoCompletionCodeArea
+public class BoundedVarCodeArea extends AutoCompletionCodeArea
         implements MenuBarInterface {
 
     /** The Constant RESOURCE. */
