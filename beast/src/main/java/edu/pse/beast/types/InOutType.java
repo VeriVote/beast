@@ -353,7 +353,8 @@ public abstract class InOutType {
 
     /**
      * A human readable representation of this type.
-     *
+     * Also called a name.
+     * For example: "Single choice", "Approval" ...
      * @return the string
      */
     public abstract String otherToString();
