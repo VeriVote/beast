@@ -100,6 +100,7 @@ module edu.pse.beast {
     // TODO maybe extract the types into their own modules
     provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
             edu.pse.beast.types.cbmctypes.inputplugins.Preference,
+            edu.pse.beast.types.cbmctypes.inputplugins.PreferenceStack,
             edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice,
             edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack,
             edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
