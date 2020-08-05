@@ -13,7 +13,6 @@ import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.i;
 import static edu.pse.beast.toolbox.CCodeHelper.include;
 import static edu.pse.beast.toolbox.CCodeHelper.intVar;
-import static edu.pse.beast.toolbox.CCodeHelper.intVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.j;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
@@ -447,7 +446,7 @@ public class CBMCCodeGenerator {
         code.add(intVar(functionCode(MAIN))
                 + space() + CCodeHelper.OPENING_BRACES);
         addMarginCompMethod(code, electionDesc.getContainer().getInputType(),
-                electionDesc.getContainer().getOutputType(), origResultName);
+                electionDesc.getContainer().getOutputType(), origResultName, electionDesc);
         code.add(CCodeHelper.CLOSING_BRACES);
     }
 
@@ -465,10 +464,10 @@ public class CBMCCodeGenerator {
      */
     private void addMarginCompMethod(final CodeArrayListBeautifier codeList,
                                      final InputType inType, final OutputType outType,
-                                     final String origResultName) {
+                                     final String origResultName, ElectionDescription desc) {
         codeList.add(lineComment("Verify for input."));
         final String voteName = UnifiedNameContainer.getNewVotesName();
-        addMarginCompMethodInput(codeList, inType, voteName);
+        addMarginCompMethodInput(codeList, desc);
         codeList.add(lineComment("Verify for output."));
         addMarginCompMethodOutput(codeList, outType, voteName, origResultName);
     }
@@ -484,52 +483,8 @@ public class CBMCCodeGenerator {
      *            the vote name
      */
     private void addMarginCompMethodInput(final CodeArrayListBeautifier codeList,
-                                          final InputType inType,
-                                          final String voteName) {
-        codeList.add(intVarEqualsCode(TOTAL_DIFF)
-                + zero() + CCodeHelper.SEMICOLON);
-        codeList.add(intVarEqualsCode(POS_DIFF) + zero()
-                + CCodeHelper.SEMICOLON);
-        final String voteContainer =
-                inType.getStruct().getStructAccess() + space()
-                + voteName + CCodeHelper.SEMICOLON;
-        codeList.add(voteContainer);
-
-        // addInitialisedValue(voteName, inType,
-        //                     electionDesc.getContainer().getInputStruct(),
-        //                     inType.getMinimalValue(),
-        //                     inType.getMaximalValue());
-
-        // addConditionalValue(voteName, inType); // The votes had to be valid
-        //                                           beforehand
-
-        // List<String> tmploopVars =
-        //     addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(),
-        //                         new ArrayList<String>());
-
-        // code.add(inType.setVoteValue(voteName,
-        //                              electionDesc.getContainer()
-        //                                  .getNameContainer().getOrigVotesName(),
-        //                              tmploopVars));
-        // // Set the previous votes to the new votes.
-
-        // addNestedForrLoopBot(code, inType.getAmountOfDimensions());
-        final List<String> loopVars =
-                addNestedForLoopTop(codeList,
-                                    inType.getSizeOfDimensionsAsList(),
-                                    new ArrayList<String>());
-        inType.flipVote(voteName, UnifiedNameContainer.getOrigVotesName(),
-                        loopVars, codeList);
-
-        // addConditionalValue(voteName, inType);
-        // The votes have to be valid afterwards
-        addNestedForLoopBot(codeList, inType.getAmountOfDimensions());
-
-        // No more changes than margin allows
-        codeList.add(functionCode(ASSUME, leq(POS_DIFF, MARGIN))
-                    + CCodeHelper.SEMICOLON);
-        codeList.add(functionCode(ASSUME, eq(TOTAL_DIFF, zero()))
-                    + CCodeHelper.SEMICOLON);
+                                          ElectionDescription desc) {
+        codeList.addList(Arrays.asList(desc.getBallotModifier().split("\n")));
     }
 
     // /**
@@ -574,56 +529,14 @@ public class CBMCCodeGenerator {
                 + CCodeHelper.SEMICOLON;
         codeList.add(resultAssignment);
         final List<String> loopVars =
-                addNestedForLoopTop(codeList,
+                CCodeHelper.addNestedForLoopTop(codeList,
                                     outType.getSizeOfDimensionsAsList(),
                                     new ArrayList<String>());
         final String newResultAcc = outType.getFullVarAccess(resultName, loopVars);
         final String origResultAcc = outType.getFullVarAccess(origResultName, loopVars);
         codeList.add(functionCode(ASSERT, eq(newResultAcc, origResultAcc))
                     + CCodeHelper.SEMICOLON);
-        addNestedForLoopBot(codeList, loopVars.size());
-    }
-
-    /**
-     * TODO move to utility class.
-     *
-     * @param code
-     *            the code beautifier it should be added to
-     * @param dimensions
-     *            the size of each dimension,
-     * @param nameOfLoopVariables
-     *            an empty, new list. Every new loop variable will be appended
-     * @return the list
-     */
-    public static List<String> addNestedForLoopTop(final CodeArrayListBeautifier code,
-                                                   final List<String> dimensions,
-                                                   final List<String> nameOfLoopVariables) {
-        if (dimensions.size() > 0) {
-            String name = "loop_" + nameOfLoopVariables.size();
-            name = code.getNotUsedVarName(name);
-            nameOfLoopVariables.add(name);
-            code.add(forLoopHeaderCode(name, lt(), dimensions.get(0)));
-            code.addTab();
-            return addNestedForLoopTop(code,
-                                       dimensions.subList(1, dimensions.size()),
-                                       nameOfLoopVariables);
-        }
-        return nameOfLoopVariables;
-    }
-
-    /**
-     * TODO move to utility class.
-     *
-     * @param code
-     *            the code
-     * @param dimensions
-     *            the dimensions
-     */
-    public static void addNestedForLoopBot(final CodeArrayListBeautifier code,
-                                           final int dimensions) {
-        for (int i = 0; i < dimensions; i++) {
-            code.add(CCodeHelper.CLOSING_BRACES);
-        }
+        CCodeHelper.addNestedForLoopBot(codeList, loopVars.size());
     }
 
     /**
@@ -1601,7 +1514,7 @@ public class CBMCCodeGenerator {
                 + valueName + CCodeHelper.SEMICOLON;
         code.add(declaration);
         final List<String> loopVariables =
-                addNestedForLoopTop(this.code,
+                CCodeHelper.addNestedForLoopTop(this.code,
                                     inOutType.getSizeOfDimensionsAsList(),
                                     new ArrayList<String>());
         String assignment =
@@ -1616,7 +1529,7 @@ public class CBMCCodeGenerator {
                                                parenthesize(leq(assignment, maxValue))))
                 + CCodeHelper.SEMICOLON);
         inOutType.addExtraCodeAtEndOfCodeInit(code, valueName, loopVariables);
-        addNestedForLoopBot(this.code, inOutType.getAmountOfDimensions());
+        CCodeHelper.addNestedForLoopBot(this.code, inOutType.getAmountOfDimensions());
     }
 
     /**

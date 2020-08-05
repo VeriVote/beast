@@ -321,6 +321,9 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     /** The elec description. */
     private ElectionDescription elecDescription;
 
+    private EqualsCodeArea equalsCodeArea;
+
+    private BallotModifierCodeArea ballotModifierCodeArea;
     /** The locked line start. */
     private int lockedLineStart;
 
@@ -441,6 +444,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             event.consume();
         }
     }
+
 
     /**
      * Delete.
@@ -725,9 +729,27 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             lockedLineEnd = lockedLineStart + declarationString.length();
             this.replaceText(declarationString + "\n\n}");
             lockedBracePos = this.getText().length() - 1;
+
+            final String equalFunc = CCodeHelper.generateSimpleEqualsFunction(newDescription.getContainer());
+            if (equalsCodeArea == null) {
+                elecDescription.setEqualsFunction(equalFunc);
+
+            }
+            else {
+                equalsCodeArea.replaceText(equalFunc);
+            }
+            final String ballotMod = CCodeHelper.generateSimpleBallotModifier(newDescription.getContainer());
+            if (ballotModifierCodeArea == null) {
+                elecDescription.setBallotModifier(ballotMod);
+            }
+            else {
+                ballotModifierCodeArea.replaceText(ballotMod);
+            }
             this.elecDescription.setNotNew();
         } else {
             this.replaceText(newDescription.getCodeAsString());
+            equalsCodeArea.replaceText(newDescription.getEqualsFunction());
+            ballotModifierCodeArea.replaceText(newDescription.getBallotModifier());
             lockedLineStart = newDescription.getLockedLineStart();
             lockedLineEnd = newDescription.getLockedLineEnd();
             lockedBracePos = newDescription.getLockedBracePos();
@@ -892,5 +914,25 @@ public final class NewCodeArea extends AutoCompletionCodeArea
      */
     public KeyCombination getUndoCombination() {
         return undoCombination;
+    }
+
+    public EqualsCodeArea getEqualsCodeArea() {
+        return equalsCodeArea;
+    }
+
+    public void setEqualsCodeArea(EqualsCodeArea equalsCodeArea) {
+        this.equalsCodeArea = equalsCodeArea;
+    }
+
+    public BallotModifierCodeArea getBallotModifierCodeArea() {
+        return ballotModifierCodeArea;
+    }
+
+    public void setBallotModifierCodeArea(BallotModifierCodeArea ballotModifierCodeArea) {
+        this.ballotModifierCodeArea = ballotModifierCodeArea;
+    }
+
+    public ElectionDescription getShallowElectionDescription() {
+        return elecDescription;
     }
 }

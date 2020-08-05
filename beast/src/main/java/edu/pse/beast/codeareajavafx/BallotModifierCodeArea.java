@@ -5,10 +5,12 @@ public class BallotModifierCodeArea extends BoundedVarCodeArea{
     public BallotModifierCodeArea(NewCodeArea parent) {
         super();
         mainCodeArea = parent;
+        parent.setBallotModifierCodeArea(this);
+        replaceText(parent.getElectionDescription().getBallotModifier());
         this.richChanges()
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
                 .subscribe(change -> {
-                    parent.getElectionDescription().setBallotModifier(this.getText());
+                    parent.getShallowElectionDescription().setBallotModifier(this.getText());
                 });
     }
 }

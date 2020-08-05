@@ -7,10 +7,13 @@ public class EqualsCodeArea extends BoundedVarCodeArea {
     public EqualsCodeArea(NewCodeArea parent) {
         super();
         mainCodeArea = parent;
+        parent.setEqualsCodeArea(this);
+
+        replaceText(parent.getElectionDescription().getEqualsFunction());
         this.richChanges()
                 .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
                 .subscribe(change -> {
-                    parent.getElectionDescription().setEqualsFunction(this.getText());
+                    parent.getShallowElectionDescription().setEqualsFunction(this.getText());
                 });
     }
 }

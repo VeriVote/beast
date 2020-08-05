@@ -209,6 +209,11 @@ public final class CCodeHelper {
     private static final String AMOUNT_VOTES = "amountVotes";
     /** The "_exp" string. */
     private static final String EXP = "_exp";
+    private static final String TOTAL_DIFF = "total_diff";
+    private static final String POS_DIFF = "pos_diff";
+    private static final String ASSUME = "assume";
+    private static final String MARGIN = "MARGIN";
+    private static final String NEWLINE = "\n";
 
     // String that only allows string in valid C format (they can still contain
     // identifiers)
@@ -1271,6 +1276,52 @@ public final class CCodeHelper {
         return decl;
     }
 
+    /** Generates a stub equal method
+     *
+      * @param container container for in and output type of the election for that the stub is to be created
+     * @return String that contains the method
+     */
+    public static String generateSimpleEqualsFunction(final ElectionTypeContainer container) {
+        String func = INT + BLANK + "equals" + "(" + RESULT + BLANK + "res1" + COMMA + RESULT + BLANK + "res2" + PAREN_R_BRACE_L;
+        func += "\n return 0; \n}";
+        func = func.replace(RESULT, container.getOutputType().getDataTypeAndSign() + container.getOutputType().getDimensionDescriptor(true));
+        return func;
+    }
+
+    public static String generateSimpleBallotModifier(final ElectionTypeContainer container) {
+        String mod = "//" + container.getInputType().getDataTypeAndSign() + container.getInputType().getDimensionDescriptor(true);
+         mod += (intVarEqualsCode(TOTAL_DIFF)
+                + zero() + CCodeHelper.SEMICOLON) + NEWLINE;
+        mod += (intVarEqualsCode(POS_DIFF) + zero()
+                + CCodeHelper.SEMICOLON) + NEWLINE;
+        String voteName = UnifiedNameContainer.getNewVotesName();
+        final String voteContainer =
+                container.getInputType().getStruct().getStructAccess() + space()
+                        + voteName + CCodeHelper.SEMICOLON + NEWLINE;
+        mod += (voteContainer) + NEWLINE;
+
+        CodeArrayListBeautifier codeList = new CodeArrayListBeautifier();
+        final List<String> loopVars =
+                addNestedForLoopTop(codeList,
+                        container.getInputType().getSizeOfDimensionsAsList(),
+                        new ArrayList<String>());
+        container.getInputType().flipVote(voteName, UnifiedNameContainer.getOrigVotesName(),
+                loopVars, codeList);
+
+        // addConditionalValue(voteName, inType);
+        // The votes have to be valid afterwards
+        addNestedForLoopBot(codeList, container.getInputType().getAmountOfDimensions());
+
+        for (String line : codeList.getCodeArrayList()) {
+            mod += line + NEWLINE;
+        }
+        // No more changes than margin allows
+        mod += (functionCode(ASSUME, leq(POS_DIFF, MARGIN))
+                + CCodeHelper.SEMICOLON) + NEWLINE;
+        mod += (functionCode(ASSUME, eq(TOTAL_DIFF, zero()))
+                + CCodeHelper.SEMICOLON) + NEWLINE;
+        return mod;
+    }
     /**
      * Generates the declaration String for a voting function depending on its
      * input and result type.
@@ -1377,5 +1428,47 @@ public final class CCodeHelper {
         System.out.println("The given symbolic variable name"
                             + " is not valid in C.");
         return false;
+    }
+
+    /**
+     *
+     *
+     * @param code
+     *            the code beautifier it should be added to
+     * @param dimensions
+     *            the size of each dimension,
+     * @param nameOfLoopVariables
+     *            an empty, new list. Every new loop variable will be appended
+     * @return the list
+     */
+    public static List<String> addNestedForLoopTop(final CodeArrayListBeautifier code,
+                                                   final List<String> dimensions,
+                                                   final List<String> nameOfLoopVariables) {
+        if (dimensions.size() > 0) {
+            String name = "loop_" + nameOfLoopVariables.size();
+            name = code.getNotUsedVarName(name);
+            nameOfLoopVariables.add(name);
+            code.add(forLoopHeaderCode(name, lt(), dimensions.get(0)));
+            code.addTab();
+            return addNestedForLoopTop(code,
+                                       dimensions.subList(1, dimensions.size()),
+                                       nameOfLoopVariables);
+        }
+        return nameOfLoopVariables;
+    }
+
+    /**
+     *
+     *
+     * @param code
+     *            the code
+     * @param dimensions
+     *            the dimensions
+     */
+    public static void addNestedForLoopBot(final CodeArrayListBeautifier code,
+                                           final int dimensions) {
+        for (int i = 0; i < dimensions; i++) {
+            code.add(CLOSING_BRACES);
+        }
     }
 }
