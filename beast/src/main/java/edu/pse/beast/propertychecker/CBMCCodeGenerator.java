@@ -384,7 +384,7 @@ public class CBMCCodeGenerator {
                 uintVarEqualsCode(ORIG_VOTES_SIZE) + sizeOfVote + CCodeHelper.SEMICOLON;
         code.add(origVotesSize);
         code.add(origVotes);
-        addMarginMainCheck(margin, origResult);
+        addMarginMainCheck(margin, origResult, electionDesc);
     }
 
     /**
@@ -429,7 +429,7 @@ public class CBMCCodeGenerator {
      *            the orig data
      */
     private void addMarginMainCheck(final int marginVal,
-                                    final ElectionSimulationData origData) {
+                                    final ElectionSimulationData origData, ElectionDescription desc) {
         // We add the margin which will get computed by the model checker.
         code.add(defineIfNonDef(MARGIN, marginVal));
         // We also add the original result, which is calculated by compiling the
@@ -441,6 +441,10 @@ public class CBMCCodeGenerator {
         // Add the verify method:
         // Taken and adjusted from the paper:
         // https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
+
+        // add equals function from election description
+        code.add("// function to compare two election results and tell if they are different");
+        code.addAll(Arrays.asList(desc.getEqualsFunction().split("\n")));
 
         // Add the main method.
         code.add(intVar(functionCode(MAIN))
@@ -469,7 +473,7 @@ public class CBMCCodeGenerator {
         final String voteName = UnifiedNameContainer.getNewVotesName();
         addMarginCompMethodInput(codeList, desc);
         codeList.add(lineComment("Verify for output."));
-        addMarginCompMethodOutput(codeList, outType, voteName, origResultName);
+        addMarginCompMethodOutput(codeList, origResultName);
     }
 
     /**
@@ -477,10 +481,7 @@ public class CBMCCodeGenerator {
      *
      * @param codeList
      *            the code list
-     * @param inType
-     *            the in type
-     * @param voteName
-     *            the vote name
+
      */
     private void addMarginCompMethodInput(final CodeArrayListBeautifier codeList,
                                           ElectionDescription desc) {
@@ -507,36 +508,16 @@ public class CBMCCodeGenerator {
      *
      * @param codeList
      *            the code list
-     * @param outType
-     *            the out type
-     * @param newVotesName
-     *            the new votes name
+
      * @param origResultName
      *            the orig result name
      */
     private void addMarginCompMethodOutput(final CodeArrayListBeautifier codeList,
-                                           final OutputType outType,
-                                           final String newVotesName,
                                            final String origResultName) {
         final String resultName = UnifiedNameContainer.getNewResultName();
-        final String resultContainer =
-                outType.getStruct().getStructAccess()
-                + space() + resultName;
-        final String resultAssignment =
-                varAssignCode(resultContainer,
-                              functionCode(UnifiedNameContainer.getVotingMethod(),
-                                           ORIG_VOTES_SIZE, newVotesName))
-                + CCodeHelper.SEMICOLON;
-        codeList.add(resultAssignment);
-        final List<String> loopVars =
-                CCodeHelper.addNestedForLoopTop(codeList,
-                                    outType.getSizeOfDimensionsAsList(),
-                                    new ArrayList<String>());
-        final String newResultAcc = outType.getFullVarAccess(resultName, loopVars);
-        final String origResultAcc = outType.getFullVarAccess(origResultName, loopVars);
-        codeList.add(functionCode(ASSERT, eq(newResultAcc, origResultAcc))
+
+        codeList.add(functionCode(ASSERT, functionCode("equals", resultName, origResultName))
                     + CCodeHelper.SEMICOLON);
-        CCodeHelper.addNestedForLoopBot(codeList, loopVars.size());
     }
 
     /**

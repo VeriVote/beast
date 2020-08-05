@@ -1,1 +1,76 @@
-{"name":"Margin","code":"unsigned int[C] voting(unsigned int amountVotes, unsigned int votes[amountVotes]) {\n    unsigned int mandates[C];\n    int divisor[C];\n    for (int i \u003d 0; i \u003c C; i++) {\n        mandates[i] \u003d 0;\n        divisor[i] \u003d 1;\n    }\n\n    int elected \u003d 0;\n\n    for (int j \u003d 0; j \u003c S; j++) {\n        for (int i \u003d 0; i \u003c C; i++) {\n            if (divisor[i] * votes[elected] \u003c divisor[elected] * votes[i]) {\n                elected \u003d i;\n            }\n        }\n        mandates[elected]++;\n        divisor[elected]++;\n    }\n return mandates;\n}","container":{"inType":{"type":"SingleChoiceStack","properties":{"unsigned":true,"dataType":"INT","dimensions":1,"sizeOfDimensions":["C"]}},"outType":{"type":"ParliamentStack","properties":{"unsigned":true,"dataType":"INT","dimensions":1,"sizeOfDimensions":["C"]}},"inputStruct":{"inOutType":{"type":"SingleChoiceStack","properties":{"unsigned":true,"dataType":"INT","dimensions":1,"sizeOfDimensions":["C"]}},"dataType":"INT","dimensions":1,"sizeOfDimensions":["C"],"unsigned":true,"structName":"auto_intC"},"outputStruct":{"inOutType":{"type":"SingleChoiceStack","properties":{"unsigned":true,"dataType":"INT","dimensions":1,"sizeOfDimensions":["C"]}},"dataType":"INT","dimensions":1,"sizeOfDimensions":["C"],"unsigned":true,"structName":"auto_intC"},"nameContainer":{}},"lockedLineStart":0,"lockedLineEnd":83,"lockedBracePos":529,"isNew":false}
+{
+  "name": "Margin",
+  "code": "unsigned int[C] voting(unsigned int amountVotes, unsigned int votes[amountVotes]) {\n    unsigned int mandates[C];\n    int divisor[C];\n    for (int i \u003d 0; i \u003c C; i++) {\n        mandates[i] \u003d 0;\n        divisor[i] \u003d 1;\n    }\n\n    int elected \u003d 0;\n\n    for (int j \u003d 0; j \u003c S; j++) {\n        for (int i \u003d 0; i \u003c C; i++) {\n            if (divisor[i] * votes[elected] \u003c divisor[elected] * votes[i]) {\n                elected \u003d i;\n            }\n        }\n        mandates[elected]++;\n        divisor[elected]++;\n    }\n return mandates;\n}",
+  "equalsFunction": "",
+  "ballotModifier": "",
+
+  "container": {
+    "inType": {
+      "type": "SingleChoiceStack",
+      "properties": {
+        "unsigned": true,
+        "dataType": "INT",
+        "dimensions": 1,
+        "sizeOfDimensions": [
+          "C"
+        ]
+      }
+    },
+    "outType": {
+      "type": "ParliamentStack",
+      "properties": {
+        "unsigned": true,
+        "dataType": "INT",
+        "dimensions": 1,
+        "sizeOfDimensions": [
+          "C"
+        ]
+      }
+    },
+    "inputStruct": {
+      "inOutType": {
+        "type": "SingleChoiceStack",
+        "properties": {
+          "unsigned": true,
+          "dataType": "INT",
+          "dimensions": 1,
+          "sizeOfDimensions": [
+            "C"
+          ]
+        }
+      },
+      "dataType": "INT",
+      "dimensions": 1,
+      "sizeOfDimensions": [
+        "C"
+      ],
+      "unsigned": true,
+      "structName": "auto_intC"
+    },
+    "outputStruct": {
+      "inOutType": {
+        "type": "SingleChoiceStack",
+        "properties": {
+          "unsigned": true,
+          "dataType": "INT",
+          "dimensions": 1,
+          "sizeOfDimensions": [
+            "C"
+          ]
+        }
+      },
+      "dataType": "INT",
+      "dimensions": 1,
+      "sizeOfDimensions": [
+        "C"
+      ],
+      "unsigned": true,
+      "structName": "auto_intC"
+    },
+    "nameContainer": {}
+  },
+  "lockedLineStart": 0,
+  "lockedLineEnd": 83,
+  "lockedBracePos": 529,
+  "isNew": false
+}
