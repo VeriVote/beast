@@ -1282,14 +1282,14 @@ public final class CCodeHelper {
      * @return String that contains the method
      */
     public static String generateSimpleEqualsFunction(final ElectionTypeContainer container) {
-        String func = INT + BLANK + "equals" + "(" + RESULT + BLANK + "res1" + COMMA + RESULT + BLANK + "res2" + PAREN_R_BRACE_L;
+        String func = INT + BLANK + "equals" + "(" + STRUCT + BLANK + AUTO + UNDERSCORE + RESULT + BLANK + "res1" + COMMA +  STRUCT + BLANK + AUTO + UNDERSCORE + RESULT + BLANK + "res2" + PAREN_R_BRACE_L;
         func += "\n return 0; \n}";
-        func = func.replace(RESULT, container.getOutputType().getDataTypeAndSign() + container.getOutputType().getDimensionDescriptor(true));
+        func = func.replace(RESULT, container.getOutputType().getDataType().toString());
         return func;
     }
 
     public static String generateSimpleBallotModifier(final ElectionTypeContainer container) {
-        String mod = "//" + container.getInputType().getDataTypeAndSign() + container.getInputType().getDimensionDescriptor(true);
+        String mod = "//" + container.getInputType().getDataTypeAndSign() + container.getInputType().getDimensionDescriptor(true) + NEWLINE;
          mod += (intVarEqualsCode(TOTAL_DIFF)
                 + zero() + CCodeHelper.SEMICOLON) + NEWLINE;
         mod += (intVarEqualsCode(POS_DIFF) + zero()

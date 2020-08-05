@@ -1,41 +1,5 @@
 package edu.pse.beast.propertychecker;
 
-import static edu.pse.beast.toolbox.CCodeHelper.arr;
-import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
-import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
-import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
-import static edu.pse.beast.toolbox.CCodeHelper.define;
-import static edu.pse.beast.toolbox.CCodeHelper.defineIfNonDef;
-import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
-import static edu.pse.beast.toolbox.CCodeHelper.eq;
-import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
-import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
-import static edu.pse.beast.toolbox.CCodeHelper.i;
-import static edu.pse.beast.toolbox.CCodeHelper.include;
-import static edu.pse.beast.toolbox.CCodeHelper.intVar;
-import static edu.pse.beast.toolbox.CCodeHelper.j;
-import static edu.pse.beast.toolbox.CCodeHelper.leq;
-import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
-import static edu.pse.beast.toolbox.CCodeHelper.lineComment;
-import static edu.pse.beast.toolbox.CCodeHelper.lt;
-import static edu.pse.beast.toolbox.CCodeHelper.neq;
-import static edu.pse.beast.toolbox.CCodeHelper.one;
-import static edu.pse.beast.toolbox.CCodeHelper.parenthesize;
-import static edu.pse.beast.toolbox.CCodeHelper.pointer;
-import static edu.pse.beast.toolbox.CCodeHelper.space;
-import static edu.pse.beast.toolbox.CCodeHelper.spaces;
-import static edu.pse.beast.toolbox.CCodeHelper.two;
-import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
-import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
-import static edu.pse.beast.toolbox.CCodeHelper.varAddCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varDivideCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varMultiplyCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varSubtractCode;
-import static edu.pse.beast.toolbox.CCodeHelper.x;
-import static edu.pse.beast.toolbox.CCodeHelper.y;
-import static edu.pse.beast.toolbox.CCodeHelper.zero;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +28,8 @@ import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.OutputType;
+
+import static edu.pse.beast.toolbox.CCodeHelper.*;
 
 /**
  * This class creates the .c file which will be checked with CBMC. It generates
@@ -370,7 +336,7 @@ public class CBMCCodeGenerator {
         // Add the code which defines the votes
         final String origVotes =
                 varAssignCode(electionDesc.getContainer().getInputStruct().getStructAccess()
-                                + UnifiedNameContainer.getOrigVotesName(),
+                               + " " + UnifiedNameContainer.getOrigVotesName(),
                               getVotingResultCode((CBMCResultValueWrapper)
                                                       votingData.getValues()))
                 + CCodeHelper.SEMICOLON;
@@ -473,7 +439,7 @@ public class CBMCCodeGenerator {
         final String voteName = UnifiedNameContainer.getNewVotesName();
         addMarginCompMethodInput(codeList, desc);
         codeList.add(lineComment("Verify for output."));
-        addMarginCompMethodOutput(codeList, origResultName);
+        addMarginCompMethodOutput(codeList, origResultName, desc);
     }
 
     /**
@@ -513,9 +479,10 @@ public class CBMCCodeGenerator {
      *            the orig result name
      */
     private void addMarginCompMethodOutput(final CodeArrayListBeautifier codeList,
-                                           final String origResultName) {
+                                           final String origResultName, ElectionDescription desc) {
         final String resultName = UnifiedNameContainer.getNewResultName();
-
+        code.add(varAssignCode(desc.getContainer().getOutputStruct().getStructAccess() + " " + resultName, functionCode(UnifiedNameContainer.getVotingMethod(), UnifiedNameContainer.getVoter(), UnifiedNameContainer.getNewVotesName()))
+                + SEMICOLON);
         codeList.add(functionCode(ASSERT, functionCode("equals", resultName, origResultName))
                     + CCodeHelper.SEMICOLON);
     }

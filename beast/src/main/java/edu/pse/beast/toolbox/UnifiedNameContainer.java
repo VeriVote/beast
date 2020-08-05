@@ -66,6 +66,7 @@ public final class UnifiedNameContainer {
         map.put(CANDIDATE, "C");
         map.put(VOTER, "V");
         map.put(SEATS, "S");
+
         map.put(ELECT, ELECT);
 
         map.put(VOTING_METHOD, "voting");
