@@ -17,7 +17,6 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
-
 /**
  * The Class InputType.
  *
@@ -107,6 +106,7 @@ public abstract class InputType extends InOutType {
 
     /**
      * Vets a value to determine if it is legal for the input type, or not.
+     * Will always return a legal value for the given input type.
      *
      * @param container
      *            the type container
@@ -117,8 +117,11 @@ public abstract class InputType extends InOutType {
      * @param positionInRow
      *            the position in row
      * @param newValue
-     *            the new value
+     *            The value to be checked. If it is permissible this will equal the return value
      * @return the new value
+     */
+    /*
+
      */
     public abstract String vetValue(ElectionTypeContainer container,
                                     List<NEWRowOfValues> rows,
@@ -205,29 +208,30 @@ public abstract class InputType extends InOutType {
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     /**
-     * Vet amount candidates.
+     * Vets amount candidates. Will return a correct number of candidates.
      *
      * @param amountCandidates
-     *            the amount candidates
-     * @return the int
+     *            the amount candidates proposed
+     * @return A correct candidate number, if amountCandidates is allowed, it will be returned
      */
     public abstract int vetAmountCandidates(int amountCandidates);
 
     /**
-     * Vet amount voters.
+     * Vets amount voters. Will return a correct number of voters.
+     * Negative values will most likely be considered wrong and therefore 1 will be returned.
      *
      * @param amountVoters
      *            the amount voters
-     * @return the int
+     * @return A correct number of voters, if amountVoters is allowed, it will be returned.
      */
     public abstract int vetAmountVoters(int amountVoters);
 
     /**
-     * Vet amount seats.
-     *
+     * Vets amount seats. Will return a correct number of seats.
+     * Negative values will most likely be considered wrong in all cases and therefore 1 will be returned.
      * @param amountSeats
      *            the amount seats
-     * @return the int
+     * @return A correct number of seats, if amountSeats is allowed, it will be returned.
      */
     public abstract int vetAmountSeats(int amountSeats);
 
