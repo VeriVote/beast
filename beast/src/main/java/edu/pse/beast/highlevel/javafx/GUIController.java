@@ -5,15 +5,14 @@ import java.awt.Point;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.net.URL;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.pse.beast.codeareajavafx.*;
+import edu.pse.beast.highlevel.MainApplicationClass;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,7 +21,10 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -31,8 +33,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -171,6 +176,14 @@ public class GUIController {
     /** The Constant X_MARK_BUTTON. */
     private static final String X_MARK_BUTTON = "toolbar/x-mark.png";
 
+    /** The Constant RESOURCE. */
+    private static final String RESOURCE =
+            "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+    /** The Constant RESOURCE_BUNDLE. */
+    private static final String RESOURCE_BUNDLE =
+            // "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+            "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+
     /** The focused main tab. */
     private MenuBarInterface focusedMainTab;
 
@@ -281,6 +294,9 @@ public class GUIController {
     @FXML
     private Button loadPropList;
 
+    @FXML
+    private Button rlaButton;
+
     /** The delete items checkbox. */
     @FXML
     private CheckBox deleteItemsCheckbox;
@@ -388,6 +404,8 @@ public class GUIController {
     @FXML
     private TextField inputSeatField;
 
+    @FXML
+    private TextField inputStacksField;
     /** The input grid pane. */
     @FXML
     private GridPane inputGridPane;
@@ -483,6 +501,8 @@ public class GUIController {
 
     /** The symb var to remove. */
     private TreeItem<String> symbVarToRemove;
+
+    private static final String RISKLIMITINGAUDIT_WINDOW = "/src/main/resources/edu/pse/beast/highlevel/javafx/RLA.fxml";
 
     // /** The property to remove. */
     // private TreeItem<CustomTreeItem> propertyToRemove; FIXME
@@ -608,7 +628,7 @@ public class GUIController {
                 null);
         variableTreeView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue,
-                        newValue) -> setSymbVarToRemove(newValue));
+                              newValue) -> setSymbVarToRemove(newValue));
         codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
         mainTabPane.getSelectionModel().select(codePane);
@@ -744,6 +764,13 @@ public class GUIController {
                 addInputNumberEnforcer(inputSeatField, newValue);
             }
         });
+        inputStacksField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(final ObservableValue<? extends String> observable,
+                                final String oldValue, final String newValue) {
+                addInputNumberEnforcer(inputStacksField, newValue);
+            }
+        });
     }
 
     // Top Panels
@@ -775,6 +802,11 @@ public class GUIController {
      */
     @FXML
     public void inputPaneClicked(final Event event) {
+    }
+
+
+    public TextField getInputStacksField() {
+        return inputStacksField;
     }
 
     /**
@@ -1298,7 +1330,7 @@ public class GUIController {
                         InputType.getInputTypes(),
                         "output Type:",
                         OutputType.getOutputTypes()
-                        );
+                );
         if (triplet != null) {
             codeArea.setNewElectionDescription(
                     new ElectionDescription(triplet.first(), triplet.second(),
@@ -1439,7 +1471,7 @@ public class GUIController {
                 new TreeItem<CustomTreeItem>();
         final ParentTreeItem parentItem =
                 new ParentTreeItem(prop, false,
-                                   treeItem, false);
+                        treeItem, false);
         treeItems.add(treeItem);
         properties.add(parentItem);
         root.getChildren().add(treeItem);
@@ -1461,7 +1493,7 @@ public class GUIController {
             }
             if (!breakOut) {
                 parentItem.addChild(values,
-                                    Integer.parseInt(stringIndex));
+                        Integer.parseInt(stringIndex));
             }
         }
         if (parentItem.getCounter() != ITEM_COUNT) {
@@ -1516,8 +1548,8 @@ public class GUIController {
                     } else {
                         final PreAndPostConditionsDescription prop =
                                 booleanExpEditor
-                                .open(new File(currentDir.getPath() + SLASH
-                                        + property[0]));
+                                        .open(new File(currentDir.getPath() + SLASH
+                                                + property[0]));
                         final String[] children = currentDir
                                 .list(new FilenameFilter() {
                                     @Override
@@ -1531,7 +1563,7 @@ public class GUIController {
                             errorTextArea.setText(errorTextInvalidPropList(currentDir));
                         } else {
                             breakOut = addPropertyListItem(currentDir,
-                                                           prop, children);
+                                    prop, children);
                         }
                     }
                 }
@@ -1691,7 +1723,7 @@ public class GUIController {
                     new File(folder.getPath() + SLASH + DESCR_ELEC));
             // Save the property list
             savePropertyListFromFile(new File(folder.getPath() + SLASH
-                    + PROP_LIST_STRING + SaverLoader.PROP_LIST_FILE_ENDING),
+                            + PROP_LIST_STRING + SaverLoader.PROP_LIST_FILE_ENDING),
                     false, true);
             // Save election input
             electionSimulation.saveAs(
@@ -1976,6 +2008,37 @@ public class GUIController {
     }
 
     /**
+     *  Opens a window for conducting a risk limiting audit
+     */
+    @FXML
+    public void conductRiskLimitingAudit(final ActionEvent event) {
+        final Locale locale = Locale.ENGLISH;
+        Stage stage = new Stage();
+
+        try {
+            final RLAController controller = new RLAController(getResultPresenter().getResult());
+            final FXMLLoader loader = new FXMLLoader(
+                    new URL("file:///" + SuperFolderFinder.getSuperFolder() + RISKLIMITINGAUDIT_WINDOW),
+                    ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
+            loader.setController(controller);
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root, 450, 450);
+            stage.setScene(scene);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(final WindowEvent t) {
+                    Platform.exit();
+                    System.exit(0);
+                }
+            });
+            stage.show();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    /**
      * Adds the number enforcer.
      *
      * @param field
@@ -2063,10 +2126,10 @@ public class GUIController {
         final int marginSeats = electionSimulation.getNumSeats();
         final ElectionCheckParameter param =
                 new ElectionCheckParameter(voter, cand,
-                                           seat, marginVoters,
-                                           marginCandidates,
-                                           marginSeats, time,
-                                           numberProcesses, argument);
+                        seat, marginVoters,
+                        marginCandidates,
+                        marginSeats, time,
+                        numberProcesses, argument);
         return param;
     }
 
@@ -2394,6 +2457,7 @@ public class GUIController {
         if (vettedVoters != inputSeatField.getText()) {
             inputSeatField.setText(vettedSeats);
         }
+        final String vettedStacks = electionSimulation.setAndVetStacksNumber(inputStacksField.getText());
     }
 
     /**
@@ -2466,7 +2530,7 @@ public class GUIController {
             propNameButtonClicked(null); // Try to save the text the user wrote
         }
         booleanExpEditor.setCurrentPropertyDescription(propertyItem,
-                                                       bringToFront);
+                bringToFront);
         propNameField.setText(propertyItem.getPreAndPostProperties().getName());
         resultNameField
                 .setText(propertyItem.getPreAndPostProperties().getName());
@@ -2515,7 +2579,7 @@ public class GUIController {
         stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
         final ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(buttonType,
-                                                       ButtonType.CANCEL);
+                ButtonType.CANCEL);
         final GridPane grid = new GridPane();
         grid.setHgap(GAP_SIZE);
         grid.setVgap(GAP_SIZE);
@@ -2543,7 +2607,7 @@ public class GUIController {
                 final Tuple3<String, InputType, OutputType> toReturn =
                         new Tuple3<String, InputType, OutputType>(
                                 newName, inputType.getValue(), outputType.getValue()
-                                );
+                        );
                 return toReturn;
             } else {
                 setErrorText("File name not valid, try again.");
@@ -2690,8 +2754,8 @@ public class GUIController {
     public void setEligableTypes(final List<ResultPresentationType> eligableTypes) {
         displayFormat.getItems().clear();
         for (Iterator<ResultPresentationType> iterator =
-                    eligableTypes.iterator();
-                iterator.hasNext();) {
+             eligableTypes.iterator();
+             iterator.hasNext();) {
             final ResultPresentationType type =
                     (ResultPresentationType) iterator.next();
             displayFormat.getItems().add(type.getMenuItem());
@@ -2720,10 +2784,10 @@ public class GUIController {
         final ButtonType buttonTypeSave = new ButtonType("Save");
         final ButtonType buttonTypeSaveAs = new ButtonType("Save as");
         final ButtonType buttonTypeCancel = new ButtonType("Cancel",
-                                                           ButtonData.CANCEL_CLOSE);
+                ButtonData.CANCEL_CLOSE);
 
         alert.getButtonTypes().setAll(buttonTypeSave, buttonTypeSaveAs,
-                                      buttonTypeCancel);
+                buttonTypeCancel);
         final Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeSave) {
             caller.save();
@@ -2754,4 +2818,10 @@ public class GUIController {
     public void setPreviousState(final Result result) {
         result.getPropertyDesctiption();
     }
+
+    public Button getRlaButton() {
+        return rlaButton;
+    }
+
+
 }

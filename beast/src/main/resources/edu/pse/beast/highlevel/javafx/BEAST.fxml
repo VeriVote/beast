@@ -487,6 +487,8 @@
                                                 <TextField fx:id="inputCandidateField" maxWidth="50.0" text="0" />
                                                 <Label text="Seats" />
                                                 <TextField fx:id="inputSeatField" maxWidth="50.0" text="0" />
+                                                <Label text="Stacks" />
+                                                <TextField fx:id="inputStacksField" maxWidth="50.0" text="0" />
                                                 <Pane HBox.hgrow="ALWAYS" />
                                                 <Button mnemonicParsing="false" onAction="#resetInput" text="%key.reset" />
                                             </items>
@@ -523,6 +525,7 @@
                                                 <ToolBar style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                                                   <items>
                                                       <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format" />
+                                                      <Button fx:id="rlaButton" text="Risk Limiting Audit" disable="false" onAction="#conductRiskLimitingAudit"/>
                                                   </items>
                                                 </ToolBar>
                                              </left>

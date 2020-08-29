@@ -109,6 +109,11 @@ public final class SingleChoice extends CBMCInputType {
     }
 
     @Override
+    public int vetAmountStacks(int amountStacks) {
+        return 0;
+    }
+
+    @Override
     public String[] getVotePoints(final String[][] votes,
                                   final int amountCandidates,
                                   final int amountVoters) {
@@ -167,7 +172,7 @@ public final class SingleChoice extends CBMCInputType {
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF,
-                              eq(arrAccess(arr(), i()), CANDIDATE))
+                eq(arrAccess(arr(), i()), CANDIDATE))
                 + space() + plusPlus(SUM)
                 + CCodeHelper.SEMICOLON);
     }
@@ -198,7 +203,7 @@ public final class SingleChoice extends CBMCInputType {
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
         return GUIController.getController().getElectionSimulation()
-                    .getNumVoters();
+                .getNumVoters();
     }
 
     @Override

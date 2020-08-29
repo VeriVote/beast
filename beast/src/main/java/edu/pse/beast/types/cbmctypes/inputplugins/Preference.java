@@ -125,13 +125,18 @@ public final class Preference extends CBMCInputType {
         code.add(functionCode(CCodeHelper.IF, neq(LOOP_R_1, LOOP_R_2))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
-                              neq(dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_1),
-                                  dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_2))
-                ) + CCodeHelper.SEMICOLON);
+                neq(dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_1),
+                        dotArrStructAccess(voteName, LOOP_R_0, LOOP_R_2))
+        ) + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add(CCodeHelper.CLOSING_BRACES);
+    }
+
+    @Override
+    public int vetAmountStacks(int amountStacks) {
+        return 0;
     }
 
     @Override
@@ -208,16 +213,16 @@ public final class Preference extends CBMCInputType {
                                             final List<String> loopVariables) {
         final String ownLoopVar = code.getNotUsedVarName("j_prime");
         final String loopHead = forLoopHeaderCode(ownLoopVar, lt(),
-                                                  loopVariables.get(1));
+                loopVariables.get(1));
         code.add(loopHead);
         code.add(functionCode(
-                    CBMCCodeGenerator.ASSUME,
-                    neq(dotStructAccess(valueName,
-                                        UnifiedNameContainer.getStructValueName(),
-                                        loopVariables.get(0), loopVariables.get(1)),
+                CBMCCodeGenerator.ASSUME,
+                neq(dotStructAccess(valueName,
+                        UnifiedNameContainer.getStructValueName(),
+                        loopVariables.get(0), loopVariables.get(1)),
                         dotStructAccess(valueName,
-                                        UnifiedNameContainer.getStructValueName(),
-                                        loopVariables.get(0), ownLoopVar)))
+                                UnifiedNameContainer.getStructValueName(),
+                                loopVariables.get(0), ownLoopVar)))
                 + CCodeHelper.SEMICOLON);
         code.deleteTab();
         code.add(CCodeHelper.CLOSING_BRACES);
@@ -227,9 +232,9 @@ public final class Preference extends CBMCInputType {
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF,
-                              eq(arrAccess(arr(), i(), zero()),
-                                 CANDIDATE)
-                ) + space() + plusPlus(SUM)
+                eq(arrAccess(arr(), i(), zero()),
+                        CANDIDATE)
+        ) + space() + plusPlus(SUM)
                 + CCodeHelper.SEMICOLON);
     }
 
@@ -275,7 +280,7 @@ public final class Preference extends CBMCInputType {
         final List<CBMCResultValueWrapper> wrappedValues =
                 new ArrayList<CBMCResultValueWrapper>();
         for (final Iterator<String> iterator = values.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final String value = iterator.next();
             final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();

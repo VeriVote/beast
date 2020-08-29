@@ -7,10 +7,8 @@ import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.*;
+import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
@@ -24,7 +22,8 @@ import static edu.pse.beast.toolbox.CCodeHelper.plusPlus;
 
 public final class PreferenceStack extends CBMCInputType {
     public static final int DIMENSIONS = 1;
-    public static final String[] SIZE_OF_DIMENSIONS= {UnifiedNameContainer.getVoter(),UnifiedNameContainer.getCandidate()};
+    // +1 to candidates because we need to save the votes for each stack somewhere
+    public static final String[] SIZE_OF_DIMENSIONS= {UnifiedNameContainer.getStacks(),UnifiedNameContainer.getCandidate() + "+1"};
     public PreferenceStack() {
         super(true, DataType.INT, 2, SIZE_OF_DIMENSIONS);
     }
@@ -37,6 +36,8 @@ public final class PreferenceStack extends CBMCInputType {
     public boolean isVotingForOneCandidate() {
         return false;
     }
+
+
 
     @Override
     public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> row, int rowNumber, int positionInRow, String newValue) {
@@ -122,15 +123,15 @@ public final class PreferenceStack extends CBMCInputType {
         final List<String> values = row.getValues();
         final List<CBMCResultValueWrapper> wrappedValues =
                 new ArrayList<CBMCResultValueWrapper>();
-        for (final Iterator<String> iterator = values.iterator();
-             iterator.hasNext();) {
-            final String value = iterator.next();
+
+        final CBMCResultValueArray toReturn =new CBMCResultValueArray();
+        for (String value:values) {
             final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue(CCodeHelper.INT, value, INT_LENGTH);
             wrapper.setValue(toWrap);
-        }
-        final CBMCResultValueArray toReturn = new CBMCResultValueArray();
+            wrappedValues.add(wrapper);
+        };
         toReturn.setValue(wrappedValues);
         return toReturn;
     }
@@ -159,4 +160,30 @@ public final class PreferenceStack extends CBMCInputType {
     public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
 
     }
+
+    @Override
+    public int vetAmountStacks(int amountStacks) {
+        return vetAmountInputValue(amountStacks);
+    }
+
+    @Override
+    public List<Integer> getSizesInOrder(int amountVoters, int amountCandidates, int amountSeats, int amountStacks) {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(amountStacks);
+        list.add(amountCandidates + 1);
+        list.add(amountVoters);
+        return list;
+    }
+
+    @Override
+    public String getDimensionDescriptor(boolean includeSizes) {
+        return InOutType.createSquareBrackets(UnifiedNameContainer.getStacks())
+                + createSquareBrackets(UnifiedNameContainer.getCandidate() + "+1");
+    }
+
+    @Override
+    public String getDimensionDescriptor(String[] sizes) {
+        return super.getDimensionDescriptor(sizes);
+    }
+
 }

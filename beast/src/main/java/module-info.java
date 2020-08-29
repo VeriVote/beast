@@ -89,27 +89,34 @@ module edu.pse.beast {
     requires wellbehavedfx;
     requires java.base;
 
-    opens edu.pse.beast.highlevel.javafx to javafx.fxml;
-    opens edu.pse.beast.datatypes.electiondescription to gson;
-    opens edu.pse.beast.datatypes.propertydescription to gson;
-    opens edu.pse.beast.types to gson;
-    opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
-    opens edu.pse.beast.propertychecker to gson;
-    opens edu.pse.beast.toolbox.valueContainer to gson;
-
-    // TODO maybe extract the types into their own modules
-    provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
+    opens edu.pse.beast.highlevel.javafx to javafx.fxml, com.google.gson;
+    opens edu.pse.beast.datatypes.electiondescription to com.google.gson;
+    opens edu.pse.beast.datatypes.propertydescription to com.google.gson;
+    opens edu.pse.beast.types to com.google.gson;
+    opens edu.pse.beast.types.cbmctypes.inputplugins to com.google.gson;
+    opens edu.pse.beast.propertychecker to com.google.gson;
+    opens edu.pse.beast.toolbox.valueContainer to com.google.gson;
+    opens edu.pse.beast.types.cbmctypes.cbmcstructs to com.google.gson;
+    opens edu.pse.beast.options to com.google.gson;
+    opens edu.pse.beast.toolbox.valueContainer.cbmcValueContainers to com.google.gson;
+    opens edu.pse.beast.electionsimulator to com.google.gson,
             edu.pse.beast.types.cbmctypes.inputplugins.Preference,
             edu.pse.beast.types.cbmctypes.inputplugins.PreferenceStack,
             edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice,
             edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack,
             edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
 
+    provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
+            edu.pse.beast.types.cbmctypes.inputplugins.Preference,
+            edu.pse.beast.types.cbmctypes.inputplugins.PreferenceStack,
+            edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice,
+            edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack,
+            edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
     provides OutputType
             with edu.pse.beast.types.cbmctypes.outputplugins.CandidateList,
-            edu.pse.beast.types.cbmctypes.outputplugins.Parliament,
-            edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
-            edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
+                    edu.pse.beast.types.cbmctypes.outputplugins.Parliament,
+                    edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
+                    edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
     provides Result with edu.pse.beast.propertychecker.CBMCResult;
 

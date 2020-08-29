@@ -31,6 +31,8 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
  * @author Lukas Stapelbroek
  */
 public abstract class InOutType {
+
+
     /**
      * The Enum DataType.
      */
@@ -238,7 +240,7 @@ public abstract class InOutType {
      *            the content to be put in the brackets
      * @return e.g "[content]"
      */
-    private static String createSquareBrackets(final String content) {
+    protected static String createSquareBrackets(final String content) {
         return arrAcc(content);
     }
 
@@ -284,32 +286,32 @@ public abstract class InOutType {
         final String printedResultArray;
 
         switch(resultType) {
-        case STRUCT:
-            final CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
-            final CBMCResultValueWrapper wrapperRec =
-                    struct.getResultVariable(UnifiedNameContainer.getStructValueName());
-            printedResultArray = printArray(wrapperRec);
-            break;
-        case SINGLE:
-            final CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
-            printedResultArray = single.getValue();
-            break;
-        case ARRAY:
-            final CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
-            final List<CBMCResultValueWrapper> newValues = array.getValues();
-            String subArray = "";
-            for (int i = 0; i < array.getArraySize(); i++) {
-                subArray += comma(printArray(newValues.get(i)));
-            }
-            // cut off the last ","
-            subArray = subArray.substring(0, subArray.length() - 1);
-            printedResultArray = createCurlyBraces(subArray);
-            break;
-        default:
-            printedResultArray = null;
-            throw new IllegalArgumentException("Only single numbers arrays,"
-                                                + " and a struct of an array"
-                                                + " are allowed here");
+            case STRUCT:
+                final CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
+                final CBMCResultValueWrapper wrapperRec =
+                        struct.getResultVariable(UnifiedNameContainer.getStructValueName());
+                printedResultArray = printArray(wrapperRec);
+                break;
+            case SINGLE:
+                final CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
+                printedResultArray = single.getValue();
+                break;
+            case ARRAY:
+                final CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
+                final List<CBMCResultValueWrapper> newValues = array.getValues();
+                String subArray = "";
+                for (int i = 0; i < array.getArraySize(); i++) {
+                    subArray += comma(printArray(newValues.get(i)));
+                }
+                // cut off the last ","
+                subArray = subArray.substring(0, subArray.length() - 1);
+                printedResultArray = createCurlyBraces(subArray);
+                break;
+            default:
+                printedResultArray = null;
+                throw new IllegalArgumentException("Only single numbers arrays,"
+                        + " and a struct of an array"
+                        + " are allowed here");
         }
         return printedResultArray;
     }
@@ -341,7 +343,7 @@ public abstract class InOutType {
     public String getFullVarAccess(final String varName,
                                    final List<String> filling) {
         return dotStructAccess(varName, UnifiedNameContainer.getStructValueName(),
-                               filling);
+                filling);
     }
 
     /**
@@ -390,32 +392,32 @@ public abstract class InOutType {
             final CBMCResultValueArray arr;
 
             switch(amountOfDimensions) {
-            case 2:
-                arr = (CBMCResultValueArray) struct
-                        .getResultVariable(arr()).getResultValue();
-                toReturn.addAll(CBMCResultPresentationHelper
-                        .printTwoDimResult(arr, size, name.length()));
-                break;
-            case 1:
-                arr = (CBMCResultValueArray) struct
-                        .getResultVariable(arr()).getResultValue();
-                toReturn.add(
-                        CBMCResultPresentationHelper.printOneDimResult(
-                                arr, size, name.length()
-                                )
-                );
-                break;
-            case 0:
-                toReturn.add(
-                        CBMCResultPresentationHelper.printSingleElement(
-                                (CBMCResultValueSingle)
-                                    struct.getResultVariable(arr()).getResultValue(),
-                                name.length()
-                        )
-                );
-                break;
-            default:
-                arr = null;
+                case 2:
+                    arr = (CBMCResultValueArray) struct
+                            .getResultVariable(arr()).getResultValue();
+                    toReturn.addAll(CBMCResultPresentationHelper
+                            .printTwoDimResult(arr, size, name.length()));
+                    break;
+                case 1:
+                    arr = (CBMCResultValueArray) struct
+                            .getResultVariable(arr()).getResultValue();
+                    toReturn.add(
+                            CBMCResultPresentationHelper.printOneDimResult(
+                                    arr, size, name.length()
+                            )
+                    );
+                    break;
+                case 0:
+                    toReturn.add(
+                            CBMCResultPresentationHelper.printSingleElement(
+                                    (CBMCResultValueSingle)
+                                            struct.getResultVariable(arr()).getResultValue(),
+                                    name.length()
+                            )
+                    );
+                    break;
+                default:
+                    arr = null;
             }
         }
         return toReturn;

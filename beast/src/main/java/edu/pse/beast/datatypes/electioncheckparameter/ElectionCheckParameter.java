@@ -37,6 +37,7 @@ public class ElectionCheckParameter {
 
     /** The margin seats. */
     private final int marginSeats;
+    private int marginStacks;
 
     /**
      * Instantiates a new election check parameter.
@@ -101,7 +102,7 @@ public class ElectionCheckParameter {
                                   final TimeOut timeOutVal,
                                   final Integer procs, final String arg) {
         this(amountOfVoters, amountOfCandidates, amountOfSeats, 1, 1, 1,
-             timeOutVal, procs, arg);
+                timeOutVal, procs, arg);
     }
 
     /**
@@ -193,5 +194,9 @@ public class ElectionCheckParameter {
     public int getNumVotingPoints() {
         return GUIController.getController().getElectionSimulation()
                 .getNumVotingPoints();
+    }
+
+    public int getMarginStacks() {
+        return marginStacks;
     }
 }

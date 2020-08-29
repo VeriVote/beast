@@ -18,28 +18,31 @@ public class ElectionSimulationData {
     /** The seats. */
     private final int seats;
 
+    /** the number of stacks */
+    private int stacks;
     /** The values. */
     private final ResultValueWrapper values;
 
+
     /**
      * Instantiates a new election simulation data.
-     *
-     * @param voterNum
+     *  @param voterNum
      *            the voter num
      * @param candidateNum
      *            the candidate num
      * @param seatNum
      *            the seat num
+     * @param stacks
      * @param vals
-     *            the vals
      */
     public ElectionSimulationData(final int voterNum, final int candidateNum,
                                   final int seatNum,
-                                  final ResultValueWrapper vals) {
+                                  int stacks, final ResultValueWrapper vals) {
         this.voters = voterNum;
         this.candidates = candidateNum;
         this.seats = seatNum;
         this.values = vals;
+        this.stacks = stacks;
     }
 
     /**
@@ -76,5 +79,9 @@ public class ElectionSimulationData {
      */
     public ResultValueWrapper getValues() {
         return values;
+    }
+
+    public int getStacks() {
+        return stacks;
     }
 }

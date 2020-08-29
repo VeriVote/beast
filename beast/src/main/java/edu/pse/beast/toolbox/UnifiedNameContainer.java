@@ -42,6 +42,8 @@ public final class UnifiedNameContainer {
     /** The orig votes string. */
     private static final String ORIG_VOTES = "ORIG_VOTES";
 
+    private static final String STACKS = "stacks";
+
     /** The listeners. */
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
 
@@ -66,6 +68,7 @@ public final class UnifiedNameContainer {
         map.put(CANDIDATE, "C");
         map.put(VOTER, "V");
         map.put(SEATS, "S");
+        map.put(STACKS, "stacks");
 
         map.put(ELECT, ELECT);
 
@@ -96,8 +99,8 @@ public final class UnifiedNameContainer {
      */
     private static void notifyNameChangeListeners() {
         for (Iterator<NameChangeListener> iterator =
-                    listeners.iterator();
-                iterator.hasNext();) {
+             listeners.iterator();
+             iterator.hasNext();) {
             final NameChangeListener nameChangeListener = iterator.next();
             nameChangeListener.notifyNameChange();
         }
@@ -365,4 +368,9 @@ public final class UnifiedNameContainer {
         map.put(key, toSet);
         notifyNameChangeListeners();
     }
+
+    public static String getStacks() {
+        return STACKS;
+    }
+
 }

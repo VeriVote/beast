@@ -50,11 +50,12 @@ public final class CVariableErrorFinder {
         separated.add(defineIfNonDef(UnifiedNameContainer.getVoter(), one()));
         separated.add(defineIfNonDef(UnifiedNameContainer.getCandidate(), one()));
         separated.add(defineIfNonDef(UnifiedNameContainer.getSeats(), one()));
+        separated.add(defineIfNonDef(UnifiedNameContainer.getStacks(), one()));
 
         // Since we want to reserve the function name "verify", we define it
         // here..
         separated.add(CCodeHelper.VOID + space() + functionCode("verify") + space()
-                        + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+                + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
 
         // WORKAROUND: Will change if I think of a more elegant solution (if
         // there is one) (look at issue 49 on github)
@@ -64,54 +65,54 @@ public final class CVariableErrorFinder {
         // easier.
 
         separated.add(CCodeHelper.VOID + space()
-                        + functionCode(CBMCCodeGenerator.CPROVER_ASSERT,
-                                       intVar(x()), intVar(y()))
-                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+                + functionCode(CBMCCodeGenerator.CPROVER_ASSERT,
+                intVar(x()), intVar(y()))
+                + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
         separated.add(CCodeHelper.VOID + space()
-                        + functionCode(CBMCCodeGenerator.CPROVER_ASSUME, intVar(x()))
-                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+                + functionCode(CBMCCodeGenerator.CPROVER_ASSUME, intVar(x()))
+                + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
 
         separated.addAll(Arrays.asList(electionDesc.getContainer() // Add all used structs
-                            .getStructDefinitions().split("\\n")));
+                .getStructDefinitions().split("\\n")));
 
         separated.add(CCodeHelper.VOID + space()
-                        + functionCode(CBMCCodeGenerator.ASSUME, intVar(x()))
-                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+                + functionCode(CBMCCodeGenerator.ASSUME, intVar(x()))
+                + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
         separated.add(CCodeHelper.VOID + space()
-                        + functionCode(CBMCCodeGenerator.ASSERT, intVar(x()))
-                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+                + functionCode(CBMCCodeGenerator.ASSERT, intVar(x()))
+                + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
         separated.add(CCodeHelper.VOID + space()
-                        + functionCode(CBMCCodeGenerator.ASSERT2, intVar(x()), intVar(y()))
-                        + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
+                + functionCode(CBMCCodeGenerator.ASSERT2, intVar(x()), intVar(y()))
+                + space() + CCodeHelper.OPENING_BRACES + CCodeHelper.CLOSING_BRACES);
 
         separated.add(intVar(functionCode(CBMCCodeGenerator.NONDET_INT)
-                        + space() + CCodeHelper.OPENING_BRACES
-                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
-                        + CCodeHelper.CLOSING_BRACES));
+                + space() + CCodeHelper.OPENING_BRACES
+                + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                + CCodeHelper.CLOSING_BRACES));
         separated.add(unsignedIntVar(functionCode(CBMCCodeGenerator.NONDET_UINT)
-                        + space() + CCodeHelper.OPENING_BRACES
-                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
-                        + CCodeHelper.CLOSING_BRACES));
+                + space() + CCodeHelper.OPENING_BRACES
+                + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                + CCodeHelper.CLOSING_BRACES));
 
         separated.add(unsignedCharVar(functionCode(CBMCCodeGenerator.NONDET_UCHAR)
-                        + space() + CCodeHelper.OPENING_BRACES
-                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
-                        + CCodeHelper.CLOSING_BRACES));
+                + space() + CCodeHelper.OPENING_BRACES
+                + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                + CCodeHelper.CLOSING_BRACES));
         separated.add(charVar(functionCode(CBMCCodeGenerator.NONDET_CHAR)
-                        + space() + CCodeHelper.OPENING_BRACES
-                        + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
-                        + CCodeHelper.CLOSING_BRACES));
+                + space() + CCodeHelper.OPENING_BRACES
+                + CCodeHelper.RETURN + space() + zero() + CCodeHelper.SEMICOLON
+                + CCodeHelper.CLOSING_BRACES));
 
         // WORKAROUND end
 
         separated.addAll(code);
         separated.add(intVar(functionCode(CBMCCodeGenerator.MAIN))
-                        + space() + CCodeHelper.OPENING_BRACES);
+                + space() + CCodeHelper.OPENING_BRACES);
         separated.add(CCodeHelper.CLOSING_BRACES);
         final int lineOffset = separated.size() + 1;
 
         return new ArrayList<CodeError>(
                 DeepErrorChecker.checkCodeForErrors(separated, lineOffset)
-                );
+        );
     }
 }

@@ -170,9 +170,9 @@ public final class Approval extends CBMCInputType {
         if (unique) {
             code.add(forLoopHeaderCode(j(), lt(), CBMCCodeGenerator.C));
             code.add(functionCode(CCodeHelper.IF,
-                                  conjunct(neq(j(), CANDIDATE),
-                                           leq(CAND_SUM,
-                                               arrAccess(arr(), i(), j()))))
+                    conjunct(neq(j(), CANDIDATE),
+                            leq(CAND_SUM,
+                                    arrAccess(arr(), i(), j()))))
                     + CCodeHelper.space() + varAssignCode(CAND_SUM, zero())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);
@@ -208,7 +208,7 @@ public final class Approval extends CBMCInputType {
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
         return GUIController.getController().getElectionSimulation()
-                    .getNumVoters();
+                .getNumVoters();
     }
 
     @Override
@@ -223,7 +223,7 @@ public final class Approval extends CBMCInputType {
                 new ArrayList<CBMCResultValueWrapper>();
 
         for (Iterator<String> iterator = values.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final String value = iterator.next();
             final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
@@ -247,5 +247,10 @@ public final class Approval extends CBMCInputType {
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
         // No extra needed
+    }
+
+    @Override
+    public int vetAmountStacks(int amountStacks) {
+        return 0;
     }
 }

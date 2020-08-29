@@ -60,6 +60,9 @@ public class ElectionSimulationModel {
     /** The amount seats. */
     private int amountSeats = 1;
 
+    /** The number of stacks */
+    private int amountStacks = 0;
+
     /** The current rows. */
     private int currentRows;
 
@@ -107,13 +110,13 @@ public class ElectionSimulationModel {
         if (elTypeContainer.getInputType().getAmountOfDimensions() == 2) {
             this.xLabel =
                     elTypeContainer.getInputType()
-                    .getSizeOfDimensions()[1];
+                            .getSizeOfDimensions()[1];
         } else {
             this.xLabel = "";
         }
         isTwoDim =
                 elTypeContainer.getInputType()
-                .getAmountOfDimensions() == 2;
+                        .getAmountOfDimensions() == 2;
     }
 
     /**
@@ -143,11 +146,11 @@ public class ElectionSimulationModel {
         if (currentRows == maxRows) {
             final NEWRowOfValues toAdd =
                     new NEWRowOfValues(this, container,
-                                       this.getAmountCandidates(),
-                                       this.getAmountVoters(),
-                                       this.getAmountSeats(),
-                                       currentRows, ELEMENT_WIDTH,
-                                       ELEMENT_HEIGHT);
+                            this.getAmountCandidates(),
+                            this.getAmountVoters(),
+                            this.getAmountSeats(),
+                            currentRows, ELEMENT_WIDTH,
+                            ELEMENT_HEIGHT);
             rows.add(toAdd);
             final TextField newVoter = new TextField(yLabel + currentRows);
             yDescriptors.add(newVoter);
@@ -186,7 +189,7 @@ public class ElectionSimulationModel {
     public void changeContainer(final ElectionTypeContainer elTypeContainer) {
         this.container = elTypeContainer;
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final NEWRowOfValues currentRow = iterator.next();
             currentRow.setContainer(elTypeContainer);
         }
@@ -226,9 +229,9 @@ public class ElectionSimulationModel {
     private void update() {
         final List<Integer> list =
                 container.getInputType()
-                .getSizesInOrder(amountVoters, amountCandidates, amountSeats);
+                        .getSizesInOrder(amountVoters, amountCandidates, amountSeats, amountStacks);
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final NEWRowOfValues row = iterator.next();
             row.setVoters(getAmountVoters());
             row.setCandidates(getAmountCandidates());
@@ -279,7 +282,7 @@ public class ElectionSimulationModel {
     public void setAmountCandidates(final int candidates) {
         this.amountCandidates =
                 container.getInputType()
-                .vetAmountCandidates(candidates);
+                        .vetAmountCandidates(candidates);
         update();
     }
 
@@ -302,6 +305,11 @@ public class ElectionSimulationModel {
      */
     public void setAmountSeats(final int seats) {
         this.amountSeats = container.getInputType().vetAmountSeats(seats);
+        update();
+    }
+
+    public void setAmountStacks(int amountStacks) {
+        this.amountStacks = container.getInputType().vetAmountStacks(amountStacks);
         update();
     }
 
@@ -407,7 +415,7 @@ public class ElectionSimulationModel {
      */
     private void updateX(final int size) {
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final NEWRowOfValues row = iterator.next();
             row.setRowSize(size);
         }
@@ -417,7 +425,7 @@ public class ElectionSimulationModel {
                 while (currentRowSize < size) {
                     if (xDescriptors.size() > currentRowSize) {
                         candidateGridPane.add(xDescriptors.get(currentRowSize),
-                                              currentRowSize, 0);
+                                currentRowSize, 0);
                     } else {
                         final TextField candToAdd =
                                 new TextField(xLabel + currentCandidates);
@@ -455,9 +463,13 @@ public class ElectionSimulationModel {
      */
     private void updateVetting() {
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final NEWRowOfValues row = iterator.next();
             row.updateVetting();
         }
+    }
+
+    public int getAmountStacks() {
+        return amountStacks;
     }
 }

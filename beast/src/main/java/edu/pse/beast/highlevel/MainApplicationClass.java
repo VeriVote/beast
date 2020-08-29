@@ -50,6 +50,7 @@ public final class MainApplicationClass extends Application {
     private static final String RESOURCE =
             "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
 
+
     // private static final String RESOURCE =
     //        "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
 
@@ -179,4 +180,5 @@ public final class MainApplicationClass extends Application {
     public static Stage getMainStage() {
         return mainStage;
     }
+
 }

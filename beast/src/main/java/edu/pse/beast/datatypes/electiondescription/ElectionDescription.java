@@ -177,7 +177,7 @@ public class ElectionDescription {
         final List<String> loopVariables =
                 generateLoopVariables(code, dimensions, VOTES);
         final String[] sizes = container.getInputType().getSizeOfDimensions();
-        sizes[0] = AMOUNT_VOTES;
+        //sizes[0] = AMOUNT_VOTES;
         String forLoopStart = "";
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),

@@ -126,7 +126,7 @@ public final class SingleChoiceStack extends CBMCInputType {
         }
         totalSum -= Integer.parseInt(
                 rows.get(rowNumber).getValues().get(positionInRow)
-                );
+        );
         totalSum += Integer.parseInt(newValue);
         return totalSum;
     }
@@ -178,18 +178,18 @@ public final class SingleChoiceStack extends CBMCInputType {
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
-                              leq(functionCode(ABS_FUNC, TMP_DIFF),
-                                  MARGIN))
+                leq(functionCode(ABS_FUNC, TMP_DIFF),
+                        MARGIN))
                 + CCodeHelper.SEMICOLON);
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
-                              leq(zero(), plus(origVotesNameAcc, TMP_DIFF)))
+                leq(zero(), plus(origVotesNameAcc, TMP_DIFF)))
                 + CCodeHelper.SEMICOLON);
         code.add(functionCode(CCodeHelper.IF, lt(TMP_DIFF, zero()))
                 + CCodeHelper.OPENING_BRACES);
         code.add();
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
-                              leq(functionCode(ABS_FUNC, TMP_DIFF),
-                                  origVotesNameAcc))
+                leq(functionCode(ABS_FUNC, TMP_DIFF),
+                        origVotesNameAcc))
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(CCodeHelper.CLOSING_BRACES);
@@ -197,7 +197,7 @@ public final class SingleChoiceStack extends CBMCInputType {
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(varAssignCode(POS_DIFF,
-                               plus(TOTAL_DIFF, functionCode(ABS_FUNC, TMP_DIFF)))
+                plus(TOTAL_DIFF, functionCode(ABS_FUNC, TMP_DIFF)))
                 + CCodeHelper.SEMICOLON);
         code.add(plusEquals(TOTAL_DIFF, TMP_DIFF) + CCodeHelper.SEMICOLON);
     }
@@ -209,12 +209,17 @@ public final class SingleChoiceStack extends CBMCInputType {
                 + CCodeHelper.SEMICOLON);
         code.add(forLoopHeaderCode(LOOP_R_0, lt(), CBMCCodeGenerator.C));
         code.add(plusEquals(TMP_RESTR_SUM,
-                            dotArrStructAccess(voteName, LOOP_R_0))
+                dotArrStructAccess(voteName, LOOP_R_0))
                 + CCodeHelper.SEMICOLON);
         code.add(CCodeHelper.CLOSING_BRACES);
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
-                              leq(TMP_RESTR_SUM, CBMCCodeGenerator.V))
+                leq(TMP_RESTR_SUM, CBMCCodeGenerator.V))
                 + CCodeHelper.SEMICOLON);
+    }
+
+    @Override
+    public int vetAmountStacks(int amountStacks) {
+        return vetAmountInputValue(amountStacks);
     }
 
     @Override

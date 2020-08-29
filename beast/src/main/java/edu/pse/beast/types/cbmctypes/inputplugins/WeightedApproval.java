@@ -117,6 +117,11 @@ public final class WeightedApproval extends CBMCInputType {
     }
 
     @Override
+    public int vetAmountStacks(int amountStacks) {
+        return 0;
+    }
+
+    @Override
     public String[] getVotePoints(final String[][] votes,
                                   final int amountCandidates,
                                   final int amountVoters) {
@@ -192,10 +197,10 @@ public final class WeightedApproval extends CBMCInputType {
                 + CCodeHelper.SEMICOLON);
         if (unique) {
             code.add(forLoopHeaderCode(j(), lt(),
-                                       UnifiedNameContainer.getCandidate()));
+                    UnifiedNameContainer.getCandidate()));
             code.add(functionCode(CCodeHelper.IF,
-                                  conjunct(neq(j(), CANDIDATE),
-                                           leq(CAND_SUM, arrAccess(arr(), i(), j()))))
+                    conjunct(neq(j(), CANDIDATE),
+                            leq(CAND_SUM, arrAccess(arr(), i(), j()))))
                     + space() + varAssignCode(CAND_SUM, zero())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);
@@ -257,7 +262,7 @@ public final class WeightedApproval extends CBMCInputType {
         final List<CBMCResultValueWrapper> wrappedValues =
                 new ArrayList<CBMCResultValueWrapper>();
         for (Iterator<String> iterator = values.iterator();
-                iterator.hasNext();) {
+             iterator.hasNext();) {
             final String value = iterator.next();
             final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();

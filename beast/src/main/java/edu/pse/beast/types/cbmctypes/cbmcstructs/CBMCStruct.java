@@ -4,12 +4,14 @@ import static edu.pse.beast.toolbox.CCodeHelper.STRUCT;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InOutType.DataType;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * The Class CBMCStruct.
@@ -58,7 +60,9 @@ public final class CBMCStruct extends ComplexType {
                 + this.dataType.toString().replaceAll("\\s", "");
 
         for (int i = 0; i < dimensions; i++) {
-            generatedName = generatedName + sizeOfDimensions[i];
+            Random r = new Random();
+            r.setSeed(sizeOfDimensions[i].hashCode());
+            generatedName = generatedName + RandomStringUtils.random(5, 0, 0, true, false, null, r);
         }
         this.structName = generatedName;
     }
