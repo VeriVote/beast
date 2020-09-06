@@ -148,6 +148,8 @@ public final class ResultPresenterNEW {
         if (result == null) {
             return;
         }
+        if (result.hasFinalMargin()) GUIController.getController().getRlaButton().setDisable(false);
+        else GUIController.getController().getRlaButton().setDisable(true);
         final Node finishedResult = presentationType.presentResult(result);
         GUIController.getController()
                 .disableZoomSlider(!presentationType.supportsZoom());
@@ -177,5 +179,9 @@ public final class ResultPresenterNEW {
             instance = new ResultPresenterNEW();
         }
         return instance;
+    }
+
+    public Result getResult() {
+        return result;
     }
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="532.0" prefWidth="545.0">
+         <top>
+            <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <buttons>
+                  <Label maxWidth="15.0" minWidth="15.0" prefHeight="17.0" prefWidth="15.0" text="Label" />
+                  <Spinner />
+                  <Label maxWidth="37.0" minWidth="0.0" prefHeight="17.0" prefWidth="35.0" text="Alpha" />
+                  <Spinner />
+                  <Label minWidth="22.0" prefHeight="17.0" text="Seed" />
+                  <TextField />
+               </buttons>
+            </ButtonBar>
+         </top>
+         <center>
+            <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <items>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="selectedVotes" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </Pane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableView" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn fx:id="originalVoteCol" prefWidth="75.0" text="Original" />
+                            <TableColumn fx:id="correctVoteCol" prefWidth="75.0" text="Corrected" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+               </items>
+            </SplitPane>
+         </center>
+      </BorderPane>
+   </children>
+</VBox>
