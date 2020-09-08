@@ -1,6 +1,7 @@
 package edu.pse.beast.highlevel.javafx;
 
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.rla.RiskLimitingAuditSTV;
 import edu.pse.beast.toolbox.Tuple;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -28,6 +29,7 @@ public class RLAController {
     @FXML
     private TableColumn<String, Tuple<String, String>> correctVoteCol;
 
+    RiskLimitingAuditSTV audit;
     private Result result;
     public RLAController(Result result) {
         this.result = result;
@@ -35,14 +37,13 @@ public class RLAController {
     }
     @FXML
     public void initialize() {
-        ObservableList<Integer> list = FXCollections.observableList(new ArrayList<Integer>());
+
+        audit = new RiskLimitingAuditSTV(result.getFinalMargin(), 0.05, 0.01, 1, result.getNumVoters());
+
+        ObservableList<Integer> list = FXCollections.observableList(audit.getSelectedVotes());
         list.add(5);
         list.add(4);
         selectedVotes.setItems(list);
-        PropertyValueFactory factory1 = new PropertyValueFactory("first");
-        originalVoteCol.setCellFactory(factory1);
-        correctVoteCol.setCellFactory(new PropertyValueFactory("second"));
-        tableView.getItems().add(new Tuple<String, String>("first", "second"));
     }
 
     private int getMargin() {
