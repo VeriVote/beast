@@ -351,6 +351,8 @@ public final class ElectionSimulation implements MenuBarInterface {
                             .setText("" + values[1]);
                     GUIController.getController().getInputSeats()
                             .setText("" + values[2]);
+                    GUIController.getController().getInputStacksField()
+                            .setText("" + values[3]);
                 } else {
                     for (int x = 0; x < values.length; x++) {
                         model.setValue(x, y - 1, values[x]);
@@ -386,7 +388,8 @@ public final class ElectionSimulation implements MenuBarInterface {
         saveString =
                 lineBreak(model.getAmountVoters() + CSV_SEPARATOR
                         + model.getAmountCandidates() + CSV_SEPARATOR
-                        + model.getAmountSeats());
+                        + model.getAmountSeats() + CSV_SEPARATOR +
+                        model.getAmountStacks());
         final List<NEWRowOfValues> rows = model.getRows();
 
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
