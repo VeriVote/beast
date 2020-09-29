@@ -374,7 +374,7 @@ public class CBMCCodeGenerator {
         // Add the code which defines the votes
         final String origVotes =
                 varAssignCode(electionDesc.getContainer().getInputStruct().getStructAccess()
-                                + UnifiedNameContainer.getOrigVotesName(),
+                                + space() + UnifiedNameContainer.getOrigVotesName(),
                               getVotingResultCode((CBMCResultValueWrapper)
                                                       votingData.getValues()))
                 + CCodeHelper.SEMICOLON;
