@@ -517,6 +517,19 @@ public final class CCodeHelper {
     }
 
     /**
+     * Generate code for variable of some type.
+     *
+     * @param typeName
+     *            the type name
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String typeVar(final String typeName, final String varName) {
+        return typeName + BLANK + varName;
+    }
+
+    /**
      * Generate code for long variable.
      *
      * @param varName
@@ -524,7 +537,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String longVar(final String varName) {
-        return LONG + BLANK + varName;
+        return typeVar(LONG, varName);
     }
 
     /**
@@ -535,7 +548,18 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String intVar(final String varName) {
-        return INT + BLANK + varName;
+        return typeVar(INT, varName);
+    }
+
+    /**
+     * Generate code for unsigned (int/char/..) variable.
+     *
+     * @param varName
+     *            the var name
+     * @return the string
+     */
+    public static String unsignedVar(final String varName) {
+        return typeVar(UNSIGNED, varName);
     }
 
     /**
@@ -546,7 +570,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String unsignedIntVar(final String varName) {
-        return UNSIGNED + BLANK + intVar(varName);
+        return unsignedVar(intVar(varName));
     }
 
     /**
@@ -557,7 +581,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String charVar(final String varName) {
-        return CHAR + BLANK + varName;
+        return typeVar(CHAR, varName);
     }
 
     /**
@@ -568,7 +592,7 @@ public final class CCodeHelper {
      * @return the string
      */
     public static String unsignedCharVar(final String varName) {
-        return UNSIGNED + BLANK + charVar(varName);
+        return unsignedVar(charVar(varName));
     }
 
     /**
