@@ -1,7 +1,6 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
