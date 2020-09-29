@@ -26,6 +26,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.pointer;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.spaces;
 import static edu.pse.beast.toolbox.CCodeHelper.two;
+import static edu.pse.beast.toolbox.CCodeHelper.typeVar;
 import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.unsignedIntVar;
 import static edu.pse.beast.toolbox.CCodeHelper.varAddCode;
@@ -183,6 +184,8 @@ public class CBMCCodeGenerator {
 
     /** The Constant CONCAT_ONE. */
     private static final String CONCAT_ONE = "concatOne";
+    /** The Constant INTERSECT. */
+    private static final String INTERSECT = "intersect";
     /** The Constant PERMUTATE_ONE. */
     private static final String PERMUTATE_ONE = "permutateOne";
     /** The Constant PERMUTATE_TWO. */
@@ -740,11 +743,11 @@ public class CBMCCodeGenerator {
 
         code.add(electionDesc.getContainer().getOutputStruct().getStructAccess()
                 + space()
-                + functionCode("intersect",
+                + functionCode(INTERSECT,
                         electionDesc.getContainer().getOutputStruct().getStructAccess()
-                            + space() + one(),
+                            + space() + VOTES + one(),
                         electionDesc.getContainer().getOutputStruct().getStructAccess()
-                            + space() + two())
+                            + space() + VOTES + two())
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(electionDesc.getContainer().getOutputStruct().getStructAccess()
                 + space() + TO_RETURN + CCodeHelper.SEMICOLON);
@@ -759,11 +762,12 @@ public class CBMCCodeGenerator {
         code.add(spaces(SPACES_PER_HALF_TAB)
                 + forLoopHeaderCode(i(), lt(), C));
         code.add(spaces(SPACES_PER_TAB)
-                + functionCode(CCodeHelper.IF, conjunct(dotArrStructAccess(one(), i()),
-                                                        dotArrStructAccess(two(), i())))
+                + functionCode(CCodeHelper.IF, eq(dotArrStructAccess(VOTES + one(), i()),
+                                                  dotArrStructAccess(VOTES + two(), i())))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
-                + varAssignCode(dotArrStructAccess(TO_RETURN, i()), one())
+                + varAssignCode(dotArrStructAccess(TO_RETURN, i()),
+                                dotArrStructAccess(VOTES + one(), i()))
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + CCodeHelper.CLOSING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + CCodeHelper.CLOSING_BRACES);
@@ -797,7 +801,7 @@ public class CBMCCodeGenerator {
                 electionDesc.getContainer().getInputStruct().getStructAccess();
 
         code.add(voteStruct + space()
-                + functionCode(PERMUTATE_TWO, voteStruct, VOTES,
+                + functionCode(PERMUTATE_TWO, typeVar(voteStruct, VOTES),
                                unsignedIntVar(LENGTH))
                 + space()
                 + CCodeHelper.OPENING_BRACES);
