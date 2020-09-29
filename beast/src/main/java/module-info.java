@@ -84,7 +84,7 @@ module edu.pse.beast {
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;
     requires reactfx;
-    requires richtextfx;
+    requires org.fxmisc.richtext;
     requires undofx;
     requires wellbehavedfx;
     requires java.base;
