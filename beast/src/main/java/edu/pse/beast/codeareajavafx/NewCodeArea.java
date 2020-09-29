@@ -361,73 +361,11 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         this.getStylesheets().add(stylesheet);
         final IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
-        this.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            consume(event);
-            String replacement = "";
-            final String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
 
-            int step = 0;
-
-            if (value.length() != 1) {
-                return;
-            } else {
-                replacement = value;
-                switch (value) {
-                case OPENING_PARENTHESES:
-                    replacement = "()";
-                    step = -1;
-                    break;
-                case "[":
-                    replacement = "[]";
-                    step = -1;
-                    break;
-                case "{":
-                    replacement = "{\n\n}";
-                    break;
-                default:
-                    break;
-                }
-                lockedLineSafeInsertText(replacement, false, false, null);
-                this.moveTo(Math.max(0, this.getCaretPosition() + step));
-                this.setLastChar(value);
-            }
-        });
-
-        this.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
-            consume(event);
-        });
-
-        this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            // System.out.println(event.getCode());
-            if (selectAllCombination.match(event)) {
-                // we just want to select all
-                this.selectAll();
-                consume(event);
-            } else if (backspaceCombination.match(event)) {
-                lockedLineSafeInsertText("", true, false, null);
-                consume(event);
-            } else if (deleteCombination.match(event)) {
-                delete(event);
-            } else if (enterCombination.match(event)) {
-                lockedLineSafeInsertText(lineBreak(), false, false, null);
-                consume(event);
-            } else if (pasteCombination.match(event)) {
-                paste(event);
-            } else if (cutCombination.match(event)) {
-                cut(event);
-            } else if (tabulatorCombination.match(event)) {
-                final String whitespaces =
-                        new String(new char[spacesPerTab]).replace("\0", " ");
-                lockedLineSafeInsertText(whitespaces, false, false, null);
-                consume(event);
-            }
-        });
-        this.richChanges()
-                .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
-                .subscribe(change -> {
-                    this.setStyleSpans(0, computeHighlighting(this.getText()));
-                    elecDescription.setCode(this.getText());
-                });
+        addKeyTypedFilter();
+        addKeyReleasedFilter();
+        addKeyPressedFilter();
+        addSyntaxHighlighting();
     }
 
     /**
@@ -552,6 +490,95 @@ public final class NewCodeArea extends AutoCompletionCodeArea
     public void undo() {
         undo(null);
         super.undo();
+    }
+
+    /**
+     * Add filter for key type event.
+     */
+    private void addKeyTypedFilter() {
+        this.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            consume(event);
+            String replacement = "";
+            final String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
+
+            int step = 0;
+
+            if (value.length() != 1) {
+                return;
+            } else {
+                replacement = value;
+                switch (value) {
+                case OPENING_PARENTHESES:
+                    replacement = "()";
+                    step = -1;
+                    break;
+                case "[":
+                    replacement = "[]";
+                    step = -1;
+                    break;
+                case "{":
+                    replacement = "{\n\n}";
+                    break;
+                default:
+                    break;
+                }
+                lockedLineSafeInsertText(replacement, false, false, null);
+                this.moveTo(Math.max(0, this.getCaretPosition() + step));
+                this.setLastChar(value);
+            }
+        });
+    }
+
+    /**
+     * Add filter for key release event.
+     */
+    private void addKeyReleasedFilter() {
+        this.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            consume(event);
+        });
+    }
+
+    /**
+     * Add filter for key press event.
+     */
+    private void addKeyPressedFilter() {
+        this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            // System.out.println(event.getCode());
+            if (selectAllCombination.match(event)) {
+                // we just want to select all
+                this.selectAll();
+                consume(event);
+            } else if (backspaceCombination.match(event)) {
+                lockedLineSafeInsertText("", true, false, null);
+                consume(event);
+            } else if (deleteCombination.match(event)) {
+                delete(event);
+            } else if (enterCombination.match(event)) {
+                lockedLineSafeInsertText(lineBreak(), false, false, null);
+                consume(event);
+            } else if (pasteCombination.match(event)) {
+                paste(event);
+            } else if (cutCombination.match(event)) {
+                cut(event);
+            } else if (tabulatorCombination.match(event)) {
+                final String whitespaces =
+                        new String(new char[spacesPerTab]).replace("\0", " ");
+                lockedLineSafeInsertText(whitespaces, false, false, null);
+                consume(event);
+            }
+        });
+    }
+
+    /**
+     * Add syntax highlighting.
+     */
+    private void addSyntaxHighlighting() {
+        this.richChanges()
+                .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
+                .subscribe(change -> {
+                    this.setStyleSpans(0, computeHighlighting(this.getText()));
+                    elecDescription.setCode(this.getText());
+                });
     }
 
     /**

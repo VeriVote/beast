@@ -106,72 +106,42 @@ public final class LinuxErrorChecker extends SystemSpecificErrorChecker {
             String varName = "";
             String message = "";
             // we only want error lines, no warning or something else
-            if (line.contains(ERROR + COLON)) {
-                // we want the format :line:position: ... error:
-                // so we need at least 4 ":" in the string to be sure to find a
-                // line and the position and the error
-                if (line.split(COLON).length > FOUR) {
-                    try {
-                        // put the output in the containers for them
-                        lineNumber =
-                                Integer.parseInt(line.split(COLON)[1]) - lineOffset;
-                        linePos = Integer.parseInt(line.split(COLON)[2]);
-                        message = line.split(ERROR + COLON)[1];
-                        if (message.contains(QUOTE_START) && message.contains(QUOTE_END)) {
-                            varName = message.split(QUOTE_START)[1].split(QUOTE_END)[0];
-                        }
-                        codeErrors.add(
-                                CCodeErrorFactory.generateCompilerError(
-                                        lineNumber, linePos,
-                                        varName, message)
-                        );
-                    } catch (NumberFormatException e) {
-                        ErrorLogger.log(ERROR_MSG);
-                    }
-                }
-            } else if (line.contains(GCC_MISSING_RETURN_FOUND)) {
-                // We want the format :line:position: ... error:
-                // so we need at least 4 ":" in the string to be sure to find a
-                // line and the position and the error.
+            if ((line.contains(ERROR + COLON)
+                        || line.contains(GCC_MISSING_RETURN_FOUND)
+                        || line.contains(GCC_MISSING_FUNCTION_FOUND))
+                    // we want the format :line:position: ... error:
+                    // so we need at least 4 ":" in the string to be sure to find a
+                    // line and the position and the error
+                    && line.split(COLON).length > FOUR) {
                 try {
-                    // The output has the form"FILENANE:LINE:COLUMN
-                    // warning:control reaches..."
-                    lineNumber = Integer.parseInt(line.split(COLON)[1]);
+                    // put the output in the containers for them
+                    lineNumber =
+                            Integer.parseInt(line.split(COLON)[1]);
                     linePos = Integer.parseInt(line.split(COLON)[2]);
-                    varName = "";
-                    message = "Missing return";
-                    codeErrors.add(
-                            CCodeErrorFactory.generateCompilerError(
-                                    lineNumber, linePos,
-                                    varName, message));
                 } catch (NumberFormatException e) {
                     ErrorLogger.log(ERROR_MSG);
                 }
-            } else if (line.contains(GCC_MISSING_FUNCTION_FOUND)) {
-                // We want the format :line:position: ... error:
-                // so we need at least 4 ":" in the string to be sure to find a
-                // line and the position and the error.
-                final String[] splittedLine = line.split(COLON);
-                if (splittedLine.length >= FOUR) {
-                    try {
-                        // the output has the form"FILENANE:LINE:COLUMN
-                        // warning:control reaches..."
-                        lineNumber = Integer.parseInt(line.split(COLON)[1]);
-                        linePos = Integer.parseInt(line.split(COLON)[2]);
-                        if (message.contains(QUOTE_START) && message.contains(QUOTE_END)) {
-                            varName = message.split(QUOTE_START)[1].split(QUOTE_END)[0];
-                        }
-                        message = line.split(WARNING + COLON)[1];
-                        codeErrors.add(
-                                CCodeErrorFactory.generateCompilerError(
-                                        lineNumber, linePos,
-                                        varName, message)
-                        );
-                    } catch (NumberFormatException e) {
-                        ErrorLogger.log("cannot parse the current"
-                                        + " error line from gcc.");
+                if (line.contains(ERROR + COLON)) {
+                    lineNumber -= lineOffset;
+                    message = line.split(ERROR + COLON)[1];
+                    if (message.contains(QUOTE_START) && message.contains(QUOTE_END)) {
+                        varName = message.split(QUOTE_START)[1].split(QUOTE_END)[0];
                     }
+                } else if (line.contains(GCC_MISSING_RETURN_FOUND)) {
+                    varName = "";
+                    message = "Missing return";
+                } else if (line.contains(GCC_MISSING_FUNCTION_FOUND)) {
+                    // the output has the form"FILENANE:LINE:COLUMN
+                    if (message.contains(QUOTE_START) && message.contains(QUOTE_END)) {
+                        varName = message.split(QUOTE_START)[1].split(QUOTE_END)[0];
+                    }
+                    message = line.split(WARNING + COLON)[1];
                 }
+                codeErrors.add(
+                        CCodeErrorFactory.generateCompilerError(
+                                lineNumber, linePos,
+                                varName, message)
+                );
             }
         }
         return codeErrors;

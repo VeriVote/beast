@@ -68,6 +68,73 @@ public final class MainApplicationClass extends Application {
     private static Stage mainStage;
 
     /**
+     * Add scene event handler for key pressed event.
+     * @param controller
+     *            the GUI controller
+     * @param scene
+     *            the scene
+     */
+    private static void addKeyPressedEventHandler(final GUIController controller,
+                                                  final Scene scene) {
+        // specify the short cuts the program should ignore
+        final InputMap<Event> shortcutsToConsume = InputMap.consume(anyOf(
+        // prevent selection via (CTRL + ) SHIFT + [LEFT, UP, DOWN]
+        // ignore the save shortcut
+        // keyPressed(KeyCode.S,
+        // KeyCombination.CONTROL_DOWN, SHORTCUT_ANY),
+        // keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN,
+        // KeyCombination.SHIFT_DOWN, SHORTCUT_ANY),
+        // ignore the save shortcut
+        // keyPressed(KeyCode.O, KeyCombination.CONTROL_DOWN,
+        // SHORTCUT_ANY)
+        ));
+        controller.setShortcutsToConsume(shortcutsToConsume);
+        final KeyCombination saveCombination = new KeyCodeCombination(
+                KeyCode.S, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY);
+        final KeyCombination saveAllCombination = new KeyCodeCombination(
+                KeyCode.S, KeyCombination.SHIFT_DOWN,
+                KeyCombination.CONTROL_DOWN);
+        final KeyCombination openCombination = new KeyCodeCombination(
+                KeyCode.S, KeyCombination.CONTROL_DOWN);
+        final KeyCombination autoCompletionCombination = new KeyCodeCombination(
+                KeyCode.SPACE, KeyCombination.CONTROL_DOWN);
+        // final KeyCombination copyCombination = new
+        // KeyCodeCombination(KeyCode.C,
+        // KeyCombination.CONTROL_DOWN);
+        final KeyCombination pasteCombination = new KeyCodeCombination(
+                KeyCode.V, KeyCombination.CONTROL_DOWN);
+        final KeyCombination cutCombination = new KeyCodeCombination(
+                KeyCode.X, KeyCombination.CONTROL_DOWN);
+        scene.addEventHandler(KeyEvent.KEY_PRESSED,
+                new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(final KeyEvent event) {
+                        if (saveCombination.match(event)) {
+                            controller.getFocusedArea().save();
+                        }
+                        if (saveAllCombination.match(event)) {
+                            controller.saveProject(null);
+                        }
+                        if (openCombination.match(event)) {
+                            controller.openButton(null);
+                        }
+                        if (autoCompletionCombination.match(event)) {
+                            controller.getFocusedArea().autoComplete();
+                        }
+                        // if (copyCombination.match(event)) {
+                        // controller.getFocusedArea().copy();
+                        // }
+                        if (pasteCombination.match(event)) {
+                            controller.getFocusedArea().paste();
+                        }
+                        if (cutCombination.match(event)) {
+                            controller.getFocusedArea().cut();
+                        }
+                    }
+                });
+    }
+
+    /**
      * Starts BEAST by creating a BEASTCommunicator and corresponding
      * CentralObjectProvider. If you want to replace one or more implementation
      * of high level interfaces you have to create a new implementation of
@@ -109,62 +176,7 @@ public final class MainApplicationClass extends Application {
                     System.exit(0);
                 }
             });
-            // specify the short cuts the program should ignore
-            final InputMap<Event> shortcutsToConsume = InputMap.consume(anyOf(
-            // prevent selection via (CTRL + ) SHIFT + [LEFT, UP, DOWN]
-            // ignore the save shortcut
-            // keyPressed(KeyCode.S,
-            // KeyCombination.CONTROL_DOWN, SHORTCUT_ANY),
-            // keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN,
-            // KeyCombination.SHIFT_DOWN, SHORTCUT_ANY),
-            // ignore the save shortcut
-            // keyPressed(KeyCode.O, KeyCombination.CONTROL_DOWN,
-            // SHORTCUT_ANY)
-            ));
-            controller.setShortcutsToConsume(shortcutsToConsume);
-            final KeyCombination saveCombination = new KeyCodeCombination(
-                    KeyCode.S, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY);
-            final KeyCombination saveAllCombination = new KeyCodeCombination(
-                    KeyCode.S, KeyCombination.SHIFT_DOWN,
-                    KeyCombination.CONTROL_DOWN);
-            final KeyCombination openCombination = new KeyCodeCombination(
-                    KeyCode.S, KeyCombination.CONTROL_DOWN);
-            final KeyCombination autoCompletionCombination = new KeyCodeCombination(
-                    KeyCode.SPACE, KeyCombination.CONTROL_DOWN);
-            // final KeyCombination copyCombination = new
-            // KeyCodeCombination(KeyCode.C,
-            // KeyCombination.CONTROL_DOWN);
-            final KeyCombination pasteCombination = new KeyCodeCombination(
-                    KeyCode.V, KeyCombination.CONTROL_DOWN);
-            final KeyCombination cutCombination = new KeyCodeCombination(
-                    KeyCode.X, KeyCombination.CONTROL_DOWN);
-            scene.addEventHandler(KeyEvent.KEY_PRESSED,
-                    new EventHandler<KeyEvent>() {
-                        @Override
-                        public void handle(final KeyEvent event) {
-                            if (saveCombination.match(event)) {
-                                controller.getFocusedArea().save();
-                            }
-                            if (saveAllCombination.match(event)) {
-                                controller.saveProject(null);
-                            }
-                            if (openCombination.match(event)) {
-                                controller.openButton(null);
-                            }
-                            if (autoCompletionCombination.match(event)) {
-                                controller.getFocusedArea().autoComplete();
-                            }
-                            // if (copyCombination.match(event)) {
-                            // controller.getFocusedArea().copy();
-                            // }
-                            if (pasteCombination.match(event)) {
-                                controller.getFocusedArea().paste();
-                            }
-                            if (cutCombination.match(event)) {
-                                controller.getFocusedArea().cut();
-                            }
-                        }
-                    });
+            addKeyPressedEventHandler(controller, scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

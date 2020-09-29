@@ -159,13 +159,10 @@ public final class BEASTCommunicator {
      */
     public static synchronized boolean startCheckNEW() {
         stopped = false;
-        final ElectionDescription electionDesc =
-                GUIController.getController().getElectionDescription();
-        final List<ParentTreeItem> properties =
-                GUIController.getController().getProperties();
-        final ElectionCheckParameter parameter =
-                GUIController.getController().getParameter();
-
+        final GUIController guiController = GUIController.getController();
+        final ElectionDescription electionDesc = guiController.getElectionDescription();
+        final List<ParentTreeItem> properties = guiController.getProperties();
+        final ElectionCheckParameter parameter = guiController.getParameter();
         final boolean result;
         if (!hasProperties(properties)) {
             // Checks if there even are any properties selected for analysis in
