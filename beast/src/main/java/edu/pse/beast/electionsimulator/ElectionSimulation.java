@@ -85,10 +85,10 @@ public final class ElectionSimulation implements MenuBarInterface {
     }
 
     /**
-     * Update container.
+     * Update election type container.
      *
      * @param elecTypeContainer
-     *            the elec type container
+     *            the election type container
      */
     public void updateContainer(final ElectionTypeContainer elecTypeContainer) {
         this.container = elecTypeContainer;

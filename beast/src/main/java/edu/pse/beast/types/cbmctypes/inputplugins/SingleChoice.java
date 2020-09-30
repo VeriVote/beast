@@ -67,6 +67,11 @@ public final class SingleChoice extends CBMCInputType {
     }
 
     @Override
+    public boolean isStackType() {
+        return false;
+    }
+
+    @Override
     public boolean hasVariableAsMinValue() {
         return false;
     }
@@ -83,19 +88,16 @@ public final class SingleChoice extends CBMCInputType {
 
     @Override
     public String vetValue(final ElectionTypeContainer container,
-                           final List<NEWRowOfValues> row,
+                           final List<NEWRowOfValues> rows,
                            final int rowNumber,
                            final int positionInRow,
                            final String newValue) {
-        final int number;
-        try {
-            number = Integer.parseInt(newValue);
-        } catch (NumberFormatException e) {
-            return zero();
-        }
+        final int number = parseIntegerValue(newValue);
         final String result;
-        if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
-            result = zero();
+        if (rowNumber < rows.size()
+                && (number < 0
+                        || rows.get(rowNumber).getAmountCandidates() < number)) {
+            result = getMinimalValue();
         } else {
             result = newValue;
         }

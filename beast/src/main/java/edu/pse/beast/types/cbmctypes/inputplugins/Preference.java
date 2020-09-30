@@ -78,6 +78,11 @@ public final class Preference extends CBMCInputType {
     }
 
     @Override
+    public boolean isStackType() {
+        return false;
+    }
+
+    @Override
     public boolean hasVariableAsMinValue() {
         return false;
     }
@@ -94,21 +99,17 @@ public final class Preference extends CBMCInputType {
 
     @Override
     public String vetValue(final ElectionTypeContainer container,
-                           final List<NEWRowOfValues> row,
+                           final List<NEWRowOfValues> rows,
                            final int rowNumber,
                            final int positionInRow,
                            final String newValue) {
-        final int number;
-        try {
-            number = Integer.parseInt(newValue);
-        } catch (NumberFormatException e) {
-            return zero();
-        }
+        final int number = parseIntegerValue(newValue);
         final String result;
-        if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
-            result = zero();
-        } else if (row.get(rowNumber).getValues().contains(newValue)) {
-            result = zero();
+        if (rowNumber < rows.size()
+                && (number < 0
+                        || rows.get(rowNumber).getAmountCandidates() < number
+                        || rows.get(rowNumber).getValues().contains(newValue))) {
+            result = getMinimalValue();
         } else {
             result = newValue;
         }
@@ -227,7 +228,7 @@ public final class Preference extends CBMCInputType {
     public void addCodeForVoteSum(final CodeArrayListBeautifier code,
                                   final boolean unique) {
         code.add(functionCode(CCodeHelper.IF,
-                              eq(arrAccess(arr(), i(), zero()),
+                              eq(arrAccess(arr(), i(), getMinimalValue()),
                                  CANDIDATE)
                 ) + space() + plusPlus(SUM)
                 + CCodeHelper.SEMICOLON);

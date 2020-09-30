@@ -317,6 +317,13 @@ public abstract class InputType extends InOutType {
     }
 
     /**
+     * Checks if is stack type, i.e., only aggregated votes.
+     *
+     * @return true, if is stack type
+     */
+    public abstract boolean isStackType();
+
+    /**
      * Checks for variable as min value.
      *
      * @return true, if successful
@@ -360,6 +367,21 @@ public abstract class InputType extends InOutType {
                                          final int amountSeats) {
         return recGetSizesInOrder(amountVoters, amountCandidates, amountSeats,
                                   getSizeOfDimensionsAsList());
+    }
+
+    /**
+     * Parses a string to an integer value.
+     * In case this does not work, the method returns the minimal value.
+     *
+     * @param value the string value
+     * @return the (parsed) integer value
+     */
+    protected int parseIntegerValue(final String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return Integer.parseInt(getMinimalValue());
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.j;
 import static edu.pse.beast.toolbox.CCodeHelper.leq;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.neq;
+import static edu.pse.beast.toolbox.CCodeHelper.one;
 import static edu.pse.beast.toolbox.CCodeHelper.plusEquals;
 import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
 import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
@@ -65,12 +66,17 @@ public final class Approval extends CBMCInputType {
 
     @Override
     public String getMinimalValue() {
-        return CCodeHelper.zero();
+        return zero();
     }
 
     @Override
     public String getMaximalValue() {
-        return CCodeHelper.one();
+        return one();
+    }
+
+    @Override
+    public boolean isStackType() {
+        return false;
     }
 
     @Override
@@ -94,17 +100,15 @@ public final class Approval extends CBMCInputType {
                            final int rowNumber,
                            final int positionInRow,
                            final String newValue) {
-        final int number;
-        try {
-            number = Integer.parseInt(newValue);
-        } catch (NumberFormatException e) {
-            return CCodeHelper.zero();
-        }
-        if (number != 0 && number != 1) {
-            return CCodeHelper.zero();
+        final int number = parseIntegerValue(newValue);
+        final String value;
+        if (rowNumber < rows.size()
+                && number != 0 && number != 1) {
+            value = getMinimalValue();
         } else {
-            return newValue;
+            value = newValue;
         }
+        return value;
     }
 
     @Override
@@ -173,7 +177,7 @@ public final class Approval extends CBMCInputType {
                                   conjunct(neq(j(), CANDIDATE),
                                            leq(CAND_SUM,
                                                arrAccess(arr(), i(), j()))))
-                    + CCodeHelper.space() + varAssignCode(CAND_SUM, zero())
+                    + CCodeHelper.space() + varAssignCode(CAND_SUM, getMinimalValue())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);
         }

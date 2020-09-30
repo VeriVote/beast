@@ -103,17 +103,15 @@ public class ElectionSimulationModel {
         this.voterGridPane = votGridPane;
         this.candidateGridPane = candGridPane;
         this.yLabel = elTypeContainer.getInputType().getSizeOfDimensions()[0];
+        GUIController.getController()
+            .updateElectionInputIndexText(elTypeContainer.getInputType());
 
         if (elTypeContainer.getInputType().getAmountOfDimensions() == 2) {
-            this.xLabel =
-                    elTypeContainer.getInputType()
-                    .getSizeOfDimensions()[1];
+            this.xLabel = elTypeContainer.getInputType().getSizeOfDimensions()[1];
         } else {
             this.xLabel = "";
         }
-        isTwoDim =
-                elTypeContainer.getInputType()
-                .getAmountOfDimensions() == 2;
+        isTwoDim = elTypeContainer.getInputType().getAmountOfDimensions() == 2;
     }
 
     /**
@@ -437,16 +435,14 @@ public class ElectionSimulationModel {
                             .remove(xDescriptors.get(currentCandidates));
                 }
             }
-        } else {
-            if (xDescriptors.size() == 0) {
-                final TextField descriptorToAdd = new TextField("Values");
-                descriptorToAdd.setEditable(false);
-                descriptorToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
-                descriptorToAdd.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
-                descriptorToAdd.setMaxSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
-                xDescriptors.add(descriptorToAdd);
-                candidateGridPane.add(descriptorToAdd, 0, 0);
-            }
+        } else if (xDescriptors.size() == 0) {
+            final TextField descriptorToAdd = new TextField("Values");
+            descriptorToAdd.setEditable(false);
+            descriptorToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+            descriptorToAdd.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+            descriptorToAdd.setMaxSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+            xDescriptors.add(descriptorToAdd);
+            candidateGridPane.add(descriptorToAdd, 0, 0);
         }
     }
 

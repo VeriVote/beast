@@ -87,6 +87,11 @@ public final class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
+    public boolean isStackType() {
+        return true;
+    }
+
+    @Override
     public boolean hasVariableAsMinValue() {
         return false;
     }
@@ -137,30 +142,19 @@ public final class SingleChoiceStack extends CBMCInputType {
                            final int rowNumber,
                            final int positionInRow,
                            final String newValue) {
+        final int number = parseIntegerValue(newValue);
         final String value;
-        if (rows.size() <= rowNumber) {
-            value = newValue;
+        // TODO: Labels in the 'ballot profile' tab are not correct yet
+        // and candidate and voter labels should probably be switched.
+        if (rowNumber < rows.size()
+                && (number < 0
+                        || rows.get(rowNumber).getAmountVoters() < number
+                        || rows.get(rowNumber).getAmountVoters()
+                            // we would exceed the limit with this addition
+                            < computeTotalSum(rows, rowNumber, positionInRow, newValue))) {
+            value = getMinimalValue();
         } else {
-            final int number;
-            try {
-                number = Integer.parseInt(newValue);
-            } catch (NumberFormatException e) {
-                return zero();
-            }
-            if (number < 0
-                    || number > rows.get(rowNumber).getAmountVoters()) {
-                value = zero();
-            } else {
-                final int totalSum =
-                        computeTotalSum(rows, rowNumber, positionInRow, newValue);
-                if (totalSum > rows.get(rowNumber).getAmountVoters()) {
-                    // we would exceed the limit with this addition, so
-                    // we reset to 0
-                    value = zero();
-                } else {
-                    value = newValue;
-                }
-            }
+            value = newValue;
         }
         return value;
     }
@@ -182,9 +176,9 @@ public final class SingleChoiceStack extends CBMCInputType {
                                   MARGIN))
                 + CCodeHelper.SEMICOLON);
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
-                              leq(zero(), plus(origVotesNameAcc, TMP_DIFF)))
+                              leq(getMinimalValue(), plus(origVotesNameAcc, TMP_DIFF)))
                 + CCodeHelper.SEMICOLON);
-        code.add(functionCode(CCodeHelper.IF, lt(TMP_DIFF, zero()))
+        code.add(functionCode(CCodeHelper.IF, lt(TMP_DIFF, getMinimalValue()))
                 + CCodeHelper.OPENING_BRACES);
         code.add();
         code.add(functionCode(CBMCCodeGenerator.ASSUME,
@@ -205,7 +199,7 @@ public final class SingleChoiceStack extends CBMCInputType {
     @Override
     public void restrictVotes(final String voteName,
                               final CodeArrayListBeautifier code) {
-        code.add(varAssignCode(uintVarEqualsCode(TMP_RESTR_SUM), zero())
+        code.add(varAssignCode(uintVarEqualsCode(TMP_RESTR_SUM), getMinimalValue())
                 + CCodeHelper.SEMICOLON);
         code.add(forLoopHeaderCode(LOOP_R_0, lt(), CBMCCodeGenerator.C));
         code.add(plusEquals(TMP_RESTR_SUM,

@@ -47,6 +47,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import org.apache.commons.io.FileUtils;
@@ -99,6 +100,14 @@ public class GUIController {
     private static final String INPUT_ELEC_IN = "input.elecIn";
     /** The Constant OPT_STRING. */
     private static final String OPT_STRING = "options";
+    /** The Constant BALLOT_PROFILE_Y_INDEX_STRING. */
+    private static final String BALLOT_PROFILE_Y_INDEX_STRING = "Voters";
+    /** The Constant BALLOT_PROFILE_Y_INDEX_STRING. */
+    private static final String BALLOT_PROFILE_Y_STACK_INDEX_STRING = "Cand";
+    /** The Constant BALLOT_PROFILE_X_INDEX_STRING. */
+    private static final String BALLOT_PROFILE_X_INDEX_STRING = "Cand →";
+    /** The Constant BALLOT_PROFILE_X_INDEX_STRING. */
+    private static final String BALLOT_PROFILE_X_STACK_INDEX_STRING = "Num →";
     /** The Constant MINUS_SIGN. */
     private static final String MINUS_SIGN = "-";
     /** The Constant BLANK. */
@@ -429,6 +438,14 @@ public class GUIController {
     /** The candidate grid pane. */
     @FXML
     private GridPane candidateGridPane;
+
+    /** The ballot profile Y index. */
+    @FXML
+    private Text ballotProfileYIndex;
+
+    /** The ballot profile X index. */
+    @FXML
+    private Text ballotProfileXIndex;
 
     /** The remove symb var button. */
     @FXML
@@ -1306,10 +1323,10 @@ public class GUIController {
         final Tuple3<String, InputType, OutputType> triplet =
                 showPopUp(
                         "New Election Description",
-                        "chose the new Election description",
-                        "input Type:",
+                        "Choose name and type of the election description.",
+                        "Input Type:",
                         InputType.getInputTypes(),
-                        "output Type:",
+                        "Output Type:",
                         OutputType.getOutputTypes()
                         );
         if (triplet != null) {
@@ -1317,7 +1334,7 @@ public class GUIController {
                     new ElectionDescription(triplet.first(), triplet.second(),
                             triplet.third(), 0, 0, 0, true));
         }
-
+        updateElectionInputIndexText(triplet.second());
         this.getElectionSimulation().updateContainer(
                 codeArea.getElectionDescription().getContainer());
     }
@@ -1916,6 +1933,16 @@ public class GUIController {
         electionSimulation.save();
     }
 
+    public void updateElectionInputIndexText(final InputType elecInputType) {
+        if (elecInputType.isStackType()) {
+            ballotProfileYIndex.setText(BALLOT_PROFILE_Y_STACK_INDEX_STRING);
+            ballotProfileXIndex.setText(BALLOT_PROFILE_X_STACK_INDEX_STRING);
+        } else {
+            ballotProfileYIndex.setText(BALLOT_PROFILE_Y_INDEX_STRING);
+            ballotProfileXIndex.setText(BALLOT_PROFILE_X_INDEX_STRING);
+        }
+    }
+
     /**
      * Time out.
      *
@@ -2399,12 +2426,12 @@ public class GUIController {
         }
         final String vettedCandidates = electionSimulation
                 .setAndVetCandidateNumber(inputCandidateField.getText());
-        if (vettedVoters != inputCandidateField.getText()) {
+        if (vettedCandidates != inputCandidateField.getText()) {
             inputCandidateField.setText(vettedCandidates);
         }
         final String vettedSeats = electionSimulation
                 .setAndVetSeatNumber(inputSeatField.getText());
-        if (vettedVoters != inputSeatField.getText()) {
+        if (vettedSeats != inputSeatField.getText()) {
             inputSeatField.setText(vettedSeats);
         }
     }
@@ -2534,7 +2561,7 @@ public class GUIController {
         grid.setVgap(GAP_SIZE);
         grid.setPadding(new Insets(TOP, WIDTH, GAP_SIZE, GAP_SIZE));
         // Populate the grid with the choices
-        grid.add(new Label("name:"), 0, 0);
+        grid.add(new Label("Name:"), 0, 0);
         final TextField nameField = new TextField();
         grid.add(nameField, 1, 0);
         grid.add(new Label(inTypeDescription), 0, 1);

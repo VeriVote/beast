@@ -116,9 +116,9 @@
                 </MenuItem>
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Solveroptionen">
+            <Menu mnemonicParsing="false" text="%key.solverOptions">
               <items>
-                <Menu mnemonicParsing="false" text="Solverauswahl">
+                <Menu mnemonicParsing="false" text="%key.solver">
                            <items>
                               <MenuItem mnemonicParsing="false">
                                  <graphic>
@@ -447,13 +447,13 @@
                                                    <left>
                                                       <BorderPane maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="50.0" BorderPane.alignment="CENTER">
                                                          <center>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Voters" BorderPane.alignment="CENTER" />
+                                                            <Text fx:id="ballotProfileYIndex" strokeType="OUTSIDE" strokeWidth="0.0" text="Voters" BorderPane.alignment="CENTER" />
                                                          </center>
                                                          <bottom>
                                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" ↓" BorderPane.alignment="CENTER" />
                                                          </bottom>
                                                          <top>
-                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cand →" BorderPane.alignment="CENTER" />
+                                                            <Text fx:id="ballotProfileXIndex" strokeType="OUTSIDE" strokeWidth="0.0" text="Cand →" BorderPane.alignment="CENTER" />
                                                          </top>
                                                       </BorderPane>
                                                    </left>

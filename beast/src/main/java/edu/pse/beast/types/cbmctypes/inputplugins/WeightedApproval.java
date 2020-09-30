@@ -77,6 +77,11 @@ public final class WeightedApproval extends CBMCInputType {
     }
 
     @Override
+    public boolean isStackType() {
+        return false;
+    }
+
+    @Override
     public boolean hasVariableAsMinValue() {
         return false;
     }
@@ -93,18 +98,14 @@ public final class WeightedApproval extends CBMCInputType {
 
     @Override
     public String vetValue(final ElectionTypeContainer container,
-                           final List<NEWRowOfValues> rowOfValues,
+                           final List<NEWRowOfValues> rows,
                            final int rowNumber,
                            final int positionInRow,
                            final String newValue) {
-        final int number;
-        try {
-            number = Integer.parseInt(newValue);
-        } catch (NumberFormatException e) {
-            return zero();
-        }
-        if (number < 0 || number > MAX_VALUE) {
-            return zero();
+        final int number = parseIntegerValue(newValue);
+        if (rowNumber < rows.size()
+                && (number < 0 || MAX_VALUE < number)) {
+            return getMinimalValue();
         } else {
             return newValue;
         }
@@ -196,7 +197,7 @@ public final class WeightedApproval extends CBMCInputType {
             code.add(functionCode(CCodeHelper.IF,
                                   conjunct(neq(j(), CANDIDATE),
                                            leq(CAND_SUM, arrAccess(arr(), i(), j()))))
-                    + space() + varAssignCode(CAND_SUM, zero())
+                    + space() + varAssignCode(CAND_SUM, getMinimalValue())
                     + CCodeHelper.SEMICOLON);
             code.add(CCodeHelper.CLOSING_BRACES);
         }
