@@ -189,6 +189,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private static final String SIZE = "size";
     /** The Constant SPLIT. */
     private static final String SPLIT = "split";
+    /** The Constant SPLIT_LINES. */
+    private static final String SPLIT_LINES = "splitLines";
 
     /**
      * This String must always be "assume" or "assert". If it is not set, it is
@@ -933,7 +935,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                                functionCode(GET_RANDOM_SPLIT_LINES,
                                             splits, voteInputSize))
                 + CCodeHelper.SEMICOLON);
-        final String splitLines = "splitLines" + getTmpIndex();
+        final String splitLines = SPLIT_LINES + getTmpIndex();
         code.add(unsignedIntVar(arrAccess(splitLines, splits)) + CCodeHelper.SEMICOLON);
         code.add(forLoopHeaderCode(i(), leq(), splits));
         code.add(varAssignCode(arrAccess(splitLines, i()),
@@ -1349,9 +1351,10 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitPermutationExpNode(final PermutationExpNode node) {
+        final String tmpVoteVar = newTempVarString(VOTE);
         final String voteInput =
                 electionTypeContainer.getInputStruct().getStructAccess()
-                + space() + newTempVarString(VOTE);
+                + space() + tmpVoteVar;
         // Create the variable
         code.add(voteInput + CCodeHelper.SEMICOLON);
         final String voteInputSize = newTempVarString(SIZE);
@@ -1359,7 +1362,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         final VoteEquivalentsNode voteEqNode =
                 new VoteEquivalentsNode(
                         node.getPermutationExpContext().voteEquivalents(),
-                        voteInput, voteInputSize);
+                        tmpVoteVar, voteInputSize);
         // voteInput now holds the vote to permute.
         // voteInputSize now is set to the size of the returned array
         voteEqNode.getVisited(this);
@@ -1374,7 +1377,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add(voteStruct + space()
                     + varAssignCode(tmp,
                                     functionCode(PERMUTATE_ONE,
-                                                 voteInput,
+                                                 tmpVoteVar,
                                                  voteInputSize))
                     + CCodeHelper.SEMICOLON);
             // Result is now in tmp
@@ -1388,7 +1391,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add(voteStruct + space()
                     + varAssignCode(tmp,
                                     functionCode(PERMUTATE_TWO,
-                                                 voteInput,
+                                                 tmpVoteVar,
                                                  voteInputSize)
                             )
                     + CCodeHelper.SEMICOLON);

@@ -88,6 +88,8 @@ public class CBMCCodeGenerator {
     public static final String STD_LIB = "stdlib";
     /** The Constant STD_INT. */
     public static final String STD_INT = "stdint";
+    /** The Constant MALLOC. */
+    public static final String MALLOC = "malloc";
 
     /** The Constant CPROVER_ASSUME. */
     public static final String CPROVER_ASSUME = "__CPROVER_assume";
@@ -1119,9 +1121,9 @@ public class CBMCCodeGenerator {
                              unsignedIntVar(MAX))))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + uintVarEqualsCode(pointer(SPLIT_ARR))
-                + functionCode("malloc", varMultiplyCode(SPLITS,
-                                                         functionCode(CCodeHelper.SIZE_OF,
-                                                                      pointer(SPLIT_ARR))))
+                + functionCode(MALLOC, varMultiplyCode(SPLITS,
+                                                       functionCode(CCodeHelper.SIZE_OF,
+                                                                    pointer(SPLIT_ARR))))
                 + CCodeHelper.SEMICOLON);
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(spaces(SPACES_PER_HALF_TAB) + functionCode(CCodeHelper.IF, eq(SPLITS, one()))
@@ -1520,7 +1522,7 @@ public class CBMCCodeGenerator {
      */
     private void addPreProperties(final BooleanExpListNode preAST) {
         code.add();
-        code.add(lineComment("Preconditions "));
+        code.add(lineComment("Preconditions"));
         code.add();
         visitor.setToPreConditionMode();
         preAST.getBooleanExpressions().forEach(booleanExpressionLists -> {
@@ -1538,7 +1540,7 @@ public class CBMCCodeGenerator {
      */
     private void addPostProperties(final BooleanExpListNode postAST) {
         code.add();
-        code.add(lineComment("Postconditions "));
+        code.add(lineComment("Postconditions"));
         code.add();
         visitor.setToPostConditionMode();
         postAST.getBooleanExpressions().forEach(booleanExpressionLists -> {
