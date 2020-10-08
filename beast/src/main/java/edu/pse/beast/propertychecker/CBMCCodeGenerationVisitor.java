@@ -1,5 +1,6 @@
 package edu.pse.beast.propertychecker;
 
+import static edu.pse.beast.propertychecker.CBMCCodeGenerator.getRandomSplitLinesFunction;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAcc;
 import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
@@ -113,7 +114,8 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /** The Constant UNIQUE. */
     private static final String UNIQUE = "Unique";
     /** The Constant VOTE_SUM_FOR_CANDIDATE. */
-    private static final String VOTE_SUM_FOR_CANDIDATE = "voteSumForCandidate";
+    private static final String VOTE_SUM_FOR_CANDIDATE =
+            CBMCCodeGenerator.VOTE_SUM_FOR_CANDIDATE;
     /** The Constant VOTE_SUM_EXP. */
     private static final String VOTE_SUM_EXP = "voteSumExp";
     /** The Constant INTEGER_VAR. */
@@ -128,8 +130,6 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private static final String SPLITS = "splits";
     /** The Constant LINES. */
     private static final String LINES = "Lines";
-    /** The Constant GET_RANDOM_SPLIT_LINES. */
-    private static final String GET_RANDOM_SPLIT_LINES = "getRandomSplitLines";
     /** The Constant LAST_SPLIT. */
     private static final String LAST_SPLIT = "last_split";
     /** The Constant OUTPUT. */
@@ -137,9 +137,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /** The Constant INTERSECT. */
     private static final String INTERSECT = "intersect";
     /** The Constant CONCAT_ONE. */
-    private static final String CONCAT_ONE = "concatOne";
+    private static final String CONCAT_ONE = CBMCCodeGenerator.CONCAT_ONE;
     /** The Constant CONCAT_TWO. */
-    private static final String CONCAT_TWO = "concatTwo";
+    private static final String CONCAT_TWO = CBMCCodeGenerator.CONCAT_TWO;
     /** The Constant PERMUTATE_ONE. */
     private static final String PERMUTATE_ONE = "permutateOne";
     /** The Constant PERMUTATE_TWO. */
@@ -175,9 +175,9 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private static final String CAND_TEMPLATE = "CAND";
 
     /** The Constant C. */
-    private static final String C = "C";
+    private static final String C = UnifiedNameContainer.getCandidate();
     /** The Constant V. */
-    private static final String V = "V";
+    private static final String V = UnifiedNameContainer.getVoter();
 
     /** The Constant VOTE. */
     private static final String VOTE = "vote";
@@ -821,9 +821,11 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         final String rhs = variableNames.pop();
         final String lhs = variableNames.pop();
         final String comparisonString =
-                uintVarEqualsCode(varNameDecl) + lhs
-                + space() + listComparisonNode.getComparisonSymbol().getCStringRep()
-                + space() + rhs + CCodeHelper.SEMICOLON;
+                uintVarEqualsCode(varNameDecl)
+                + parenthesize(lhs + space()
+                                + listComparisonNode.getComparisonSymbol().getCStringRep()
+                                + space() + rhs)
+                + CCodeHelper.SEMICOLON;
         code.add(comparisonString);
         variableNames.push(varNameDecl);
         testIfLast();
@@ -932,8 +934,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add(unsignedIntVar(pointer(tmpLines)) + CCodeHelper.SEMICOLON);
         // TODO Maybe make this non-dynamic
         code.add(varAssignCode(tmpLines,
-                               functionCode(GET_RANDOM_SPLIT_LINES,
-                                            splits, voteInputSize))
+                               getRandomSplitLinesFunction(splits, voteInputSize))
                 + CCodeHelper.SEMICOLON);
         final String splitLines = SPLIT_LINES + getTmpIndex();
         code.add(unsignedIntVar(arrAccess(splitLines, splits)) + CCodeHelper.SEMICOLON);

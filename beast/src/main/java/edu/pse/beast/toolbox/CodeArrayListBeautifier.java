@@ -158,7 +158,7 @@ public class CodeArrayListBeautifier {
         int length = Math.min(preferredName.length(), 2);
         String name = preferredName;
         while (this.contains(name)) {
-            name = RandomStringUtils.random(length++, true, false);
+            name = RandomStringUtils.random(length++, true, false).toLowerCase();
         }
         return name;
     }

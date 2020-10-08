@@ -15,6 +15,12 @@ import java.util.Map;
  * @author Lukas Stapelbroek
  */
 public final class UnifiedNameContainer {
+    /** The string C. */
+    private static final String C = "C";
+    /** The string V. */
+    private static final String V = "V";
+    /** The string S. */
+    private static final String S = "S";
     /** The candidate string. */
     private static final String CANDIDATE = "candidate";
     /** The voter string. */
@@ -23,6 +29,12 @@ public final class UnifiedNameContainer {
     private static final String SEATS = "seats";
     /** The elect string. */
     private static final String ELECT = "elect";
+    /** The string voting. */
+    private static final String VOTING = "voting";
+    /** The string arr. */
+    private static final String ARR = "arr";
+    /** The string votes. */
+    private static final String VOTES = "votes";
     /** The voting method string. */
     private static final String VOTING_METHOD = "votingMethod";
     /** The result array name string. */
@@ -63,16 +75,16 @@ public final class UnifiedNameContainer {
      * Inits the.
      */
     private static void init() {
-        map.put(CANDIDATE, "C");
-        map.put(VOTER, "V");
-        map.put(SEATS, "S");
+        map.put(CANDIDATE, C);
+        map.put(VOTER, V);
+        map.put(SEATS, S);
         map.put(ELECT, ELECT);
 
-        map.put(VOTING_METHOD, "voting");
+        map.put(VOTING_METHOD, VOTING);
 
-        map.put(RESULT_ARR_NAME, "arr");
+        map.put(RESULT_ARR_NAME, ARR);
 
-        map.put(VOTING_ARRAY, "votes");
+        map.put(VOTING_ARRAY, VOTES);
 
         map.put(NEW_RESULT, NEW_RESULT);
         map.put(NEW_VOTES, NEW_VOTES);

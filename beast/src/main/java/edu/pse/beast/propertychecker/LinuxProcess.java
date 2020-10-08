@@ -1,7 +1,5 @@
 package edu.pse.beast.propertychecker;
 
-import static edu.pse.beast.toolbox.CCodeHelper.constAssignCode;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,15 +19,6 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Lukas Stapelbroek
  */
 public final class LinuxProcess extends CBMCProcess {
-    /** The Constant QUOTE. */
-    private static final String QUOTE = "\"";
-
-    /** The Constant PASS_C_CONST. */
-    private static final String PASS_C_CONST = "-D ";
-
-    /** The Constant CBMC_XML_OUTPUT. */
-    private static final String CBMC_XML_OUTPUT = "--xml-ui";
-
     /** The Constant RELATIVE_PATH_TO_CBMC_64. */
     private static final String RELATIVE_PATH_TO_CBMC_64 = "/linux/cbmcLin/cbmc";
 
@@ -38,9 +27,6 @@ public final class LinuxProcess extends CBMCProcess {
      * the termination of the process on linux.
      */
     private static final long WAITING_TIME = 3000;
-
-    /** The Constant ENABLE_USER_INCLUDE. */
-    private static final String ENABLE_USER_INCLUDE = "-I";
 
     /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
@@ -65,44 +51,10 @@ public final class LinuxProcess extends CBMCProcess {
      *            the result
      */
     public LinuxProcess(final int voters, final int candidates, final int seats,
-                        final String advanced, final File toCheck,
-                        final CheckerFactory parent, final Result result) {
-        super(voters, candidates, seats, advanced, toCheck, parent, result);
-    }
-
-    /**
-     * Put some name in quotes.
-     *
-     * @param name
-     *            the name string
-     * @return the quoted string
-     */
-    private static String quote(final String name) {
-        return name != null && !"".equals(name)
-                ? QUOTE + name + QUOTE : QUOTE;
-    }
-
-    /**
-     * Print a quote.
-     *
-     * @return the quote
-     */
-    private static String quote() {
-        return quote("");
-    }
-
-    /**
-     * Pass constant.
-     *
-     * @param constName
-     *            the const name
-     * @param constValue
-     *            the const value
-     * @return the string
-     */
-    private static String passConstant(final String constName,
-                                       final int constValue) {
-        return PASS_C_CONST + constAssignCode(constName, constValue);
+                        final String advanced, final List<String> unwindset,
+                        final File toCheck, final CheckerFactory parent,
+                        final Result result) {
+        super(voters, candidates, seats, advanced, unwindset, toCheck, parent, result);
     }
 
     @Override
@@ -113,6 +65,7 @@ public final class LinuxProcess extends CBMCProcess {
     @Override
     public Process createProcess(final File toCheck, final int voters,
                                  final int candidates, final int seats,
+                                 final List<String> unwindset,
                                  final String advanced) {
         final List<String> arguments = new ArrayList<String>();
         final String cbmc =
@@ -120,15 +73,13 @@ public final class LinuxProcess extends CBMCProcess {
                                 + RELATIVE_PATH_TO_CBMC_64).getPath());
         // Enable the usage of includes in cbmc.
         final String userIncludeAndPath =
-                quote(ENABLE_USER_INCLUDE
-                        + SuperFolderFinder.getSuperFolder()
-                        + USER_INCLUDE_FOLDER);
+                quote(getUserIncludeFiles(SuperFolderFinder.getSuperFolder()
+                                            + USER_INCLUDE_FOLDER));
         // Get all Files from the form "*.c" so we can include them into cbmc.
         final List<String> allFiles =
                 FileLoader.listAllFilesFromFolder(
-                        quote(SuperFolderFinder.getSuperFolder()
-                                + USER_INCLUDE_FOLDER),
-                        FileLoader.C_FILE_ENDING);
+                        quote(SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER),
+                              FileLoader.C_FILE_ENDING);
         if (!new File(cbmc.replace(quote(), "")).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Cannot find the cbmc program in the subfolder \"linux/cbmcLin/\", "
@@ -158,6 +109,7 @@ public final class LinuxProcess extends CBMCProcess {
             arguments.add(passConstant(UnifiedNameContainer.getVoter(), voters));
             arguments.add(passConstant(UnifiedNameContainer.getCandidate(), candidates));
             arguments.add(passConstant(UnifiedNameContainer.getSeats(), seats));
+            arguments.add(unwindString(unwindset).replace(quote(), ""));
             // We need the trace command to track the output on the command line
             arguments.add(CBMC_XML_OUTPUT);
             if (advanced != null && advanced.length() > 0) {

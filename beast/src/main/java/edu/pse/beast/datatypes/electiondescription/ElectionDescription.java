@@ -11,7 +11,9 @@ import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,6 +54,13 @@ public class ElectionDescription {
 
     /** The code. */
     private String code = "";
+
+    /**
+     * Loop bounds for header functions for pre- and postconditions, saved as pairs of
+     * (unique) loop name and bound value.
+     * TODO: Not sure sure if this really belongs here!
+     */
+    private Map<String, String> headerLoopBounds = new LinkedHashMap<String, String>();
 
     /** The container. */
     private ElectionTypeContainer container;
@@ -130,6 +139,28 @@ public class ElectionDescription {
     }
 
     /**
+     * Adds a vote loop bound.
+     *
+     * @param uniqueLoopName the unique loop name with this bound
+     */
+    private void addVoteLoopBound(final String uniqueLoopName) {
+        headerLoopBounds.put(uniqueLoopName, UnifiedNameContainer.getVoterKey());
+    }
+
+    /**
+     * Gets the loop bound. Makes most sense if called after the method
+     * {@link #getComplexCode()}.
+     *
+     * @return the loop bounds.
+     */
+    public Map<String, String> getLoopBounds() {
+        if (headerLoopBounds == null || headerLoopBounds.isEmpty()) {
+            getComplexCode();
+        }
+        return headerLoopBounds;
+    }
+
+    /**
      * Generate variable name. We have to replace every return statement with
      * a loop, which transforms the one data type into another.
      *
@@ -157,6 +188,9 @@ public class ElectionDescription {
 
     /**
      * Gets the complex code.
+     * The method also puts the necessary loop bounds into the field
+     * {@link #headerLoopBounds}.
+     * TODO: Some of this should probably go into CBMCCodeGenerator!
      *
      * @return code of this description with structs used where applicable
      */
@@ -174,6 +208,9 @@ public class ElectionDescription {
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
+            if (sizes[i].equals(AMOUNT_VOTES)) {
+                addVoteLoopBound(UnifiedNameContainer.getVotingMethod() + "." + i);
+            }
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
@@ -674,6 +711,6 @@ public class ElectionDescription {
      * @return the string
      */
     private static String generateRandomString(final int length) {
-        return RandomStringUtils.random(length, true, false);
+        return RandomStringUtils.random(length, true, false).toLowerCase();
     }
 }

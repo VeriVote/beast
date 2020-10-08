@@ -472,6 +472,15 @@ public final class CCodeHelper {
     }
 
     /**
+     * Gets the variable name for the amount of votes.
+     *
+     * @return the variable name
+     */
+    public static String amountVoteVar() {
+        return AMOUNT_VOTES;
+    }
+
+    /**
      * Generate code for zero.
      *
      * @return the string
@@ -1273,16 +1282,17 @@ public final class CCodeHelper {
      *            the input format of the voting array passed to the function
      * @return the voting function declaration line
      */
-    public static String generateSimpleDeclString(final ElectionTypeContainer container) {
+    private static String generateSimpleDeclString(final ElectionTypeContainer container,
+                                                   final boolean onlyForGUI) {
         String decl = RESULT + BLANK
                 + UnifiedNameContainer.getVotingMethod()
-                + UINT_LOOP_START + AMOUNT_VOTES + COMMA + BLANK + VOTES + PAREN_R_BRACE_L;
+                + comma(UINT_LOOP_START + amountVoteVar())
+                + VOTES + PAREN_R_BRACE_L;
         final String[] sizeOfDimensions =
                 container.getInputType().getSizeOfDimensions();
         if (sizeOfDimensions.length > 0) {
-            sizeOfDimensions[0] = AMOUNT_VOTES;
+            sizeOfDimensions[0] = amountVoteVar();
         }
-
         decl = decl.replace(RESULT,
                 container.getInputType().getDataTypeAndSign() + container
                         .getOutputType().getDimensionDescriptor(true));
@@ -1291,8 +1301,50 @@ public final class CCodeHelper {
                         + UnifiedNameContainer.getVotingArray()
                         + container.getInputType()
                                 .getDimensionDescriptor(sizeOfDimensions));
+        return onlyForGUI ? simplifyForGUI(decl) : decl;
+    }
 
-        return decl;
+    /**
+     * Simplify the voting function for the GUI to hide the variable "amountVotes"
+     * from the voting function signature for the user.
+     *
+     * @param decl
+     *            the declaration String from code generation
+     * @return the simplified declaration String
+     */
+    private static String simplifyForGUI(final String declString) {
+        final String emptyString = "";
+        return declString
+                .replace(comma(unsignedIntVar(amountVoteVar())), emptyString)
+                .replace(amountVoteVar(), UnifiedNameContainer.getVoter());
+    }
+
+    /**
+     * Generates the declaration String for a voting function depending on its
+     * input and result type. This is the voting method which will be presented
+     * to the user, so it should not contain structs, but just simple data types
+     * (except if it cannot be helped).
+     *
+     * @param container
+     *            the input format of the voting array passed to the function
+     * @return the voting function declaration line
+     */
+    public static String generateSimpleDeclStringForCodeArea(final ElectionTypeContainer cont) {
+        return generateSimpleDeclString(cont, true);
+    }
+
+    /**
+     * Generates the declaration String for a voting function depending on its
+     * input and result type. This is the voting method which will be presented
+     * to the user, so it should not contain structs, but just simple data types
+     * (except if it cannot be helped).
+     *
+     * @param container
+     *            the input format of the voting array passed to the function
+     * @return the voting function declaration line
+     */
+    public static String generateSimpleDeclString(final ElectionTypeContainer container) {
+        return generateSimpleDeclString(container, false);
     }
 
     /**
@@ -1309,7 +1361,8 @@ public final class CCodeHelper {
                                                   final String voteStructName) {
         String decl = RESULT + BLANK
                 + UnifiedNameContainer.getVotingMethod()
-                + UINT_LOOP_START + AMOUNT_VOTES + COMMA + BLANK + VOTES + PAREN_R_BRACE_L;
+                + comma(UINT_LOOP_START + amountVoteVar())
+                + VOTES + PAREN_R_BRACE_L;
 
         decl = decl.replace(RESULT,
                 container.getOutputStruct().getStructAccess());

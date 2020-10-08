@@ -406,11 +406,11 @@ public abstract class InputType extends InOutType {
             return toReturn;
         } else {
             final String sizeOfDim = sizesOfDimensions.get(0);
-            if (sizeOfDim.contentEquals("V")) {
+            if (sizeOfDim.contentEquals(UnifiedNameContainer.getVoter())) {
                 toReturn.add(amountVoters);
-            } else if (sizeOfDim.contentEquals("C")) {
+            } else if (sizeOfDim.contentEquals(UnifiedNameContainer.getCandidate())) {
                 toReturn.add(amountCandidates);
-            } else if (sizeOfDim.contentEquals("S")) {
+            } else if (sizeOfDim.contentEquals(UnifiedNameContainer.getSeats())) {
                 toReturn.add(amountSeats);
             }
             toReturn.addAll(

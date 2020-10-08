@@ -2,6 +2,9 @@ package edu.pse.beast.propertychecker;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -13,6 +16,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
  * A factory for creating CBMCProcess objects.
@@ -55,6 +59,8 @@ public final class CBMCProcessFactory extends CheckerFactory {
      * but the file that is already there will be reused. */
     private File toCheck;
 
+    private Map<String, String> loopBounds = new LinkedHashMap<String, String>();
+
     /**
      * Creates a new CBMC checker factory, that determines what operating system
      * is running.
@@ -77,6 +83,43 @@ public final class CBMCProcessFactory extends CheckerFactory {
         super(controller, electionDesc, result, parameter);
         os = determineOS();
     }
+
+    /**
+     * Sets the unwind bounds.
+     *
+     * @param candidates the candidates amount
+     * @param voters the voters amount
+     * @param seats the seats amount
+     */
+    private void setUnwindBounds(final int candidates,
+                                 final int voters,
+                                 final int seats) {
+        for (final String key: loopBounds.keySet()) {
+            final String c = UnifiedNameContainer.getCandidateKey();
+            final String v = UnifiedNameContainer.getVoterKey();
+            final String s = UnifiedNameContainer.getSeatsKey();
+            final String value =
+                    loopBounds.get(key)
+                    .replace(c, String.valueOf(candidates))
+                    .replace(v, String.valueOf(voters))
+                    .replace(s, String.valueOf(seats));
+            loopBounds.put(key, value);
+        }
+    }
+
+    /**
+     * Creates the unwindset from the bounds for loops in header files.
+     *
+     * @return the unwindset
+     */
+    private List<String> createUnwindset() {
+        final List<String> unwindset = new ArrayList<String>();
+        for (final String key: loopBounds.keySet()) {
+            unwindset.add(key + ":" + loopBounds.get(key));
+        }
+        return unwindset;
+    }
+
     //
     // public CBMCProcessFactory(FactoryController controller, File toCheck,
     // ParameterSource paramSrc, Result result, boolean isMargin) {
@@ -372,6 +415,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
         final CBMCCodeGenerator generator =
                 new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc);
         final ArrayList<String> code = generator.getCode();
+        loopBounds = generator.getLoopBoundsForHeaders();
         final String absolutePath = SuperFolderFinder.getSuperFolder()
                                     + PATH_TO_TEMP_FOLDER;
         final File file = new File(new File(absolutePath),
@@ -415,6 +459,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
                                       postAndPrepPropDesc, margin,
                                       origResult, inputData);
         final ArrayList<String> code = generator.getCode();
+        loopBounds = generator.getLoopBoundsForHeaders();
         final String absolutePath = SuperFolderFinder.getSuperFolder()
                                     + PATH_TO_TEMP_FOLDER;
         final File file = new File(new File(absolutePath),
@@ -452,6 +497,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
                 new CBMCCodeGenerator(electionDesc,
                                       postAndPrepPropDesc, inputData);
         final ArrayList<String> code = generator.getCode();
+        loopBounds = generator.getLoopBoundsForHeaders();
         final String absolutePath = SuperFolderFinder.getSuperFolder()
                                     + PATH_TO_TEMP_FOLDER;
         final File file = new File(new File(absolutePath),
@@ -645,15 +691,19 @@ public final class CBMCProcessFactory extends CheckerFactory {
             // Create the file only once for each factory and reuse it then.
             toCheck = createCodeFileCheck(electionDesc, postAndPrepPropDesc);
         }
+        setUnwindBounds(candidates, voters, seats);
+        final List<String> unwindset = createUnwindset();
         Checker startedChecker = null;
         switch (os) {
         case Linux:
             startedChecker = new LinuxProcess(voters, candidates, seats,
-                    userOptions, toCheck, parent, result);
+                                              userOptions, unwindset, toCheck,
+                                              parent, result);
             break;
         case Windows:
             startedChecker = new WindowsProcess(voters, candidates, seats,
-                    userOptions, toCheck, parent, result);
+                                                userOptions, unwindset, toCheck,
+                                                parent, result);
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(MAC_OS_NOT_SUPPORTED);
@@ -679,15 +729,19 @@ public final class CBMCProcessFactory extends CheckerFactory {
         // create the file in which the code is saved
         toCheck = createCodeFileMargin(electionDesc, postAndPrepPropDesc,
                                        margin, origResult, votingData);
+        setUnwindBounds(candidates, voters, seats);
+        final List<String> unwindset = createUnwindset();
         Checker startedChecker = null;
         switch (os) {
         case Linux:
             startedChecker = new LinuxProcess(voters, candidates, seats,
-                                              userOptions, toCheck, parent, result);
+                                              userOptions, unwindset, toCheck,
+                                              parent, result);
             break;
         case Windows:
             startedChecker = new WindowsProcess(voters, candidates, seats,
-                                                userOptions, toCheck, parent, result);
+                                                userOptions, unwindset, toCheck,
+                                                parent, result);
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(MAC_OS_NOT_SUPPORTED);
@@ -711,15 +765,19 @@ public final class CBMCProcessFactory extends CheckerFactory {
         // create the file in which the code is saved
         toCheck = createCodeFileTest(electionDesc, postAndPrepPropDesc,
                                      votingData);
+        setUnwindBounds(candidates, voters, seats);
+        final List<String> unwindset = createUnwindset();
         Checker startedChecker = null;
         switch (os) {
         case Linux:
             startedChecker = new LinuxProcess(voters, candidates, seats,
-                                              userOptions, toCheck, parent, result);
+                                              userOptions, unwindset, toCheck,
+                                              parent, result);
             break;
         case Windows:
             startedChecker = new WindowsProcess(voters, candidates, seats,
-                                                userOptions, toCheck, parent, result);
+                                                userOptions, unwindset, toCheck,
+                                                parent, result);
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(MAC_OS_NOT_SUPPORTED);

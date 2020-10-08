@@ -31,6 +31,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.UNSIGNED;
 import static edu.pse.beast.toolbox.CCodeHelper.VOID;
 import static edu.pse.beast.toolbox.CCodeHelper.VOLATILE;
 import static edu.pse.beast.toolbox.CCodeHelper.WHILE;
+import static edu.pse.beast.toolbox.CCodeHelper.generateSimpleDeclStringForCodeArea;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 
 import java.awt.HeadlessException;
@@ -71,7 +72,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
@@ -747,7 +747,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         this.elecDescription = newDescription;
         if (newDescription.isNew()) {
             final String declarationString =
-                    CCodeHelper.generateSimpleDeclString(newDescription.getContainer());
+                    generateSimpleDeclStringForCodeArea(newDescription.getContainer());
             lockedLineStart = 0;
             lockedLineEnd = lockedLineStart + declarationString.length();
             this.replaceText(declarationString + "\n\n}");

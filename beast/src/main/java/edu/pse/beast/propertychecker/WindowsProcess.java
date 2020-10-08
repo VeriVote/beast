@@ -37,15 +37,8 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
 public final class WindowsProcess extends CBMCProcess {
     /** The Constant BLANK. */
     private static final String BLANK = " ";
-    /** The Constant EQUALS. */
-    private static final String EQUALS = "=";
     /** The Constant SEMICOLON. */
     private static final String SEMICOLON = ";";
-    /** The Constant QUOTE. */
-    private static final String QUOTE = "\"";
-
-    /** The Constant PASS_C_CONST. */
-    private static final String PASS_C_CONST = " -D ";
 
     /** The Constant A_VERY_LONG_TIME. */
     private static final double A_VERY_LONG_TIME = 1000d;
@@ -88,9 +81,9 @@ public final class WindowsProcess extends CBMCProcess {
      */
     public WindowsProcess(final int voters, final int candidates,
                           final int seats, final String advanced,
-                          final File toCheck, final CheckerFactory parent,
-                          final Result result) {
-        super(voters, candidates, seats, advanced, toCheck, parent, result);
+                          final List<String> unwindset, final File toCheck,
+                          final CheckerFactory parent, final Result result) {
+        super(voters, candidates, seats, advanced, unwindset, toCheck, parent, result);
     }
 
     /**
@@ -193,24 +186,29 @@ public final class WindowsProcess extends CBMCProcess {
      *            the amount of candidates
      * @param seats
      *            the amount of seats
+     * @param unwindset
+     *            the unwind set
      * @param advanced
      *            the user arguments
      * @return the string of arguments for cbmc
      */
     private static String createArguments(final int voters, final int candidates,
-                                          final int seats, final String advanced) {
+                                          final int seats, final List<String> unwindset,
+                                          final String advanced) {
         String userCommands = String.join(BLANK, advanced.split(SEMICOLON));
         // Trace is mandatory under windows, or the counterexample cannot get
         // generated.
-        userCommands = userCommands + BLANK + "--xml-ui";
+        userCommands = userCommands + BLANK + CBMC_XML_OUTPUT;
         // Set the values for the voters, candidates and seats.
         final String arguments =
-                userCommands + PASS_C_CONST
-                + UnifiedNameContainer.getVoter() + EQUALS + voters
-                + PASS_C_CONST
-                + UnifiedNameContainer.getCandidate() + EQUALS + candidates
-                + PASS_C_CONST
-                + UnifiedNameContainer.getSeats() + EQUALS + seats;
+                userCommands + BLANK
+                + passConstant(UnifiedNameContainer.getVoter(), voters)
+                + BLANK
+                + passConstant(UnifiedNameContainer.getCandidate(), candidates)
+                + BLANK
+                + passConstant(UnifiedNameContainer.getSeats(), seats)
+                + BLANK
+                + unwindString(unwindset);
         return arguments;
     }
 
@@ -230,7 +228,7 @@ public final class WindowsProcess extends CBMCProcess {
         }
         if (vsCmd != null) {
             // Surround the vsCMD string with quotes, in case it has spaces in it.
-            vsCmd = QUOTE + vsCmd + QUOTE;
+            vsCmd = quote(vsCmd);
             // Determine the OS architecture
             final boolean is64bit;
             if (System.getProperty("os.name").contains("Windows")) {
@@ -275,8 +273,8 @@ public final class WindowsProcess extends CBMCProcess {
 
         if (!new File(cbmcEXE).exists()) {
             ErrorForUserDisplayer
-                    .displayError("Cannot find the program \"" + CBMC_EXE
-                            + QUOTE + BLANK
+                    .displayError("Cannot find the program " + BLANK
+                            + quote(CBMC_EXE) + BLANK
                             + "in the subfolder \"windows/cbmcWin/\". \n "
                             + "Please download it from the cbmc website "
                             + "and place it there!");
@@ -286,13 +284,12 @@ public final class WindowsProcess extends CBMCProcess {
                     "This program does not have the privileges "
                             + "to execute this program. \n "
                             + "Please change the access rights for the program "
-                            + QUOTE + "/windows/cbmcWin/" + CBMC_EXE
-                            + QUOTE + BLANK
+                            + quote("/windows/cbmcWin/" + CBMC_EXE) + BLANK
                             + "in the BEAST installation folder and try again.");
             cbmcEXE = null;
         } else {
             // Surround it with quotes, in case there are spaces in the name
-            cbmcEXE = QUOTE + cbmcEXE + QUOTE;
+            cbmcEXE = quote(cbmcEXE);
         }
         return cbmcEXE;
     }
@@ -346,6 +343,7 @@ public final class WindowsProcess extends CBMCProcess {
     @Override
     protected Process createProcess(final File toCheck, final int voters,
                                     final int candidates, final int seats,
+                                    final List<String> unwindset,
                                     final String advanced) {
         final String vsCmd = tryToGetVsCmd();
         final String cbmcEXE = getCmbcExe();
@@ -354,17 +352,17 @@ public final class WindowsProcess extends CBMCProcess {
         }
 
         final String arguments =
-                createArguments(voters, candidates, seats, advanced);
+                createArguments(voters, candidates, seats, unwindset, advanced);
         // Enable the usage of includes in cbmc.
         final String userIncludeAndPath =
-                QUOTE + ENABLE_USER_INCLUDE
-                + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + QUOTE;
+                quote(ENABLE_USER_INCLUDE
+                        + SuperFolderFinder.getSuperFolder()
+                        + USER_INCLUDE_FOLDER);
         // Get all Files from the form "*.c" so we can include them into cbmc.
         final List<String> allFiles =
                 FileLoader.listAllFilesFromFolder(
-                        QUOTE + SuperFolderFinder.getSuperFolder()
-                        + USER_INCLUDE_FOLDER + QUOTE,
+                        quote(SuperFolderFinder.getSuperFolder()
+                                + USER_INCLUDE_FOLDER),
                         FileLoader.C_FILE_ENDING);
         // We have to give all available "*c" files to cbmc, in case the user
         // used their own includes, so we combine them here.
@@ -375,8 +373,8 @@ public final class WindowsProcess extends CBMCProcess {
         // inside VScmd has to be in one giant string
         final String cbmcCall =
                 vsCmd + BLANK + "&" + BLANK + cbmcEXE + BLANK
-                + userIncludeAndPath + BLANK + QUOTE
-                + toCheck.getAbsolutePath() + QUOTE + BLANK
+                + userIncludeAndPath + BLANK
+                + quote(toCheck.getAbsolutePath()) + BLANK
                 + compileAllIncludesInIncludePath + BLANK + arguments;
         final List<String> callInList = new ArrayList<String>();
         callInList.add(cbmcCall);
@@ -391,8 +389,7 @@ public final class WindowsProcess extends CBMCProcess {
         //                                                cbmcCall);
         final ProcessBuilder prossBuild =
                 new ProcessBuilder(CMD_EXE, SLASH_C,
-                        QUOTE + batFile.getAbsolutePath()
-                        + QUOTE);
+                                   quote(batFile.getAbsolutePath()));
 
         Process startedProcess = null;
         try {

@@ -46,6 +46,9 @@ public abstract class Checker implements Runnable {
     /** The to check. */
     private final File toCheck;
 
+    /** The unwind set. */
+    final List<String> unwindset;
+
     /** The parent. */
     private final CheckerFactory parent;
 
@@ -90,12 +93,13 @@ public abstract class Checker implements Runnable {
      */
     public Checker(final int voterAmount, final int candAmount,
                    final int seatAmount, final String advancedOptions,
-                   final File fileToCheck, final CheckerFactory parentFactory,
-                   final Result resultVal) {
+                   final List<String> unwindset, final File fileToCheck,
+                   final CheckerFactory parentFactory, final Result resultVal) {
         this.voters = voterAmount;
         this.candidates = candAmount;
         this.seats = seatAmount;
         this.advanced = advancedOptions;
+        this.unwindset = unwindset;
         this.toCheck = fileToCheck;
         this.parent = parentFactory;
         this.result = resultVal;
@@ -113,7 +117,7 @@ public abstract class Checker implements Runnable {
 
     @Override
     public final void run() {
-        process = createProcess(toCheck, voters, candidates, seats, advanced);
+        process = createProcess(toCheck, voters, candidates, seats, unwindset, advanced);
         if (process != null) {
             final CountDownLatch latch = new CountDownLatch(2);
             final ThreadedBufferedReader outReader =
@@ -236,6 +240,8 @@ public abstract class Checker implements Runnable {
      *            the amount of candidates to check with
      * @param seatAmount
      *            the amount of seats to check with
+     * @param unwindset
+     *            the list of bounds for specific loops in header files
      * @param advancedOptions
      *            all advanced options that might be applied
      * @return a process that describes the system process that is currently
@@ -243,7 +249,8 @@ public abstract class Checker implements Runnable {
      */
     protected abstract Process createProcess(File fileToCheck, int voterAmount,
                                              int candAmount, int seatAmount,
-                                             String advancedOptions);
+                                             final List<String> unwindset,
+                                             final String advancedOptions);
 
     /**
      * System specific implementation to stop the process that got started.

@@ -40,7 +40,9 @@ import static edu.pse.beast.toolbox.CCodeHelper.zero;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -78,11 +80,11 @@ import edu.pse.beast.types.OutputType;
  */
 public class CBMCCodeGenerator {
     /** The Constant C. */
-    public static final String C = "C";
+    public static final String C = UnifiedNameContainer.getCandidate();
     /** The Constant S. */
-    public static final String S = "S";
+    public static final String S = UnifiedNameContainer.getSeats();
     /** The Constant V. */
-    public static final String V = "V";
+    public static final String V = UnifiedNameContainer.getVoter();
 
     /** The Constant STD_LIB. */
     public static final String STD_LIB = "stdlib";
@@ -185,7 +187,9 @@ public class CBMCCodeGenerator {
     private static final String SIZE_TWO = "sizeTwo";
 
     /** The Constant CONCAT_ONE. */
-    private static final String CONCAT_ONE = "concatOne";
+    static final String CONCAT_ONE = "concatOne";
+    /** The Constant CONCAT_TWO. */
+    static final String CONCAT_TWO = "concatTwo";
     /** The Constant INTERSECT. */
     private static final String INTERSECT = "intersect";
     /** The Constant PERMUTATE_ONE. */
@@ -193,7 +197,7 @@ public class CBMCCodeGenerator {
     /** The Constant PERMUTATE_TWO. */
     private static final String PERMUTATE_TWO = "permutateTwo";
     /** The Constant VOTE_SUM_FOR_CANDIDATE. */
-    private static final String VOTE_SUM_FOR_CANDIDATE =
+    static final String VOTE_SUM_FOR_CANDIDATE =
             "voteSumForCandidate";
     /** The Constant UNIQUE. */
     private static final String UNIQUE = "Unique";
@@ -224,6 +228,12 @@ public class CBMCCodeGenerator {
 
     /** The code. */
     private CodeArrayListBeautifier code;
+
+    /**
+     * Loop bounds for header functions for pre- and postconditions, saved as pairs of
+     * (unique) loop name and bound value.
+     */
+    private Map<String, String> headerLoopBounds = new LinkedHashMap<String, String>();
 
     /** The election desc. */
     private final ElectionDescription electionDesc;
@@ -338,12 +348,41 @@ public class CBMCCodeGenerator {
     }
 
     /**
+     * Adds a vote loop bound.
+     *
+     * @param uniqueLoopName the unique loop name with this bound
+     */
+    private void addVoteLoopBound(final String uniqueLoopName) {
+        headerLoopBounds.put(uniqueLoopName, UnifiedNameContainer.getVoterKey());
+    }
+
+    /**
+     * Random split lines function.
+     *
+     * @param p1 the first parameter
+     * @param p2 the second parameter
+     * @return the function string
+     */
+    static String getRandomSplitLinesFunction(final String p1, final String p2) {
+        return functionCode(GET_RANDOM_SPLIT_LINES, p1, p2);
+    }
+
+    /**
      * Gets the code.
      *
      * @return returns the generated code
      */
     public ArrayList<String> getCode() {
         return code.getCodeArrayList();
+    }
+
+    /**
+     * Gets the bounds for the individual loops in the headers.
+     *
+     * @return the loop bounds for headers with a mapping from unique loop identifiers.
+     */
+    public Map<String, String> getLoopBoundsForHeaders() {
+        return headerLoopBounds;
     }
 
     /**
@@ -357,6 +396,7 @@ public class CBMCCodeGenerator {
         code.add(lineComment("User code."));
         final ArrayList<String> electionDescriptionCode = new ArrayList<String>();
         electionDescriptionCode.addAll(electionDesc.getComplexCode());
+        headerLoopBounds.putAll(electionDesc.getLoopBounds());
         code.addList(electionDescriptionCode);
         addMainMethod();
     }
@@ -371,8 +411,9 @@ public class CBMCCodeGenerator {
         // Add the header and the voting data
         addMarginHeaders(votingData);
         // Add the code the user wrote (e.g the election function)
-        code.addAll(GUIController.getController().getElectionDescription()
-                .getComplexCode());
+        final ElectionDescription descr = GUIController.getController().getElectionDescription();
+        code.addAll(descr.getComplexCode());
+        headerLoopBounds.putAll(descr.getLoopBounds());
         // Add the code which defines the votes
         final String origVotes =
                 varAssignCode(electionDesc.getContainer().getInputStruct().getStructAccess()
@@ -403,8 +444,9 @@ public class CBMCCodeGenerator {
         // Add the header and the voting data.
         addMarginHeaders(votingData);
         // Add the code the user wrote (e.g the election function).
-        code.addAll(GUIController.getController().getElectionDescription()
-                .getComplexCode());
+        final ElectionDescription descr = GUIController.getController().getElectionDescription();
+        code.addAll(descr.getComplexCode());
+        headerLoopBounds.putAll(descr.getLoopBounds());
         // Add the code which defines the votes.
         final String origVotes =
                 varAssignCode(electionDesc.getContainer().getInputStruct().getStructAccess()
@@ -665,12 +707,13 @@ public class CBMCCodeGenerator {
      *            the unique
      */
     private void addVoteSumFunc(final boolean unique) {
+        final String funcName = VOTE_SUM_FOR_CANDIDATE + (unique ? UNIQUE : "");
         final String input =
                 electionDesc.getContainer().getInputStruct().getStructAccess()
                     + space() + TMP_STRUCT;
         code.add(
             unsignedIntVar(
-                functionCode(VOTE_SUM_FOR_CANDIDATE + (unique ? UNIQUE : ""),
+                functionCode(funcName,
                              input,
                              unsignedIntVar(AMOUNT_VOTES),
                              unsignedIntVar(CANDIDATE))
@@ -684,9 +727,11 @@ public class CBMCCodeGenerator {
         sizes[0] = AMOUNT_VOTES;
         String forLoopStart = "";
         final List<String> loopVariables = generateLoopVariables(dimensions, arr());
+        int loopNr = 0;
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
+            addVoteLoopBound(funcName + "." + loopNr++);
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
@@ -713,6 +758,8 @@ public class CBMCCodeGenerator {
         code.add(assignment);
         code.add(uintVarEqualsCode(SUM) + zero() + CCodeHelper.SEMICOLON);
         code.add(forLoopHeaderCode(i(), lt(), AMOUNT_VOTES));
+        loopNr += (unique ? 1 : 0);
+        addVoteLoopBound(funcName + "." + loopNr);
 
         // Add the specific code which differs for different input types
         electionDesc.getContainer().getInputType().addCodeForVoteSum(code,
@@ -822,6 +869,7 @@ public class CBMCCodeGenerator {
         code.add();
         code.addSpaces(SPACES_PER_HALF_TAB);
         code.add(forLoopHeaderCode(i(), lt(), LENGTH));
+        addVoteLoopBound(PERMUTATE_TWO + ".2");
         code.add(varAssignCode(unsignedIntVar(NEW_INDEX),
                                functionCode(NONDET_UINT))
                 + CCodeHelper.SEMICOLON);
@@ -830,6 +878,7 @@ public class CBMCCodeGenerator {
                 + CCodeHelper.SEMICOLON);
         code.add();
         code.add(forLoopHeaderCode(j(), lt(), i()));
+        addVoteLoopBound(PERMUTATE_TWO + ".4");
         code.add(functionCode(ASSUME,
                               neq(NEW_INDEX, arrAccess(ALREADY_USED_ARR, j())))
                 + CCodeHelper.SEMICOLON);
@@ -966,7 +1015,7 @@ public class CBMCCodeGenerator {
         final String voteStruct =
                 electionDesc.getContainer().getInputStruct().getStructAccess();
         code.add(voteStruct + space()
-                + functionCode("concatTwo",
+                + functionCode(CONCAT_TWO,
                                voteStruct + space() + VOTES_ONE,
                                unsignedIntVar(SIZE_ONE),
                                voteStruct + space() + VOTES_TWO,
@@ -988,6 +1037,7 @@ public class CBMCCodeGenerator {
         code.add(spaces(SPACES_PER_HALF_TAB)
                 + forLoopHeaderCode(i(), lt(), SIZE_ONE)
                 + space() + lineComment(COMMENT_LIMIT_UPPER_BOUND));
+        addVoteLoopBound(CONCAT_TWO + ".3");
         code.add(spaces(SPACES_PER_TAB)
                 + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
@@ -1004,6 +1054,7 @@ public class CBMCCodeGenerator {
         code.add(spaces(SPACES_PER_HALF_TAB)
                 + forLoopHeaderCode(i(), lt(), SIZE_TWO)
                 + space() + lineComment(COMMENT_LIMIT_UPPER_BOUND));
+        addVoteLoopBound(CONCAT_TWO + ".5");
         code.add(spaces(SPACES_PER_TAB)
                 + forLoopHeaderCode(j(), lt(), C));
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
@@ -1115,10 +1166,8 @@ public class CBMCCodeGenerator {
         code.add(lineComment("Split array."));
         code.add();
         code.add(lineComment("Get splits cuts through an array of size max."));
-        code.add(unsignedIntVar(pointer(
-                functionCode(GET_RANDOM_SPLIT_LINES,
-                             unsignedIntVar(SPLITS),
-                             unsignedIntVar(MAX))))
+        code.add(unsignedIntVar(pointer(getRandomSplitLinesFunction(unsignedIntVar(SPLITS),
+                                                                    unsignedIntVar(MAX))))
                 + space() + CCodeHelper.OPENING_BRACES);
         code.add(spaces(SPACES_PER_HALF_TAB) + uintVarEqualsCode(pointer(SPLIT_ARR))
                 + functionCode(MALLOC, varMultiplyCode(SPLITS,
@@ -1148,6 +1197,7 @@ public class CBMCCodeGenerator {
                 + uintVarEqualsCode(LAST_SPLIT) + zero()
                 + CCodeHelper.SEMICOLON);
         code.add(spaces(SPACES_PER_TAB) + forLoopHeaderCode(i(), lt(), SPLITS));
+        addVoteLoopBound(GET_RANDOM_SPLIT_LINES + ".0");
         code.addSpaces(SPACES_PER_ONE_AND_HALF_TABS);
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS) + uintVarEqualsCode(NEXT_SPLIT)
                 + functionCode(NONDET_UINT)
@@ -1177,6 +1227,7 @@ public class CBMCCodeGenerator {
         code.addSpaces(SPACES_PER_TAB);
         code.add(spaces(SPACES_PER_TAB)
                 + forLoopHeaderCode(i(), lt(), SPLITS));
+        addVoteLoopBound(GET_RANDOM_SPLIT_LINES + ".1");
         code.add(spaces(SPACES_PER_ONE_AND_HALF_TABS)
                 + uintVarEqualsCode("debugrandom") + arrAccess(SPLIT_LINES, i())
                 + CCodeHelper.SEMICOLON);
@@ -1704,7 +1755,7 @@ public class CBMCCodeGenerator {
      * @return the string
      */
     private String generateRandomString(final int length) {
-        return RandomStringUtils.random(length, true, false);
+        return RandomStringUtils.random(length, true, false).toLowerCase();
     }
 
     /**
