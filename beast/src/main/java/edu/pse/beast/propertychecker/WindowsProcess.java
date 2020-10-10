@@ -100,7 +100,7 @@ public final class WindowsProcess extends CBMCProcess {
             flat += (i != 0 && i != list.size() ? BLANK : "") + l;
             i++;
         }
-        return "";
+        return flat;
     }
 
     /**
