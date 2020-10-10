@@ -148,6 +148,9 @@ public final class ResultPresenterNEW {
         if (result == null) {
             return;
         }
+        if (presentationType == null) { // TODO: Maybe check again.
+            setPresentationType(new CBMCOutput());
+        }
         final Node finishedResult = presentationType.presentResult(result);
         GUIController.getController()
                 .disableZoomSlider(!presentationType.supportsZoom());

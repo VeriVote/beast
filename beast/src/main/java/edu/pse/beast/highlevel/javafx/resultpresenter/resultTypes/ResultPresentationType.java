@@ -3,6 +3,7 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -133,8 +134,11 @@ public abstract class ResultPresentationType {
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
         final Map<Integer, Long> toReturn = new HashMap<Integer, Long>();
-        for (final Iterator<ResultValueWrapper> iterator = toExtract.iterator();
-                iterator.hasNext();) {
+        Iterator<ResultValueWrapper> emptyIterator =
+                new LinkedList<ResultValueWrapper>().iterator();
+        for (final Iterator<ResultValueWrapper>
+                iterator = toExtract != null ? toExtract.iterator() : emptyIterator;
+             iterator.hasNext();) {
             final ResultValueWrapper currentWrapper = iterator.next();
             final int index = currentWrapper.getMainIndex();
             final CBMCResultValueSingle singleValue =

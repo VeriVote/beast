@@ -938,10 +938,14 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 + CCodeHelper.SEMICOLON);
         final String splitLines = SPLIT_LINES + getTmpIndex();
         code.add(unsignedIntVar(arrAccess(splitLines, splits)) + CCodeHelper.SEMICOLON);
-        code.add(forLoopHeaderCode(i(), leq(), splits));
+        code.add(forLoopHeaderCode(i(), leq(), V));
+        code.add(functionCode(CCodeHelper.IF, leq(i(), splits))
+                + CCodeHelper.space()
+                + CCodeHelper.OPENING_BRACES);
         code.add(varAssignCode(arrAccess(splitLines, i()),
                                arrAccess(tmpLines, i()))
                 + CCodeHelper.SEMICOLON);
+        code.add(CCodeHelper.CLOSING_BRACES);
         code.add(CCodeHelper.CLOSING_BRACES);
         final int tupleSize = tupleVotes.size();
         final String lastSplit = LAST_SPLIT + getTmpIndex();

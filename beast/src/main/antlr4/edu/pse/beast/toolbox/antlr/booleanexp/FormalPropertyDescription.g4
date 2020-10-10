@@ -1,167 +1,293 @@
 grammar FormalPropertyDescription;
 
-booleanExpList : booleanExpListElement*;
+booleanExpList
+    : booleanExpListElement*
+    ;
 
-booleanExpListElement : booleanExp ';' |
+booleanExpListElement
+    :   booleanExp ';'
+    // New part 0
+    |   votingListChangeExp ';'
+    |   votingTupleChangeExp ';'
+    |   candidateListChangeExp ';'
+    ;
+    // End new part 0
 
-//new part 0
-                        votingListChangeExp ';'|
-                        votingTupleChangeExp ';' |
-                        candidateListChangeExp ';';
-//end new part 0
+// New part 1
+votingListChangeExp
+    :   Vote ValueAssign votingListChangeContent
+    ;
 
-//new part 1
-votingListChangeExp : Vote ValueAssign votingListChangeContent;
+// Expressions that make changes to the voting lists used
+votingListChangeContent
+    :   concatenationExp
+    |   permutationExp
+    ;
 
-votingListChangeContent : concatenationExp | permutationExp; //expressions that make changes to the voting lists used
+votingTupleChangeExp
+    :   tuple ValueAssign splitExp
+    ;
 
-votingTupleChangeExp: tuple ValueAssign splitExp;
+candidateListChangeExp
+    :   Elect ValueAssign intersectExp
+    ;
 
-candidateListChangeExp: Elect ValueAssign intersectExp;
+// End new part1
 
-//end new part1
+booleanExp
+    :   quantifierExp
+    |   notEmptyExp
+    |   intersectExp
+    |   binaryRelationExp
+    |   notExp
+    |   comparisonExp
+    |   OpenBracket booleanExp ClosedBracket
+    ;
 
-booleanExp :     quantifierExp | notEmptyExp | intersectExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+binaryRelationExp
+    :   binaryRelationExp BinaryRelationSymbol booleanExp
+    |   quantifierExp BinaryRelationSymbol booleanExp
+    |   notExp BinaryRelationSymbol booleanExp
+    |   comparisonExp BinaryRelationSymbol booleanExp
+    |   notEmptyExp BinaryRelationSymbol booleanExp
+    |   intersectExp BinaryRelationSymbol booleanExp
+    // |   concatenationExp BinaryRelationSymbol booleanExp
+    |   '(' binaryRelationExp ')' BinaryRelationSymbol booleanExp
+    |   '(' quantifierExp ')' BinaryRelationSymbol booleanExp
+    |   '(' notExp ')' BinaryRelationSymbol booleanExp
+    |   '(' comparisonExp ')' BinaryRelationSymbol booleanExp
+    |   '(' notEmptyExp ')' BinaryRelationSymbol booleanExp
+    |   '(' intersectExp ')' BinaryRelationSymbol booleanExp
+    ;
 
-binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
-                    quantifierExp BinaryRelationSymbol booleanExp |
-                    notExp BinaryRelationSymbol booleanExp |
-                    comparisonExp BinaryRelationSymbol booleanExp |
+// New part 2
+addedContentExp
+    :   notEmptyExp
+    |   intersectExp
+    ;
 
-                    notEmptyExp BinaryRelationSymbol booleanExp |
-                    intersectExp BinaryRelationSymbol booleanExp |
-//                    concatenationExp BinaryRelationSymbol booleanExp|
-
-
-
-                    '(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
-                    '(' quantifierExp ')' BinaryRelationSymbol booleanExp |
-                    '(' notExp ')' BinaryRelationSymbol booleanExp |
-                    '(' comparisonExp ')' BinaryRelationSymbol booleanExp |
-
-                    '(' notEmptyExp ')' BinaryRelationSymbol booleanExp |
-                    '(' intersectExp ')' BinaryRelationSymbol booleanExp
-                    ;
-
-//new part 2
-
-addedContentExp : notEmptyExp | intersectExp;
-
-notEmptyExp :        NotEmpty '(' notEmptyContent ')';
-
-
-notEmptyContent    : Elect | intersectExp;
-
-voteEquivalents : Vote | permutationExp | concatenationExp; //all types that are equivalent to "Vote" (e.g the function returns "Vote")
-
-concatenationExp :    '(' voteEquivalents Concatenate voteEquivalents ')'
-                    | Vote Concatenate voteEquivalents
-                    | permutationExp Concatenate voteEquivalents;
-
-splitExp :     Split '(' voteEquivalents ')';
-
-permutationExp: Permutation '(' voteEquivalents ')';
-
-intersectExp: Intersect '(' intersectContent ',' intersectContent ')';
-
-intersectContent : Elect | intersectExp;
-
-tuple :    '(' Vote tupleContent ')';
-
-tupleContent : ',' Vote | ',' Vote tupleContent;
-
-//end new part 2
-
-quantifierExp : Quantifier passSymbVar ':' booleanExp;
+notEmptyExp
+    :   NotEmpty '(' notEmptyContent ')'
+    ;
 
 
-notExp : '!' booleanExp;
+notEmptyContent
+    :   Elect
+    |   intersectExp
+    ;
 
-comparisonExp : typeExp ComparisonSymbol typeExp;
+// All types that are equivalent to "Vote" (e.g the function returns "Vote")
+voteEquivalents
+    :   Vote
+    |   permutationExp
+    |   concatenationExp
+    ;
 
-typeExp : electExp | voteExp | numberExpression | symbolicVarExp | typeByPosExp | intersectExp;
+concatenationExp
+    :   '(' voteEquivalents Concatenate voteEquivalents ')'
+    |   Vote Concatenate voteEquivalents
+    |   permutationExp Concatenate voteEquivalents
+    ;
 
-numberExpression :     '(' numberExpression ')' |
-            numberExpression Mult numberExpression |
-            numberExpression Add numberExpression |
-            voteSumExp |
-            voteSumUniqueExp |
-            constantExp |
-            integer;
+splitExp
+    :   Split '(' voteEquivalents ')'
+    ;
 
+permutationExp
+    :   Permutation '(' voteEquivalents ')'
+    ;
 
-typeByPosExp : voterByPosExp | candByPosExp | seatByPosExp;
+intersectExp
+    :   Intersect '(' intersectContent ',' intersectContent ')'
+    ;
 
-voterByPosExp : 'VOTER_AT_POS' passPosition;
+intersectContent
+    :   Elect | intersectExp
+    ;
 
-candByPosExp : 'CAND_AT_POS' passPosition;
+tuple
+    :   '(' Vote tupleContent ')'
+    ;
 
-seatByPosExp : 'SEAT_AT_POS' passPosition;
+tupleContent
+    :   ',' Vote
+    |   ',' Vote tupleContent
+    ;
 
-integer : Integer;
+// End new part 2
 
-electExp :  Elect passType*;
+quantifierExp
+    :   Quantifier passSymbVar ':' booleanExp
+    ;
 
-voteExp : Vote passType*;
+notExp
+    :   '!' booleanExp
+    ;
 
-passType : passSymbVar|passByPos;
+comparisonExp
+    :   typeExp ComparisonSymbol typeExp
+    ;
 
-constantExp : 'V' | 'C' | 'S';
+typeExp
+    :   electExp
+    |   voteExp
+    |   numberExpression
+    |   symbolicVarExp
+    |   typeByPosExp
+    |   intersectExp
+    ;
 
-voteSumExp : Votesum passType;
+numberExpression
+    :   '(' numberExpression ')'
+    |   numberExpression Mult numberExpression
+    |   numberExpression Add numberExpression
+    |   voteSumExp
+    |   voteSumUniqueExp
+    |   constantExp
+    |   integer
+    ;
 
-voteSumUniqueExp : VotesumUnique passType;
+typeByPosExp
+    :   voterByPosExp
+    |   candByPosExp
+    |   seatByPosExp
+    ;
 
-passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
+voterByPosExp
+    :   'VOTER_AT_POS' passPosition
+    ;
 
-passPosition : OpenBracket numberExpression ClosedBracket;
+candByPosExp
+    :   'CAND_AT_POS' passPosition
+    ;
 
-passByPos : OpenBracket typeByPosExp ClosedBracket;
+seatByPosExp
+    :   'SEAT_AT_POS' passPosition
+    ;
 
-symbolicVarExp : Identifier;
+integer
+    :   Integer
+    ;
 
-//Lexer
+electExp
+    :   Elect passType*
+    ;
 
-Mult : '*'|'/';
+voteExp
+    :   Vote passType*
+    ;
 
-Add : '+'|'-';
+passType
+    :   passSymbVar
+    |   passByPos
+    ;
+
+constantExp
+    :   'V'
+    |   'C'
+    |   'S'
+    ;
+
+voteSumExp
+    :   Votesum passType
+    ;
+
+voteSumUniqueExp
+    :   VotesumUnique passType
+    ;
+
+passSymbVar
+    :   OpenBracket symbolicVarExp ClosedBracket
+    ;
+
+passPosition
+    :   OpenBracket numberExpression ClosedBracket
+    ;
+
+passByPos
+    :   OpenBracket typeByPosExp ClosedBracket
+    ;
+
+symbolicVarExp
+    :   Identifier
+    ;
+
+// Lexer
+
+Mult
+    :   '*'
+    |   '/'
+    ;
+
+Add
+    :   '+'
+    |   '-'
+    ;
 
 Concatenate : '++';
 
 Intersect : 'INTERSECT';
 
-Vote : 'VOTES' Integer;
+Vote
+    :   'VOTES' Integer
+    ;
 
-Elect : 'ELECT' Integer;
+Elect
+    :   'ELECT' Integer
+    ;
 
-NotEmpty: 'NOTEMPTY';
+NotEmpty : 'NOTEMPTY';
 
-Votesum : 'VOTE_SUM_FOR_CANDIDATE' Integer;
+Votesum
+    :   'VOTE_SUM_FOR_CANDIDATE' Integer
+    ;
 
-VotesumUnique : 'VOTE_SUM_FOR_UNIQUE_CANDIDATE' Integer;
+VotesumUnique
+    :   'VOTE_SUM_FOR_UNIQUE_CANDIDATE' Integer
+    ;
 
 ClosedBracket : ')';
 
 OpenBracket : '(';
 
-Quantifier : 'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
-            'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
+Quantifier
+    :   'FOR_ALL_VOTERS'
+    |   'FOR_ALL_CANDIDATES'
+    |   'FOR_ALL_SEATS'
+    |   'EXISTS_ONE_VOTER'
+    |   'EXISTS_ONE_CANDIDATE'
+    |   'EXISTS_ONE_SEAT'
+    ;
 
-//new part 3
-Split :        'SPLIT';
+// New part 3
+Split : 'SPLIT';
 
 Permutation : 'PERM';
 
 ValueAssign : '<-';
-//end new part 3
+// End new part 3
 
-ComparisonSymbol : '==' | '!=' | '<=' | '>=' | '<' | '>';
+ComparisonSymbol
+    :   '=='
+    |   '!='
+    |   '<='
+    |   '>='
+    |   '<'
+    |   '>'
+    ;
 
-BinaryRelationSymbol : '&&' | '||' | '==>' | '<==>';
+BinaryRelationSymbol
+    :   '&&'
+    |   '||'
+    |   '==>'
+    |   '<==>'
+    ;
 
-Integer : Digit+;
+Integer
+    :   Digit+
+    ;
 
-// same rules as C
+// Same rules as C
 
 Identifier
     :   IdentifierNondigit
@@ -174,7 +300,7 @@ fragment
 IdentifierNondigit
     :   Nondigit
     |   UniversalCharacterName
-    //|   // other implementation-defined characters...
+    // |   // Other implementation-defined characters ...
     ;
 
 fragment

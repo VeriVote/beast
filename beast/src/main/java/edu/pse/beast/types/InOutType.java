@@ -8,6 +8,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -376,8 +377,10 @@ public abstract class InOutType {
                                    final String varNameMatcher,
                                    final Map<Integer, Long> sizes) {
         final List<String> toReturn = new ArrayList<String>();
-        final List<ResultValueWrapper> votes = // TODO name container
+        List<ResultValueWrapper> votes = // TODO name container
                 result.readVariableValue(varNameMatcher);
+        votes = votes == null ?
+                new LinkedList<ResultValueWrapper>() : votes;
 
         for (final ResultValueWrapper currentVar : votes) {
             final long size = sizes.get(currentVar.getMainIndex());

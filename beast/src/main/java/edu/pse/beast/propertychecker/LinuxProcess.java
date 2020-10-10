@@ -67,19 +67,19 @@ public final class LinuxProcess extends CBMCProcess {
                                  final int candidates, final int seats,
                                  final List<String> unwindset,
                                  final String advanced) {
-        final List<String> arguments = new ArrayList<String>();
+        final List<String> arguments = new ArrayList<String>(11);
         final String cbmc =
-                quote(new File(SuperFolderFinder.getSuperFolder()
-                                + RELATIVE_PATH_TO_CBMC_64).getPath());
+                new File(SuperFolderFinder.getSuperFolder()
+                        + RELATIVE_PATH_TO_CBMC_64).getPath();
         // Enable the usage of includes in cbmc.
         final String userIncludeAndPath =
-                quote(getUserIncludeFiles(SuperFolderFinder.getSuperFolder()
-                                            + USER_INCLUDE_FOLDER));
+                getUserIncludeFiles(SuperFolderFinder.getSuperFolder()
+                        + USER_INCLUDE_FOLDER);
         // Get all Files from the form "*.c" so we can include them into cbmc.
         final List<String> allFiles =
                 FileLoader.listAllFilesFromFolder(
-                        quote(SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER),
-                              FileLoader.C_FILE_ENDING);
+                        SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER,
+                        FileLoader.C_FILE_ENDING);
         if (!new File(cbmc.replace(quote(), "")).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Cannot find the cbmc program in the subfolder \"linux/cbmcLin/\", "
@@ -99,19 +99,20 @@ public final class LinuxProcess extends CBMCProcess {
             arguments.add(toCheck.getAbsolutePath().replace(quote(), ""));
             // Iterate over all "*.c" files from the include folder, to include
             // them
-            for (Iterator<String> iterator = allFiles.iterator();
-                    iterator.hasNext();) {
+            for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
                 final String toBeIncludedFile = iterator.next();
                 arguments.add(toBeIncludedFile.replace(quote(), ""));
             }
-            // Here we supply this call with the correct values for the voters,
-            // candidates and seats.
-            arguments.add(passConstant(UnifiedNameContainer.getVoter(), voters));
-            arguments.add(passConstant(UnifiedNameContainer.getCandidate(), candidates));
-            arguments.add(passConstant(UnifiedNameContainer.getSeats(), seats));
-            arguments.add(unwindString(unwindset).replace(quote(), ""));
             // We need the trace command to track the output on the command line
+            arguments.add("--trace");
             arguments.add(CBMC_XML_OUTPUT);
+            // Here we supply this call with the correct values for the candidates,
+            // voters, and seats.
+            arguments.add(passConstant(UnifiedNameContainer.getCandidate(), candidates));
+            arguments.add(passConstant(UnifiedNameContainer.getVoter(), voters));
+            arguments.add(passConstant(UnifiedNameContainer.getSeats(), seats));
+            arguments.addAll(unwindSet(unwindset));
+            // arguments.add("--unwind 7");
             if (advanced != null && advanced.length() > 0) {
                 for (int i = 0; i < advanced.split(CCodeHelper.SEMICOLON).length; i++) {
                     final String sanitized =
@@ -122,10 +123,28 @@ public final class LinuxProcess extends CBMCProcess {
                 }
             }
             Process startedProcess = null;
-            final ProcessBuilder prossBuild =
-                    new ProcessBuilder(arguments.toArray(new String[0]));
+            //final ProcessBuilder prossBuild = // ProcessBuilder produces problems
+            //        new ProcessBuilder(arguments);//.toArray(new String[0]));
+            //prossBuild.directory(new File(SuperFolderFinder.getSuperFolder()
+            //                        + RELATIVE_PATH_TO_CBMC_64).getParentFile());
+            // prossBuild.inheritIO();
+            // prossBuild.environment().putAll(System.getenv());
+            // prossBuild.redirectErrorStream(true);
+            String argument = "";
+            int a = 0;
+            for (final String arg: arguments) {
+                if (!argument.isEmpty() && a != arguments.size()) {
+                    argument += " ";
+                }
+                argument += arg;
+                a++;
+            }
             try {
-                startedProcess = prossBuild.start();
+                startedProcess = // prossBuild.start();
+                Runtime.getRuntime().exec(argument, null,
+                                          new File(SuperFolderFinder.getSuperFolder()
+                                                     + RELATIVE_PATH_TO_CBMC_64)
+                                          .getParentFile());
             } catch (IOException e) {
                 e.printStackTrace();
             }

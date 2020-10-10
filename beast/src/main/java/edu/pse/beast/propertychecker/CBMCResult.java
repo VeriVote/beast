@@ -96,7 +96,13 @@ public final class CBMCResult extends Result {
         reset();
         super.setResult(result);
         if (result != null) {
-            parseResult(); // Get the xml list from this list of strings.
+            try {
+                // Get the xml list from this list of strings.
+                parseResult();
+            } catch (SAXException e) {
+                e.printStackTrace();
+                return;
+            }
             // TODO Add the NameContainer here.
             final String[] arr = {"votes\\d", "elect\\d"};
             readVariableValue(Arrays.asList(arr));
@@ -107,7 +113,7 @@ public final class CBMCResult extends Result {
     /**
      * Parses the result.
      */
-    private void parseResult() {
+    private void parseResult() throws SAXException {
         int offset = 0; // TODO Beautify
         final OperatingSystems os = CBMCProcessFactory.determineOS();
         switch (os) {
@@ -133,7 +139,7 @@ public final class CBMCResult extends Result {
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             this.rootElement = builder.parse(xmlStream);
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+        } catch (ParserConfigurationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -209,7 +215,12 @@ public final class CBMCResult extends Result {
         if (super.getResult() != null && super.getResult().size() > 0) {
             // the result object is set
             if (rootElement == null) {
-                parseResult();
+                try {
+                    parseResult();
+                } catch (SAXException e) {
+                    e.printStackTrace();
+                    return false;
+                }
             }
             return true;
         } else { // it is not set, so we return false

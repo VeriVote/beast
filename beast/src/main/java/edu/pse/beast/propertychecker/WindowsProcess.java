@@ -87,6 +87,23 @@ public final class WindowsProcess extends CBMCProcess {
     }
 
     /**
+     * Flatten list of strings into giant string for command line call
+     * concatenated with white spaces in-between.
+     *
+     * @param list the list of strings
+     * @return the flattened string
+     */
+    private static String flatten(List<String> list) {
+        String flat = "";
+        int i = 0;
+        for (final String l: list) {
+            flat += (i != 0 && i != list.size() ? BLANK : "") + l;
+            i++;
+        }
+        return "";
+    }
+
+    /**
      * Find CBMC instance.
      *
      * @param pid
@@ -208,7 +225,7 @@ public final class WindowsProcess extends CBMCProcess {
                 + BLANK
                 + passConstant(UnifiedNameContainer.getSeats(), seats)
                 + BLANK
-                + unwindString(unwindset);
+                + flatten(unwindSet(unwindset));
         return arguments;
     }
 
@@ -375,7 +392,11 @@ public final class WindowsProcess extends CBMCProcess {
                 vsCmd + BLANK + "&" + BLANK + cbmcEXE + BLANK
                 + userIncludeAndPath + BLANK
                 + quote(toCheck.getAbsolutePath()) + BLANK
-                + compileAllIncludesInIncludePath + BLANK + arguments;
+                + compileAllIncludesInIncludePath + BLANK
+                + "--trace" + BLANK
+                + CBMC_XML_OUTPUT + BLANK
+                + arguments;
+
         final List<String> callInList = new ArrayList<String>();
         callInList.add(cbmcCall);
         final File batFile =

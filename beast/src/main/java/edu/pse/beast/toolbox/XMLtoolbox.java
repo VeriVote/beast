@@ -1,5 +1,7 @@
 package edu.pse.beast.toolbox;
 
+import javax.imageio.metadata.IIOMetadataNode;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -11,7 +13,7 @@ import org.w3c.dom.NodeList;
 public final class XMLtoolbox {
 
     /**
-     * Instantiates a new XM ltoolbox.
+     * Instantiates a new XMLtoolbox.
      */
     private XMLtoolbox() { }
 
@@ -24,7 +26,8 @@ public final class XMLtoolbox {
      *            the node which child items should be cleaned
      */
     public static void clean(final Node node) {
-        final NodeList childNodes = node.getChildNodes();
+        final NodeList childNodes = node != null ?
+                node.getChildNodes() : new IIOMetadataNode();
 
         for (int n = childNodes.getLength() - 1; n >= 0; n--) {
             final Node child = childNodes.item(n);

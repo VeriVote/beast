@@ -1,11 +1,11 @@
 package edu.pse.beast.propertychecker;
 
-import static edu.pse.beast.toolbox.CCodeHelper.comma;
 import static edu.pse.beast.toolbox.CCodeHelper.constAssignCode;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
 import static edu.pse.beast.toolbox.CCodeHelper.typeVar;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,13 +80,12 @@ public abstract class CBMCProcess extends Checker {
      * @param unwindset the unwindset
      * @return the string
      */
-    static String unwindString(final List<String> unwindset) {
-        String unw = unwindset.isEmpty() ? "" : UNWIND_SET + space();
-        int i = 0;
+    static List<String> unwindSet(final List<String> unwindset) {
+        List<String> list = new ArrayList<String>(unwindset.size());
         for (final String unwind: unwindset) {
-            unw += (i++ != (unwindset.size() - 1)) ? comma(unwind) : unwind;
+            list.add(UNWIND_SET + space() + unwind.replace(space(), ""));
         }
-        return quote(unw);
+        return list;
     }
 
     /**

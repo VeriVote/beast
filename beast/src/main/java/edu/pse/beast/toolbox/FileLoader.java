@@ -161,8 +161,7 @@ public final class FileLoader {
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile() && file.getName().endsWith(endsWith)) {
-                    // surround it with quotes in case there are spaces in there
-                    foundFiles.add(QUOTE + file.getAbsolutePath() + QUOTE);
+                    foundFiles.add(file.getAbsolutePath());
                 }
             }
         }
