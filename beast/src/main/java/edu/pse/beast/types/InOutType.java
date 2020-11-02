@@ -353,7 +353,7 @@ public abstract class InOutType {
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     /**
-     * A human readable representation of this type.
+     * A human readable name of this type, e.g., "Single choice" or "Approval".
      *
      * @return the string
      */

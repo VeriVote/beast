@@ -107,6 +107,7 @@ public abstract class InputType extends InOutType {
 
     /**
      * Vets a value to determine if it is legal for the input type, or not.
+     * This method will always return a legal value for the given input type.
      *
      * @param container
      *            the type container
@@ -117,7 +118,7 @@ public abstract class InputType extends InOutType {
      * @param positionInRow
      *            the position in row
      * @param newValue
-     *            the new value
+     *            the value to be checked
      * @return the new value
      */
     public abstract String vetValue(ElectionTypeContainer container,
@@ -205,29 +206,35 @@ public abstract class InputType extends InOutType {
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     /**
-     * Vet amount candidates.
+     * Vets the amount of candidates.
+     * This will return a correct number of candidates, negative values will most likely be
+     * considered wrong and therefore '1' will be returned.
      *
      * @param amountCandidates
-     *            the amount candidates
-     * @return the int
+     *            the proposed amount of candidates
+     * @return the proposed amount of candidates if permissible, otherwise the previous one
      */
     public abstract int vetAmountCandidates(int amountCandidates);
 
     /**
      * Vet amount voters.
+     * This will return a correct number of voters, negative values will most likely be
+     * considered wrong and therefore '1' will be returned.
      *
      * @param amountVoters
-     *            the amount voters
-     * @return the int
+     *            the proposed amount of voters
+     * @return the proposed amount of voters if permissible, otherwise the previous one
      */
     public abstract int vetAmountVoters(int amountVoters);
 
     /**
      * Vet amount seats.
+     * This will return a correct number of seats, negative values will most likely be
+     * considered wrong and therefore '1' will be returned.
      *
      * @param amountSeats
-     *            the amount seats
-     * @return the int
+     *            the proposed amount of seats
+     * @return the proposed amount of seats if permissible, otherwise the previous one
      */
     public abstract int vetAmountSeats(int amountSeats);
 

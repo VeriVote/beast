@@ -165,9 +165,9 @@ public final class ElectionSimulation implements MenuBarInterface {
         final List<CBMCResultValueWrapper> valueWrappers =
                 new ArrayList<CBMCResultValueWrapper>();
 
-        for (int i = 0; i < this.getNumCandidates(); i++) {
+        for (NEWRowOfValues row: rows) {
             final CBMCResultValue result =
-                    inType.convertRowToResultValue(rows.get(i));
+                    inType.convertRowToResultValue(row);
             valueWrappers.add(new CBMCResultValueWrapper(result));
         }
         topArrayValue.setValue(valueWrappers);

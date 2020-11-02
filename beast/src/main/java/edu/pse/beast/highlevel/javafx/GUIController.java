@@ -1332,11 +1332,11 @@ public class GUIController {
         if (triplet != null) {
             codeArea.setNewElectionDescription(
                     new ElectionDescription(triplet.first(), triplet.second(),
-                            triplet.third(), 0, 0, 0, true));
+                                            triplet.third(), 0, 0, 0, true));
+            updateElectionInputIndexText(triplet.second());
+            this.getElectionSimulation().updateContainer(
+                    codeArea.getElectionDescription().getContainer());
         }
-        updateElectionInputIndexText(triplet.second());
-        this.getElectionSimulation().updateContainer(
-                codeArea.getElectionDescription().getContainer());
     }
 
     /**
