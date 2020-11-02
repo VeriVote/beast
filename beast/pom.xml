@@ -201,7 +201,7 @@
                 <groupId>org.openjfx</groupId>
                 <!-- Instead of `exec:java`, use `javafx:run` to run the application -->
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.4</version>
+                <version>0.0.5</version>
                 <configuration>
                     <vendor>KIT</vendor>
                     <jlinkImageName>beast</jlinkImageName>
@@ -410,14 +410,14 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.36.2</version>
+                            <version>8.37</version>
                         </dependency>
                     </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.1.3</version>
+                    <version>4.1.4</version>
                 </plugin>
             </plugins>
         </pluginManagement>
