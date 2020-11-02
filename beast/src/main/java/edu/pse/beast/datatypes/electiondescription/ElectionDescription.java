@@ -4,6 +4,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.dotStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
+import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 import static edu.pse.beast.toolbox.CCodeHelper.lt;
 import static edu.pse.beast.toolbox.CCodeHelper.space;
@@ -203,12 +204,11 @@ public class ElectionDescription {
         final List<String> loopVariables =
                 generateLoopVariables(code, dimensions, VOTES);
         final String[] sizes = container.getInputType().getSizeOfDimensions();
-        sizes[0] = AMOUNT_VOTES;
         String forLoopStart = "";
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
-            if (sizes[i].equals(AMOUNT_VOTES)) {
+            if (sizes[i].equals(UnifiedNameContainer.getVoter())) {
                 addVoteLoopBound(UnifiedNameContainer.getVotingMethod() + "." + i);
             }
         }
@@ -225,11 +225,25 @@ public class ElectionDescription {
                                         access),
                               dotArrStructAccess(votesName, access))
                 + CCodeHelper.SEMICOLON;
+        final String conditionalAssignment;
+        if (0 < dimensions) {
+            conditionalAssignment =
+                    space()
+                    + functionCode(CCodeHelper.IF,
+                                   lt(loopVariables.get(0), AMOUNT_VOTES))
+                    + space() + CCodeHelper.OPENING_BRACES + space()
+                    + assignment
+                    + space() + CCodeHelper.CLOSING_BRACES
+                    + space();
+        } else {
+            conditionalAssignment = assignment;
+        }
         final String switchedArray =
                 space() + getContainer().getInputType().getDataTypeAndSign()
                 + space() + UnifiedNameContainer.getVotingArray()
                 + getContainer().getInputType().getDimensionDescriptor(true)
-                + CCodeHelper.SEMICOLON + forLoopStart + assignment + forLoopEnd;
+                + CCodeHelper.SEMICOLON
+                + forLoopStart + conditionalAssignment + forLoopEnd;
         String middlePart = code.substring(lockedLineEnd, lockedBracePos);
         final String thirdPart = code.substring(lockedBracePos);
         middlePart = replaceReturns(middlePart,
