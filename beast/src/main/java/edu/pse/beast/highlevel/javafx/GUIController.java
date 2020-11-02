@@ -2088,7 +2088,6 @@ public class GUIController {
         if (!timeOut.getText().isEmpty()) {
             time = new TimeOut(timeUnitChoice.getValue(),
                     Integer.parseInt(timeOut.getText()));
-            numberProcesses = Integer.parseInt(processes.getText());
         }
         String argument = advancedParameters.getText();
         final int maxUnrollings = getMaxUnrolls();
