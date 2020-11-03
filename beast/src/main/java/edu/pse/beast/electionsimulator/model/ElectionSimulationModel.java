@@ -193,6 +193,7 @@ public class ElectionSimulationModel {
             final NEWRowOfValues currentRow = iterator.next();
             currentRow.setContainer(elTypeContainer);
         }
+        update();
     }
 
     /**
@@ -419,8 +420,15 @@ public class ElectionSimulationModel {
             if (currentRowSize < size) {
                 while (currentRowSize < size) {
                     if (xDescriptors.size() > currentRowSize) {
-                        candidateGridPane.add(xDescriptors.get(currentRowSize),
-                                              currentRowSize, 0);
+                        final TextField template = xDescriptors.get(currentRowSize);
+                        final TextField toAdd =
+                                new TextField(template.getText());
+                        toAdd.setEditable(template.isEditable());
+                        toAdd.setMinSize(template.getMinWidth(), template.getMinHeight());
+                        toAdd.setPrefSize(template.getPrefWidth(), template.getPrefHeight());
+                        toAdd.setMaxSize(template.getMaxWidth(), template.getMaxHeight());
+                        xDescriptors.add(toAdd);
+                        candidateGridPane.add(toAdd, currentRowSize, 0);
                     } else {
                         final TextField candToAdd =
                                 new TextField(xLabel + currentCandidates);
