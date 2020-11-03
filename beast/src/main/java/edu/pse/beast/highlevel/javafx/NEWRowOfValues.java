@@ -55,7 +55,7 @@ public class NEWRowOfValues {
     private boolean disabled;
 
     /** The is two dim. */
-    private final boolean isTwoDim;
+    private boolean isTwoDim;
 
     /** The row size. */
     private int rowSize;
@@ -232,6 +232,8 @@ public class NEWRowOfValues {
      */
     public void setContainer(final ElectionTypeContainer electTypeContainer) {
         this.container = electTypeContainer;
+        this.isTwoDim =
+                electTypeContainer.getInputType().getAmountOfDimensions() == 2;
         for (int i = 0; i < values.size(); i++) {
             checkAndInsertValue(ZERO, i, false);
         }

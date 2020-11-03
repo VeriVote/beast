@@ -73,13 +73,13 @@ public class ElectionSimulationModel {
     private int currentCandidates;
 
     /** The x label. */
-    private final String xLabel;
+    private String xLabel;
 
     /** The y label. */
     private final String yLabel;
 
     /** The is two dim. */
-    private final boolean isTwoDim;
+    private boolean isTwoDim;
 
     /**
      * Instantiates a new election simulation model.
@@ -105,13 +105,12 @@ public class ElectionSimulationModel {
         this.yLabel = elTypeContainer.getInputType().getSizeOfDimensions()[0];
         GUIController.getController()
             .updateElectionInputIndexText(elTypeContainer.getInputType());
-
-        if (elTypeContainer.getInputType().getAmountOfDimensions() == 2) {
+        this.isTwoDim = elTypeContainer.getInputType().getAmountOfDimensions() == 2;
+        if (isTwoDim) {
             this.xLabel = elTypeContainer.getInputType().getSizeOfDimensions()[1];
         } else {
             this.xLabel = "";
         }
-        isTwoDim = elTypeContainer.getInputType().getAmountOfDimensions() == 2;
     }
 
     /**
@@ -183,6 +182,12 @@ public class ElectionSimulationModel {
      */
     public void changeContainer(final ElectionTypeContainer elTypeContainer) {
         this.container = elTypeContainer;
+        this.isTwoDim = elTypeContainer.getInputType().getAmountOfDimensions() == 2;
+        if (this.isTwoDim) {
+            this.xLabel = elTypeContainer.getInputType().getSizeOfDimensions()[1];
+        } else {
+            this.xLabel = "";
+        }
         for (Iterator<NEWRowOfValues> iterator = rows.iterator();
                 iterator.hasNext();) {
             final NEWRowOfValues currentRow = iterator.next();
