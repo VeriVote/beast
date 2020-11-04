@@ -32,7 +32,7 @@ public enum InternalTypeRep {
     WEIGHTED_APPROVAL,
 
     /**
-     * IntergerType.
+     * IntegerType.
      */
     INTEGER,
 

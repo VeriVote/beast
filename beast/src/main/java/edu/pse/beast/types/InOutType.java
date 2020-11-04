@@ -379,6 +379,10 @@ public abstract class InOutType {
         final List<String> toReturn = new ArrayList<String>();
         List<ResultValueWrapper> votes = // TODO name container
                 result.readVariableValue(varNameMatcher);
+        if (votes != null && votes.isEmpty()
+                && varNameMatcher.startsWith(UnifiedNameContainer.getVotingArray())) {
+            toReturn.add("Property fails for any input.\n");
+        }
         votes = votes == null ?
                 new LinkedList<ResultValueWrapper>() : votes;
 

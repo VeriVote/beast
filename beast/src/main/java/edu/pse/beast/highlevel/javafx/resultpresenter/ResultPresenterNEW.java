@@ -60,7 +60,7 @@ public final class ResultPresenterNEW {
      * Gets the default presentation.
      */
     private void getDefaultPresentation() {
-        final List<ResultPresentationType> types = getEligablePresentationTypes();
+        final List<ResultPresentationType> types = getEligiblePresentationTypes();
         for (final Iterator<ResultPresentationType> iterator =
                 types.iterator();
                 iterator.hasNext();) {
@@ -79,7 +79,7 @@ public final class ResultPresenterNEW {
      */
     private void reset() {
         ResultImageRenderer.reset();
-        GUIController.getController().setEligableTypes(new ArrayList<ResultPresentationType>());
+        GUIController.getController().setEligibleTypes(new ArrayList<ResultPresentationType>());
         resultScrollPane.setContent(null);
         // resultPane.getChildren().clear();
     }
@@ -100,13 +100,13 @@ public final class ResultPresenterNEW {
     }
 
     /**
-     * Gets the eligable presentation types.
+     * Gets the eligible presentation types.
      *
-     * @return the eligable presentation types
+     * @return the eligible presentation types
      */
-    private List<ResultPresentationType> getEligablePresentationTypes() {
+    private List<ResultPresentationType> getEligiblePresentationTypes() {
         this.presentationType = null;
-        final List<ResultPresentationType> eligableTypes =
+        final List<ResultPresentationType> eligibleTypes =
             new ArrayList<ResultPresentationType>();
 
         for (final Iterator<ResultPresentationType> iterator =
@@ -114,14 +114,14 @@ public final class ResultPresenterNEW {
                 iterator.hasNext();) {
             final ResultPresentationType typeToCheck = iterator.next();
             if (typeToCheck.supports(result.getAnalysisType())) {
-                eligableTypes.add(typeToCheck);
+                eligibleTypes.add(typeToCheck);
             }
         }
         // TODO maybe find a better way to find the best presenter
         // for every type
         this.setPresentationType(new CBMCOutput());
-        GUIController.getController().setEligableTypes(eligableTypes);
-        return eligableTypes;
+        GUIController.getController().setEligibleTypes(eligibleTypes);
+        return eligibleTypes;
     }
 
     /**

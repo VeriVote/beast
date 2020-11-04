@@ -2721,15 +2721,15 @@ public class GUIController {
     }
 
     /**
-     * Sets the eligable types.
+     * Sets the eligible types.
      *
-     * @param eligableTypes
-     *            the new eligable types
+     * @param eligibleTypes
+     *            the new eligible types
      */
-    public void setEligableTypes(final List<ResultPresentationType> eligableTypes) {
+    public void setEligibleTypes(final List<ResultPresentationType> eligibleTypes) {
         displayFormat.getItems().clear();
         for (Iterator<ResultPresentationType> iterator =
-                    eligableTypes.iterator();
+                    eligibleTypes.iterator();
                 iterator.hasNext();) {
             final ResultPresentationType type =
                     (ResultPresentationType) iterator.next();

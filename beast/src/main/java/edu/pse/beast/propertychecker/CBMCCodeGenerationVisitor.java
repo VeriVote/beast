@@ -734,7 +734,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitElectExp(final ElectExp exp) {
         visitAccessingNodesReverseOrder(exp);
         String tempCode = (ELECT + NUMBER_TEMPLATE).replace(NUMBER_TEMPLATE,
-                String.valueOf(exp.getCount()));
+                String.valueOf(exp.getCount())) + dotArr();
         for (int i = 0; i < exp.getAccessingVars().length; ++i) {
             tempCode += arrAcc(VAR_TEMPLATE).replace(VAR_TEMPLATE, variableNames.pop());
             listlvl--;
