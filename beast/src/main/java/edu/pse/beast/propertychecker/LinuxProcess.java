@@ -42,6 +42,8 @@ public final class LinuxProcess extends CBMCProcess {
      *            the amount of seats
      * @param advanced
      *            the string that represents the advanced options
+     * @param unwindset
+     *            the set of loop bounds with respective loop identifiers
      * @param toCheck
      *            the file to check with cbmc
      * @param parent
@@ -65,7 +67,7 @@ public final class LinuxProcess extends CBMCProcess {
     @Override
     public Process createProcess(final File toCheck, final int voters,
                                  final int candidates, final int seats,
-                                 final List<String> unwindset,
+                                 final List<String> unwindings,
                                  final String advanced) {
         final List<String> arguments = new ArrayList<String>(11);
         final String cbmc =
@@ -104,14 +106,14 @@ public final class LinuxProcess extends CBMCProcess {
                 arguments.add(toBeIncludedFile.replace(quote(), ""));
             }
             // We need the trace command to track the output on the command line
-            arguments.add("--trace");
+            arguments.add(CBMC_TRACE);
             arguments.add(CBMC_XML_OUTPUT);
             // Here we supply this call with the correct values for the candidates,
             // voters, and seats.
             arguments.add(passConstant(UnifiedNameContainer.getCandidate(), candidates));
             arguments.add(passConstant(UnifiedNameContainer.getVoter(), voters));
             arguments.add(passConstant(UnifiedNameContainer.getSeats(), seats));
-            arguments.addAll(unwindSet(unwindset));
+            arguments.addAll(unwindSet(unwindings));
             // arguments.add("--unwind 7");
             if (advanced != null && advanced.length() > 0) {
                 for (int i = 0; i < advanced.split(CCodeHelper.SEMICOLON).length; i++) {

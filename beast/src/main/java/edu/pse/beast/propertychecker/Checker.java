@@ -26,6 +26,9 @@ public abstract class Checker implements Runnable {
     /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;
 
+    /** The unwind set. */
+    final List<String> unwindset;
+
     /**
      * The process that this checker runs.
      */
@@ -45,9 +48,6 @@ public abstract class Checker implements Runnable {
 
     /** The to check. */
     private final File toCheck;
-
-    /** The unwind set. */
-    final List<String> unwindset;
 
     /** The parent. */
     private final CheckerFactory parent;
@@ -83,6 +83,8 @@ public abstract class Checker implements Runnable {
      *            the amount of seats to check with
      * @param advancedOptions
      *            all advanced options that might be applied
+     * @param unwindings
+     *            the list of bounds for specific loops in header files
      * @param fileToCheck
      *            the path to the file to check
      * @param parentFactory
@@ -93,13 +95,13 @@ public abstract class Checker implements Runnable {
      */
     public Checker(final int voterAmount, final int candAmount,
                    final int seatAmount, final String advancedOptions,
-                   final List<String> unwindset, final File fileToCheck,
+                   final List<String> unwindings, final File fileToCheck,
                    final CheckerFactory parentFactory, final Result resultVal) {
         this.voters = voterAmount;
         this.candidates = candAmount;
         this.seats = seatAmount;
         this.advanced = advancedOptions;
-        this.unwindset = unwindset;
+        this.unwindset = unwindings;
         this.toCheck = fileToCheck;
         this.parent = parentFactory;
         this.result = resultVal;
@@ -240,7 +242,7 @@ public abstract class Checker implements Runnable {
      *            the amount of candidates to check with
      * @param seatAmount
      *            the amount of seats to check with
-     * @param unwindset
+     * @param unwindings
      *            the list of bounds for specific loops in header files
      * @param advancedOptions
      *            all advanced options that might be applied
@@ -249,8 +251,8 @@ public abstract class Checker implements Runnable {
      */
     protected abstract Process createProcess(File fileToCheck, int voterAmount,
                                              int candAmount, int seatAmount,
-                                             final List<String> unwindset,
-                                             final String advancedOptions);
+                                             List<String> unwindings,
+                                             String advancedOptions);
 
     /**
      * System specific implementation to stop the process that got started.

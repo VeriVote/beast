@@ -6,6 +6,7 @@ import static edu.pse.beast.toolbox.CCodeHelper.arrAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.conjunct;
 import static edu.pse.beast.toolbox.CCodeHelper.define;
 import static edu.pse.beast.toolbox.CCodeHelper.defineIfNonDef;
+import static edu.pse.beast.toolbox.CCodeHelper.dot;
 import static edu.pse.beast.toolbox.CCodeHelper.dotArrStructAccess;
 import static edu.pse.beast.toolbox.CCodeHelper.eq;
 import static edu.pse.beast.toolbox.CCodeHelper.forLoopHeaderCode;
@@ -118,6 +119,13 @@ public class CBMCCodeGenerator {
     /** The Constant MAIN. */
     public static final String MAIN = "main";
 
+    /** The Constant VOTE_SUM_FOR_CANDIDATE. */
+    static final String VOTE_SUM_FOR_CANDIDATE = "voteSumForCandidate";
+    /** The Constant CONCAT_ONE. */
+    static final String CONCAT_ONE = "concatOne";
+    /** The Constant CONCAT_TWO. */
+    static final String CONCAT_TWO = "concatTwo";
+
     /** The Constant TMP_STRUCT. */
     private static final String TMP_STRUCT = "tmp_struct";
 
@@ -186,19 +194,12 @@ public class CBMCCodeGenerator {
     /** The Constant SIZE_TWO. */
     private static final String SIZE_TWO = "sizeTwo";
 
-    /** The Constant CONCAT_ONE. */
-    static final String CONCAT_ONE = "concatOne";
-    /** The Constant CONCAT_TWO. */
-    static final String CONCAT_TWO = "concatTwo";
     /** The Constant INTERSECT. */
     private static final String INTERSECT = "intersect";
     /** The Constant PERMUTATE_ONE. */
     private static final String PERMUTATE_ONE = "permutateOne";
     /** The Constant PERMUTATE_TWO. */
     private static final String PERMUTATE_TWO = "permutateTwo";
-    /** The Constant VOTE_SUM_FOR_CANDIDATE. */
-    static final String VOTE_SUM_FOR_CANDIDATE =
-            "voteSumForCandidate";
     /** The Constant UNIQUE. */
     private static final String UNIQUE = "Unique";
 
@@ -731,7 +732,7 @@ public class CBMCCodeGenerator {
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
-            addVoteLoopBound(funcName + "." + loopNr++);
+            addVoteLoopBound(funcName + dot() + loopNr++);
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
@@ -758,8 +759,8 @@ public class CBMCCodeGenerator {
         code.add(assignment);
         code.add(uintVarEqualsCode(SUM) + zero() + CCodeHelper.SEMICOLON);
         code.add(forLoopHeaderCode(i(), lt(), AMOUNT_VOTES));
-        loopNr += (unique ? 1 : 0);
-        addVoteLoopBound(funcName + "." + loopNr);
+        loopNr += unique ? 1 : 0;
+        addVoteLoopBound(funcName + dot() + loopNr);
 
         // Add the specific code which differs for different input types
         electionDesc.getContainer().getInputType().addCodeForVoteSum(code,
@@ -1662,7 +1663,7 @@ public class CBMCCodeGenerator {
                                     inOutType.getSizeOfDimensionsAsList(),
                                     new ArrayList<String>());
         String assignment =
-                valueName + "."
+                valueName + dot()
                 + UnifiedNameContainer.getStructValueName();
         for (int i = 0; i < inOutType.getAmountOfDimensions(); i++) {
             assignment += arrAcc(loopVariables.get(i));

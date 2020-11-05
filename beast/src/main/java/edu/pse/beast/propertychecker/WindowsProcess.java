@@ -70,7 +70,9 @@ public final class WindowsProcess extends CBMCProcess {
      * @param seats
      *            the amount of seats
      * @param advanced
-     *            the string that represents the advanced options"
+     *            the string that represents the advanced options
+     * @param unwindset
+     *            the set of loop bounds with respective loop identifiers
      * @param toCheck
      *            the file to check with cbmc
      * @param parent
@@ -93,7 +95,7 @@ public final class WindowsProcess extends CBMCProcess {
      * @param list the list of strings
      * @return the flattened string
      */
-    private static String flatten(List<String> list) {
+    private static String flatten(final List<String> list) {
         String flat = "";
         int i = 0;
         for (final String l: list) {
@@ -360,7 +362,7 @@ public final class WindowsProcess extends CBMCProcess {
     @Override
     protected Process createProcess(final File toCheck, final int voters,
                                     final int candidates, final int seats,
-                                    final List<String> unwindset,
+                                    final List<String> unwindings,
                                     final String advanced) {
         final String vsCmd = tryToGetVsCmd();
         final String cbmcEXE = getCmbcExe();
@@ -369,7 +371,7 @@ public final class WindowsProcess extends CBMCProcess {
         }
 
         final String arguments =
-                createArguments(voters, candidates, seats, unwindset, advanced);
+                createArguments(voters, candidates, seats, unwindings, advanced);
         // Enable the usage of includes in cbmc.
         final String userIncludeAndPath =
                 quote(ENABLE_USER_INCLUDE
@@ -393,7 +395,7 @@ public final class WindowsProcess extends CBMCProcess {
                 + userIncludeAndPath + BLANK
                 + quote(toCheck.getAbsolutePath()) + BLANK
                 + compileAllIncludesInIncludePath + BLANK
-                + "--trace" + BLANK
+                + CBMC_TRACE + BLANK
                 + CBMC_XML_OUTPUT + BLANK
                 + arguments;
 

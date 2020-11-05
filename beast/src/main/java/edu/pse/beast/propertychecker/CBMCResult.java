@@ -112,6 +112,9 @@ public final class CBMCResult extends Result {
 
     /**
      * Parses the result.
+     *
+     * @throws SAXException
+     *           an SAX exception in case the xml stream cannot be parsed properly
      */
     private void parseResult() throws SAXException {
         int offset = 0; // TODO Beautify

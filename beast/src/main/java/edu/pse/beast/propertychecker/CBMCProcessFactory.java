@@ -59,6 +59,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
      * but the file that is already there will be reused. */
     private File toCheck;
 
+    /** The loop bounds with their respective loop identifiers as keys. */
     private Map<String, String> loopBounds = new LinkedHashMap<String, String>();
 
     /**

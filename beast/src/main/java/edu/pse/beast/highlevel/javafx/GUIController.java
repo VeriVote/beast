@@ -100,18 +100,20 @@ public class GUIController {
     private static final String INPUT_ELEC_IN = "input.elecIn";
     /** The Constant OPT_STRING. */
     private static final String OPT_STRING = "options";
-    /** The Constant BALLOT_PROFILE_Y_INDEX_STRING. */
-    private static final String BALLOT_PROFILE_Y_INDEX_STRING = "Voters";
-    /** The Constant BALLOT_PROFILE_Y_INDEX_STRING. */
-    private static final String BALLOT_PROFILE_Y_STACK_INDEX_STRING = "Cand";
-    /** The Constant BALLOT_PROFILE_X_INDEX_STRING. */
-    private static final String BALLOT_PROFILE_X_INDEX_STRING = "Cand →";
-    /** The Constant BALLOT_PROFILE_X_INDEX_STRING. */
-    private static final String BALLOT_PROFILE_X_STACK_INDEX_STRING = "Num →";
     /** The Constant MINUS_SIGN. */
     private static final String MINUS_SIGN = "-";
     /** The Constant BLANK. */
     private static final String BLANK = " ";
+    /** The Constant ARROW. */
+    private static final String ARROW = "→";
+    /** The Constant VOTERS. */
+    private static final String VOTERS = "Voters";
+    /** The Constant CANDIDATES. */
+    private static final String CANDIDATES = "Candidates";
+    /** The Constant SEATS. */
+    private static final String SEATS = "Seats";
+    /** The Constant CAND. */
+    private static final String CAND = "Cand";
     /** The Constant MATCH_DEC. */
     private static final String MATCH_DEC = "\\d*";
     /** The Constant REPLACE_FROM_DEC. */
@@ -626,9 +628,9 @@ public class GUIController {
         final TreeItem<String> symbVarRoot = new TreeItem<String>();
         symbVarRoot.setExpanded(true);
         variableTreeView.setRoot(symbVarRoot);
-        this.voterItems = new TreeItem<String>("Voters");
-        this.candidateItems = new TreeItem<String>("Candidates");
-        this.seatItems = new TreeItem<String>("Seats");
+        this.voterItems = new TreeItem<String>(VOTERS);
+        this.candidateItems = new TreeItem<String>(CANDIDATES);
+        this.seatItems = new TreeItem<String>(SEATS);
         symbVarRoot.getChildren().add(voterItems);
         symbVarRoot.getChildren().add(candidateItems);
         symbVarRoot.getChildren().add(seatItems);
@@ -1933,13 +1935,20 @@ public class GUIController {
         electionSimulation.save();
     }
 
-    public void updateElectionInputIndexText(final InputType elecInputType) {
+    /**
+     * Update election input index text depending whether the input has
+     * stack type or not.
+     *
+     * @param elecInputType
+     *            the election input type
+     */
+    public final void updateElectionInputIndexText(final InputType elecInputType) {
         if (elecInputType.isStackType()) {
-            ballotProfileYIndex.setText(BALLOT_PROFILE_Y_STACK_INDEX_STRING);
-            ballotProfileXIndex.setText(BALLOT_PROFILE_X_STACK_INDEX_STRING);
+            ballotProfileYIndex.setText(CAND);
+            ballotProfileXIndex.setText("Num" + BLANK + ARROW);
         } else {
-            ballotProfileYIndex.setText(BALLOT_PROFILE_Y_INDEX_STRING);
-            ballotProfileXIndex.setText(BALLOT_PROFILE_X_INDEX_STRING);
+            ballotProfileYIndex.setText(VOTERS);
+            ballotProfileXIndex.setText(CAND + BLANK + ARROW);
         }
     }
 

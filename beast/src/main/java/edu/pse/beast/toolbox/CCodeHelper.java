@@ -334,6 +334,15 @@ public final class CCodeHelper {
     }
 
     /**
+     * Produces a dot.
+     *
+     * @return a dot
+     */
+    public static String dot() {
+        return DOT;
+    }
+
+    /**
      * Generate line comment.
      *
      * @param text
@@ -1124,7 +1133,7 @@ public final class CCodeHelper {
         String arrAccess = notNullOrEmpty(owner) ? owner : "";
         if (notNullOrEmpty(owner)) {
             arrAccess += notNullOrEmpty(structName)
-                    ? (DOT + structName) : dotArr();
+                    ? (dot() + structName) : dotArr();
             if (notNullOrEmpty(dims)) {
                 for (final String dim : dims) {
                     arrAccess += notNullOrEmpty(dim) ? arrAcc(dim) : "";
@@ -1273,6 +1282,21 @@ public final class CCodeHelper {
     }
 
     /**
+     * Simplify the voting function for the GUI to hide the variable "amountVotes"
+     * from the voting function signature for the user.
+     *
+     * @param declString
+     *            the declaration String from code generation
+     * @return the simplified declaration String
+     */
+    private static String simplifyForGUI(final String declString) {
+        final String emptyString = "";
+        return declString
+                .replace(comma(unsignedIntVar(amountVoteVar())), emptyString)
+                .replace(amountVoteVar(), UnifiedNameContainer.getVoter());
+    }
+
+    /**
      * Generates the declaration String for a voting function depending on its
      * input and result type. This is the voting method which will be presented
      * to the user, so it should not contain structs, but just simple data types
@@ -1280,6 +1304,9 @@ public final class CCodeHelper {
      *
      * @param container
      *            the input format of the voting array passed to the function
+     * @param onlyForGUI
+     *            a boolean declaring whether the string is "only" presented
+     *            via the GUI to the user or actually to be used in the analysis
      * @return the voting function declaration line
      */
     private static String generateSimpleDeclString(final ElectionTypeContainer container,
@@ -1305,35 +1332,6 @@ public final class CCodeHelper {
     }
 
     /**
-     * Simplify the voting function for the GUI to hide the variable "amountVotes"
-     * from the voting function signature for the user.
-     *
-     * @param decl
-     *            the declaration String from code generation
-     * @return the simplified declaration String
-     */
-    private static String simplifyForGUI(final String declString) {
-        final String emptyString = "";
-        return declString
-                .replace(comma(unsignedIntVar(amountVoteVar())), emptyString)
-                .replace(amountVoteVar(), UnifiedNameContainer.getVoter());
-    }
-
-    /**
-     * Generates the declaration String for a voting function depending on its
-     * input and result type. This is the voting method which will be presented
-     * to the user, so it should not contain structs, but just simple data types
-     * (except if it cannot be helped).
-     *
-     * @param container
-     *            the input format of the voting array passed to the function
-     * @return the voting function declaration line
-     */
-    public static String generateSimpleDeclStringForCodeArea(final ElectionTypeContainer cont) {
-        return generateSimpleDeclString(cont, true);
-    }
-
-    /**
      * Generates the declaration String for a voting function depending on its
      * input and result type. This is the voting method which will be presented
      * to the user, so it should not contain structs, but just simple data types
@@ -1345,6 +1343,21 @@ public final class CCodeHelper {
      */
     public static String generateSimpleDeclString(final ElectionTypeContainer container) {
         return generateSimpleDeclString(container, false);
+    }
+
+    /**
+     * Generates the declaration String for a voting function depending on its
+     * input and result type. This is the voting method which will be presented
+     * to the user, so it should not contain structs, but just simple data types
+     * (except if it cannot be helped).
+     *
+     * @param cont
+     *            the input format of the voting array passed to the function
+     * @return the voting function declaration line
+     */
+    public static String
+            generateSimpleDeclStringForCodeArea(final ElectionTypeContainer cont) {
+        return generateSimpleDeclString(cont, true);
     }
 
     /**

@@ -14,19 +14,52 @@ import java.util.List;
  * @author Lukas Stapelbroek
  */
 public abstract class CBMCProcess extends Checker {
+    /** The Constant CBMC_TRACE. */
+    static final String CBMC_TRACE = "--trace";
+
+    /** The Constant CBMC_XML_OUTPUT. */
+    static final String CBMC_XML_OUTPUT = "--xml-ui";
+
     /** The Constant QUOTE. */
     private static final String QUOTE = "\"";
 
     /** The Constant PASS_C_CONST. */
     private static final String PASS_C_CONST = "-D";
 
-    static String UNWIND_SET = "--unwindset";
+    /** The Constant UNWIND_SET. */
+    private static final String UNWIND_SET = "--unwindset";
 
     /** The Constant ENABLE_USER_INCLUDE. */
     private static final String ENABLE_USER_INCLUDE = "-I";
 
-    /** The Constant CBMC_XML_OUTPUT. */
-    static final String CBMC_XML_OUTPUT = "--xml-ui";
+    /**
+     * Creates a new CBMCProcess that is a super class for the system specific
+     * processes that run cbmc.
+     *
+     * @param voters
+     *            the amount of voters
+     * @param candidates
+     *            the amount of candidates
+     * @param seats
+     *            the amount of seats
+     * @param advanced
+     *            the string that represents the advanced options
+     * @param unwindings
+     *            the list of bounds for specific loops in header files
+     * @param toCheck
+     *            the file to check with cbmc
+     * @param parent
+     *            the parent CheckerFactory, that has to be notified about
+     *            finished checking
+     * @param result
+     *            the result
+     */
+    public CBMCProcess(final int voters, final int candidates, final int seats,
+                       final String advanced, final List<String> unwindings,
+                       final File toCheck, final CheckerFactory parent,
+                       final Result result) {
+        super(voters, candidates, seats, advanced, unwindings, toCheck, parent, result);
+    }
 
     /**
      * Put some name in quotes.
@@ -66,7 +99,7 @@ public abstract class CBMCProcess extends Checker {
     /**
      * User include files (typically c-header-files ending with ".h").
      *
-     * @param folderPath
+     * @param folder
      *            the path to the folder that holds the user include files
      * @return the string
      */
@@ -81,37 +114,10 @@ public abstract class CBMCProcess extends Checker {
      * @return the string
      */
     static List<String> unwindSet(final List<String> unwindset) {
-        List<String> list = new ArrayList<String>(unwindset.size());
+        final List<String> list = new ArrayList<String>(unwindset.size());
         for (final String unwind: unwindset) {
             list.add(UNWIND_SET + space() + unwind.replace(space(), ""));
         }
         return list;
-    }
-
-    /**
-     * Creates a new CBMCProcess that is a super class for the system specific
-     * processes that run cbmc.
-     *
-     * @param voters
-     *            the amount of voters
-     * @param candidates
-     *            the amount of candidates
-     * @param seats
-     *            the amount of seats
-     * @param advanced
-     *            the string that represents the advanced options
-     * @param toCheck
-     *            the file to check with cbmc
-     * @param parent
-     *            the parent CheckerFactory, that has to be notified about
-     *            finished checking
-     * @param result
-     *            the result
-     */
-    public CBMCProcess(final int voters, final int candidates, final int seats,
-                       final String advanced, final List<String> unwindset,
-                       final File toCheck, final CheckerFactory parent,
-                       final Result result) {
-        super(voters, candidates, seats, advanced, unwindset, toCheck, parent, result);
     }
 }

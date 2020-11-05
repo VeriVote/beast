@@ -26,8 +26,8 @@ public final class XMLtoolbox {
      *            the node which child items should be cleaned
      */
     public static void clean(final Node node) {
-        final NodeList childNodes = node != null ?
-                node.getChildNodes() : new IIOMetadataNode();
+        final NodeList childNodes = node != null
+                ? node.getChildNodes() : new IIOMetadataNode();
 
         for (int n = childNodes.getLength() - 1; n >= 0; n--) {
             final Node child = childNodes.item(n);

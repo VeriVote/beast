@@ -383,8 +383,9 @@ public abstract class InOutType {
                 && varNameMatcher.startsWith(UnifiedNameContainer.getVotingArray())) {
             toReturn.add("Property fails for any input.\n");
         }
-        votes = votes == null ?
-                new LinkedList<ResultValueWrapper>() : votes;
+        votes = votes == null
+                ? new LinkedList<ResultValueWrapper>()
+                        : votes;
 
         for (final ResultValueWrapper currentVar : votes) {
             final long size = sizes.get(currentVar.getMainIndex());

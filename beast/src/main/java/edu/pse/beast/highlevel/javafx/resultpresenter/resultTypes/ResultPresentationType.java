@@ -134,7 +134,7 @@ public abstract class ResultPresentationType {
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
         final Map<Integer, Long> toReturn = new HashMap<Integer, Long>();
-        Iterator<ResultValueWrapper> emptyIterator =
+        final Iterator<ResultValueWrapper> emptyIterator =
                 new LinkedList<ResultValueWrapper>().iterator();
         for (final Iterator<ResultValueWrapper>
                 iterator = toExtract != null ? toExtract.iterator() : emptyIterator;
