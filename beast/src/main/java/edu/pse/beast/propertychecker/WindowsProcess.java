@@ -51,7 +51,7 @@ public final class WindowsProcess extends CBMCProcess {
     private static final String CBMC64_EXE = "cbmc64.exe";
 
     /** The Constant RELATIVE_PATH_TO_CBMC_64. */
-    private static final String RELATIVE_PATH_TO_CBMC_64 =
+    private static final String RELATIVE_PATH_TO_CBMC =
             "/windows/cbmcWIN/" + CBMC_EXE;
 
     /** The Constant ENABLE_USER_INCLUDE. */
@@ -288,7 +288,7 @@ public final class WindowsProcess extends CBMCProcess {
         String cbmcEXE = "";
         // Load the system specific cbmc programs.
         cbmcEXE = new File(SuperFolderFinder.getSuperFolder()
-                + RELATIVE_PATH_TO_CBMC_64).getPath();
+                + RELATIVE_PATH_TO_CBMC).getPath();
 
         if (!new File(cbmcEXE).exists()) {
             ErrorForUserDisplayer

@@ -115,6 +115,11 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
+     * Reset.
+     */
+    abstract void reset();
+
+    /**
      * Checks if is test.
      *
      * @return true, if is test
@@ -225,6 +230,7 @@ public abstract class Result implements ResultInterface {
      */
     public void setStarted() {
         wasStarted = true;
+        reset();
     }
 
     /**

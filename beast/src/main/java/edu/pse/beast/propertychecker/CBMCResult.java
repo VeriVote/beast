@@ -82,10 +82,8 @@ public final class CBMCResult extends Result {
         // Empty constructor
     }
 
-    /**
-     * Reset.
-     */
-    private void reset() {
+    @Override
+    void reset() {
         this.valueCache.clear();
         this.rootElement = null;
         this.isInitialized();
