@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.scene.Node;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
@@ -66,6 +69,13 @@ public final class Default extends ResultPresentationType {
 
         for (int i = 0; i < toAdd.size(); i++) {
             area.appendText(toAdd.get(i));
+        }
+
+        if (result.checkAssertionSuccess()) {
+            area.setBackground(new Background(new BackgroundFill(Color.GREENYELLOW, null, null)));
+            area.appendText("The property holds!\n");
+        } else if (!result.checkAssertionFailure()) {
+            area.setBackground(new Background(new BackgroundFill(Color.YELLOW, null, null)));
         }
         return area;
     }
