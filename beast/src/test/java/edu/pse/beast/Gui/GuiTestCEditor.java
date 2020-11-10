@@ -5,6 +5,7 @@ import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
@@ -14,6 +15,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 /**
  * Created by holger on 07.03.17.
  */
+@Ignore
 public class GuiTestCEditor {
 
     private final long waittime = 500;

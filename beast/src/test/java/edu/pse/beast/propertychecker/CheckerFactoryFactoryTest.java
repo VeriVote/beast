@@ -19,7 +19,7 @@ public class CheckerFactoryFactoryTest {
 
     @Test
     public void createSuccess() {
-        PropertyChecker checker = CheckerFactoryFactory.createPropertyChecker("cbmc");
+        PropertyChecker checker = CheckerFactoryFactory.createPropertyChecker(CheckerFactoryFactory.CBMC_KEY);
         assertNotNull(checker);
     }
 
@@ -30,7 +30,7 @@ public class CheckerFactoryFactoryTest {
     
     @Test
     public void resultSuccess() {
-        List<Result> result = CheckerFactoryFactory.getMatchingResult("cbmc", 1);
+        List<Result> result = CheckerFactoryFactory.getMatchingResult(CheckerFactoryFactory.CBMC_KEY, 1);
         assertNotNull(result);
         assertTrue(result.get(0) instanceof CBMCResult);
     }
@@ -43,7 +43,7 @@ public class CheckerFactoryFactoryTest {
     
     @Test
     public void createCheckerfactorySuccess() {
-        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory("cbmc", null, null, null, null, null, false);
+        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(CheckerFactoryFactory.CBMC_KEY, null, null, null, null, null, false);
         
         assertNotNull(factory);
         

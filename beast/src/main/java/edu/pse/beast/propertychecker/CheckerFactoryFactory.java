@@ -14,6 +14,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
 public final class CheckerFactoryFactory {
     private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();
     private static boolean initialized = false;
+    public static final String CBMC_KEY = "CBMC";
 
     private CheckerFactoryFactory() {
 
@@ -22,7 +23,7 @@ public final class CheckerFactoryFactory {
     private static void init() {
         if (!initialized) {
             // cbmc is always included, so we add it here
-            factories.put("CBMC", new CBMCProcessFactory(null, null, null, null, null, false));
+            factories.put(CBMC_KEY, new CBMCProcessFactory(null, null, null, null, null, false));
 
             // TODO search for other classes
 
