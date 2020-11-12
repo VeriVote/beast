@@ -1,0 +1,78 @@
+
+  When running a test with empty properties, an exception gets thrown which doesnt get caught of type 
+  org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 67;
+  The markup in the document following the root element must be well-formed.
+  
+  this happens in CBMCResult.parseResult() line: 148	
+  this is the xml:
+    final InputStream xmlStream =
+                IOUtils.toInputStream(
+                        String.join(
+                                "",
+                                super.getResult().subList(offset, super.getResult().size())
+                                ),
+                        charSet
+                        );
+  
+ Im guessing its missing a beginning <message type=""> tag
+ and a <cprover> beginning tag
+ 
+ 
+ <message type="STATUS-MESSAGE">
+<text>CBMC version 5.10 (cbmc-5.10) 32-bit i386 windows</text>
+</message>
+<message type="STATUS-MESSAGE">
+	<text>Parsing D:\code\eclipse-workspace\BEAST\BEAST\beast\core\generated_c_files\6os8ocepn1j3qnr60u0t.c</text>
+</message>
+<message type="ERROR">
+	<text>Der Befehl "CL" ist entweder falsch geschrieben oder</text>
+</message>
+<message type="ERROR">
+	<text>konnte nicht gefunden werden.</text>
+</message>
+<message type="ERROR">
+	<text>CL Preprocessing failed</text>
+</message>
+<message type="ERROR">
+	<text>PARSING ERROR</text>
+</message>
+<message type="ERROR">
+	<text>Numeric exception : 0</text>
+</message>
+
+</cprover>
+
+i think this is the complete msg
+D:\code\eclipse-workspace\BEAST\BEAST\beast>"
+D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\VsDevCmd.bat"  
+ & "D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\cbmcWIN\cbmc.exe"
+ "-ID:\code\eclipse-workspace\BEAST\BEAST\beast/core/user_includes/" 
+ "D:\code\eclipse-workspace\BEAST\BEAST\beast\core\generated_c_files\cl95jo6mcqnnj65fucuu.c"
+  D:\code\eclipse-workspace\BEAST\BEAST\beast\core\user_includes\foo.c --trace --xml-ui  --xml-ui -D V=1 -D C=1 -D S=1 --unwindset voteSumForCandidate.0:1 --unwindset voteSumForCandidate.1:1 --unwindset voteSumForCandidate.2:1 --unwindset voteSumForCandidateUnique.0:1 --unwindset voteSumForCandidateUnique.1:1 --unwindset voteSumForCandidateUnique.3:1 --unwindset getRandomSplitLines.0:1 --unwindset getRandomSplitLines.1:1 --unwindset concatTwo.3:1 --unwindset concatTwo.5:1 --unwindset permutateTwo.2:1 --unwindset permutateTwo.4:1 --unwindset voting.0:1 D:\code\eclipse-workspace\BEAST\BEAST\beast>call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"" 
+  
+  <?xml version="1.0" encoding="UTF-8"?>
+  <cprover>
+  <program>CBMC 5.10 (cbmc-5.10)</program>
+  <message type="STATUS-MESSAGE">  <<---------above one starts here (offset = 8)
+  <text>CBMC version 5.10 (cbmc-5.10) 32-bit i386 windows</text></message>
+  <message type="STATUS-MESSAGE">  
+  <text>Parsing D:\code\eclipse-workspace\BEAST\BEAST\beast\core\generated_c_files\cl95jo6mcqnnj65fucuu.c</text>
+  </message>
+  <message type="ERROR">  
+  <text>Der Befehl "CL" ist entweder falsch geschrieben oder</text>
+  </message>
+  <message type="ERROR">  <text>konnte nicht gefunden werden.</text>
+  </message>
+  <message type="ERROR">  <text>CL Preprocessing failed</text>
+  </message>
+  <message type="ERROR">  <text>PARSING ERROR</text>
+  </message>
+  <message type="ERROR">  <text>Numeric exception : 0</text>
+  </message>
+  </cprover>
+  
+  for some reason sublist starts to late
+  
+  /** The Constant WIN_OFFSET. */
+    private static final int WIN_OFFSET = 8;
+  im guessing its not so constant after all...maybe bcus it doesnt find cl?
