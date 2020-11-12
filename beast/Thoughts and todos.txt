@@ -76,3 +76,38 @@ D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\VsDevCmd.bat"
   /** The Constant WIN_OFFSET. */
     private static final int WIN_OFFSET = 8;
   im guessing its not so constant after all...maybe bcus it doesnt find cl?
+  
+  Im guessing instead of using the offset we could just try and find the first <?xml tag? Id need to know about
+  the linux output maybe
+  
+  So I implemented that and it works. Now theres an issue because theres no preconditions. Im guessing there
+  are no sanity checks on the input whatsoever?
+  
+  Yeah, if I just open an empty project and click start it throws Exceptions on Exceptions :D fun fun fun
+  
+  This happens here         
+  
+  edu.pse.beast.datatypes.electiondescription.ElectionDescription.getComplexCode
+  String middlePart = code.substring(lockedLineEnd, lockedBracePos);
+  
+  Im guessing the variable code doesnt get set when the class first gets created? Anyways, ill have to check
+  that later. Also, im pretty sure we used to check the c code for errors by running it through a compiler...?
+  
+  Ok leave that aside for now, when I open a project with preconditions and everything it throws an exception
+  Exception in thread "CheckerFactory Property 2" java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+	at java.base/java.util.Objects.checkIndex(Objects.java:372)
+	at java.base/java.util.ArrayList.get(ArrayList.java:459)
+	at edu.pse.beast/edu.pse.beast.propertychecker.CheckerFactory.runTest(CheckerFactory.java:434)
+	at edu.pse.beast/edu.pse.beast.propertychecker.CheckerFactory.run(CheckerFactory.java:146)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+  
+  im guessing its here                                 
+  res.readVariableValue(ELECT_DEC).get(0)
+  
+  why do i feel like this whole parsing the results thing needs a complete refactor
+  
+  in the parameter menu it doesnt show the solver. Maybe it doesnt even load cmbc to begin with..??? 
+  

@@ -107,6 +107,23 @@ public final class CBMCResult extends Result {
             // Already read "votes" and "elect", so the access can be faster.
         }
     }
+    
+    /**
+     * goes through @param lines and returns the first position of an xml tag.
+     * We use this in parseResult 
+     * @param lines list of strings
+     * @return first position of an xml tag
+     */
+    private int findFirstXMLLine(List<String> lines) {
+    	int lineNumber = 0;
+    	for (String string : lines) {
+			if(string.contains("<?xml")) {
+				return lineNumber;
+			}
+			lineNumber++;
+		}
+    	return -1;
+    }
 
     /**
      * Parses the result.
@@ -127,12 +144,14 @@ public final class CBMCResult extends Result {
         default:
             break;
         }
+        List<String> lines = super.getResult();
+        offset = findFirstXMLLine(lines);
 
         final InputStream xmlStream =
                 IOUtils.toInputStream(
                         String.join(
                                 "",
-                                super.getResult().subList(offset, super.getResult().size())
+                                lines.subList(offset, lines.size())
                                 ),
                         charSet
                         );
@@ -141,6 +160,9 @@ public final class CBMCResult extends Result {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             this.rootElement = builder.parse(xmlStream);
         } catch (ParserConfigurationException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
