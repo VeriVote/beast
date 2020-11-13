@@ -169,7 +169,7 @@ public final class BEASTCommunicator {
             // the PreAndPostConditionsSource
             GUIController.setConsoleText("No property selected!");
             // TODO: (add string resouce loading later)");
-            result = false;
+            return false;
         } else if (!checkForErrors(electionDesc, properties)) {
             GUIController.setConsoleText("Starting verification ..");
             // TODO load the property checker

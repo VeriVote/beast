@@ -111,3 +111,73 @@ D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\VsDevCmd.bat"
   
   in the parameter menu it doesnt show the solver. Maybe it doesnt even load cmbc to begin with..??? 
   
+  Lets see what the prog does at startup
+  
+  uses Application.launch wat this
+  
+  its javafx stuff:
+  
+   The entry point for JavaFX applications is the Application class. The JavaFX runtime does the following, in order, whenever an application is launched:
+
+    Constructs an instance of the specified Application class
+    Calls the init() method
+    Calls the start(javafx.stage.Stage) method
+    Waits for the application to finish, which happens when either of the following occur:
+        the application calls Platform.exit()
+        the last window has been closed and the implicitExit attribute on Platform is true
+    Calls the stop() method
+  
+  ohyeah, it implements application which overrides start
+  
+  theres a giant class called guicontroller
+  
+  the fxml schema             "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+  
+  alright, i wanna start a test. Press the button. what do?
+  
+  addKeyPressedEventHandler gets set after building the scene, im guessing it simply sets shortcuts
+  
+  These comments dude :D :D :D
+   /** The running. */
+    @FXML
+    private boolean running;
+    
+    ok so if we press the button it starts the function "#startStopPressed"
+    
+     @FXML
+    public synchronized void startStopPressed(final ActionEvent event) {
+    
+    which calls BEASTCommunicator.startCheckNEW
+    
+    again, this javadoc is incredible
+    
+       * Start check NEW.
+     *
+     * @return true, if successful
+     */
+    public static synchronized boolean startCheckNEW() {
+  
+  checks for props which is good         if (!hasProperties(properties)) {
+  
+  then it checks for errors in     public static boolean checkForErrors(final ElectionDescription description,...
+  and throws an exception. ezzgetit
+  
+  therefore it needs getComplexCode
+  
+  which throws right here         String middlePart = code.substring(lockedLineEnd, lockedBracePos);
+  
+  because code hasnt been set
+  
+  SOMETHING is wrong w the debugging man
+  
+  where does ElectionDescription get created....
+  
+  OKAY so here
+  
+  NewCodeArea.setNewElectionDescription the initial string gets created but not set in electiondescription.
+  
+  so it should prob b happening inside the election descr, but for now well just put it in this method to set the code in electionDescription
+  
+	newDescription.setCode(this.getText());
+	
+	alright, that fixed that bug

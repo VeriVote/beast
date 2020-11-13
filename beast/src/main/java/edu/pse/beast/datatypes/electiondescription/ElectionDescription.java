@@ -54,7 +54,7 @@ public class ElectionDescription {
     private String name;
 
     /** The code. */
-    private String code = "";
+    private String code;
 
     /**
      * Loop bounds for header functions for pre- and postconditions, saved as pairs of

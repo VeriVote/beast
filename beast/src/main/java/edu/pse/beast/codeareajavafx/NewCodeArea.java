@@ -752,6 +752,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
             lockedLineEnd = lockedLineStart + declarationString.length();
             this.replaceText(declarationString + "\n\n}");
             lockedBracePos = this.getText().length() - 1;
+            newDescription.setCode(this.getText());
             this.elecDescription.setNotNew();
         } else {
             this.replaceText(newDescription.getCodeAsString());

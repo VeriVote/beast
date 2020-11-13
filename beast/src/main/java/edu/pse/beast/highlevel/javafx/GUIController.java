@@ -479,7 +479,7 @@ public class GUIController {
 
     /** The running. */
     @FXML
-    private boolean running;
+    private boolean testIsRunning;
 
     // @FXML
     // private Text
@@ -993,7 +993,7 @@ public class GUIController {
                         new ImageView(PATH_TO_IMAGES + START_BUTTON));
             }
         });
-        running = false;
+        testIsRunning = false;
     }
 
     // --------
@@ -1007,12 +1007,13 @@ public class GUIController {
      */
     @FXML
     public synchronized void startStopPressed(final ActionEvent event) {
-        if (!running) {
+    	
+        if (!testIsRunning) {
             // react = false; // Lock the GUI
             if (BEASTCommunicator.startCheckNEW()) {
                 // If we start it successfully
                 startStopButton.setGraphic(new ImageView(PATH_TO_IMAGES + STOP_BUTTON));
-                running = true;
+                testIsRunning = true;
             }
         } else {
             if (BEASTCommunicator.stopCheck()) {
