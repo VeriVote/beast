@@ -35,7 +35,8 @@ public final class WindowsOStoolbox {
                 new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_VS_CMD);
         if (Files.isExecutable(file.toPath())) {
             return file.getPath();
-        } else { // we were unable to locate the command prompt in the resources
+        } else { 
+        	// we were unable to locate the command prompt in the resources
             // and search now for it in the common install directories
             final Path x86 = new File("C:/Program Files (x86)").toPath();
             final Path x64 = new File("C:/Program Files").toPath();

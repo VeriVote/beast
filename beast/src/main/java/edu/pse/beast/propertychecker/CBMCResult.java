@@ -149,10 +149,7 @@ public final class CBMCResult extends Result {
 
         final InputStream xmlStream =
                 IOUtils.toInputStream(
-                        String.join(
-                                "",
-                                lines.subList(offset, lines.size())
-                                ),
+                        String.join("", lines.subList(offset, lines.size())),
                         charSet
                         );
         final DocumentBuilder builder;

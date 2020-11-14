@@ -181,3 +181,52 @@ D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\VsDevCmd.bat"
 	newDescription.setCode(this.getText());
 	
 	alright, that fixed that bug
+	
+aaaaaaanyways, time to see where the cbmc checker is SUPPOSED to be set up cuz i dont think it is
+
+basically i wanna know: where do we start cbmc and how
+
+ok so theres an error when calling cbmc, it even gets returned from the call to CBMCResult.parseResult
+
+so the waitForResultsThread should prob check for errors also?
+
+has this error 
+<?xml version="1.0" encoding="UTF-8"?>
+<cprover>
+	<program>CBMC 5.17.0 (cbmc-5.17.0)</program>
+	<message type="STATUS-MESSAGE">
+		<text>CBMC version 5.17.0 (cbmc-5.17.0) 64-bit x86_64 windows</text>
+	</message>
+	<message type="STATUS-MESSAGE">
+		<text>Parsing
+			D:\code\eclipse-workspace\BEAST\BEAST\beast\core\generated_c_files\29e691bb93ubplu9qc67.c</text>
+	</message>
+	<message type="ERROR">
+		<text>CL Preprocessing failed</text>
+	</message>
+	<message type="ERROR">
+		<text>PARSING ERROR</text>
+	</message>
+</cprover>
+but i dont see it anywhere. So where does it get processed?
+
+its WindowsProcess extends CBMCProcess??
+lol it ays cmbc istead of cbmc. 
+
+
+alright so it wants to call VsDevCommand which need to be in call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat""
+
+which...it isnt...
+
+so either ask the user where vs is and than try and find it and save the path in user settings somewhere
+ok so it calls the generated .bat file, thats the output that gets parsed.
+
+D:\code\eclipse-workspace\BEAST\BEAST\beast\core\generated_c_files>call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat""
+Das System kann den angegebenen Pfad nicht finden.
+<?xml version="1.0" encoding="UTF-8"?>
+
+there we go
+
+ok so first we need to change that somehow. like see where it gets the path from currently and hook into that
+
+WindowsOStoolbox
