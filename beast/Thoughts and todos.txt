@@ -18,7 +18,7 @@
  and a <cprover> beginning tag
  
  
- <message type="STATUS-MESSAGE">
+<message type="STATUS-MESSAGE">
 <text>CBMC version 5.10 (cbmc-5.10) 32-bit i386 windows</text>
 </message>
 <message type="STATUS-MESSAGE">
@@ -208,6 +208,7 @@ has this error
 		<text>PARSING ERROR</text>
 	</message>
 </cprover>
+
 but i dont see it anywhere. So where does it get processed?
 
 its WindowsProcess extends CBMCProcess??
@@ -230,3 +231,41 @@ there we go
 ok so first we need to change that somehow. like see where it gets the path from currently and hook into that
 
 WindowsOStoolbox
+
+Fehler auf GUI anzeigen
+
+GUIController gets init through fxml, then starts all the other objects and basically gets used by the communicator. This
+should prob b the other way round lol
+
+So i wanna long term make it so you have a client server type thing w beast being the server and the gui being the client. maybe some msgs back
+and forth so we can get stuff like how much longer does it take etc.
+
+Still, where does cbmc  get set up homes???
+
+Aight got it
+
+so weve got a mess of factories and factory factories. Basically we get a cbmc factory by calling something with a string "cbmc"
+CBMCProcessFactory
+
+btw the CBMCPRocessFactory determines the OS. This should prob happen in the ostoolbox lol
+
+factoryfactoy adds it here private static Map<String, CheckerFactory> searchForCheckers() {
+
+and u get it here     
+public static PropertyChecker createPropertyChecker(final String checkerID) {
+        if (factories.keySet().contains(checkerID)) {
+            return new PropertyChecker(checkerID);
+        } else {
+            ErrorLogger.log(ERROR_MSG);
+            return null;
+        }
+    }
+    
+Java programs dude :D
+
+WindowsProcess starts the final test
+
+ok so get this. Everytime it runs a test it tries to find vscmd. which is just in the beast/windows folder. VSCmd in there is just a file with a 
+hardcoded path where it expects the "real" vsCmd. tf.
+
+So yeah, def change it so the user gets asked at startup if it isnt there. Then save it to settings somewhere.
