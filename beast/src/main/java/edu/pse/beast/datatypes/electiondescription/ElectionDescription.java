@@ -150,13 +150,13 @@ public class ElectionDescription {
 
     /**
      * Gets the loop bound. Makes most sense if called after the method
-     * {@link #getComplexCode()}.
+     * {@link #getComplexCodeAndSetHeaderLoopBounds()}.
      *
      * @return the loop bounds.
      */
     public Map<String, String> getLoopBounds() {
         if (headerLoopBounds == null || headerLoopBounds.isEmpty()) {
-            getComplexCode();
+            getComplexCodeAndSetHeaderLoopBounds();
         }
         return headerLoopBounds;
     }
@@ -195,7 +195,7 @@ public class ElectionDescription {
      *
      * @return code of this description with structs used where applicable
      */
-    public List<String> getComplexCode() {
+    public List<String> getComplexCodeAndSetHeaderLoopBounds() {
         final String firstPart = code.substring(0, lockedLineStart);
         final String votesName = generateVariableName(code, AUTO_VOTES);
         final String replacementLine =
@@ -205,13 +205,19 @@ public class ElectionDescription {
                 generateLoopVariables(code, dimensions, VOTES);
         final String[] sizes = container.getInputType().getSizeOfDimensions();
         String forLoopStart = "";
+   
         for (int i = 0; i < dimensions; i++) { // Add all needed loop headers
             forLoopStart += generateForLoopHeader(loopVariables.get(i),
                                                   sizes[i]);
+            
+            //only call for preference voting
             if (sizes[i].equals(UnifiedNameContainer.getVoter())) {
                 addVoteLoopBound(UnifiedNameContainer.getVotingMethod() + "." + i);
-            }
+            }            
         }
+        
+        
+        
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
             forLoopEnd += CCodeHelper.CLOSING_BRACES; // Close the for loops

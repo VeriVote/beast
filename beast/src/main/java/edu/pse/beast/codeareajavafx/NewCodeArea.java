@@ -790,7 +790,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea
         final GUIController cont = GUIController.getController();
         cont.getMainTabPane().getSelectionModel().select(cont.getCodeTab());
         displayErrors(CVariableErrorFinder.findErrors(
-                elecDescription.getDeepCopy().getComplexCode(),
+                elecDescription.getDeepCopy().getComplexCodeAndSetHeaderLoopBounds(),
                 elecDescription));
     }
 

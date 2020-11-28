@@ -269,3 +269,7 @@ ok so get this. Everytime it runs a test it tries to find vscmd. which is just i
 hardcoded path where it expects the "real" vsCmd. tf.
 
 So yeah, def change it so the user gets asked at startup if it isnt there. Then save it to settings somewhere.
+
+Fehler werden nicht gescheit angezeigt.
+
+how do i wanna make the api, esp considering that we need this outside stuff?

@@ -396,7 +396,7 @@ public class CBMCCodeGenerator {
         addOtherFunctions();
         code.add(lineComment("User code."));
         final ArrayList<String> electionDescriptionCode = new ArrayList<String>();
-        electionDescriptionCode.addAll(electionDesc.getComplexCode());
+        electionDescriptionCode.addAll(electionDesc.getComplexCodeAndSetHeaderLoopBounds());
         headerLoopBounds.putAll(electionDesc.getLoopBounds());
         code.addList(electionDescriptionCode);
         addMainMethod();
@@ -413,7 +413,7 @@ public class CBMCCodeGenerator {
         addMarginHeaders(votingData);
         // Add the code the user wrote (e.g the election function)
         final ElectionDescription descr = GUIController.getController().getElectionDescription();
-        code.addAll(descr.getComplexCode());
+        code.addAll(descr.getComplexCodeAndSetHeaderLoopBounds());
         headerLoopBounds.putAll(descr.getLoopBounds());
         // Add the code which defines the votes
         final String origVotes =
@@ -446,7 +446,7 @@ public class CBMCCodeGenerator {
         addMarginHeaders(votingData);
         // Add the code the user wrote (e.g the election function).
         final ElectionDescription descr = GUIController.getController().getElectionDescription();
-        code.addAll(descr.getComplexCode());
+        code.addAll(descr.getComplexCodeAndSetHeaderLoopBounds());
         headerLoopBounds.putAll(descr.getLoopBounds());
         // Add the code which defines the votes.
         final String origVotes =
