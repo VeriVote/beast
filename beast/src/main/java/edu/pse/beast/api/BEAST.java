@@ -12,7 +12,8 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 public class BEAST {
-
+	
+	//TODO pass the windows process and other setup stuff 
 	public BEASTPromise startTest(BEASTCallback cb, ElectionDescription description,
 			List<PreAndPostConditionsDescription> propertiesToTest, ElectionCheckParameter param) {
 
