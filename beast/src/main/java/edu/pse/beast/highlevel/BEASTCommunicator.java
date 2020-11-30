@@ -268,8 +268,8 @@ public final class BEASTCommunicator {
         // Save the currently opened property
         GUIController.getController().getBooleanExpEditor()
                 .savePropertyTextAreasIntoDescription();
-        final List<CodeError> codeErrors = CVariableErrorFinder
-                .findErrors(description.getComplexCodeAndSetHeaderLoopBounds(), description);
+        final List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description);
+        
         if (codeErrors.size() != 0) {
             GUIController.getController().getCodeArea()
                     .displayErrors(codeErrors);

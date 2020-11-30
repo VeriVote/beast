@@ -109,7 +109,7 @@ public class ElectionCheckParameter {
      *
      * @return the list that specifies the range of voters
      */
-    public List<Integer> getAmountVoters() {
+    public List<Integer> getRangeOfVoters() {
         return amountVoters;
     }
 
@@ -118,7 +118,7 @@ public class ElectionCheckParameter {
      *
      * @return the list that specifies the range of candidates
      */
-    public List<Integer> getAmountCandidates() {
+    public List<Integer> getRangeofCandidates() {
         return amountCandidates;
     }
 
@@ -127,7 +127,7 @@ public class ElectionCheckParameter {
      *
      * @return the list that specifies the range of seats
      */
-    public List<Integer> getAmountSeats() {
+    public List<Integer> getRangeOfSeats() {
         return amountSeats;
     }
 

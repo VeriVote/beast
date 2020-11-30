@@ -59,12 +59,12 @@ public class ElectionCheckParameterSaverLoaderTest {
         final ElectionCheckParameter recreatedElectionCheckParameter
             = (ElectionCheckParameter)
                 ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
-        assertEquals((int)recreatedElectionCheckParameter.getAmountCandidates().get(0), 1);
-        assertEquals((int)recreatedElectionCheckParameter.getAmountCandidates().get(1), 2);
-        assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(0), 1);
-        assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(1), 2);
-        assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(0), 1);
-        assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(1), 2);
+        assertEquals((int)recreatedElectionCheckParameter.getRangeofCandidates().get(0), 1);
+        assertEquals((int)recreatedElectionCheckParameter.getRangeofCandidates().get(1), 2);
+        assertEquals((int)recreatedElectionCheckParameter.getRangeOfSeats().get(0), 1);
+        assertEquals((int)recreatedElectionCheckParameter.getRangeOfSeats().get(1), 2);
+        assertEquals((int)recreatedElectionCheckParameter.getRangeOfVoters().get(0), 1);
+        assertEquals((int)recreatedElectionCheckParameter.getRangeOfVoters().get(1), 2);
         assertEquals(recreatedElectionCheckParameter.getArgument(), SIX_UNWINDINGS);
         assertEquals((int)recreatedElectionCheckParameter.getProcesses(), NUM_PROCESSES);
         final TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();

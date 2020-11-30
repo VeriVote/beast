@@ -228,25 +228,25 @@ public final class ElectionCheckParameterSaverLoader {
      */
     public static String createSaveString(final ElectionCheckParameter electionCheckParameter) {
         final String amountVotersMin = valString(VOTERS, MIN)
-                + electionCheckParameter.getAmountVoters().get(0)
+                + electionCheckParameter.getRangeOfVoters().get(0)
                 + boundString(VOTERS, MIN);
         final String amountVotersMax = valString(VOTERS, MAX)
-                + electionCheckParameter.getAmountVoters().get(
-                        electionCheckParameter.getAmountVoters().size() - 1)
+                + electionCheckParameter.getRangeOfVoters().get(
+                        electionCheckParameter.getRangeOfVoters().size() - 1)
                 + boundString(VOTERS, MAX);
         final String amountCandidatesMin = valString(CANDIDATES, MIN)
-                + electionCheckParameter.getAmountCandidates().get(0)
+                + electionCheckParameter.getRangeofCandidates().get(0)
                 + boundString(CANDIDATES, MIN);
         final String amountCandidatesMax = valString(CANDIDATES, MAX)
-                + electionCheckParameter.getAmountCandidates().get(
-                        electionCheckParameter.getAmountCandidates().size() - 1)
+                + electionCheckParameter.getRangeofCandidates().get(
+                        electionCheckParameter.getRangeofCandidates().size() - 1)
                 + boundString(CANDIDATES, MAX);
         final String amountSeatsMin = valString(SEATS, MIN)
-                + electionCheckParameter.getAmountSeats().get(0)
+                + electionCheckParameter.getRangeOfSeats().get(0)
                 + boundString(SEATS, MIN);
         final String amountSeatsMax = valString(SEATS, MAX)
-                + electionCheckParameter.getAmountSeats()
-                        .get(electionCheckParameter.getAmountSeats().size() - 1)
+                + electionCheckParameter.getRangeOfSeats()
+                        .get(electionCheckParameter.getRangeOfSeats().size() - 1)
                 + boundString(SEATS, MAX);
         final String timeout = valString(TIMEOUT)
                 + TimeOutSaverLoader

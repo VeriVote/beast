@@ -74,4 +74,33 @@ public final class BooleanExpEditorGeneralErrorFinder {
         // bounded variable error finder
         return combinedErrors;
     }
+    
+    public static List<CodeError> getErrors(PreAndPostConditionsDescription property) {
+        final List<CodeError> combinedErrors = new ArrayList<CodeError>();
+        // precondition error finder
+        final BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(
+                property.getPreConditionsDescription().getCode());
+        combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
+        combinedErrors.addAll(
+            BooleanExpEditorVariableErrorFinder.getErrors(
+                    preAntlrHandler,
+                    property.getSymVarList(),
+                    GUIController.getController().getCodeArea()
+            )
+        );
+
+        // postcondition error finder
+        final BooleanExpANTLRHandler postAntlrHandler = new BooleanExpANTLRHandler(
+                property.getPostConditionsDescription().getCode());
+        combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(postAntlrHandler));
+        combinedErrors.addAll(
+            BooleanExpEditorVariableErrorFinder.getErrors(
+                    postAntlrHandler,
+                    property.getSymVarList(),
+                    GUIController.getController().getCodeArea()
+            )
+        );
+        // bounded variable error finder
+        return combinedErrors;
+    }
 }

@@ -186,9 +186,9 @@ public abstract class CheckerFactory implements Runnable {
      */
     private void runCheck(final String advanced, final Result res) {
         outerLoop:
-        for (final int voters : parameter.getAmountVoters()) {
-            for (final int candidates : parameter.getAmountCandidates()) {
-                for (final int seats : parameter.getAmountSeats()) {
+        for (final int voters : parameter.getRangeOfVoters()) {
+            for (final int candidates : parameter.getRangeofCandidates()) {
+                for (final int seats : parameter.getRangeOfSeats()) {
                     synchronized (this) {
                         if (!stopped) {
                             currentlyRunning =

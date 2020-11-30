@@ -43,8 +43,8 @@ public final class CVariableErrorFinder {
      *            the election description
      * @return a list of code errors
      */
-    public static List<CodeError> findErrors(final List<String> code,
-                                             final ElectionDescription electionDesc) {
+    public static List<CodeError> findErrors(final ElectionDescription electionDesc) {
+    	final List<String> code = electionDesc.getComplexCodeAndSetHeaderLoopBounds();
         // TODO Use unified name container here later.
         final ArrayList<String> separated = new ArrayList<String>();
         separated.add(defineIfNonDef(UnifiedNameContainer.getVoter(), one()));
