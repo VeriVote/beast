@@ -174,7 +174,7 @@ public class SymbolicVariableListTest {
         System.out.println("addListener");
         final VariableListListener listener =
                 new FormalExpErrorFinderTreeListener(
-                    null, null, GUIController.getController().getElectionDescription()
+                    null, GUIController.getController().getElectionDescription().getContainer()
               );
         final SymbolicVariableList instance = new SymbolicVariableList();
         instance.addListener(listener);

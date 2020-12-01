@@ -29,7 +29,7 @@ public class BEAST {
 		// Test the Conditiondescriptions for errors
 		int idx = 0;
 		for (PreAndPostConditionsDescription prop : propertiesToTest) {
-			List<CodeError> propCodeErrors = BooleanExpEditorGeneralErrorFinder.getErrors(prop);
+			List<CodeError> propCodeErrors = BooleanExpEditorGeneralErrorFinder.getErrors(prop, description.getContainer());
 			if (!propCodeErrors.isEmpty()) {
 				for (CodeError err : propCodeErrors) {
 					cb.onPropertyCodeError(err, idx);

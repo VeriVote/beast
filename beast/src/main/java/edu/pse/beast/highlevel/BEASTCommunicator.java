@@ -281,7 +281,7 @@ public final class BEASTCommunicator {
             final ParentTreeItem parentTreeItem = iterator.next();
             if (parentTreeItem.isChildSelected()) {
                 errorsFound |= BooleanExpEditorGeneralErrorFinder
-                        .hasErrors(parentTreeItem);
+                        .hasErrors(parentTreeItem, description.getContainer());
             }
         }
         return errorsFound;
