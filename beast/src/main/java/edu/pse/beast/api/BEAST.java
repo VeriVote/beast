@@ -34,9 +34,9 @@ public class BEAST {
 				for (CodeError err : propCodeErrors) {
 					cb.onPropertyCodeError(err, idx);
 				}
+				return new BEASTTestSession();
 			}
 			idx++;
-			return new BEASTTestSession();
 		}
 
 		// TODO pass in which type of test...margin, etc. Currently this

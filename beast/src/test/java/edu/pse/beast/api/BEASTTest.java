@@ -23,7 +23,7 @@ import edu.pse.beast.types.OutputType;
 class BEASTTest {
 
 	@Test
-	void testBEASTSimpleElectionDescription() {
+	void testBEASTSimpleElectionDescription() throws InterruptedException {
 		InputType it = InputType.getInputTypes().get(2);
 		OutputType ot = OutputType.getOutputTypes().get(3);
 		ElectionDescription descr = new ElectionDescription("simple", it, ot);
@@ -36,6 +36,7 @@ class BEASTTest {
 		
 		elecDescrCode += "\n\n";
 		elecDescrCode += "\treturn 0;";
+		
 		elecDescrCode += "\n\n}";
 		
 		int lockedBracePos = elecDescrCode.length() - 1;
@@ -75,6 +76,11 @@ class BEASTTest {
 		};		
 		
 		BEASTTestSession p = beast.startTest(cb, descr, condList, param);
+		
+		p.doAfter(() -> {
+			System.out.println("done");
+		});
+		p.waitSync();		
 	}
 
 }

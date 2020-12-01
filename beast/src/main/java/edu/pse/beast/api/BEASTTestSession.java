@@ -13,4 +13,15 @@ public class BEASTTestSession {
 	public BEASTTestSession() {
 	}
 	
+	public void doAfter(BEASTAfterTestOp op) {
+		beastTestRunner.doAfter(op);
+	}
+	
+	public void waitSync() throws InterruptedException {
+		while(beastTestRunner.isRunning()) {
+			Thread.sleep(200);
+		}
+	}
+	
+	
 }

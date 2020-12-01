@@ -31,6 +31,10 @@ public class BEASTTestRunner implements Runnable {
 	private List<PreAndPostConditionsDescription> propertiesToTest;
 	private ElectionCheckParameter param;
 
+	private BEASTAfterTestOp afterOp;
+	
+	private boolean running;
+
 	// TODO pass user wishes about which lvl of concurrency somewhere
 	public BEASTTestRunner(BEASTCallback cb, ElectionDescription description,
 			List<PreAndPostConditionsDescription> propertiesToTest, ElectionCheckParameter param) {
@@ -46,6 +50,7 @@ public class BEASTTestRunner implements Runnable {
 
 	@Override
 	public void run() {
+		running = true;
 		cb.onTestStarted();
 		// TODO pass which type of checker we want to use
 		// for now only use cbmc
@@ -107,7 +112,17 @@ public class BEASTTestRunner implements Runnable {
 					}
 				}
 			}
-
 		}
+		running = false;
+		if (afterOp != null)
+			afterOp.op();
+	}
+
+	public void doAfter(BEASTAfterTestOp op) {
+		this.afterOp = op;
+	}
+
+	public boolean isRunning() {
+		return running;
 	}
 }
