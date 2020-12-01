@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.codeareajavafx.NewCodeArea;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 
 /**
@@ -37,11 +39,10 @@ public final class BooleanExpEditorVariableErrorFinder {
      */
     public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler,
                                                  final SymbolicVariableList list,
-                                                 final NewCodeArea codeArea) {
+                                                 final ElectionTypeContainer electionContainer) {
         final FormalExpErrorFinderTreeListener listener =
                 new FormalExpErrorFinderTreeListener(
-                        list, codeArea,
-                        codeArea.getElectionDescription());
+                        list, electionContainer);
         final ParseTree tree = antlrHandler.getParseTree();
         final ParseTreeWalker walker = new ParseTreeWalker();
         try {

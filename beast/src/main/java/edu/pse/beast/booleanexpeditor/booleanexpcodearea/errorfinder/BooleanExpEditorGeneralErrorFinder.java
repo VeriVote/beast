@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.errorhandling.CodeError;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
@@ -27,8 +28,8 @@ public final class BooleanExpEditorGeneralErrorFinder {
      *            parent tree item
      * @return true, if there are errors, else false
      */
-    public static boolean hasErrors(final ParentTreeItem parentTreeItem) {
-        final List<CodeError> combinedErrors = getErrors(parentTreeItem);
+    public static boolean hasErrors(final ParentTreeItem parentTreeItem, ElectionTypeContainer electionContainer) {
+        final List<CodeError> combinedErrors = getErrors(parentTreeItem, electionContainer);
         if (combinedErrors.size() > 0) {
             parentTreeItem.addErrors(combinedErrors);
             return true;
@@ -44,7 +45,7 @@ public final class BooleanExpEditorGeneralErrorFinder {
      *            the parent tree item
      * @return the errors
      */
-    public static List<CodeError> getErrors(final ParentTreeItem parentTreeItem) {
+    public static List<CodeError> getErrors(final ParentTreeItem parentTreeItem, ElectionTypeContainer electionContainer) {
         final List<CodeError> combinedErrors = new ArrayList<CodeError>();
         final PreAndPostConditionsDescription property =
                 parentTreeItem.getPreAndPostProperties();
@@ -56,7 +57,7 @@ public final class BooleanExpEditorGeneralErrorFinder {
             BooleanExpEditorVariableErrorFinder.getErrors(
                     preAntlrHandler,
                     property.getSymVarList(),
-                    GUIController.getController().getCodeArea()
+                    electionContainer
             )
         );
 
@@ -68,14 +69,14 @@ public final class BooleanExpEditorGeneralErrorFinder {
             BooleanExpEditorVariableErrorFinder.getErrors(
                     postAntlrHandler,
                     property.getSymVarList(),
-                    GUIController.getController().getCodeArea()
+                    electionContainer
             )
         );
         // bounded variable error finder
         return combinedErrors;
     }
     
-    public static List<CodeError> getErrors(PreAndPostConditionsDescription property) {
+    public static List<CodeError> getErrors(PreAndPostConditionsDescription property, ElectionTypeContainer electionContainer) {
         final List<CodeError> combinedErrors = new ArrayList<CodeError>();
         // precondition error finder
         final BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(
@@ -85,7 +86,7 @@ public final class BooleanExpEditorGeneralErrorFinder {
             BooleanExpEditorVariableErrorFinder.getErrors(
                     preAntlrHandler,
                     property.getSymVarList(),
-                    GUIController.getController().getCodeArea()
+                    electionContainer
             )
         );
 
@@ -97,8 +98,8 @@ public final class BooleanExpEditorGeneralErrorFinder {
             BooleanExpEditorVariableErrorFinder.getErrors(
                     postAntlrHandler,
                     property.getSymVarList(),
-                    GUIController.getController().getCodeArea()
-            )
+                    electionContainer
+            		)
         );
         // bounded variable error finder
         return combinedErrors;

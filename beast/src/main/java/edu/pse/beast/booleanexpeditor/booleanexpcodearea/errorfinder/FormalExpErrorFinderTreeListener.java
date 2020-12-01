@@ -107,8 +107,6 @@ public final class FormalExpErrorFinderTreeListener
     /** The scope handler. */
     private final BooleanExpScopehandler scopeHandler = new BooleanExpScopehandler();
 
-    /** The elec description. */
-    private final ElectionDescription elecDescription;
 
     /** The container. */
     private ElectionTypeContainer container;
@@ -127,15 +125,13 @@ public final class FormalExpErrorFinderTreeListener
      *            the voting rule
      */
     public FormalExpErrorFinderTreeListener(final SymbolicVariableList list,
-                                            final NewCodeArea codeArea,
-                                            final ElectionDescription elecDescr) {
-        this.elecDescription = elecDescr;
+                                            final ElectionTypeContainer electionContainer) {  
         list.addListener(this);
         scopeHandler.enterNewScope();
         for (SymbolicVariable var : list.getSymbolicVariables()) {
             scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
         }
-        this.container = codeArea.getElectionDescription().getContainer();
+        this.container = electionContainer;
     }
 
     /**
@@ -226,7 +222,7 @@ public final class FormalExpErrorFinderTreeListener
         final TypeExpression rhs; // the right arguments
         if (rhexp.getChild(0) instanceof IntersectExpContext) {
             rhs = new IntersectTypeExpNode(
-                    elecDescription.getContainer().getOutputType(),
+                    container.getOutputType(),
                     (IntersectExpContext) rhexp.getChild(0));
         } else {
             rhs = expStack.pop();
@@ -234,7 +230,7 @@ public final class FormalExpErrorFinderTreeListener
         final TypeExpression lhs; // the left argument
         if (lhexp.getChild(0) instanceof IntersectExpContext) {
             lhs = new IntersectTypeExpNode(
-                    elecDescription.getContainer().getOutputType(),
+            		container.getOutputType(),
                     (IntersectExpContext) lhexp.getChild(0));
         } else {
             lhs = expStack.pop();
