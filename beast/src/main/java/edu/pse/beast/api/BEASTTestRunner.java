@@ -71,7 +71,7 @@ public class BEASTTestRunner implements Runnable {
 		// less convoluted than we do rn
 		// for now just do the easiest thing to see what we need
 		String cbmcPath = new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath();
-		String vsCmdPath = "D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat";
+		String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
 		for (PreAndPostConditionsDescription propertyDescr : propertiesToTest) {
 			File cbmcFile = CBMCCodeFileGenerator.createCodeFileTest(description, propertyDescr);
