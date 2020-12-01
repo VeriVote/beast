@@ -14,7 +14,7 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 public class BEAST {
 	
 	//TODO pass the windows process and other setup stuff 
-	public BEASTPromise startTest(BEASTCallback cb, ElectionDescription description,
+	public BEASTTestSession startTest(BEASTCallback cb, ElectionDescription description,
 			List<PreAndPostConditionsDescription> propertiesToTest, ElectionCheckParameter param) {
 
 		// Test the election description for errors
@@ -23,7 +23,7 @@ public class BEAST {
 			for (CodeError err : electionCodeErrors) {
 				cb.onElectionCodeError(err);
 			}
-			return new BEASTPromise();
+			return new BEASTTestSession();
 		}
 
 		// Test the Conditiondescriptions for errors
@@ -36,13 +36,12 @@ public class BEAST {
 				}
 			}
 			idx++;
-			return new BEASTPromise();
+			return new BEASTTestSession();
 		}
 
-		// start the test (for now, all we can do is run a normal cbmc test)
 		// TODO pass in which type of test...margin, etc. Currently this
 		// is intertwined with the javafx ChildTreeItem specifically which
 		// subclass gets passed. Wild
-		return new BEASTPromise(new BEASTTestRunner(cb, description, propertiesToTest, param));
+		return new BEASTTestSession(new BEASTTestRunner(cb, description, propertiesToTest, param));
 	}
 }

@@ -230,10 +230,16 @@ public abstract class SystemSpecificErrorChecker {
             waitToFinish(process, latch);
             // deletes the temporary file, so it does not clog up the file
             // system
+            
+            //W U A T T T
+            /*
             if (GUIController.getController().getDeleteTmpFiles()) {
                 cFile.delete();
                 batFile.delete();
             }
+            */
+            cFile.delete();
+            batFile.delete();
             objFile.delete();
             exeFile.delete();
             outReader.finish();

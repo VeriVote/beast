@@ -24,7 +24,7 @@ public class ElectionCheckParameter {
     private final TimeOut timeOut;
 
     /** The processes. */
-    private final Integer processes;
+    private final Integer maxNumProcesses;
 
     /** The argument. */
     private final String argument;
@@ -55,7 +55,7 @@ public class ElectionCheckParameter {
      *            the amount of seats for the computed margin
      * @param timeOutVal
      *            the timeout that specifies how long the checker should run
-     * @param procs
+     * @param maxNumProcesses
      *            max number of processes of the checker
      * @param arg
      *            the arguments given by the user
@@ -67,7 +67,8 @@ public class ElectionCheckParameter {
                                   final int marginCandidateNumber,
                                   final int marginSeatNumber,
                                   final TimeOut timeOutVal,
-                                  final Integer procs, final String arg) {
+                                  final Integer maxNumProcesses,
+                                  final String arg) {
         this.amountVoters = amountOfVoters;
         this.amountCandidates = amountOfCandidates;
         this.amountSeats = amountOfSeats;
@@ -75,7 +76,7 @@ public class ElectionCheckParameter {
         this.marginCandidates = marginCandidateNumber;
         this.marginSeats = marginSeatNumber;
         this.timeOut = timeOutVal;
-        this.processes = procs;
+        this.maxNumProcesses = maxNumProcesses;
         this.argument = arg;
     }
 
@@ -146,7 +147,7 @@ public class ElectionCheckParameter {
      * @return the amount of processes the user wishes to run at the same time
      */
     public Integer getProcesses() {
-        return processes;
+        return maxNumProcesses;
     }
 
     /**

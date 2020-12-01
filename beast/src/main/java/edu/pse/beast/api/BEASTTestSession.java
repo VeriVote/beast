@@ -1,16 +1,16 @@
 package edu.pse.beast.api;
 
-public class BEASTPromise {
+public class BEASTTestSession {
 	private BEASTTestRunner beastTestRunner;
 	private Thread t;
 
-	public BEASTPromise(BEASTTestRunner beastTestRunner) {
+	public BEASTTestSession(BEASTTestRunner beastTestRunner) {
 		this.beastTestRunner = beastTestRunner;
 		t = new Thread(beastTestRunner);
 		t.start();
 	}
 
-	public BEASTPromise() {
+	public BEASTTestSession() {
 	}
 	
 }
