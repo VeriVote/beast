@@ -273,3 +273,8 @@ So yeah, def change it so the user gets asked at startup if it isnt there. Then 
 Fehler werden nicht gescheit angezeigt.
 
 how do i wanna make the api, esp considering that we need this outside stuff?
+
+Thoughts about how to split up w diff oss etc
+
+
+

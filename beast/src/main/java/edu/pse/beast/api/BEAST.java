@@ -3,6 +3,7 @@ package edu.pse.beast.api;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.api.testrunner.BEASTTestRunner;
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGeneralErrorFinder;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.errorhandling.CodeError;
@@ -13,6 +14,12 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 public class BEAST {
 	
+	private BEASTTestRunner testRunner;
+	
+	public BEAST(BEASTTestRunner testRunner) {
+		this.testRunner = testRunner;
+	}
+
 	//TODO pass the windows process and other setup stuff 
 	public BEASTTestSession startTest(BEASTCallback cb, ElectionDescription description,
 			List<PreAndPostConditionsDescription> propertiesToTest, ElectionCheckParameter param) {
@@ -42,6 +49,7 @@ public class BEAST {
 		// TODO pass in which type of test...margin, etc. Currently this
 		// is intertwined with the javafx ChildTreeItem specifically which
 		// subclass gets passed. Wild
-		return new BEASTTestSession(new BEASTTestRunner(cb, description, propertiesToTest, param));
+		testRunner.setupTestRun(cb, description, propertiesToTest, param);
+		return new BEASTTestSession(testRunner);
 	}
 }

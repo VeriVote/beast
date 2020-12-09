@@ -1,13 +1,14 @@
 package edu.pse.beast.api;
 
+import edu.pse.beast.api.testrunner.BEASTAfterTestOp;
+import edu.pse.beast.api.testrunner.BEASTTestRunner;
+
 public class BEASTTestSession {
 	private BEASTTestRunner beastTestRunner;
-	private Thread t;
 
 	public BEASTTestSession(BEASTTestRunner beastTestRunner) {
 		this.beastTestRunner = beastTestRunner;
-		t = new Thread(beastTestRunner);
-		t.start();
+		beastTestRunner.start();
 	}
 
 	public BEASTTestSession() {
