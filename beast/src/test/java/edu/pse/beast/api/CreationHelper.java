@@ -39,8 +39,8 @@ public class CreationHelper {
 		return descr;
 	}
 	
-	public static List<PreAndPostConditionsDescription> createSimpleCondList(String preCode, String postCode) {
-		PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription("simple");
+	public static List<PreAndPostConditionsDescription> createSimpleCondList(String name, String preCode, String postCode) {
+		PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription(name);
 
 		conds.getPreConditionsDescription().setCode(preCode);
 		conds.getPostConditionsDescription().setCode(postCode);
