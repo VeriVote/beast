@@ -65,13 +65,13 @@ class BEASTTest {
 		ElectionCheckParameter param = new ElectionCheckParameter(vots, cands, seats, timeOut, 1, "");
 
 		BEAST beast = new BEAST(new CBMCTestRunnerWindows("\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\""));
+		
 
 		BEASTCallback cb = new BEASTCallback() {
 			@Override
 			public void onPropertyTestResult(ElectionDescription electionDescription,
 					PreAndPostConditionsDescription preAndPostConditionsDescription, int v, int c, int s,
 					boolean verificationSuccess) {
-				System.out.println("CALLBACK SUCCESS " + verificationSuccess);
 			}
 		};
 
@@ -81,6 +81,8 @@ class BEASTTest {
 			System.out.println("done");
 		});
 		p.waitSync();
+		assertTrue(p.getResults().get(0).verificationFinished()); 
+		assertTrue(p.getResults().get(0).isVerificationSuccess()); 
 	}
 
 	@Test
@@ -145,6 +147,8 @@ class BEASTTest {
 			System.out.println("done");
 		});
 		p.waitSync();
+		assertTrue(p.getResults().get(0).verificationFinished()); 
+		assertFalse(p.getResults().get(0).isVerificationSuccess()); 
 	}
 
 }

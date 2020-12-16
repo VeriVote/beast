@@ -34,6 +34,7 @@ public abstract class BEASTTestRunner implements Runnable {
 
 	private List<PreAndPostConditionsDescription> propertiesToTest;
 	private ElectionCheckParameter param;
+	private List<BEASTResult> results = new ArrayList<>();
 
 	protected ElectionDescription description;
 	protected BEASTCallback cb;
@@ -63,9 +64,9 @@ public abstract class BEASTTestRunner implements Runnable {
 		t.start();
 	}
 
-	protected abstract void beforeTest();
-
-	protected abstract void beforeProperty(PreAndPostConditionsDescription propertyDescr);
+	public List<BEASTResult> getResults() {
+		return results;
+	}
 
 	protected abstract BEASTResult startTestForParam(PreAndPostConditionsDescription propertyDescr, int V, int C,
 			int S);
@@ -90,15 +91,14 @@ public abstract class BEASTTestRunner implements Runnable {
 		return num;
 	}
 
+	//TODO handle timeout
 	@Override
 	public void run() {
 		running = true;
 		cb.onTestStarted();
-		beforeTest();
-		List<BEASTResult> results = new ArrayList<>();
+		results = new ArrayList<>();
 
 		for (PreAndPostConditionsDescription propertyDescr : propertiesToTest) {
-			beforeProperty(propertyDescr);
 
 			for (int V : param.getRangeOfVoters()) {
 				for (int C : param.getRangeofCandidates()) {
@@ -110,7 +110,7 @@ public abstract class BEASTTestRunner implements Runnable {
 						BEASTResult res = startTestForParam(propertyDescr, V, C, S);
 						
 						if (res != null)
-							results.add(res);
+							this.results.add(res);
 
 					}
 				}

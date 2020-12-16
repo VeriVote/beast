@@ -1,33 +1,23 @@
-package edu.pse.beast.api.testrunner.cbmc;
+package edu.pse.beast.api.testrunner.threadpool;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.commons.io.IOUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
+import edu.pse.beast.api.BEASTCallback;
 import edu.pse.beast.api.testrunner.BEASTResult;
-import edu.pse.beast.api.testrunner.BEASTTestRunner;
+import edu.pse.beast.api.testrunner.cbmc.CBMCBEASTResult;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
-public class CBMCTestRunnerWindows extends BEASTTestRunner {
+public class CBMCProcessWindows {
 	/** The Constant CBMC_EXE. */
 	private String CBMC_EXE = "cbmc.exe";
 	/** The Constant CBMC64_EXE. */
@@ -41,20 +31,10 @@ public class CBMCTestRunnerWindows extends BEASTTestRunner {
 	// only needed in windows
 	String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
-	HashMap<PreAndPostConditionsDescription, File> cbmcFileForPropertyDescr = new HashMap<>();
+	public ProcessBuilder startTestForParam(ElectionDescription description, PreAndPostConditionsDescription propertyDescr,
+			int V, int C, int S, BEASTCallback cb) {
 
-	public CBMCTestRunnerWindows(String vsCmdPath) {
-		this.vsCmdPath = vsCmdPath;
-	}
-
-	@Override
-	protected BEASTResult startTestForParam(PreAndPostConditionsDescription propertyDescr, int V, int C, int S) {
-		if (!cbmcFileForPropertyDescr.containsKey(propertyDescr)) {
-			cbmcFileForPropertyDescr.put(propertyDescr,
-					CBMCCodeFileGenerator.createCodeFileTest(description, propertyDescr));
-		}
-
-		File cbmcFile = cbmcFileForPropertyDescr.get(propertyDescr);
+		File cbmcFile = CBMCCodeFileGenerator.createCodeFileTest(description, propertyDescr);
 
 		String cbmcPath = new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath();
 		String BLANK = " ";
@@ -74,16 +54,6 @@ public class CBMCTestRunnerWindows extends BEASTTestRunner {
 		list.add(completeCommand);
 		FileSaver.writeStringLinesToFile(list, batFile);
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", batFile.getAbsolutePath());
-		Process process;
-		try {
-			process = pb.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			return new CBMCBEASTResult(description, propertyDescr, V, C, S, cb, process, reader);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return pb;
 	}
-
 }

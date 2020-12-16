@@ -4,6 +4,7 @@ import edu.pse.beast.api.BEASTCallback;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
+//TODO timeout
 public abstract class BEASTResult implements Runnable {
 
 	private ElectionDescription electionDescription;
@@ -26,6 +27,14 @@ public abstract class BEASTResult implements Runnable {
 		S = s;
 		this.cb = cb;
 	}
+	
+	public boolean verificationFinished() {
+		return finished;
+	}
+	
+	public boolean isVerificationSuccess() {
+		return verificationSuccess;
+	}
 
 	protected void startThread() {
 		this.thread = new Thread(this);
@@ -39,7 +48,5 @@ public abstract class BEASTResult implements Runnable {
 		this.finished = true;
 	}
 	
-	public boolean verificationFinished() {
-		return finished;
-	}
+	
 }

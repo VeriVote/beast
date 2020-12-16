@@ -22,6 +22,8 @@ import edu.pse.beast.api.testrunner.BEASTResult;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
+//TODO xml trace zugriff und darstellung regeln als objekt struktur
+//Was war die eingabe
 public class CBMCBEASTResult extends BEASTResult {
 	private Process process;
 	BufferedReader reader;
@@ -51,6 +53,7 @@ public class CBMCBEASTResult extends BEASTResult {
 			e.printStackTrace();
 		}
 		processCBMCOutput(cbmcOutput);
+		System.out.println("EXIT VAL :: " + process.exitValue()); 
 	}
 
 	private void processCBMCOutput(List<String> cbmcOutput) {
