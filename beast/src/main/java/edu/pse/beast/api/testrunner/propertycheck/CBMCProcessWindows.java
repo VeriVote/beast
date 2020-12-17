@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.threadpool;
+package edu.pse.beast.api.testrunner.propertycheck;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.BEASTCallback;
-import edu.pse.beast.api.testrunner.BEASTResult;
-import edu.pse.beast.api.testrunner.cbmc.CBMCBEASTResult;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
@@ -39,7 +37,7 @@ public class CBMCProcessWindows {
 		String cbmcPath = new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath();
 		String BLANK = " ";
 
-		String voterArg = "V=" + V;
+		String voterArg = "V=" + V;	
 		String candArg = "C=" + C;
 		String seatsArg = "S=" + S;
 

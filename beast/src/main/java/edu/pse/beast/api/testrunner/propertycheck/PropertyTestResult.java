@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.threadpool;
+package edu.pse.beast.api.testrunner.propertycheck;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;

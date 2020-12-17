@@ -3,7 +3,8 @@ package edu.pse.beast.api;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.api.testrunner.BEASTTestRunner;
+import edu.pse.beast.api.testrunner.propertycheck.PropertyCheckWorkSupplier;
+import edu.pse.beast.api.testrunner.threadpool.ThreadPool;
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGeneralErrorFinder;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.errorhandling.CodeError;
@@ -14,10 +15,10 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 public class BEAST {
 	
-	private BEASTTestRunner testRunner;
+	private ThreadPool tp;
 	
-	public BEAST(BEASTTestRunner testRunner) {
-		this.testRunner = testRunner;
+	public BEAST() {
+		this.tp = new ThreadPool(4);
 	}
 
 	//TODO pass the windows process and other setup stuff 
@@ -49,7 +50,6 @@ public class BEAST {
 		// TODO pass in which type of test...margin, etc. Currently this
 		// is intertwined with the javafx ChildTreeItem specifically which
 		// subclass gets passed. Wild
-		testRunner.setupTestRun(cb, description, propertiesToTest, param);
-		return new BEASTTestSession(testRunner);
+		return new BEASTTestSession(new PropertyCheckWorkSupplier(description, propertiesToTest, param, cb));
 	}
 }

@@ -1,33 +1,34 @@
 package edu.pse.beast.api;
 
-import java.util.List;
+import edu.pse.beast.api.testrunner.propertycheck.PropertyCheckWorkSupplier;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-import edu.pse.beast.api.testrunner.BEASTAfterTestOp;
-import edu.pse.beast.api.testrunner.BEASTResult;
-import edu.pse.beast.api.testrunner.BEASTTestRunner;
-
-public class BEASTTestSession {
-	private BEASTTestRunner beastTestRunner;
-
-	public BEASTTestSession(BEASTTestRunner beastTestRunner) {
-		this.beastTestRunner = beastTestRunner;
-		beastTestRunner.start();
-	}
-
+public class BEASTTestSession {	
+	
+	private PropertyCheckWorkSupplier propertyCheckWorkSupplier;
+	
 	public BEASTTestSession() {
 	}
-	
-	public void doAfter(BEASTAfterTestOp op) {
-		beastTestRunner.doAfter(op);
-	}
-	public List<BEASTResult> getResults() {
-		return beastTestRunner.getResults();
+
+	public BEASTTestSession(PropertyCheckWorkSupplier propertyCheckWorkSupplier) {
+		this.propertyCheckWorkSupplier = propertyCheckWorkSupplier;
 	}
 	
-	public void waitSync() throws InterruptedException {
-		while(beastTestRunner.isRunning()) {
-			Thread.sleep(200);
-		}
-	}	
+	public void interruptAllTests() {
+		propertyCheckWorkSupplier.interruptAll();
+	}
 	
+	public void interruptSpecificTest(String uuid) {
+		propertyCheckWorkSupplier.interruptSpecific(uuid);
+	}
+	
+	/**
+	 * blocks the calling thread until the beast test session is finished
+	 * @throws InterruptedException
+	 */
+	public void await() throws InterruptedException {
+		propertyCheckWorkSupplier.waitSync();
+	}
+
 }

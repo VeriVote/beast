@@ -1,6 +1,6 @@
 package edu.pse.beast.api;
 
-import edu.pse.beast.api.testrunner.threadpool.PropertyTestResult;
+import edu.pse.beast.api.testrunner.propertycheck.PropertyTestResult;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;

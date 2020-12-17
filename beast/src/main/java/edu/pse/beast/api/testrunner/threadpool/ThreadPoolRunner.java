@@ -32,4 +32,8 @@ public class ThreadPoolRunner implements Runnable {
 		}
 	}
 
+	public void shutdown() {
+		keepRunning = false;
+	}
+
 }

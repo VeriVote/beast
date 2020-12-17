@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.threadpool;
+package edu.pse.beast.api.testrunner.propertycheck;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,6 +19,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.pse.beast.api.BEASTCallback;
+import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
@@ -107,6 +108,12 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void interrupt() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

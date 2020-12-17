@@ -1,10 +1,12 @@
-package edu.pse.beast.api.testrunner.threadpool;
+package edu.pse.beast.api.testrunner.propertycheck;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import edu.pse.beast.api.BEASTCallback;
+import edu.pse.beast.api.testrunner.threadpool.WorkSupplier;
+import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -49,7 +51,7 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	}
 
 	@Override
-	public synchronized boolean isFinished() {		
+	public boolean isFinished() {		
 		// TODO workIdx-generated method stub
 		if (workIdx < workQueue.size()) return false;
 		for(PropertyCheckWorkUnit work : workQueue) {
@@ -63,5 +65,17 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 			Thread.sleep(200);
 		}
 	}
+
+	@Override
+	public void interruptAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void interruptSpecific(String uuid) {
+		// TODO Auto-generated method stub
+		
+	} 
 
 }

@@ -25,5 +25,9 @@ public class ThreadPool {
 	public void waitForCurrentWorkSupplierSync() throws InterruptedException {
 		currentSupplier.waitSync();
 	}
+
+	public void shutdown() {
+		for(ThreadPoolRunner runner : runners) runner.shutdown();
+	}
 	
 }
