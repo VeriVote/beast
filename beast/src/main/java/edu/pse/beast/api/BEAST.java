@@ -3,6 +3,7 @@ package edu.pse.beast.api;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
 import edu.pse.beast.api.testrunner.propertycheck.PropertyCheckWorkSupplier;
 import edu.pse.beast.api.testrunner.threadpool.ThreadPool;
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGeneralErrorFinder;
@@ -16,9 +17,13 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 public class BEAST {
 	
 	private ThreadPool tp;
+	private ThreadPoolInterface tpi;
+	private CBMCProcessStarter processStarter;
 	
-	public BEAST() {
+	public BEAST(CBMCProcessStarter processStarter) {
 		this.tp = new ThreadPool(4);
+		this.tpi = new ThreadPoolInterface(this.tp);
+		this.processStarter = processStarter;
 	}
 
 	//TODO pass the windows process and other setup stuff 
@@ -50,6 +55,6 @@ public class BEAST {
 		// TODO pass in which type of test...margin, etc. Currently this
 		// is intertwined with the javafx ChildTreeItem specifically which
 		// subclass gets passed. Wild
-		return new BEASTTestSession(new PropertyCheckWorkSupplier(description, propertiesToTest, param, cb));
+		return new BEASTTestSession(new PropertyCheckWorkSupplier(description, propertiesToTest, param, cb, processStarter), tpi);
 	}
 }

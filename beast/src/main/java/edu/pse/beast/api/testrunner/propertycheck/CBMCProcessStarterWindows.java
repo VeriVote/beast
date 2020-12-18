@@ -15,7 +15,7 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
-public class CBMCProcessWindows {
+public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 	/** The Constant CBMC_EXE. */
 	private String CBMC_EXE = "cbmc.exe";
 	/** The Constant CBMC64_EXE. */
@@ -29,15 +29,18 @@ public class CBMCProcessWindows {
 	// only needed in windows
 	String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
-	public ProcessBuilder startTestForParam(ElectionDescription description, PreAndPostConditionsDescription propertyDescr,
-			int V, int C, int S, BEASTCallback cb) {
+	@Override
+	public ProcessBuilder startTestForParam(ElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int V, int C, int S, String uuid, BEASTCallback cb) {
 
 		File cbmcFile = CBMCCodeFileGenerator.createCodeFileTest(description, propertyDescr);
+
+		cb.onTestFileCreated(description, propertyDescr, V, C, S, uuid, cbmcFile);
 
 		String cbmcPath = new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath();
 		String BLANK = " ";
 
-		String voterArg = "V=" + V;	
+		String voterArg = "V=" + V;
 		String candArg = "C=" + C;
 		String seatsArg = "S=" + S;
 

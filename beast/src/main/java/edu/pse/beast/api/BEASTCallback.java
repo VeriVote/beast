@@ -1,5 +1,7 @@
 package edu.pse.beast.api;
 
+import java.io.File;
+
 import edu.pse.beast.api.testrunner.propertycheck.PropertyTestResult;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -24,12 +26,6 @@ public interface BEASTCallback {
 	public default void onTestStopped() {
 	}
 
-	// TODO also pass raw output
-	public default void onPropertyTestResult(ElectionDescription electionDescription,
-			PreAndPostConditionsDescription preAndPostConditionsDescription, int v, int c, int s,
-			boolean verificationSuccess) {
-	}
-
 	public default void onPropertyTestResult(ElectionDescription electionDescription,
 			PreAndPostConditionsDescription preAndPostConditionsDescription, int v, int c, int s,
 			PropertyTestResult result) {
@@ -42,6 +38,11 @@ public interface BEASTCallback {
 
 	public default void onPropertyTestRawOutput(ElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid, String output) {
+
+	}
+
+	public default void onTestFileCreated(ElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int v, int c, int s, String uuid, File cbmcFile) {
 
 	}
 }

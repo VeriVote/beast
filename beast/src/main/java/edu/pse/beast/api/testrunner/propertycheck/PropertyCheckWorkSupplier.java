@@ -19,13 +19,15 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	private BEASTCallback cb;
 	private List<PropertyCheckWorkUnit> workQueue = new ArrayList<>();
 	private int workIdx = 0;
-
+	private CBMCProcessStarter processStarter;
+	
 	public PropertyCheckWorkSupplier(ElectionDescription descrs, List<PreAndPostConditionsDescription> propDescrs,
-			ElectionCheckParameter parameter, BEASTCallback cb) {
+			ElectionCheckParameter parameter, BEASTCallback cb, CBMCProcessStarter processStarter) {
 		this.descrs = descrs;
 		this.propDescrs = propDescrs;
 		this.parameter = parameter;
 		this.cb = cb;
+		this.processStarter = processStarter;
 		fillQueue();
 	}
 
@@ -36,7 +38,7 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 					for (int c : parameter.getRangeofCandidates()) {
 						for (int v : parameter.getRangeOfVoters()) {
 							workQueue.add(new PropertyCheckWorkUnit(descrs, propDescr, v, c, s,
-									UUID.randomUUID().toString(), cb));
+									UUID.randomUUID().toString(), cb, this.processStarter));
 						}
 					}
 				}

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.pse.beast.api.BEASTCallback;
 import edu.pse.beast.api.CreationHelper;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
 import edu.pse.beast.api.testrunner.propertycheck.PropertyCheckWorkSupplier;
 import edu.pse.beast.api.testrunner.propertycheck.PropertyTestResult;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
@@ -88,7 +89,14 @@ class ThreadPoolTest {
 						+ result.isSuccess());
 				assertTrue(result.isSuccess());
 			}
-		}));
+			
+			@Override
+			public void onPropertyTestRawOutput(ElectionDescription description,
+					PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid, String output) {
+				// TODO Auto-generated method stub
+				//System.out.println(output);
+			}
+		}, new CBMCProcessStarterWindows()));
 		pool.waitForCurrentWorkSupplierSync();
 		pool.shutdown();
 	}
@@ -109,7 +117,7 @@ class ThreadPoolTest {
 						+ result.isSuccess());
 				assertFalse(result.isSuccess());
 			}
-		}));
+		}, new CBMCProcessStarterWindows()));
 		pool.waitForCurrentWorkSupplierSync();
 		pool.shutdown();
 	}

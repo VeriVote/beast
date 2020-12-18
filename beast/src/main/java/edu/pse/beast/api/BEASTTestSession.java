@@ -7,12 +7,15 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 public class BEASTTestSession {	
 	
 	private PropertyCheckWorkSupplier propertyCheckWorkSupplier;
+	private ThreadPoolInterface tpi;
 	
 	public BEASTTestSession() {
 	}
 
-	public BEASTTestSession(PropertyCheckWorkSupplier propertyCheckWorkSupplier) {
+	public BEASTTestSession(PropertyCheckWorkSupplier propertyCheckWorkSupplier, ThreadPoolInterface tpi) {
 		this.propertyCheckWorkSupplier = propertyCheckWorkSupplier;
+		this.tpi = tpi;
+		tpi.startOnceReady(propertyCheckWorkSupplier);
 	}
 	
 	public void interruptAllTests() {

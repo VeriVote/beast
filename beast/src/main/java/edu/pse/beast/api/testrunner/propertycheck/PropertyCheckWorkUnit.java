@@ -29,12 +29,12 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	PreAndPostConditionsDescription propertyDescr;
 	int v, c, s;
 	String uuid;
-	CBMCProcessWindows windows = new CBMCProcessWindows();
+	CBMCProcessStarter processStarter;
 	BEASTCallback cb;
 	private boolean finished = false;
 
 	public PropertyCheckWorkUnit(ElectionDescription description, PreAndPostConditionsDescription propertyDescr, int v,
-			int c, int s, String uuid, BEASTCallback cb) {
+			int c, int s, String uuid, BEASTCallback cb, CBMCProcessStarter processStarter) {
 		this.description = description;
 		this.propertyDescr = propertyDescr;
 		this.v = v;
@@ -42,13 +42,14 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 		this.s = s;
 		this.uuid = uuid;
 		this.cb = cb;
+		this.processStarter = processStarter;
 	}
 
 	@Override
 	public void doWork() {
 		cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
 		
-		ProcessBuilder pb = windows.startTestForParam(description, propertyDescr, v, c, s, cb);
+		ProcessBuilder pb = processStarter.startTestForParam(description, propertyDescr, v, c, s, uuid, cb);
 		Process process;
 		try {
 			process = pb.start();
