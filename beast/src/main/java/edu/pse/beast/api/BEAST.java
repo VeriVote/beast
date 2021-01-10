@@ -27,7 +27,7 @@ public class BEAST {
 	}
 
 	//TODO pass the windows process and other setup stuff 
-	public BEASTTestSession startTest(BEASTCallback cb, ElectionDescription description,
+	public BEASTPropertyCheckSession startPropertyCheck(BEASTCallback cb, ElectionDescription description,
 			List<PreAndPostConditionsDescription> propertiesToTest, ElectionCheckParameter param) {
 
 		// Test the election description for errors
@@ -36,7 +36,7 @@ public class BEAST {
 			for (CodeError err : electionCodeErrors) {
 				cb.onElectionCodeError(err);
 			}
-			return new BEASTTestSession();
+			return new BEASTPropertyCheckSession();
 		}
 
 		// Test the Conditiondescriptions for errors
@@ -47,7 +47,7 @@ public class BEAST {
 				for (CodeError err : propCodeErrors) {
 					cb.onPropertyCodeError(err, idx);
 				}
-				return new BEASTTestSession();
+				return new BEASTPropertyCheckSession();
 			}
 			idx++;
 		}
@@ -55,6 +55,6 @@ public class BEAST {
 		// TODO pass in which type of test...margin, etc. Currently this
 		// is intertwined with the javafx ChildTreeItem specifically which
 		// subclass gets passed. Wild
-		return new BEASTTestSession(new PropertyCheckWorkSupplier(description, propertiesToTest, param, cb, processStarter), tpi);
+		return new BEASTPropertyCheckSession(new PropertyCheckWorkSupplier(description, propertiesToTest, param, cb, processStarter), tpi);
 	}
 }

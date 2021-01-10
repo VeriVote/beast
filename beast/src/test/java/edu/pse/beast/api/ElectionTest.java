@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.pse.beast.api.fileio.FileIOInterface;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCXmlOutputHandler;
 import edu.pse.beast.api.testrunner.propertycheck.PropertyTestResult;
 import edu.pse.beast.codeareajavafx.SaverLoader;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
@@ -39,23 +40,28 @@ class ElectionTest {
 
 		List<PreAndPostConditionsDescription> propList = new ArrayList<>();
 		propList.add(prop);
-
-		beast.startTest(new BEASTCallback() {
+		
+		CBMCXmlOutputHandler xmlOutputHandler = new CBMCXmlOutputHandler();
+		BEASTPropertyCheckSession sess = beast.startPropertyCheck(new BEASTCallback() {		
+			
 			@Override
-			public void onPropertyTestResult(ElectionDescription electionDescription,
-					PreAndPostConditionsDescription preAndPostConditionsDescription, int v, int c, int s,
-					PropertyTestResult result) {
+			public void onCompleteCommand(ElectionDescription description,
+					PreAndPostConditionsDescription propertyDescr, int v, int c, int s, String uuid,
+					String completeCommand) {
 				// TODO Auto-generated method stub
-				System.out.println(preAndPostConditionsDescription.getName() + " V=" + v + " C=" + c + " S=" + s + " "
-						+ result.isSuccess());
+				System.out.println(completeCommand);
 			}
+			
+			@Override
+			public void onPropertyTestRawOutputComplete(ElectionDescription description,
+					PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid,
+					List<String> cbmcOutput) {
+				System.out.println("finished for s = " + s + " c = " + c + " v = " + v);
+				xmlOutputHandler.onCompleteOutput(description, propertyDescr, s, c, v, uuid, cbmcOutput);
+			}
+
 		}, descr, propList, params);
-
-		/*
-		 * File projFile = new File("./projectFiles/Black.proj"); Project proj =
-		 * fileIOInterface.loadProjectFromFile(projFile);
-		 */
-
+		sess.await();
 	}
 
 }

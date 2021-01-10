@@ -1,5 +1,6 @@
 package edu.pse.beast.api.testrunner.propertycheck;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -10,6 +11,7 @@ import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 
 public class PropertyCheckWorkSupplier implements WorkSupplier {
 
@@ -32,13 +34,16 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	}
 
 	private void fillQueue() {
+
 		synchronized (workQueue) {
-			for (PreAndPostConditionsDescription propDescr : propDescrs) {
+			for (PreAndPostConditionsDescription propDescr : propDescrs) {		
+				File cbmcFile = CBMCCodeFileGenerator.createCodeFileTest(descrs, propDescr);
+
 				for (int s : parameter.getRangeOfSeats()) {
 					for (int c : parameter.getRangeofCandidates()) {
 						for (int v : parameter.getRangeOfVoters()) {
 							workQueue.add(new PropertyCheckWorkUnit(descrs, propDescr, v, c, s,
-									UUID.randomUUID().toString(), cb, this.processStarter));
+									UUID.randomUUID().toString(), cb, this.processStarter, cbmcFile));
 						}
 					}
 				}

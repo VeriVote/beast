@@ -4,15 +4,15 @@ import edu.pse.beast.api.testrunner.propertycheck.PropertyCheckWorkSupplier;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public class BEASTTestSession {	
+public class BEASTPropertyCheckSession {	
 	
 	private PropertyCheckWorkSupplier propertyCheckWorkSupplier;
 	private ThreadPoolInterface tpi;
 	
-	public BEASTTestSession() {
+	public BEASTPropertyCheckSession() {
 	}
 
-	public BEASTTestSession(PropertyCheckWorkSupplier propertyCheckWorkSupplier, ThreadPoolInterface tpi) {
+	public BEASTPropertyCheckSession(PropertyCheckWorkSupplier propertyCheckWorkSupplier, ThreadPoolInterface tpi) {
 		this.propertyCheckWorkSupplier = propertyCheckWorkSupplier;
 		this.tpi = tpi;
 		tpi.startOnceReady(propertyCheckWorkSupplier);

@@ -37,4 +37,9 @@ public class FileIOInterface {
 		Project created = projectSaverLoader.createFromSaveString(String.join("\n", lines));
 		return created;
 	}
+
+	public static String readFileIntoLines(File f) throws IOException {
+		List<String> lines = Files.readAllLines(f.toPath(), Charset.defaultCharset());
+		return String.join("\n", lines);
+	}
 }

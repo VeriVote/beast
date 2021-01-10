@@ -32,9 +32,10 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	CBMCProcessStarter processStarter;
 	BEASTCallback cb;
 	private boolean finished = false;
+	File cbmcFile;
 
 	public PropertyCheckWorkUnit(ElectionDescription description, PreAndPostConditionsDescription propertyDescr, int v,
-			int c, int s, String uuid, BEASTCallback cb, CBMCProcessStarter processStarter) {
+			int c, int s, String uuid, BEASTCallback cb, CBMCProcessStarter processStarter, File cbmcFile) {
 		this.description = description;
 		this.propertyDescr = propertyDescr;
 		this.v = v;
@@ -43,13 +44,14 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 		this.uuid = uuid;
 		this.cb = cb;
 		this.processStarter = processStarter;
+		this.cbmcFile = cbmcFile;
 	}
 
 	@Override
 	public void doWork() {
 		cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
-		
-		ProcessBuilder pb = processStarter.startTestForParam(description, propertyDescr, v, c, s, uuid, cb);
+
+		ProcessBuilder pb = processStarter.startTestForParam(description, propertyDescr, v, c, s, uuid, cb, cbmcFile);
 		Process process;
 		try {
 			process = pb.start();
@@ -65,14 +67,15 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			processCBMCOutput(cbmcOutput);
+			cb.onPropertyTestRawOutputComplete(description, propertyDescr, s, c, v, uuid, cbmcOutput);
+			cb.onPropertyTestFinished(description, propertyDescr, s, c, v, uuid);
+			finished = true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
-		finished = true;
+		}
 	}
-	
+
 	@Override
 	public boolean isFinished() {
 		return finished;
@@ -82,40 +85,11 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	public String getUUID() {
 		return uuid;
 	}
-	
-	private void processCBMCOutput(List<String> cbmcOutput) {
-		// find first line of cbmc xml output
-		int i = 0;
-		for (; i < cbmcOutput.size() && !cbmcOutput.get(i).contains("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); ++i)
-			;
 
-		String xmlString = String.join("\n", cbmcOutput.subList(i, cbmcOutput.size()));
-		InputStream xmlStream = IOUtils.toInputStream(xmlString, Charset.forName("UTF-8"));
-
-		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-			Document cbmcDocument = builder.parse(xmlStream);
-			NodeList resultElements = cbmcDocument.getElementsByTagName("cprover-status");
-			String resElemTextContext = resultElements.item(0).getTextContent();					
-			cb.onPropertyTestResult(description, propertyDescr, v, c, s, new PropertyTestResult(cbmcDocument));
-			// TODO errorhandling
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	@Override
 	public void interrupt() {
-		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

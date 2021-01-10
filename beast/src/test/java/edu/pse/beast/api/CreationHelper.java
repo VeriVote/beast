@@ -14,9 +14,8 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 public class CreationHelper {
-	public static ElectionDescription createSimpleDescription(String code) {
-		InputType it = InputType.getInputTypes().get(2);
-		OutputType ot = OutputType.getOutputTypes().get(3);
+
+	public static ElectionDescription createSimpleDescription(String code, InputType it, OutputType ot) {
 		ElectionDescription descr = new ElectionDescription("simple", it, ot);
 
 		String elecDescrCode = generateSimpleDeclStringForCodeArea(descr.getContainer());
@@ -25,7 +24,7 @@ public class CreationHelper {
 		int lockedLineEnd = lockedLineStart + elecDescrCode.length();
 
 		elecDescrCode += "\n\n";
-		
+
 		elecDescrCode += code;
 
 		elecDescrCode += "\n\n}";
@@ -38,8 +37,15 @@ public class CreationHelper {
 		List<String> complexCode = descr.getComplexCodeAndSetHeaderLoopBounds();
 		return descr;
 	}
-	
-	public static List<PreAndPostConditionsDescription> createSimpleCondList(String name, String preCode, String postCode) {
+
+	public static ElectionDescription createSimpleDescription(String code) {
+		InputType it = InputType.getInputTypes().get(2);
+		OutputType ot = OutputType.getOutputTypes().get(3);
+		return (createSimpleDescription(code, it, ot));
+	}
+
+	public static List<PreAndPostConditionsDescription> createSimpleCondList(String name, String preCode,
+			String postCode) {
 		PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription(name);
 
 		conds.getPreConditionsDescription().setCode(preCode);
@@ -50,25 +56,25 @@ public class CreationHelper {
 
 		return condList;
 	}
-	
+
 	public static ElectionCheckParameter createParams(int maxV, int maxC, int maxS) {
 		List<Integer> vots = new ArrayList<>();
-		for(int i = 1; i <= maxV; ++i) {
+		for (int i = 1; i <= maxV; ++i) {
 			vots.add(i);
 		}
 		List<Integer> cands = new ArrayList<>();
-		for(int i = 1; i <= maxC; ++i) {
+		for (int i = 1; i <= maxC; ++i) {
 			cands.add(i);
 		}
 		List<Integer> seats = new ArrayList<>();
-		for(int i = 1; i <= maxS; ++i) {
+		for (int i = 1; i <= maxS; ++i) {
 			seats.add(i);
 		}
 
 		TimeOut timeOut = new TimeOut(TimeUnit.SECONDS, 1);
 
 		ElectionCheckParameter param = new ElectionCheckParameter(vots, cands, seats, timeOut, 1, "");
-		
+
 		return param;
 	}
 }
