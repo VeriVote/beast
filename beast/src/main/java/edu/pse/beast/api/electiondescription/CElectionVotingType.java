@@ -22,6 +22,5 @@ import java.util.List;
 public class CElectionVotingType {
 	private int listDimensions;
 	private CElectionSimpleTypes simpleType;
-	private List<String> listSizes;
-	
+	private List<CBMCVars> listSizes;		
 }

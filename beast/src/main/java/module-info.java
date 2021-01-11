@@ -22,7 +22,8 @@ module edu.pse.beast {
     exports edu.pse.beast.booleanexpeditor.booleanexpcodearea;
     exports edu.pse.beast.codearea.useractions;
     exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
-    exports edu.pse.beast.highlevel.javafx;
+    exports edu.pse.beast.highlevel.javafx;   
+    exports edu.pse.beast.gui;
     exports edu.pse.beast.saverloader.staticsaverloaders;
     exports edu.pse.beast.booleanexpeditor.useractions;
     exports edu.pse.beast.propertylist.model;
@@ -90,6 +91,7 @@ module edu.pse.beast {
     requires java.base;
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
+    opens edu.pse.beast.gui to javafx.fxml;
     opens edu.pse.beast.datatypes.electiondescription to gson;
     opens edu.pse.beast.datatypes.propertydescription to gson;
     opens edu.pse.beast.types to gson;
