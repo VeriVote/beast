@@ -17,10 +17,11 @@ public class CBMCCodeGeneratorTest {
 	public void testSimpleElecCodeGen() {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
 				VotingOutputTypes.SINGLE_CANDIDATE);
-		descr.getVotingFunction().getCode().add("return 0;");
+		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("ELECT1 != ELECT2", "",
 				"ELECT1 != ELECT2;");
 
-		CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0));
+		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0));
+		System.out.println(c);
 	}
 }

@@ -30,6 +30,10 @@ public class VotingSigFunction {
 	public String getVotingVarName() {
 		return "votes";
 	}
+	
+	public String getResultVarName() {
+		return "result";
+	}
 
 	public List<String> getCode() {
 		return code;

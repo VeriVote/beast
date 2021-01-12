@@ -28,6 +28,7 @@
                   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#addFunction" text="+" />
                   <Button layoutX="89.0" layoutY="14.0" mnemonicParsing="false" onAction="#removeFunction" text="-" />
                   <Button layoutX="13.0" layoutY="54.0" mnemonicParsing="false" onAction="#changeVote" text="change" />
+                  <Button layoutX="13.0" layoutY="92.0" mnemonicParsing="false" onAction="#gencode" text="gencode" />
                </children>
             </AnchorPane>
         </items>

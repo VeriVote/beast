@@ -7,15 +7,16 @@ import edu.pse.beast.api.electiondescription.VotingSigFunction;
 public class FunctionToC {
 	public static String getFunctionSignature(VotingSigFunction func) {
 		return votingTypeToCString(CElectionVotingType.of(func.getOutputType())) + " " + func.getName() + "("
-				+ votingTypeToCString(CElectionVotingType.of(func.getInputType())) + " " + func.getVotingVarName() +  ")";
+				+ votingTypeToCString(CElectionVotingType.of(func.getInputType())) + " " + func.getVotingVarName()
+				+ ")";
 	}
-	
+
 	public static String getConstPreamble(VotingSigFunction func) {
-		return votingTypeToCString(CElectionVotingType.of(func.getOutputType())) + " result;";
+		return votingTypeToCString(CElectionVotingType.of(func.getOutputType())) + " " + func.getResultVarName() + ";";
 	}
-	
+
 	public static String getConstEnding(VotingSigFunction func) {
-		return "return result;";
+		return "return " + func.getResultVarName() + ";";
 	}
 	
 	public static String votingTypeToCString(CElectionVotingType type) {

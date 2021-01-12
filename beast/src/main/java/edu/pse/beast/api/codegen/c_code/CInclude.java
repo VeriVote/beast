@@ -6,6 +6,9 @@ public class CInclude {
 	public CInclude(String filePath) {
 		this.filePath = filePath;
 	}
-	
-	
+
+	public String generateCode() {
+		return "#include <" + filePath + ">";
+	}
+
 }
