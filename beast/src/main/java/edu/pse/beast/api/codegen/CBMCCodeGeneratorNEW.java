@@ -30,7 +30,7 @@ public class CBMCCodeGeneratorNEW {
 	 * 
 	 */
 	
-	public static void generateCode(CElectionDescription descr, PreAndPostConditionsDescription propDescr) {
+	public static String generateCode(CElectionDescription descr, PreAndPostConditionsDescription propDescr) {
 		CFile created = new CFile();
 		created.include(STDLIB);
 		created.include(STDINT);
@@ -39,6 +39,8 @@ public class CBMCCodeGeneratorNEW {
 		created.define(ASSUME, CPROVER_ASSUME);
 		
 		created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
-		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());				
+		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());			
+		
+		return created.generateCode();
 	}
 }

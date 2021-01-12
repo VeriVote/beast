@@ -9,13 +9,24 @@ public class CElectionDescription {
 
 	private VotingSigFunction votingFunction;
 
-	CElectionVotingType inputType;
-	CElectionVotingType outputType;
+	private VotingInputTypes inputType;
+	private VotingOutputTypes outputType;
 
-	public CElectionDescription(CElectionVotingType inputType, CElectionVotingType outputType,
-			String votingFuncName) {
+	public CElectionDescription(VotingInputTypes inputType, VotingOutputTypes outputType) {
 		this.inputType = inputType;
 		this.outputType = outputType;
+		votingFunction = new VotingSigFunction("voting", inputType, outputType);
 	}
+
+	public VotingSigFunction getVotingFunction() {
+		return votingFunction;
+	}	
+	
+	public VotingSigFunction createNewAndAdd(String name) {
+		VotingSigFunction created = new VotingSigFunction(name, inputType, outputType);
+		votingSigFunctions.add(created);
+		return created;
+	}
+	
 
 }

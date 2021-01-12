@@ -613,6 +613,7 @@ public final class NewCodeArea extends AutoCompletionCodeArea implements MenuBar
 		for (CodeError codeError : codeErrors) {
 			toDisplay += "line: " + codeError.getLine() + "| Message: " + codeError.getMsg() + lineBreak();
 		}
+		
 		GUIController.setErrorText(toDisplay);
 	}
 

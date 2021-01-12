@@ -2197,9 +2197,11 @@ public class GUIController {
      *            the new error text
      */
     public static void setErrorText(final String text) {
-        controller.errorTextArea.setText(text);
-        controller.getSubTabPane().getSelectionModel()
-                .select(controller.errorPane);
+    	if(controller != null) {
+            controller.errorTextArea.setText(text);
+            controller.getSubTabPane().getSelectionModel()
+                    .select(controller.errorPane);
+    	}
     }
 
     /**
