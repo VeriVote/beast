@@ -34,15 +34,6 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	/**
-	 * generates the cbmc code for a given ElectionDescription and
-	 * PreAndPostConditionsDescription.
-	 * 
-	 * This has several steps:
-	 * 
-	 * 
-	 * 
-	 */
 
 	public static String generateCode(CElectionDescription descr, PreAndPostConditionsDescription propDescr) {
 		CFile created = new CFile();
@@ -67,7 +58,7 @@ public class CBMCCodeGeneratorNEW {
 		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(), voteArrStruct, voteResultStruct,
 				votesNakedArr, resultNakedArr));
 		
-		created.addFunction(CBMCMainGenerator.main(propDescr));
+		created.addFunction(CBMCMainGenerator.main(descr, propDescr));
 
 		return created.generateCode();
 	}

@@ -14,7 +14,13 @@ public class CFunction {
 		this.name = name;
 		for (String s : args) {
 			String typeAndName[] = s.split(" ");
-			this.args.add(new CTypeAndName(typeAndName[0], typeAndName[1]));
+			String argName = typeAndName[typeAndName.length - 1];
+			String argType = "";
+			for (int i = 0; i < typeAndName.length - 1; ++i) {
+				argType += typeAndName[i];
+				argType += i < typeAndName.length - 2 ? " " : "";
+			}
+			this.args.add(new CTypeAndName(argType, argName));
 		}
 		this.returnType = returnType;
 	}
