@@ -46,7 +46,7 @@ public final class SymbolicVarExp extends TypeExpression {
         return "SymbVar: {id "
                 + symbVar.getId() + ", type: " + symbVar
                         .getInternalTypeContainer().getInternalType().toString()
-                + "}\n";
+                + "}";
     }
 
     @Override

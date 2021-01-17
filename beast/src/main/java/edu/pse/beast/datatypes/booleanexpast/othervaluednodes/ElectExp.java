@@ -31,6 +31,6 @@ public final class ElectExp extends AccessValueNode {
 
     @Override
     public String getTreeString(final int depth) {
-        return null;
+        return "ELECT" + count;
     }
 }

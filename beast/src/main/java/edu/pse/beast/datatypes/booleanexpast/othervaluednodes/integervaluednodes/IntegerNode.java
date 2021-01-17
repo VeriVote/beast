@@ -28,7 +28,7 @@ public final class IntegerNode extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "Integer: " + heldInteger + LINE_BREAK;
+        return "Integer: " + heldInteger;
     }
 
     /**

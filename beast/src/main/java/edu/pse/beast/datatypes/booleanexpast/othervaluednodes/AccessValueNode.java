@@ -11,10 +11,10 @@ import edu.pse.beast.types.InOutType;
  */
 public abstract class AccessValueNode extends TypeExpression {
     /** The accessing vars. */
-    private final TypeExpression[] accessingVars;
+	protected final TypeExpression[] accessingVars;
 
     /** The count. */
-    private final int count;
+    protected final int count;
 
     /**
      * Instantiates a new access value node.

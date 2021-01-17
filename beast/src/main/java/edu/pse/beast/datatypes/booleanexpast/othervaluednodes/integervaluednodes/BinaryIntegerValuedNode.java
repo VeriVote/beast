@@ -45,8 +45,8 @@ public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
         final StringBuilder b = new StringBuilder();
         final String tabs = TABS.substring(0, depth + 1);
         b.append("BinaryIntNode: Symbol " + relationSymbol + LINE_BREAK);
-        b.append(tabs + LHS + getLhs().getTreeString(depth + 1));
-        b.append(tabs + RHS + getRhs().getTreeString(depth + 1));
+        b.append(tabs + LHS + getLhs().getTreeString(depth + 1) + LINE_BREAK);
+        b.append(tabs + RHS + getRhs().getTreeString(depth + 1) + LINE_BREAK);
         return b.toString();
     }
 

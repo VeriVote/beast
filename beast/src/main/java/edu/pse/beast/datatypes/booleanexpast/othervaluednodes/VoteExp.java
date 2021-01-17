@@ -31,6 +31,10 @@ public final class VoteExp extends AccessValueNode {
 
     @Override
     public String getTreeString(final int depth) {
-        return null;
+    	String acc = "";
+    	for(TypeExpression exp : accessingVars) {
+    		acc += "[]";
+    	}
+        return "Vote" + count + acc;
     }
 }

@@ -37,7 +37,7 @@ public final class ConstantExp extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "const " + constant + LINE_BREAK;
+        return "const " + constant;
     }
 
     @Override

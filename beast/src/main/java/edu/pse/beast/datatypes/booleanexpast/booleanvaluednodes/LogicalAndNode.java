@@ -30,7 +30,7 @@ public final class LogicalAndNode extends BinaryRelationshipNode {
     public String getTreeString(final int depth) {
         final String tabs = TABS.substring(0, depth + 1);
         return "&&" + LINE_BREAK + tabs + LHS
-                + getLHSBooleanExpNode().getTreeString(depth + 1) + tabs
-                + RHS + getRHSBooleanExpNode().getTreeString(depth + 1);
+                + getLHSBooleanExpNode().getTreeString(depth + 1) + LINE_BREAK
+                + tabs + RHS + getRHSBooleanExpNode().getTreeString(depth + 1);
     }
 }

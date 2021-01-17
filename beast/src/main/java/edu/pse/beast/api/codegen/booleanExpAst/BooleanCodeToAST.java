@@ -5,6 +5,7 @@ import java.util.Stack;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpConstant;
@@ -31,6 +32,7 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.ConstantExp;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerValuedExpression;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
@@ -49,6 +51,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Nu
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.QuantifierExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbolicVarExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumUniqueExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScopehandler;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -59,6 +63,9 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 //TODO: possibly doesnt do what you expect if highest vote is higher than highest elect,
 //ie VOTES5 == ... but max elect is like ELECT2 == ...
 public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
+
+    private static final String VOTE_SUM = "VOTE_SUM_FOR_CANDIDATE";
+    private static final String VOTE_SUM_UNIQUE = "VOTE_SUM_FOR_UNIQUE_CANDIDATE";
 
 	private CElectionDescription descr;
 	private BooleanExpASTData generated;
@@ -325,6 +332,36 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final int heldInteger = Integer.valueOf(integerString);
 		final IntegerNode integerNode = new IntegerNode(heldInteger);
 		expStack.push(integerNode);
+	}
+
+	@Override
+	public void enterVoteSumExp(final VoteSumExpContext ctx) {
+	}
+
+	private void exitVoteSum(final String exprStr, final TerminalNode tn, final boolean unique) {
+		final String numberString = tn.getText().substring(exprStr.length());
+		final int number = Integer.valueOf(numberString);
+		setHighestVote(number);
+		final VoteSumForCandExp expNode = new VoteSumForCandExp(number, expStack.pop(), unique);
+		expStack.push(expNode);
+	}
+
+	@Override
+	public void exitVoteSumExp(final VoteSumExpContext ctx) {
+		final String exprStr = VOTE_SUM;
+		final TerminalNode tn = ctx.Votesum();
+		exitVoteSum(exprStr, tn, false);
+	}
+
+	@Override
+	public void enterVoteSumUniqueExp(final VoteSumUniqueExpContext ctx) {
+	}
+
+	@Override
+	public void exitVoteSumUniqueExp(final VoteSumUniqueExpContext ctx) {
+		final String exprStr = VOTE_SUM_UNIQUE;
+		final TerminalNode tn = ctx.VotesumUnique();
+		exitVoteSum(exprStr, tn, true);
 	}
 
 }
