@@ -6,38 +6,10 @@ booleanExpList
 
 booleanExpListElement
     :   booleanExp ';'
-    // New part 0
-    |   votingListChangeExp ';'
-    |   votingTupleChangeExp ';'
-    |   candidateListChangeExp ';'
     ;
-    // End new part 0
-
-// New part 1
-votingListChangeExp
-    :   Vote ValueAssign votingListChangeContent
-    ;
-
-// Expressions that make changes to the voting lists used
-votingListChangeContent
-    :   concatenationExp
-    |   permutationExp
-    ;
-
-votingTupleChangeExp
-    :   tuple ValueAssign splitExp
-    ;
-
-candidateListChangeExp
-    :   Elect ValueAssign intersectExp
-    ;
-
-// End new part1
 
 booleanExp
     :   quantifierExp
-    |   notEmptyExp
-    |   intersectExp
     |   binaryRelationExp
     |   notExp
     |   comparisonExp
@@ -49,72 +21,13 @@ binaryRelationExp
     |   quantifierExp BinaryRelationSymbol booleanExp
     |   notExp BinaryRelationSymbol booleanExp
     |   comparisonExp BinaryRelationSymbol booleanExp
-    |   notEmptyExp BinaryRelationSymbol booleanExp
-    |   intersectExp BinaryRelationSymbol booleanExp
-    // |   concatenationExp BinaryRelationSymbol booleanExp
+    
     |   '(' binaryRelationExp ')' BinaryRelationSymbol booleanExp
     |   '(' quantifierExp ')' BinaryRelationSymbol booleanExp
     |   '(' notExp ')' BinaryRelationSymbol booleanExp
     |   '(' comparisonExp ')' BinaryRelationSymbol booleanExp
-    |   '(' notEmptyExp ')' BinaryRelationSymbol booleanExp
-    |   '(' intersectExp ')' BinaryRelationSymbol booleanExp
     ;
 
-// New part 2
-addedContentExp
-    :   notEmptyExp
-    |   intersectExp
-    ;
-
-notEmptyExp
-    :   NotEmpty '(' notEmptyContent ')'
-    ;
-
-
-notEmptyContent
-    :   Elect
-    |   intersectExp
-    ;
-
-// All types that are equivalent to "Vote" (e.g the function returns "Vote")
-voteEquivalents
-    :   Vote
-    |   permutationExp
-    |   concatenationExp
-    ;
-
-concatenationExp
-    :   '(' voteEquivalents Concatenate voteEquivalents ')'
-    |   Vote Concatenate voteEquivalents
-    |   permutationExp Concatenate voteEquivalents
-    ;
-
-splitExp
-    :   Split '(' voteEquivalents ')'
-    ;
-
-permutationExp
-    :   Permutation '(' voteEquivalents ')'
-    ;
-
-intersectExp
-    :   Intersect '(' intersectContent ',' intersectContent ')'
-    ;
-
-intersectContent
-    :   Elect | intersectExp
-    ;
-
-tuple
-    :   '(' Vote tupleContent ')'
-    ;
-
-tupleContent
-    :   ',' Vote
-    |   ',' Vote tupleContent
-    ;
-
-// End new part 2
 
 quantifierExp
     :   Quantifier passSymbVar ':' booleanExp
@@ -129,12 +42,9 @@ comparisonExp
     ;
 
 typeExp
-    :   electExp
-    |   voteExp
+    :   
     |   numberExpression
-    |   symbolicVarExp
-    |   typeByPosExp
-    |   intersectExp
+    |   electionTypeExpression
     ;
 
 numberExpression
@@ -146,6 +56,55 @@ numberExpression
     |   constantExp
     |   integer
     ;
+    
+// any sort of expression which returns a type which is not a number and represents an
+// election object. These differ depending on the input and output type of the election.
+// eg VOTES1 can be and array of uints, or an array of arrays of unints.
+// Thus, things such as VOTES1 == ELECT1 can make sense but doesnt have to.
+// These types can only be compared, which leads to a boolean exp. Two types
+// can only be compared if they produce lists of same dims with the same underlying
+// value, such as VOTES1 == VOTES2    
+
+electionTypeExpression
+    : '(' electionTypeExpression ')'
+    | typeByPosExp
+    | electExp
+    | voteExp
+    | tupleExp
+    | permExp
+    | intersectExp
+    ;
+    
+intersectExp
+	: intersectVotes
+	| intersectElect
+	;
+	
+intersectVotes
+	: Votes (Intersect Votes)*
+	;
+
+intersectElect
+	: Elect (Intersect Elect)*
+	;
+	
+permExp
+	: Permutation OpenBracket Vote ClosedBracket
+	| Permutation OpenBracket Elect ClosedBracket
+	;
+    
+tupleExp
+	: voteTupleExp
+	| electTupleExp
+	;
+	
+electTupleExp
+	: OpenBracket Elect (',' Elect)* ClosedBracket
+	;
+    
+voteTupleExp
+	: OpenBracket Vote (',' Vote)* ClosedBracket
+	;
 
 typeByPosExp
     :   voterByPosExp
@@ -224,9 +183,7 @@ Add
     |   '-'
     ;
 
-Concatenate : '++';
-
-Intersect : 'INTERSECT';
+Intersect : 'I';
 
 Vote
     :   'VOTES' Integer
