@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
+import java.util.List;
 import java.util.Stack;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -7,6 +8,12 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpConstant;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
@@ -44,21 +51,28 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Bo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ComparisonExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ConstantExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectTupleExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntegerContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectElectContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectVotesContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.NotExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.NumberExpressionContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermElectExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermVoteExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.QuantifierExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbolicVarExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumUniqueExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteTupleExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScopehandler;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
-
 
 public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
@@ -229,13 +243,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		TypeExpression rhs = expStack.pop();
 		TypeExpression lhs = expStack.pop();
 
-//		if (lhs.getInternalTypeContainer().getInternalType() == InternalTypeRep.INTEGER) {
-//			final IntegerComparisonNode node = new IntegerComparisonNode(lhs, rhs, comparisonSymbol);
-//			nodeStack.add(node);
-//		} else {
 		final ComparisonNode node = new ComparisonNode(lhs, rhs, comparisonSymbol);
 		nodeStack.add(node);
-//		}
 	}
 
 	@Override
@@ -362,4 +371,71 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		exitVoteSum(exprStr, tn, true);
 	}
 
+	private int extractNumberFromVote(String voteString) {
+		final String numberString = voteString.substring(VOTER.length());
+		final int number = Integer.valueOf(numberString);
+		return number;
+	}
+
+	private int extractNumberFromElect(String electString) {
+		final String numberString = electString.substring(ELECT.length());
+		final int number = Integer.valueOf(numberString);
+		return number;
+	}
+
+	@Override
+	public void exitVoteTupleExp(VoteTupleExpContext ctx) {
+		VoteTupleNode node = new VoteTupleNode(null);
+		for (TerminalNode vote : ctx.Vote()) {
+			int number = extractNumberFromVote(vote.getText());
+			node.addVoteNumber(number);
+		}
+		expStack.push(node);
+	}
+
+	@Override
+	public void exitElectTupleExp(ElectTupleExpContext ctx) {
+		ElectTupleNode node = new ElectTupleNode(null);
+		for (TerminalNode elect : ctx.Elect()) {
+			int number = extractNumberFromElect(elect.getText());
+			node.addElectNumber(number);
+		}
+		expStack.push(node);
+	}
+
+	@Override
+	public void exitPermVoteExp(PermVoteExpContext ctx) {
+		VotePermutationNode node = new VotePermutationNode(null);
+		int number = extractNumberFromVote(ctx.Vote().getText());
+		node.setVoteNumber(number);
+		expStack.push(node);
+	}
+
+	@Override
+	public void exitPermElectExp(PermElectExpContext ctx) {
+		ElectPermutationNode node = new ElectPermutationNode(null);
+		int number = extractNumberFromElect(ctx.Elect().getText());
+		node.setElectNumber(number);
+		expStack.push(node);
+	}
+	
+	@Override
+	public void exitIntersectElect(IntersectElectContext ctx) {
+		ElectIntersectionNode node = new ElectIntersectionNode(null);
+		for (TerminalNode elect : ctx.Elect()) {
+			int number = extractNumberFromElect(elect.getText());
+			node.addElectNumber(number);
+		}
+		expStack.push(node);
+	}
+	
+	@Override
+	public void exitIntersectVotes(IntersectVotesContext ctx) {
+		VoteIntersectionNode node = new VoteIntersectionNode(null);
+		for (TerminalNode elect : ctx.Vote()) {
+			int number = extractNumberFromElect(elect.getText());
+			node.addVoteNumber(number);
+		}
+		expStack.push(node);
+	}
 }

@@ -39,11 +39,11 @@ notExp
 
 comparisonExp
     :   typeExp ComparisonSymbol typeExp
-    ;
+    ;   
 
+	
 typeExp
-    :   
-    |   numberExpression
+    :   numberExpression
     |   electionTypeExpression
     ;
 
@@ -65,15 +65,24 @@ numberExpression
 // can only be compared if they produce lists of same dims with the same underlying
 // value, such as VOTES1 == VOTES2    
 
+// Instead of Not Empty we use Empty and combine it with ! which we already have
+// Instead of an Empty(Votes) expression I want to see if I can use a comparison with
+// a special Empty list
+
 electionTypeExpression
-    : '(' electionTypeExpression ')'
-    | typeByPosExp
+	: intersectExp
+	| typeByPosExp
     | electExp
     | voteExp
     | tupleExp
     | permExp
-    | intersectExp
+    | emptyList
+    | symbolicVarExp
     ;
+
+emptyList
+	: EmptyList
+	;
     
 intersectExp
 	: intersectVotes
@@ -81,16 +90,24 @@ intersectExp
 	;
 	
 intersectVotes
-	: Votes (Intersect Votes)*
+	: Intersect '(' Vote (','Vote)* ')'
 	;
 
 intersectElect
-	: Elect (Intersect Elect)*
+	: Intersect '(' Elect (','Elect)* ')'
 	;
 	
 permExp
+	: permVoteExp
+	| permElectExp
+	;
+	
+permVoteExp
 	: Permutation OpenBracket Vote ClosedBracket
-	| Permutation OpenBracket Elect ClosedBracket
+	;
+
+permElectExp
+	: Permutation OpenBracket Elect ClosedBracket
 	;
     
 tupleExp
@@ -99,11 +116,11 @@ tupleExp
 	;
 	
 electTupleExp
-	: OpenBracket Elect (',' Elect)* ClosedBracket
+	: OpenTuple Elect (',' Elect)* CloseTuple
 	;
     
 voteTupleExp
-	: OpenBracket Vote (',' Vote)* ClosedBracket
+	: OpenTuple Vote (',' Vote)* CloseTuple
 	;
 
 typeByPosExp
@@ -183,7 +200,7 @@ Add
     |   '-'
     ;
 
-Intersect : 'I';
+Intersect : 'CUT';
 
 Vote
     :   'VOTES' Integer
@@ -193,7 +210,7 @@ Elect
     :   'ELECT' Integer
     ;
 
-NotEmpty : 'NOTEMPTY';
+EmptyList : 'O';
 
 Votesum
     :   'VOTE_SUM_FOR_CANDIDATE' Integer
@@ -207,6 +224,10 @@ ClosedBracket : ')';
 
 OpenBracket : '(';
 
+OpenTuple : '[';
+
+CloseTuple : ']';
+
 Quantifier
     :   'FOR_ALL_VOTERS'
     |   'FOR_ALL_CANDIDATES'
@@ -216,13 +237,7 @@ Quantifier
     |   'EXISTS_ONE_SEAT'
     ;
 
-// New part 3
-Split : 'SPLIT';
-
 Permutation : 'PERM';
-
-ValueAssign : '<-';
-// End new part 3
 
 ComparisonSymbol
     :   '=='

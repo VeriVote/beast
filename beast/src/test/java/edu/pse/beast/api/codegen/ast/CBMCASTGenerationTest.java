@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.ast;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,13 +27,14 @@ public class CBMCASTGenerationTest {
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getSymVarsAsScope());
+		
+		BooleanExpListNode topNode = ast.getTopAstNode();
+		System.out.println(topNode.getTreeString());
 
 		assertEquals(ast.getHighestElect(), 2);
 		assertEquals(ast.getHighestVote(), 0);
 		
-		BooleanExpListNode topNode = ast.getTopAstNode();
 		
-		System.out.println(topNode.getTreeString());
 	}
 	
 	@Test
@@ -82,19 +83,50 @@ public class CBMCASTGenerationTest {
 	}
 	
 	@Test
-	public void testPERMASTGen() {
+	public void testTupleASTGen() {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
-		final String exp = "VOTES2 == PERM(VOTES1)";
+		final String exp = "[VOTES1, VOTES2] == VOTES3;";
 		PreAndPostConditionsDescription propDescr = CreationHelper
-				.createSimpleCondList("PERM", "", exp).get(0);
+				.createSimpleCondList("tuple", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getSymVarsAsScope());
+		
+		BooleanExpListNode topNode = ast.getTopAstNode();
+		
+		System.out.println(topNode.getTreeString());
+	}
+	
+	@Test
+	public void testPermutationASTGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		final String exp = "VOTES1 == PERM(VOTES3);";
+		PreAndPostConditionsDescription propDescr = CreationHelper
+				.createSimpleCondList("perm", "", exp).get(0);
 
-		assertEquals(ast.getHighestElect(), 0);
-		assertEquals(ast.getHighestVote(), 1);
+		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
+				propDescr.getSymVarsAsScope());
+		
+		BooleanExpListNode topNode = ast.getTopAstNode();
+		
+		System.out.println(topNode.getTreeString());
+	}
+	
+	@Test
+	public void testIntersectionASTGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		final String exp = "VOTES1 == CUT(VOTES1, VOTES2, VOTES3);";
+		PreAndPostConditionsDescription propDescr = CreationHelper
+				.createSimpleCondList("intersect", "", exp).get(0);
+
+		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
+				propDescr.getSymVarsAsScope());
 		
 		BooleanExpListNode topNode = ast.getTopAstNode();
 		
