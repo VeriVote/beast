@@ -76,11 +76,11 @@ electionTypeExpression
     | voteExp
     | tupleExp
     | permExp
-    | emptyList
+    | emptyListExp
     | symbolicVarExp
     ;
 
-emptyList
+emptyListExp
 	: EmptyList
 	;
     
@@ -210,7 +210,7 @@ Elect
     :   'ELECT' Integer
     ;
 
-EmptyList : 'O';
+EmptyList : 'EmptyList';
 
 Votesum
     :   'VOTE_SUM_FOR_CANDIDATE' Integer

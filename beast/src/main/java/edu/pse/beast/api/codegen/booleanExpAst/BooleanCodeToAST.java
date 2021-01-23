@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.EmptyListNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
@@ -52,6 +53,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Co
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ConstantExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectTupleExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.EmptyListExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntegerContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectElectContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectVotesContext;
@@ -418,7 +420,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		node.setElectNumber(number);
 		expStack.push(node);
 	}
-	
+
 	@Override
 	public void exitIntersectElect(IntersectElectContext ctx) {
 		ElectIntersectionNode node = new ElectIntersectionNode(null);
@@ -428,7 +430,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		}
 		expStack.push(node);
 	}
-	
+
 	@Override
 	public void exitIntersectVotes(IntersectVotesContext ctx) {
 		VoteIntersectionNode node = new VoteIntersectionNode(null);
@@ -436,6 +438,12 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 			int number = extractNumberFromElect(elect.getText());
 			node.addVoteNumber(number);
 		}
+		expStack.push(node);
+	}
+
+	@Override
+	public void exitEmptyListExp(EmptyListExpContext ctx) {
+		EmptyListNode node = new EmptyListNode(null);
 		expStack.push(node);
 	}
 }

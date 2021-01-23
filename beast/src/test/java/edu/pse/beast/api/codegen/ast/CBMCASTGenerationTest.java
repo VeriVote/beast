@@ -132,4 +132,21 @@ public class CBMCASTGenerationTest {
 		
 		System.out.println(topNode.getTreeString());
 	}
+	
+	@Test
+	public void testEmptyListASTGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		final String exp = "CUT(VOTES1, VOTES2, VOTES3) != EmptyList;";
+		PreAndPostConditionsDescription propDescr = CreationHelper
+				.createSimpleCondList("emptyList", "", exp).get(0);
+
+		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
+				propDescr.getSymVarsAsScope());
+		
+		BooleanExpListNode topNode = ast.getTopAstNode();
+		
+		System.out.println(topNode.getTreeString());
+	}
 }
