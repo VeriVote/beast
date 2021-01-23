@@ -60,12 +60,11 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
-//TODO: possibly doesnt do what you expect if highest vote is higher than highest elect,
-//ie VOTES5 == ... but max elect is like ELECT2 == ...
+
 public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
-    private static final String VOTE_SUM = "VOTE_SUM_FOR_CANDIDATE";
-    private static final String VOTE_SUM_UNIQUE = "VOTE_SUM_FOR_UNIQUE_CANDIDATE";
+	private static final String VOTE_SUM = "VOTE_SUM_FOR_CANDIDATE";
+	private static final String VOTE_SUM_UNIQUE = "VOTE_SUM_FOR_UNIQUE_CANDIDATE";
 
 	private CElectionDescription descr;
 	private BooleanExpASTData generated;

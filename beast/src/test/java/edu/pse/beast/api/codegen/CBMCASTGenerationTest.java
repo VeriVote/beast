@@ -68,7 +68,27 @@ public class CBMCASTGenerationTest {
                 "EXISTS_ONE_CANDIDATE(c) : "
               + "1 == V / 2 * (3 + VOTE_SUM_FOR_CANDIDATE1(c)) - C - S;";
 		PreAndPostConditionsDescription propDescr = CreationHelper
-				.createSimpleCondList("FOR_ALL_VOTERS", "", exp).get(0);
+				.createSimpleCondList("VOTE_SUM_FOR_CANDIDATE", "", exp).get(0);
+
+		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
+				propDescr.getSymVarsAsScope());
+
+		assertEquals(ast.getHighestElect(), 0);
+		assertEquals(ast.getHighestVote(), 1);
+		
+		BooleanExpListNode topNode = ast.getTopAstNode();
+		
+		System.out.println(topNode.getTreeString());
+	}
+	
+	@Test
+	public void testPERMASTGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		final String exp = "VOTES2 == PERM(VOTES1)";
+		PreAndPostConditionsDescription propDescr = CreationHelper
+				.createSimpleCondList("PERM", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getSymVarsAsScope());
