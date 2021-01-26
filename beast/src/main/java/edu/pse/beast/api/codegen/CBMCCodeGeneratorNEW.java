@@ -2,14 +2,18 @@ package edu.pse.beast.api.codegen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.codegen.c_code.CFile;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeAndName;
+import edu.pse.beast.api.codegen.helperfunctions.HelperFunction;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
@@ -34,7 +38,6 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-
 	public static String generateCode(CElectionDescription descr, PreAndPostConditionsDescription propDescr) {
 		CFile created = new CFile();
 		created.include(STDLIB);
@@ -52,18 +55,33 @@ public class CBMCCodeGeneratorNEW {
 		CStruct voteArrStruct = votingTypeToCStruct(votesNakedArr, "VoteStruct", "votes");
 		CStruct voteResultStruct = votingTypeToCStruct(resultNakedArr, "VoteResultStruct", "result");
 
+		ElectionTypeCStruct inputStruct = new ElectionTypeCStruct(votesNakedArr, voteArrStruct);
+		ElectionTypeCStruct outputStruct = new ElectionTypeCStruct(resultNakedArr, voteResultStruct);
+
+		AllInputAndOutputTypes allInOutTypes = new AllInputAndOutputTypes(descr.getVotingFunction().getInputType(),
+				descr.getVotingFunction().getOutputType(), inputStruct, outputStruct);
+
 		created.addStructDef(voteArrStruct);
 		created.addStructDef(voteResultStruct);
 
 		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(), voteArrStruct, voteResultStruct,
 				votesNakedArr, resultNakedArr));
-		
-		created.addFunction(CBMCMainGenerator.main(descr, propDescr));
+
+		// we do this here to know which helper functions we need to generate
+		BooleanExpASTData astData = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
+				propDescr.getSymVarsAsScope());
+
+		Map<String, HelperFunction> neededFunctions = FindNeededHelperFunctions
+				.findNeededFunctions(propDescr.getPostConditionsDescription().getCode(), allInOutTypes);
+
+		for (HelperFunction func : neededFunctions.values()) {
+			created.addFunction(func.generateCFunc());
+		}
+
+		created.addFunction(CBMCMainGenerator.main(descr, propDescr, astData, voteArrStruct, voteResultStruct));
 
 		return created.generateCode();
 	}
-	
-	
 
 	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func, CStruct votingInput,
 			CStruct votingResult, CElectionVotingType votesNakedArr, CElectionVotingType resultNakedArr) {
@@ -80,11 +98,11 @@ public class CBMCCodeGeneratorNEW {
 				votingStructVarName + "." + votingInput.getMembers().get(0).getName(), func.getVotingVarName()));
 
 		code.add("//user generated code");
-		
+
 		code.addAll(func.getCode());
 
 		code.add("//end user generated code");
-		
+
 		code.add(generateCopyToResultStruct(func, votingResult, resultNakedArr));
 
 		created.setCode(code);
@@ -125,7 +143,7 @@ public class CBMCCodeGeneratorNEW {
 			CElectionVotingType resultNakedArr) {
 		List<String> code = new ArrayList<>();
 		String resultStructVarName = unusedVarName();
-		
+
 		code.add(votingResult.getName() + " " + resultStructVarName + ";");
 
 		List<String> listSizes = cbmcVarArrToVarNames(resultNakedArr.getListSizes());

@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
 
@@ -25,6 +26,12 @@ public class VoteTupleNode extends ElectionTypeNode {
 
 	public void addVoteNumber(int number) {
 		voteNumbers.add(number);
+	}
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

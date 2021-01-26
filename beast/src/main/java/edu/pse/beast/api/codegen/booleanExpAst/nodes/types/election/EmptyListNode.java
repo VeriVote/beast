@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
 
@@ -16,6 +17,12 @@ public class EmptyListNode extends ElectionTypeNode {
 	@Override
 	public String getTreeString(int depth) {
 		return "EmptyList";
+	}
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

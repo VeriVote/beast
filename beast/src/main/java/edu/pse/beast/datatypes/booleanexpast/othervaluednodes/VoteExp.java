@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
 
@@ -37,4 +38,9 @@ public final class VoteExp extends AccessValueNode {
     	}
         return "Vote" + count + acc;
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitVoteExpNode(this);		
+	}
 }

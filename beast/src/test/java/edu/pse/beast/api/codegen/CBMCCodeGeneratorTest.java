@@ -22,6 +22,16 @@ public class CBMCCodeGeneratorTest {
 				"ELECT1 != ELECT2;");
 
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0));
-		System.out.println(c);
+	}
+	
+	@Test
+	public void testIntersectionCodeGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
+				"VOTES1 == CUT(VOTES4, VOTES2, VOTES3);");
+
+		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0));
 	}
 }

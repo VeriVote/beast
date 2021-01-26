@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
 
@@ -23,6 +24,12 @@ public class VotePermutationNode extends ElectionTypeNode {
 	
 	public void setVoteNumber(int voteNumber) {
 		this.voteNumber = voteNumber;
+	}
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

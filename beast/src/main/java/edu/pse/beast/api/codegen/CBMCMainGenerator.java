@@ -14,10 +14,15 @@ import java.util.List;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.codegen.c_code.CFunction;
+import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -36,12 +41,22 @@ public class CBMCMainGenerator {
 	// other preconditions
 	// call the voting func
 	// post conditions
-	public static CFunction main(CElectionDescription descr, PreAndPostConditionsDescription propDescr) {
+	public static CFunction main(CElectionDescription descr, PreAndPostConditionsDescription propDescr,
+			BooleanExpASTData astData, CStruct voteArrStruct, CStruct voteResultStruct) {
 		CFunction created = new CFunction("main", List.of("int argc", "char ** argv"), "int");
 		created.setCode(List.of("return 1;"));
-		BooleanCodeToAST.generateAST(descr, propDescr.getPostConditionsDescription().getCode(), propDescr.getSymVarsAsScope());
 		
-		
+
+		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct, voteResultStruct);
+		int highestVote = astData.getHighestVote();
+		for (int i = 0; i < highestVote; ++i) {
+			for (BooleanExpressionNode node : astData.getTopAstNode().getBooleanExpressions().get(i)) {
+				String s = node.getTreeString(0);
+				node.getVisited(visitor);
+				System.out.println(visitor.getCodeBlock().generateCode());
+			}
+		}
+
 		return created;
 	}
 

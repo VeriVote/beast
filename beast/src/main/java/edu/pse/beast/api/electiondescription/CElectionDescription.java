@@ -28,5 +28,11 @@ public class CElectionDescription {
 		return created;
 	}
 	
-
+	public VotingInputTypes getInputType() {
+		return inputType;
+	}
+	
+	public VotingOutputTypes getOutputType() {
+		return outputType;
+	}
 }

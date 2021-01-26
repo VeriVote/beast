@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.ComparisonSymbol;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
@@ -38,23 +39,6 @@ public class ComparisonNode extends BooleanExpressionNode {
         this.comparisonSymbol = comparisonSymb;
     }
 
-    /**
-     * Gets the LHS boolean exp node.
-     *
-     * @return the LHSNode
-     */
-    public TypeExpression getLHSBooleanExpNode() {
-        return getLhsTypeExp();
-    }
-
-    /**
-     * Gets the RHS boolean exp node.
-     *
-     * @return the RHSNode
-     */
-    public TypeExpression getRHSBooleanExpNode() {
-        return getRhsTypeExp();
-    }
 
     /**
      * {@inheritDoc}
@@ -150,4 +134,9 @@ public class ComparisonNode extends BooleanExpressionNode {
     public TypeExpression getRhsTypeExp() {
         return rhsTypeExp;
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitComparisonNode(this);		
+	}
 }

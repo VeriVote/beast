@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes.booleanexpast;
 
 import java.util.ArrayList;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 
 /**
@@ -96,5 +97,6 @@ public final class BooleanExpListNode {
         boolNodesPerElectLevel
                 .forEach(l -> l.forEach(n -> b.append(n.getTreeString(0))));
         return b.toString();
-    }
+    }   
+    
 }

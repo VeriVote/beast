@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
 import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
@@ -35,6 +36,8 @@ public abstract class BooleanExpressionNode {
      *            the visitor that visits
      */
     public abstract void getVisited(BooleanExpNodeVisitor visitor);
+    
+    public abstract void getVisited(BooleanAstVisitor visitor);
 
     /**
      * Gets the tree string.

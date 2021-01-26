@@ -24,6 +24,12 @@ public class CFunction {
 		}
 		this.returnType = returnType;
 	}
+	
+	public CFunction(String name, String returnType, List<CTypeAndName> args) {
+		this.name = name;
+		this.args.addAll(args);
+		this.returnType = returnType;
+	}
 
 	public void setCode(List<String> code) {
 		this.code = code;
