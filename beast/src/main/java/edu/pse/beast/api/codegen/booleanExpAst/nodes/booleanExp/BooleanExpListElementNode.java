@@ -25,7 +25,7 @@ public class BooleanExpListElementNode extends BooleanExpressionNode {
 
 	@Override
 	public String getTreeString(int depth) {
-		return null;
+		return firstChild.getTreeString(depth);
 	}
 	
 	public String getCompleteCode() {

@@ -7,7 +7,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListEl
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.c_code.CStruct;
-import edu.pse.beast.api.codegen.c_code.CTypeAndName;
+import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
@@ -17,7 +17,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	
 	private CCodeBlock codeBlock;
 	
-	private Stack<CTypeAndName> varStack = new Stack<>();	
+	private Stack<CTypeNameBrackets> varStack = new Stack<>();	
 	
 	private CStruct voteArrStruct;
 	private CStruct voteResultStruct;
@@ -47,8 +47,6 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitVoteIntersectionNode(VoteIntersectionNode node) {
 		String generatedVarName = codeBlock.newVarName();
 		
-		
-		varStack.push(new CTypeAndName(voteArrStruct.getName(), generatedVarName));
 	}
 
 	@Override

@@ -7,18 +7,14 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import edu.pse.beast.api.codegen.AllInputAndOutputTypes;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.EmptyListNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
-import edu.pse.beast.api.codegen.helperfunctions.IntersectHelperFunction;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpConstant;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanexpast.ComparisonSymbol;
@@ -53,10 +49,10 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Co
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ConstantExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectTupleExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.EmptyListExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntegerContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectElectContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectVotesContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IsEmptyExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.NotExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.NumberExpressionContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermElectExpContext;
@@ -439,8 +435,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	}
 
 	@Override
-	public void exitEmptyListExp(EmptyListExpContext ctx) {
-		EmptyListNode node = new EmptyListNode(null);
-		expStack.push(node);
+	public void exitIsEmptyExp(IsEmptyExpContext ctx) {
+		BooleanExpIsEmptyNode node = new BooleanExpIsEmptyNode(expStack.pop());
+		nodeStack.add(node);
 	}
 }

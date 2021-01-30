@@ -5,18 +5,18 @@ import java.util.List;
 
 public class CStruct {
 	private String name;
-	private List<CTypeAndName> members = new ArrayList<>();
+	private List<CTypeNameBrackets> members = new ArrayList<>();
 
 	private final String template = "typedef struct STRUCT_NAME { MEMBER_LIST } STRUCT_NAME;";
 
-	public CStruct(String name, List<CTypeAndName> members) {
+	public CStruct(String name, List<CTypeNameBrackets> members) {
 		this.name = name;
 		this.members = members;
 	}
 
 	public String generateDefCode() {
 		List<String> memberList = new ArrayList<>();
-		for (CTypeAndName member : members) {
+		for (CTypeNameBrackets member : members) {
 			memberList.add(member.generateCode() + ";");
 		}
 		return template.replaceAll("STRUCT_NAME", name).replace("MEMBER_LIST", String.join("\n", memberList));
@@ -26,7 +26,7 @@ public class CStruct {
 		return name;
 	}
 
-	public List<CTypeAndName> getMembers() {
+	public List<CTypeNameBrackets> getMembers() {
 		return members;
 	}
 	

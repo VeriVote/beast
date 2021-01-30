@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CForLoop {
-	private CTypeAndName counterVar;
+	private CTypeNameBrackets counterVar;
 	private String stopCond;
 	private String doafter;
 
 	private List<String> code = new ArrayList<>();
 
-	public CForLoop(CTypeAndName counterVar, String stopCond, String doafter) {
+	public CForLoop(CTypeNameBrackets counterVar, String stopCond, String doafter) {
 		this.counterVar = counterVar;
 		this.stopCond = stopCond;
 		this.doafter = doafter;

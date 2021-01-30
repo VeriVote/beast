@@ -81,7 +81,7 @@ public class TestGUIController {
 		AnchorPane.setLeftAnchor(vsp, (double) 0);
 		AnchorPane.setRightAnchor(vsp, (double) 0);
 
-		functionacc.getPanes().add(new TitledPane(FunctionToC.getFunctionSignature(func), anchor));
+		//functionacc.getPanes().add(new TitledPane(FunctionToC.getFunctionSignature(func), anchor));
 	}
 
 	private void display(CElectionDescription descr) {

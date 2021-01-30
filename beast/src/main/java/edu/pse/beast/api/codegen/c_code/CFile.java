@@ -10,6 +10,16 @@ public class CFile {
 	private List<CInclude> includes = new ArrayList<>();
 	private List<CDefine> defines = new ArrayList<>();
 	private List<CStruct> structs = new ArrayList<>();
+	private List<CTypeDef> typedefs = new ArrayList<>();
+
+	public void addTypeDef(CTypeDef typeDef) {
+		this.typedefs.add(typeDef);
+	}
+
+	public void addTypeDef(List<CTypeDef> typeDefs) {
+		for (CTypeDef td : typeDefs)
+			addTypeDef(td);
+	}
 
 	public void addFunction(CFunction func) {
 		this.funcs.add(func);
@@ -27,13 +37,20 @@ public class CFile {
 		defines.add(new CDefine(toReplace, replaceWith));
 	}
 
+	public void addStructDef(CStruct struct) {
+		structs.add(struct);
+	}
+
 	public String generateCode() {
 		List<String> created = new ArrayList<>();
 		for (CInclude inc : includes) {
 			created.add(inc.generateCode());
-		}
+		}		
 		for (CDefine def : defines) {
 			created.add(def.generateCode());
+		}
+		for (CTypeDef tdef : typedefs) {
+			created.add(tdef.generateCode());
 		}
 		for (CStruct s : structs) {
 			created.add(s.generateDefCode());
@@ -47,7 +64,4 @@ public class CFile {
 		return String.join("\n", created);
 	}
 
-	public void addStructDef(CStruct struct) {
-		structs.add(struct);
-	}
 }

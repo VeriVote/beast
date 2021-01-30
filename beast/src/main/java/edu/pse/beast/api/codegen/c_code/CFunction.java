@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class CFunction {
 	private String name;
-	private List<CTypeAndName> args = new ArrayList<>();
+	private List<CTypeNameBrackets> args = new ArrayList<>();
 	private String returnType;
 	private List<String> code;
 
@@ -20,12 +20,12 @@ public class CFunction {
 				argType += typeAndName[i];
 				argType += i < typeAndName.length - 2 ? " " : "";
 			}
-			this.args.add(new CTypeAndName(argType, argName));
+			this.args.add(new CTypeNameBrackets(argType, argName, ""));
 		}
 		this.returnType = returnType;
 	}
-	
-	public CFunction(String name, String returnType, List<CTypeAndName> args) {
+
+	public CFunction(String name, String returnType, List<CTypeNameBrackets> args) {
 		this.name = name;
 		this.args.addAll(args);
 		this.returnType = returnType;

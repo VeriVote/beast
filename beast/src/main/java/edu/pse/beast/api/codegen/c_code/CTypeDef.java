@@ -8,4 +8,8 @@ public class CTypeDef {
 		this.type = type;
 		this.newTypeName = newTypeName;
 	}
+
+	public String generateCode() {
+		return "typedef " + type + " " + newTypeName + ";";
+	}
 }

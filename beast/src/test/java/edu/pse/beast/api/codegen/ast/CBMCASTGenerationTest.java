@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
-import edu.pse.beast.api.codegen.AllInputAndOutputTypes;
+import edu.pse.beast.api.codegen.InputAndOutputElectionStructs;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
@@ -80,7 +80,7 @@ public class CBMCASTGenerationTest {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
-		final String exp = "[VOTES1, VOTES2] == VOTES3;";
+		final String exp = "[[VOTES1, VOTES2]] == VOTES3;";
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("tuple", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
@@ -128,7 +128,7 @@ public class CBMCASTGenerationTest {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
-		final String exp = "CUT(VOTES1, VOTES2, VOTES3) != EmptyList;";
+		final String exp = "EMPTY(CUT(VOTES1, VOTES2, VOTES3));";
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("emptyList", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),

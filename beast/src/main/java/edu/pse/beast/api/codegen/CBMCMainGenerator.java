@@ -44,7 +44,7 @@ public class CBMCMainGenerator {
 	public static CFunction main(CElectionDescription descr, PreAndPostConditionsDescription propDescr,
 			BooleanExpASTData astData, CStruct voteArrStruct, CStruct voteResultStruct) {
 		CFunction created = new CFunction("main", List.of("int argc", "char ** argv"), "int");
-		created.setCode(List.of("return 1;"));
+		created.setCode(List.of("return 0;"));
 		
 
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct, voteResultStruct);

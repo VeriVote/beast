@@ -13,6 +13,7 @@ booleanExp
     |   binaryRelationExp
     |   notExp
     |   comparisonExp
+    |   isEmptyExp
     |   OpenBracket booleanExp ClosedBracket
     ;
 
@@ -76,12 +77,11 @@ electionTypeExpression
     | voteExp
     | tupleExp
     | permExp
-    | emptyListExp
     | symbolicVarExp
     ;
 
-emptyListExp
-	: EmptyList
+isEmptyExp
+	: IsEmpty OpenBracket electionTypeExpression ClosedBracket
 	;
     
 intersectExp
@@ -90,11 +90,11 @@ intersectExp
 	;
 	
 intersectVotes
-	: Intersect '(' Vote (','Vote)* ')'
+	: Intersect '(' Vote (','Vote)+ ')'
 	;
 
 intersectElect
-	: Intersect '(' Elect (','Elect)* ')'
+	: Intersect '(' Elect (','Elect)+ ')'
 	;
 	
 permExp
@@ -109,7 +109,7 @@ permVoteExp
 permElectExp
 	: Permutation OpenBracket Elect ClosedBracket
 	;
-    
+	
 tupleExp
 	: voteTupleExp
 	| electTupleExp
@@ -175,7 +175,7 @@ voteSumUniqueExp
 passSymbVar
     :   OpenBracket symbolicVarExp ClosedBracket
     ;
-
+ 
 passPosition
     :   OpenBracket numberExpression ClosedBracket
     ;
@@ -210,7 +210,7 @@ Elect
     :   'ELECT' Integer
     ;
 
-EmptyList : 'EmptyList';
+IsEmpty : 'EMPTY';
 
 Votesum
     :   'VOTE_SUM_FOR_CANDIDATE' Integer
@@ -224,9 +224,9 @@ ClosedBracket : ')';
 
 OpenBracket : '(';
 
-OpenTuple : '[';
+OpenTuple : '[[';
 
-CloseTuple : ']';
+CloseTuple : ']]';
 
 Quantifier
     :   'FOR_ALL_VOTERS'

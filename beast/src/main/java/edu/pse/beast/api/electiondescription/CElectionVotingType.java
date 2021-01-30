@@ -37,26 +37,34 @@ public class CElectionVotingType {
 		return simpleType;
 	}
 
+	public CElectionVotingType getTypeOneDimLess() {
+		CElectionVotingType created = new CElectionVotingType();
+		created.listDimensions = this.listDimensions - 1;
+		created.simpleType = this.simpleType;
+		created.listSizes = this.listSizes.subList(1, this.listSizes.size());
+		return created;
+	}
+
 	public static CElectionVotingType of(VotingOutputTypes outType) {
 		CElectionVotingType created = new CElectionVotingType();
 		switch (outType) {
 		case CANDIDATE_LIST:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.RESULT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_CANDIDATES);
 			break;
 		case PARLIAMENT:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.RESULT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_CANDIDATES);
 			break;
 		case PARLIAMENT_STACK:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.RESULT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_CANDIDATES);
 			break;
 		case SINGLE_CANDIDATE:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.RESULT;
 			created.listDimensions = 0;
 			created.listSizes = List.of();
 			break;
@@ -70,27 +78,27 @@ public class CElectionVotingType {
 		CElectionVotingType created = new CElectionVotingType();
 		switch (inType) {
 		case APPROVAL:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
 			break;
 		case PREFERENCE:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
 			break;
 		case SINGLE_CHOICE:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS);
 			break;
 		case SINGLE_CHOICE_STACK:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS);
 			break;
 		case WEIGHTED_APPROVAL:
-			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
 			break;

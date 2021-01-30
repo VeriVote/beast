@@ -33,5 +33,6 @@ public class CBMCCodeGeneratorTest {
 				"VOTES1 == CUT(VOTES4, VOTES2, VOTES3);");
 
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0));
+		System.out.println(c);
 	}
 }

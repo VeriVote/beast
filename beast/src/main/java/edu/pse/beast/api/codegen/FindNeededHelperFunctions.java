@@ -1,46 +1,50 @@
 package edu.pse.beast.api.codegen;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
 import edu.pse.beast.api.codegen.helperfunctions.HelperFunction;
-import edu.pse.beast.api.codegen.helperfunctions.IntersectHelperFunction;
+import edu.pse.beast.api.codegen.helperfunctions.HelperFunctionMap;
+import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelperFunction;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectVotesContext;
 
 public class FindNeededHelperFunctions extends FormalPropertyDescriptionBaseListener {
-	private AllInputAndOutputTypes allInputAndOutputTypes;
-	private Map<String, HelperFunction> generated = new HashMap<>();
+	private InputAndOutputElectionStructs allInputAndOutputTypes;
+	private HelperFunctionMap map = new HelperFunctionMap();
 
-	public FindNeededHelperFunctions(AllInputAndOutputTypes allInputAndOutputTypes) {
+	public FindNeededHelperFunctions(InputAndOutputElectionStructs allInputAndOutputTypes) {
 		this.allInputAndOutputTypes = allInputAndOutputTypes;
 	}
 
-	public static Map<String, HelperFunction> findNeededFunctions(String boolExpCode,
-			AllInputAndOutputTypes allInputAndOutputTypes) {
+	public static HelperFunctionMap findNeededFunctions(String boolExpCode,
+			InputAndOutputElectionStructs inAndOutStructs) {
 		final FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(
 				CharStreams.fromString(boolExpCode));
 		final CommonTokenStream ts = new CommonTokenStream(l);
 		final FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
 
 		ParseTreeWalker walker = new ParseTreeWalker();
-		FindNeededHelperFunctions listener = new FindNeededHelperFunctions(allInputAndOutputTypes);
+		FindNeededHelperFunctions listener = new FindNeededHelperFunctions(inAndOutStructs);
 		walker.walk(listener, p.booleanExpList());
 
-		return listener.generated;
+		return listener.map;
+	}
+
+	private void addFuncAndDeps(HelperFunction func) {
+		for (HelperFunction dep : func.dependencies()) {
+			addFuncAndDeps(dep);
+		}
+		map.add(func);
 	}
 
 	@Override
 	public void exitIntersectVotes(IntersectVotesContext ctx) {
-		IntersectHelperFunction func = new IntersectHelperFunction(allInputAndOutputTypes.getInputStruct());
-		generated.put(func.getUUID(), func);
+		IntersectionHelperFunction func = new IntersectionHelperFunction(allInputAndOutputTypes.getInput());
+		addFuncAndDeps(func);
 	}
 
 }
