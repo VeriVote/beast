@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
 
@@ -33,4 +34,9 @@ public final class ElectExp extends AccessValueNode {
     public String getTreeString(final int depth) {
         return "ELECT" + count;
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		
+	}
 }

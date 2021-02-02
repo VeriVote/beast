@@ -24,6 +24,16 @@ public class CElectionVotingType {
 	private int listDimensions;
 	private CElectionSimpleTypes simpleType;
 	private List<CBMCVars> listSizes;
+	
+	@Override
+	public boolean equals(Object obj) {		
+		CElectionVotingType other = (CElectionVotingType) obj;
+		if (listDimensions != other.listDimensions)
+			return false;		
+		if (simpleType != other.simpleType)
+			return false;
+		return true;
+	}
 
 	public int getListDimensions() {
 		return listDimensions;

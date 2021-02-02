@@ -419,6 +419,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		for (TerminalNode elect : ctx.Elect()) {
 			int number = extractNumberFromElect(elect.getText());
 			node.addElectNumber(number);
+			setHighestElect(number);
 		}
 		expStack.push(node);
 	}
@@ -429,6 +430,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		for (TerminalNode elect : ctx.Vote()) {
 			int number = extractNumberFromElect(elect.getText());
 			node.addVoteNumber(number);
+			setHighestVote(number);
 		}
 		expStack.push(node);
 

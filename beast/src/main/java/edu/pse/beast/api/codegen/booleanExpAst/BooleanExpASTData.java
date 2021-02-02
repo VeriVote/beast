@@ -1,9 +1,8 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import edu.pse.beast.api.codegen.helperfunctions.HelperFunction;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
 
 public class BooleanExpASTData {
@@ -33,6 +32,10 @@ public class BooleanExpASTData {
 
 	public BooleanExpListNode getTopAstNode() {
 		return topAstNode;
+	}
+	
+	public int getHighestVoteOrElect() {
+		return Math.max(highestElect, highestVote);
 	}
 
 }

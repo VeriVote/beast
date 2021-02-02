@@ -27,7 +27,7 @@ public class TypeManager {
 	public void add(ElectionTypeCStruct electionTypeCStruct) {
 		this.elecTypeCStructs.add(electionTypeCStruct);
 	}
-	
+
 	public static String SimpleTypeToCType(CElectionSimpleTypes simpleType) {
 		switch (simpleType) {
 		case INT:
@@ -44,6 +44,8 @@ public class TypeManager {
 			return "VoteResult";
 		case VOID:
 			return "void";
+		case BOOL:
+			return "bool";
 		default:
 			return null;
 		}

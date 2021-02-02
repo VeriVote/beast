@@ -31,5 +31,9 @@ public class VoteIntersectionNode extends ElectionTypeNode {
 	public void getVisited(BooleanAstVisitor visitor) {		
 		visitor.visitVoteIntersectionNode(this);
 	}
+	
+	public List<Integer> getNumbers() {
+		return numbers;
+	}
 
 }

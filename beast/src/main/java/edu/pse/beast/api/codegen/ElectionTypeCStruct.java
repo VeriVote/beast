@@ -34,4 +34,12 @@ public class ElectionTypeCStruct {
 		CForLoop created = new CForLoop(counterVar, "", "");
 		return created;
 	}
+	
+	public String getListName() {
+		return listName;
+	}
+	
+	public String getAmtName() {
+		return amtName;
+	}
 }

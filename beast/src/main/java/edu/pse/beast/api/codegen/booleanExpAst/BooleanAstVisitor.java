@@ -8,6 +8,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Bo
 
 public interface BooleanAstVisitor {
 	
+	
 	/*
 	 * 
 	 * Nodes returning a boolean value

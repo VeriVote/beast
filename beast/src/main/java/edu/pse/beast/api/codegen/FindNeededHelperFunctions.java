@@ -4,20 +4,24 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
+import edu.pse.beast.api.codegen.helperfunctions.CompareVotesHelperFunction;
 import edu.pse.beast.api.codegen.helperfunctions.HelperFunction;
 import edu.pse.beast.api.codegen.helperfunctions.HelperFunctionMap;
-import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelperFunction;
+import edu.pse.beast.api.codegen.helperfunctions.InitializeVoteHelperFunc;
+import edu.pse.beast.api.codegen.helperfunctions.IntersectVotesHelperFunc;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ComparisonExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectVotesContext;
 
 public class FindNeededHelperFunctions extends FormalPropertyDescriptionBaseListener {
 	private InputAndOutputElectionStructs allInputAndOutputTypes;
 	private HelperFunctionMap map = new HelperFunctionMap();
 
-	public FindNeededHelperFunctions(InputAndOutputElectionStructs allInputAndOutputTypes) {
-		this.allInputAndOutputTypes = allInputAndOutputTypes;
+	public FindNeededHelperFunctions(InputAndOutputElectionStructs inputAndOutputElectionStructs) {
+		this.allInputAndOutputTypes = inputAndOutputElectionStructs;
 	}
 
 	public static HelperFunctionMap findNeededFunctions(String boolExpCode,
@@ -42,9 +46,16 @@ public class FindNeededHelperFunctions extends FormalPropertyDescriptionBaseList
 	}
 
 	@Override
+	public void exitBooleanExpList(BooleanExpListContext ctx) {
+		addFuncAndDeps(new CompareVotesHelperFunction(allInputAndOutputTypes.getInput()));
+		addFuncAndDeps(new InitializeVoteHelperFunc(allInputAndOutputTypes.getInput()));
+	}
+
+	@Override
 	public void exitIntersectVotes(IntersectVotesContext ctx) {
-		IntersectionHelperFunction func = new IntersectionHelperFunction(allInputAndOutputTypes.getInput());
+		IntersectVotesHelperFunc func = new IntersectVotesHelperFunc(allInputAndOutputTypes.getInput());
 		addFuncAndDeps(func);
 	}
+	
 
 }

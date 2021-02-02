@@ -64,7 +64,9 @@ public class CBMCCodeGeneratorNEW {
 				voteResultStruct.getStruct(), votesNakedArr, resultNakedArr));
 
 		// we do this here to know which helper functions we need to generate
-		BooleanExpASTData astData = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
+		BooleanExpASTData preAstData = BooleanCodeToAST.generateAST(propDescr.getPreConditionsDescription().getCode(),
+				propDescr.getSymVarsAsScope());
+		BooleanExpASTData postAstData = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getSymVarsAsScope());
 
 		InputAndOutputElectionStructs inAndOutStructs = new InputAndOutputElectionStructs(voteArrStruct,
@@ -73,12 +75,12 @@ public class CBMCCodeGeneratorNEW {
 		HelperFunctionMap neededFunctions = FindNeededHelperFunctions
 				.findNeededFunctions(propDescr.getPostConditionsDescription().getCode(), inAndOutStructs);
 
-		for (HelperFunction func : neededFunctions.values()) {
+		for (HelperFunction func : neededFunctions.getHelperFunctions()) {
 			created.addFunction(func.cfunc(neededFunctions));
 		}
 
-		// created.addFunction(CBMCMainGenerator.main(descr, propDescr, astData,
-		// voteArrStruct, voteResultStruct));
+		created.addFunction(
+				CBMCMainGenerator.main(preAstData, postAstData, voteArrStruct, voteResultStruct, neededFunctions));
 
 		return created.generateCode();
 	}
@@ -90,7 +92,7 @@ public class CBMCCodeGeneratorNEW {
 		CFunction created = new CFunction(func.getName(), List.of(votingInput.getName() + " " + votingStructVarName),
 				votingResult.getName());
 		List<String> code = new ArrayList<>();
-		code.add(FunctionToC.getConstPreamble(func));
+		code.add(votingResult.getName() + " result;");
 
 		code.add(FunctionToC.votingTypeToC(votesNakedArr, "").getType() + " " + func.getVotingVarName() + ";");
 

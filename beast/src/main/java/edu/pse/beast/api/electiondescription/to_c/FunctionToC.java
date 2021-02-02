@@ -7,10 +7,6 @@ import edu.pse.beast.api.electiondescription.VotingSigFunction;
 
 public class FunctionToC {
 
-	public static String getConstPreamble(VotingSigFunction func) {
-		return (CElectionVotingType.of(func.getOutputType())) + " " + func.getResultVarName() + ";";
-	}
-
 	public static String getConstEnding(VotingSigFunction func) {
 		return "return " + func.getResultVarName() + ";";
 	}
