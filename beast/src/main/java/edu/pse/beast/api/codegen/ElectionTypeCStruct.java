@@ -8,8 +8,8 @@ import edu.pse.beast.api.electiondescription.CElectionVotingType;
 public class ElectionTypeCStruct {
 	private CElectionVotingType votingType;
 	private CStruct struct;
-	String listName; 
-	String amtName;
+	private String listName; 
+	private String amtName;
 	
 	public ElectionTypeCStruct(CElectionVotingType votingType, CStruct struct, String listName, String amtName) {
 		super();

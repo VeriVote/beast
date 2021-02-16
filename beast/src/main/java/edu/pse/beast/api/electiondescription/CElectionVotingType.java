@@ -24,6 +24,8 @@ public class CElectionVotingType {
 	private int listDimensions;
 	private CElectionSimpleTypes simpleType;
 	private List<CBMCVars> listSizes;
+	private CBMCVars simpleTypeLowerBound;
+	private CBMCVars simpleTypeUpperBound;
 	
 	@Override
 	public boolean equals(Object obj) {		
@@ -46,6 +48,14 @@ public class CElectionVotingType {
 	public CElectionSimpleTypes getSimpleType() {
 		return simpleType;
 	}
+	
+	public CBMCVars getSimpleTypeLowerBound() {
+		return simpleTypeLowerBound;
+	}
+	
+	public CBMCVars getSimpleTypeUpperBound() {
+		return simpleTypeUpperBound;
+	}	
 
 	public CElectionVotingType getTypeOneDimLess() {
 		CElectionVotingType created = new CElectionVotingType();
@@ -91,16 +101,22 @@ public class CElectionVotingType {
 			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
+			created.simpleTypeLowerBound = CBMCVars.ZERO;
+			created.simpleTypeUpperBound = CBMCVars.AMT_CANDIDATES;
 			break;
 		case PREFERENCE:
 			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
+			created.simpleTypeLowerBound = CBMCVars.ZERO;
+			created.simpleTypeUpperBound = CBMCVars.AMT_CANDIDATES;
 			break;
 		case SINGLE_CHOICE:
 			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS);
+			created.simpleTypeLowerBound = CBMCVars.ZERO;
+			created.simpleTypeUpperBound = CBMCVars.AMT_CANDIDATES;
 			break;
 		case SINGLE_CHOICE_STACK:
 			created.simpleType = CElectionSimpleTypes.VOTE;

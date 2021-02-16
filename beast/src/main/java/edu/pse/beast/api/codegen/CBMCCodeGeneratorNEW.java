@@ -11,8 +11,6 @@ import edu.pse.beast.api.codegen.c_code.CFile;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
-import edu.pse.beast.api.codegen.helperfunctions.HelperFunction;
-import edu.pse.beast.api.codegen.helperfunctions.HelperFunctionMap;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
@@ -70,17 +68,10 @@ public class CBMCCodeGeneratorNEW {
 				propDescr.getSymVarsAsScope());
 
 		InputAndOutputElectionStructs inAndOutStructs = new InputAndOutputElectionStructs(voteArrStruct,
-				voteResultStruct);
-
-		HelperFunctionMap neededFunctions = FindNeededHelperFunctions
-				.findNeededFunctions(propDescr.getPostConditionsDescription().getCode(), inAndOutStructs);
-
-		for (HelperFunction func : neededFunctions.getHelperFunctions()) {
-			created.addFunction(func.cfunc(neededFunctions));
-		}
-
+				voteResultStruct);		
+		
 		created.addFunction(
-				CBMCMainGenerator.main(preAstData, postAstData, voteArrStruct, voteResultStruct, neededFunctions));
+				CBMCMainGenerator.main(preAstData, postAstData, voteArrStruct, voteResultStruct));
 
 		return created.generateCode();
 	}

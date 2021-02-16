@@ -1,52 +1,56 @@
 package edu.pse.beast.api.codegen;
 
-import static edu.pse.beast.toolbox.CCodeHelper.functionCode;
-import static edu.pse.beast.toolbox.CCodeHelper.intVar;
-import static edu.pse.beast.toolbox.CCodeHelper.lineComment;
-import static edu.pse.beast.toolbox.CCodeHelper.pointer;
-import static edu.pse.beast.toolbox.CCodeHelper.space;
-import static edu.pse.beast.toolbox.CCodeHelper.uintVarEqualsCode;
-import static edu.pse.beast.toolbox.CCodeHelper.varAssignCode;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CommonTokenStream;
-
-import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
-import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.codegen.c_code.CFunction;
-import edu.pse.beast.api.codegen.c_code.CStruct;
-import edu.pse.beast.api.codegen.helperfunctions.HelperFunctionMap;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.toolbox.CCodeHelper;
-import edu.pse.beast.toolbox.UnifiedNameContainer;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.FormalPropertySyntaxTreeToAstTranslator;
 
 public class CBMCMainGenerator {
 
 	private static final String voteTemplate = 
-						"TYPE voteNUMBER;\n" + 
-						"voteNUMBER = INITVOTE(voteNUMBER);\n";
+						"    TYPE voteNUMBER;\n";
+	
+	private static final String initVotesTemplate2D = 
+			"    voteNUMBER.AMT_MEMBER = NONDET_UINT_CALL();\n"
+			+ "    ASSUME(voteNUMBER.AMT_MEMBER <= AMT_VOTES);\n"
+			+ "    for (int OUTER_COUNTER = 0; OUTER_COUNTER < AMT_VOTES; ++OUTER_COUNTER) {\n"
+			+ "        for (int INNER_COUNTER = 0; INNER_COUNTER < ELEMENT_PER_VOTE; ++INNER_COUNTER) {\n"
+			+ "            voteNUMBER.VOTE_ARR[OUTER_COUNTER][INNER_COUNTER] = NONDET_UINT_CALL();\n"
+			+ "            ASSUME(voteNUMBER.VOTE_ARR[OUTER_COUNTER][INNER_COUNTER] <= UPPER_LIMIT);\n"
+			+ "            ASSUME(voteNUMBER.VOTE_ARR[OUTER_COUNTER][INNER_COUNTER] >= LOWER_LIMIT);\n"
+			+ "        }\n"
+			+ "    }\n";
 
+	private static String getInitVotesString(ElectionTypeCStruct voteArrStruct) {
+		String code = null;
+		if(voteArrStruct.getVotingType().getListDimensions() == 2) {
+			code = initVotesTemplate2D;
+			
+			code = code.replaceAll("OUTER_COUNTER", "i");
+			code = code.replaceAll("INNER_COUNTER", "j");
+			
+			code = code.replaceAll("ELEMENT_PER_VOTE", voteArrStruct.getVotingType().getListSizes().get(1).toString());
+			
+			code = code.replaceAll("LOWER_LIMIT", voteArrStruct.getVotingType().getSimpleTypeLowerBound().toString());
+			code = code.replaceAll("UPPER_LIMIT", voteArrStruct.getVotingType().getSimpleTypeUpperBound().toString());
+		}
+		return code;
+	}
+	
 	private static List<String> establishVotes(BooleanExpASTData astData, ElectionTypeCStruct voteArrStruct,
-			ElectionTypeCStruct voteResultStruct, HelperFunctionMap functionMap) {
+			ElectionTypeCStruct voteResultStruct) {
 
 		List<String> code = new ArrayList<>();
 		for (int i = 0; i < astData.getHighestVoteOrElect(); ++i) {
-			String voteCode = voteTemplate;
+			String voteCode = voteTemplate + getInitVotesString(voteArrStruct);
+			
 			voteCode = voteCode.replaceAll("TYPE", voteArrStruct.getStruct().getName());
 			voteCode = voteCode.replaceAll("NUMBER", String.valueOf(i + 1));
-			voteCode = voteCode.replaceAll("INITVOTE", functionMap.getInitVoteFunction().uniqueName());
+			voteCode = voteCode.replaceAll("AMT_MEMBER", voteArrStruct.getAmtName());
+			
+			System.out.println(voteCode);
 			code.add(voteCode);
 		}
 		return code;
@@ -61,13 +65,13 @@ public class CBMCMainGenerator {
 	// call the voting func
 	// post conditions
 	public static CFunction main(BooleanExpASTData preAstData, BooleanExpASTData postAstData, ElectionTypeCStruct voteArrStruct,
-			ElectionTypeCStruct voteResultStruct, HelperFunctionMap functionMap) {
+			ElectionTypeCStruct voteResultStruct) {
 		CFunction created = new CFunction("main", List.of("int argc", "char ** argv"), "int");
 		List<String> code = new ArrayList<>();
 
-		code.addAll(establishVotes(postAstData, voteArrStruct, voteResultStruct, functionMap));
+		code.addAll(establishVotes(postAstData, voteArrStruct, voteResultStruct));
 		
-		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct, voteResultStruct, functionMap);
+		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct, voteResultStruct);
 		int highestVote = postAstData.getHighestVote();
 		visitor.setMode("assert");
 		for (int i = 0; i < postAstData.getTopAstNode().getBooleanExpressions().size(); ++i) {
