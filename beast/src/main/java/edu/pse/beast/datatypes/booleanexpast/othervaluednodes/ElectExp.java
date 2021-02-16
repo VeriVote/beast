@@ -37,6 +37,6 @@ public final class ElectExp extends AccessValueNode {
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		
+		visitor.visitElectExpNode(this);
 	}
 }

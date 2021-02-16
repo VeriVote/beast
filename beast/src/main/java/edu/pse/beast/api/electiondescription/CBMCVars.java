@@ -4,5 +4,4 @@ public enum CBMCVars {
 	AMT_VOTERS,
 	AMT_CANDIDATES,
 	AMT_SEATS,
-	ZERO;
 }

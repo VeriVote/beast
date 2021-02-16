@@ -11,132 +11,127 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
  * @author Lukas Stapelbroek
  */
 public class ComparisonNode extends BooleanExpressionNode {
-    /** The lhs type exp. */
-    private final TypeExpression lhsTypeExp;
 
-    /** The rhs type exp. */
-    private final TypeExpression rhsTypeExp;
+	public enum ComparisonType {
+		EQ, UNEQ, L, G, LEQ, GEQ
+	}
 
-    /** The comparison symbol. */
-    private final ComparisonSymbol comparisonSymbol;
+	private ComparisonType comparisonType;
 
-    /**
-     * Instantiates a new comparison node.
-     *
-     * @param lhsTypeExpr
-     *            the lhsExpression
-     * @param rhsTypeExpr
-     *            the rhsExpression
-     * @param comparisonSymb
-     *            the symbol that describes this comparison (for example <, >,
-     *            == )
-     */
-    public ComparisonNode(final TypeExpression lhsTypeExpr,
-                          final TypeExpression rhsTypeExpr,
-                          final ComparisonSymbol comparisonSymb) {
-        this.lhsTypeExp = lhsTypeExpr;
-        this.rhsTypeExp = rhsTypeExpr;
-        this.comparisonSymbol = comparisonSymb;
-    }
+	/** The lhs type exp. */
+	private final TypeExpression lhsTypeExp;
 
+	/** The rhs type exp. */
+	private final TypeExpression rhsTypeExp;
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Generates the code for the comparison of 2 types which are not integers.
-     * These types can be lists which may have different depth and might be
-     * accessed by variables.
-     */
-    @Override
-    public void getVisited(final BooleanExpNodeVisitor visitor) {
-        visitor.visitComparisonNode(this);
-    }
+	/** The comparison symbol. */
+	private final ComparisonSymbol comparisonSymbol;
 
-    @Override
-    public final int hashCode() {
-        int result = 1;
-        result = PRIME * result + ((comparisonSymbol == null) ? 0
-                : comparisonSymbol.hashCode());
-        result = PRIME * result
-                + ((getLhsTypeExp() == null) ? 0 : getLhsTypeExp().hashCode());
-        result = PRIME * result
-                + ((getRhsTypeExp() == null) ? 0 : getRhsTypeExp().hashCode());
-        return result;
-    }
+	/**
+	 * Instantiates a new comparison node.
+	 *
+	 * @param lhsTypeExpr    the lhsExpression
+	 * @param rhsTypeExpr    the rhsExpression
+	 * @param comparisonSymb the symbol that describes this comparison (for example
+	 *                       <, >, == )
+	 */
+	public ComparisonNode(final TypeExpression lhsTypeExpr, final TypeExpression rhsTypeExpr,
+			final ComparisonSymbol comparisonSymb) {
+		this.lhsTypeExp = lhsTypeExpr;
+		this.rhsTypeExp = rhsTypeExpr;
+		this.comparisonSymbol = comparisonSymb;
+		if (comparisonSymb.getCStringRep().equals("==")) {
+			this.comparisonType = ComparisonType.EQ;
+		} else if (comparisonSymb.getCStringRep().equals("!=")) {
+			this.comparisonType = ComparisonType.UNEQ;
+		}
+	}
 
-    @Override
-    public final boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final ComparisonNode that = (ComparisonNode) o;
-        if (getLhsTypeExp() != null
-                ? !getLhsTypeExp().equals(that.getLhsTypeExp())
-                : that.getLhsTypeExp() != null) {
-            return false;
-        }
-        if (getRhsTypeExp() != null
-                ? !getRhsTypeExp().equals(that.getRhsTypeExp())
-                : that.getRhsTypeExp() != null) {
-            return false;
-        }
-        return comparisonSymbol != null
-                ? comparisonSymbol.equals(that.comparisonSymbol)
-                : that.comparisonSymbol == null;
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * Generates the code for the comparison of 2 types which are not integers.
+	 * These types can be lists which may have different depth and might be accessed
+	 * by variables.
+	 */
+	@Override
+	public void getVisited(final BooleanExpNodeVisitor visitor) {
+		visitor.visitComparisonNode(this);
+	}
 
-    private String getTreeStringExtra() {
-        final String simpleClassName = this.getClass().getSimpleName();
-        final String text = ": Symbol ";
-        return "ComparisonNode".equals(simpleClassName)
-                ? "" : simpleClassName + text;
-    }
+	@Override
+	public final int hashCode() {
+		int result = 1;
+		result = PRIME * result + ((comparisonSymbol == null) ? 0 : comparisonSymbol.hashCode());
+		result = PRIME * result + ((getLhsTypeExp() == null) ? 0 : getLhsTypeExp().hashCode());
+		result = PRIME * result + ((getRhsTypeExp() == null) ? 0 : getRhsTypeExp().hashCode());
+		return result;
+	}
 
-    @Override
-    public final String getTreeString(final int depth) {
-        final StringBuilder b = new StringBuilder();
-        final String tabs = TABS.substring(0, depth);
-        b.append(tabs + getTreeStringExtra()
-                + comparisonSymbol.getCStringRep() + LINE_BREAK);
-        b.append(tabs + TAB + LHS
-                + getLhsTypeExp().getTreeString(depth + 1));
-        b.append(tabs + TAB + RHS
-                + getRhsTypeExp().getTreeString(depth + 1));
-        return b.toString();
-    }
+	@Override
+	public final boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final ComparisonNode that = (ComparisonNode) o;
+		if (getLhsTypeExp() != null ? !getLhsTypeExp().equals(that.getLhsTypeExp()) : that.getLhsTypeExp() != null) {
+			return false;
+		}
+		if (getRhsTypeExp() != null ? !getRhsTypeExp().equals(that.getRhsTypeExp()) : that.getRhsTypeExp() != null) {
+			return false;
+		}
+		return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol)
+				: that.comparisonSymbol == null;
+	}
 
-    /**
-     * Gets the comparison symbol.
-     *
-     * @return the symbol that describes this comparison
-     */
-    public ComparisonSymbol getComparisonSymbol() {
-        return comparisonSymbol;
-    }
+	private String getTreeStringExtra() {
+		final String simpleClassName = this.getClass().getSimpleName();
+		final String text = ": Symbol ";
+		return "ComparisonNode".equals(simpleClassName) ? "" : simpleClassName + text;
+	}
 
-    /**
-     * Gets the lhs type exp.
-     *
-     * @return the lhs type exp
-     */
-    public TypeExpression getLhsTypeExp() {
-        return lhsTypeExp;
-    }
+	@Override
+	public final String getTreeString(final int depth) {
+		final StringBuilder b = new StringBuilder();
+		final String tabs = TABS.substring(0, depth);
+		b.append(tabs + getTreeStringExtra() + comparisonSymbol.getCStringRep() + LINE_BREAK);
+		b.append(tabs + TAB + LHS + getLhsTypeExp().getTreeString(depth + 1));
+		b.append(tabs + TAB + RHS + getRhsTypeExp().getTreeString(depth + 1));
+		return b.toString();
+	}
 
-    /**
-     * Gets the rhs type exp.
-     *
-     * @return the rhs type exp
-     */
-    public TypeExpression getRhsTypeExp() {
-        return rhsTypeExp;
-    }
+	public ComparisonType getComparisonType() {
+		return comparisonType;
+	}
+	
+	public ComparisonSymbol getComparisonSymbol() {
+		return comparisonSymbol;
+	}
+
+	/**
+	 * Gets the lhs type exp.
+	 *
+	 * @return the lhs type exp
+	 */
+	public TypeExpression getLhsTypeExp() {
+		return lhsTypeExp;
+	}
+
+	/**
+	 * Gets the rhs type exp.
+	 *
+	 * @return the rhs type exp
+	 */
+	public TypeExpression getRhsTypeExp() {
+		return rhsTypeExp;
+	}
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitComparisonNode(this);		
+		visitor.visitComparisonNode(this);
 	}
 }

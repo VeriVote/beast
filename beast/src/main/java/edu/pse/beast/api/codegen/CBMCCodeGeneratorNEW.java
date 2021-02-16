@@ -11,6 +11,7 @@ import edu.pse.beast.api.codegen.c_code.CFile;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
+import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
@@ -34,13 +35,17 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	public static String generateCode(CElectionDescription descr, PreAndPostConditionsDescription propDescr) {
+	public static String generateCode(CElectionDescription descr, PreAndPostConditionsDescription propDescr,
+			CodeGenOptions options) {
 		CFile created = new CFile();
 		created.include(STDLIB);
 		created.include(STDINT);
 		created.include(ASSERT);
 
 		created.define(ASSUME, CPROVER_ASSUME);
+
+		created.define("V", "1");
+		created.define("C", "1");
 
 		created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
 		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());
@@ -58,8 +63,7 @@ public class CBMCCodeGeneratorNEW {
 		created.addStructDef(voteArrStruct.getStruct());
 		created.addStructDef(voteResultStruct.getStruct());
 
-		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(), voteArrStruct.getStruct(),
-				voteResultStruct.getStruct(), votesNakedArr, resultNakedArr));
+		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(), voteArrStruct, voteResultStruct, options));
 
 		// we do this here to know which helper functions we need to generate
 		BooleanExpASTData preAstData = BooleanCodeToAST.generateAST(propDescr.getPreConditionsDescription().getCode(),
@@ -68,27 +72,31 @@ public class CBMCCodeGeneratorNEW {
 				propDescr.getSymVarsAsScope());
 
 		InputAndOutputElectionStructs inAndOutStructs = new InputAndOutputElectionStructs(voteArrStruct,
-				voteResultStruct);		
-		
-		created.addFunction(
-				CBMCMainGenerator.main(preAstData, postAstData, voteArrStruct, voteResultStruct));
+				voteResultStruct);
+
+		options.setCbmcAssumeName("assume");
+		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
+
+		created.addFunction(CBMCMainGenerator.main(preAstData, postAstData, voteArrStruct, voteResultStruct, options));
 
 		return created.generateCode();
 	}
 
-	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func, CStruct votingInput,
-			CStruct votingResult, CElectionVotingType votesNakedArr, CElectionVotingType resultNakedArr) {
-		String votingStructVarName = func.getVotingVarName() + "struct";
+	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func, ElectionTypeCStruct input,
+			ElectionTypeCStruct output, CodeGenOptions options) {
+		
+		String votingStructVarName = "voteStruct";
 
-		CFunction created = new CFunction(func.getName(), List.of(votingInput.getName() + " " + votingStructVarName),
-				votingResult.getName());
+		CFunction created = new CFunction(func.getName(), List.of(input.getStruct().getName() + " " + votingStructVarName),
+				output.getStruct().getName());
+		
 		List<String> code = new ArrayList<>();
-		code.add(votingResult.getName() + " result;");
-
-		code.add(FunctionToC.votingTypeToC(votesNakedArr, "").getType() + " " + func.getVotingVarName() + ";");
-
-		code.add(generateDeepCopy(votesNakedArr.getListDimensions(), cbmcVarArrToVarNames(votesNakedArr.getListSizes()),
-				votingStructVarName + "." + votingInput.getMembers().get(0).getName(), func.getVotingVarName()));
+		
+		String voteArrayName = "votes";
+		code.add("Vote votes[V][C];");
+		code.add("VoteResult result;");
+		
+		code.add(VotingFunctionHelper.generateVoteCopy(voteArrayName, votingStructVarName, input, options));
 
 		code.add("//user generated code");
 
@@ -96,8 +104,12 @@ public class CBMCCodeGeneratorNEW {
 
 		code.add("//end user generated code");
 
-		code.add(generateCopyToResultStruct(func, votingResult, resultNakedArr));
+		String resultName = "result";
+		String outputVarName = "resultStruct";
+		code.add(output.getStruct().getName() + " " + outputVarName + ";");
+		code.add(VotingFunctionHelper.generateResultCopy(resultName, outputVarName, output, options));
 
+		code.add("return RES;".replaceAll("RES", outputVarName));
 		created.setCode(code);
 		return created;
 	}

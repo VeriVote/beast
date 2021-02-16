@@ -23,8 +23,8 @@ public class CCodeBlock {
 		return "{\n" + String.join("\n", code) + "\n}\n";
 	}
 
-	public String newVarName() {
-		return "var" + number++;
+	public String newVarName(String hint) {
+		return hint + number++;
 	}
 
 	public void addVarDecl(String type, String generatedVarName) {
