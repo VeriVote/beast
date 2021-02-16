@@ -11,6 +11,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutat
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
+import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode.ComparisonType;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
@@ -131,7 +132,14 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitVotePermutation(VotePermutationNode node) {
-				
+		String generatedVarName = codeBlock.newVarName("permutation");
+		String varName = "voteNUMBER".replaceAll("NUMBER", String.valueOf(node.getVoteNumber()));
+		
+		codeBlock.addSnippet(
+				PermutationHelper.generateVotePermutation(generatedVarName, varName, voteArrStruct, options));
+
+		expVarNameStack.push(generatedVarName);
+		comparedTypes.push(voteArrStruct);
 	}
 
 }

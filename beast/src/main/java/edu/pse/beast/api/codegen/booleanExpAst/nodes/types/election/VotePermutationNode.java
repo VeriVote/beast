@@ -26,10 +26,13 @@ public class VotePermutationNode extends ElectionTypeNode {
 		this.voteNumber = voteNumber;
 	}
 
+	public int getVoteNumber() {
+		return voteNumber;
+	}
+	
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visitVotePermutation(this);		
 	}
 
 }
