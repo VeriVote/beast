@@ -56,7 +56,7 @@ public class IntersectionHelper {
 			
 			code = code.replaceAll("LHS_VAR_NAME", varNames.get(0));			
 
-			code = code.replaceAll("OUTER_BOUND", options.getCbmcAmountVotesVarName());
+			code = code.replaceAll("OUTER_BOUND", options.getCbmcAmountVotersVarName());
 			code = code.replaceAll("INNER_BOUND", options.getCbmcAmountCandidatesVarName());
 			
 			code = code.replaceAll("ASSUME", options.getCbmcAssumeName());

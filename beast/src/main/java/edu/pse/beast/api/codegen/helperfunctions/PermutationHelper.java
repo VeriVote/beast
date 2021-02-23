@@ -43,7 +43,7 @@ public class PermutationHelper {
 			code = code.replaceAll("NONDET_UINT", options.getCbmcNondetUintName());
 			code = code.replaceAll("RHS", varName);
 			code = code.replaceAll("PERM", "permutationIndices");			
-			code = code.replaceAll("AMT_VOTES", options.getCbmcAmountVotesVarName());
+			code = code.replaceAll("AMT_VOTES", options.getCbmcAmountVotersVarName());
 		}
 		
 		return code;

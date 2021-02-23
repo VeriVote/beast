@@ -78,13 +78,33 @@ public class CBMCCodeGeneratorTest {
 	}
 	
 	@Test
+	public void testSimpleForAll() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
+				"");
+		propDescr.get(0).getPostConditionsDescription().setCode(
+				"FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);");
+
+		CodeGenOptions options = new CodeGenOptions();
+		options.setCbmcAmountCandidatesVarName("C");
+		options.setCbmcAmountVotesVarName("V");
+
+		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0), options);
+		System.out.println(c);
+	}
+	
+	@Test
 	public void testUniqueVotesCodeGen() {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.PREFERENCE,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
 				"");
-		propDescr.get(0).getPostConditionsDescription().setCode("FOR_ALL_VOTERS(v1) : !(EXISTS_ONE_VOTER(v2) : v2 != v1 && VOTES1(v1) == VOTES1(v2));");
+		propDescr.get(0).getPostConditionsDescription().setCode(
+				"FOR_ALL_VOTERS(v1) : !(EXISTS_ONE_CANDIDATE(c1) : EXISTS_ONE_CANDIDATE(c2) : c1 != c2 && "
+				+ "VOTES1(v1)(c1) == VOTES1(v1)(c2));");
 
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");

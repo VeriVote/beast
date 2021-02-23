@@ -6,11 +6,11 @@ public class CodeGenOptions {
 	private String cbmcAssumeName;
 	private String cbmcAssertName;
 	private String cbmcNondetUintName;
-	private String cbmcAmountVotesVarName;
+	private String cbmcAmountVotersVarName;
 	private String cbmcAmountCandidatesVarName;
 
-	public String getCbmcAmountVotesVarName() {
-		return cbmcAmountVotesVarName;
+	public String getCbmcAmountVotersVarName() {
+		return cbmcAmountVotersVarName;
 	}
 
 	public String getCbmcAssertName() {
@@ -26,7 +26,7 @@ public class CodeGenOptions {
 	}
 
 	public void setCbmcAmountVotesVarName(String cbmcAmountVotesVarName) {
-		this.cbmcAmountVotesVarName = cbmcAmountVotesVarName;
+		this.cbmcAmountVotersVarName = cbmcAmountVotesVarName;
 	}
 
 	public void setCbmcAmountCandidatesVarName(String cbmcAmountCandidatesVarName) {

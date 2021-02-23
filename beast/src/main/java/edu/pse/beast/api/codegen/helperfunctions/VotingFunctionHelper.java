@@ -21,7 +21,7 @@ public class VotingFunctionHelper {
 			code = code.replaceAll("VOTE_INPUT", votingStructVarName);
 			code = code.replaceAll("VOTES", voteArrayName);
 			code = code.replaceAll("LIST_MEMBER", voteType.getListName());
-			code = code.replaceAll("OUTER_BOUND", options.getCbmcAmountVotesVarName());
+			code = code.replaceAll("OUTER_BOUND", options.getCbmcAmountVotersVarName());
 			code = code.replaceAll("INNER_BOUND", options.getCbmcAmountCandidatesVarName());
 
 		}

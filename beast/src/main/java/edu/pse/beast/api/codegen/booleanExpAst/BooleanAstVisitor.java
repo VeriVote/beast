@@ -5,6 +5,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersec
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListElementContext;
@@ -20,7 +21,7 @@ public interface BooleanAstVisitor {
 	
 	public void visitBooleanExpListElementNode(BooleanExpListElementNode node);
 	public void visitComparisonNode(ComparisonNode node);
-	
+	public void visitForAllVotersNode(ForAllNode node);
 	
 	/*
 	 * 
@@ -35,7 +36,6 @@ public interface BooleanAstVisitor {
 	public void visitElectExpNode(ElectExp node);
 	public void visitVotePermutation(VotePermutationNode node);
 	public void visitVoteTuple(VoteTupleNode node);
-	
 	
 	
 }

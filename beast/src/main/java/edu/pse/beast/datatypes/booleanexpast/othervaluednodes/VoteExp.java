@@ -1,5 +1,8 @@
 package edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
 
+import java.util.List;
+
+import edu.pse.beast.api.codegen.CBMCVar;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
@@ -20,12 +23,31 @@ public final class VoteExp extends AccessValueNode {
      * @param count
      *            the count of this vote
      */
+	
+	private List<CBMCVar> accessingCBMCVars;
+	private String voteNumber;
+	
     public VoteExp(final InOutType type, final TypeExpression[] accessingVars,
                    final int count) {
         super(type, accessingVars, count);
     }
+    
+    public VoteExp(List<CBMCVar> accessingCBMCVars, String voteNumber) {
+		super(null, null, 0);
+		this.accessingCBMCVars = accessingCBMCVars;
+		this.voteNumber = voteNumber;
+		
+	}
 
-    @Override
+    public List<CBMCVar> getAccessingCBMCVars() {
+		return accessingCBMCVars;
+	}
+
+    public String getVoteNumber() {
+		return voteNumber;
+	}
+    
+	@Override
     public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitVoteExp(this);
     }
@@ -33,7 +55,7 @@ public final class VoteExp extends AccessValueNode {
     @Override
     public String getTreeString(final int depth) {
     	String acc = "";
-    	for(TypeExpression exp : accessingVars) {
+    	for(CBMCVar exp : accessingCBMCVars) {
     		acc += "[]";
     	}
         return "Vote" + count + acc;

@@ -1,5 +1,7 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -7,6 +9,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.CBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.ScopeHandler;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
@@ -82,14 +87,20 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	private BooleanExpScopehandler scopeHandler;
 	private Stack<BooleanExpressionNode> nodeStack;
 	private Stack<TypeExpression> expStack;
+	
+	ScopeHandler scopeHandlerNew;
 
 	private int highestElect;
 	private int highestVote;
 	private int highestElectInThisListNode;
+	
 
 	private BooleanCodeToAST(BooleanExpScope declaredVars) {
 		scopeHandler = new BooleanExpScopehandler();
 		scopeHandler.enterNewScope(declaredVars);
+		
+		scopeHandlerNew = new ScopeHandler();
+		scopeHandlerNew.push();
 	}
 
 	public static BooleanExpASTData generateAST(String boolExpCode, BooleanExpScope declaredVars) {
@@ -175,10 +186,13 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void enterQuantifierExp(final QuantifierExpContext ctx) {
 		final String quantifierTypeString = ctx.Quantifier().getText();
 		final InternalTypeContainer varType;
+		CBMCVar.CBMCVarType type = null;
 		if (quantifierTypeString.contains(VariableTypeNames.VOTER)) {
 			varType = new InternalTypeContainer(InternalTypeRep.VOTER);
+			type = CBMCVarType.VOTER;
 		} else if (quantifierTypeString.contains(VariableTypeNames.CANDIDATE)) {
 			varType = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+			type = CBMCVarType.CANDIDATE;
 		} else if (quantifierTypeString.contains(VariableTypeNames.SEAT)) {
 			varType = new InternalTypeContainer(InternalTypeRep.SEAT);
 		} else {
@@ -187,14 +201,24 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		scopeHandler.enterNewScope();
 		final String id = ctx.passSymbVar().symbolicVarExp().Identifier().getText();
 		scopeHandler.addVariable(id, varType);
+		
+		scopeHandlerNew.push();
+		scopeHandlerNew.add(new CBMCVar(id, type));
 	}
 
 	@Override
 	public void exitQuantifierExp(final QuantifierExpContext ctx) {
 		final String quantifierType = ctx.Quantifier().getText();
 		final QuantifierNode node;
+		
+		CBMCVar var = null;
+		String name = ctx.passSymbVar().symbolicVarExp().getText();
+		if(quantifierType.contains("VOTER")) {
+			var = new CBMCVar(name, CBMCVar.CBMCVarType.VOTER);
+		}
+		
 		if (quantifierType.contains(Quantifier.FOR_ALL)) {
-			node = new ForAllNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
+			node = new ForAllNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop(), var);
 		} else if (quantifierType.contains(Quantifier.EXISTS)) {
 			node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
 		} else {
@@ -202,6 +226,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		}
 		nodeStack.add(node);
 		scopeHandler.exitScope();
+		scopeHandlerNew.pop();
 	}
 
 	@Override
@@ -213,7 +238,10 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final String name = ctx.getText();
 		final InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
 		final SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
-		expStack.push(expNode);
+		//expStack.push(expNode);
+	
+		CBMCVarType varType = scopeHandlerNew.getType(name);
+		expStack.push(new SymbolicVarExp(new CBMCVar(name, varType)));
 	}
 
 	@Override
@@ -299,12 +327,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		setHighestVote(number);
 
 		final int amtAccessingTypes = ctx.passType().size();
-		final TypeExpression[] accessingVars = new TypeExpression[amtAccessingTypes];
+		
+		List<CBMCVar> accessingVars = new ArrayList<>();		
+		
 		for (int i = 0; i < amtAccessingTypes; ++i) {
-			accessingVars[amtAccessingTypes - i - 1] = expStack.pop();
+			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
 		}
 		// TODO make work with new input types
-		final VoteExp expNode = new VoteExp(CBMCInputType.getInputTypes().get(0), accessingVars, number);
+		final VoteExp expNode = new VoteExp(accessingVars, numberString);
 		expStack.push(expNode);
 	}
 
@@ -438,11 +468,11 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		expStack.push(node);
 
 	}
-	
+
 	@Override
 	public void exitTupleExp(TupleExpContext ctx) {
 		VoteTupleNode node = new VoteTupleNode(null);
-		for(TerminalNode voteNode : ctx.voteTupleExp().Vote()) {
+		for (TerminalNode voteNode : ctx.voteTupleExp().Vote()) {
 			int number = extractNumberFromVote(voteNode.getText());
 			node.addVoteNumber(number);
 			setHighestVote(number);
