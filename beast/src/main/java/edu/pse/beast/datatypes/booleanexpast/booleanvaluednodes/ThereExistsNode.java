@@ -1,5 +1,7 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
@@ -17,21 +19,37 @@ public final class ThereExistsNode extends QuantifierNode {
      * @param followingNode
      *            the following node of this quantifier
      */
+	private CBMCVar var;
+	
     public ThereExistsNode(final SymbolicVariable declSymbVar,
                            final BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
 
-    @Override
+    public ThereExistsNode(SymbolicVariable symbolicVar, BooleanExpressionNode followingNode, CBMCVar var) {
+        super(symbolicVar, followingNode);
+        this.var = var;
+	}
+
+    public CBMCVar getVar() {
+		return var;
+	}
+    
+	@Override
     public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitThereExistsNode(this);
     }
 
     @Override
     public String getTreeString(final int depth) {
-        return "ExistsOne: Declared var: " + getDeclaredSymbolicVar().getId()
+        return "ExistsOne: Declared var: " + var.getName()
                 + LINE_BREAK + TABS.substring(0, depth + 1)
                 + "following: "
                 + getFollowingExpNode().getTreeString(depth + 1);
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitExistsCandidateNode(this);
+	}
 }

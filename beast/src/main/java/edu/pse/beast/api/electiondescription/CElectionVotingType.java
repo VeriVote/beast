@@ -123,5 +123,13 @@ public class CElectionVotingType {
 		}
 		return created;
 	}
+	
+	public static CElectionVotingType simple() {
+		CElectionVotingType created = new CElectionVotingType();
+		created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
+		created.listDimensions = 0;
+		created.listSizes = List.of();
+		return created;
+	}
 
 }

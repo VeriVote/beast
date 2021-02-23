@@ -56,8 +56,7 @@ public final class SymbolicVarExp extends TypeExpression {
     @Override
     public String getTreeString(final int depth) {
         return "SymbVar: {id "
-                + symbVar.getId() + ", type: " + symbVar
-                        .getInternalTypeContainer().getInternalType().toString()
+                + cbmcVar.getName()
                 + "}";
     }
 
@@ -83,5 +82,6 @@ public final class SymbolicVarExp extends TypeExpression {
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitSymbolicVarExp(this);
 	}
 }

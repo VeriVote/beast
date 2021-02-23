@@ -6,7 +6,11 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutat
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.SymbolicVarExp;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListElementContext;
 
@@ -22,6 +26,9 @@ public interface BooleanAstVisitor {
 	public void visitBooleanExpListElementNode(BooleanExpListElementNode node);
 	public void visitComparisonNode(ComparisonNode node);
 	public void visitForAllVotersNode(ForAllNode node);
+	public void visitExistsCandidateNode(ThereExistsNode node);
+	public void visitNotNode(NotNode node);
+	public void visitAndNode(LogicalAndNode logicalAndNode);
 	
 	/*
 	 * 
@@ -36,6 +43,7 @@ public interface BooleanAstVisitor {
 	public void visitElectExpNode(ElectExp node);
 	public void visitVotePermutation(VotePermutationNode node);
 	public void visitVoteTuple(VoteTupleNode node);
+	public void visitSymbolicVarExp(SymbolicVarExp node);
 	
 	
 }

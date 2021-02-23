@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
@@ -62,4 +63,9 @@ public final class NotNode extends BooleanExpressionNode {
                 ? followingNode.equals(notNode.followingNode)
                 : notNode.followingNode == null;
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitNotNode(this);
+	}
 }

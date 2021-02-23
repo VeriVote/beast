@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
@@ -33,4 +34,9 @@ public final class LogicalAndNode extends BinaryRelationshipNode {
                 + getLHSBooleanExpNode().getTreeString(depth + 1) + LINE_BREAK
                 + tabs + RHS + getRHSBooleanExpNode().getTreeString(depth + 1);
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitAndNode(this);
+	}
 }

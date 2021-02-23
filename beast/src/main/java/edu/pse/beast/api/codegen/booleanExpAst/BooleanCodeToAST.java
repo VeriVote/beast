@@ -1,6 +1,8 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -8,6 +10,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.reactfx.util.Lists;
 
 import edu.pse.beast.api.codegen.CBMCVar;
 import edu.pse.beast.api.codegen.CBMCVar.CBMCVarType;
@@ -215,12 +218,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		String name = ctx.passSymbVar().symbolicVarExp().getText();
 		if(quantifierType.contains("VOTER")) {
 			var = new CBMCVar(name, CBMCVar.CBMCVarType.VOTER);
+		} else if(quantifierType.contains("CANDIDATE")) {
+			var = new CBMCVar(name, CBMCVar.CBMCVarType.CANDIDATE);
 		}
 		
 		if (quantifierType.contains(Quantifier.FOR_ALL)) {
 			node = new ForAllNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop(), var);
 		} else if (quantifierType.contains(Quantifier.EXISTS)) {
-			node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
+			node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop(), var);
 		} else {
 			node = null;
 		}
@@ -333,6 +338,9 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		for (int i = 0; i < amtAccessingTypes; ++i) {
 			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
 		}
+		
+		Collections.reverse(accessingVars);
+		
 		// TODO make work with new input types
 		final VoteExp expNode = new VoteExp(accessingVars, numberString);
 		expStack.push(expNode);
