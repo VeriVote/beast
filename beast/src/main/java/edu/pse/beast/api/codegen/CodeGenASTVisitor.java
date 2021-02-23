@@ -8,10 +8,12 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
+import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode.ComparisonType;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
@@ -138,6 +140,19 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		codeBlock.addSnippet(
 				PermutationHelper.generateVotePermutation(generatedVarName, varName, voteArrStruct, options));
 
+		expVarNameStack.push(generatedVarName);
+		comparedTypes.push(voteArrStruct);
+	}
+
+	@Override
+	public void visitVoteTuple(VoteTupleNode node) {
+		String generatedVarName = codeBlock.newVarName("tuple");
+		List<String> voteNames = new ArrayList<>();
+		for (int number : node.getNumbers()) {
+			voteNames.add("voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+		}
+		
+		codeBlock.addSnippet(TupleHelper.generateCode(generatedVarName, voteNames, voteArrStruct, options));
 		expVarNameStack.push(generatedVarName);
 		comparedTypes.push(voteArrStruct);
 	}

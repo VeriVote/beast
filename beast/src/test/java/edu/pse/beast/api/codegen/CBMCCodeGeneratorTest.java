@@ -47,11 +47,44 @@ public class CBMCCodeGeneratorTest {
 	
 	@Test
 	public void testPermCodeGen() {
-		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.PREFERENCE,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
 				"VOTES1 == PERM(VOTES4);");
+
+		CodeGenOptions options = new CodeGenOptions();
+		options.setCbmcAmountCandidatesVarName("C");
+		options.setCbmcAmountVotesVarName("V");
+
+		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0), options);
+		System.out.println(c);
+	}
+	
+	@Test
+	public void testSplitCodeGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("split", "",
+				"[[VOTES1, VOTES2]] == VOTES3;");
+
+		CodeGenOptions options = new CodeGenOptions();
+		options.setCbmcAmountCandidatesVarName("C");
+		options.setCbmcAmountVotesVarName("V");
+
+		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0), options);
+		System.out.println(c);
+	}
+	
+	@Test
+	public void testUniqueVotesCodeGen() {
+		CElectionDescription descr = new CElectionDescription(VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.SINGLE_CANDIDATE);
+		descr.getVotingFunction().getCode().add("result = 0;");
+		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
+				"");
+		propDescr.get(0).getPostConditionsDescription().setCode("FOR_ALL_VOTERS(v1) : !(EXISTS_ONE_VOTER(v2) : v2 != v1 && VOTES1(v1) == VOTES1(v2));");
 
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");

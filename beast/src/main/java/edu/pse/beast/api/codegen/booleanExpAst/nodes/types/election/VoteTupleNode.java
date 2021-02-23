@@ -23,6 +23,10 @@ public class VoteTupleNode extends ElectionTypeNode {
 	public String getTreeString(int depth) {
 		return "Vote Tuple";
 	}
+	
+	public List<Integer> getNumbers() {
+		return voteNumbers;
+	}
 
 	public void addVoteNumber(int number) {
 		voteNumbers.add(number);
@@ -30,8 +34,7 @@ public class VoteTupleNode extends ElectionTypeNode {
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visitVoteTuple(this);		
 	}
 
 }

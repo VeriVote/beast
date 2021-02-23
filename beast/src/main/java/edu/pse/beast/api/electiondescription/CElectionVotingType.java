@@ -24,6 +24,7 @@ public class CElectionVotingType {
 	private int listDimensions;
 	private CElectionSimpleTypes simpleType;
 	private List<CBMCVars> listSizes;
+	private boolean uniqueVotes = false;
 	
 	@Override
 	public boolean equals(Object obj) {		
@@ -47,6 +48,9 @@ public class CElectionVotingType {
 		return simpleType;
 	}
 	
+	public boolean isUniqueVotes() {
+		return uniqueVotes;
+	}	
 
 	public CElectionVotingType getTypeOneDimLess() {
 		CElectionVotingType created = new CElectionVotingType();
@@ -97,6 +101,7 @@ public class CElectionVotingType {
 			created.simpleType = CElectionSimpleTypes.VOTE;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
+			created.uniqueVotes = true;
 			break;
 		case SINGLE_CHOICE:
 			created.simpleType = CElectionSimpleTypes.VOTE;

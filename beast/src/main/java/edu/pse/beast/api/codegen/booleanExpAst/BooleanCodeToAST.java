@@ -59,6 +59,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Pe
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermVoteExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.QuantifierExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbolicVarExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumUniqueExpContext;
@@ -401,6 +402,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void exitPermVoteExp(PermVoteExpContext ctx) {
 		VotePermutationNode node = new VotePermutationNode(null);
 		int number = extractNumberFromVote(ctx.Vote().getText());
+		setHighestVote(number);
 		node.setVoteNumber(number);
 		expStack.push(node);
 	}
@@ -409,6 +411,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void exitPermElectExp(PermElectExpContext ctx) {
 		ElectPermutationNode node = new ElectPermutationNode(null);
 		int number = extractNumberFromElect(ctx.Elect().getText());
+		setHighestElect(number);
 		node.setElectNumber(number);
 		expStack.push(node);
 	}
@@ -434,6 +437,16 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		}
 		expStack.push(node);
 
+	}
+	
+	@Override
+	public void exitTupleExp(TupleExpContext ctx) {
+		VoteTupleNode node = new VoteTupleNode(null);
+		for(TerminalNode voteNode : ctx.voteTupleExp().Vote()) {
+			int number = extractNumberFromVote(voteNode.getText());
+			node.addVoteNumber(number);
+			setHighestVote(number);
+		}
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class ComparisonHelper {
 			"ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
 			+ "    for (int i = 0; i < OUTER_BOUND; ++i) {\n"
 			+ "        for (int j = 0; j < INNER_BOUND; ++j) {\n"
-			+ "            ASSUME_OR_ASSERT(LHS_VAR.LIST_MEMBER[i] COMP RHS_VAR.LIST_MEMBER[j]);\n"
+			+ "            ASSUME_OR_ASSERT(LHS_VAR.LIST_MEMBER[i][j] COMP RHS_VAR.LIST_MEMBER[i][j]);\n"
 			+ "        } \n"
 			+ "    }";
 	
