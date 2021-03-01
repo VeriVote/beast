@@ -1,19 +1,10 @@
-header kann schöner generiert werden, viel code dupl,
+loop bounds
 
-electiondescription soll eig nicht über cbmc wissen
+majority criterion (> 50 percent)
 
-signatur im hintergrund nicht dasselbe, als param kommen noch amt_votes hinzu, aber sollte nach außen hin nicht gezeigt werden
+plurality,
 
-V,C, etc namen änderbar, unifiednamecontainer
+approval, reinforcement
+range,
 
-split: teilt array in beliebige anzahl andere arrays (arr0,..,arrn) <- split(arr)
-
-code generation: was abh von input und output type?
-
-vergleiche
-
-votesum
-
-
-
-komplettes refactoring ok?
+borda

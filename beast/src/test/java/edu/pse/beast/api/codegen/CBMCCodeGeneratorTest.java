@@ -85,7 +85,7 @@ public class CBMCCodeGeneratorTest {
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
 				"");
 		propDescr.get(0).getPostConditionsDescription().setCode(
-				"FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);");
+				"FOR_ALL_VOTERS(v) . VOTES1(v) == VOTES2(v);");
 
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");
@@ -103,7 +103,7 @@ public class CBMCCodeGeneratorTest {
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper.createSimpleCondList("intersect", "",
 				"");
 		propDescr.get(0).getPostConditionsDescription().setCode(
-				"FOR_ALL_VOTERS(v1) : !(EXISTS_ONE_CANDIDATE(c1) : EXISTS_ONE_CANDIDATE(c2) : c1 != c2 && "
+				"FOR_ALL_VOTERS(v1) . !(EXISTS_ONE_CANDIDATE(c1) . EXISTS_ONE_CANDIDATE(c2) . c1 != c2 && "
 				+ "VOTES1(v1)(c1) == VOTES1(v1)(c2));");
 
 		CodeGenOptions options = new CodeGenOptions();

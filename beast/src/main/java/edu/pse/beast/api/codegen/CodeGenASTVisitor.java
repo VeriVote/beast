@@ -16,6 +16,7 @@ import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteExpHelper;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode.ComparisonType;
@@ -32,6 +33,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public enum Mode {
 		ASSUME, ASSERT
 	}
+
+	private LoopBoundHandler loopBoundHandler;
 
 	private CCodeBlock codeBlock;
 
@@ -54,11 +57,13 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	private int level = 0;
 
-	public CodeGenASTVisitor(ElectionTypeCStruct voteArrStruct, ElectionTypeCStruct voteResultStruct,
-			CodeGenOptions options) {
+	public CodeGenASTVisitor(ElectionTypeCStruct voteArrStruct,
+			ElectionTypeCStruct voteResultStruct, CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler) {
 		this.voteArrStruct = voteArrStruct;
 		this.voteResultStruct = voteResultStruct;
 		this.options = options;
+		this.loopBoundHandler = loopBoundHandler;
 	}
 
 	public CCodeBlock getCodeBlock() {
@@ -84,28 +89,32 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	}
 
 	private void visitVoteComparison(ComparisonNode node) {
-
 		String code = null;
 		if (node.getComparisonType() != ComparisonType.UNEQ) {
 			if (level == 0) {
-				code = VoteComparisonHelper.generateTopLevelVoteComparisonCode(expVarNameStack.pop(),
-						expVarNameStack.pop(), voteArrStruct, options, assumeAssert,
-						node.getComparisonSymbol().getCStringRep());
+				code = VoteComparisonHelper.generateTopLevelVoteComparisonCode(
+						expVarNameStack.pop(), expVarNameStack.pop(),
+						voteArrStruct, options, assumeAssert,
+						node.getComparisonSymbol().getCStringRep(), loopBoundHandler);
 				codeBlock.addSnippet(code);
 			} else {
 				String generatedBoolName = codeBlock.newVarName("comparison");
-				code = VoteComparisonHelper.generateVoteComparisonCode(generatedBoolName, expVarNameStack.pop(),
-						expVarNameStack.pop(), voteArrStruct, options, node.getComparisonSymbol().getCStringRep());
+				code = VoteComparisonHelper.generateVoteComparisonCode(
+						generatedBoolName, expVarNameStack.pop(),
+						expVarNameStack.pop(), voteArrStruct, options,
+						node.getComparisonSymbol().getCStringRep());
 				codeBlock.addSnippet(code);
 				booleanVarNameStack.push(generatedBoolName);
 			}
 		} else if (node.getComparisonType() == ComparisonType.UNEQ) {
 			String generatedBoolName = codeBlock.newVarName("notEqual");
-			code = VoteComparisonHelper.generateVoteUneqCode(generatedBoolName, expVarNameStack.pop(),
-					expVarNameStack.pop(), voteArrStruct, options);
+			code = VoteComparisonHelper.generateVoteUneqCode(generatedBoolName,
+					expVarNameStack.pop(), expVarNameStack.pop(), voteArrStruct,
+					options);
 			codeBlock.addSnippet(code);
 			if (level == 0) {
-				codeBlock.addSnippet(assumeAssert + "(" + generatedBoolName + ")");
+				codeBlock.addSnippet(
+						assumeAssert + "(" + generatedBoolName + ")");
 			} else {
 				booleanVarNameStack.push(generatedBoolName);
 			}
@@ -127,28 +136,20 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			String lhsVarName = expVarNameStack.pop();
 			if (level == 0 && node.getComparisonType() != ComparisonType.UNEQ) {
 				String code = ComparisonHelper.generateTopLevelCompCode(
-						node.getComparisonSymbol().getCStringRep(),
-						lhsVarName, rhsVarName, 
-						expTypes.pop(), 
-						options, 
-						assumeAssert);
+						node.getComparisonSymbol().getCStringRep(), lhsVarName,
+						rhsVarName, expTypes.pop(), options, assumeAssert,
+						loopBoundHandler);
 				expTypes.pop();
 				codeBlock.addSnippet(code);
 			} else {
 				String varName = codeBlock.newVarName("comparison");
-				String code = ComparisonHelper.generateCompCode(
-						varName,
-						node.getComparisonSymbol().getCStringRep(),
-						lhsVarName, rhsVarName, 
-						expTypes.pop(), 
-						options, 
-						assumeAssert
-						);
+				String code = ComparisonHelper.generateCompCode(varName,
+						node.getComparisonSymbol().getCStringRep(), lhsVarName,
+						rhsVarName, expTypes.pop(), options, assumeAssert);
 				codeBlock.addSnippet(code);
 				booleanVarNameStack.push(varName);
 			}
 		}
-
 	}
 
 	@Override
@@ -157,11 +158,12 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			varNames.add("voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+			varNames.add(
+					"voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
 		}
 
-		codeBlock.addSnippet(
-				IntersectionHelper.generateVoteIntersection(generatedVarName, varNames, voteArrStruct, options));
+		codeBlock.addSnippet(IntersectionHelper.generateVoteIntersection(
+				generatedVarName, varNames, voteArrStruct, options, loopBoundHandler));
 
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
@@ -173,9 +175,10 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			expVarNameStack.push("vote" + node.getCount());
 			amtVoteVars++;
 		} else {
-			String voteVarName = "voteNUMBER".replaceAll("NUMBER", node.getVoteNumber());
-			String varName = VoteExpHelper.getVarFromVoteAccess(voteVarName, node.getAccessingCBMCVars(), options,
-					voteArrStruct);
+			String voteVarName = "voteNUMBER".replaceAll("NUMBER",
+					node.getVoteNumber());
+			String varName = VoteExpHelper.getVarFromVoteAccess(voteVarName,
+					node.getAccessingCBMCVars(), options, voteArrStruct);
 			expVarNameStack.push(varName);
 
 			CElectionVotingType type = voteArrStruct.getVotingType();
@@ -201,10 +204,11 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVotePermutation(VotePermutationNode node) {
 		String generatedVarName = codeBlock.newVarName("permutation");
-		String varName = "voteNUMBER".replaceAll("NUMBER", String.valueOf(node.getVoteNumber()));
+		String varName = "voteNUMBER".replaceAll("NUMBER",
+				String.valueOf(node.getVoteNumber()));
 
-		codeBlock.addSnippet(
-				PermutationHelper.generateVotePermutation(generatedVarName, varName, voteArrStruct, options));
+		codeBlock.addSnippet(PermutationHelper.generateVotePermutation(
+				generatedVarName, varName, voteArrStruct, options, loopBoundHandler));
 
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
@@ -212,13 +216,15 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitVoteTuple(VoteTupleNode node) {
-		String generatedVarName = codeBlock.newVarName("tuple");
+		String generatedVarName = codeBlock.newVarName("sequence");
 		List<String> voteNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			voteNames.add("voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+			voteNames.add(
+					"voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
 		}
 
-		codeBlock.addSnippet(TupleHelper.generateCode(generatedVarName, voteNames, voteArrStruct, options));
+		codeBlock.addSnippet(TupleHelper.generateCode(generatedVarName,
+				voteNames, voteArrStruct, options, loopBoundHandler));
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
 	}
@@ -228,11 +234,12 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String symbVarName = node.getVar().getName();
 		scopeHandler.push();
 		scopeHandler.add(node.getVar());
-		
+
 		String code = "for(unsigned int VAR_NAME = 0; VAR_NAME < AMT_VOTERS; ++VAR_NAME) {\n";
 		code = code.replaceAll("VAR_NAME", symbVarName);
-		code = code.replaceAll("AMT_VOTERS", options.getCbmcAmountVotersVarName());
-		
+		code = code.replaceAll("AMT_VOTERS",
+				options.getCbmcAmountVotersVarName());
+
 		if (level == 0) {
 			codeBlock.addSnippet(code);
 
@@ -257,18 +264,19 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		level++;
 		node.getNegatedExpNode().getVisited(this);
 		level--;
-		
-		if(level == 0) {
+
+		if (level == 0) {
 			String template = "ASSUME_OR_ASSERT(!BOOL);";
 			template = template.replaceAll("ASSUME_OR_ASSERT", assumeAssert);
 			template = template.replaceAll("BOOL", booleanVarNameStack.pop());
 			codeBlock.addSnippet(template);
 		} else {
 			String generatedVar = codeBlock.newVarName("not");
-			codeBlock.addAssignment("unsigned int " + generatedVar, "!" + booleanVarNameStack.pop());
+			codeBlock.addAssignment("unsigned int " + generatedVar,
+					"!" + booleanVarNameStack.pop());
 			booleanVarNameStack.push(generatedVar);
-		}		
-		
+		}
+
 	}
 
 	@Override
@@ -282,23 +290,25 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String boolVarName = codeBlock.newVarName("existsCandidate");
 		String code = "for(unsigned int VAR_NAME = 0; VAR_NAME < AMT_CANDIDATES; ++VAR_NAME) {\n";
 		code = code.replaceAll("VAR_NAME", symbolicVarName);
-		code = code.replaceAll("AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName());
+		code = code.replaceAll("AMT_CANDIDATES",
+				options.getCbmcAmountCandidatesVarName());
 
 		codeBlock.addSnippet("unsigned int " + boolVarName + " = 0;");
 		codeBlock.addSnippet(code);
 
 		node.getFollowingExpNode().getVisited(this);
-		
-		codeBlock.addSnippet(boolVarName + " |= " + booleanVarNameStack.pop() + ";");
-		
+
+		codeBlock.addSnippet(
+				boolVarName + " |= " + booleanVarNameStack.pop() + ";");
+
 		level--;
 
-		if(level == 0) {
+		if (level == 0) {
 			codeBlock.addSnippet(assumeAssert + "(" + boolVarName + ");");
 		} else {
 			booleanVarNameStack.push(boolVarName);
 		}
-		
+
 		codeBlock.addSnippet("}");
 		scopeHandler.pop();
 	}
@@ -320,9 +330,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		} else {
 			String varName = codeBlock.newVarName("and");
 			codeBlock.addAssignment("unsigned int " + varName,
-					booleanVarNameStack.pop() + " && " + booleanVarNameStack.pop());
+					booleanVarNameStack.pop() + " && "
+							+ booleanVarNameStack.pop());
 			booleanVarNameStack.push(varName);
 		}
 	}
-
 }

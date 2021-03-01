@@ -31,7 +31,7 @@ binaryRelationExp
 
 
 quantifierExp
-    :   Quantifier passSymbVar ':' booleanExp
+    :   Quantifier passSymbVar '.' booleanExp
     ;
 
 notExp

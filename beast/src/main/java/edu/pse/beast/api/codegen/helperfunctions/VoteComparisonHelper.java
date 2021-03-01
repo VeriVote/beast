@@ -1,28 +1,25 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.List;
+
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 
 public class VoteComparisonHelper {
 
-	private static String topLevelTemplate2d = 
-			"ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
-			+ "    for (int i = 0; i < OUTER_BOUND; ++i) {\n"
-			+ "        for (int j = 0; j < INNER_BOUND; ++j) {\n"
-			+ "            ASSUME_OR_ASSERT(LHS_VAR.LIST_MEMBER[i][j] COMP RHS_VAR.LIST_MEMBER[i][j]);\n"
-			+ "        }\n"
-			+ "    }\n";
-	
-	private static String template0d = "unsigned int GENERATED_VAR = LHS.LIST_MEMBER COMP RHS.LIST_MEMBER;";
-	
-	private static String uneqTemplate0d = "unsigned int GENERATED_VAR = LHS.LIST_MEMBER != RHS.LIST_MEMBER;";
 	
 	public static String generateTopLevelVoteComparisonCode(String lhsVarName, String rhsVarName, ElectionTypeCStruct comparedType,
-			CodeGenOptions options, String assumeAssert, String compareSymbol) {
+			CodeGenOptions options, String assumeAssert, String compareSymbol, LoopBoundHandler loopBoundHandler) {
 		String code = null;
 		
 		if(comparedType.getVotingType().getListDimensions() == 2) {
-			code = topLevelTemplate2d;
+			code = CodeTemplates.VoteComparison.topLevelTemplate2d;
+			
+			List<String> loopbounds = CodeTemplates.VoteComparison.topLevelTemplate2dLoopBounds;
+			CodeTemplates.replaceAll(loopbounds, "OUTER_BOUND", options.getCbmcAmountVotersVarName());
+			CodeTemplates.replaceAll(loopbounds, "INNER_BOUND", options.getCbmcAmountCandidatesVarName());
+			loopBoundHandler.addMainLoopBounds(loopbounds);
 			
 			code = code.replaceAll("LHS_VAR", lhsVarName);
 			code = code.replaceAll("RHS_VAR", rhsVarName);
@@ -47,7 +44,7 @@ public class VoteComparisonHelper {
 		String code = null;
 		
 		if(comparedType.getVotingType().getListDimensions() == 0) {
-			code = template0d;
+			code = CodeTemplates.VoteComparison.template0d;
 			code = code.replaceAll("GENERATED_VAR", generatedBoolName);
 			code = code.replaceAll("LHS", lhsVarName);
 			code = code.replaceAll("RHS", rhsVarName);
@@ -64,7 +61,7 @@ public class VoteComparisonHelper {
 		String code = null;
 		
 		if(comparedType.getVotingType().getListDimensions() == 0) {
-			code = uneqTemplate0d;
+			code = CodeTemplates.VoteComparison.uneqTemplate0d;
 			code = code.replaceAll("GENERATED_VAR", generatedBoolName);
 			code = code.replaceAll("LHS", lhsVarName);
 			code = code.replaceAll("RHS", rhsVarName);
