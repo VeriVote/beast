@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class CodeTemplates {
@@ -14,7 +15,7 @@ public abstract class CodeTemplates {
 				+ "		ASSUME_OR_ASSERT(LHS_VAR_NAME[i] COMP RHS_VAR_NAME[i]);\n" 
 				+ "	}\n";
 
-		public final static List<String> template1dloopBounds = List.of("AMT");
+		public final static List<String> template1dloopBounds = Arrays.asList("AMT");
 	}
 
 	public static class VoteInit {
@@ -30,8 +31,8 @@ public abstract class CodeTemplates {
 				+ "        }\n" 
 				+ "    }\n";
 
-		public final static List<String> template2dloopBounds = List
-				.of("OUTER_BOUND", "INNER_BOUND");
+		public final static List<String> template2dloopBounds = Arrays.asList(
+				"OUTER_BOUND", "INNER_BOUND");
 
 		public final static String uniquenessTemplate = 
 				  "    for (int i = 0; i < AMT_VOTES; ++i) {\n"
@@ -49,7 +50,7 @@ public abstract class CodeTemplates {
 				+ "        }\n" 
 				+ "    }\n";
 
-		public final static List<String> uniquenessTemplateloopBounds = List.of(
+		public final static List<String> uniquenessTemplateloopBounds = Arrays.asList(
 				"AMT_VOTES", "AMT_CANDIDATES", "AMT_CANDIDATES",
 				"AMT_CANDIDATES");
 	}
@@ -76,8 +77,8 @@ public abstract class CodeTemplates {
 				+ "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);"
 				+ "}\n";
 
-		public final static List<String> template2dloopBounds = List
-				.of("OUTER_BOUND", "INNER_BOUND", "INNER_BOUND");
+		public final static List<String> template2dloopBounds = Arrays.asList(
+				"OUTER_BOUND", "INNER_BOUND", "INNER_BOUND");
 	}
 	
 	public static class Permutation {
@@ -99,8 +100,8 @@ public abstract class CodeTemplates {
 				+ "            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i][j] == RHS.LIST_MEMBER[PERM[i]][j]);\n"
 				+ "        }\n"
 				+ "    }";
-		public final static List<String> template2dloopBounds = List
-				.of("AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "INNER_BOUND");
+		public final static List<String> template2dloopBounds = Arrays.asList(
+				"AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "INNER_BOUND");
 	}
 	
 	public static class Tuple {
@@ -120,8 +121,8 @@ public abstract class CodeTemplates {
 				+ "        }\n";
 		
 
-		public final static List<String> template2dloopBounds = List
-				.of("AMT_VOTES", "AMT_CANDIDATES");
+		public final static List<String> template2dloopBounds = Arrays.asList(
+				"AMT_VOTES", "AMT_CANDIDATES");
 	}
 	
 	public static class VoteComparison {
@@ -133,8 +134,8 @@ public abstract class CodeTemplates {
 				+ "    }\n"
 				+ "}\n";
 		
-		public final static List<String> topLevelTemplate2dLoopBounds = List
-				.of("OUTER_BOUND", "INNER_BOUND");
+		public final static List<String> topLevelTemplate2dLoopBounds = Arrays.asList(
+				"OUTER_BOUND", "INNER_BOUND");
 		
 		public static String template0d = 
 				"unsigned int GENERATED_VAR = LHS.LIST_MEMBER COMP RHS.LIST_MEMBER;";

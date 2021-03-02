@@ -9,11 +9,15 @@ import edu.pse.beast.api.electiondescription.CElectionVotingType;
 
 public class ComparisonHelper {
 
-	public static String generateTopLevelCompCode(String comparison, String lhsVarName, String rhsVarName,
-			CElectionVotingType type, CodeGenOptions options, String assumeOrAssert,
+	public static String generateTopLevelCompCode(String comparison, 
+			String lhsVarName, String rhsVarName,
+			CElectionVotingType type, CodeGenOptions options, 
+			String assumeOrAssert,
 			LoopBoundHandler loopBoundHandler) {
 		String code = null;
-		if (type.getListDimensions() == 1) {
+		if(type.getListDimensions() == 0) {
+			return assumeOrAssert + "(" + lhsVarName + comparison + rhsVarName + ");\n";
+		} else if (type.getListDimensions() == 1) {
 			code = CodeTemplates.Comparison.template1dTopLevel;
 			CBMCVars listSize = type.getListSizes().get(0);
 			String amtString = null;

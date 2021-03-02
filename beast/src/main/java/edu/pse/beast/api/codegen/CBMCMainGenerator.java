@@ -6,6 +6,7 @@ import java.util.List;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 
@@ -52,9 +53,40 @@ public class CBMCMainGenerator {
 					options, loopBoundHandler));
 		}
 
+		loopBoundHandler.getMainLoopBounds()
+				.forEach(b -> System.out.println(b.getCBMCString()));
+
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,
 				voteResultStruct, options, loopBoundHandler);
+
+		// preconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);
+		for (int i = 0; i < preAstData.getTopAstNode().getBooleanExpressions()
+				.size(); ++i) {
+			for (BooleanExpressionNode node : postAstData.getTopAstNode()
+					.getBooleanExpressions().get(i)) {
+				String s = node.getTreeString(0);
+				node.getVisited(visitor);
+				code.add(visitor.getCodeBlock().generateCode());
+			}
+		}
+
+		// vote
+		for (int i = 0; i < highestVote; ++i) {
+			String generatedVarName = "electNUMBER".replaceAll("NUMBER",
+					String.valueOf(i + 1));
+			String voteVarName = "voteNUMBER".replaceAll("NUMBER",
+					String.valueOf(i + 1));
+
+			code.add("//performing vote VAR".replaceAll("VAR",
+					generatedVarName));
+
+			code.add(PerformVoteHelper.generateCode(generatedVarName,
+					voteVarName, voteArrStruct, voteResultStruct, options));
+		}
+
+		// postconditions
+		visitor.setMode(CodeGenASTVisitor.Mode.ASSERT);
 		for (int i = 0; i < postAstData.getTopAstNode().getBooleanExpressions()
 				.size(); ++i) {
 			for (BooleanExpressionNode node : postAstData.getTopAstNode()

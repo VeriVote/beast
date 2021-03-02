@@ -73,10 +73,10 @@ public class CBMCCodeGeneratorNEW {
 		// we do this here to know which helper functions we need to generate
 		BooleanExpASTData preAstData = BooleanCodeToAST.generateAST(
 				propDescr.getPreConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 		BooleanExpASTData postAstData = BooleanCodeToAST.generateAST(
 				propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		InputAndOutputElectionStructs inAndOutStructs = new InputAndOutputElectionStructs(
 				voteArrStruct, voteResultStruct);
@@ -84,6 +84,9 @@ public class CBMCCodeGeneratorNEW {
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 
 		options.setCbmcAssumeName("assume");
+		options.setCbmcAssertName("assert");
+		options.setVoteFuncName("voting");
+
 		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
 
 		created.addFunction(CBMCMainGenerator.main(preAstData, postAstData,

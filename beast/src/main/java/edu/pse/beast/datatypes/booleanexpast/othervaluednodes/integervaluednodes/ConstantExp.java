@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
@@ -60,4 +61,9 @@ public final class ConstantExp extends IntegerValuedExpression {
     public int hashCode() {
         return PRIME + (constant != null ? constant.hashCode() : 0);
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitConstantExp(this);
+	}
 }

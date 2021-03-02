@@ -87,33 +87,33 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	private BooleanExpASTData generated;
 	private BooleanExpListNode AST;
 
-	private BooleanExpScopehandler scopeHandler;
 	private Stack<BooleanExpressionNode> nodeStack;
 	private Stack<TypeExpression> expStack;
-	
+
 	ScopeHandler scopeHandlerNew;
 
 	private int highestElect;
 	private int highestVote;
 	private int highestElectInThisListNode;
-	
 
-	private BooleanCodeToAST(BooleanExpScope declaredVars) {
-		scopeHandler = new BooleanExpScopehandler();
-		scopeHandler.enterNewScope(declaredVars);
-		
+	private BooleanCodeToAST(List<CBMCVar> declaredVariables) {
 		scopeHandlerNew = new ScopeHandler();
 		scopeHandlerNew.push();
+		for (CBMCVar var : declaredVariables) {
+			scopeHandlerNew.add(var);
+		}
 	}
 
-	public static BooleanExpASTData generateAST(String boolExpCode, BooleanExpScope declaredVars) {
+	public static BooleanExpASTData generateAST(String boolExpCode,
+			List<CBMCVar> declaredVariables) {
 		final FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(
 				CharStreams.fromString(boolExpCode));
 		final CommonTokenStream ts = new CommonTokenStream(l);
-		final FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
+		final FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(
+				ts);
 
 		ParseTreeWalker walker = new ParseTreeWalker();
-		BooleanCodeToAST listener = new BooleanCodeToAST(declaredVars);
+		BooleanCodeToAST listener = new BooleanCodeToAST(declaredVariables);
 		walker.walk(listener, p.booleanExpList());
 
 		return listener.generated;
@@ -148,13 +148,16 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	}
 
 	@Override
-	public void enterBooleanExpListElement(final BooleanExpListElementContext ctx) {
+	public void enterBooleanExpListElement(
+			final BooleanExpListElementContext ctx) {
 		highestElectInThisListNode = 0;
 	}
 
 	@Override
-	public void exitBooleanExpListElement(final BooleanExpListElementContext ctx) {
-		BooleanExpListElementNode node = new BooleanExpListElementNode(ctx.getText(), nodeStack.pop());
+	public void exitBooleanExpListElement(
+			final BooleanExpListElementContext ctx) {
+		BooleanExpListElementNode node = new BooleanExpListElementNode(
+				ctx.getText(), nodeStack.pop());
 		AST.addNode(node, highestElectInThisListNode);
 		setHighestElect(highestElectInThisListNode);
 	}
@@ -201,10 +204,9 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		} else {
 			varType = null;
 		}
-		scopeHandler.enterNewScope();
-		final String id = ctx.passSymbVar().symbolicVarExp().Identifier().getText();
-		scopeHandler.addVariable(id, varType);
-		
+		final String id = ctx.passSymbVar().symbolicVarExp().Identifier()
+				.getText();
+
 		scopeHandlerNew.push();
 		scopeHandlerNew.add(new CBMCVar(id, type));
 	}
@@ -213,24 +215,27 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void exitQuantifierExp(final QuantifierExpContext ctx) {
 		final String quantifierType = ctx.Quantifier().getText();
 		final QuantifierNode node;
-		
+
 		CBMCVar var = null;
 		String name = ctx.passSymbVar().symbolicVarExp().getText();
-		if(quantifierType.contains("VOTER")) {
+		if (quantifierType.contains("VOTER")) {
 			var = new CBMCVar(name, CBMCVar.CBMCVarType.VOTER);
-		} else if(quantifierType.contains("CANDIDATE")) {
+		} else if (quantifierType.contains("CANDIDATE")) {
 			var = new CBMCVar(name, CBMCVar.CBMCVarType.CANDIDATE);
 		}
-		
+
 		if (quantifierType.contains(Quantifier.FOR_ALL)) {
-			node = new ForAllNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop(), var);
+			node = new ForAllNode(
+					((SymbolicVarExp) expStack.pop()).getSymbolicVar(),
+					nodeStack.pop(), var);
 		} else if (quantifierType.contains(Quantifier.EXISTS)) {
-			node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop(), var);
+			node = new ThereExistsNode(
+					((SymbolicVarExp) expStack.pop()).getSymbolicVar(),
+					nodeStack.pop(), var);
 		} else {
 			node = null;
 		}
 		nodeStack.add(node);
-		scopeHandler.exitScope();
 		scopeHandlerNew.pop();
 	}
 
@@ -241,10 +246,6 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	@Override
 	public void exitSymbolicVarExp(final SymbolicVarExpContext ctx) {
 		final String name = ctx.getText();
-		final InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
-		final SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
-		//expStack.push(expNode);
-	
 		CBMCVarType varType = scopeHandlerNew.getType(name);
 		expStack.push(new SymbolicVarExp(new CBMCVar(name, varType)));
 	}
@@ -266,12 +267,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	@Override
 	public void exitComparisonExp(final ComparisonExpContext ctx) {
 		final String comparisonSymbolString = ctx.ComparisonSymbol().getText();
-		final ComparisonSymbol comparisonSymbol = new ComparisonSymbol(comparisonSymbolString);
+		final ComparisonSymbol comparisonSymbol = new ComparisonSymbol(
+				comparisonSymbolString);
 
 		TypeExpression rhs = expStack.pop();
 		TypeExpression lhs = expStack.pop();
 
-		final ComparisonNode node = new ComparisonNode(lhs, rhs, comparisonSymbol);
+		final ComparisonNode node = new ComparisonNode(lhs, rhs,
+				comparisonSymbol);
 		nodeStack.add(node);
 	}
 
@@ -282,14 +285,20 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	@Override
 	public void exitNumberExpression(final NumberExpressionContext ctx) {
 		if (ctx.Mult() != null) {
-			final IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
-			final IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-			final BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
+			final IntegerValuedExpression rhs = (IntegerValuedExpression) expStack
+					.pop();
+			final IntegerValuedExpression lsh = (IntegerValuedExpression) expStack
+					.pop();
+			final BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(
+					lsh, rhs, ctx.Mult().getText());
 			expStack.push(expNode);
 		} else if (ctx.Add() != null) {
-			final IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
-			final IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-			final BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
+			final IntegerValuedExpression rhs = (IntegerValuedExpression) expStack
+					.pop();
+			final IntegerValuedExpression lsh = (IntegerValuedExpression) expStack
+					.pop();
+			final BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(
+					lsh, rhs, ctx.Add().getText());
 			expStack.push(expNode);
 		}
 	}
@@ -302,7 +311,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 	@Override
 	public void exitElectExp(final ElectExpContext ctx) {
-		final String numberString = ctx.Elect().getText().substring(ELECT.length());
+		final String numberString = ctx.Elect().getText()
+				.substring(ELECT.length());
 		final int number = Integer.valueOf(numberString);
 		if (highestElectInThisListNode < number) {
 			highestElectInThisListNode = number;
@@ -315,7 +325,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		}
 
 		// TODO make work with new output types
-		final ElectExp expNode = new ElectExp(CBMCOutputType.getOutputTypes().get(3), accessingVars, number);
+		final ElectExp expNode = new ElectExp(
+				CBMCOutputType.getOutputTypes().get(3), accessingVars, number);
 		expStack.push(expNode);
 	}
 
@@ -327,20 +338,21 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 	@Override
 	public void exitVoteExp(final VoteExpContext ctx) {
-		final String numberString = ctx.Vote().getText().substring(VOTER.length());
+		final String numberString = ctx.Vote().getText()
+				.substring(VOTER.length());
 		final int number = Integer.valueOf(numberString);
 		setHighestVote(number);
 
 		final int amtAccessingTypes = ctx.passType().size();
-		
-		List<CBMCVar> accessingVars = new ArrayList<>();		
-		
+
+		List<CBMCVar> accessingVars = new ArrayList<>();
+
 		for (int i = 0; i < amtAccessingTypes; ++i) {
 			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
 		}
-		
+
 		Collections.reverse(accessingVars);
-		
+
 		// TODO make work with new input types
 		final VoteExp expNode = new VoteExp(accessingVars, numberString);
 		expStack.push(expNode);
@@ -356,9 +368,11 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final ConstantExp expNode;
 		if (constString.equals(BooleanExpConstant.getConstForVoterAmt())) {
 			expNode = new ConstantExp(constString);
-		} else if (constString.equals(BooleanExpConstant.getConstForCandidateAmt())) {
+		} else if (constString
+				.equals(BooleanExpConstant.getConstForCandidateAmt())) {
 			expNode = new ConstantExp(constString);
-		} else if (constString.equals(BooleanExpConstant.getConstForSeatAmt())) {
+		} else if (constString
+				.equals(BooleanExpConstant.getConstForSeatAmt())) {
 			expNode = new ConstantExp(constString);
 		} else {
 			expNode = null;
@@ -378,12 +392,16 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void enterVoteSumExp(final VoteSumExpContext ctx) {
 	}
 
-	private void exitVoteSum(final String exprStr, final TerminalNode tn, final boolean unique) {
+	private void exitVoteSum(final String exprStr, final TerminalNode tn,
+			final boolean unique) {
 		final String numberString = tn.getText().substring(exprStr.length());
 		final int number = Integer.valueOf(numberString);
 		setHighestVote(number);
-		final VoteSumForCandExp expNode = new VoteSumForCandExp(number, expStack.pop(), unique);
+		SymbolicVarExp access = (SymbolicVarExp) expStack.pop();
+		final VoteSumForCandExp expNode = new VoteSumForCandExp(number,
+				access.getCbmcVar(), unique);
 		expStack.push(expNode);
+
 	}
 
 	@Override

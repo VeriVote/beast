@@ -1,7 +1,9 @@
 package edu.pse.beast.datatypes.propertydescription;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.CBMCVar;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
 
 /**
@@ -16,8 +18,7 @@ public final class PreAndPostConditionsDescription {
 	/** The name. */
 	private String name;
 
-	/** The symbolic variable list. */
-	private final SymbolicVariableList symbolicVariableList;
+	private List<CBMCVar> cbmcVariables = new ArrayList<>();
 
 	/** The preconditions description. */
 	private final FormalPropertiesDescription preConditionsDescription;
@@ -35,7 +36,6 @@ public final class PreAndPostConditionsDescription {
 	 */
 	public PreAndPostConditionsDescription(final String nameString) {
 		this.name = nameString;
-		this.symbolicVariableList = new SymbolicVariableList();
 		this.preConditionsDescription = new FormalPropertiesDescription("");
 		this.postConditionsDescription = new FormalPropertiesDescription("");
 		this.boundedVarDescription = new FormalPropertiesDescription("");
@@ -57,7 +57,6 @@ public final class PreAndPostConditionsDescription {
 		this.preConditionsDescription = preDescr;
 		this.postConditionsDescription = postDescr;
 		this.boundedVarDescription = boundedVarDesc;
-		this.symbolicVariableList = symbVarList;
 	}
 
 	/**
@@ -69,32 +68,10 @@ public final class PreAndPostConditionsDescription {
 		return this.name;
 	}
 
-	/**
-	 * Gets the symbolic variables as list.
-	 *
-	 * @return the SymbolicVariableList as a List
-	 */
-	public List<SymbolicVariable> getSymbolicVariablesAsList() {
-		return symbolicVariableList.getSymbolicVariables();
+	public List<CBMCVar> getCbmcVariables() {
+		return cbmcVariables;
 	}
 
-	/**
-	 * Gets the symbolic variables cloned.
-	 *
-	 * @return the symbolic variables cloned
-	 */
-	public List<SymbolicVariable> getSymbolicVariablesCloned() {
-		return symbolicVariableList.getSymbolicVariablesCloned();
-	}
-
-	/**
-	 * Gets the sym var list.
-	 *
-	 * @return the symbolicVariableList as the datatype
-	 */
-	public SymbolicVariableList getSymVarList() {
-		return symbolicVariableList;
-	}
 
 	/**
 	 * Gets the post conditions description.
@@ -139,7 +116,6 @@ public final class PreAndPostConditionsDescription {
 		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
 		result = PRIME * result + ((postConditionsDescription == null) ? 0 : postConditionsDescription.hashCode());
 		result = PRIME * result + ((preConditionsDescription == null) ? 0 : preConditionsDescription.hashCode());
-		result = PRIME * result + ((symbolicVariableList == null) ? 0 : symbolicVariableList.hashCode());
 		return result;
 	}
 
@@ -183,21 +159,8 @@ public final class PreAndPostConditionsDescription {
 		} else if (!preConditionsDescription.equals(other.preConditionsDescription)) {
 			return false;
 		}
-		if (symbolicVariableList == null) {
-			if (other.symbolicVariableList != null) {
-				return false;
-			}
-		} else if (!symbolicVariableList.equals(other.symbolicVariableList)) {
-			return false;
-		}
 		return true;
 	}
 
-	public BooleanExpScope getSymVarsAsScope() {
-		BooleanExpScope declaredVars = new BooleanExpScope();
-		getSymbolicVariablesAsList().forEach(v -> {
-			declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
-		});
-		return declaredVars;
-	}
+
 }

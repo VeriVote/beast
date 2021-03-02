@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoopBoundHandler {
-	
+
 	private List<String> mainFuncLoopBounds = new ArrayList<>();
 
 	public void addMainLoopBound(String sizeOfBound) {
@@ -14,5 +14,17 @@ public class LoopBoundHandler {
 	public void addMainLoopBounds(List<String> bounds) {
 		mainFuncLoopBounds.addAll(bounds);
 	}
-	
+
+	public List<LoopBound> getMainLoopBounds() {
+		List<LoopBound> created = new ArrayList<>();
+		for (int i = 0; i < mainFuncLoopBounds.size(); ++i) {
+			final String nameTemplate = "main.NUMBER";
+			LoopBound bound = new LoopBound(
+					nameTemplate.replace("NUMBER", String.valueOf(i)),
+					mainFuncLoopBounds.get(i));
+			created.add(bound);
+		}
+		return created;
+	}
+
 }

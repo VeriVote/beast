@@ -25,7 +25,7 @@ public class CBMCASTGenerationTest {
 				.createSimpleCondList("ELECT1 != ELECT2", "", "ELECT1 != ELECT2;").get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		BooleanExpListNode topNode = ast.getTopAstNode();
 		System.out.println(topNode.getTreeString());
@@ -40,12 +40,12 @@ public class CBMCASTGenerationTest {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
-		final String exp = "FOR_ALL_VOTERS(v) : " + "EXISTS_ONE_CANDIDATE(c) : " + "VOTES1(v) == c && VOTES1(v) == c;";
+		final String exp = "FOR_ALL_VOTERS(v) . " + "EXISTS_ONE_CANDIDATE(c) . " + "VOTES1(v) == c && VOTES1(v) == c;";
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("FOR_ALL_VOTERS", "", exp)
 				.get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		assertEquals(ast.getHighestElect(), 0);
 		assertEquals(ast.getHighestVote(), 1);
@@ -60,12 +60,13 @@ public class CBMCASTGenerationTest {
 		CElectionDescription descr = new CElectionDescription(VotingInputTypes.APPROVAL,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
-		final String exp = "EXISTS_ONE_CANDIDATE(c) : " + "1 == V / 2 * (3 + VOTE_SUM_FOR_CANDIDATE1(c)) - C - S;";
+		final String exp = "EXISTS_ONE_CANDIDATE(c) . " + "1 == V / 2 * (3 + VOTE_SUM_FOR_CANDIDATE1(c)) - C - S;";
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("VOTE_SUM_FOR_CANDIDATE", "", exp).get(0);
 
-		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+		BooleanExpASTData ast = BooleanCodeToAST.generateAST(
+				propDescr.getPostConditionsDescription().getCode(),
+				propDescr.getCbmcVariables());
 
 		assertEquals(ast.getHighestElect(), 0);
 		assertEquals(ast.getHighestVote(), 1);
@@ -84,7 +85,7 @@ public class CBMCASTGenerationTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("tuple", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		BooleanExpListNode topNode = ast.getTopAstNode();
 
@@ -100,7 +101,7 @@ public class CBMCASTGenerationTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("perm", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		BooleanExpListNode topNode = ast.getTopAstNode();
 
@@ -116,7 +117,7 @@ public class CBMCASTGenerationTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("intersect", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		BooleanExpListNode topNode = ast.getTopAstNode();
 
@@ -132,7 +133,7 @@ public class CBMCASTGenerationTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper.createSimpleCondList("emptyList", "", exp).get(0);
 
 		BooleanExpASTData ast = BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-				propDescr.getSymVarsAsScope());
+				propDescr.getCbmcVariables());
 
 		BooleanExpListNode topNode = ast.getTopAstNode();
 

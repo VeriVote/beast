@@ -8,6 +8,7 @@ public class CodeGenOptions {
 	private String cbmcNondetUintName;
 	private String cbmcAmountVotersVarName;
 	private String cbmcAmountCandidatesVarName;
+	private String voteFuncName;
 
 	public String getCbmcAmountVotersVarName() {
 		return cbmcAmountVotersVarName;
@@ -64,5 +65,15 @@ public class CodeGenOptions {
 	public void setCbmcNondetUintName(String cbmcNondetUintName) {
 		this.cbmcNondetUintName = cbmcNondetUintName;
 	}
+
+	public String getVoteFuncName() {
+		return voteFuncName;
+	}
+
+	public void setVoteFuncName(String voteFuncName) {
+		this.voteFuncName = voteFuncName;
+	}
+	
+	
 
 }
