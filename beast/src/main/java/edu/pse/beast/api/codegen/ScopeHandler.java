@@ -2,7 +2,7 @@ package edu.pse.beast.api.codegen;
 
 import java.util.Stack;
 
-import edu.pse.beast.api.codegen.CBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 
 public class ScopeHandler {
 	private Stack<Scope> scopes = new Stack<>();
@@ -15,7 +15,7 @@ public class ScopeHandler {
 		scopes.pop();
 	}
 
-	public void add(CBMCVar var) {
+	public void add(SymbolicCBMCVar var) {
 		scopes.peek().add(var);
 	}
 

@@ -2,18 +2,18 @@ package edu.pse.beast.api.codegen.helperfunctions;
 
 import java.util.List;
 
-import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
 
 public class VoteExpHelper {
-	public static String getVarFromVoteAccess(String voteVarName, List<CBMCVar> list, CodeGenOptions options,
+	public static String getVarFromVoteAccess(String voteVarName, List<SymbolicCBMCVar> list, CodeGenOptions options,
 			ElectionTypeCStruct voteStruct) {
 		String code = "VOTE_VAR.LIST_MEMBER--ACC--";
 
 		String accBrackets = "";
-		for (CBMCVar var : list) {
+		for (SymbolicCBMCVar var : list) {
 			accBrackets += "[" + var.getName() + "]";
 		}
 

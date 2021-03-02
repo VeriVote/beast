@@ -9,8 +9,16 @@ public class VotingFunctionHelper {
 			String votingStructVarName, ElectionTypeCStruct voteType,
 			CodeGenOptions options) {
 		String code = null;
-
-		if (voteType.getVotingType().getListDimensions() == 2) {
+		if (voteType.getVotingType().getListDimensions() == 1) {
+			code = CodeTemplates.VotingFunction.template1d;
+			code = code.replaceAll("VOTE_INPUT", votingStructVarName);
+			code = code.replaceAll("VOTES", voteArrayName);
+			code = code.replaceAll("LIST_MEMBER", voteType.getListName());
+			code = code.replaceAll("AMT_VOTERS",
+					options.getCbmcAmountVotersVarName());
+			
+			
+		}else if (voteType.getVotingType().getListDimensions() == 2) {
 			code = CodeTemplates.VotingFunction.template2d;
 
 			code = code.replaceAll("VOTE_INPUT", votingStructVarName);

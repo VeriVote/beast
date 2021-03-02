@@ -1,6 +1,6 @@
 package edu.pse.beast.api.codegen;
 
-public class CBMCVar {
+public class SymbolicCBMCVar {
 	public enum CBMCVarType {
 		CANDIDATE, VOTER,
 	}
@@ -8,7 +8,7 @@ public class CBMCVar {
 	private String name;
 	private CBMCVarType varType;
 	
-	public CBMCVar(String name, CBMCVarType varType) {
+	public SymbolicCBMCVar(String name, CBMCVarType varType) {
 		this.name = name;
 		this.varType = varType;
 	}

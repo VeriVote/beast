@@ -19,6 +19,18 @@ public abstract class CodeTemplates {
 	}
 
 	public static class VoteInit {
+		public final static String template1d = 
+				  "    VOTE_TYPE VAR_NAME;\n"
+				+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
+				+ "    ASSUME(VAR_NAME.amtVotes <= AMT_VOTES);\n"
+				+ "    for (int i = 0; i < AMT_VOTES; ++i) {\n"
+				+ "            VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();\n"
+				+ "            ASSUME(VAR_NAME.votes[i] >= LOWER_VOTE_BOUND);\n"
+				+ "            ASSUME(VAR_NAME.votes[i] <= UPPER_VOTE_BOUND);\n"
+				+ "    }\n";
+		public final static List<String> template1dloopBounds = 
+				Arrays.asList("AMT_VOTES");
+		
 		public final static String template2d = 
 				  "    VOTE_TYPE VAR_NAME;\n"
 				+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
@@ -56,6 +68,24 @@ public abstract class CodeTemplates {
 	}
 
 	public static class Intersection {
+		
+		public final static String template1d = 
+				  "VOTE_TYPE GENERATED_VAR_NAME;\n"
+				+ "{\n"
+				+ "    unsigned int count = 0;\n"
+				+ "    for (int i = 0; i < OUTER_BOUND; ++i) {\n"
+				+ "        unsigned int eq = COMPARE_VARS;\n"
+				+ "        if (eq) {\n"
+				+ "            GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();\n"
+				+ "            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS_VAR_NAME.LIST_MEMBER[i]);\n"
+				+ "            count++;\n" 
+				+ "        }\n"
+				+ "    }\n"
+				+ "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
+				+ "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);\n"
+				+ "}\n";
+		
+		
 		public final static String template2d = 
 				  "VOTE_TYPE GENERATED_VAR_NAME;\n"
 				+ "{\n"
@@ -92,8 +122,10 @@ public abstract class CodeTemplates {
 				+ "        ASSUME(PERM[i] >= 0);\n"
 				+ "        ASSUME(PERM[i] < RHS.AMT_MEMBER);\n"
 				+ "    }\n"
-				+ "    for (int i = 0; i < RHS.AMT_MEMBER - 1 && i < AMT_VOTES; ++i) {\n"
-				+ "        ASSUME(PERM[i] != PERM[i + 1]);\n"
+				+ "    for (int i = 0; i < RHS.AMT_MEMBER - 2 && i < AMT_VOTES; ++i) {\n"
+				+ "        for (int j = i + 1; j < RHS.AMT_MEMBER - 1 && j < AMT_VOTES; ++j) {\n"
+				+ "            ASSUME(PERM[i] != PERM[j]);\n"
+				+ "        }\n"
 				+ "    }\n"
 				+ "    for (int i = 0; i < RHS.AMT_MEMBER - 1 && i < AMT_VOTES; ++i) {\n"
 				+ "        for (int j = 0; j < INNER_BOUND; ++j) {\n"
@@ -101,7 +133,7 @@ public abstract class CodeTemplates {
 				+ "        }\n"
 				+ "    }";
 		public final static List<String> template2dloopBounds = Arrays.asList(
-				"AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "INNER_BOUND");
+				"AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "INNER_BOUND");
 	}
 	
 	public static class Tuple {
@@ -126,6 +158,13 @@ public abstract class CodeTemplates {
 	}
 	
 	public static class VoteComparison {
+		public static String topLevelTemplate1d = 
+				  "ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
+				+ "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
+				+ "    ASSUME_OR_ASSERT(LHS_VAR.LIST_MEMBER[i] COMP RHS_VAR.LIST_MEMBER[i]);\n"
+				+ "}\n";
+		
+		
 		public static String topLevelTemplate2d = 
 				  "ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
 				+ "for (int i = 0; i < OUTER_BOUND; ++i) {\n"
@@ -144,6 +183,11 @@ public abstract class CodeTemplates {
 				"unsigned int GENERATED_VAR = LHS.LIST_MEMBER != RHS.LIST_MEMBER;";
 	}
 	public static class VotingFunction {
+		public static String template1d = 
+				  "	for (int i = 0; i < AMT_VOTERS; ++i) {\n"
+				+ "     VOTES[i] = VOTE_INPUT.LIST_MEMBER[i];\n" 
+				+ " }";
+		
 		public static String template2d = 
 				  "	for (int i = 0; i < OUTER_BOUND; ++i) {\n"
 				+ " 	for (int j = 0; j < INNER_BOUND; ++j) {\n"

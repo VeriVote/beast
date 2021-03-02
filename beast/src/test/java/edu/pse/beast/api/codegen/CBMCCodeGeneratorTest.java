@@ -15,17 +15,46 @@ import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 public class CBMCCodeGeneratorTest {
 
 	@Test
-	public void pluralityTest() {
+	public void reinforcementTest() {
+		CElectionDescription descr = new CElectionDescription(
+				VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.PARLIAMENT);
+		descr.getVotingFunction().getCode().add("result = 0;");
+
+		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
+		String post1 = 
+				     " !EMPTY(CUT(ELECT2, ELECT3));\n"
+				    + " ELECT1 == CUT(ELECT2, ELECT3);";
+		String post = "";
+		
+		List<PreAndPostConditionsDescription> propDescr = CreationHelper
+				.createSimpleCondList("reinforcementTest",
+						pre, post1);
+		
+		propDescr.get(0).getCbmcVariables()
+				.add(new SymbolicCBMCVar("c", SymbolicCBMCVar.CBMCVarType.CANDIDATE));
+
+		CodeGenOptions options = new CodeGenOptions();
+		options.setCbmcAmountCandidatesVarName("C");
+		options.setCbmcAmountVotesVarName("V");
+
+		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
+				options);
+		System.out.println(c);
+	}
+	
+	@Test
+	public void majorityTest() {
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.SINGLE_CHOICE,
 				VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
 
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
-				.createSimpleCondList("Votesum",
+				.createSimpleCondList("majorityTest",
 						"VOTE_SUM_FOR_CANDIDATE1(c) >= C/2;", "ELECT1 == c;");
 		propDescr.get(0).getCbmcVariables()
-				.add(new CBMCVar("c", CBMCVar.CBMCVarType.CANDIDATE));
+				.add(new SymbolicCBMCVar("c", SymbolicCBMCVar.CBMCVarType.CANDIDATE));
 
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");

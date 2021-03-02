@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
 
-import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -14,7 +14,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 public final class SymbolicVarExp extends TypeExpression {
     /** The symb var. */
     private final SymbolicVariable symbVar;
-    private CBMCVar cbmcVar;
+    private SymbolicCBMCVar cbmcVar;
     /**
      * Instantiates a new symbolic var exp.
      *
@@ -29,13 +29,13 @@ public final class SymbolicVarExp extends TypeExpression {
         this.symbVar = symbolicVar;
     }
 
-    public SymbolicVarExp(CBMCVar cbmcVar) {
+    public SymbolicVarExp(SymbolicCBMCVar cbmcVar) {
         super(null);
         this.symbVar = null;
     	this.cbmcVar = cbmcVar;
 	}
     
-    public CBMCVar getCbmcVar() {
+    public SymbolicCBMCVar getCbmcVar() {
 		return cbmcVar;
 	}
 

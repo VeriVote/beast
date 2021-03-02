@@ -12,8 +12,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.reactfx.util.Lists;
 
-import edu.pse.beast.api.codegen.CBMCVar;
-import edu.pse.beast.api.codegen.CBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.ScopeHandler;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
@@ -96,16 +96,16 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	private int highestVote;
 	private int highestElectInThisListNode;
 
-	private BooleanCodeToAST(List<CBMCVar> declaredVariables) {
+	private BooleanCodeToAST(List<SymbolicCBMCVar> declaredVariables) {
 		scopeHandlerNew = new ScopeHandler();
 		scopeHandlerNew.push();
-		for (CBMCVar var : declaredVariables) {
+		for (SymbolicCBMCVar var : declaredVariables) {
 			scopeHandlerNew.add(var);
 		}
 	}
 
 	public static BooleanExpASTData generateAST(String boolExpCode,
-			List<CBMCVar> declaredVariables) {
+			List<SymbolicCBMCVar> declaredVariables) {
 		final FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(
 				CharStreams.fromString(boolExpCode));
 		final CommonTokenStream ts = new CommonTokenStream(l);
@@ -192,7 +192,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void enterQuantifierExp(final QuantifierExpContext ctx) {
 		final String quantifierTypeString = ctx.Quantifier().getText();
 		final InternalTypeContainer varType;
-		CBMCVar.CBMCVarType type = null;
+		SymbolicCBMCVar.CBMCVarType type = null;
 		if (quantifierTypeString.contains(VariableTypeNames.VOTER)) {
 			varType = new InternalTypeContainer(InternalTypeRep.VOTER);
 			type = CBMCVarType.VOTER;
@@ -208,7 +208,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 				.getText();
 
 		scopeHandlerNew.push();
-		scopeHandlerNew.add(new CBMCVar(id, type));
+		scopeHandlerNew.add(new SymbolicCBMCVar(id, type));
 	}
 
 	@Override
@@ -216,12 +216,12 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final String quantifierType = ctx.Quantifier().getText();
 		final QuantifierNode node;
 
-		CBMCVar var = null;
+		SymbolicCBMCVar var = null;
 		String name = ctx.passSymbVar().symbolicVarExp().getText();
 		if (quantifierType.contains("VOTER")) {
-			var = new CBMCVar(name, CBMCVar.CBMCVarType.VOTER);
+			var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.VOTER);
 		} else if (quantifierType.contains("CANDIDATE")) {
-			var = new CBMCVar(name, CBMCVar.CBMCVarType.CANDIDATE);
+			var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.CANDIDATE);
 		}
 
 		if (quantifierType.contains(Quantifier.FOR_ALL)) {
@@ -247,7 +247,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	public void exitSymbolicVarExp(final SymbolicVarExpContext ctx) {
 		final String name = ctx.getText();
 		CBMCVarType varType = scopeHandlerNew.getType(name);
-		expStack.push(new SymbolicVarExp(new CBMCVar(name, varType)));
+		expStack.push(new SymbolicVarExp(new SymbolicCBMCVar(name, varType)));
 	}
 
 	@Override
@@ -345,7 +345,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 		final int amtAccessingTypes = ctx.passType().size();
 
-		List<CBMCVar> accessingVars = new ArrayList<>();
+		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 
 		for (int i = 0; i < amtAccessingTypes; ++i) {
 			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());

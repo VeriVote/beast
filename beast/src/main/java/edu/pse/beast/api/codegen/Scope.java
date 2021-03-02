@@ -3,12 +3,12 @@ package edu.pse.beast.api.codegen;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 
 public class Scope {
-	private Map<String, CBMCVar.CBMCVarType> containedVars = new HashMap<>();
+	private Map<String, SymbolicCBMCVar.CBMCVarType> containedVars = new HashMap<>();
 
-	public void add(CBMCVar var) {
+	public void add(SymbolicCBMCVar var) {
 		containedVars.put(var.getName(), var.getVarType());
 	}
 

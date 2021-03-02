@@ -3,7 +3,7 @@ package edu.pse.beast.datatypes.propertydescription;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
 
 /**
@@ -18,7 +18,7 @@ public final class PreAndPostConditionsDescription {
 	/** The name. */
 	private String name;
 
-	private List<CBMCVar> cbmcVariables = new ArrayList<>();
+	private List<SymbolicCBMCVar> cbmcVariables = new ArrayList<>();
 
 	/** The preconditions description. */
 	private final FormalPropertiesDescription preConditionsDescription;
@@ -68,7 +68,7 @@ public final class PreAndPostConditionsDescription {
 		return this.name;
 	}
 
-	public List<CBMCVar> getCbmcVariables() {
+	public List<SymbolicCBMCVar> getCbmcVariables() {
 		return cbmcVariables;
 	}
 

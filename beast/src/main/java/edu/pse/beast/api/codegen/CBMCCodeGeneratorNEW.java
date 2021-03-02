@@ -90,7 +90,8 @@ public class CBMCCodeGeneratorNEW {
 		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
 
 		created.addFunction(CBMCMainGenerator.main(preAstData, postAstData,
-				voteArrStruct, voteResultStruct, options, loopBoundHandler));
+				propDescr.getCbmcVariables(), voteArrStruct, voteResultStruct,
+				options, loopBoundHandler));
 
 		return created.generateCode();
 	}
@@ -108,7 +109,13 @@ public class CBMCCodeGeneratorNEW {
 		List<String> code = new ArrayList<>();
 
 		String voteArrayName = "votes";
-		code.add("Vote votes[V][C];");
+		
+		//TODO cleanup
+		if(input.getVotingType().getListDimensions() == 1) {
+			code.add("Vote votes[V];");	
+		} else if(input.getVotingType().getListDimensions() == 2) {
+			code.add("Vote votes[V][C];");	
+		}
 		code.add("VoteResult result;");
 
 		code.add(VotingFunctionHelper.generateVoteCopy(voteArrayName,

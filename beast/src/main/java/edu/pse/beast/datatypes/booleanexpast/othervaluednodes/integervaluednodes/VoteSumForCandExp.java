@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes;
 
-import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
@@ -14,7 +14,7 @@ public final class VoteSumForCandExp extends IntegerValuedExpression {
 	/** The accessing var. */
 	private final TypeExpression accessingVar;
 	
-	private CBMCVar cbmcVar;
+	private SymbolicCBMCVar cbmcVar;
 
 	/** The vote arr num. */
 	private final int voteArrNum;
@@ -40,14 +40,14 @@ public final class VoteSumForCandExp extends IntegerValuedExpression {
 	}
 
 	public VoteSumForCandExp(final int voteArrayNumber,
-			final CBMCVar cbmcVar, final boolean uniqueAttr) {
+			final SymbolicCBMCVar cbmcVar, final boolean uniqueAttr) {
 		this.accessingVar = null;
 		this.cbmcVar = cbmcVar;
 		this.voteArrNum = voteArrayNumber;
 		this.unique = uniqueAttr;
 	}
 	
-	public CBMCVar getCbmcVar() {
+	public SymbolicCBMCVar getCbmcVar() {
 		return cbmcVar;
 	}
 

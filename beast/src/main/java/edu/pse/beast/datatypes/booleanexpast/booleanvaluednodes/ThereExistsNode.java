@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
-import edu.pse.beast.api.codegen.CBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -19,19 +19,19 @@ public final class ThereExistsNode extends QuantifierNode {
      * @param followingNode
      *            the following node of this quantifier
      */
-	private CBMCVar var;
+	private SymbolicCBMCVar var;
 	
     public ThereExistsNode(final SymbolicVariable declSymbVar,
                            final BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
 
-    public ThereExistsNode(SymbolicVariable symbolicVar, BooleanExpressionNode followingNode, CBMCVar var) {
+    public ThereExistsNode(SymbolicVariable symbolicVar, BooleanExpressionNode followingNode, SymbolicCBMCVar var) {
         super(symbolicVar, followingNode);
         this.var = var;
 	}
 
-    public CBMCVar getVar() {
+    public SymbolicCBMCVar getVar() {
 		return var;
 	}
     

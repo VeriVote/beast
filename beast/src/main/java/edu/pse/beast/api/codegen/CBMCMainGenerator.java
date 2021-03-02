@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
@@ -22,7 +23,8 @@ public class CBMCMainGenerator {
 	// call the voting func
 	// post conditions
 	public static CFunction main(BooleanExpASTData preAstData,
-			BooleanExpASTData postAstData, ElectionTypeCStruct voteArrStruct,
+			BooleanExpASTData postAstData, List<SymbolicCBMCVar> symCbmcVars,
+			ElectionTypeCStruct voteArrStruct,
 			ElectionTypeCStruct voteResultStruct, CodeGenOptions options,
 			LoopBoundHandler loopBoundHandler) {
 		CFunction created = new CFunction("main",
@@ -43,7 +45,22 @@ public class CBMCMainGenerator {
 		options.setVotesLowerBoundVarName(votesLowerBoundVarName);
 		options.setVotesUpperBoundVarName(votesUpperBoundVarName);
 
-		int highestVote = postAstData.getHighestVoteOrElect();
+		// TODO cleanup
+		// init global symbolic vars
+		for (SymbolicCBMCVar var : symCbmcVars) {
+			code.add("unsigned int " + var.getName() + " = "
+					+ options.getCbmcNondetUintName() + "();\n");
+			if (var.getVarType() == CBMCVarType.CANDIDATE) {
+				code.add(options.getCbmcAssumeName() + "(" + var.getName()
+						+ " <= C);\n");
+				code.add(options.getCbmcAssumeName() + "(" + var.getName()
+						+ " >= 0);\n");
+			}
+		}
+
+		// init votes
+		int highestVote = Math.max(preAstData.getHighestVoteOrElect(),
+				postAstData.getHighestVoteOrElect());
 
 		for (int i = 0; i < highestVote; ++i) {
 			String varName = "voteNUMBER".replaceAll("NUMBER",
@@ -61,10 +78,9 @@ public class CBMCMainGenerator {
 
 		// preconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);
-		for (int i = 0; i < preAstData.getTopAstNode().getBooleanExpressions()
-				.size(); ++i) {
-			for (BooleanExpressionNode node : postAstData.getTopAstNode()
-					.getBooleanExpressions().get(i)) {
+		for (List<BooleanExpressionNode> nodesList : preAstData.getTopAstNode()
+				.getBooleanExpressions()) {
+			for (BooleanExpressionNode node : nodesList) {
 				String s = node.getTreeString(0);
 				node.getVisited(visitor);
 				code.add(visitor.getCodeBlock().generateCode());
@@ -87,10 +103,9 @@ public class CBMCMainGenerator {
 
 		// postconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSERT);
-		for (int i = 0; i < postAstData.getTopAstNode().getBooleanExpressions()
-				.size(); ++i) {
-			for (BooleanExpressionNode node : postAstData.getTopAstNode()
-					.getBooleanExpressions().get(i)) {
+		for (List<BooleanExpressionNode> nodesList : postAstData.getTopAstNode()
+				.getBooleanExpressions()) {
+			for (BooleanExpressionNode node : nodesList) {
 				String s = node.getTreeString(0);
 				node.getVisited(visitor);
 				code.add(visitor.getCodeBlock().generateCode());

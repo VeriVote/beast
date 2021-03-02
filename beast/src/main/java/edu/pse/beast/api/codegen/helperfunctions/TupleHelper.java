@@ -39,6 +39,8 @@ public class TupleHelper {
 					options.getCbmcNondetUintName());
 			code = code.replaceAll("AMT_CANDIDATES",
 					options.getCbmcAmountCandidatesVarName());
+			code = code.replaceAll("AMT_VOTES",
+					options.getCbmcAmountVotersVarName());
 			code = code.replaceAll("VOTE_TYPE",
 					voteArrStruct.getStruct().getName());
 			code = code.replaceAll("VAR_NAME", generatedVarName);

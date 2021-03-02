@@ -1,7 +1,7 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
-import edu.pse.beast.api.codegen.CBMCVar;
-import edu.pse.beast.api.codegen.CBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -13,7 +13,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  */
 public final class ForAllNode extends QuantifierNode {
 	
-	private CBMCVar var;
+	private SymbolicCBMCVar var;
     /**
      * Instantiates a new for all node.
      *
@@ -23,7 +23,7 @@ public final class ForAllNode extends QuantifierNode {
      *            the following node of this quantifier
      */
     public ForAllNode(final SymbolicVariable declSymbVar,
-                      final BooleanExpressionNode followingNode, CBMCVar var) {
+                      final BooleanExpressionNode followingNode, SymbolicCBMCVar var) {
         super(declSymbVar, followingNode);
         this.var = var;
     }
@@ -33,7 +33,7 @@ public final class ForAllNode extends QuantifierNode {
         visitor.visitForAllNode(this);
     }
 
-    public CBMCVar getVar() {
+    public SymbolicCBMCVar getVar() {
 		return var;
 	}
     

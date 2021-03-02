@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Stack;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
@@ -90,23 +92,26 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		codeBlock = new CCodeBlock();
 		codeBlock.addComment(node.getCompleteCode());
 		this.level = 0;
+		amtElectVars = 0;
+		amtVoteVars = 0;
 		node.getFirstChild().getVisited(this);
 	}
 
-	private void visitVoteComparison(ComparisonNode node) {
+	private void visitVoteTypeComparison(ComparisonNode node, ElectionTypeCStruct voteTypeCStruct) {
 		String code = null;
 		if (node.getComparisonType() != ComparisonType.UNEQ) {
 			if (level == 0) {
 				code = VoteComparisonHelper.generateTopLevelVoteComparisonCode(
 						expVarNameStack.pop(), expVarNameStack.pop(),
-						voteArrStruct, options, assumeAssert,
-						node.getComparisonSymbol().getCStringRep(), loopBoundHandler);
+						voteTypeCStruct, options, assumeAssert,
+						node.getComparisonSymbol().getCStringRep(),
+						loopBoundHandler);
 				codeBlock.addSnippet(code);
 			} else {
 				String generatedBoolName = codeBlock.newVarName("comparison");
 				code = VoteComparisonHelper.generateVoteComparisonCode(
 						generatedBoolName, expVarNameStack.pop(),
-						expVarNameStack.pop(), voteArrStruct, options,
+						expVarNameStack.pop(), voteTypeCStruct, options,
 						node.getComparisonSymbol().getCStringRep());
 				codeBlock.addSnippet(code);
 				booleanVarNameStack.push(generatedBoolName);
@@ -114,7 +119,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		} else if (node.getComparisonType() == ComparisonType.UNEQ) {
 			String generatedBoolName = codeBlock.newVarName("notEqual");
 			code = VoteComparisonHelper.generateVoteUneqCode(generatedBoolName,
-					expVarNameStack.pop(), expVarNameStack.pop(), voteArrStruct,
+					expVarNameStack.pop(), expVarNameStack.pop(), voteTypeCStruct,
 					options);
 			codeBlock.addSnippet(code);
 			if (level == 0) {
@@ -132,29 +137,31 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		node.getRhsTypeExp().getVisited(this);
 
 		if (amtVoteVars == 2) {
-			visitVoteComparison(node);
+			visitVoteTypeComparison(node, voteArrStruct);
 			amtVoteVars = 0;
 		} else if (amtElectVars == 2) {
+			visitVoteTypeComparison(node, voteResultStruct);
 			amtElectVars = 0;
 		} else {
 			String rhsVarName = expVarNameStack.pop();
-			String lhsVarName = expVarNameStack.pop();		
-			
+			String lhsVarName = expVarNameStack.pop();
+
 			CElectionVotingType rhsType = expTypes.pop();
 			CElectionVotingType lhsType = expTypes.pop();
-			
-			if(amtElectVars == 1) {
-				//we are comparing a number or symbolic var with an election result
-				//this can only happen for an election type of single candidate
-				//TODO clean this up!!
-				
-				if(lhsVarName.contains("elect")) {
+
+			if (amtElectVars == 1) {
+				// we are comparing a number or symbolic var with an election
+				// result
+				// this can only happen for an election type of single candidate
+				// TODO clean this up!!
+
+				if (lhsVarName.contains("elect")) {
 					lhsVarName += "." + voteResultStruct.getListName();
-				} else if(rhsVarName.contains("elect")) {
+				} else if (rhsVarName.contains("elect")) {
 					rhsVarName += voteResultStruct.getListName();
-				}								
-			} 
-			
+				}
+			}
+
 			if (level == 0 && node.getComparisonType() != ComparisonType.UNEQ) {
 				String code = ComparisonHelper.generateTopLevelCompCode(
 						node.getComparisonSymbol().getCStringRep(), lhsVarName,
@@ -174,7 +181,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitVoteIntersectionNode(VoteIntersectionNode node) {
-		String generatedVarName = codeBlock.newVarName("intersection");
+		String generatedVarName = codeBlock.newVarName("voteIntersection");
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
@@ -182,8 +189,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 					"voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
 		}
 
-		codeBlock.addSnippet(IntersectionHelper.generateVoteIntersection(
-				generatedVarName, varNames, voteArrStruct, options, loopBoundHandler));
+		codeBlock.addSnippet(
+				IntersectionHelper.generateVoteIntersection(generatedVarName,
+						varNames, voteArrStruct, options, loopBoundHandler));
 
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
@@ -228,8 +236,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String varName = "voteNUMBER".replaceAll("NUMBER",
 				String.valueOf(node.getVoteNumber()));
 
-		codeBlock.addSnippet(PermutationHelper.generateVotePermutation(
-				generatedVarName, varName, voteArrStruct, options, loopBoundHandler));
+		codeBlock.addSnippet(
+				PermutationHelper.generateVotePermutation(generatedVarName,
+						varName, voteArrStruct, options, loopBoundHandler));
 
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
@@ -358,19 +367,16 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	}
 
 	@Override
-	public void visitVoteSumExp(VoteSumForCandExp node) {	
+	public void visitVoteSumExp(VoteSumForCandExp node) {
 		String generatedVarName = codeBlock.newVarName("voteSum");
 		int voteNumber = node.getVoteNumber();
 		String symbolicVarCand = node.getCbmcVar().getName();
-		String code = VotesumHelper.
-				generateCode(generatedVarName, voteNumber,
-						symbolicVarCand, voteArrStruct, 
-						options, loopBoundHandler);
+		String code = VotesumHelper.generateCode(generatedVarName, voteNumber,
+				symbolicVarCand, voteArrStruct, options, loopBoundHandler);
 		codeBlock.addSnippet(code);
 		expVarNameStack.add(generatedVarName);
 		expTypes.push(CElectionVotingType.simple());
 	}
-	
 
 	@Override
 	public void visitIntegerExp(IntegerNode node) {
@@ -386,10 +392,10 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		binaryIntegerValuedNode.getRhs().getVisited(this);
 		String rhsNumber = expVarNameStack.pop();
 		String lhsNumber = expVarNameStack.pop();
-		
+
 		expTypes.pop();
 		expTypes.pop();
-				
+
 		String op = binaryIntegerValuedNode.getRelationSymbol();
 		expVarNameStack.push("(" + lhsNumber + op + rhsNumber + ")");
 		expTypes.push(CElectionVotingType.simple());
@@ -399,5 +405,45 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitConstantExp(ConstantExp constantExp) {
 		expVarNameStack.push(constantExp.getConstant());
 		expTypes.push(CElectionVotingType.simple());
+	}
+
+	@Override
+	public void visitEmptyNode(BooleanExpIsEmptyNode booleanExpIsEmptyNode) {
+		booleanExpIsEmptyNode.getInnerNode().getVisited(this);
+		String emptyVarName = expVarNameStack.pop();
+		CElectionVotingType emptyType = expTypes.pop();
+		if (amtVoteVars == 1) {
+
+		} else if (amtElectVars == 1) {
+			if (level == 0) {
+				codeBlock.addSnippet(assumeAssert + "(" + emptyVarName + "."
+						+ voteResultStruct.getAmtName() + " == 0);\n");
+			} else {
+				String boolVarName = codeBlock.newVarName("isElectEmpty");
+				codeBlock.addAssignment(
+						"unsigned int " + boolVarName, 
+						emptyVarName + "."+ voteResultStruct.getAmtName() + " == 0");
+				booleanVarNameStack.push(boolVarName);
+			}
+		}
+	}
+
+	@Override
+	public void visitElectIntersectionNode(ElectIntersectionNode node) {
+		String generatedVarName = codeBlock.newVarName("electIntersection");
+
+		List<String> varNames = new ArrayList<>();
+		for (int number : node.getNumbers()) {
+			varNames.add(
+					"electNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+		}
+
+		codeBlock.addSnippet(
+				IntersectionHelper.generateElectIntersection(generatedVarName,
+						varNames, voteResultStruct, options, loopBoundHandler));
+
+		expVarNameStack.push(generatedVarName);
+		expTypes.push(voteResultStruct.getVotingType());
+		amtElectVars++;
 	}
 }

@@ -8,8 +8,6 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 public class BooleanExpIsEmptyNode extends BooleanExpressionNode {
 	
 	TypeExpression innerNode;
-
-	
 	
 	public BooleanExpIsEmptyNode(TypeExpression innerNode) {
 		super();
@@ -23,6 +21,7 @@ public class BooleanExpIsEmptyNode extends BooleanExpressionNode {
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitEmptyNode(this);
 	}
 
 	@Override
@@ -30,4 +29,7 @@ public class BooleanExpIsEmptyNode extends BooleanExpressionNode {
 		return "EMPTY " + innerNode.getTreeString(depth + 1);
 	}
 
+	public TypeExpression getInnerNode() {
+		return innerNode;
+	}
 }

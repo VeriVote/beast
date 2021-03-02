@@ -59,4 +59,47 @@ public class IntersectionHelper {
 		return code;
 	}
 
+	public static String generateElectIntersection(String generatedVarName,
+			List<String> varNames, ElectionTypeCStruct voteResultStruct,
+			CodeGenOptions options, LoopBoundHandler loopBoundHandler) {
+		String code = null;
+		if (voteResultStruct.getVotingType().getListDimensions() == 0) {
+			
+		} else if (voteResultStruct.getVotingType().getListDimensions() == 1) {
+			code = CodeTemplates.Intersection.template1d;
+
+			String comparison = "";
+			int i = 0;
+			for (; i < varNames.size() - 2; ++i) {
+				comparison += varNames.get(i) + ".LIST_MEMBER[i] == "
+						+ varNames.get(i + 1) + ".LIST_MEMBER[i] && ";
+			}
+			comparison += varNames.get(i) + ".LIST_MEMBER[i] == "
+					+ varNames.get(i + 1) + ".LIST_MEMBER[i]";
+
+			code = code.replaceAll("COMPARE_VARS", comparison);
+
+			code = code.replaceAll("VOTE_TYPE",
+					voteResultStruct.getStruct().getName());
+			code = code.replaceAll("AMT_MEMBER", voteResultStruct.getAmtName());
+			code = code.replaceAll("LIST_MEMBER",
+					voteResultStruct.getListName());
+
+			code = code.replaceAll("GENERATED_VAR_NAME", generatedVarName);
+
+			code = code.replaceAll("LHS_VAR_NAME", varNames.get(0));
+
+			code = code.replaceAll("OUTER_BOUND",
+					options.getCbmcAmountVotersVarName());
+			code = code.replaceAll("INNER_BOUND",
+					options.getCbmcAmountCandidatesVarName());
+
+			code = code.replaceAll("ASSUME", options.getCbmcAssumeName());
+			code = code.replaceAll("NONDET_UINT",
+					options.getCbmcNondetUintName());
+		}
+
+		return code;
+	}
+
 }

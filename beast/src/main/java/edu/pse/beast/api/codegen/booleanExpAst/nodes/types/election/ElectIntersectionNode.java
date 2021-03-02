@@ -20,6 +20,10 @@ public class ElectIntersectionNode extends ElectionTypeNode {
 		
 	}
 
+	public List<Integer> getNumbers() {
+		return numbers;
+	}
+	
 	@Override
 	public String getTreeString(int depth) {
 		return "Intersect Elects";
@@ -31,8 +35,7 @@ public class ElectIntersectionNode extends ElectionTypeNode {
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visitElectIntersectionNode(this);
 	}
 	
 }
