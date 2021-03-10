@@ -21,6 +21,8 @@ import edu.pse.beast.api.codegen.helperfunctions.VoteExpHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VotesumHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.electiondescription.VotingInputTypes;
+import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode.ComparisonType;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
@@ -42,21 +44,22 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	}
 
 	private LoopBoundHandler loopBoundHandler;
-
 	private CCodeBlock codeBlock;
 
 	ScopeHandler scopeHandler = new ScopeHandler();
 
 	private Stack<String> expVarNameStack = new Stack<>();
-	private Stack<String> booleanVarNameStack = new Stack<>();
-
 	private Stack<CElectionVotingType> expTypes = new Stack<>();
-
 	private int amtVoteVars = 0;
 	private int amtElectVars = 0;
+	
+	
+	private Stack<String> booleanVarNameStack = new Stack<>();
 
 	private ElectionTypeCStruct voteArrStruct;
+	private VotingInputTypes votingInputType;
 	private ElectionTypeCStruct voteResultStruct;
+	private VotingOutputTypes votingOutputType;
 	private CodeGenOptions options;
 
 	private Mode mode;
@@ -64,11 +67,17 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	private int level = 0;
 
-	public CodeGenASTVisitor(ElectionTypeCStruct voteArrStruct,
-			ElectionTypeCStruct voteResultStruct, CodeGenOptions options,
+	public CodeGenASTVisitor(
+			ElectionTypeCStruct voteArrStruct,
+			VotingInputTypes votingInputType,
+			ElectionTypeCStruct voteResultStruct,
+			VotingOutputTypes votingOutputType,
+			CodeGenOptions options,
 			LoopBoundHandler loopBoundHandler) {
 		this.voteArrStruct = voteArrStruct;
+		this.votingInputType = votingInputType;
 		this.voteResultStruct = voteResultStruct;
+		this.votingOutputType = votingOutputType;
 		this.options = options;
 		this.loopBoundHandler = loopBoundHandler;
 	}
@@ -91,44 +100,26 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitBooleanExpListElementNode(BooleanExpListElementNode node) {
 		codeBlock = new CCodeBlock();
 		codeBlock.addComment(node.getCompleteCode());
-		this.level = 0;
+		level = 0;
 		amtElectVars = 0;
 		amtVoteVars = 0;
 		node.getFirstChild().getVisited(this);
 	}
 
 	private void visitVoteTypeComparison(ComparisonNode node, ElectionTypeCStruct voteTypeCStruct) {
-		String code = null;
-		if (node.getComparisonType() != ComparisonType.UNEQ) {
-			if (level == 0) {
-				code = VoteComparisonHelper.generateTopLevelVoteComparisonCode(
-						expVarNameStack.pop(), expVarNameStack.pop(),
-						voteTypeCStruct, options, assumeAssert,
-						node.getComparisonSymbol().getCStringRep(),
-						loopBoundHandler);
-				codeBlock.addSnippet(code);
-			} else {
-				String generatedBoolName = codeBlock.newVarName("comparison");
-				code = VoteComparisonHelper.generateVoteComparisonCode(
-						generatedBoolName, expVarNameStack.pop(),
-						expVarNameStack.pop(), voteTypeCStruct, options,
-						node.getComparisonSymbol().getCStringRep());
-				codeBlock.addSnippet(code);
-				booleanVarNameStack.push(generatedBoolName);
-			}
-		} else if (node.getComparisonType() == ComparisonType.UNEQ) {
-			String generatedBoolName = codeBlock.newVarName("notEqual");
-			code = VoteComparisonHelper.generateVoteUneqCode(generatedBoolName,
-					expVarNameStack.pop(), expVarNameStack.pop(), voteTypeCStruct,
-					options);
-			codeBlock.addSnippet(code);
-			if (level == 0) {
-				codeBlock.addSnippet(
-						assumeAssert + "(" + generatedBoolName + ")");
-			} else {
-				booleanVarNameStack.push(generatedBoolName);
-			}
-		}
+		String rhsVarName = expVarNameStack.pop();
+		String lhsVarName = expVarNameStack.pop();
+		
+		String code = VoteComparisonHelper.generateCodeAndLoopBounds(
+				level, 
+				lhsVarName, rhsVarName, 
+				voteArrStruct, 
+				votingInputType, 
+				options, 
+				assumeAssert, 
+				node.getComparisonSymbol().getCStringRep(),
+				node.getComparisonType(),
+				loopBoundHandler);	
 	}
 
 	@Override

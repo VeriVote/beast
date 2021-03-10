@@ -14,12 +14,12 @@ public class PermutationHelper {
 		String code = null;
 
 		if (voteArrStruct.getVotingType().getListDimensions() == 2) {
-			code = CodeTemplates.Permutation.template2d;
+			code = CodeTemplatesAndLoopBounds.Permutation.template2d;
 
-			List<String> loopBounds = CodeTemplates.Permutation.template2dloopBounds;
-			CodeTemplates.replaceAll(loopBounds, "AMT_VOTES",
+			List<String> loopBounds = CodeTemplatesAndLoopBounds.Permutation.template2dloopBounds;
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "AMT_VOTES",
 					options.getCbmcAmountVotersVarName());
-			CodeTemplates.replaceAll(loopBounds, "INNER_BOUND",
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "INNER_BOUND",
 					options.getCbmcAmountCandidatesVarName());
 			loopBoundHandler.addMainLoopBounds(loopBounds);
 

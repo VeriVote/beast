@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -13,6 +14,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 
 public class CBMCCodeGeneratorTest {
+	
 
 	@Test
 	public void reinforcementTest() {
@@ -37,9 +39,11 @@ public class CBMCCodeGeneratorTest {
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
+		
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 	
@@ -52,7 +56,7 @@ public class CBMCCodeGeneratorTest {
 
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("majorityTest",
-						"VOTE_SUM_FOR_CANDIDATE1(c) >= C/2;", "ELECT1 == c;");
+						"VOTE_SUM_FOR_CANDIDATE1(c) > V/2;", "ELECT1 == c;");
 		propDescr.get(0).getCbmcVariables()
 				.add(new SymbolicCBMCVar("c", SymbolicCBMCVar.CBMCVarType.CANDIDATE));
 
@@ -60,8 +64,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -80,8 +86,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -98,8 +106,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -116,8 +126,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -135,8 +147,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -154,8 +168,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -174,8 +190,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 
@@ -195,8 +213,10 @@ public class CBMCCodeGeneratorTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotesVarName("V");
 
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+
 		String c = CBMCCodeGeneratorNEW.generateCode(descr, propDescr.get(0),
-				options);
+				options, loopBoundHandler);
 		System.out.println(c);
 	}
 }

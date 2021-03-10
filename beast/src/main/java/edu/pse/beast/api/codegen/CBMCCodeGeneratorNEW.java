@@ -36,8 +36,11 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	public static String generateCode(CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CodeGenOptions options) {
+	public static String generateCode(
+			CElectionDescription descr,
+			PreAndPostConditionsDescription propDescr, 
+			CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler) {
 		CFile created = new CFile();
 		created.include(STDLIB);
 		created.include(STDINT);
@@ -70,7 +73,6 @@ public class CBMCCodeGeneratorNEW {
 		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(),
 				voteArrStruct, voteResultStruct, options));
 
-		// we do this here to know which helper functions we need to generate
 		BooleanExpASTData preAstData = BooleanCodeToAST.generateAST(
 				propDescr.getPreConditionsDescription().getCode(),
 				propDescr.getCbmcVariables());
@@ -78,20 +80,22 @@ public class CBMCCodeGeneratorNEW {
 				propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getCbmcVariables());
 
-		InputAndOutputElectionStructs inAndOutStructs = new InputAndOutputElectionStructs(
-				voteArrStruct, voteResultStruct);
-
-		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-
 		options.setCbmcAssumeName("assume");
 		options.setCbmcAssertName("assert");
 		options.setVoteFuncName("voting");
 
 		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
-
-		created.addFunction(CBMCMainGenerator.main(preAstData, postAstData,
-				propDescr.getCbmcVariables(), voteArrStruct, voteResultStruct,
-				options, loopBoundHandler));
+		
+		CFunction mainFunction = CBMCMainGenerator.main(
+				preAstData, postAstData,
+				propDescr.getCbmcVariables(), 
+				voteArrStruct, 
+				voteResultStruct,
+				descr.getInputType(),
+				descr.getOutputType(),
+				options, loopBoundHandler);
+		
+		created.addFunction(mainFunction);
 
 		return created.generateCode();
 	}
@@ -109,12 +113,12 @@ public class CBMCCodeGeneratorNEW {
 		List<String> code = new ArrayList<>();
 
 		String voteArrayName = "votes";
-		
-		//TODO cleanup
-		if(input.getVotingType().getListDimensions() == 1) {
-			code.add("Vote votes[V];");	
-		} else if(input.getVotingType().getListDimensions() == 2) {
-			code.add("Vote votes[V][C];");	
+
+		// TODO cleanup
+		if (input.getVotingType().getListDimensions() == 1) {
+			code.add("Vote votes[V];");
+		} else if (input.getVotingType().getListDimensions() == 2) {
+			code.add("Vote votes[V][C];");
 		}
 		code.add("VoteResult result;");
 

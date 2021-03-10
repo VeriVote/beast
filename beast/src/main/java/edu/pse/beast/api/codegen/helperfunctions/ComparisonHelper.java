@@ -8,7 +8,9 @@ import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 
 public class ComparisonHelper {
-
+	
+	
+	
 	public static String generateTopLevelCompCode(String comparison, 
 			String lhsVarName, String rhsVarName,
 			CElectionVotingType type, CodeGenOptions options, 
@@ -18,7 +20,7 @@ public class ComparisonHelper {
 		if(type.getListDimensions() == 0) {
 			return assumeOrAssert + "(" + lhsVarName + comparison + rhsVarName + ");\n";
 		} else if (type.getListDimensions() == 1) {
-			code = CodeTemplates.Comparison.template1dTopLevel;
+			code = CodeTemplatesAndLoopBounds.Comparison.template1dTopLevel;
 			CBMCVars listSize = type.getListSizes().get(0);
 			String amtString = null;
 			switch (listSize) {
@@ -32,8 +34,8 @@ public class ComparisonHelper {
 				break;
 			}
 
-			List<String> bounds = CodeTemplates.Comparison.template1dloopBounds;
-			CodeTemplates.replaceAll(bounds, "AMT", amtString);
+			List<String> bounds = CodeTemplatesAndLoopBounds.Comparison.template1dloopBounds;
+			CodeTemplatesAndLoopBounds.replaceAll(bounds, "AMT", amtString);
 			loopBoundHandler.addMainLoopBounds(bounds);
 			
 			code = code.replaceAll("AMT", amtString);

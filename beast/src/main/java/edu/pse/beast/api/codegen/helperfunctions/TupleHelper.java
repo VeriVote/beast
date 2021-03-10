@@ -11,7 +11,7 @@ public class TupleHelper {
 	public static String generateCode(String generatedVarName,
 			List<String> voteNames, ElectionTypeCStruct voteArrStruct,
 			CodeGenOptions options, LoopBoundHandler loopBoundHandler) {
-		String code = CodeTemplates.Tuple.varSetupTemplate;
+		String code = CodeTemplatesAndLoopBounds.Tuple.varSetupTemplate;
 		String voteSum = "";
 		for (int i = 0; i < voteNames.size() - 1; ++i) {
 			voteSum += "CURRENT_VOTE.AMT_MEMBER + ".replaceAll("CURRENT_VOTE",
@@ -23,13 +23,13 @@ public class TupleHelper {
 
 		if (voteArrStruct.getVotingType().getListDimensions() == 2) {
 			for (String voteVarName : voteNames) {
-				code += CodeTemplates.Tuple.template2d;
+				code += CodeTemplatesAndLoopBounds.Tuple.template2d;
 				code = code.replaceAll("CURRENT_VOTE", voteVarName);
 
-				List<String> loopbounds = CodeTemplates.Tuple.template2dloopBounds;
-				CodeTemplates.replaceAll(loopbounds, "AMT_CANDIDATES",
+				List<String> loopbounds = CodeTemplatesAndLoopBounds.Tuple.template2dloopBounds;
+				CodeTemplatesAndLoopBounds.replaceAll(loopbounds, "AMT_CANDIDATES",
 						options.getCbmcAmountCandidatesVarName());
-				CodeTemplates.replaceAll(loopbounds, "AMT_VOTES",
+				CodeTemplatesAndLoopBounds.replaceAll(loopbounds, "AMT_VOTES",
 						options.getCbmcAmountVotersVarName());
 				loopBoundHandler.addMainLoopBounds(loopbounds);
 			}

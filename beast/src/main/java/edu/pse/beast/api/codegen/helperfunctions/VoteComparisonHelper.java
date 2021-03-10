@@ -5,16 +5,32 @@ import java.util.List;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.electiondescription.VotingInputTypes;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 
 public class VoteComparisonHelper {
+	
+	public static String generateCodeAndLoopBounds(
+			int level,
+			String lhsVarName,
+			String rhsVarName, 
+			ElectionTypeCStruct votingCompareCStruct,
+			VotingInputTypes votingType,
+			CodeGenOptions options, 
+			String assumeAssert, 
+			String compareSymbol,
+			ComparisonNode.ComparisonType comparisonType,
+			LoopBoundHandler loopBoundHandler) {
+		
+	}
 
-	public static String generateTopLevelVoteComparisonCode(String lhsVarName,
+	private static String generateTopLevelVoteComparisonCode(String lhsVarName,
 			String rhsVarName, ElectionTypeCStruct comparedType,
 			CodeGenOptions options, String assumeAssert, String compareSymbol,
 			LoopBoundHandler loopBoundHandler) {
 		String code = null;
 		if (comparedType.getVotingType().getListDimensions() == 1) {
-			code = CodeTemplates.VoteComparison.topLevelTemplate1d;
+			code = CodeTemplatesAndLoopBounds.VoteComparison.topLevelTemplate1d;
 			code = code.replaceAll("LHS_VAR", lhsVarName);
 			code = code.replaceAll("RHS_VAR", rhsVarName);
 
@@ -26,12 +42,12 @@ public class VoteComparisonHelper {
 			code = code.replaceAll("COMP", compareSymbol);
 
 		} else if (comparedType.getVotingType().getListDimensions() == 2) {
-			code = CodeTemplates.VoteComparison.topLevelTemplate2d;
+			code = CodeTemplatesAndLoopBounds.VoteComparison.topLevelTemplate2d;
 
-			List<String> loopbounds = CodeTemplates.VoteComparison.topLevelTemplate2dLoopBounds;
-			CodeTemplates.replaceAll(loopbounds, "OUTER_BOUND",
+			List<String> loopbounds = CodeTemplatesAndLoopBounds.VoteComparison.topLevelTemplate2dLoopBounds;
+			CodeTemplatesAndLoopBounds.replaceAll(loopbounds, "OUTER_BOUND",
 					options.getCbmcAmountVotersVarName());
-			CodeTemplates.replaceAll(loopbounds, "INNER_BOUND",
+			CodeTemplatesAndLoopBounds.replaceAll(loopbounds, "INNER_BOUND",
 					options.getCbmcAmountCandidatesVarName());
 			loopBoundHandler.addMainLoopBounds(loopbounds);
 
@@ -49,7 +65,6 @@ public class VoteComparisonHelper {
 			code = code.replaceAll("ASSUME_OR_ASSERT", assumeAssert);;
 			code = code.replaceAll("COMP", compareSymbol);
 		}
-
 		return code;
 	}
 
@@ -61,7 +76,7 @@ public class VoteComparisonHelper {
 		String code = null;
 
 		if (comparedType.getVotingType().getListDimensions() == 0) {
-			code = CodeTemplates.VoteComparison.template0d;
+			code = CodeTemplatesAndLoopBounds.VoteComparison.template0d;
 			code = code.replaceAll("GENERATED_VAR", generatedBoolName);
 			code = code.replaceAll("LHS", lhsVarName);
 			code = code.replaceAll("RHS", rhsVarName);
@@ -78,7 +93,7 @@ public class VoteComparisonHelper {
 		String code = null;
 
 		if (comparedType.getVotingType().getListDimensions() == 0) {
-			code = CodeTemplates.VoteComparison.uneqTemplate0d;
+			code = CodeTemplatesAndLoopBounds.VoteComparison.uneqTemplate0d;
 			code = code.replaceAll("GENERATED_VAR", generatedBoolName);
 			code = code.replaceAll("LHS", lhsVarName);
 			code = code.replaceAll("RHS", rhsVarName);

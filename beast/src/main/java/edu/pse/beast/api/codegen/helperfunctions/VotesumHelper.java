@@ -6,18 +6,10 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 
 public class VotesumHelper {
 
-	private final static String template = 
-			  "    unsigned int GENERATED_VAR = 0;\n"
-			+ "    for (int i = 0; i < VOTE_VAR.AMT_MEMBER; ++i) {\n"
-			+ "        if (VOTE_VAR.LIST_MEMBER[i] == CANDIDATE_VAR) {\n"
-			+ "            GENERATED_VAR++;\n"
-			+ "        }\n"
-			+ "    }";
-
 	public static String generateCode(String generatedVarName,
 			int voteNumber, String symbolicVarCand, ElectionTypeCStruct voteStruct,
 			CodeGenOptions options, LoopBoundHandler loopBoundHandler) {
-		String code = template;
+		String code = CodeTemplatesAndLoopBounds.VoteSumForCandidate.templateSingleChoice;
 		
 		code = code.replaceAll("GENERATED_VAR", generatedVarName);
 		code = code.replaceAll("AMT_MEMBER", voteStruct.getAmtName());

@@ -3,12 +3,11 @@ package edu.pse.beast.api.codegen.helperfunctions;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class CodeTemplates {
-	
-	public static void replaceAll(List<String> list, String before, String after) {
-		list.replaceAll(s -> s.replaceAll(before, after));
-	}
-	
+import edu.pse.beast.api.electiondescription.VotingInputTypes;
+import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+
+public abstract class CodeTemplatesAndLoopBounds {	
+
 	public static class Comparison {
 		public final static String template1dTopLevel = 
 				  "	for(int i = 0; i < AMT; ++i) {\n"
@@ -28,6 +27,7 @@ public abstract class CodeTemplates {
 				+ "            ASSUME(VAR_NAME.votes[i] >= LOWER_VOTE_BOUND);\n"
 				+ "            ASSUME(VAR_NAME.votes[i] <= UPPER_VOTE_BOUND);\n"
 				+ "    }\n";
+		
 		public final static List<String> template1dloopBounds = 
 				Arrays.asList("AMT_VOTES");
 		
@@ -158,6 +158,7 @@ public abstract class CodeTemplates {
 	}
 	
 	public static class VoteComparison {
+		
 		public static String topLevelTemplate1d = 
 				  "ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
 				+ "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
@@ -196,5 +197,15 @@ public abstract class CodeTemplates {
 				+ " }";
 		
 		public static String template0d = "GENERATED_VAR.LIST_MEMBER = NAKED_ARR;";
+	}
+	
+	public static class VoteSumForCandidate {
+		public static String templateSingleChoice = 
+				  "    unsigned int GENERATED_VAR = 0;\n"
+				+ "    for (int i = 0; i < VOTE_VAR.AMT_MEMBER; ++i) {\n"
+				+ "        if (VOTE_VAR.LIST_MEMBER[i] == CANDIDATE_VAR) {\n"
+				+ "            GENERATED_VAR++;\n"
+				+ "        }\n"
+				+ "    }";
 	}
 }

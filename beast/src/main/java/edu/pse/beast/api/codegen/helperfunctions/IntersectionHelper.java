@@ -16,15 +16,15 @@ public class IntersectionHelper {
 		if (voteArrStruct.getVotingType().getListDimensions() == 2) {
 
 			// loopbounds
-			List<String> loopBounds = CodeTemplates.Intersection.template2dloopBounds;
-			CodeTemplates.replaceAll(loopBounds, "OUTER_BOUND",
+			List<String> loopBounds = CodeTemplatesAndLoopBounds.Intersection.template2dloopBounds;
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "OUTER_BOUND",
 					options.getCbmcAmountVotersVarName());
-			CodeTemplates.replaceAll(loopBounds, "INNER_BOUND",
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "INNER_BOUND",
 					options.getCbmcAmountCandidatesVarName());
 			loopBoundHandler.addMainLoopBounds(loopBounds);
 
 			// code
-			code = CodeTemplates.Intersection.template2d;
+			code = CodeTemplatesAndLoopBounds.Intersection.template2d;
 
 			String comparison = "";
 			int i = 0;
@@ -66,7 +66,7 @@ public class IntersectionHelper {
 		if (voteResultStruct.getVotingType().getListDimensions() == 0) {
 			
 		} else if (voteResultStruct.getVotingType().getListDimensions() == 1) {
-			code = CodeTemplates.Intersection.template1d;
+			code = CodeTemplatesAndLoopBounds.Intersection.template1d;
 
 			String comparison = "";
 			int i = 0;

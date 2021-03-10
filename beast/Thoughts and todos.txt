@@ -1,10 +1,36 @@
-loop bounds
+voting: 
+überschreibe leere werte mit dummy wert
+(V, C)
 
-majority criterion (> 50 percent)
+&&
 
-plurality,
+setze Stimmen nur bis amtVotes
 
-approval, reinforcement
-range,
+&&
 
-borda
+binary combinations of booleans (&&, ==>, ||, <==>)
+
+&&
+
+majority testfall in GUI gegenbeispiel, etc, schauen was passiert
+
+&&
+
+loop bounds nach außen unwindset generieren
+
+&&
+
+aufruf cbmc
+
+&&
+
+gui code anschauen, was kann wieder verwertet werden
+
+PLAN BITCH
+
+- code gen je nach in und output art, easy peacy lemon squeazy
+- code gen für alles
+- komplett mit voting func und dummy werten
+- von außen gescheit aufrufen
+- test mit borga
+- gui schauen

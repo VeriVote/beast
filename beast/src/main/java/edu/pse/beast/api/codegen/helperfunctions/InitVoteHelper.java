@@ -13,10 +13,10 @@ public abstract class InitVoteHelper {
 			LoopBoundHandler loopBoundHandler) {
 		String code = null;
 		if (voteArrStruct.getVotingType().getListDimensions() == 1) {
-			code = CodeTemplates.VoteInit.template1d;
+			code = CodeTemplatesAndLoopBounds.VoteInit.template1d;
 
-			List<String> loopBounds = CodeTemplates.VoteInit.template1dloopBounds;
-			CodeTemplates.replaceAll(loopBounds, "AMT_VOTES",
+			List<String> loopBounds = CodeTemplatesAndLoopBounds.VoteInit.template1dloopBounds;
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "AMT_VOTES",
 					options.getCbmcAmountVotersVarName());
 			loopBoundHandler.addMainLoopBounds(loopBounds);
 
@@ -41,17 +41,17 @@ public abstract class InitVoteHelper {
 					options.getVotesUpperBoundVarName());
 
 		} else if (voteArrStruct.getVotingType().getListDimensions() == 2) {
-			code = CodeTemplates.VoteInit.template2d;
+			code = CodeTemplatesAndLoopBounds.VoteInit.template2d;
 
 			if (voteArrStruct.getVotingType().isUniqueVotes()) {
-				code += CodeTemplates.VoteInit.uniquenessTemplate;
+				code += CodeTemplatesAndLoopBounds.VoteInit.uniquenessTemplate;
 				code = code.replaceAll("AMT_CANDIDATES",
 						options.getCbmcAmountCandidatesVarName());
 
-				List<String> uniqLoopBounds = CodeTemplates.VoteInit.uniquenessTemplateloopBounds;
-				CodeTemplates.replaceAll(uniqLoopBounds, "AMT_CANDIDATES",
+				List<String> uniqLoopBounds = CodeTemplatesAndLoopBounds.VoteInit.uniquenessTemplateloopBounds;
+				CodeTemplatesAndLoopBounds.replaceAll(uniqLoopBounds, "AMT_CANDIDATES",
 						options.getCbmcAmountCandidatesVarName());
-				CodeTemplates.replaceAll(uniqLoopBounds, "AMT_VOTES",
+				CodeTemplatesAndLoopBounds.replaceAll(uniqLoopBounds, "AMT_VOTES",
 						options.getCbmcAmountVotersVarName());
 
 				loopBoundHandler.addMainLoopBounds(uniqLoopBounds);
@@ -72,10 +72,10 @@ public abstract class InitVoteHelper {
 			code = code.replaceAll("INNER_BOUND",
 					options.getCbmcAmountCandidatesVarName());
 
-			List<String> loopBounds = CodeTemplates.VoteInit.template2dloopBounds;
-			CodeTemplates.replaceAll(loopBounds, "OUTER_BOUND",
+			List<String> loopBounds = CodeTemplatesAndLoopBounds.VoteInit.template2dloopBounds;
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "OUTER_BOUND",
 					options.getCbmcAmountVotersVarName());
-			CodeTemplates.replaceAll(loopBounds, "INNER_BOUND",
+			CodeTemplatesAndLoopBounds.replaceAll(loopBounds, "INNER_BOUND",
 					options.getCbmcAmountCandidatesVarName());
 			loopBoundHandler.addMainLoopBounds(loopBounds);
 

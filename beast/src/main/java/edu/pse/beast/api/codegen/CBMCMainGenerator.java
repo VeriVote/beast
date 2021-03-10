@@ -9,26 +9,25 @@ import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.electiondescription.VotingInputTypes;
+import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 
 public class CBMCMainGenerator {
 
-	// for the voting arrays declare the max votes variables. They depend on
-	// the properties
-	// create the voting arrays, depending on how often is voted
-	// fill them with nondet int
-	// depending on voting type, make sure the votes make sense (are between
-	// bounds)
-	// other preconditions
-	// call the voting func
-	// post conditions
-	public static CFunction main(BooleanExpASTData preAstData,
-			BooleanExpASTData postAstData, List<SymbolicCBMCVar> symCbmcVars,
+
+	public static CFunction main(
+			BooleanExpASTData preAstData, 
+			BooleanExpASTData postAstData, 
+			List<SymbolicCBMCVar> symCbmcVars,
 			ElectionTypeCStruct voteArrStruct,
-			ElectionTypeCStruct voteResultStruct, CodeGenOptions options,
+			ElectionTypeCStruct voteResultStruct,
+			VotingInputTypes votingInputType,
+			VotingOutputTypes votingOutputType,
+			CodeGenOptions options,
 			LoopBoundHandler loopBoundHandler) {
-		CFunction created = new CFunction("main",
-				List.of("int argc", "char ** argv"), "int");
+		
 		List<String> code = new ArrayList<>();
 
 		String votesLowerBoundVarName = "votesLowerBound";
@@ -73,8 +72,13 @@ public class CBMCMainGenerator {
 		loopBoundHandler.getMainLoopBounds()
 				.forEach(b -> System.out.println(b.getCBMCString()));
 
-		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,
-				voteResultStruct, options, loopBoundHandler);
+		CodeGenASTVisitor visitor = new CodeGenASTVisitor(
+				voteArrStruct,
+				votingInputType,
+				voteResultStruct,
+				votingOutputType,
+				options, 
+				loopBoundHandler);
 
 		// preconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);
@@ -113,9 +117,11 @@ public class CBMCMainGenerator {
 		}
 
 		code.add("return 0;");
-
-		created.setCode(code);
-		return created;
+		
+		CFunction mainFunction = new CFunction("main",
+				List.of("int argc", "char ** argv"), "int");
+		mainFunction.setCode(code);
+		return mainFunction;
 	}
 
 }

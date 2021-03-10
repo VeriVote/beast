@@ -10,7 +10,7 @@ public class VotingFunctionHelper {
 			CodeGenOptions options) {
 		String code = null;
 		if (voteType.getVotingType().getListDimensions() == 1) {
-			code = CodeTemplates.VotingFunction.template1d;
+			code = CodeTemplatesAndLoopBounds.VotingFunction.template1d;
 			code = code.replaceAll("VOTE_INPUT", votingStructVarName);
 			code = code.replaceAll("VOTES", voteArrayName);
 			code = code.replaceAll("LIST_MEMBER", voteType.getListName());
@@ -19,7 +19,7 @@ public class VotingFunctionHelper {
 			
 			
 		}else if (voteType.getVotingType().getListDimensions() == 2) {
-			code = CodeTemplates.VotingFunction.template2d;
+			code = CodeTemplatesAndLoopBounds.VotingFunction.template2d;
 
 			code = code.replaceAll("VOTE_INPUT", votingStructVarName);
 			code = code.replaceAll("VOTES", voteArrayName);
@@ -40,7 +40,7 @@ public class VotingFunctionHelper {
 		String code = null;
 
 		if (output.getVotingType().getListDimensions() == 0) {
-			code = CodeTemplates.VotingFunction.template0d;
+			code = CodeTemplatesAndLoopBounds.VotingFunction.template0d;
 			code = code.replaceAll("GENERATED_VAR", outputVarName);
 			code = code.replaceAll("LIST_MEMBER", output.getListName());
 			code = code.replaceAll("NAKED_ARR", resultName);
