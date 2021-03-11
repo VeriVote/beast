@@ -20,7 +20,7 @@ public class CodeTemplateVoteComparison {
 		public final static List<String> loopBoundsSingleChoice = Arrays.asList(
 				"AMT_VOTERS");
 		
-		public static String templatePreferenceEq = 
+		public static String templatePreference = 
 				  "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER;\n"
 				+ "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
 				+ "    for (int j = 0; j < INNER_BOUND; ++j) {\n"
@@ -28,7 +28,7 @@ public class CodeTemplateVoteComparison {
 				+ "    }\n"
 				+ "}\n";
 		
-		public static String templatePreferenceUnEq = 
+		public static String templatePreferenceUneq = 
 				  "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER != RHS_VAR.AMT_MEMBER;\n"
 				+ "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
 				+ "    for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
@@ -37,6 +37,9 @@ public class CodeTemplateVoteComparison {
 				+ "}\n";
 		
 		public final static List<String> loopBoundsPreference = Arrays.asList(
-				"AMT_VOTERS", "AMT_CANDIDATES");		
+				"AMT_VOTERS", "AMT_CANDIDATES");	
+		
+		public static String templateApproval = templatePreference;
+		public static String templateApprovalUneq = templatePreferenceUneq;
 	
 }

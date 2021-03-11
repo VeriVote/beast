@@ -103,6 +103,7 @@ public class VotingFunctionHelper {
 
 		switch (votingInputType) {
 			case APPROVAL : {
+				code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
 				break;
 			}
 			case WEIGHTED_APPROVAL : {

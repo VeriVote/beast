@@ -44,4 +44,7 @@ public class CodeTemplateVoteIntersection {
 
 	public final static List<String> loopBoundsPreference = Arrays.asList(
 			"AMT_VOTERS", "AMT_CANDIDATES", "AMT_CANDIDATES");
+	
+	public final static String templateApproval = templatePreference; 
+
 }

@@ -20,7 +20,7 @@ public abstract class InitVoteHelper {
 		Map<String, String> replacementMap = Map.of(
 					"AMT_CANDIDATES",
 					options.getCbmcAmountCandidatesVarName(),
-					"AMT_VOTES",
+					"AMT_VOTERS",
 					options.getCbmcAmountVotersVarName(),
 					"VOTE_TYPE",
 					voteArrStruct.getStruct().getName(),
@@ -40,7 +40,8 @@ public abstract class InitVoteHelper {
 		String code = null;
 		
 		switch(votingInputType) {
-			case APPROVAL : {					
+			case APPROVAL : {		
+				code = CodeTemplateInitVote.templateApproval;
 				break;
 			}
 			case WEIGHTED_APPROVAL : {

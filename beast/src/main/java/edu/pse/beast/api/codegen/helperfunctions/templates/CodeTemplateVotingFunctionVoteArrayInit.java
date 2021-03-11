@@ -23,4 +23,7 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
 	
 	public final static List<String> preferenceLoopBounds =
 			Arrays.asList("AMT_VOTERS", "AMT_CANDIDATES");
+	
+	public final static String templateApproval = templatePreference;
+	
 }

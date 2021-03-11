@@ -19,17 +19,7 @@ public class VoteIntersectionHelper {
 			CodeGenOptions options, 
 			LoopBoundHandler loopBoundHandler) {
 		
-		Map<String, String> replacementMap = Map.of(
-				"VOTE_TYPE", voteArrStruct.getStruct().getName(),
-				"AMT_MEMBER", voteArrStruct.getAmtName(),
-				"LIST_MEMBER", voteArrStruct.getListName(),
-				"GENERATED_VAR_NAME", generatedVarName,
-				"LHS_VAR_NAME", intersectedVotesVarNames.get(0),
-				"AMT_VOTERS", options.getCbmcAmountVotersVarName(),
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
-				"ASSUME", options.getCbmcAssumeName(),
-				"NONDET_UINT", options.getCbmcNondetUintName()
-				);
+	
 		
 		String code = null;
 		
@@ -53,8 +43,22 @@ public class VoteIntersectionHelper {
 					+ intersectedVotesVarNames.get(i + 1) + ".LIST_MEMBER[i]";
 		}		
 		
+		Map<String, String> replacementMap = Map.of(
+				"COMPARE_VARS", comparison,
+				"VOTE_TYPE", voteArrStruct.getStruct().getName(),
+				"AMT_MEMBER", voteArrStruct.getAmtName(),
+				"LIST_MEMBER", voteArrStruct.getListName(),
+				"GENERATED_VAR_NAME", generatedVarName,
+				"LHS_VAR_NAME", intersectedVotesVarNames.get(0),
+				"AMT_VOTERS", options.getCbmcAmountVotersVarName(),
+				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+				"ASSUME", options.getCbmcAssumeName(),
+				"NONDET_UINT", options.getCbmcNondetUintName()
+				);
+		
 		switch(votingInputType) {
-			case APPROVAL : {					
+			case APPROVAL : {				
+				code = CodeTemplateVoteIntersection.templateApproval;
 				break;
 			}
 			case WEIGHTED_APPROVAL : {
@@ -73,6 +77,7 @@ public class VoteIntersectionHelper {
 			}			
 		}		
 
+		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}
 }

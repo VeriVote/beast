@@ -20,15 +20,21 @@ public class CodeTemplateInitVote {
 	public final static String templatePreference = 
 			  "    VOTE_TYPE VAR_NAME;\n"
 			+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
-			+ "    ASSUME(VAR_NAME.amtVotes <= AMT_VOTES);\n"
-			+ "    for (int i = 0; i < OUTER_BOUND; ++i) {\n"
-			+ "        for (int j = 0; j < INNER_BOUND; ++j) {\n"
+			+ "    ASSUME(VAR_NAME.AMT_MEMBER <= AMT_VOTERS);\n"
+			+ "    for (int i = 0; i < VAR_NAME.AMT_MEMBER; ++i) {\n"
+			+ "        for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
 			+ "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();\n"
 			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= LOWER_VOTE_BOUND);\n"
-			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] <= UPPER_VOTE_BOUND);\n"
+			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] < UPPER_VOTE_BOUND);\n"
 			+ "        }\n" 
 			+ "    }\n"
-			+ "    for (int i = 0; i < AMT_VOTES; ++i) {\n"
+			+ "    for (int i = VAR_NAME.AMT_MEMBER; i < AMT_VOTERS; ++i) {\n"
+			+ "        for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
+			+ "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();\n"
+			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] == UPPER_VOTE_BOUND);\n"
+			+ "        }\n" 
+			+ "    }\n"
+			+ "    for (int i = 0; i < VAR_NAME.AMT_MEMBER; ++i) {\n"
 			+ "        unsigned int tmp[AMT_CANDIDATES];\n"
 			+ "        for (int k = 0; k < AMT_CANDIDATES; ++k) {\n"
 			+ "            tmp[k] = 0;\n" 
@@ -43,9 +49,21 @@ public class CodeTemplateInitVote {
 			+ "        }\n" 
 			+ "    }\n";
 	
-
+	
 	public final static List<String> loopBoundsPreference = Arrays.asList(
 			"OUTER_BOUND", "INNER_BOUND", 
 			"AMT_VOTES", "AMT_CANDIDATES", 
 			"AMT_CANDIDATES", "AMT_CANDIDATES");
+
+	public final static String templateApproval = 
+			  "    VOTE_TYPE VAR_NAME;\n"
+			+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
+			+ "    ASSUME(VAR_NAME.AMT_MEMBER <= AMT_VOTERS);\n"
+			+ "    for (int i = 0; i < VAR_NAME.AMT_MEMBER; ++i) {\n"
+			+ "        for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
+			+ "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();\n"
+			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= LOWER_VOTE_BOUND);\n"
+			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] < UPPER_VOTE_BOUND);\n"
+			+ "        }\n" 
+			+ "    }\n";
 }

@@ -36,14 +36,15 @@ public class VoteComparisonHelper {
 		String code = null;
 		if(compareSymbol.equals("!=")) {
 			switch(votingInputType) {
-				case APPROVAL : {					
+				case APPROVAL : {			
+					code = CodeTemplateVoteComparison.templateApprovalUneq;
 					break;
 				}
 				case WEIGHTED_APPROVAL : {
 					break;
 				}
 				case PREFERENCE : {
-					code = CodeTemplateVoteComparison.templatePreferenceUnEq;
+					code = CodeTemplateVoteComparison.templatePreferenceUneq;
 					break;
 				}
 				case SINGLE_CHOICE : {
@@ -56,14 +57,15 @@ public class VoteComparisonHelper {
 			}
 		} else {
 			switch(votingInputType) {
-				case APPROVAL : {					
+				case APPROVAL : {				
+					code = CodeTemplateVoteComparison.templateApproval;
 					break;
 				}
 				case WEIGHTED_APPROVAL : {
 					break;
 				}
 				case PREFERENCE : {				
-					code = CodeTemplateVoteComparison.templatePreferenceEq;
+					code = CodeTemplateVoteComparison.templatePreference;
 					break;
 				}
 				case SINGLE_CHOICE : {
