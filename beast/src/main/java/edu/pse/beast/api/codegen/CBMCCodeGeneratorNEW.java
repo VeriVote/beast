@@ -17,6 +17,8 @@ import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.electiondescription.VotingInputTypes;
+import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
 import edu.pse.beast.api.electiondescription.to_c.CBMCVarNames;
 import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
@@ -62,7 +64,13 @@ public class CBMCCodeGeneratorNEW {
 		CElectionVotingType resultNakedArr = CElectionVotingType
 				.of(descr.getVotingFunction().getOutputType());
 
-		ElectionTypeCStruct voteArrStruct = votingTypeToCStruct(votesNakedArr,
+		options.setCbmcAssumeName("assume");
+		options.setCbmcAssertName("assert");
+		options.setVoteFuncName("voting");
+		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
+
+		ElectionTypeCStruct voteArrStruct = votingTypeToCStruct(
+				votesNakedArr,
 				"VoteStruct", "votes", "amtVotes");
 		ElectionTypeCStruct voteResultStruct = votingTypeToCStruct(
 				resultNakedArr, "VoteResultStruct", "result", "amtResult");
@@ -70,8 +78,16 @@ public class CBMCCodeGeneratorNEW {
 		created.addStructDef(voteArrStruct.getStruct());
 		created.addStructDef(voteResultStruct.getStruct());
 
-		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(),
-				voteArrStruct, voteResultStruct, options));
+		created.addFunction(
+				votingSigFuncToPlainCFunc(
+						descr.getVotingFunction(), 
+						descr.getInputType(), 
+						descr.getOutputType(), 
+						voteArrStruct, 
+						voteResultStruct,
+						options, 
+						loopBoundHandler)
+				);
 
 		BooleanExpASTData preAstData = BooleanCodeToAST.generateAST(
 				propDescr.getPreConditionsDescription().getCode(),
@@ -79,12 +95,6 @@ public class CBMCCodeGeneratorNEW {
 		BooleanExpASTData postAstData = BooleanCodeToAST.generateAST(
 				propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getCbmcVariables());
-
-		options.setCbmcAssumeName("assume");
-		options.setCbmcAssertName("assert");
-		options.setVoteFuncName("voting");
-
-		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
 		
 		CFunction mainFunction = CBMCMainGenerator.main(
 				preAstData, postAstData,
@@ -100,30 +110,44 @@ public class CBMCCodeGeneratorNEW {
 		return created.generateCode();
 	}
 
-	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func,
-			ElectionTypeCStruct input, ElectionTypeCStruct output,
-			CodeGenOptions options) {
+	private static CFunction votingSigFuncToPlainCFunc(
+			VotingSigFunction func,
+			VotingInputTypes votingInputType,
+			VotingOutputTypes votingOutputType,
+			ElectionTypeCStruct inputStruct, 
+			ElectionTypeCStruct outputStruct,
+			CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler) {
 
 		String votingStructVarName = "voteStruct";
+		
+		List<String> votingFuncArguments = 
+				List.of(inputStruct.getStruct().getName() 
+						+ " " + 
+						votingStructVarName);
 
-		CFunction created = new CFunction(func.getName(), List
-				.of(input.getStruct().getName() + " " + votingStructVarName),
-				output.getStruct().getName());
+		CFunction created = new CFunction(
+				func.getName(),
+				votingFuncArguments,
+				outputStruct.getStruct().getName());
 
 		List<String> code = new ArrayList<>();
 
-		String voteArrayName = "votes";
+		String voteArrayVarName = "votes";
+		String resultArrayVarName = "result";
 
-		// TODO cleanup
-		if (input.getVotingType().getListDimensions() == 1) {
-			code.add("Vote votes[V];");
-		} else if (input.getVotingType().getListDimensions() == 2) {
-			code.add("Vote votes[V][C];");
-		}
-		code.add("VoteResult result;");
-
-		code.add(VotingFunctionHelper.generateVoteCopy(voteArrayName,
-				votingStructVarName, input, options));
+		code.add(VotingFunctionHelper.generateVoteArrayInitAndCopy(
+				voteArrayVarName,
+				votingStructVarName,
+				votingInputType,
+				inputStruct, 
+				options,
+				loopBoundHandler));
+		
+		code.add(VotingFunctionHelper.generateVoteResultInit(
+				resultArrayVarName, 
+				votingOutputType, 
+				options));		
 
 		code.add("//user generated code");
 
@@ -131,68 +155,22 @@ public class CBMCCodeGeneratorNEW {
 
 		code.add("//end user generated code");
 
-		String resultName = "result";
-		String outputVarName = "resultStruct";
-		code.add(output.getStruct().getName() + " " + outputVarName + ";");
-		code.add(VotingFunctionHelper.generateResultCopy(resultName,
-				outputVarName, output, options));
-
-		code.add("return RES;".replaceAll("RES", outputVarName));
+		String resultStructVarName = "resultStruct";
+		code.add(
+				VotingFunctionHelper.
+					generateVoteResultCopy(
+							resultArrayVarName,
+							resultStructVarName, 
+							votingOutputType,
+							outputStruct, 
+							options, 
+							loopBoundHandler)
+					);
+		
 		created.setCode(code);
+		System.out.println(created.generateDefCode());
 		return created;
-	}
-
-	private static String unusedVarName() {
-		return "var" + UUID.randomUUID().toString().replaceAll("-", "");
-	}
-
-	private static String generateDeepCopy(int listDimensions,
-			List<String> listSizes, String arrFrom, String arrTo) {
-		if (listDimensions == 0) {
-			return arrTo + " = " + arrFrom + ";";
-		} else {
-			List<String> created = new ArrayList<>();
-			int lvl = 0;
-			String varAccBrackets = "";
-			String closingBrackets = "";
-			for (String dimSize : listSizes) {
-				String varName = "loopCounter" + lvl;
-				String loopTemplate = "for(int VAR_NAME=0; VAR_NAME < DIM_SIZE; ++VAR_NAME) {";
-				created.add(loopTemplate.replaceAll("VAR_NAME", varName)
-						.replaceAll("DIM_SIZE", dimSize));
-				varAccBrackets += "[" + varName + "]";
-				closingBrackets += "}";
-				lvl++;
-			}
-			created.add(arrTo + varAccBrackets + " = " + arrFrom
-					+ varAccBrackets + ";");
-			created.add(closingBrackets);
-			return String.join("\n", created);
-		}
-	}
-
-	private static List<String> cbmcVarArrToVarNames(List<CBMCVars> vars) {
-		return vars.stream().map(var -> CBMCVarNames.name(var))
-				.collect(Collectors.toList());
-	}
-
-	private static String generateCopyToResultStruct(VotingSigFunction func,
-			CStruct votingResult, CElectionVotingType resultNakedArr) {
-		List<String> code = new ArrayList<>();
-		String resultStructVarName = unusedVarName();
-
-		code.add(votingResult.getName() + " " + resultStructVarName + ";");
-
-		List<String> listSizes = cbmcVarArrToVarNames(
-				resultNakedArr.getListSizes());
-		code.add(generateDeepCopy(resultNakedArr.getListDimensions(), listSizes,
-				func.getResultVarName(), resultStructVarName + "."
-						+ votingResult.getMembers().get(0).getName()));
-
-		code.add("return " + resultStructVarName + ";");
-
-		return String.join("\n", code);
-	}
+	}	
 
 	private static ElectionTypeCStruct votingTypeToCStruct(
 			CElectionVotingType resultNakedArr, String structName,

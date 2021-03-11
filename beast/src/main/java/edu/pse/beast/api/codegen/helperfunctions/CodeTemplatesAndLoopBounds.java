@@ -7,7 +7,9 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public abstract class CodeTemplatesAndLoopBounds {	
-
+	
+	
+	
 	public static class Comparison {
 		public final static String template1dTopLevel = 
 				  "	for(int i = 0; i < AMT; ++i) {\n"
@@ -183,21 +185,7 @@ public abstract class CodeTemplatesAndLoopBounds {
 		public static String uneqTemplate0d = 
 				"unsigned int GENERATED_VAR = LHS.LIST_MEMBER != RHS.LIST_MEMBER;";
 	}
-	public static class VotingFunction {
-		public static String template1d = 
-				  "	for (int i = 0; i < AMT_VOTERS; ++i) {\n"
-				+ "     VOTES[i] = VOTE_INPUT.LIST_MEMBER[i];\n" 
-				+ " }";
-		
-		public static String template2d = 
-				  "	for (int i = 0; i < OUTER_BOUND; ++i) {\n"
-				+ " 	for (int j = 0; j < INNER_BOUND; ++j) {\n"
-				+ "     	VOTES[i][j] = VOTE_INPUT.LIST_MEMBER[i][j];\n" 
-				+ "     }\n" 
-				+ " }";
-		
-		public static String template0d = "GENERATED_VAR.LIST_MEMBER = NAKED_ARR;";
-	}
+	
 	
 	public static class VoteSumForCandidate {
 		public static String templateSingleChoice = 

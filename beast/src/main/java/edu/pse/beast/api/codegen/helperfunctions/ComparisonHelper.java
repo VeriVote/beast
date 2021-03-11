@@ -7,9 +7,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 
-public class ComparisonHelper {
-	
-	
+public class ComparisonHelper {	
 	
 	public static String generateTopLevelCompCode(String comparison, 
 			String lhsVarName, String rhsVarName,
