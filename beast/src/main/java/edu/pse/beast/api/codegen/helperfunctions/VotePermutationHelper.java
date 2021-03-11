@@ -4,8 +4,8 @@ import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVotePermutation;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVoteTuple;
+import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.vote.CodeTemplateVotePermutation;
+import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.vote.CodeTemplateVoteTuple;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 

@@ -21,6 +21,7 @@ import edu.pse.beast.api.codegen.helperfunctions.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectPermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
+import edu.pse.beast.api.codegen.helperfunctions.IsVoteEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteExpHelper;
@@ -491,22 +492,23 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitEmptyNode(BooleanExpIsEmptyNode booleanExpIsEmptyNode) {
 		booleanExpIsEmptyNode.getInnerNode().getVisited(this);
-		String emptyVarName = expVarNameStack.pop();
-		CElectionVotingType emptyType = expTypes.pop();
-		if (amtVoteVars == 1) {
-
-		} else if (amtElectVars == 1) {
-			if (level == 0) {
-				codeBlock.addSnippet(assumeAssert + "(" + emptyVarName + "."
-						+ voteResultStruct.getAmtName() + " == 0);\n");
-			} else {
-				String boolVarName = codeBlock.newVarName("isElectEmpty");
-				codeBlock.addAssignment(
-						"unsigned int " + boolVarName, 
-						emptyVarName + "."+ voteResultStruct.getAmtName() + " == 0");
-				booleanVarNameStack.push(boolVarName);
-			}
+		String testedVarName = expVarNameStack.pop();
+		String generatedVar = codeBlock.newVarName("isEmpty" + testedVarName);
+		if(amtElectVars == 1) {
+			
+		} else if(amtVoteVars == 1) {
+			codeBlock.addSnippet(
+					IsVoteEmptyHelper.generateCode(
+							generatedVar, 
+							testedVarName,
+							voteArrStruct,
+							votingInputType, 
+							assumeAssert,
+							options, 
+							loopBoundHandler));
 		}
+		
+		booleanVarNameStack.push(generatedVar);
 	}
 
 	

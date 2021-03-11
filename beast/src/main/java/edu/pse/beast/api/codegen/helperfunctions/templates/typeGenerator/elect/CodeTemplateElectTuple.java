@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.helperfunctions.templates;
+package edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.elect;
 
 public class CodeTemplateElectTuple {
 	public final static String templateVarSetup = 

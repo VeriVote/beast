@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.helperfunctions.templates;
+package edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.vote;
 
 public class CodeTemplateVoteSumForCandidate {
 	public static String templateSingleChoice = 

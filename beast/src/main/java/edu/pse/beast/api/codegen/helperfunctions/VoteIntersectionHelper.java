@@ -5,7 +5,7 @@ import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVoteIntersection;
+import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.vote.CodeTemplateVoteIntersection;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 

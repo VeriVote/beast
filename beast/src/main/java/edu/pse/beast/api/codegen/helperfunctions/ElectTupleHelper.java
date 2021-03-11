@@ -6,8 +6,8 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateElectComparison;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateElectTuple;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVoteTuple;
+import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.elect.CodeTemplateElectTuple;
+import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.vote.CodeTemplateVoteTuple;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
