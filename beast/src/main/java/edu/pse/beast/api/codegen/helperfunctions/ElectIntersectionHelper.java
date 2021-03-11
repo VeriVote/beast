@@ -23,9 +23,6 @@ public class ElectIntersectionHelper {
 			CodeGenOptions options, 
 			LoopBoundHandler loopBoundHandler) {
 
-		
-		String code = null;
-		
 		String comparison = "";
 		
 		if(electStruct.getVotingType().getListDimensions() == 1) {
@@ -51,13 +48,18 @@ public class ElectIntersectionHelper {
 				"NONDET_UINT", options.getCbmcNondetUintName()
 				);
 		
+		List<String> loopbounds = null;
+		String code = null;
+		
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
 				code = CodeTemplateElectIntersection.templateCandidateList;
+				loopbounds = CodeTemplateElectIntersection.loopboundsCandidateList;
 				break;
 			}
 			case PARLIAMENT : {
 				code = CodeTemplateElectIntersection.templateParliament;
+				loopbounds = CodeTemplateElectIntersection.loopboundsParliament;
 				break;
 			}
 			case PARLIAMENT_STACK : {
@@ -68,7 +70,10 @@ public class ElectIntersectionHelper {
 			}
 		}
 		
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap));
+		code = CodeGenerationToolbox.replacePlaceholders(
+				code, replacementMap);
 		return code;
 	}
 }

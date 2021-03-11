@@ -6,7 +6,8 @@ import java.util.List;
 public class LoopBoundHandler {
 
 	private List<String> mainFuncLoopBounds = new ArrayList<>();
-
+	private List<String> votingFuncLoopBounds = new ArrayList<>();
+	
 	public void addMainLoopBound(String sizeOfBound) {
 		mainFuncLoopBounds.add(sizeOfBound);
 	}
@@ -25,6 +26,10 @@ public class LoopBoundHandler {
 			created.add(bound);
 		}
 		return created;
+	}
+
+	public void addVotingLoopBounds(List<String> bounds) {
+		votingFuncLoopBounds.addAll(bounds);
 	}
 
 }

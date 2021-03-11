@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -41,12 +42,14 @@ public class ElectTupleHelper {
 				);
 		
 		String code = CodeTemplateElectTuple.templateVarSetup;
+		List<String> loopbounds = Arrays.asList();
 		
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
 				for (String electVarName : electNames) {
 					code += CodeTemplateElectTuple.templateCandidateList.
 							replaceAll("CURRENT_ELECT", electVarName);
+					loopbounds.addAll(CodeTemplateElectTuple.loopBoundsCandidateList);
 				}
 				break;
 			}
@@ -61,7 +64,8 @@ public class ElectTupleHelper {
 			}
 		}
 		
-		
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap));
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

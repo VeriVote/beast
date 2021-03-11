@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -66,6 +67,7 @@ public class VotingFunctionHelper {
 				"RESULT_ARR", resultArrayVarName);
 
 		String code = null;
+		List<String> loopbounds = Arrays.asList();
 
 		switch (votingOutputType) {
 			case SINGLE_CANDIDATE : {
@@ -74,20 +76,27 @@ public class VotingFunctionHelper {
 			}
 			case CANDIDATE_LIST : {
 				code = CodeTemplateVotingFunctionResultCopy.templateCandidateList;
+				loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsCandidateList;
 				break;
 			}
 			case PARLIAMENT : {
 				code = CodeTemplateVotingFunctionResultCopy.templateParliament;
+				loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsParliament;
 				break;
 			}
 		}
+		
+		loopBoundHandler.addVotingLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(
+						loopbounds, replacementMap));
+		
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, 
 				replacementMap);
 
 		return code;
-	}
-
+	}	
+	
 	public static String generateVoteArrayInitAndCopy(
 			String voteArrayVarName,
 			String votingStructVarName, 
@@ -104,11 +113,13 @@ public class VotingFunctionHelper {
 				"AMT_MEMBER", inputStruct.getAmtName(), 
 				"LIST_MEMBER", inputStruct.getListName());
 
-		String code = null;
+		String code = null;		
+		List<String> loopbounds = Arrays.asList();
 
 		switch (votingInputType) {
 			case APPROVAL : {
 				code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
+				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsApproval;
 				break;
 			}
 			case WEIGHTED_APPROVAL : {
@@ -116,17 +127,25 @@ public class VotingFunctionHelper {
 			}
 			case PREFERENCE : {
 				code = CodeTemplateVotingFunctionVoteArrayInit.templatePreference;
+				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsPreference;
 				break;
 			}
 			case SINGLE_CHOICE : {
 				code = CodeTemplateVotingFunctionVoteArrayInit.templateSingleChoice;
+				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsSingleChoice;
 				break;
 			}
 			case SINGLE_CHOICE_STACK : {
 				break;
 			}
-		}
+		}	
+		
+		loopBoundHandler.addVotingLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(
+						loopbounds, replacementMap));
+		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+		
 		return code;
 	}
 

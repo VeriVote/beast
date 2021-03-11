@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -38,10 +39,12 @@ public abstract class InitVoteHelper {
 		
 		
 		String code = null;
+		List<String> loopbounds = null;
 		
 		switch(votingInputType) {
 			case APPROVAL : {		
 				code = CodeTemplateInitVote.templateApproval;
+				loopbounds = CodeTemplateInitVote.loopBoundsApproval;
 				break;
 			}
 			case WEIGHTED_APPROVAL : {
@@ -49,17 +52,21 @@ public abstract class InitVoteHelper {
 			}
 			case PREFERENCE : {			
 				code = CodeTemplateInitVote.templatePreference;
+				loopbounds = CodeTemplateInitVote.loopBoundsPreference;
 				break;
 			}
 			case SINGLE_CHOICE : {				
 				code = CodeTemplateInitVote.templateSingleChoice;
+				loopbounds = CodeTemplateInitVote.loopBoundsSingleChoice;
 				break;
 			}
 			case SINGLE_CHOICE_STACK : {
 				break;
 			}
 		}		
-
+		
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap));
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

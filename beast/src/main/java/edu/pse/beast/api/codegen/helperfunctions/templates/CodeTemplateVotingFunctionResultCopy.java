@@ -20,8 +20,8 @@ public class CodeTemplateVotingFunctionResultCopy {
 				+ "		ASSUME(RESULT_VAR.LIST_MEMBER[i] == RESULT_ARR[i]);\n"
 				+ "	}\n";
 		
-		List<String> loopBoundsCandidateList = Arrays.asList("AMT_CANDIDATES");
+		public final static List<String> loopBoundsCandidateList = Arrays.asList("AMT_CANDIDATES");
 		
 		public final static String templateParliament = templateCandidateList;
-		List<String> loopBoundsParliament = loopBoundsCandidateList;
+		public final static List<String> loopBoundsParliament = loopBoundsCandidateList;
 }

@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -28,13 +29,16 @@ public class VotePermutationHelper {
 					"NONDET_UINT", options.getCbmcNondetUintName(),
 					"RHS", varName,
 					"PERM", "permutationIndices",
-					"AMT_VOTES", options.getCbmcAmountVotersVarName()
+					"AMT_VOTERS", options.getCbmcAmountVotersVarName()
 				);
 		
+		List<String> loopbounds = null;
 		String code = null;		
 		
 		switch(votingInputType) {
-			case APPROVAL : {					
+			case APPROVAL : {	
+				code = CodeTemplateVotePermutation.templateApproval;
+				loopbounds = CodeTemplateVotePermutation.loopBoundsApproval;				
 				break;
 			}
 			case WEIGHTED_APPROVAL : {
@@ -42,6 +46,7 @@ public class VotePermutationHelper {
 			}
 			case PREFERENCE : {		
 				code = CodeTemplateVotePermutation.templatePreference;
+				loopbounds = CodeTemplateVotePermutation.loopBoundsPreference;
 				break;
 			}
 			case SINGLE_CHOICE : {
@@ -52,6 +57,10 @@ public class VotePermutationHelper {
 			}			
 		}				
 		
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(
+						loopbounds, replacementMap)
+				);
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

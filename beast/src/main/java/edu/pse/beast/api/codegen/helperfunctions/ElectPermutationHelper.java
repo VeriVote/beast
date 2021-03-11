@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -34,10 +35,12 @@ public class ElectPermutationHelper {
 				);
 		
 		String code = null;		
+		List<String> loopbounds = null;
 	
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
 				code = CodeTemplateElectPermutation.templateCandidateList;
+				loopbounds = CodeTemplateElectPermutation.loopBoundsCandidateList;
 				break;
 			}
 			case PARLIAMENT : {
@@ -50,7 +53,9 @@ public class ElectPermutationHelper {
 				break;
 			}
 		}
-		
+
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap));
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

@@ -19,9 +19,6 @@ public class VoteIntersectionHelper {
 			CodeGenOptions options, 
 			LoopBoundHandler loopBoundHandler) {
 		
-	
-		
-		String code = null;
 		
 		String comparison = "";
 		
@@ -56,9 +53,13 @@ public class VoteIntersectionHelper {
 				"NONDET_UINT", options.getCbmcNondetUintName()
 				);
 		
+		String code = null;
+		List<String> loopbounds = null;
+		
 		switch(votingInputType) {
 			case APPROVAL : {				
 				code = CodeTemplateVoteIntersection.templateApproval;
+				loopbounds = CodeTemplateVoteIntersection.loopBoundsApproval;
 				break;
 			}
 			case WEIGHTED_APPROVAL : {
@@ -66,10 +67,12 @@ public class VoteIntersectionHelper {
 			}
 			case PREFERENCE : {		
 				code = CodeTemplateVoteIntersection.templatePreference;
+				loopbounds = CodeTemplateVoteIntersection.loopBoundsPreference;
 				break;
 			}
 			case SINGLE_CHOICE : {
 				code = CodeTemplateVoteIntersection.templateSingleChoice;
+				loopbounds = CodeTemplateVoteIntersection.loopBoundsSingleChoice;
 				break;
 			}
 			case SINGLE_CHOICE_STACK : {
@@ -77,6 +80,10 @@ public class VoteIntersectionHelper {
 			}			
 		}		
 
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(
+						loopbounds, replacementMap)
+				);
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

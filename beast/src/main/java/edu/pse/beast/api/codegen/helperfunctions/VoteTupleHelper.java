@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -34,13 +35,14 @@ public class VoteTupleHelper {
 					"LIST_MEMBER", voteArrStruct.getListName(),
 					"NONDET_UINT", options.getCbmcNondetUintName(),
 					"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
-					"AMT_VOTES", options.getCbmcAmountVotersVarName(),
+					"AMT_VOTERS", options.getCbmcAmountVotersVarName(),
 					"VOTE_TYPE", voteArrStruct.getStruct().getName(),
 					"VAR_NAME", generatedVarName,
 					"ASSUME", options.getCbmcAssumeName()
 				);
 		
 		String code = CodeTemplateVoteTuple.templateVarSetup;
+		List<String> loopbounds = Arrays.asList();
 		
 		switch(votingInputType) {
 			case APPROVAL : {					
@@ -53,6 +55,7 @@ public class VoteTupleHelper {
 				for (String voteVarName : voteNames) {
 					code += CodeTemplateVoteTuple.templatePreference.
 							replaceAll("CURRENT_VOTE", voteVarName);
+					loopbounds.addAll(CodeTemplateVoteTuple.loopBoundsPreference);
 				}
 				break;
 			}
@@ -64,6 +67,9 @@ public class VoteTupleHelper {
 			}			
 		}				
 
+		loopBoundHandler.addMainLoopBounds(
+				CodeGenerationToolbox.replaceLoopBounds(
+						loopbounds, replacementMap));
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

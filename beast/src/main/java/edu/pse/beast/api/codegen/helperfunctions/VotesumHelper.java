@@ -1,5 +1,7 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -19,15 +21,18 @@ public class VotesumHelper {
 			VotingInputTypes votingInputType,
 			CodeGenOptions options, 
 			LoopBoundHandler loopBoundHandler) {
-		String code = null;
 		
 		Map<String, String> replaceMap = Map.of(
 					"GENERATED_VAR", generatedVarName,
 					"AMT_MEMBER", voteStruct.getAmtName(),
 					"LIST_MEMBER", voteStruct.getListName(),
 					"CANDIDATE_VAR", symbolicVarCand,
+					"AMT_VOTERS", options.getCbmcAmountVotersVarName(),
 					"VOTE_VAR", "voteNUMBER".replace("NUMBER", String.valueOf(voteNumber))
 				);
+
+		String code = null;
+		List<String> loopbounds = null;
 		
 		switch(votingInputType) {
 			case APPROVAL : {					
@@ -45,10 +50,12 @@ public class VotesumHelper {
 			}
 			case SINGLE_CHOICE_STACK : {
 				code = CodeTemplateVoteSumForCandidate.templateSingleChoiceStack;
+				loopbounds = CodeTemplateVoteSumForCandidate.loopBoundsPreference;
 				break;
 			}
 		}
 		
+		loopBoundHandler.addMainLoopBounds(CodeGenerationToolbox.replaceLoopBounds(loopbounds, replaceMap));
 		code = CodeGenerationToolbox.replacePlaceholders(code, replaceMap);
 		return code;
 	}

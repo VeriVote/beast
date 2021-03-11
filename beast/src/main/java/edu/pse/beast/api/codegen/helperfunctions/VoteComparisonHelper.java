@@ -13,6 +13,28 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 
 public class VoteComparisonHelper {
 	
+	private static List<String> getLoopBounds(
+			VotingInputTypes votingInputType) {
+		switch(votingInputType) {
+			case APPROVAL : {		
+				return CodeTemplateVoteComparison.loopBoundsApproval;
+			}
+			case WEIGHTED_APPROVAL : {
+				break;
+			}
+			case PREFERENCE : {
+				return CodeTemplateVoteComparison.loopBoundsPreference;
+			}
+			case SINGLE_CHOICE : {
+				return CodeTemplateVoteComparison.loopBoundsSingleChoice;
+			}
+			case SINGLE_CHOICE_STACK : {
+				break;
+			}
+		}
+		return null;
+	}
+	
 	public static String generateCode(
 			String generatedVarName,
 			String lhsVarName,
@@ -77,6 +99,11 @@ public class VoteComparisonHelper {
 				}
 			}
 		}
+		
+		List<String> loopbounds = CodeGenerationToolbox.replaceLoopBounds(
+				getLoopBounds(votingInputType),
+				replacementMap);
+		loopBoundHandler.addMainLoopBounds(loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);		
 		return code;

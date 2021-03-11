@@ -12,7 +12,7 @@ import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class ElectComparisonHelper {
 	
-	private static List<String> getLoopBund(
+	private static List<String> getLoopBounds(
 			VotingOutputTypes votingOutputType) {
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
@@ -92,7 +92,7 @@ public class ElectComparisonHelper {
 		}
 		
 		List<String> loopbounds = CodeGenerationToolbox.replaceLoopBounds(
-				getLoopBund(votingOutputType),
+				getLoopBounds(votingOutputType),
 				replacementMap);
 		loopBoundHandler.addMainLoopBounds(loopbounds);
 		

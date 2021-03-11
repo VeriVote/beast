@@ -14,7 +14,7 @@ public class CodeTemplateInitVote {
 			+ "            ASSUME(VAR_NAME.votes[i] <= UPPER_VOTE_BOUND);\n"
 			+ "    }\n";
 	
-	public final static List<String> loopBoundsSingleCandidate = 
+	public final static List<String> loopBoundsSingleChoice = 
 			Arrays.asList("AMT_VOTERS");
 	
 	public final static String templatePreference = 
