@@ -65,8 +65,13 @@ public class CBMCMainGenerator {
 			String varName = "voteNUMBER".replaceAll("NUMBER",
 					String.valueOf(i + 1));
 			code.add("//initializing VAR".replaceAll("VAR", varName));
-			code.add(InitVoteHelper.generateCode(varName, voteArrStruct,
-					options, loopBoundHandler));
+			code.add(
+					InitVoteHelper.generateCode(
+							varName, 
+							voteArrStruct,
+							votingInputType,
+							options, 
+							loopBoundHandler));
 		}
 
 		loopBoundHandler.getMainLoopBounds()

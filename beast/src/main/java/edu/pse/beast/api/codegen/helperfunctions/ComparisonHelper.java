@@ -9,9 +9,12 @@ import edu.pse.beast.api.electiondescription.CElectionVotingType;
 
 public class ComparisonHelper {	
 	
-	public static String generateTopLevelCompCode(String comparison, 
-			String lhsVarName, String rhsVarName,
-			CElectionVotingType type, CodeGenOptions options, 
+	public static String generateCode(
+			String comparison, 
+			String lhsVarName, 
+			String rhsVarName,
+			CElectionVotingType type, 
+			CodeGenOptions options, 
 			String assumeOrAssert,
 			LoopBoundHandler loopBoundHandler) {
 		String code = null;

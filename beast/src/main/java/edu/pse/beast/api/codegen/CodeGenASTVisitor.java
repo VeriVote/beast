@@ -17,6 +17,7 @@ import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectPermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
@@ -187,7 +188,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 						votingInputType,
 						options, 
 						loopBoundHandler));
-
+		
+		expTypes.push(voteArrStruct.getVotingType());
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
 	}
@@ -203,8 +205,14 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		}
 
 		codeBlock.addSnippet(
-				IntersectionHelper.generateElectIntersection(generatedVarName,
-						varNames, voteResultStruct, options, loopBoundHandler));
+					ElectIntersectionHelper.generateCode(
+							generatedVarName,
+							varNames,
+							voteResultStruct, 
+							votingOutputType, 
+							options, 
+							loopBoundHandler)
+				);
 
 		expVarNameStack.push(generatedVarName);
 		expTypes.push(voteResultStruct.getVotingType());
