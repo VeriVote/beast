@@ -1,5 +1,7 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BinaryCombinationSymbols;
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
@@ -25,6 +27,8 @@ public final class EquivalenceNode extends BinaryRelationshipNode {
     public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitEquivalenceNode(this);
     }
+    
+    
 
     @Override
     public String getTreeString(final int depth) {
@@ -33,4 +37,9 @@ public final class EquivalenceNode extends BinaryRelationshipNode {
                 + getLHSBooleanExpNode().getTreeString(depth + 1) + tabs
                 + RHS + getRHSBooleanExpNode().getTreeString(depth + 1);
     }
+
+	@Override
+	public void getVisited(BooleanAstVisitor visitor) {
+		visitor.visitBinaryRelationNode(this, BinaryCombinationSymbols.EQUIV);
+	}
 }

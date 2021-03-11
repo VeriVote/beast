@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BinaryCombinationSymbols;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
@@ -37,6 +38,6 @@ public final class LogicalAndNode extends BinaryRelationshipNode {
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitAndNode(this);
+		visitor.visitBinaryRelationNode(this, BinaryCombinationSymbols.AND);
 	}
 }

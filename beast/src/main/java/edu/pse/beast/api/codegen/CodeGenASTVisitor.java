@@ -2,8 +2,10 @@ package edu.pse.beast.api.codegen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BinaryCombinationSymbols;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
@@ -14,17 +16,14 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersec
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
-import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
-import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectPermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectTupleHelper;
-import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsElectEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsVoteEmptyHelper;
-import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
-import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
+import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteExpHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VotePermutationHelper;
@@ -34,10 +33,9 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BinaryRelationshipNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode.ComparisonType;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
@@ -347,48 +345,31 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		code = code.replaceAll("AMT_VOTERS",
 				options.getCbmcAmountVotersVarName());
 
-		if (level == 0) {
-			codeBlock.addSnippet(code);
-
-			node.getFollowingExpNode().getVisited(this);
-
-			codeBlock.addSnippet("}\n");
-		} else {
-			String varName = codeBlock.newVarName("forAllVoters");
-			codeBlock.addAssignment("unsigned int " + varName, "1");
-			codeBlock.addSnippet(code);
-			node.getFollowingExpNode().getVisited(this);
-			codeBlock.addSnippet(varName + " &= " + booleanVarNameStack.pop());
-			codeBlock.addSnippet("}\n");
-			booleanVarNameStack.push(varName);
-		}
+		String varName = codeBlock.newVarName("forAllVoters");
+		codeBlock.addAssignment("unsigned int " + varName, "1");
+		codeBlock.addSnippet(code);
+		node.getFollowingExpNode().getVisited(this);
+		codeBlock.addSnippet(varName + " &= " + booleanVarNameStack.pop());
+		codeBlock.addSnippet("}\n");
+		booleanVarNameStack.push(varName);
+		
 
 		scopeHandler.pop();
 	}
 
 	@Override
 	public void visitNotNode(NotNode node) {
-		level++;
 		node.getNegatedExpNode().getVisited(this);
-		level--;
 
-		if (level == 0) {
-			String template = "ASSUME_OR_ASSERT(!BOOL);";
-			template = template.replaceAll("ASSUME_OR_ASSERT", assumeAssert);
-			template = template.replaceAll("BOOL", booleanVarNameStack.pop());
-			codeBlock.addSnippet(template);
-		} else {
-			String generatedVar = codeBlock.newVarName("not");
-			codeBlock.addAssignment("unsigned int " + generatedVar,
-					"!" + booleanVarNameStack.pop());
-			booleanVarNameStack.push(generatedVar);
-		}
+		String generatedVar = codeBlock.newVarName("not");
+		codeBlock.addAssignment("unsigned int " + generatedVar,
+				"!" + booleanVarNameStack.pop());
+		booleanVarNameStack.push(generatedVar);
 
 	}
 
 	@Override
 	public void visitExistsCandidateNode(ThereExistsNode node) {
-		level++;
 
 		String symbolicVarName = node.getVar().getName();
 		scopeHandler.push();
@@ -408,14 +389,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		codeBlock.addSnippet(
 				boolVarName + " |= " + booleanVarNameStack.pop() + ";");
 
-		level--;
 		codeBlock.addSnippet("}");
-
-		if (level == 0) {
-			codeBlock.addSnippet(assumeAssert + "(" + boolVarName + ");");
-		} else {
-			booleanVarNameStack.push(boolVarName);
-		}
+		booleanVarNameStack.push(boolVarName);
+		
 
 		scopeHandler.pop();
 	}
@@ -426,22 +402,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		expTypes.push(CElectionVotingType.simple());
 	}
 
-	@Override
-	public void visitAndNode(LogicalAndNode logicalAndNode) {
-		level++;
-		logicalAndNode.getLHSBooleanExpNode().getVisited(this);
-		logicalAndNode.getRHSBooleanExpNode().getVisited(this);
-		level--;
-		if (level == 0) {
 
-		} else {
-			String varName = codeBlock.newVarName("and");
-			codeBlock.addAssignment("unsigned int " + varName,
-					booleanVarNameStack.pop() + " && "
-							+ booleanVarNameStack.pop());
-			booleanVarNameStack.push(varName);
-		}
-	}
 
 	@Override
 	public void visitVoteSumExp(VoteSumForCandExp node) {
@@ -517,6 +478,41 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		}
 		
 		booleanVarNameStack.push(generatedVar);
+	}
+
+	@Override
+	public void visitBinaryRelationNode(
+			BinaryRelationshipNode node,
+			String binaryCombinationSymbol) {		
+		node.getLHSBooleanExpNode().getVisited(this);
+		node.getRHSBooleanExpNode().getVisited(this);
+		
+		String rhsVarName = booleanVarNameStack.pop();
+		String lhsVarName = booleanVarNameStack.pop();
+		
+		String generatedVarName = codeBlock.newVarName("combined");
+		
+		Map<String, String> replacementMap = Map.of(
+					"VAR_NAME", generatedVarName,
+					"LHS_VAR", lhsVarName,
+					"RHS_VAR", rhsVarName
+				);
+		
+		String code = null;
+		
+		if(binaryCombinationSymbol.equals("&&")) {
+			code = "unsigned int VAR_NAME = LHS_VAR && RHS_VAR;\n";
+		} else if(binaryCombinationSymbol.equals("||")) {
+			code = "unsigned int VAR_NAME = LHS_VAR || RHS_VAR;\n";			
+		} else if(binaryCombinationSymbol.equals("==>")) {
+			code = "unsigned int VAR_NAME = !LHS_VAR || RHS_VAR;\n";			
+		} else if(binaryCombinationSymbol.equals("<==>")) {
+			code = "unsigned int VAR_NAME = (LHS_VAR && RHS_VAR) || (!LHS_VAR && !RHS_VAR);\n";			
+		}
+		
+		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+		
+		codeBlock.addSnippet(code);
 	}
 
 	

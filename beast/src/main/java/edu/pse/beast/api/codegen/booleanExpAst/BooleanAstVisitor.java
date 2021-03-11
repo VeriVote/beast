@@ -8,6 +8,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNo
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BinaryRelationshipNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
@@ -36,8 +37,10 @@ public interface BooleanAstVisitor {
 	public void visitForAllVotersNode(ForAllNode node);
 	public void visitExistsCandidateNode(ThereExistsNode node);
 	public void visitNotNode(NotNode node);
-	public void visitAndNode(LogicalAndNode logicalAndNode);
-
+	public void visitBinaryRelationNode(
+			BinaryRelationshipNode node,
+			String binaryCombinationSymbol);
+	
 	/*
 	 * 
 	 * Nodes returning some other value to be compared into a boolean value
