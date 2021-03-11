@@ -22,17 +22,7 @@ public class ElectIntersectionHelper {
 			VotingOutputTypes votingOutputType,
 			CodeGenOptions options, 
 			LoopBoundHandler loopBoundHandler) {
-		
-		Map<String, String> replacementMap = Map.of(
-				"ELECT_TYPE", electStruct.getStruct().getName(),
-				"AMT_MEMBER", electStruct.getAmtName(),
-				"LIST_MEMBER", electStruct.getListName(),
-				"GENERATED_VAR_NAME", generatedVarName,
-				"LHS_VAR_NAME", intersectedElectNames.get(0),
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
-				"ASSUME", options.getCbmcAssumeName(),
-				"NONDET_UINT", options.getCbmcNondetUintName()
-				);
+
 		
 		String code = null;
 		
@@ -48,12 +38,26 @@ public class ElectIntersectionHelper {
 					+ intersectedElectNames.get(i + 1) + ".LIST_MEMBER[i]";
 		}		
 		
+		
+		Map<String, String> replacementMap = Map.of(
+				"ELECT_TYPE", electStruct.getStruct().getName(),
+				"AMT_MEMBER", electStruct.getAmtName(),
+				"COMPARE_VARS", comparison,
+				"LIST_MEMBER", electStruct.getListName(),
+				"GENERATED_VAR_NAME", generatedVarName,
+				"LHS_VAR_NAME", intersectedElectNames.get(0),
+				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+				"ASSUME", options.getCbmcAssumeName(),
+				"NONDET_UINT", options.getCbmcNondetUintName()
+				);
+		
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
 				code = CodeTemplateElectIntersection.templateCandidateList;
 				break;
 			}
 			case PARLIAMENT : {
+				code = CodeTemplateElectIntersection.templateParliament;
 				break;
 			}
 			case PARLIAMENT_STACK : {

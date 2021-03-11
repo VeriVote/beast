@@ -22,5 +22,8 @@ public class CodeTemplateElectComparison {
 		
 		public final static List<String> loopBoundsCandidateList = Arrays.asList(
 				"AMT_CANDIDATES");		
-	
+
+		public static String templateParliamentUneq = templateCandidateListUneq;
+		public static String templateParliament = templateCandidateList;
+
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateElectEmpty;
 import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.elect.CodeTemplateElectPermutation;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
@@ -32,6 +33,7 @@ public class IsElectEmptyHelper {
 				break;
 			}
 			case PARLIAMENT : {
+				code = CodeTemplateElectEmpty.templateParliament;
 				break;
 			}
 			case PARLIAMENT_STACK : {
@@ -42,6 +44,7 @@ public class IsElectEmptyHelper {
 			}
 		}
 		
+		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}
 }

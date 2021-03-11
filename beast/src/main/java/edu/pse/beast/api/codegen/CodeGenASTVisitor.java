@@ -526,6 +526,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		
+		booleanVarNameStack.push(generatedVarName);
 		codeBlock.addSnippet(code);
 	}
 

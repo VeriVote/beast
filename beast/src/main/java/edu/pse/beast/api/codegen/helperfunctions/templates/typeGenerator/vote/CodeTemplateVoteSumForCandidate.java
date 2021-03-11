@@ -10,5 +10,5 @@ public class CodeTemplateVoteSumForCandidate {
 			+ "    }";
 	
 	public static String templateSingleChoiceStack =
-			"unsigned int GENERATED_VAR = VOTE_VAR.LIST_MEMBER[CANDIDATE_VAR];\n";
+			"unsigned int GENERATED_VAR = VOTE_VAR.LIST_MEMBER[CANDIDATE_VAR];\n";	
 }

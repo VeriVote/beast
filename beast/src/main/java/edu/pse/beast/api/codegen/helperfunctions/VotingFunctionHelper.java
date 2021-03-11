@@ -30,6 +30,7 @@ public class VotingFunctionHelper {
 				break;
 			}
 			case PARLIAMENT : {
+				code = "unsigned int VAR_NAME[AMT_CANDIDATES];\n";
 				break;
 			}
 			case PARLIAMENT_STACK : {
@@ -73,6 +74,10 @@ public class VotingFunctionHelper {
 			}
 			case CANDIDATE_LIST : {
 				code = CodeTemplateVotingFunctionResultCopy.templateCandidateList;
+				break;
+			}
+			case PARLIAMENT : {
+				code = CodeTemplateVotingFunctionResultCopy.templateParliament;
 				break;
 			}
 		}

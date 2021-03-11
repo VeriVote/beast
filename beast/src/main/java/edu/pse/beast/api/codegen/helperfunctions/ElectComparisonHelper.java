@@ -39,6 +39,7 @@ public class ElectComparisonHelper {
 					break;
 				}
 				case PARLIAMENT : {
+					code = CodeTemplateElectComparison.templateParliamentUneq;
 					break;
 				}
 				case PARLIAMENT_STACK : {
@@ -56,6 +57,7 @@ public class ElectComparisonHelper {
 					break;
 				}
 				case PARLIAMENT : {
+					code = CodeTemplateElectComparison.templateParliament;
 					break;
 				}
 				case PARLIAMENT_STACK : {

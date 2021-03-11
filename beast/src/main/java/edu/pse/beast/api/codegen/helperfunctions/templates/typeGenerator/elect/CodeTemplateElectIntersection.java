@@ -21,5 +21,6 @@ public class CodeTemplateElectIntersection {
 			+ "}\n";
 	
 	
-	
+	public final static String templateParliament = templateCandidateList; 
+
 }

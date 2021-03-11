@@ -25,9 +25,7 @@ public class CBMCCodeGeneratorTest {
 
 		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
 		String post1 = 
-				     " !EMPTY(CUT(ELECT2, ELECT3));\n"
-				    + " ELECT1 == CUT(ELECT2, ELECT3);";
-		String post = "";
+				     " (!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
 		
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("reinforcementTest",
@@ -74,7 +72,7 @@ public class CBMCCodeGeneratorTest {
 	@Test
 	public void testVotesumAndIntegerElecCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.APPROVAL, VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingInputTypes.SINGLE_CHOICE, VotingOutputTypes.SINGLE_CANDIDATE);
 		descr.getVotingFunction().getCode().add("result = 0;");
 
 		final String exp = "EXISTS_ONE_CANDIDATE(c) . "

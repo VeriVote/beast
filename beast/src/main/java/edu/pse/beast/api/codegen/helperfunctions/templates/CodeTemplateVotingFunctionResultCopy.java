@@ -19,4 +19,13 @@ public class CodeTemplateVotingFunctionResultCopy {
 				+ "		ASSUME(RESULT_VAR.LIST_MEMBER[i] == RESULT_ARR[i]);\n"
 				+ "	}\n";
 		
+		
+		public final static String templateParliament= 
+				  "	RESULT_TYPE RESULT_VAR;\n"
+				+ "	RESULT_VAR.AMT_MEMBER == NONDET_UINT();\n"
+				+ "	for(int i = 0; i < AMT_CANDIDATES; ++i) {\n"
+				+ " 	RESULT_VAR.LIST_MEMBER[i] = NONDET_UINT();\n"
+				+ "		ASSUME(RESULT_VAR.LIST_MEMBER[i] == RESULT_ARR[i]);\n"
+				+ "	}\n";
+		
 }
