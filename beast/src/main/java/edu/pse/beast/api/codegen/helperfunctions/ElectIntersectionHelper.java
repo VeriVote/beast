@@ -48,7 +48,7 @@ public class ElectIntersectionHelper {
 				"NONDET_UINT", options.getCbmcNondetUintName()
 				);
 		
-		List<String> loopbounds = null;
+		List<String> loopbounds = List.of();
 		String code = null;
 		
 		switch(votingOutputType) {

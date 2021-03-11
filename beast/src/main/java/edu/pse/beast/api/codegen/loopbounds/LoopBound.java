@@ -19,7 +19,7 @@ public class LoopBound {
 	}
 
 	public String getCBMCString() {
-		return name + ":" + bound;
+		return "--unwindset " + name + ":" + bound;
 	}
 
 }

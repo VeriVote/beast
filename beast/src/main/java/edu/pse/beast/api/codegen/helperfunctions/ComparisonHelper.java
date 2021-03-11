@@ -36,15 +36,21 @@ public class ComparisonHelper {
 		} else if (type.getListDimensions() == 1) {
 			CBMCVars listSize = type.getListSizes().get(0);
 			String amtString = null;
+			
+			List<String> loopbounds = CodeTemplateComparison.template1dloopBounds;
+			
 			switch (listSize) {
 				case AMT_CANDIDATES:
 					amtString = options.getCbmcAmountCandidatesVarName();
+					loopbounds.replaceAll(s -> s.replaceAll("AMT", "AMT_CANDIDATES"));
 					break;
 				case AMT_VOTERS:
 					amtString = options.getCbmcAmountVotersVarName();
+					loopbounds.replaceAll(s -> s.replaceAll("AMT", "AMT_VOTERS"));
 					break;
 			}			
 			
+			loopBoundHandler.addMainLoopBounds(loopbounds);
 			replacementMap = Map.of(
 					"AMT", amtString,
 					"ASSUME_OR_ASSERT", assumeOrAssert,
@@ -58,9 +64,7 @@ public class ComparisonHelper {
 			} else {
 				code = CodeTemplateComparison.template1d;
 			}
-			
-			List<String> loopbounds = CodeTemplateComparison.template1dloopBounds;
-			loopBoundHandler.addMainLoopBounds(loopbounds);
+
 		}
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);

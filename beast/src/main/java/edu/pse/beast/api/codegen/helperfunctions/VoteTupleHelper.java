@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class VoteTupleHelper {
 				);
 		
 		String code = CodeTemplateVoteTuple.templateVarSetup;
-		List<String> loopbounds = Arrays.asList();
+		List<String> loopbounds = new ArrayList<>();
 		
 		switch(votingInputType) {
 			case APPROVAL : {					

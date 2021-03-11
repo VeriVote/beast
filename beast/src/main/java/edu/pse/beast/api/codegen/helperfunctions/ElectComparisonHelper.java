@@ -28,7 +28,7 @@ public class ElectComparisonHelper {
 				break;
 			}
 		}
-		return null;
+		return List.of();
 	}
 	
 	public static String generateCode(

@@ -15,35 +15,6 @@ import edu.pse.beast.types.OutputType;
 
 public class CreationHelper {
 
-	public static ElectionDescription createSimpleDescription(String code, InputType it, OutputType ot) {
-		ElectionDescription descr = new ElectionDescription("simple", it, ot);
-
-		String elecDescrCode = generateSimpleDeclStringForCodeArea(descr.getContainer());
-
-		int lockedLineStart = 0;
-		int lockedLineEnd = lockedLineStart + elecDescrCode.length();
-
-		elecDescrCode += "\n\n";
-
-		elecDescrCode += code;
-
-		elecDescrCode += "\n\n}";
-
-		int lockedBracePos = elecDescrCode.length() - 1;
-
-		descr.setCode(elecDescrCode);
-		descr.setLockedPositions(lockedLineStart, lockedLineEnd, lockedBracePos);
-
-		List<String> complexCode = descr.getComplexCodeAndSetHeaderLoopBounds();
-		return descr;
-	}
-
-	public static ElectionDescription createSimpleDescription(String code) {
-		InputType it = InputType.getInputTypes().get(2);
-		OutputType ot = OutputType.getOutputTypes().get(3);
-		return (createSimpleDescription(code, it, ot));
-	}
-
 	public static List<PreAndPostConditionsDescription> createSimpleCondList(String name, String preCode,
 			String postCode) {
 		PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription(name);
@@ -56,8 +27,15 @@ public class CreationHelper {
 
 		return condList;
 	}
+	
+	public static ElectionCheckParameter createParamsOnlyOneRun(int V, int C, int S, int timeout) {
+		return new ElectionCheckParameter(
+				List.of(V), List.of(C), List.of(S), 
+				new TimeOut(TimeUnit.SECONDS, timeout),
+				1, "");
+	}
 
-	public static ElectionCheckParameter createParams(int maxV, int maxC, int maxS) {
+	public static ElectionCheckParameter createParams(int maxV, int maxC, int maxS, int timeout) {
 		List<Integer> vots = new ArrayList<>();
 		for (int i = 1; i <= maxV; ++i) {
 			vots.add(i);
@@ -71,7 +49,7 @@ public class CreationHelper {
 			seats.add(i);
 		}
 
-		TimeOut timeOut = new TimeOut(TimeUnit.SECONDS, 1);
+		TimeOut timeOut = new TimeOut(TimeUnit.SECONDS, timeout);
 
 		ElectionCheckParameter param = new ElectionCheckParameter(vots, cands, seats, timeOut, 1, "");
 

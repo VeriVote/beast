@@ -30,6 +30,7 @@ public class IsElectEmptyHelper {
 		String code = null;		
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
+				code = CodeTemplateElectEmpty.templateCandidateList;
 				break;
 			}
 			case PARLIAMENT : {

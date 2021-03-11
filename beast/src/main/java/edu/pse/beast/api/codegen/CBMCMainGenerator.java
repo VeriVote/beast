@@ -74,9 +74,6 @@ public class CBMCMainGenerator {
 							loopBoundHandler));
 		}
 
-		loopBoundHandler.getMainLoopBounds()
-				.forEach(b -> System.out.println(b.getCBMCString()));
-
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(
 				voteArrStruct,
 				votingInputType,

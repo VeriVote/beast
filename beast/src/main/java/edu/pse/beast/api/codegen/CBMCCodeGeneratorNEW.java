@@ -50,9 +50,6 @@ public class CBMCCodeGeneratorNEW {
 
 		created.define(ASSUME, CPROVER_ASSUME);
 
-		created.define("V", "1");
-		created.define("C", "1");
-
 		created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
 		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());
 

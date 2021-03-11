@@ -9,6 +9,7 @@ import java.util.List;
 
 import edu.pse.beast.api.BEASTCallback;
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -38,8 +39,7 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 			int V, int C, int S, 
 			String uuid, BEASTCallback cb,
 			File cbmcFile,
-			LoopBoundHandler 
-			loopBoundHandler,
+			LoopBoundHandler loopBoundHandler,
 			CodeGenOptions codeGenOptions) {
 
 		cb.onTestFileCreated(descr, propertyDescr, V, C, S, uuid, cbmcFile);
@@ -52,11 +52,31 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 		String seatsArg = "S=" + S;
 
 		String arguments = "-D " + voterArg + " -D " + candArg + " -D " + seatsArg;
+		
+		List<LoopBound> votingLoopbounds = 
+				loopBoundHandler.getVotingLoopBounds(
+						String.valueOf(V),
+						String.valueOf(C),
+						String.valueOf(S));
+				
+		List<LoopBound> mainLoopbounds = 
+				loopBoundHandler.getMainLoopBounds(
+						String.valueOf(V),
+						String.valueOf(C),
+						String.valueOf(S));
 
 		String completeCommand =
 				vsCmdPath + BLANK + "&" + BLANK + cbmcPath + BLANK + "\"" + cbmcFile.getPath() + "\""
 				+ BLANK + CBMC_XML_OUTPUT + BLANK + arguments;
-
+		
+		for(LoopBound votingLoopBound : votingLoopbounds) {
+			completeCommand += votingLoopBound.getCBMCString() + " ";
+		}
+		
+		for(LoopBound mainLoopBound : mainLoopbounds) {
+			completeCommand += mainLoopBound.getCBMCString() + " ";
+		}
+		
 		cb.onCompleteCommand(descr, propertyDescr, V, C, S, uuid, completeCommand);
 
 		final File batFile = new File(cbmcFile.getParent() + "\\"

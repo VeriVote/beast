@@ -9,9 +9,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 
 public class CBMCCodeGeneratorTest {
 	
@@ -24,12 +22,11 @@ public class CBMCCodeGeneratorTest {
 		descr.getVotingFunction().getCode().add("result = 0;");
 
 		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
-		String post1 = 
-				     " (!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
+		String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
 		
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("reinforcementTest",
-						pre, post1);
+						pre, post);
 		
 		propDescr.get(0).getCbmcVariables()
 				.add(new SymbolicCBMCVar("c", SymbolicCBMCVar.CBMCVarType.CANDIDATE));

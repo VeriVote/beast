@@ -16,14 +16,27 @@ public class LoopBoundHandler {
 		mainFuncLoopBounds.addAll(bounds);
 	}
 
-	public List<LoopBound> getMainLoopBounds() {
+	public List<LoopBound> getMainLoopBounds(
+			String amtVoters, 
+			String amtCandidates, 
+			String amtSeats) {
 		List<LoopBound> created = new ArrayList<>();
 		for (int i = 0; i < mainFuncLoopBounds.size(); ++i) {
 			final String nameTemplate = "main.NUMBER";
-			LoopBound bound = new LoopBound(
-					nameTemplate.replace("NUMBER", String.valueOf(i)),
-					mainFuncLoopBounds.get(i));
-			created.add(bound);
+			String bound = null;
+			if(mainFuncLoopBounds.get(i).equals("AMT_VOTERS")) {
+				bound = amtVoters;
+			} else if(mainFuncLoopBounds.get(i).equals("AMT_CANDIDATES")) {
+				bound = amtCandidates;
+			} else if(mainFuncLoopBounds.get(i).equals("AMT_SEATS")) {
+				bound = amtSeats;
+			}
+			LoopBound loopBound = 
+					new LoopBound(
+						nameTemplate.replace(
+								"NUMBER", String.valueOf(i)),
+						bound);
+			created.add(loopBound);
 		}
 		return created;
 	}
@@ -32,14 +45,27 @@ public class LoopBoundHandler {
 		votingFuncLoopBounds.addAll(bounds);
 	}
 	
-	public List<LoopBound> getVotingLoopBounds() {
+	public List<LoopBound> getVotingLoopBounds(
+			String amtVoters, 
+			String amtCandidates, 
+			String amtSeats) {
 		List<LoopBound> created = new ArrayList<>();
 		for (int i = 0; i < votingFuncLoopBounds.size(); ++i) {
-			final String nameTemplate = "voting.NUMBER";
-			LoopBound bound = new LoopBound(
-					nameTemplate.replace("NUMBER", String.valueOf(i)),
-					mainFuncLoopBounds.get(i));
-			created.add(bound);
+			final String nameTemplate = "main.NUMBER";
+			String bound = null;
+			if(votingFuncLoopBounds.get(i).equals("AMT_VOTERS")) {
+				bound = amtVoters;
+			} else if(votingFuncLoopBounds.get(i).equals("AMT_CANDIDATES")) {
+				bound = amtCandidates;
+			} else if(votingFuncLoopBounds.get(i).equals("AMT_SEATS")) {
+				bound = amtSeats;
+			}
+			LoopBound loopBound = 
+					new LoopBound(
+						nameTemplate.replace(
+								"NUMBER", String.valueOf(i)),
+						bound);
+			created.add(loopBound);
 		}
 		return created;
 	}

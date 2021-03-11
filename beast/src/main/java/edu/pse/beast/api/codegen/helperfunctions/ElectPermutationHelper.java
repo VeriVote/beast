@@ -35,7 +35,7 @@ public class ElectPermutationHelper {
 				);
 		
 		String code = null;		
-		List<String> loopbounds = null;
+		List<String> loopbounds = List.of();
 	
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {

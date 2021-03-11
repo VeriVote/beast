@@ -32,7 +32,7 @@ public class VotePermutationHelper {
 					"AMT_VOTERS", options.getCbmcAmountVotersVarName()
 				);
 		
-		List<String> loopbounds = null;
+		List<String> loopbounds = List.of();
 		String code = null;		
 		
 		switch(votingInputType) {
