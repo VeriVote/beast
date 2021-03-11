@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen.booleanExpAst;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
@@ -48,6 +49,7 @@ public interface BooleanAstVisitor {
 	public void visitVoteExpNode(VoteExp node);
 	public void visitElectExpNode(ElectExp node);
 	public void visitVotePermutation(VotePermutationNode node);
+	public void visitElectPermutation(ElectPermutationNode node);
 	public void visitVoteTuple(VoteTupleNode node);
 	public void visitElectTuple(ElectTupleNode node);
 	public void visitSymbolicVarExp(SymbolicVarExp node);

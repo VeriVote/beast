@@ -8,6 +8,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
@@ -16,11 +17,14 @@ import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.ElectPermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteExpHelper;
+import edu.pse.beast.api.codegen.helperfunctions.VoteIntersectionHelper;
+import edu.pse.beast.api.codegen.helperfunctions.VotePermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VotesumHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
@@ -161,9 +165,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			String lhsVarName = expVarNameStack.pop();
 
 			CElectionVotingType rhsType = expTypes.pop();
-			CElectionVotingType lhsType = expTypes.pop();
-
-			
+			CElectionVotingType lhsType = expTypes.pop();			
 		}
 	}
 
@@ -178,11 +180,35 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		}
 
 		codeBlock.addSnippet(
-				IntersectionHelper.generateVoteIntersection(generatedVarName,
-						varNames, voteArrStruct, options, loopBoundHandler));
+				VoteIntersectionHelper.generateVoteIntersection(
+						generatedVarName,
+						varNames, 
+						voteArrStruct, 
+						votingInputType,
+						options, 
+						loopBoundHandler));
 
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
+	}
+	
+	@Override
+	public void visitElectIntersectionNode(ElectIntersectionNode node) {
+		String generatedVarName = codeBlock.newVarName("electIntersection");
+
+		List<String> varNames = new ArrayList<>();
+		for (int number : node.getNumbers()) {
+			varNames.add(
+					"electNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+		}
+
+		codeBlock.addSnippet(
+				IntersectionHelper.generateElectIntersection(generatedVarName,
+						varNames, voteResultStruct, options, loopBoundHandler));
+
+		expVarNameStack.push(generatedVarName);
+		expTypes.push(voteResultStruct.getVotingType());
+		amtElectVars++;
 	}
 
 	@Override
@@ -220,16 +246,41 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitVotePermutation(VotePermutationNode node) {
-		String generatedVarName = codeBlock.newVarName("permutation");
+		String generatedVarName = codeBlock.newVarName("votePermutation");
 		String varName = "voteNUMBER".replaceAll("NUMBER",
 				String.valueOf(node.getVoteNumber()));
 
 		codeBlock.addSnippet(
-				PermutationHelper.generateVotePermutation(generatedVarName,
-						varName, voteArrStruct, options, loopBoundHandler));
+				VotePermutationHelper.generateCode(
+						generatedVarName,
+						varName, 
+						voteArrStruct, 
+						votingInputType, 
+						options, 
+						loopBoundHandler));
 
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
+	}
+	
+	@Override
+	public void visitElectPermutation(ElectPermutationNode node) {
+		String generatedVarName = codeBlock.newVarName("votePermutation");
+		String varName = "electNUMBER".replaceAll("NUMBER",
+				String.valueOf(node.getElectNumber()));
+		
+		codeBlock.addSnippet(
+					ElectPermutationHelper.generateCode(
+							generatedVarName, 
+							varName, 
+							voteResultStruct,
+							votingOutputType,
+							options, 
+							loopBoundHandler)
+				);
+
+		expVarNameStack.push(generatedVarName);
+		amtElectVars++;
 	}
 	
 	@Override
@@ -450,24 +501,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		}
 	}
 
-	@Override
-	public void visitElectIntersectionNode(ElectIntersectionNode node) {
-		String generatedVarName = codeBlock.newVarName("electIntersection");
-
-		List<String> varNames = new ArrayList<>();
-		for (int number : node.getNumbers()) {
-			varNames.add(
-					"electNUMBER".replaceAll("NUMBER", String.valueOf(number)));
-		}
-
-		codeBlock.addSnippet(
-				IntersectionHelper.generateElectIntersection(generatedVarName,
-						varNames, voteResultStruct, options, loopBoundHandler));
-
-		expVarNameStack.push(generatedVarName);
-		expTypes.push(voteResultStruct.getVotingType());
-		amtElectVars++;
-	}
+	
 
 
 }

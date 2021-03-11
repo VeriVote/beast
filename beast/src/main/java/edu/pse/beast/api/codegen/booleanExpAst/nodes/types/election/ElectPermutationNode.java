@@ -25,11 +25,14 @@ public class ElectPermutationNode extends ElectionTypeNode {
 	public void setElectNumber(int electionNumber) {
 		this.electNumber = electionNumber;
 	}
+	
+	public int getElectNumber() {
+		return electNumber;
+	}
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visitElectPermutation(this);
 	}
 
 }
