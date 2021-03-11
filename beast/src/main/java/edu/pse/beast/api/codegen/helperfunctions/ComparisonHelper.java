@@ -60,7 +60,6 @@ public class ComparisonHelper {
 			}
 			
 			List<String> loopbounds = CodeTemplateComparison.template1dloopBounds;
-			CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap);
 			loopBoundHandler.addMainLoopBounds(loopbounds);
 		}
 		

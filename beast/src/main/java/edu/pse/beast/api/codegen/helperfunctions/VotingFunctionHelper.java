@@ -86,9 +86,7 @@ public class VotingFunctionHelper {
 			}
 		}
 		
-		loopBoundHandler.addVotingLoopBounds(
-				CodeGenerationToolbox.replaceLoopBounds(
-						loopbounds, replacementMap));
+		loopBoundHandler.addVotingLoopBounds(loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, 
@@ -140,9 +138,7 @@ public class VotingFunctionHelper {
 			}
 		}	
 		
-		loopBoundHandler.addVotingLoopBounds(
-				CodeGenerationToolbox.replaceLoopBounds(
-						loopbounds, replacementMap));
+		loopBoundHandler.addVotingLoopBounds(loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		

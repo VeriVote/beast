@@ -26,7 +26,9 @@ public class CBMCResult {
 	private Document cbmcDocument;
 	private boolean success;
 
-	public CBMCResult(ElectionDescription descr, PreAndPostConditionsDescription cond, int s, int c, int v, String uuid,
+	public CBMCResult(
+			ElectionDescription descr, PreAndPostConditionsDescription cond, 
+			int s, int c, int v, String uuid,
 			List<String> rawOutput) {
 		this.descr = descr;
 		this.cond = cond;

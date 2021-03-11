@@ -1,7 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -10,11 +9,10 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.reactfx.util.Lists;
 
+import edu.pse.beast.api.codegen.ScopeHandler;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
-import edu.pse.beast.api.codegen.ScopeHandler;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
@@ -46,7 +44,6 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerValuedExpression;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
@@ -72,11 +69,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumUniqueExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteTupleExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScopehandler;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
-import edu.pse.beast.types.cbmctypes.CBMCInputType;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {

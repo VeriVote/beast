@@ -12,7 +12,9 @@ public class BEASTPropertyCheckSession {
 	public BEASTPropertyCheckSession() {
 	}
 
-	public BEASTPropertyCheckSession(PropertyCheckWorkSupplier propertyCheckWorkSupplier, ThreadPoolInterface tpi) {
+	public BEASTPropertyCheckSession(
+			PropertyCheckWorkSupplier propertyCheckWorkSupplier, 
+			ThreadPoolInterface tpi) {
 		this.propertyCheckWorkSupplier = propertyCheckWorkSupplier;
 		this.tpi = tpi;
 		tpi.startOnceReady(propertyCheckWorkSupplier);

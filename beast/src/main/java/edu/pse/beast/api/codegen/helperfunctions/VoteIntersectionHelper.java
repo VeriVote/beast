@@ -80,11 +80,9 @@ public class VoteIntersectionHelper {
 			}			
 		}		
 
-		loopBoundHandler.addMainLoopBounds(
-				CodeGenerationToolbox.replaceLoopBounds(
-						loopbounds, replacementMap)
-				);
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+		loopBoundHandler.addMainLoopBounds(loopbounds);
+		code = CodeGenerationToolbox.replacePlaceholders(
+				code, replacementMap);
 		return code;
 	}
 }

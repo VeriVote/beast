@@ -19,13 +19,16 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import edu.pse.beast.api.BEASTCallback;
+import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 
 public class PropertyCheckWorkUnit implements WorkUnit {
-	ElectionDescription description;
+	CElectionDescription descr;
 	PreAndPostConditionsDescription propertyDescr;
 	int v, c, s;
 	String uuid;
@@ -33,10 +36,20 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	BEASTCallback cb;
 	private boolean finished = false;
 	File cbmcFile;
-
-	public PropertyCheckWorkUnit(ElectionDescription description, PreAndPostConditionsDescription propertyDescr, int v,
-			int c, int s, String uuid, BEASTCallback cb, CBMCProcessStarter processStarter, File cbmcFile) {
-		this.description = description;
+	private LoopBoundHandler loopBoundHandler;
+	private CodeGenOptions codeGenOptions;
+	
+	public PropertyCheckWorkUnit(
+			CElectionDescription descr, 
+			PreAndPostConditionsDescription propertyDescr, 
+			int v,
+			int c, int s, 
+			String uuid, BEASTCallback cb,
+			CBMCProcessStarter processStarter, 
+			File cbmcFile,
+			LoopBoundHandler loopBoundHandler,
+			CodeGenOptions codeGenOptions) {
+		this.descr = descr;
 		this.propertyDescr = propertyDescr;
 		this.v = v;
 		this.c = c;
@@ -45,13 +58,22 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 		this.cb = cb;
 		this.processStarter = processStarter;
 		this.cbmcFile = cbmcFile;
+		this.loopBoundHandler = loopBoundHandler;
+		this.codeGenOptions = codeGenOptions;
 	}
 
 	@Override
 	public void doWork() {
-		cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
+		cb.onPropertyTestStart(descr, propertyDescr, s, c, v, uuid);
 
-		ProcessBuilder pb = processStarter.startTestForParam(description, propertyDescr, v, c, s, uuid, cb, cbmcFile);
+		ProcessBuilder pb = 
+				processStarter.startTestForParam(
+					descr, propertyDescr, 
+					v, c, s,
+					uuid, 
+					cb, cbmcFile, 
+					loopBoundHandler,
+					codeGenOptions);
 		Process process;
 		try {
 			process = pb.start();
@@ -60,15 +82,18 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 			List<String> cbmcOutput = new ArrayList<>();
 			try {
 				while ((line = reader.readLine()) != null) {
-					cb.onPropertyTestRawOutput(description, propertyDescr, s, c, v, uuid, line);
+					cb.onPropertyTestRawOutput(
+							descr, propertyDescr, s, c, v, uuid, line);
 					cbmcOutput.add(line);
 				}
 				// TODO errorhandling
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			cb.onPropertyTestRawOutputComplete(description, propertyDescr, s, c, v, uuid, cbmcOutput);
-			cb.onPropertyTestFinished(description, propertyDescr, s, c, v, uuid);
+			cb.onPropertyTestRawOutputComplete(
+					descr, propertyDescr, s, c, v, uuid, cbmcOutput);
+			cb.onPropertyTestFinished(
+					descr, propertyDescr, s, c, v, uuid);
 			finished = true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

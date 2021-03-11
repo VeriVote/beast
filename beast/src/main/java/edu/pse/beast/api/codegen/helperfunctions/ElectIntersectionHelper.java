@@ -70,8 +70,7 @@ public class ElectIntersectionHelper {
 			}
 		}
 		
-		loopBoundHandler.addMainLoopBounds(
-				CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap));
+		loopBoundHandler.addMainLoopBounds(loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, replacementMap);
 		return code;

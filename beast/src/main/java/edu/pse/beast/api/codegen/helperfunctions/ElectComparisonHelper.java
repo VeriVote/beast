@@ -91,9 +91,7 @@ public class ElectComparisonHelper {
 			}
 		}
 		
-		List<String> loopbounds = CodeGenerationToolbox.replaceLoopBounds(
-				getLoopBounds(votingOutputType),
-				replacementMap);
+		List<String> loopbounds = getLoopBounds(votingOutputType);
 		loopBoundHandler.addMainLoopBounds(loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);		

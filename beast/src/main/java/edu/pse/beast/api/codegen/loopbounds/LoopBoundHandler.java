@@ -31,5 +31,17 @@ public class LoopBoundHandler {
 	public void addVotingLoopBounds(List<String> bounds) {
 		votingFuncLoopBounds.addAll(bounds);
 	}
+	
+	public List<LoopBound> getVotingLoopBounds() {
+		List<LoopBound> created = new ArrayList<>();
+		for (int i = 0; i < votingFuncLoopBounds.size(); ++i) {
+			final String nameTemplate = "voting.NUMBER";
+			LoopBound bound = new LoopBound(
+					nameTemplate.replace("NUMBER", String.valueOf(i)),
+					mainFuncLoopBounds.get(i));
+			created.add(bound);
+		}
+		return created;
+	}
 
 }

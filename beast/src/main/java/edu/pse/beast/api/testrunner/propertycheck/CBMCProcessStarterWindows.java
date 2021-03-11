@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.BEASTCallback;
+import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
@@ -30,11 +33,16 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 	String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
 	@Override
-	public ProcessBuilder startTestForParam(ElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int V, int C, int S, String uuid, BEASTCallback cb,
-			File cbmcFile) {
+	public ProcessBuilder startTestForParam(CElectionDescription descr,
+			PreAndPostConditionsDescription propertyDescr, 
+			int V, int C, int S, 
+			String uuid, BEASTCallback cb,
+			File cbmcFile,
+			LoopBoundHandler 
+			loopBoundHandler,
+			CodeGenOptions codeGenOptions) {
 
-		cb.onTestFileCreated(description, propertyDescr, V, C, S, uuid, cbmcFile);
+		cb.onTestFileCreated(descr, propertyDescr, V, C, S, uuid, cbmcFile);
 
 		String cbmcPath = "\"" + new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath() + "\"";
 		String BLANK = " ";
@@ -45,10 +53,11 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 
 		String arguments = "-D " + voterArg + " -D " + candArg + " -D " + seatsArg;
 
-		String completeCommand = vsCmdPath + BLANK + "&" + BLANK + cbmcPath + BLANK + "\"" + cbmcFile.getPath() + "\""
+		String completeCommand =
+				vsCmdPath + BLANK + "&" + BLANK + cbmcPath + BLANK + "\"" + cbmcFile.getPath() + "\""
 				+ BLANK + CBMC_XML_OUTPUT + BLANK + arguments;
 
-		cb.onCompleteCommand(description, propertyDescr, V, C, S, uuid, completeCommand);
+		cb.onCompleteCommand(descr, propertyDescr, V, C, S, uuid, completeCommand);
 
 		final File batFile = new File(cbmcFile.getParent() + "\\"
 				+ cbmcFile.getName().replace(FileLoader.C_FILE_ENDING, FileLoader.BAT_FILE_ENDING));

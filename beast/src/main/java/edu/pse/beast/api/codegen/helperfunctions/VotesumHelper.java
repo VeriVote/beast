@@ -55,7 +55,7 @@ public class VotesumHelper {
 			}
 		}
 		
-		loopBoundHandler.addMainLoopBounds(CodeGenerationToolbox.replaceLoopBounds(loopbounds, replaceMap));
+		loopBoundHandler.addMainLoopBounds(loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(code, replaceMap);
 		return code;
 	}
