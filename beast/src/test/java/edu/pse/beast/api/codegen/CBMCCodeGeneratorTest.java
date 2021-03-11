@@ -91,7 +91,7 @@ public class CBMCCodeGeneratorTest {
 	@Test
 	public void testSimpleElecCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.APPROVAL, VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingInputTypes.APPROVAL, VotingOutputTypes.CANDIDATE_LIST);
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("ELECT1 != ELECT2", "",

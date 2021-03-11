@@ -53,28 +53,32 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 
 		String arguments = "-D " + voterArg + " -D " + candArg + " -D " + seatsArg;
 		
-		List<LoopBound> votingLoopbounds = 
-				loopBoundHandler.getVotingLoopBounds(
-						String.valueOf(V),
-						String.valueOf(C),
-						String.valueOf(S));
-				
-		List<LoopBound> mainLoopbounds = 
-				loopBoundHandler.getMainLoopBounds(
-						String.valueOf(V),
-						String.valueOf(C),
-						String.valueOf(S));
-
 		String completeCommand =
 				vsCmdPath + BLANK + "&" + BLANK + cbmcPath + BLANK + "\"" + cbmcFile.getPath() + "\""
 				+ BLANK + CBMC_XML_OUTPUT + BLANK + arguments;
 		
-		for(LoopBound votingLoopBound : votingLoopbounds) {
-			completeCommand += votingLoopBound.getCBMCString() + " ";
-		}
-		
-		for(LoopBound mainLoopBound : mainLoopbounds) {
-			completeCommand += mainLoopBound.getCBMCString() + " ";
+		if(!(V == C && C == S)) {
+			List<LoopBound> votingLoopbounds = 
+					loopBoundHandler.getVotingLoopBounds(
+							String.valueOf(V),
+							String.valueOf(C),
+							String.valueOf(S));
+					
+			List<LoopBound> mainLoopbounds = 
+					loopBoundHandler.getMainLoopBounds(
+							String.valueOf(V),
+							String.valueOf(C),
+							String.valueOf(S));
+			
+			for(LoopBound votingLoopBound : votingLoopbounds) {
+				completeCommand += " " + votingLoopBound.getCBMCString();
+			}
+			
+			for(LoopBound mainLoopBound : mainLoopbounds) {
+				completeCommand += " " +  mainLoopBound.getCBMCString();
+			}
+		} else {
+			completeCommand += " --unwind " + String.valueOf(V);
 		}
 		
 		cb.onCompleteCommand(descr, propertyDescr, V, C, S, uuid, completeCommand);

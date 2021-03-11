@@ -115,7 +115,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		node.getFirstChild().getVisited(this);
 	
 		String topBoolean = booleanVarNameStack.pop();
-		codeBlock.addSnippet(assumeAssert + "(" + topBoolean + ")");
+		codeBlock.addSnippet(assumeAssert + "(" + topBoolean + ");\n");
 	}
 
 	private void visitVoteComparison(
@@ -154,14 +154,14 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitComparisonNode(ComparisonNode node) {
+		amtElectVars = 0;
+		amtVoteVars = 0;
 		node.getLhsTypeExp().getVisited(this);
 		node.getRhsTypeExp().getVisited(this);
 		if (amtVoteVars == 2) {
 			visitVoteComparison(node);
-			amtVoteVars = 0;
 		} else if (amtElectVars == 2) {
 			visitElectComparison(node);
-			amtElectVars = 0;
 		} else {
 			String rhsVarName = expVarNameStack.pop();
 			String lhsVarName = expVarNameStack.pop();
@@ -182,6 +182,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			
 			booleanVarNameStack.push(generatedVar);
 		}
+		amtElectVars = 0;
+		amtVoteVars = 0;
 	}
 
 	@Override
@@ -263,7 +265,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			expVarNameStack.push("elect" + node.getCount());
 			expTypes.push(voteResultStruct.getVotingType());
 			amtElectVars++;
-		}
+		}		
 	}
 
 	@Override

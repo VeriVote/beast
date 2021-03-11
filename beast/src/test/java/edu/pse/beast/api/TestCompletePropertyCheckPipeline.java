@@ -14,7 +14,7 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public class TestCompletePropertyCheck {
+public class TestCompletePropertyCheckPipeline {
 	
 	
 	CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();			
@@ -72,6 +72,7 @@ public class TestCompletePropertyCheck {
 							int v, int c, int s, String uuid, File cbmcFile) {
 						System.out.println(cbmcFile.getAbsolutePath());
 					}
+					
 				},
 			descr, propDecsr, params,  
 			options);

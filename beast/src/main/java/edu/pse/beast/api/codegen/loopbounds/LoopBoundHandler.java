@@ -51,7 +51,7 @@ public class LoopBoundHandler {
 			String amtSeats) {
 		List<LoopBound> created = new ArrayList<>();
 		for (int i = 0; i < votingFuncLoopBounds.size(); ++i) {
-			final String nameTemplate = "main.NUMBER";
+			final String nameTemplate = "voting.NUMBER";
 			String bound = null;
 			if(votingFuncLoopBounds.get(i).equals("AMT_VOTERS")) {
 				bound = amtVoters;
