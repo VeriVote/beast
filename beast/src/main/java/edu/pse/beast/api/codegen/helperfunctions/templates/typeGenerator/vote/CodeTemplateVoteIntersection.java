@@ -20,6 +20,8 @@ public class CodeTemplateVoteIntersection {
 			+ "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);\n"
 			+ "}\n";
 	
+	public final static List<String> loopBoundsSingleChoice = 
+			Arrays.asList("AMT_VOTERS");
 	
 	public final static String templatePreference = 
 			  "VOTE_TYPE GENERATED_VAR_NAME;\n"
@@ -46,5 +48,5 @@ public class CodeTemplateVoteIntersection {
 			"AMT_VOTERS", "AMT_CANDIDATES", "AMT_CANDIDATES");
 	
 	public final static String templateApproval = templatePreference; 
-
+	public final static List<String> loopBoundsApproval = loopBoundsPreference;
 }

@@ -23,6 +23,6 @@ public class CodeTemplateElectPermutation {
 			+ "        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == RHS.LIST_MEMBER[PERM[i]]);\n"
 			+ "    }";
 	
-	public final static List<String> loopBoundsPreference = Arrays.asList(
+	public final static List<String> loopBoundsCandidateList = Arrays.asList(
 			"AMT_CANDIDATES", "AMT_CANDIDATES", "AMT_CANDIDATES", "AMT_CANDIDATES");
 }

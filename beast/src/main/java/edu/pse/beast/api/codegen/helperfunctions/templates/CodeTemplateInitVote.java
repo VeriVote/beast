@@ -7,15 +7,15 @@ public class CodeTemplateInitVote {
 	public final static String templateSingleChoice = 
 			  "    VOTE_TYPE VAR_NAME;\n"
 			+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
-			+ "    ASSUME(VAR_NAME.amtVotes <= AMT_VOTES);\n"
-			+ "    for (int i = 0; i < AMT_VOTES; ++i) {\n"
+			+ "    ASSUME(VAR_NAME.amtVotes <= AMT_VOTERS);\n"
+			+ "    for (int i = 0; i < AMT_VOTERS; ++i) {\n"
 			+ "            VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();\n"
 			+ "            ASSUME(VAR_NAME.votes[i] >= LOWER_VOTE_BOUND);\n"
 			+ "            ASSUME(VAR_NAME.votes[i] <= UPPER_VOTE_BOUND);\n"
 			+ "    }\n";
 	
 	public final static List<String> loopBoundsSingleCandidate = 
-			Arrays.asList("AMT_VOTES");
+			Arrays.asList("AMT_VOTERS");
 	
 	public final static String templatePreference = 
 			  "    VOTE_TYPE VAR_NAME;\n"
@@ -51,8 +51,8 @@ public class CodeTemplateInitVote {
 	
 	
 	public final static List<String> loopBoundsPreference = Arrays.asList(
-			"OUTER_BOUND", "INNER_BOUND", 
-			"AMT_VOTES", "AMT_CANDIDATES", 
+			"AMT_VOTERS", "AMT_CANDIDATES", 
+			"AMT_VOTERS", "AMT_CANDIDATES", 
 			"AMT_CANDIDATES", "AMT_CANDIDATES");
 
 	public final static String templateApproval = 
@@ -65,5 +65,14 @@ public class CodeTemplateInitVote {
 			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= LOWER_VOTE_BOUND);\n"
 			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] < UPPER_VOTE_BOUND);\n"
 			+ "        }\n" 
+			+ "    }\n"
+			+ "    for (int i = VAR_NAME.AMT_MEMBER; i < AMT_VOTERS; ++i) {\n"
+			+ "        for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
+			+ "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();\n"
+			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] == UPPER_VOTE_BOUND);\n"
+			+ "        }\n" 
 			+ "    }\n";
+	
+	public final static List<String> loopBoundsApproval =
+			Arrays.asList("AMT_VOTERS", "AMT_CANDIDATES", "AMT_VOTERS", "AMT_CANDIDATES");
 }

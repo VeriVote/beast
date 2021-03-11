@@ -21,6 +21,9 @@ public class CodeTemplateElectIntersection {
 			+ "}\n";
 	
 	
+	public final static List<String> loopboundsCandidateList = 
+			Arrays.asList("AMT_CANDIDATES");	
+	
 	public final static String templateParliament = templateCandidateList; 
-
+	public final static List<String> loopboundsParliament = loopboundsCandidateList;
 }

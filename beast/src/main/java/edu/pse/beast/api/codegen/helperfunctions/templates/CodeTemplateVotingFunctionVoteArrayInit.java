@@ -10,7 +10,7 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
 			+ "     VOTE_ARR[i] = VOTE_INPUT_STRUCT_VAR.LIST_MEMBER[i];\n" 
 			+ " }";
 		
-	public final static List<String> singleChoiceloopBounds =
+	public final static List<String> loopBoundsSingleChoice =
 			Arrays.asList("AMT_VOTERS");
 
 	public final static String templatePreference = 
@@ -21,9 +21,10 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
 			+ "     }\n" 
 			+ " }";			
 	
-	public final static List<String> preferenceLoopBounds =
+	public final static List<String> loopBoundsPreference =
 			Arrays.asList("AMT_VOTERS", "AMT_CANDIDATES");
 	
 	public final static String templateApproval = templatePreference;
-	
+	public final static List<String> loopBoundsApproval = loopBoundsPreference;
+
 }

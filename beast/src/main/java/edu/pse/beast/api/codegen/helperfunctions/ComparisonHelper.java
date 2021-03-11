@@ -1,5 +1,6 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -36,15 +37,14 @@ public class ComparisonHelper {
 			CBMCVars listSize = type.getListSizes().get(0);
 			String amtString = null;
 			switch (listSize) {
-			case AMT_CANDIDATES:
-				amtString = options.getCbmcAmountCandidatesVarName();
-				break;
-			case AMT_VOTERS:
-				amtString = options.getCbmcAmountVotersVarName();
-				break;
-			default:
-				break;
+				case AMT_CANDIDATES:
+					amtString = options.getCbmcAmountCandidatesVarName();
+					break;
+				case AMT_VOTERS:
+					amtString = options.getCbmcAmountVotersVarName();
+					break;
 			}			
+			
 			replacementMap = Map.of(
 					"AMT", amtString,
 					"ASSUME_OR_ASSERT", assumeOrAssert,
@@ -58,6 +58,10 @@ public class ComparisonHelper {
 			} else {
 				code = CodeTemplateComparison.template1d;
 			}
+			
+			List<String> loopbounds = CodeTemplateComparison.template1dloopBounds;
+			CodeGenerationToolbox.replaceLoopBounds(loopbounds, replacementMap);
+			loopBoundHandler.addMainLoopBounds(loopbounds);
 		}
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);

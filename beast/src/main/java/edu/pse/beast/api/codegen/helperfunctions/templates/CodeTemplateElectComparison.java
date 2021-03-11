@@ -20,10 +20,13 @@ public class CodeTemplateElectComparison {
 				+ "    GENERATED_VAR |= LHS_VAR.LIST_MEMBER[i] != RHS_VAR.LIST_MEMBER[i];\n"
 				+ "}\n";		
 		
-		public final static List<String> loopBoundsCandidateList = Arrays.asList(
-				"AMT_CANDIDATES");		
+		public final static List<String> loopBoundsCandidateList 
+											= Arrays.asList("AMT_CANDIDATES");		
 
 		public static String templateParliamentUneq = templateCandidateListUneq;
 		public static String templateParliament = templateCandidateList;
+		
+		public final static List<String> loopBoundsParliament
+											= loopBoundsCandidateList;
 
 }
