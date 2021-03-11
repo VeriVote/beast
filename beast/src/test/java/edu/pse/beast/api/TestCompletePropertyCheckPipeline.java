@@ -48,7 +48,7 @@ public class TestCompletePropertyCheckPipeline {
 		List<PreAndPostConditionsDescription> propDecsr =
 				CreationHelper.createSimpleCondList("reinforce", pre, post);
 		
-		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5, 5, 5, 10);
+		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(10, 10, 10, 10);
 		
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");
@@ -71,6 +71,15 @@ public class TestCompletePropertyCheckPipeline {
 							PreAndPostConditionsDescription propertyDescr,
 							int v, int c, int s, String uuid, File cbmcFile) {
 						System.out.println(cbmcFile.getAbsolutePath());
+					}
+					
+					@Override
+					public void onPropertyTestRawOutput(
+							CElectionDescription description,
+							PreAndPostConditionsDescription propertyDescr,
+							int s, int c, int v, String uuid,
+							String output) {
+						System.out.println(output);
 					}
 					
 				},

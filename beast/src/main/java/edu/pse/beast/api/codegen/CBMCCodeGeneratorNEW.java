@@ -165,7 +165,6 @@ public class CBMCCodeGeneratorNEW {
 					);
 		
 		created.setCode(code);
-		System.out.println(created.generateDefCode());
 		return created;
 	}	
 
