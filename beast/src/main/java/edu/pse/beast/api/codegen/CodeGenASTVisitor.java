@@ -8,6 +8,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
@@ -15,10 +16,12 @@ import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.ElectTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteExpHelper;
+import edu.pse.beast.api.codegen.helperfunctions.VoteTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VotesumHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
@@ -228,10 +231,31 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
 	}
+	
+	@Override
+	public void visitElectTuple(ElectTupleNode node) {
+		String generatedVarName = codeBlock.newVarName("electSequence");
+		
+		List<String> electNames = new ArrayList<>();		
+		for (int number : node.getElectNumbers()) {
+			electNames.add("electNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+		}
+		
+		codeBlock.addSnippet(ElectTupleHelper.generateCode(
+				generatedVarName,
+				electNames, 
+				voteResultStruct, 
+				votingOutputType,
+				options, 
+				loopBoundHandler));
+		
+		expVarNameStack.push(generatedVarName);
+		amtElectVars++;
+	}
 
 	@Override
 	public void visitVoteTuple(VoteTupleNode node) {
-		String generatedVarName = codeBlock.newVarName("sequence");
+		String generatedVarName = codeBlock.newVarName("voteSequence");
 		
 		List<String> voteNames = new ArrayList<>();		
 		for (int number : node.getNumbers()) {
@@ -240,7 +264,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		}
 
 		codeBlock.addSnippet(
-				TupleHelper.generateCode(
+				VoteTupleHelper.generateCode(
 						generatedVarName,
 						voteNames, 
 						voteArrStruct, 
@@ -444,4 +468,6 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		expTypes.push(voteResultStruct.getVotingType());
 		amtElectVars++;
 	}
+
+
 }

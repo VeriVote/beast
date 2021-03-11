@@ -26,11 +26,14 @@ public class ElectTupleNode extends ElectionTypeNode {
 	public void addElectNumber(int number) {
 		electNumbers.add(number);
 	}
+	
+	public List<Integer> getElectNumbers() {
+		return electNumbers;
+	}
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		visitor.visitElectTuple(this);
 	}
 
 }
