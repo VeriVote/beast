@@ -21,6 +21,7 @@ import edu.pse.beast.api.codegen.helperfunctions.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectPermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
+import edu.pse.beast.api.codegen.helperfunctions.IsElectEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsVoteEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
@@ -495,6 +496,14 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String testedVarName = expVarNameStack.pop();
 		String generatedVar = codeBlock.newVarName("isEmpty" + testedVarName);
 		if(amtElectVars == 1) {
+			codeBlock.addSnippet(
+					IsElectEmptyHelper.generateCode(
+							generatedVar, 
+							testedVarName,
+							voteResultStruct,
+							votingOutputType, 
+							options, 
+							loopBoundHandler));
 			
 		} else if(amtVoteVars == 1) {
 			codeBlock.addSnippet(
@@ -503,7 +512,6 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 							testedVarName,
 							voteArrStruct,
 							votingInputType, 
-							assumeAssert,
 							options, 
 							loopBoundHandler));
 		}

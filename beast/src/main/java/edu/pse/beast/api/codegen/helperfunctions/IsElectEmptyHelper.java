@@ -1,5 +1,7 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
+import java.util.Map;
+
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVoteComparison;
@@ -14,10 +16,15 @@ public class IsElectEmptyHelper {
 				String testedVarName,
 				ElectionTypeCStruct electStruct,
 				VotingOutputTypes votingOutputType,
-				String assumeAssert,
 				CodeGenOptions options,
 				LoopBoundHandler loopBoundHandler			
 			) {
+		
+		Map<String, String> replacementMap = Map.of(
+					"GENERATED_VAR", generatedVarName,
+					"TESTED_VAR", testedVarName,
+					"AMT_MEMBER", electStruct.getAmtName()
+				);
 		
 		String code = null;		
 		switch(votingOutputType) {
