@@ -14,6 +14,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNod
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.TupleHelper;
@@ -65,7 +66,6 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	private Mode mode;
 	private String assumeAssert;
 
-	private int level = 0;
 
 	public CodeGenASTVisitor(
 			ElectionTypeCStruct voteArrStruct,
@@ -100,38 +100,58 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitBooleanExpListElementNode(BooleanExpListElementNode node) {
 		codeBlock = new CCodeBlock();
 		codeBlock.addComment(node.getCompleteCode());
-		level = 0;
 		amtElectVars = 0;
 		amtVoteVars = 0;
+		
 		node.getFirstChild().getVisited(this);
+	
+		String topBoolean = booleanVarNameStack.pop();
+		codeBlock.addSnippet(assumeAssert + "(" + topBoolean + ")");
 	}
 
-	private void visitVoteTypeComparison(ComparisonNode node, ElectionTypeCStruct voteTypeCStruct) {
+	private void visitVoteComparison(
+			ComparisonNode node) {
 		String rhsVarName = expVarNameStack.pop();
 		String lhsVarName = expVarNameStack.pop();
-		
-		String code = VoteComparisonHelper.generateCodeAndLoopBounds(
-				level, 
+		String generatedVarName = codeBlock.newVarName("voteCompare");
+		String code = VoteComparisonHelper.generateCode(
+				generatedVarName, 
 				lhsVarName, rhsVarName, 
 				voteArrStruct, 
 				votingInputType, 
 				options, 
-				assumeAssert, 
 				node.getComparisonSymbol().getCStringRep(),
-				node.getComparisonType(),
-				loopBoundHandler);	
+				loopBoundHandler);
+		codeBlock.addSnippet(code);
+		booleanVarNameStack.push(generatedVarName);
+	}
+	
+	private void visitElectComparison(
+			ComparisonNode node) {
+		String rhsVarName = expVarNameStack.pop();
+		String lhsVarName = expVarNameStack.pop();
+		String generatedVarName = codeBlock.newVarName("electCompare");
+		String code = ElectComparisonHelper.generateCode(
+				generatedVarName, 
+				lhsVarName, rhsVarName, 
+				voteResultStruct, 
+				votingOutputType, 
+				options, 
+				node.getComparisonSymbol().getCStringRep(),
+				loopBoundHandler);
+		codeBlock.addSnippet(code);
+		booleanVarNameStack.push(generatedVarName);
 	}
 
 	@Override
 	public void visitComparisonNode(ComparisonNode node) {
 		node.getLhsTypeExp().getVisited(this);
 		node.getRhsTypeExp().getVisited(this);
-
 		if (amtVoteVars == 2) {
-			visitVoteTypeComparison(node, voteArrStruct);
+			visitVoteComparison(node);
 			amtVoteVars = 0;
 		} else if (amtElectVars == 2) {
-			visitVoteTypeComparison(node, voteResultStruct);
+			visitElectComparison(node);
 			amtElectVars = 0;
 		} else {
 			String rhsVarName = expVarNameStack.pop();
@@ -140,33 +160,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			CElectionVotingType rhsType = expTypes.pop();
 			CElectionVotingType lhsType = expTypes.pop();
 
-			if (amtElectVars == 1) {
-				// we are comparing a number or symbolic var with an election
-				// result
-				// this can only happen for an election type of single candidate
-				// TODO clean this up!!
-
-				if (lhsVarName.contains("elect")) {
-					lhsVarName += "." + voteResultStruct.getListName();
-				} else if (rhsVarName.contains("elect")) {
-					rhsVarName += voteResultStruct.getListName();
-				}
-			}
-
-			if (level == 0 && node.getComparisonType() != ComparisonType.UNEQ) {
-				String code = ComparisonHelper.generateTopLevelCompCode(
-						node.getComparisonSymbol().getCStringRep(), lhsVarName,
-						rhsVarName, lhsType, options, assumeAssert,
-						loopBoundHandler);
-				codeBlock.addSnippet(code);
-			} else {
-				String varName = codeBlock.newVarName("comparison");
-				String code = ComparisonHelper.generateCompCode(varName,
-						node.getComparisonSymbol().getCStringRep(), lhsVarName,
-						rhsVarName, lhsType, options, assumeAssert);
-				codeBlock.addSnippet(code);
-				booleanVarNameStack.push(varName);
-			}
+			
 		}
 	}
 

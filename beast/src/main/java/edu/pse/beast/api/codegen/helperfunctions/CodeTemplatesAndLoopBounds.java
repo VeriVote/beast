@@ -159,41 +159,5 @@ public abstract class CodeTemplatesAndLoopBounds {
 				"AMT_VOTES", "AMT_CANDIDATES");
 	}
 	
-	public static class VoteComparison {
-		
-		public static String topLevelTemplate1d = 
-				  "ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
-				+ "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
-				+ "    ASSUME_OR_ASSERT(LHS_VAR.LIST_MEMBER[i] COMP RHS_VAR.LIST_MEMBER[i]);\n"
-				+ "}\n";
-		
-		
-		public static String topLevelTemplate2d = 
-				  "ASSUME_OR_ASSERT(LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER);\n"
-				+ "for (int i = 0; i < OUTER_BOUND; ++i) {\n"
-				+ "    for (int j = 0; j < INNER_BOUND; ++j) {\n"
-				+ "        ASSUME_OR_ASSERT(LHS_VAR.LIST_MEMBER[i][j] COMP RHS_VAR.LIST_MEMBER[i][j]);\n"
-				+ "    }\n"
-				+ "}\n";
-		
-		public final static List<String> topLevelTemplate2dLoopBounds = Arrays.asList(
-				"OUTER_BOUND", "INNER_BOUND");
-		
-		public static String template0d = 
-				"unsigned int GENERATED_VAR = LHS.LIST_MEMBER COMP RHS.LIST_MEMBER;";
-		
-		public static String uneqTemplate0d = 
-				"unsigned int GENERATED_VAR = LHS.LIST_MEMBER != RHS.LIST_MEMBER;";
-	}
 	
-	
-	public static class VoteSumForCandidate {
-		public static String templateSingleChoice = 
-				  "    unsigned int GENERATED_VAR = 0;\n"
-				+ "    for (int i = 0; i < VOTE_VAR.AMT_MEMBER; ++i) {\n"
-				+ "        if (VOTE_VAR.LIST_MEMBER[i] == CANDIDATE_VAR) {\n"
-				+ "            GENERATED_VAR++;\n"
-				+ "        }\n"
-				+ "    }";
-	}
 }
