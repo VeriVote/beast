@@ -232,14 +232,21 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteTuple(VoteTupleNode node) {
 		String generatedVarName = codeBlock.newVarName("sequence");
-		List<String> voteNames = new ArrayList<>();
+		
+		List<String> voteNames = new ArrayList<>();		
 		for (int number : node.getNumbers()) {
 			voteNames.add(
 					"voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
 		}
 
-		codeBlock.addSnippet(TupleHelper.generateCode(generatedVarName,
-				voteNames, voteArrStruct, options, loopBoundHandler));
+		codeBlock.addSnippet(
+				TupleHelper.generateCode(
+						generatedVarName,
+						voteNames, 
+						voteArrStruct, 
+						votingInputType, 
+						options, 
+						loopBoundHandler));
 		expVarNameStack.push(generatedVarName);
 		amtVoteVars++;
 	}
@@ -356,8 +363,14 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("voteSum");
 		int voteNumber = node.getVoteNumber();
 		String symbolicVarCand = node.getCbmcVar().getName();
-		String code = VotesumHelper.generateCode(generatedVarName, voteNumber,
-				symbolicVarCand, voteArrStruct, options, loopBoundHandler);
+		String code = VotesumHelper.generateCode(
+				generatedVarName, 
+				voteNumber,
+				symbolicVarCand, 
+				voteArrStruct, 
+				votingInputType,
+				options, 
+				loopBoundHandler);
 		codeBlock.addSnippet(code);
 		expVarNameStack.add(generatedVarName);
 		expTypes.push(CElectionVotingType.simple());

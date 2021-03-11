@@ -8,7 +8,10 @@ import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
 
 public class VoteExpHelper {
-	public static String getVarFromVoteAccess(String voteVarName, List<SymbolicCBMCVar> list, CodeGenOptions options,
+	public static String getVarFromVoteAccess(
+			String voteVarName, 
+			List<SymbolicCBMCVar> list, 
+			CodeGenOptions options,
 			ElectionTypeCStruct voteStruct) {
 		String code = "VOTE_VAR.LIST_MEMBER--ACC--";
 

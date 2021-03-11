@@ -138,26 +138,4 @@ public abstract class CodeTemplatesAndLoopBounds {
 				"AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "AMT_VOTES", "INNER_BOUND");
 	}
 	
-	public static class Tuple {
-		public final static String varSetupTemplate = 
-				  "        VOTE_TYPE VAR_NAME;\n"
-				+ "        VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
-				+ "        ASSUME(VAR_NAME.AMT_MEMBER == VOTEAMTSUM);\n"
-				+ "        unsigned int pos = 0;\n";
-		
-		public final static String template2d = 
-				  "        for (unsigned int i = 0; i < CURRENT_VOTE.AMT_MEMBER && i < AMT_VOTES; ++pos) {\n"
-				+ "            for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
-				+ "                VAR_NAME.votes[pos][j] = NONDET_UINT();\n"
-				+ "                ASSUME(VAR_NAME.LIST_MEMBER[pos][j] == CURRENT_VOTE.LIST_MEMBER[i][j]);\n"
-				+ "            }\n"
-				+ "            pos++;\n"
-				+ "        }\n";
-		
-
-		public final static List<String> template2dloopBounds = Arrays.asList(
-				"AMT_VOTES", "AMT_CANDIDATES");
-	}
-	
-	
 }
