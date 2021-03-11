@@ -17,6 +17,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutat
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
+import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectPermutationHelper;
@@ -166,7 +167,20 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			String lhsVarName = expVarNameStack.pop();
 
 			CElectionVotingType rhsType = expTypes.pop();
-			CElectionVotingType lhsType = expTypes.pop();			
+			CElectionVotingType lhsType = expTypes.pop();	
+			
+			String generatedVar = codeBlock.newVarName("comparison");
+			codeBlock.addSnippet(ComparisonHelper.generateCode(
+					generatedVar,
+					node.getComparisonSymbol().getCStringRep(), 
+					lhsVarName, 
+					rhsVarName,
+					rhsType, 
+					options, 
+					assumeAssert, 
+					loopBoundHandler));
+			
+			booleanVarNameStack.push(generatedVar);
 		}
 	}
 

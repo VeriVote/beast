@@ -11,6 +11,7 @@ import edu.pse.beast.api.electiondescription.CElectionVotingType;
 public class ComparisonHelper {	
 	
 	public static String generateCode(
+			String generatedVar,
 			String comparison, 
 			String lhsVarName, 
 			String rhsVarName,
@@ -27,7 +28,8 @@ public class ComparisonHelper {
 					"ASSUME_OR_ASSERT", assumeOrAssert,
 					"LHS_VAR_NAME", lhsVarName,
 					"RHS_VAR_NAME", rhsVarName,
-					"COMP", comparison					
+					"COMP", comparison,
+					"GENERATED_VAR", generatedVar
 					);
 			code = CodeTemplateComparison.template0d;
 		} else if (type.getListDimensions() == 1) {
@@ -48,7 +50,8 @@ public class ComparisonHelper {
 					"ASSUME_OR_ASSERT", assumeOrAssert,
 					"LHS_VAR_NAME", lhsVarName,
 					"RHS_VAR_NAME", rhsVarName,
-					"COMP", comparison					
+					"COMP", comparison,			
+					"GENERATED_VAR", generatedVar		
 					);	
 			if(comparison.equals("!=")) {
 				code = CodeTemplateComparison.template1dUneq;
