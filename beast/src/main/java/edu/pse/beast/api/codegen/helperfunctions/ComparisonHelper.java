@@ -1,8 +1,9 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
-import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateComparison;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
@@ -17,11 +18,19 @@ public class ComparisonHelper {
 			CodeGenOptions options, 
 			String assumeOrAssert,
 			LoopBoundHandler loopBoundHandler) {
+		
+		Map<String, String> replacementMap = null;
+		
 		String code = null;
 		if(type.getListDimensions() == 0) {
-			return assumeOrAssert + "(" + lhsVarName + comparison + rhsVarName + ");\n";
+			replacementMap = Map.of(
+					"ASSUME_OR_ASSERT", assumeOrAssert,
+					"LHS_VAR_NAME", lhsVarName,
+					"RHS_VAR_NAME", rhsVarName,
+					"COMP", comparison					
+					);
+			code = CodeTemplateComparison.template0d;
 		} else if (type.getListDimensions() == 1) {
-			code = CodeTemplatesAndLoopBounds.Comparison.template1dTopLevel;
 			CBMCVars listSize = type.getListSizes().get(0);
 			String amtString = null;
 			switch (listSize) {
@@ -33,33 +42,23 @@ public class ComparisonHelper {
 				break;
 			default:
 				break;
+			}			
+			replacementMap = Map.of(
+					"AMT", amtString,
+					"ASSUME_OR_ASSERT", assumeOrAssert,
+					"LHS_VAR_NAME", lhsVarName,
+					"RHS_VAR_NAME", rhsVarName,
+					"COMP", comparison					
+					);	
+			if(comparison.equals("!=")) {
+				code = CodeTemplateComparison.template1dUneq;
+			} else {
+				code = CodeTemplateComparison.template1d;
 			}
-
-			List<String> bounds = CodeTemplatesAndLoopBounds.Comparison.template1dloopBounds;
-			CodeTemplatesAndLoopBounds.replaceAll(bounds, "AMT", amtString);
-			loopBoundHandler.addMainLoopBounds(bounds);
-			
-			code = code.replaceAll("AMT", amtString);
-			code = code.replaceAll("ASSUME_OR_ASSERT", assumeOrAssert);
-			code = code.replaceAll("LHS_VAR_NAME", lhsVarName);
-			code = code.replaceAll("RHS_VAR_NAME", rhsVarName);
-			code = code.replaceAll("COMP", comparison);
 		}
+		
+		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}
 
-	public static String generateCompCode(String genVarName, String comparison, String lhsVarName, String rhsVarName,
-			CElectionVotingType cElectionVotingType, CodeGenOptions options, String assumeAssert) {
-		String code = null;
-
-		if (cElectionVotingType.getListDimensions() == 0) {
-			code = "unsigned int GENERATED_VAR_NAME = LHS_VAR_NAME COMP RHS_VAR_NAME;";
-			code = code.replaceAll("GENERATED_VAR_NAME", genVarName);
-			code = code.replaceAll("LHS_VAR_NAME", lhsVarName);
-			code = code.replaceAll("RHS_VAR_NAME", rhsVarName);
-			code = code.replaceAll("COMP", comparison);
-		}
-
-		return code;
-	}
 }
