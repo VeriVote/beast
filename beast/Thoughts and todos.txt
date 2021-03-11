@@ -1,36 +1,42 @@
-voting: 
-überschreibe leere werte mit dummy wert
-(V, C)
+Gemacht:
 
-&&
+Main methode:
+init votes für verschiedene votinginputtypes komplett möglich
+            
+Code generation für properties, fertig bis auf:
+    todo: isempty (3-4 stunden für alles)
+    
+todo: was als dummy wert verwenden? Max uint?
 
-setze Stimmen nur bis amtVotes
+voting methode:
+kopieren zu und von nacktem array / structs
 
-&&
+verdrahtung mit threadpool, etc, funktioniert
 
-binary combinations of booleans (&&, ==>, ||, <==>)
+TODO: Gui rework
 
-&&
+Wiederverwertbar: 
+- fxml und Controller skelett (aber stark gestrippt), 
+- code highlighting (?)
+- sonst nichts 
 
-majority testfall in GUI gegenbeispiel, etc, schauen was passiert
+todo:
+code area rework auf unsere idee mit bausteinen wie loops etc (1-2 wochen)
+back and forth communication mit threadpool (1 woche)
+linux process starter (1-3 stunden)
+error checker für property description (kann sich vermutlich gut nach dem code gen richten)
+(4 stunden)
+error checker für election description
+(keine ahnung)
 
-&&
+löschen nicht mehr benötigter code, wie zb Alten Code visitor (4-5h)
+restliche ast nodes in das neue booleanExpAst Package (3-5h)
 
-loop bounds nach außen unwindset generieren
+threadpool workitem exceptions speichern und kommunizieren (3h)
+threadpool timeout (2h)
 
-&&
+documentation (beliebig lang, aber sagen wir mal ne woche)
 
-aufruf cbmc
-
-&&
-
-gui code anschauen, was kann wieder verwertet werden
-
-PLAN BITCH
-
-- code gen je nach in und output art, easy peacy lemon squeazy
-- code gen für alles
-- komplett mit voting func und dummy werten
-- von außen gescheit aufrufen
-- test mit borga
-- gui schauen
+code generation:    Performance für cbmc erforschen, was ist der einfluss verschiedener
+                    möglichkeiten die diversen typen zu erstellen, die vergleiche etc zu machen,
+                    loops aufzurollen (1 monat locker)

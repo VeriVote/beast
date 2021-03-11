@@ -114,7 +114,6 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 
 	@Override
 	public void interrupt() {
-
 	}
 
 }

@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.helperfunctions;
+package edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote;
 
 import java.util.List;
 
