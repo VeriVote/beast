@@ -16,7 +16,6 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 
 public class TestCompletePropertyCheckPipeline {
 	
-	
 	CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();			
 	BEAST beast = new BEAST(cbmcProcessStarter);
 	
@@ -48,7 +47,7 @@ public class TestCompletePropertyCheckPipeline {
 		List<PreAndPostConditionsDescription> propDecsr =
 				CreationHelper.createSimpleCondList("reinforce", pre, post);
 		
-		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(10, 10, 10, 10);
+		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5, 10, 10, 10);
 		
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");
@@ -80,8 +79,7 @@ public class TestCompletePropertyCheckPipeline {
 							int s, int c, int v, String uuid,
 							String output) {
 						System.out.println(output);
-					}
-					
+					}					
 				},
 			descr, propDecsr, params,  
 			options);
@@ -89,3 +87,4 @@ public class TestCompletePropertyCheckPipeline {
 	}
 	
 }
+//"D:\Visual studio\Common7\Tools\VsDevCmd.bat" & "D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\cbmcWIN\cbmc.exe" "D:\code\eclipse-workspace\BEAST\BEAST\beast\core\generated_c_files\jr1i8oili7buhtm0ovet.c" --xml-ui -D V=5 -D C=10 -D S=10 --unwindset voting.0:5 --unwindset voting.1:10 --unwindset voting.2:10 --unwindset main.0:5 --unwindset main.1:10 --unwindset main.2:5 --unwindset main.3:10 --unwindset main.4:10 --unwindset main.5:10 --unwindset main.6:5 --unwindset main.7:10 --unwindset main.8:5 --unwindset main.9:10 --unwindset main.10:10 --unwindset main.11:10 --unwindset main.12:5 --unwindset main.13:10 --unwindset main.14:5 --unwindset main.15:10 --unwindset main.16:10 --unwindset main.17:10 --unwindset main.18:5 --unwindset main.19:10 --unwindset main.20:5 --unwindset main.21:10 --unwindset main.22:5 --unwindset main.23:5 --unwindset main.24:5 --unwindset main.25:5 --unwindset main.26:10 --unwindset main.27:5 --unwindset main.28:10 --unwindset main.29:10 --unwindset main.30:10 --unwindset main.31:10

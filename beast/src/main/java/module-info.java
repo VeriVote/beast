@@ -89,6 +89,7 @@ module edu.pse.beast {
     requires undofx;
     requires wellbehavedfx;
     requires java.base;
+	requires org.json;
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;

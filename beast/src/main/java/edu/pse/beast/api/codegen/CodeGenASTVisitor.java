@@ -531,8 +531,4 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		booleanVarNameStack.push(generatedVarName);
 		codeBlock.addSnippet(code);
 	}
-
-	
-
-
 }

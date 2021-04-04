@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1274</x>
+      <y>623</y>
+      <w>147</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>BeastCommunicator
+--
+--
+setup(...os specific stuff...)
+CheckRun startCheck(...)
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>623</x>
+      <y>462</y>
+      <w>420</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>GUI
+--
+bg=orange
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1274</x>
+      <y>448</y>
+      <w>147</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>CheckRun
+--
+--
+killProcesses()
+isFinished()
+setCallback()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1036</x>
+      <y>658</y>
+      <w>252</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>340.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1323</x>
+      <y>546</y>
+      <w>49</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+returns</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1554</x>
+      <y>742</y>
+      <w>196</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>PreAndPostConditionsDescription
+--
+--
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1547</x>
+      <y>630</y>
+      <w>147</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>ElectionDescription
+--
+--
+setCCode()
+getComplexCode()
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1274</x>
+      <y>287</y>
+      <w>147</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>CheckRunCallback
+--
+--
+onError
+onResult
+...other events</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1316</x>
+      <y>385</y>
+      <w>98</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+calls with updates</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>749</x>
+      <y>595</y>
+      <w>238</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Singleton&gt;&gt; GUIController
+--
+--
+
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1036</x>
+      <y>700</y>
+      <w>525</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>730.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
