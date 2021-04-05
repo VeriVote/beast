@@ -18,7 +18,8 @@ public class CBMCCodeGeneratorTest {
 	public void reinforcementTest() {
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.PARLIAMENT);
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 
 		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
@@ -45,8 +46,9 @@ public class CBMCCodeGeneratorTest {
 	@Test
 	public void majorityTest() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.SINGLE_CHOICE,
-				VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
@@ -69,7 +71,9 @@ public class CBMCCodeGeneratorTest {
 	@Test
 	public void testVotesumAndIntegerElecCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.SINGLE_CHOICE, VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 
 		final String exp = "EXISTS_ONE_CANDIDATE(c) . "
@@ -91,7 +95,9 @@ public class CBMCCodeGeneratorTest {
 	@Test
 	public void testSimpleElecCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.APPROVAL, VotingOutputTypes.CANDIDATE_LIST);
+				VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("ELECT1 != ELECT2", "",
@@ -111,7 +117,9 @@ public class CBMCCodeGeneratorTest {
 	@Test
 	public void testIntersectionCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.APPROVAL, VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("intersect", "",
@@ -132,7 +140,8 @@ public class CBMCCodeGeneratorTest {
 	public void testPermCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("intersect", "",
@@ -153,7 +162,8 @@ public class CBMCCodeGeneratorTest {
 	public void testSplitCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("split", "",
@@ -174,7 +184,8 @@ public class CBMCCodeGeneratorTest {
 	public void testSimpleForAll() {
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("intersect", "", "");
@@ -196,7 +207,8 @@ public class CBMCCodeGeneratorTest {
 	public void testUniqueVotesCodeGen() {
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.SINGLE_CANDIDATE);
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("intersect", "", "");

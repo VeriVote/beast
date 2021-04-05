@@ -38,7 +38,8 @@ public class TestCompletePropertyCheckPipeline {
 		
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.CANDIDATE_LIST);
+				VotingOutputTypes.CANDIDATE_LIST,
+				"borda");
 		descr.getVotingFunction().getCode().add(bordaCode);
 		
 		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";

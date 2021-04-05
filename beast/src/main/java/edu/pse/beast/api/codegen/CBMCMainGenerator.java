@@ -9,7 +9,6 @@ import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;

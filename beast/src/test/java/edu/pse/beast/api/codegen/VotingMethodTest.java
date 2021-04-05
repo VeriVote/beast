@@ -15,8 +15,9 @@ public class VotingMethodTest {
 	@Test
 	public void testPreferenceVotingMethod() {
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.SINGLE_CHOICE,
-				VotingOutputTypes.CANDIDATE_LIST);
+				VotingInputTypes.PREFERENCE,
+				VotingOutputTypes.PARLIAMENT,
+				"test");
 		descr.getVotingFunction().getCode().add("result = 0;");
 		List<PreAndPostConditionsDescription> propDescr = CreationHelper
 				.createSimpleCondList("intersect", "", "");

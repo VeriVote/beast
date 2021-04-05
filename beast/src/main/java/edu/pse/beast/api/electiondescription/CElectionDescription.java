@@ -6,15 +6,20 @@ import java.util.List;
 public class CElectionDescription {
 	private List<VotingSigFunction> votingSigFunctions = new ArrayList<>();
 	private List<SimpleTypeFunction> simpleTypeFunctions = new ArrayList<>();
+	private String name;
 
 	private VotingSigFunction votingFunction;
 
 	private VotingInputTypes inputType;
 	private VotingOutputTypes outputType;
 
-	public CElectionDescription(VotingInputTypes inputType, VotingOutputTypes outputType) {
+	public CElectionDescription(
+			VotingInputTypes inputType, 
+			VotingOutputTypes outputType,
+			String name) {
 		this.inputType = inputType;
 		this.outputType = outputType;
+		this.name = name;
 		votingFunction = new VotingSigFunction("voting", inputType, outputType);
 	}
 

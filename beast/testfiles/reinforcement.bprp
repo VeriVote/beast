@@ -1,0 +1,1 @@
+{"post_descr":{"code":"(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));"},"name":"reinforce","symbolic_variables":[],"pre_descr":{"code":"[[VOTES2, VOTES3]] == PERM(VOTES1);"},"version":1}
