@@ -1,6 +1,7 @@
 package edu.pse.beast.api.electiondescription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class VotingSigFunction {
@@ -37,6 +38,14 @@ public class VotingSigFunction {
 
 	public List<String> getCode() {
 		return code;
+	}
+	
+	public String codeAsString() {
+		return String.join("\n", code);
+	}
+	
+	public void setCode(String c) {
+		code = Arrays.asList(c.split("\n"));
 	}
 
 }

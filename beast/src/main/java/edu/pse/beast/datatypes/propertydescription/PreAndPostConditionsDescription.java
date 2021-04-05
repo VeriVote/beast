@@ -12,8 +12,6 @@ import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
  * @author Niels Hanselmann
  */
 public final class PreAndPostConditionsDescription {
-	/** The Constant PRIME. */
-	private static final int PRIME = 31;
 
 	/** The name. */
 	private String name;
@@ -28,7 +26,7 @@ public final class PreAndPostConditionsDescription {
 
 	/** The bounded variable description. */
 	private final FormalPropertiesDescription boundedVarDescription;
-
+	
 	/**
 	 * Instantiates a new pre and post conditions description.
 	 *
@@ -40,6 +38,21 @@ public final class PreAndPostConditionsDescription {
 		this.postConditionsDescription = new FormalPropertiesDescription("");
 		this.boundedVarDescription = new FormalPropertiesDescription("");
 	}
+	
+	
+
+	public PreAndPostConditionsDescription(String name,
+			List<SymbolicCBMCVar> cbmcVariables,
+			FormalPropertiesDescription preConditionsDescription,
+			FormalPropertiesDescription postConditionsDescription) {
+		this.name = name;
+		this.cbmcVariables = cbmcVariables;
+		this.preConditionsDescription = preConditionsDescription;
+		this.postConditionsDescription = postConditionsDescription;
+		this.boundedVarDescription = new FormalPropertiesDescription("");
+	}
+
+
 
 	/**
 	 * Creator with a SymbolicVariableList.
@@ -50,7 +63,8 @@ public final class PreAndPostConditionsDescription {
 	 * @param boundedVarDesc the boundedVarDescription
 	 * @param symbVarList    the symbolicVariableList
 	 */
-	public PreAndPostConditionsDescription(final String nameString, final FormalPropertiesDescription preDescr,
+	public PreAndPostConditionsDescription(
+			final String nameString, final FormalPropertiesDescription preDescr,
 			final FormalPropertiesDescription postDescr, final FormalPropertiesDescription boundedVarDesc,
 			final SymbolicVariableList symbVarList) {
 		this.name = nameString;
@@ -109,15 +123,7 @@ public final class PreAndPostConditionsDescription {
 		this.name = nameString;
 	}
 
-	@Override
-	public int hashCode() {
-		int result = 1;
-		result = PRIME * result + ((boundedVarDescription == null) ? 0 : boundedVarDescription.hashCode());
-		result = PRIME * result + ((name == null) ? 0 : name.hashCode());
-		result = PRIME * result + ((postConditionsDescription == null) ? 0 : postConditionsDescription.hashCode());
-		result = PRIME * result + ((preConditionsDescription == null) ? 0 : preConditionsDescription.hashCode());
-		return result;
-	}
+	
 
 	@Override
 	public boolean equals(final Object obj) {

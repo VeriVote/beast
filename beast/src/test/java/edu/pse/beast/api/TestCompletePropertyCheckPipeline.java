@@ -36,13 +36,13 @@ public class TestCompletePropertyCheckPipeline {
 				+ "        }\n"
 				+ "    }";
 		
-		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
-		String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
-		
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE,
 				VotingOutputTypes.CANDIDATE_LIST);
 		descr.getVotingFunction().getCode().add(bordaCode);
+		
+		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
+		String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
 		
 		List<PreAndPostConditionsDescription> propDecsr =
 				CreationHelper.createSimpleCondList("reinforce", pre, post);

@@ -95,7 +95,7 @@ public class TestGUIController {
 
 	@FXML
 	public void addFunction() {
-		display(descr.createNewAndAdd("func"));
+		display(descr.createNewVotingSigFunctionAndAdd("func"));
 	}
 
 	@FXML

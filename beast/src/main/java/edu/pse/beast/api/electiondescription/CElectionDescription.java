@@ -22,7 +22,11 @@ public class CElectionDescription {
 		return votingFunction;
 	}	
 	
-	public VotingSigFunction createNewAndAdd(String name) {
+	public void setVotingFunction(VotingSigFunction votingFunction) {
+		this.votingFunction = votingFunction;
+	}
+	
+	public VotingSigFunction createNewVotingSigFunctionAndAdd(String name) {
 		VotingSigFunction created = new VotingSigFunction(name, inputType, outputType);
 		votingSigFunctions.add(created);
 		return created;
@@ -35,4 +39,6 @@ public class CElectionDescription {
 	public VotingOutputTypes getOutputType() {
 		return outputType;
 	}
+	
+	
 }
