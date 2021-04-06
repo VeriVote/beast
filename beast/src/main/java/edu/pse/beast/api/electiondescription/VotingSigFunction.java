@@ -40,7 +40,7 @@ public class VotingSigFunction {
 		return code;
 	}
 	
-	public String codeAsString() {
+	public String getCodeAsString() {
 		return String.join("\n", code);
 	}
 	

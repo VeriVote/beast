@@ -58,7 +58,7 @@ public class SavingLoadingTest {
 		assertEquals(descr.getInputType(), loadedDescr.getInputType());
 		assertEquals(descr.getOutputType(), loadedDescr.getOutputType());
 		assertEquals(descr.getVotingFunction().getName(), loadedDescr.getVotingFunction().getName());
-		assertEquals(descr.getVotingFunction().codeAsString(), loadedDescr.getVotingFunction().codeAsString());
+		assertEquals(descr.getVotingFunction().getCodeAsString(), loadedDescr.getVotingFunction().getCodeAsString());
 	}
 	
 	@Test

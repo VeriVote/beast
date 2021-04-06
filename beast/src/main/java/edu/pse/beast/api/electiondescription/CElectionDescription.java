@@ -45,5 +45,8 @@ public class CElectionDescription {
 		return outputType;
 	}
 	
+	public List<VotingSigFunction> getVotingSigFunctions() {
+		return votingSigFunctions;
+	}
 	
 }

@@ -30,7 +30,7 @@ public class CElectionSaverLoader {
 	private static JSONObject fromVotingFunction(VotingSigFunction func) {
 		JSONObject json = new JSONObject();
 		json.put(VOTING_FUNC_NAME_KEY, func.getName());
-		json.put(VOTING_FUNC_CODE_KEY, func.codeAsString());
+		json.put(VOTING_FUNC_CODE_KEY, func.getCodeAsString());
 		return json;
 	}
 

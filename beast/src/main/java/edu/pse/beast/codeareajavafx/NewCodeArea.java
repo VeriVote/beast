@@ -504,7 +504,8 @@ public final class NewCodeArea extends AutoCompletionCodeArea implements MenuBar
 	 *                    inferred from the cursor or the marked area
 	 * @return true, if successful
 	 */
-	private boolean lockedLineSafeInsertText(final String replacement, final boolean backspace, final boolean delete,
+	private boolean lockedLineSafeInsertText(
+			final String replacement, final boolean backspace, final boolean delete,
 			final Tuple<Integer, Integer> tuple) {
 		int selectionStart = 0;
 		int selectionEnd = 0;
