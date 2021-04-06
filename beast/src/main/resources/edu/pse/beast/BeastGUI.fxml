@@ -2,38 +2,124 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.7892976588628763" layoutX="167.0" layoutY="59.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane fx:id="codePane" minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0" />
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <ListView fx:id="loopBoundList" prefHeight="196.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <Button layoutX="14.0" layoutY="204.0" mnemonicParsing="false" onAction="#addLoopBound" text="+" />
-                              <Button layoutX="48.0" layoutY="204.0" mnemonicParsing="false" onAction="#removeLoopBound" prefHeight="25.0" prefWidth="25.0" text="-" />
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                           <children>
-                              <ListView fx:id="functionList" prefHeight="187.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <Button layoutX="14.0" layoutY="195.0" mnemonicParsing="false" onAction="#addFunction" text="+" AnchorPane.topAnchor="195.0" />
-                              <Button layoutX="48.0" layoutY="195.0" mnemonicParsing="false" onAction="#removeFunction" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.topAnchor="195.0" />
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Election Code">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.7892976588628763" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane fx:id="codePane" minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <items>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                             <children>
+                                                <ListView fx:id="loopBoundList" prefHeight="196.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <Button layoutX="14.0" layoutY="204.0" mnemonicParsing="false" onAction="#addLoopBound" text="+" />
+                                                <Button layoutX="48.0" layoutY="204.0" mnemonicParsing="false" onAction="#removeLoopBound" prefHeight="25.0" prefWidth="25.0" text="-" />
+                                             </children>
+                                          </AnchorPane>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                             <children>
+                                                <ListView fx:id="functionList" prefHeight="187.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <Button layoutX="14.0" layoutY="195.0" mnemonicParsing="false" onAction="#addFunction" text="+" AnchorPane.topAnchor="195.0" />
+                                                <Button layoutX="48.0" layoutY="195.0" mnemonicParsing="false" onAction="#removeFunction" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.topAnchor="195.0" />
+                                             </children>
+                                          </AnchorPane>
+                                      </items>
+                                    </SplitPane>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Property Editor">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.36394557823129253, 0.7006802721088435" orientation="VERTICAL" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                              <BorderPane>
+                                 <top>
+                                    <BorderPane BorderPane.alignment="CENTER">
+                                       <right>
+                                          <Button mnemonicParsing="false" text="change" BorderPane.alignment="CENTER" />
+                                       </right>
+                                       <center>
+                                          <TextField fx:id="propNameField" editable="false" text="no property" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
+                                 </top>
+                                 <center>
+                                    <TabPane BorderPane.alignment="CENTER">
+                                       <tabs>
+                                          <Tab closable="false" text="Variables">
+                                             <content>
+                                                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                   <center>
+                                                      <TreeView fx:id="variableTreeView" BorderPane.alignment="CENTER" />
+                                                   </center>
+                                                   <right>
+                                                      <BorderPane BorderPane.alignment="CENTER">
+                                                         <top>
+                                                            <BorderPane BorderPane.alignment="CENTER">
+                                                               <left>
+                                                                  <MenuButton alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="add" BorderPane.alignment="CENTER" />
+                                                               </left>
+                                                            </BorderPane>
+                                                         </top>
+                                                         <bottom>
+                                                            <BorderPane BorderPane.alignment="CENTER">
+                                                               <left>
+                                                                  <Button alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="remove" BorderPane.alignment="CENTER" />
+                                                               </left>
+                                                            </BorderPane>
+                                                         </bottom>
+                                                      </BorderPane>
+                                                   </right>
+                                                </BorderPane>
+                                             </content>
+                                          </Tab>
+                                       </tabs>
+                                    </TabPane>
+                                 </center>
+                              </BorderPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <TitledPane fx:id="prePropertyPane" animated="false" layoutY="52.0" prefHeight="115.0" prefWidth="405.0" text="Precondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <TitledPane fx:id="postPropertyPane" animated="false" text="Postcondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

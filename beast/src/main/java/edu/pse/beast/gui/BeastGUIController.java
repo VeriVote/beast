@@ -14,19 +14,20 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
+import edu.pse.beast.gui.elements.CEditorElement;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -39,6 +40,12 @@ public class BeastGUIController {
 
 	@FXML
 	private ListView<String> functionList;
+
+	@FXML
+	private TitledPane prePropertyPane;
+
+	@FXML
+	private TitledPane postPropertyPane;
 
 	private CodeGenOptions codeGenOptions;
 	CElectionEditor cElectionEditor;
@@ -189,12 +196,7 @@ public class BeastGUIController {
 		AnchorPane.setBottomAnchor(child, bottom);
 	}
 
-	@FXML
-	public void initialize() {
-		this.codeGenOptions = new CodeGenOptions();
-		codeGenOptions.setCbmcAmountCandidatesVarName("C");
-		codeGenOptions.setCbmcAmountVotesVarName("V");
-
+	private void initElectionEditor() {
 		CodeArea funcDeclArea = new CodeArea();
 		codePane.getChildren().add(funcDeclArea);
 		AnchorPane.setTopAnchor(funcDeclArea, 0d);
@@ -207,10 +209,11 @@ public class BeastGUIController {
 		AnchorPane.setLeftAnchor(closingBracketArea, 0d);
 		AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
-		cElectionEditor = new CElectionEditor(codeGenOptions, funcDeclArea,
-				closingBracketArea);
-		VirtualizedScrollPane<CElectionEditor> vsp = new VirtualizedScrollPane(
-				cElectionEditor);
+		CEditorElement cEditor = new CEditorElement();
+		cElectionEditor = new CElectionEditor(codeGenOptions, cEditor,
+				funcDeclArea, closingBracketArea);
+		VirtualizedScrollPane<CEditorElement> vsp = new VirtualizedScrollPane(
+				cEditor);
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
 		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -225,5 +228,14 @@ public class BeastGUIController {
 
 		descr = getTestDescr();
 		loadDescr(descr);
+	}
+
+	@FXML
+	public void initialize() {
+		this.codeGenOptions = new CodeGenOptions();
+		codeGenOptions.setCbmcAmountCandidatesVarName("C");
+		codeGenOptions.setCbmcAmountVotesVarName("V");
+		initElectionEditor();
+
 	}
 }

@@ -12,6 +12,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
+import edu.pse.beast.gui.elements.CEditorElement;
 import edu.pse.beast.toolbox.TextStyle;
 import javafx.css.Style;
 import javafx.scene.input.KeyCode;
@@ -20,28 +21,33 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
-public class CElectionEditor extends CodeArea {
+public class CElectionEditor {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
 	private final String cssLockedClassName = "locked";
 	private CodeArea funcDeclArea;
 	private CodeArea closingBracketArea;
+	private CEditorElement electionCodeArea;
 
 	private CodeGenOptions codeGenOptions;
 
 	private int editableRangeStart;
 	private int editableRangeEnd;
 
-	public CElectionEditor(CodeGenOptions codeGenOptions, CodeArea funcDeclArea,
+	public CElectionEditor(CodeGenOptions codeGenOptions,
+			CEditorElement electionCodeArea, CodeArea funcDeclArea,
 			CodeArea closingBracketArea) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
 		this.codeGenOptions = codeGenOptions;
-		
+
+		this.electionCodeArea = electionCodeArea;
 		this.funcDeclArea = funcDeclArea;
 		this.closingBracketArea = closingBracketArea;
+
 		this.funcDeclArea.setEditable(false);
 		this.closingBracketArea.setEditable(false);
-		
+
+		electionCodeArea.getStylesheets().add(stylesheet);
 		funcDeclArea.getStylesheets().add(stylesheet);
 		closingBracketArea.getStylesheets().add(stylesheet);
 	}
@@ -88,12 +94,12 @@ public class CElectionEditor extends CodeArea {
 	}
 
 	public void loadFunction(VotingSigFunction func) {
-		clear();
+		electionCodeArea.clear();
 		funcDeclArea.clear();
 		closingBracketArea.clear();
 
 		funcDeclArea.insertText(0, votingSigFuncToCString(func) + "{");
-		insertText(getCaretPosition(), func.getCodeAsString());
+		electionCodeArea.insertText(0, func.getCodeAsString());
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
 	}
