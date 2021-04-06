@@ -13,6 +13,11 @@ public class SymbolicCBMCVar {
 		this.varType = varType;
 	}
 	
+	@Override
+	public String toString() {
+		return varType.toString() + " " + name;
+	}
+	
 	public String getName() {
 		return name;
 	}

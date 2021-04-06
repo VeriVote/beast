@@ -32,6 +32,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
@@ -57,6 +58,9 @@ public class BeastGUIController {
 
 	@FXML
 	private TreeView<String> variableTreeView;
+	
+	@FXML
+	private MenuButton addSymbVarMenu;
 
 	private CodeGenOptions codeGenOptions;
 	private CElectionEditor cElectionEditor;
@@ -158,7 +162,8 @@ public class BeastGUIController {
 		postPropertyPane.setContent(postVsp);
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
-				prePropertyEditor, postPropertyEditor, variableTreeView);
+				prePropertyEditor, postPropertyEditor, variableTreeView, 
+				addSymbVarMenu);
 
 		PreAndPostConditionsDescription prp = getTestProperty();
 		preAndPostPropertyEditor.loadProperty(prp);

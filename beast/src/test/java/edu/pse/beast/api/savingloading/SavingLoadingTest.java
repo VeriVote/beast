@@ -13,6 +13,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import edu.pse.beast.api.CreationHelper;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -69,6 +71,10 @@ public class SavingLoadingTest {
 		List<PreAndPostConditionsDescription> propDecsr =
 				CreationHelper.createSimpleCondList("reinforce", pre, post);
 		
+		propDecsr.get(0).getCbmcVariables().add(new SymbolicCBMCVar("v1", CBMCVarType.VOTER));
+		propDecsr.get(0).getCbmcVariables().add(new SymbolicCBMCVar("v2", CBMCVarType.VOTER));
+		propDecsr.get(0).getCbmcVariables().add(new SymbolicCBMCVar("c", CBMCVarType.CANDIDATE));
+
 		File f = new File("testfiles");
 		f.mkdirs();
 		f = new File("testfiles/reinforcement.bprp");

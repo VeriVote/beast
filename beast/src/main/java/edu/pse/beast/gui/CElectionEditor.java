@@ -182,7 +182,8 @@ public class CElectionEditor {
 
 	public void loadElectionDescr(CElectionDescription descr) {
 		this.currentDescr = descr;
-		loadFunction(descr.getVotingFunction());
+		populateFunctionList(descr);
+		functionList.getSelectionModel().clearAndSelect(0);
 	}
 
 	public void addLoopBound() {
@@ -235,9 +236,10 @@ public class CElectionEditor {
 	public void removeFunction() {
 		String functionName = functionList.getSelectionModel()
 				.getSelectedItem();
-
+		int selectionindex = functionList.getSelectionModel().getSelectedIndex();
 		currentDescr.removeFunction(functionName);
 		populateFunctionList(currentDescr);
+		functionList.getSelectionModel().select(selectionindex - 1);
 	}
 
 }
