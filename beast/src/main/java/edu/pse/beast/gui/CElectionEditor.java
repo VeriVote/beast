@@ -4,17 +4,25 @@ import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
 import edu.pse.beast.gui.elements.CEditorElement;
 import edu.pse.beast.toolbox.TextStyle;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.css.Style;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -24,9 +32,15 @@ import javafx.scene.paint.Color;
 public class CElectionEditor {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
 	private final String cssLockedClassName = "locked";
+
+	private ListView<String> functionList;
+	private ListView<String> loopBoundList;
+
 	private CodeArea funcDeclArea;
 	private CodeArea closingBracketArea;
 	private CEditorElement electionCodeArea;
+
+	private CElectionDescription currentDescr;
 
 	private CodeGenOptions codeGenOptions;
 
@@ -35,10 +49,14 @@ public class CElectionEditor {
 
 	public CElectionEditor(CodeGenOptions codeGenOptions,
 			CEditorElement electionCodeArea, CodeArea funcDeclArea,
-			CodeArea closingBracketArea) {
+			CodeArea closingBracketArea, ListView<String> functionList,
+			ListView<String> loopBoundList) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
 		this.codeGenOptions = codeGenOptions;
+
+		this.functionList = functionList;
+		this.loopBoundList = loopBoundList;
 
 		this.electionCodeArea = electionCodeArea;
 		this.funcDeclArea = funcDeclArea;
@@ -50,6 +68,64 @@ public class CElectionEditor {
 		electionCodeArea.getStylesheets().add(stylesheet);
 		funcDeclArea.getStylesheets().add(stylesheet);
 		closingBracketArea.getStylesheets().add(stylesheet);
+
+		initListViews();
+	}
+
+	private void initListViews() {
+		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		functionList.getSelectionModel().selectedItemProperty()
+				.addListener((ObservableValue<? extends String> observable,
+						String oldValue, String newValue) -> {
+					selectedFunctionChanged(newValue);
+				});
+
+		loopBoundList.getSelectionModel()
+				.setSelectionMode(SelectionMode.SINGLE);
+
+	}
+
+	private void selectedFunctionChanged(String selectedFunctionName) {
+		if (currentDescr.getVotingFunction().getName()
+				.equals(selectedFunctionName)) {
+			loadVotingSigFunction(currentDescr.getVotingFunction());
+			return;
+		}
+		for (VotingSigFunction f : currentDescr.getVotingSigFunctions()) {
+			if (f.getName().equals(selectedFunctionName)) {
+				loadVotingSigFunction(f);
+				return;
+			}
+		}
+	}
+
+	private void populateFunctionList(CElectionDescription descr) {
+		ObservableList<String> observableList = FXCollections
+				.observableArrayList();
+
+		observableList.add(descr.getVotingFunction().getName());
+
+		for (VotingSigFunction f : descr.getVotingSigFunctions()) {
+			observableList.add(f.getName());
+		}
+		functionList.setItems(observableList);
+		functionList.getSelectionModel().clearAndSelect(0);
+	}
+
+	private void populateLoopBoundList(List<LoopBound> loopbounds) {
+		ObservableList<String> observableList = FXCollections
+				.observableArrayList();
+		for (LoopBound b : loopbounds) {
+			observableList.add(b.toString());
+		}
+		loopBoundList.setItems(observableList);
+	}
+
+	private void loadVotingSigFunction(VotingSigFunction f) {
+		loadFunction(f);
+		List<LoopBound> loopbounds = currentDescr
+				.getLoopBoundsForFunction(f.getName());
+		populateLoopBoundList(loopbounds);
 	}
 
 	private String votingInputTypeToCType(VotingInputTypes inputType,
@@ -93,7 +169,7 @@ public class CElectionEditor {
 				cssLockedClassName);
 	}
 
-	public void loadFunction(VotingSigFunction func) {
+	private void loadFunction(VotingSigFunction func) {
 		electionCodeArea.clear();
 		funcDeclArea.clear();
 		closingBracketArea.clear();
@@ -102,6 +178,66 @@ public class CElectionEditor {
 		electionCodeArea.insertText(0, func.getCodeAsString());
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
+	}
+
+	public void loadElectionDescr(CElectionDescription descr) {
+		this.currentDescr = descr;
+		loadFunction(descr.getVotingFunction());
+	}
+
+	public void addLoopBound() {
+		String functionName = functionList.getSelectionModel()
+				.getSelectedItem();
+
+		TextField indexField = new TextField();
+		TextField boundField = new TextField();
+
+		Optional<String> res = DialogHelper
+				.generateDialog(List.of("index", "bound"),
+						List.of(indexField, boundField))
+				.showAndWait();
+
+		if (res.isPresent()) {
+			String index = indexField.getText();
+			String bound = boundField.getText();
+
+			currentDescr.addLoopBoundForFunction(functionName,
+					Integer.valueOf(index), bound);
+			populateLoopBoundList(
+					currentDescr.getLoopBoundsForFunction(functionName));
+		}
+	}
+
+	public void removeLoopBound() {
+		String loopBoundString = loopBoundList.getSelectionModel()
+				.getSelectedItem();
+
+		String functionName = functionList.getSelectionModel()
+				.getSelectedItem();
+		currentDescr.removeLoopBoundForFunction(functionName, loopBoundString);
+		populateLoopBoundList(
+				currentDescr.getLoopBoundsForFunction(functionName));
+	}
+
+	public void addFunction() {
+		TextField nameField = new TextField();
+		Optional<String> res = DialogHelper
+				.generateDialog(List.of("name"), List.of(nameField))
+				.showAndWait();
+		if (res.isPresent()) {
+			String name = nameField.getText();
+			currentDescr.createNewVotingSigFunctionAndAdd(name);
+			populateFunctionList(currentDescr);
+			functionList.getSelectionModel().select(name);
+		}
+	}
+
+	public void removeFunction() {
+		String functionName = functionList.getSelectionModel()
+				.getSelectedItem();
+
+		currentDescr.removeFunction(functionName);
+		populateFunctionList(currentDescr);
 	}
 
 }
