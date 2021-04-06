@@ -34,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
@@ -58,16 +59,18 @@ public class BeastGUIController {
 
 	@FXML
 	private TreeView<String> variableTreeView;
-	
+
 	@FXML
 	private MenuButton addSymbVarMenu;
+	
+	@FXML
+	private TabPane propertyTestRunPane;
 
 	private CodeGenOptions codeGenOptions;
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
-
-	private CElectionDescription descr;
-
+	private PropertyTestRunner propertyTestRunner;
+	
 	private CElectionDescription getTestDescr() {
 		String name = "test";
 		CElectionDescription descr = new CElectionDescription(
@@ -104,7 +107,7 @@ public class BeastGUIController {
 	public void removeFunction() {
 		cElectionEditor.removeFunction();
 	}
-	
+
 	@FXML
 	public void addLoopBound() {
 		cElectionEditor.addLoopBound();
@@ -112,9 +115,9 @@ public class BeastGUIController {
 
 	@FXML
 	public void removeLoopBound() {
-		cElectionEditor.removeLoopBound();		
+		cElectionEditor.removeLoopBound();
 	}
-	
+
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
 		codePane.getChildren().add(child);
@@ -145,7 +148,7 @@ public class BeastGUIController {
 		cElectionEditor = new CElectionEditor(codeGenOptions, cEditor,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList);
 
-		descr = getTestDescr();
+		CElectionDescription descr = getTestDescr();
 		cElectionEditor.loadElectionDescr(descr);
 	}
 
@@ -162,11 +165,15 @@ public class BeastGUIController {
 		postPropertyPane.setContent(postVsp);
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
-				prePropertyEditor, postPropertyEditor, variableTreeView, 
+				prePropertyEditor, postPropertyEditor, variableTreeView,
 				addSymbVarMenu);
 
 		PreAndPostConditionsDescription prp = getTestProperty();
 		preAndPostPropertyEditor.loadProperty(prp);
+	}
+
+	private void initPropertyRunner() {
+		propertyTestRunner = new PropertyTestRunner(propertyTestRunPane);
 	}
 
 	@FXML
@@ -176,5 +183,6 @@ public class BeastGUIController {
 		codeGenOptions.setCbmcAmountVotesVarName("V");
 		initElectionEditor();
 		initPropertyEditor();
+		initPropertyRunner();
 	}
 }

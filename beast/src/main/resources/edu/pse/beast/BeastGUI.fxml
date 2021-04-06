@@ -83,7 +83,7 @@
                                                          <top>
                                                             <BorderPane BorderPane.alignment="CENTER">
                                                                <left>
-                                                                  <MenuButton alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="add" BorderPane.alignment="CENTER" />
+                                                                  <MenuButton fx:id="addSymbVarMenu" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="add" BorderPane.alignment="CENTER" />
                                                                </left>
                                                             </BorderPane>
                                                          </top>
@@ -119,6 +119,28 @@
                   </AnchorPane>
             </content>
           </Tab>
+            <Tab text="Property Test Runs">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane layoutX="86.0" layoutY="82.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <tabs>
+                            <Tab text="untitled run">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                              </content>
+                            </Tab>
+                              <Tab text="+">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
