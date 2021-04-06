@@ -6,25 +6,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <SplitPane dividerPositions="0.7892976588628763" layoutX="167.0" layoutY="59.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane fx:id="codePane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          <AnchorPane fx:id="codePane" minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0" />
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <SplitPane dividerPositions="0.11616161616161616" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#setLoopBounds" prefHeight="25.0" prefWidth="97.0" text="loop Bounds" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                              <ListView prefHeight="196.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Button layoutX="14.0" layoutY="204.0" mnemonicParsing="false" onAction="#addLoopBound" text="+" />
+                              <Button layoutX="48.0" layoutY="204.0" mnemonicParsing="false" onAction="#removeLoopBounds" prefHeight="25.0" prefWidth="25.0" text="-" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <ListView fx:id="functionList" prefHeight="277.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <Button layoutX="14.0" layoutY="285.0" mnemonicParsing="false" onAction="#addFunction" text="+" />
-                              <Button layoutX="61.0" layoutY="285.0" mnemonicParsing="false" onAction="#removeFunction" prefHeight="25.0" prefWidth="25.0" text="-" />
+                              <ListView fx:id="functionList" prefHeight="187.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Button layoutX="14.0" layoutY="195.0" mnemonicParsing="false" onAction="#addFunction" text="+" AnchorPane.topAnchor="195.0" />
+                              <Button layoutX="48.0" layoutY="195.0" mnemonicParsing="false" onAction="#removeFunction" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.topAnchor="195.0" />
                            </children>
                         </AnchorPane>
                     </items>
