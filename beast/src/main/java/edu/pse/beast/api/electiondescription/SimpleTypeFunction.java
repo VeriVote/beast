@@ -4,8 +4,11 @@ import java.util.List;
 
 public class SimpleTypeFunction {
 	private List<CElectionSimpleTypes> arguments;
-	CElectionSimpleTypes outputType;
-	
+	private CElectionSimpleTypes outputType;
 	private String name;
 	private List<String> code;	
+
+	public String getName() {
+		return name;
+	}
 }

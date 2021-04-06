@@ -23,17 +23,27 @@ import javafx.scene.paint.Color;
 public class CElectionEditor extends CodeArea {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
 	private final String cssLockedClassName = "locked";
-	
+	private CodeArea funcDeclArea;
+	private CodeArea closingBracketArea;
+
 	private CodeGenOptions codeGenOptions;
-	
+
 	private int editableRangeStart;
 	private int editableRangeEnd;
-	
 
-	public CElectionEditor(CodeGenOptions codeGenOptions) {
-		final String stylesheet = this.getClass().getResource(cssResource).toExternalForm();
-		this.getStylesheets().add(stylesheet);
+	public CElectionEditor(CodeGenOptions codeGenOptions, CodeArea funcDeclArea,
+			CodeArea closingBracketArea) {
+		final String stylesheet = this.getClass().getResource(cssResource)
+				.toExternalForm();
 		this.codeGenOptions = codeGenOptions;
+		
+		this.funcDeclArea = funcDeclArea;
+		this.closingBracketArea = closingBracketArea;
+		this.funcDeclArea.setEditable(false);
+		this.closingBracketArea.setEditable(false);
+		
+		funcDeclArea.getStylesheets().add(stylesheet);
+		closingBracketArea.getStylesheets().add(stylesheet);
 	}
 
 	private String votingInputTypeToCType(VotingInputTypes inputType,
@@ -69,29 +79,22 @@ public class CElectionEditor extends CodeArea {
 				.replaceAll("NAME", func.getName()).replaceAll("INPUT_VAR",
 						votingInputTypeToCType(func.getInputType(), "votes"));
 	}
-	
-	private void insertVotingFunction(VotingSigFunction func) {
-		
-		insertText(getCaretPosition(), votingSigFuncToCString(func));
-		insertText(getCaretPosition(), "{\n");
-		
-		editableRangeStart = getCaretPosition();
-		
-		insertText(getCaretPosition(), func.getCodeAsString());
-		
-		editableRangeEnd = getCaretPosition();
-		
-		insertText(getCaretPosition(), "\n}");		
-	}
-	
+
 	private void setLockedColor() {
-		setStyleClass(0, editableRangeStart, cssLockedClassName);	
-		setStyleClass(editableRangeEnd, getLength(), cssLockedClassName);	
+		funcDeclArea.setStyleClass(0, funcDeclArea.getLength(),
+				cssLockedClassName);
+		closingBracketArea.setStyleClass(0, closingBracketArea.getLength(),
+				cssLockedClassName);
 	}
 
 	public void loadFunction(VotingSigFunction func) {
-		deleteText(0, getLength());
-		insertVotingFunction(func);
+		clear();
+		funcDeclArea.clear();
+		closingBracketArea.clear();
+
+		funcDeclArea.insertText(0, votingSigFuncToCString(func) + "{");
+		insertText(getCaretPosition(), func.getCodeAsString());
+		closingBracketArea.insertText(0, "}");
 		setLockedColor();
 	}
 

@@ -2,18 +2,24 @@ package edu.pse.beast.api.electiondescription;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 
 public class CElectionDescription {
 	private List<VotingSigFunction> votingSigFunctions = new ArrayList<>();
 	private List<SimpleTypeFunction> simpleTypeFunctions = new ArrayList<>();
+	private Set<String> functionNames = new HashSet<>();
+	
 	private Map<String, List<LoopBound>> loopBounds = new HashMap();
 	private String name;
-
+	
 	private VotingSigFunction votingFunction;
 
 	private VotingInputTypes inputType;
@@ -33,12 +39,17 @@ public class CElectionDescription {
 
 	public void setVotingFunction(VotingSigFunction votingFunction) {
 		this.votingFunction = votingFunction;
+		functionNames.add(votingFunction.getName());
 	}
 
 	public VotingSigFunction createNewVotingSigFunctionAndAdd(String name) {
+		if(functionNames.contains(name)) {
+			throw new IllegalArgumentException("function with this name already exists");
+		}
 		VotingSigFunction created = new VotingSigFunction(name, inputType,
 				outputType);
 		votingSigFunctions.add(created);
+		functionNames.add(name);
 		return created;
 	}
 
@@ -55,20 +66,50 @@ public class CElectionDescription {
 	}
 
 	public List<LoopBound> getLoopBoundsForFunction(String name) {
+		if (!loopBounds.containsKey(name)) {
+			return List.of();
+		}
 		return loopBounds.get(name);
 	}
 
-	public void addLoopBoundForFunction(String functionName, String loopIndex,
+	private void sortLoopBoundListByIndex(List<LoopBound> list) {
+		list.sort((LoopBound lhs, LoopBound rhs) -> {
+			return Integer.compare(lhs.getIndex(), rhs.getIndex());
+		});
+	}
+
+	public void addLoopBoundForFunction(String functionName, int loopIndex,
 			String bound) {
 		if (!loopBounds.containsKey(functionName)) {
 			loopBounds.put(functionName, new ArrayList<>());
 		}
 		List<LoopBound> list = loopBounds.get(functionName);
 		list.add(new LoopBound(functionName, loopIndex, bound));
+		sortLoopBoundListByIndex(list);
+	}
+
+	public void removeLoopBoundForFunction(String functionName,
+			String loopBoundString) {
+		if (!loopBounds.containsKey(functionName)) {
+			return;
+		}
+		List<LoopBound> list = loopBounds.get(functionName);
+		list.removeIf((LoopBound b) -> {
+			boolean rm = b.toString().equals(loopBoundString);
+			return rm;
+		});
+		loopBounds.put(functionName, list);
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public void removeFunction(String functionName) {
+		if(votingFunction.getName().equals(functionName)) return;
+		functionNames.remove(functionName);
+		votingSigFunctions.removeIf(f -> f.getName().equals(functionName));
+		simpleTypeFunctions.removeIf(f -> f.getName().equals(functionName));
 	}
 
 }
