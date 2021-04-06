@@ -16,10 +16,10 @@ public class CElectionDescription {
 	private List<VotingSigFunction> votingSigFunctions = new ArrayList<>();
 	private List<SimpleTypeFunction> simpleTypeFunctions = new ArrayList<>();
 	private Set<String> functionNames = new HashSet<>();
-	
+
 	private Map<String, List<LoopBound>> loopBounds = new HashMap();
 	private String name;
-	
+
 	private VotingSigFunction votingFunction;
 
 	private VotingInputTypes inputType;
@@ -43,8 +43,9 @@ public class CElectionDescription {
 	}
 
 	public VotingSigFunction createNewVotingSigFunctionAndAdd(String name) {
-		if(functionNames.contains(name)) {
-			throw new IllegalArgumentException("function with this name already exists");
+		if (functionNames.contains(name)) {
+			throw new IllegalArgumentException(
+					"function with this name already exists");
 		}
 		VotingSigFunction created = new VotingSigFunction(name, inputType,
 				outputType);
@@ -106,10 +107,29 @@ public class CElectionDescription {
 	}
 
 	public void removeFunction(String functionName) {
-		if(votingFunction.getName().equals(functionName)) return;
+		if (votingFunction.getName().equals(functionName))
+			return;
 		functionNames.remove(functionName);
 		votingSigFunctions.removeIf(f -> f.getName().equals(functionName));
 		simpleTypeFunctions.removeIf(f -> f.getName().equals(functionName));
+	}
+
+	public List<LoopBound> getLoopBounds() {
+		List<LoopBound> created = new ArrayList<>();
+		for (String k : loopBounds.keySet()) {
+			created.addAll(loopBounds.get(k));
+		}
+		return created;
+	}
+
+	public void setLoopBounds(List<LoopBound> loopBoundsFromJsonArray) {
+		for (LoopBound b : loopBoundsFromJsonArray) {
+			String functionName = b.getFunctionName();
+			if (loopBounds.containsKey(functionName)) {
+				loopBounds.put(functionName, Arrays.asList());
+			}
+			loopBounds.get(functionName).add(b);
+		}
 	}
 
 }

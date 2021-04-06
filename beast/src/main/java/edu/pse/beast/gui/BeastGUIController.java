@@ -1,45 +1,30 @@
 package edu.pse.beast.gui;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.electiondescription.VotingSigFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.elements.CEditorElement;
 import edu.pse.beast.gui.elements.PropertyEditorElement;
-import edu.pse.beast.saverloader.SaverLoader;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 
 public class BeastGUIController {
 	@FXML
@@ -62,15 +47,24 @@ public class BeastGUIController {
 
 	@FXML
 	private MenuButton addSymbVarMenu;
-	
+
 	@FXML
 	private TabPane propertyTestRunPane;
+
+	@FXML
+	private Button propertyTestStartButton;
+	@FXML
+	private Button propertyTestStopButton;
+	@FXML
+	private Button addPropertyTestRunButton;
+	@FXML
+	private Button removePropertyTestRunButton;
 
 	private CodeGenOptions codeGenOptions;
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
-	private PropertyTestRunner propertyTestRunner;
-	
+	private PropertyTestRunHandler propertyTestRunner;
+
 	private CElectionDescription getTestDescr() {
 		String name = "test";
 		CElectionDescription descr = new CElectionDescription(
@@ -173,7 +167,10 @@ public class BeastGUIController {
 	}
 
 	private void initPropertyRunner() {
-		propertyTestRunner = new PropertyTestRunner(propertyTestRunPane);
+		propertyTestRunner = new PropertyTestRunHandler(propertyTestRunPane,
+				propertyTestStartButton, propertyTestStopButton,
+				addPropertyTestRunButton, removePropertyTestRunButton);
+	
 	}
 
 	@FXML

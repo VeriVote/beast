@@ -37,6 +37,8 @@ public class ElectionCheckParameter {
 
     /** The margin seats. */
     private final int marginSeats;
+    
+    private String name;
 
     /**
      * Instantiates a new election check parameter.
@@ -195,4 +197,12 @@ public class ElectionCheckParameter {
         return GUIController.getController().getElectionSimulation()
                 .getNumVotingPoints();
     }
+    
+    public String getName() {
+		return name;
+	}
+    
+    public void setName(String name) {
+		this.name = name;
+	}
 }

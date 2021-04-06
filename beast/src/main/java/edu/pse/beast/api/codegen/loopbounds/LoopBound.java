@@ -4,6 +4,7 @@ public class LoopBound {
 	private String name;
 	private String bound;
 	private int index;
+	private String functionName;
 
 	public LoopBound(String name, String bound) {
 		super();
@@ -13,6 +14,7 @@ public class LoopBound {
 
 	public LoopBound(String functionName, int loopIndex, String bound) {
 		this.index = loopIndex;
+		this.functionName = functionName;
 		this.name = functionName + ":" + loopIndex;
 		this.bound = bound;
 	}
@@ -27,6 +29,10 @@ public class LoopBound {
 	
 	public int getIndex() {
 		return index;
+	}
+	
+	public String getFunctionName() {
+		return functionName;
 	}
 	
 	@Override
