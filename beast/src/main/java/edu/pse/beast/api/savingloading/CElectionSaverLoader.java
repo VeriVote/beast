@@ -16,12 +16,13 @@ import edu.pse.beast.api.electiondescription.VotingSigFunction;
 
 public class CElectionSaverLoader {
 	private static final int CURRENT_VERSION = 1;
-	
+
 	private static final String VERSION_KEY = "version";
+	private static final String NAME_KEY = "name";
 	private static final String INPUT_TYPE_KEY = "inputType";
 	private static final String OUTPUT_TYPE_KEY = "outputType";
 	private static final String VOTING_FUNC_KEY = "votingFunction";
-	private static final String VOTING_FUNC_NAME_KEY = "name";
+	private static final String VOTING_FUNC_NAME_KEY = "voting_func_name";
 	private static final String VOTING_FUNC_CODE_KEY = "code";
 
 	private static boolean isVersionCompatible(int version) {
@@ -52,6 +53,7 @@ public class CElectionSaverLoader {
 		json.put(OUTPUT_TYPE_KEY, descr.getOutputType().toString());
 		json.put(VOTING_FUNC_KEY,
 				fromVotingFunction(descr.getVotingFunction()));
+		json.put(NAME_KEY, descr.getName());
 		String s = json.toString();
 		SavingLoadingInterface.writeStringToFile(f, s);
 	}
@@ -70,13 +72,15 @@ public class CElectionSaverLoader {
 				.valueOf(json.getString(INPUT_TYPE_KEY));
 		VotingOutputTypes outputType = VotingOutputTypes
 				.valueOf(json.getString(OUTPUT_TYPE_KEY));
+
+		String name = json.getString(NAME_KEY);
+
 		CElectionDescription descr = new CElectionDescription(inputType,
-				outputType);
+				outputType, name);
 		VotingSigFunction votingFunction = toVotingFunction(
 				json.getJSONObject(VOTING_FUNC_KEY), inputType, outputType);
 		descr.setVotingFunction(votingFunction);
 		return descr;
 	}
 
-	
 }

@@ -1,6 +1,7 @@
 package edu.pse.beast.api.electiondescription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,15 @@ public class CElectionDescription {
 
 	public void addLoopBoundForFunction(String functionName, String loopIndex,
 			String bound) {
-		
+		if (!loopBounds.containsKey(functionName)) {
+			loopBounds.put(functionName, new ArrayList<>());
+		}
+		List<LoopBound> list = loopBounds.get(functionName);
+		list.add(new LoopBound(functionName, loopIndex, bound));
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

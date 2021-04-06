@@ -10,6 +10,11 @@ public class LoopBound {
 		this.bound = bound;
 	}
 
+	public LoopBound(String functionName, String loopIndex, String bound) {
+		this.name = functionName + ":" + loopIndex;
+		this.bound = bound;
+	}
+
 	public String getName() {
 		return name;
 	}

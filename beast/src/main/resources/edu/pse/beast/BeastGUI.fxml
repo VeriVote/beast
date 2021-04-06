@@ -17,9 +17,9 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <ListView prefHeight="196.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ListView fx:id="loopBoundList" prefHeight="196.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <Button layoutX="14.0" layoutY="204.0" mnemonicParsing="false" onAction="#addLoopBound" text="+" />
-                              <Button layoutX="48.0" layoutY="204.0" mnemonicParsing="false" onAction="#removeLoopBounds" prefHeight="25.0" prefWidth="25.0" text="-" />
+                              <Button layoutX="48.0" layoutY="204.0" mnemonicParsing="false" onAction="#removeLoopBound" prefHeight="25.0" prefWidth="25.0" text="-" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

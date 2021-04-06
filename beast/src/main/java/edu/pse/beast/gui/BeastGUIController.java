@@ -21,6 +21,9 @@ public class BeastGUIController {
 	private AnchorPane codePane;
 
 	@FXML
+	private ListView<String> loopBoundList;
+	
+	@FXML
 	private ListView<String> functionList;
 
 	private CodeGenOptions codeGenOptions;
@@ -53,17 +56,20 @@ public class BeastGUIController {
 	}
 
 	@FXML
-	public void setLoopBounds() {
-	}
-
-	@FXML
 	public void addFunction() {
 	}
 
 	@FXML
 	public void removeFunction() {
 	}
-
+	
+	@FXML
+	public void addLoopBound() {
+	}
+	
+	@FXML
+	public void removeLoopBound() {
+	}
 
 	void populateFunctionList(CElectionDescription descr) {
 		ObservableList<String> observableList = FXCollections
@@ -81,15 +87,20 @@ public class BeastGUIController {
 	private void loadDescr(CElectionDescription descr) {
 		populateFunctionList(descr);
 	}
-	
+
+	private void loadVotingSigFunction(VotingSigFunction f) {
+		cElectionEditor.loadFunction(f);
+		
+	}
+
 	private void selectedFunctionChanged(String selectedFunctionName) {
-		if(descr.getVotingFunction().getName() == selectedFunctionName) {
-			cElectionEditor.loadFunction(descr.getVotingFunction());
+		if (descr.getVotingFunction().getName() == selectedFunctionName) {
+			loadVotingSigFunction(descr.getVotingFunction());
 			return;
 		}
 		for (VotingSigFunction f : descr.getVotingSigFunctions()) {
-			if(f.getName() == selectedFunctionName) 
-				cElectionEditor.loadFunction(f);
+			if (f.getName() == selectedFunctionName)
+				loadVotingSigFunction(f);
 			return;
 		}
 	}
@@ -104,13 +115,15 @@ public class BeastGUIController {
 		VirtualizedScrollPane<CElectionEditor> vsp = new VirtualizedScrollPane(
 				cElectionEditor);
 		addChildToAnchorPane(codePane, vsp, 0, 0, 0, 0);
-		
-		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);		
+
+		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		functionList.getSelectionModel().selectedItemProperty()
 				.addListener((ObservableValue<? extends String> observable,
 						String oldValue, String newValue) -> {
 					selectedFunctionChanged(newValue);
 				});
+		
+		loopBoundList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 		descr = getTestDescr();
 		loadDescr(descr);

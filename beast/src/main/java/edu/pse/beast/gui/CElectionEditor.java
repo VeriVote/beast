@@ -24,10 +24,6 @@ public class CElectionEditor extends CodeArea {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
 	private final String cssLockedClassName = "locked";
 	
-	private final KeyCombination backspaceCombination = new KeyCodeCombination(KeyCode.BACK_SPACE); 
-	private final KeyCombination deleteCombination = new KeyCodeCombination(KeyCode.DELETE); 
-	private final KeyCombination enterCombination = new KeyCodeCombination(KeyCode.ENTER);
-
 	private CodeGenOptions codeGenOptions;
 	
 	private int editableRangeStart;
