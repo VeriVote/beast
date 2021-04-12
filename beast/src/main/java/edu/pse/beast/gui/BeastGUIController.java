@@ -18,6 +18,7 @@ import edu.pse.beast.gui.elements.PropertyEditorElement;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.Tab;
@@ -52,18 +53,18 @@ public class BeastGUIController {
 	private TabPane propertyTestRunPane;
 
 	@FXML
-	private Button propertyTestStartButton;
+	private ChoiceBox<String> openedElectionDescriptionChoiceBox;
 	@FXML
-	private Button propertyTestStopButton;
+	private Button addElectionDescriptionButton;
+
 	@FXML
-	private Button addPropertyTestRunButton;
-	@FXML
-	private Button removePropertyTestRunButton;
+	private ChoiceBox<String> openedPropertyDescriptionChoiceBox;
 
 	private CodeGenOptions codeGenOptions;
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
-	private PropertyTestRunHandler propertyTestRunner;
+
+	private BeastWorkspace beastWorkspace = new BeastWorkspace();
 
 	private CElectionDescription getTestDescr() {
 		String name = "test";
@@ -140,10 +141,8 @@ public class BeastGUIController {
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
 		cElectionEditor = new CElectionEditor(codeGenOptions, cEditor,
-				funcDeclArea, closingBracketArea, functionList, loopBoundList);
-
-		CElectionDescription descr = getTestDescr();
-		cElectionEditor.loadElectionDescr(descr);
+				funcDeclArea, closingBracketArea, functionList, loopBoundList,
+				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
 
 	private void initPropertyEditor() {
@@ -160,17 +159,12 @@ public class BeastGUIController {
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
 				prePropertyEditor, postPropertyEditor, variableTreeView,
-				addSymbVarMenu);
-
-		PreAndPostConditionsDescription prp = getTestProperty();
-		preAndPostPropertyEditor.loadProperty(prp);
+				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
+				beastWorkspace);
 	}
 
 	private void initPropertyRunner() {
-		propertyTestRunner = new PropertyTestRunHandler(propertyTestRunPane,
-				propertyTestStartButton, propertyTestStopButton,
-				addPropertyTestRunButton, removePropertyTestRunButton);
-	
+
 	}
 
 	@FXML
@@ -178,8 +172,11 @@ public class BeastGUIController {
 		this.codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountVotesVarName("V");
+
+		beastWorkspace.getLoadedDescrs().add(getTestDescr());
+		beastWorkspace.getLoadedPropDescrs().add(getTestProperty());
+
 		initElectionEditor();
 		initPropertyEditor();
-		initPropertyRunner();
 	}
 }

@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.propertydescription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
@@ -51,8 +52,6 @@ public final class PreAndPostConditionsDescription {
 		this.postConditionsDescription = postConditionsDescription;
 		this.boundedVarDescription = new FormalPropertiesDescription("");
 	}
-
-
 
 	/**
 	 * Creator with a SymbolicVariableList.

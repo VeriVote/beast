@@ -83,7 +83,4 @@ public class SavingLoadingTest {
 				SavingLoadingInterface.loadPreAndPostConditionDescription(f);
 		assertEquals(propDecsr.get(0), loadedPropDescr);
 	}
-	
-	
-	
 }

@@ -228,9 +228,6 @@ public final class BooleanExpEditorNEW implements MenuBarInterface {
 		currentPropertyDescription.getPreConditionsDescription().setCode(preArea.getText());
 		currentPropertyDescription.getPostConditionsDescription().setCode(postArea.getText());
 		currentPropertyDescription.getBoundedVarDescription().setCode(boundedVarArea.getText());
-		currentPropertyDescription.getSymbolicVariablesAsList().clear();
-		currentPropertyDescription.getSymVarList().clearList();
-		currentPropertyDescription.getSymVarList().addSymbolicVariableList(getAllSymbolicVariables());
 	}
 
 	/**
@@ -258,9 +255,7 @@ public final class BooleanExpEditorNEW implements MenuBarInterface {
 		this.removeAllVariables();
 		updatePropertyTextAreas(currentPropertyDescription);
 
-		for (SymbolicVariable variable : currentPropertyDescription.getSymbolicVariablesAsList()) {
-			this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
-		}
+	
 		if (bringToFront) {
 			bringToFront();
 		}

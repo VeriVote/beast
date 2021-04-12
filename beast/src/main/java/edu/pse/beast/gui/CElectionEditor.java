@@ -1,8 +1,5 @@
 package edu.pse.beast.gui;
 
-import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,19 +12,13 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
 import edu.pse.beast.gui.elements.CEditorElement;
-import edu.pse.beast.toolbox.TextStyle;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.Style;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 
 public class CElectionEditor {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
@@ -39,18 +30,19 @@ public class CElectionEditor {
 	private CodeArea funcDeclArea;
 	private CodeArea closingBracketArea;
 	private CEditorElement electionCodeArea;
+	private ChoiceBox<String> openedElectionDescriptionChoiceBox;
 
 	private CElectionDescription currentDescr;
 
 	private CodeGenOptions codeGenOptions;
-
-	private int editableRangeStart;
-	private int editableRangeEnd;
+	private BeastWorkspace beastWorkspace;
 
 	public CElectionEditor(CodeGenOptions codeGenOptions,
 			CEditorElement electionCodeArea, CodeArea funcDeclArea,
 			CodeArea closingBracketArea, ListView<String> functionList,
-			ListView<String> loopBoundList) {
+			ListView<String> loopBoundList,
+			ChoiceBox<String> openedElectionDescriptionChoiceBox,
+			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
 		this.codeGenOptions = codeGenOptions;
@@ -69,7 +61,33 @@ public class CElectionEditor {
 		funcDeclArea.getStylesheets().add(stylesheet);
 		closingBracketArea.getStylesheets().add(stylesheet);
 
+		this.beastWorkspace = beastWorkspace;
+		this.openedElectionDescriptionChoiceBox = openedElectionDescriptionChoiceBox;
+
 		initListViews();
+		initOpenedDescrChoiceBox();
+		handleWorkspaceUpdate();
+	}
+
+	private void selectedDescrChanged(String newSelectedName) {
+		CElectionDescription descr = beastWorkspace
+				.getDescrByName(newSelectedName);
+		loadElectionDescr(descr);
+	}
+
+	private void initOpenedDescrChoiceBox() {
+		openedElectionDescriptionChoiceBox.getSelectionModel()
+				.selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> {
+					selectedDescrChanged(newValue);
+				});
+	}
+
+	private void handleWorkspaceUpdate() {
+		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
+			openedElectionDescriptionChoiceBox.getItems().add(descr.getName());
+		}
+		openedElectionDescriptionChoiceBox.getSelectionModel().selectLast();
 	}
 
 	private void initListViews() {
@@ -236,7 +254,8 @@ public class CElectionEditor {
 	public void removeFunction() {
 		String functionName = functionList.getSelectionModel()
 				.getSelectedItem();
-		int selectionindex = functionList.getSelectionModel().getSelectedIndex();
+		int selectionindex = functionList.getSelectionModel()
+				.getSelectedIndex();
 		currentDescr.removeFunction(functionName);
 		populateFunctionList(currentDescr);
 		functionList.getSelectionModel().select(selectionindex - 1);
