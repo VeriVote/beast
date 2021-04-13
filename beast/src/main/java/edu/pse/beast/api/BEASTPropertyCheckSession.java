@@ -20,6 +20,10 @@ public class BEASTPropertyCheckSession {
 		this.uuid = uuid;
 		this.propertyCheckWorkSupplier = propertyCheckWorkSupplier;
 		this.tpi = tpi;
+	}
+	
+	public void start() {
+		propertyCheckWorkSupplier.fillQueue();
 		tpi.startOnceReady(propertyCheckWorkSupplier);
 	}
 	

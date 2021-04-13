@@ -28,9 +28,13 @@ public class BEAST {
 		this.tpi = new ThreadPoolInterface(this.tp);
 		this.processStarter = processStarter;
 	}
+	
+	public void shutdown() {
+		tp.shutdown();
+	}
 
 	//TODO pass the windows process and other setup stuff 
-	public BEASTPropertyCheckSession startPropertyCheck(
+	public BEASTPropertyCheckSession createCheckSession(
 			BEASTCallback cb, 
 			CElectionDescription descr,
 			List<PreAndPostConditionsDescription> propertiesToTest, 

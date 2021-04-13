@@ -1,5 +1,6 @@
 package edu.pse.beast.gui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class BeastWorkspace {
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
 	private List<TestConfiguration> testConfigs = new ArrayList<>();
 	private CodeGenOptions codeGenOptions;
-
+	private File baseDir;
+	
 	public BeastWorkspace(CodeGenOptions codeGenOptions) {
 		this.codeGenOptions = codeGenOptions;
 	}
@@ -80,6 +82,8 @@ public class BeastWorkspace {
 	}
 
 	public void addElectionDescription(CElectionDescription descr) {
+		if (getDescrByName(descr.getName()) != null)
+			return;
 		loadedDescrs.add(descr);
 		messageUpdateListener();
 	}
@@ -104,8 +108,16 @@ public class BeastWorkspace {
 		selectedConfig.setDescr(newDescr);
 		messageUpdateListener();
 	}
-	
+
 	public CodeGenOptions getCodeGenOptions() {
 		return codeGenOptions;
+	}
+
+	public void setBaseDir(File baseDir) {
+		this.baseDir = baseDir;
+	}
+	
+	public File getBaseDir() {
+		return baseDir;
 	}
 }

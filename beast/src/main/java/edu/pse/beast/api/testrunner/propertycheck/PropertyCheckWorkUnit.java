@@ -39,6 +39,7 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	private LoopBoundHandler loopBoundHandler;
 	private CodeGenOptions codeGenOptions;
 	private String sessionUUID;
+	private Process process;
 
 	public PropertyCheckWorkUnit(String sessionUUID, CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
@@ -66,7 +67,6 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 		ProcessBuilder pb = processStarter.startTestForParam(sessionUUID, descr,
 				propertyDescr, v, c, s, uuid, cb, cbmcFile, loopBoundHandler,
 				codeGenOptions);
-		Process process;
 		try {
 			process = pb.start();
 			BufferedReader reader = new BufferedReader(
@@ -87,6 +87,7 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 					uuid, cbmcOutput);
 			cb.onPropertyTestFinished(descr, propertyDescr, s, c, v, uuid);
 			finished = true;
+			process.destroy();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,6 +106,7 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 
 	@Override
 	public void interrupt() {
+		process.destroyForcibly();
 	}
 
 }

@@ -21,6 +21,7 @@ public class BeastWithGuiApplicationClass extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlResourceName));
 		loader.setController(controller);
+		controller.setPrimaryStage(primaryStage);
 		Parent root = loader.load();
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();

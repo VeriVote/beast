@@ -43,9 +43,6 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 			File cbmcFile,
 			LoopBoundHandler loopBoundHandler,
 			CodeGenOptions codeGenOptions) {
-
-		cb.onTestFileCreated(sessionUUID, descr, propertyDescr, V, C, S, uuid, cbmcFile);
-
 		String cbmcPath = "\"" + new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath() + "\"";
 		String BLANK = " ";
 

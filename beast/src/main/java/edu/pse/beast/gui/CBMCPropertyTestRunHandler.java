@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.StyledTextArea;
 
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.BEASTCallback;
@@ -21,6 +22,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.toolbox.Tuple;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
 public class CBMCPropertyTestRunHandler implements BEASTCallback {
 
@@ -73,11 +75,11 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 
 	public void stopTest(CBMCPropertyTestConfiguration selectedConfig) {
 		for (Tuple<CBMCPropertyTestConfiguration, String> t : activeTests) {
-			if (t.first() == selectedConfig) {				
+			if (t.first() == selectedConfig) {
 				BEASTPropertyCheckSession session = sessionUUIDToTestSession
 						.get(t.second());
 				session.interruptAllTests();
-				
+
 				startTestConfigButton.setDisable(false);
 				stopTestConfigButton.setDisable(true);
 				return;
@@ -108,7 +110,7 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 				amountOfVoters, amountOfCandidates, amountOfSeats, timeOut, 1,
 				"");
 
-		BEASTPropertyCheckSession session = beast.startPropertyCheck(this,
+		BEASTPropertyCheckSession session = beast.createCheckSession(this,
 				selectedConfig.getDescr(),
 				List.of(selectedConfig.getPropDescr()), param, codeGenOptions);
 
@@ -121,6 +123,8 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 		startTestConfigButton.setDisable(true);
 		stopTestConfigButton.setDisable(false);
 		startDisplay(session.getUuid());
+		
+		session.start();
 	}
 
 	private void startDisplay(String uuid) {
@@ -146,11 +150,27 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 		addLog(sessionUUID, output);
 	}
 
+	public class FileLink {
+		private File file;
+
+		public FileLink(File file) {
+
+		}
+
+		public void applyToText(Text text) {
+
+		}
+	}
+
+	public class FileStyle {
+
+	}
+
 	@Override
 	public void onTestFileCreated(String sessionUUID,
 			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
-			String uuid, File cbmcFile) {
+			PreAndPostConditionsDescription propertyDescr, File cbmcFile) {
+
 		addLog(sessionUUID, "Codefile creation has successfully completed: "
 				+ cbmcFile.getAbsolutePath());
 	}

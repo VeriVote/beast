@@ -5,6 +5,7 @@ public class ThreadPoolRunner implements Runnable {
 	private boolean keepRunning = true;
 	private WorkSupplier workSupplier;
 	private String id;
+	private WorkUnit work;
 
 	public ThreadPoolRunner(String id) {
 		this.id = id;
@@ -25,14 +26,20 @@ public class ThreadPoolRunner implements Runnable {
 					e.printStackTrace();
 				}
 			} else {
-				WorkUnit work = workSupplier.getWorkUnit();
+				work = workSupplier.getWorkUnit();
 				if (work != null)
 					work.doWork();
+				else {
+					if (workSupplier.isFinished()) {
+						workSupplier = null;
+					}
+				}
 			}
-		}
+		}		
 	}
 
 	public void shutdown() {
+		work.interrupt();
 		keepRunning = false;
 	}
 

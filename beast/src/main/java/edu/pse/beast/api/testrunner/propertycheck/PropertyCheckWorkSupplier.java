@@ -27,9 +27,9 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	private int workIdx = 0;
 	private CBMCProcessStarter processStarter;
 	private String sessionUUID;
+	private CodeGenOptions codeGenOptions;
 
-	public PropertyCheckWorkSupplier(
-			String sessionUUID,
+	public PropertyCheckWorkSupplier(String sessionUUID,
 			CElectionDescription descrs,
 			List<PreAndPostConditionsDescription> propDescrs,
 			ElectionCheckParameter parameter, BEASTCallback cb,
@@ -40,10 +40,10 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 		this.parameter = parameter;
 		this.cb = cb;
 		this.processStarter = processStarter;
-		fillQueue(codeGenOptions);
+		this.codeGenOptions = codeGenOptions;
 	}
 
-	private void fillQueue(CodeGenOptions codeGenOptions) {
+	public void fillQueue() {
 
 		synchronized (workQueue) {
 			for (PreAndPostConditionsDescription propDescr : propDescrs) {
@@ -54,6 +54,8 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 					cbmcFile = CBMCCodeFileGeneratorNEW.createCodeFileTest(
 							descrs, propDescr, codeGenOptions,
 							loopBoundHandler);
+					cb.onTestFileCreated(sessionUUID, descrs, propDescr,
+							cbmcFile);
 				} catch (IOException e) {
 					// TODO pass exception on to work unit
 					// handle exceptions thusly

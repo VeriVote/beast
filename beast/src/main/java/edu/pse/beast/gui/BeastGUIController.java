@@ -2,6 +2,9 @@ package edu.pse.beast.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -30,8 +33,15 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class BeastGUIController {
+
+	private Stage primaryStage;
+	
+	@FXML
+	private Button loadElectionDescriptionButton;
+	
 	@FXML
 	private AnchorPane codePane;
 
@@ -196,7 +206,9 @@ public class BeastGUIController {
 				cEditor);
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
-		cElectionEditor = new CElectionEditor(cEditor,
+		cElectionEditor = new CElectionEditor(
+				primaryStage,
+				cEditor,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
@@ -230,6 +242,11 @@ public class BeastGUIController {
 		
 		BEAST beast = new BEAST(ps);
 		
+		primaryStage.onCloseRequestProperty().addListener(e -> {
+			System.out.println("closing");
+			beast.shutdown();		
+		});
+		
 		CBMCPropertyTestRunHandler testRunHandler =
 				new CBMCPropertyTestRunHandler(
 						startTestConfigButton,
@@ -245,16 +262,25 @@ public class BeastGUIController {
 	}
 
 	@FXML
-	public void initialize() throws IOException {
+	public void initialize() throws IOException {		
+		
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountVotesVarName("V");
 		
+		
 		beastWorkspace = new BeastWorkspace(codeGenOptions);
+		
+		
 
 		CElectionDescription descr = getTestDescr();
 		PreAndPostConditionsDescription propDescr = getTestProperty();
 
+		Path currentRelativePath = Paths.get("");
+		String s = currentRelativePath.toAbsolutePath().toString();
+		File baseDir = new File(s);
+
+		beastWorkspace.setBaseDir(baseDir);
 		beastWorkspace.getLoadedDescrs().add(getTestDescr());
 		beastWorkspace.getLoadedPropDescrs().add(getTestProperty());
 		beastWorkspace.getTestConfigs().add(getTestConfig(descr, propDescr));
@@ -266,5 +292,22 @@ public class BeastGUIController {
 		addElectionDescriptionButton.setOnAction(e -> {
 			cElectionEditor.createNewDescr();
 		});
+		
+		loadElectionDescriptionButton.setOnAction(e -> {
+			try {
+				cElectionEditor.letUserLoad();
+			} catch (NotImplementedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+	}
+	
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+		
 	}
 }

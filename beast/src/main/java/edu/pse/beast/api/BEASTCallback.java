@@ -41,8 +41,7 @@ public interface BEASTCallback {
 
 	public default void onTestFileCreated(String sessionUUID,
 			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
-			String uuid, File cbmcFile) {
+			PreAndPostConditionsDescription propertyDescr, File cbmcFile) {
 
 	}
 

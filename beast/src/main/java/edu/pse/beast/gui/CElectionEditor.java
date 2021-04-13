@@ -1,8 +1,11 @@
 package edu.pse.beast.gui;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -11,6 +14,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
+import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.gui.elements.CEditorElement;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class CElectionEditor implements WorkspaceUpdateListener {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
@@ -38,13 +43,17 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	private BeastWorkspace beastWorkspace;
 
-	public CElectionEditor(CEditorElement electionCodeArea,
+	private Stage primaryStage;
+
+	public CElectionEditor(Stage primaryStage, CEditorElement electionCodeArea,
 			CodeArea funcDeclArea, CodeArea closingBracketArea,
 			ListView<String> functionList, ListView<String> loopBoundList,
 			ChoiceBox<String> openedElectionDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
+
+		this.primaryStage = primaryStage;
 
 		this.functionList = functionList;
 		this.loopBoundList = loopBoundList;
@@ -305,6 +314,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 					outputType, name);
 			beastWorkspace.addElectionDescription(descr);
 		}
+	}
+
+	public void letUserLoad() throws NotImplementedException, IOException {
+		CElectionDescription descr = OpenDialogHelper
+				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
+						primaryStage);
+		beastWorkspace.addElectionDescription(descr);
 	}
 
 }
