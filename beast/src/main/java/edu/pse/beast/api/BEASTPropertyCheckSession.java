@@ -8,13 +8,16 @@ public class BEASTPropertyCheckSession {
 	
 	private PropertyCheckWorkSupplier propertyCheckWorkSupplier;
 	private ThreadPoolInterface tpi;
+	private String uuid;
 	
 	public BEASTPropertyCheckSession() {
 	}
 
 	public BEASTPropertyCheckSession(
+			String uuid,
 			PropertyCheckWorkSupplier propertyCheckWorkSupplier, 
 			ThreadPoolInterface tpi) {
+		this.uuid = uuid;
 		this.propertyCheckWorkSupplier = propertyCheckWorkSupplier;
 		this.tpi = tpi;
 		tpi.startOnceReady(propertyCheckWorkSupplier);
@@ -34,6 +37,10 @@ public class BEASTPropertyCheckSession {
 	 */
 	public void await() throws InterruptedException {
 		propertyCheckWorkSupplier.waitSync();
+	}
+	
+	public String getUuid() {
+		return uuid;
 	}
 
 }

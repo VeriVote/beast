@@ -34,7 +34,9 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 	String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
 	@Override
-	public ProcessBuilder startTestForParam(CElectionDescription descr,
+	public ProcessBuilder startTestForParam(
+			String sessionUUID,
+			CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, 
 			int V, int C, int S, 
 			String uuid, BEASTCallback cb,
@@ -42,7 +44,7 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 			LoopBoundHandler loopBoundHandler,
 			CodeGenOptions codeGenOptions) {
 
-		cb.onTestFileCreated(descr, propertyDescr, V, C, S, uuid, cbmcFile);
+		cb.onTestFileCreated(sessionUUID, descr, propertyDescr, V, C, S, uuid, cbmcFile);
 
 		String cbmcPath = "\"" + new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC).getPath() + "\"";
 		String BLANK = " ";

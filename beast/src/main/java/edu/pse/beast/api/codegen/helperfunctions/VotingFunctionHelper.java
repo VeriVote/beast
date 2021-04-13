@@ -35,6 +35,7 @@ public class VotingFunctionHelper {
 				break;
 			}
 			case PARLIAMENT_STACK : {
+				code = "unsigned int VAR_NAME[AMT_CANDIDATES];\n";
 				break;
 			}
 			case SINGLE_CANDIDATE : {
@@ -121,6 +122,8 @@ public class VotingFunctionHelper {
 				break;
 			}
 			case WEIGHTED_APPROVAL : {
+				code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
+				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsApproval;
 				break;
 			}
 			case PREFERENCE : {

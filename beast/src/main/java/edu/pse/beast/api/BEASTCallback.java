@@ -27,34 +27,43 @@ public interface BEASTCallback {
 	}
 
 	public default void onPropertyTestStart(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid) {
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
 
 	}
 
-	public default void onPropertyTestRawOutput(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid, String output) {
+	public default void onPropertyTestRawOutput(String sessionUUID,
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid, String output) {
 
 	}
 
-	public default void onTestFileCreated(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int v, int c, int s, String uuid, File cbmcFile) {
+	public default void onTestFileCreated(String sessionUUID,
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
+			String uuid, File cbmcFile) {
 
 	}
 
 	public default void onCompleteCommand(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int v, int c, int s, String uuid, String completeCommand) {
+			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
+			String uuid, String completeCommand) {
 	}
 
 	public default void onException(Exception ex) throws Exception {
 	}
 
 	public default void onPropertyTestFinished(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid) {
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
 
 	}
 
-	public default void onPropertyTestRawOutputComplete(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v, String uuid, List<String> cbmcOutput) {
+	public default void onPropertyTestRawOutputComplete(
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid, List<String> cbmcOutput) {
 
 	}
 }

@@ -2,6 +2,7 @@ package edu.pse.beast.api;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
@@ -58,12 +59,12 @@ public class BEAST {
 //			}
 //			idx++;
 //		}
-
-		// TODO pass in which type of test...margin, etc. Currently this
-		// is intertwined with the javafx ChildTreeItem specifically which
-		// subclass gets passed. Wild
+		
+		String sessionUUID = UUID.randomUUID().toString();
 		return new BEASTPropertyCheckSession(
+				sessionUUID,
 				new PropertyCheckWorkSupplier(
+						sessionUUID,
 						descr, 
 						propertiesToTest,
 						param, 

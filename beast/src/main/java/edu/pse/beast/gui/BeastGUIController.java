@@ -7,11 +7,14 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 
+import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.elements.CEditorElement;
 import edu.pse.beast.gui.elements.PropertyEditorElement;
@@ -76,19 +79,18 @@ public class BeastGUIController {
 	@FXML
 	private AnchorPane testConfigDetailsAnchorPane;
 	// TestConfigHandler end
-
-	private CodeGenOptions codeGenOptions;
+	
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigurationHandler testConfigurationHandler;
 
-	private BeastWorkspace beastWorkspace = new BeastWorkspace();
+	private BeastWorkspace beastWorkspace;
 
 	private CElectionDescription getTestDescr() {
 		String name = "test";
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.WEIGHTED_APPROVAL,
-				VotingOutputTypes.PARLIAMENT_STACK, "test");
+				VotingInputTypes.APPROVAL,
+				VotingOutputTypes.CANDIDATE_LIST, "test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
 		descr.addLoopBoundForFunction("voting", 0, "V");
@@ -120,14 +122,14 @@ public class BeastGUIController {
 		cc.setMinCands(5);
 		cc.setMinSeats(5);
 
-		cc.setMaxCands(6);
-		cc.setMaxVoters(6);
-		cc.setMaxSeats(6);
+		cc.setMaxCands(5);
+		cc.setMaxVoters(5);
+		cc.setMaxSeats(5);
 
 		cc.setDescr(descr);
 		cc.setPropDescr(propDescr);
 
-		cc.setName("5-6");
+		cc.setName("test five");
 
 		created.getCbmcPropertyTestConfigurations().add(cc);
 
@@ -181,7 +183,7 @@ public class BeastGUIController {
 				cEditor);
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
-		cElectionEditor = new CElectionEditor(codeGenOptions, cEditor,
+		cElectionEditor = new CElectionEditor(cEditor,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
@@ -203,19 +205,40 @@ public class BeastGUIController {
 				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
 				beastWorkspace);
 	}
+	
+	private CBMCProcessStarter getProcessStarter() {
+		//TODO check os and get user input if needed
+		CBMCProcessStarter ps = new CBMCProcessStarterWindows();
+		return ps;
+	}
 
 	private void initTestConfigHandler() throws IOException {
+		CBMCProcessStarter ps = getProcessStarter();
+		
+		BEAST beast = new BEAST(ps);
+		
+		CBMCPropertyTestRunHandler testRunHandler =
+				new CBMCPropertyTestRunHandler(
+						startTestConfigButton,
+						stopTestConfigButton,
+						beast);
+		
+		
 		this.testConfigurationHandler = new TestConfigurationHandler(
-				testConfigTreeView, testConfigDetailsAnchorPane,
-				beastWorkspace);
+				startTestConfigButton,
+				stopTestConfigButton,
+				testConfigTreeView, testConfigDetailsAnchorPane			,
+				beastWorkspace, testRunHandler);
 	}
 
 	@FXML
 	public void initialize() throws IOException {
-		this.codeGenOptions = new CodeGenOptions();
+		CodeGenOptions codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountVotesVarName("V");
 		
+		beastWorkspace = new BeastWorkspace(codeGenOptions);
+
 		CElectionDescription descr = getTestDescr();
 		PreAndPostConditionsDescription propDescr = getTestProperty();
 
@@ -226,5 +249,9 @@ public class BeastGUIController {
 		initElectionEditor();
 		initPropertyEditor();
 		initTestConfigHandler();
+
+		addElectionDescriptionButton.setOnAction(e -> {
+			cElectionEditor.createNewDescr();
+		});
 	}
 }

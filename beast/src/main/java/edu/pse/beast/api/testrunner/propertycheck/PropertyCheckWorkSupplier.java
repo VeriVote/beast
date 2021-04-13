@@ -26,14 +26,15 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	private List<PropertyCheckWorkUnit> workQueue = new ArrayList<>();
 	private int workIdx = 0;
 	private CBMCProcessStarter processStarter;
-	
+	private String sessionUUID;
+
 	public PropertyCheckWorkSupplier(
-			CElectionDescription descrs, 
+			String sessionUUID,
+			CElectionDescription descrs,
 			List<PreAndPostConditionsDescription> propDescrs,
-			ElectionCheckParameter parameter,
-			BEASTCallback cb, 
-			CBMCProcessStarter processStarter,
-			CodeGenOptions codeGenOptions) {
+			ElectionCheckParameter parameter, BEASTCallback cb,
+			CBMCProcessStarter processStarter, CodeGenOptions codeGenOptions) {
+		this.sessionUUID = sessionUUID;
 		this.descrs = descrs;
 		this.propDescrs = propDescrs;
 		this.parameter = parameter;
@@ -45,19 +46,17 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	private void fillQueue(CodeGenOptions codeGenOptions) {
 
 		synchronized (workQueue) {
-			for (PreAndPostConditionsDescription propDescr : propDescrs) {	
+			for (PreAndPostConditionsDescription propDescr : propDescrs) {
 				LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 				File cbmcFile = null;
 				IOException ioExep = null;
 				try {
 					cbmcFile = CBMCCodeFileGeneratorNEW.createCodeFileTest(
-							descrs, 
-							propDescr,
-							codeGenOptions,
+							descrs, propDescr, codeGenOptions,
 							loopBoundHandler);
 				} catch (IOException e) {
-					//TODO pass exception on to work unit
-					//handle exceptions thusly
+					// TODO pass exception on to work unit
+					// handle exceptions thusly
 					ioExep = e;
 					continue;
 				}
@@ -65,16 +64,11 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 				for (int s : parameter.getRangeOfSeats()) {
 					for (int c : parameter.getRangeofCandidates()) {
 						for (int v : parameter.getRangeOfVoters()) {
-							workQueue.add(
-									new PropertyCheckWorkUnit(
-									descrs, propDescr, 
-									v, c, s,
-									UUID.randomUUID().toString(), 
-									cb, 
-									this.processStarter, 
-									cbmcFile,
-									loopBoundHandler,
-									codeGenOptions));
+							workQueue.add(new PropertyCheckWorkUnit(sessionUUID,
+									descrs, propDescr, v, c, s,
+									UUID.randomUUID().toString(), cb,
+									this.processStarter, cbmcFile,
+									loopBoundHandler, codeGenOptions));
 						}
 					}
 				}
@@ -84,16 +78,19 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 
 	@Override
 	public synchronized WorkUnit getWorkUnit() {
-		if(workIdx == workQueue.size()) return null;
+		if (workIdx == workQueue.size())
+			return null;
 		return workQueue.get(workIdx++);
 	}
 
 	@Override
-	public boolean isFinished() {		
+	public boolean isFinished() {
 		// TODO workIdx-generated method stub
-		if (workIdx < workQueue.size()) return false;
-		for(PropertyCheckWorkUnit work : workQueue) {
-			if(!work.isFinished()) return false;
+		if (workIdx < workQueue.size())
+			return false;
+		for (PropertyCheckWorkUnit work : workQueue) {
+			if (!work.isFinished())
+				return false;
 		}
 		return true;
 	}
@@ -107,13 +104,13 @@ public class PropertyCheckWorkSupplier implements WorkSupplier {
 	@Override
 	public void interruptAll() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void interruptSpecific(String uuid) {
 		// TODO Auto-generated method stub
-		
-	} 
+
+	}
 
 }

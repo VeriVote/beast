@@ -38,17 +38,14 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	File cbmcFile;
 	private LoopBoundHandler loopBoundHandler;
 	private CodeGenOptions codeGenOptions;
-	
-	public PropertyCheckWorkUnit(
-			CElectionDescription descr, 
-			PreAndPostConditionsDescription propertyDescr, 
-			int v,
-			int c, int s, 
-			String uuid, BEASTCallback cb,
-			CBMCProcessStarter processStarter, 
-			File cbmcFile,
-			LoopBoundHandler loopBoundHandler,
+	private String sessionUUID;
+
+	public PropertyCheckWorkUnit(String sessionUUID, CElectionDescription descr,
+			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
+			String uuid, BEASTCallback cb, CBMCProcessStarter processStarter,
+			File cbmcFile, LoopBoundHandler loopBoundHandler,
 			CodeGenOptions codeGenOptions) {
+		this.sessionUUID = sessionUUID;
 		this.descr = descr;
 		this.propertyDescr = propertyDescr;
 		this.v = v;
@@ -66,34 +63,29 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	public void doWork() {
 		cb.onPropertyTestStart(descr, propertyDescr, s, c, v, uuid);
 
-		ProcessBuilder pb = 
-				processStarter.startTestForParam(
-					descr, propertyDescr, 
-					v, c, s,
-					uuid, 
-					cb, cbmcFile, 
-					loopBoundHandler,
-					codeGenOptions);
+		ProcessBuilder pb = processStarter.startTestForParam(sessionUUID, descr,
+				propertyDescr, v, c, s, uuid, cb, cbmcFile, loopBoundHandler,
+				codeGenOptions);
 		Process process;
 		try {
 			process = pb.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(process.getInputStream()));
 			String line;
 			List<String> cbmcOutput = new ArrayList<>();
 			try {
 				while ((line = reader.readLine()) != null) {
-					cb.onPropertyTestRawOutput(
-							descr, propertyDescr, s, c, v, uuid, line);
+					cb.onPropertyTestRawOutput(sessionUUID, descr,
+							propertyDescr, s, c, v, uuid, line);
 					cbmcOutput.add(line);
 				}
 				// TODO errorhandling
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			cb.onPropertyTestRawOutputComplete(
-					descr, propertyDescr, s, c, v, uuid, cbmcOutput);
-			cb.onPropertyTestFinished(
-					descr, propertyDescr, s, c, v, uuid);
+			cb.onPropertyTestRawOutputComplete(descr, propertyDescr, s, c, v,
+					uuid, cbmcOutput);
+			cb.onPropertyTestFinished(descr, propertyDescr, s, c, v, uuid);
 			finished = true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -110,7 +102,6 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	public String getUUID() {
 		return uuid;
 	}
-
 
 	@Override
 	public void interrupt() {

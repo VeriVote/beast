@@ -11,6 +11,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 
 public interface CBMCProcessStarter {
 	public ProcessBuilder startTestForParam(
+			String sessionUUID,
 			CElectionDescription descr, 
 			PreAndPostConditionsDescription propertyDescr,
 			int V, int C, int S, 

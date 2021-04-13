@@ -15,12 +15,14 @@ import edu.pse.beast.gui.elements.CEditorElement;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 
-public class CElectionEditor {
+public class CElectionEditor implements WorkspaceUpdateListener {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
 	private final String cssLockedClassName = "locked";
 
@@ -34,18 +36,15 @@ public class CElectionEditor {
 
 	private CElectionDescription currentDescr;
 
-	private CodeGenOptions codeGenOptions;
 	private BeastWorkspace beastWorkspace;
 
-	public CElectionEditor(CodeGenOptions codeGenOptions,
-			CEditorElement electionCodeArea, CodeArea funcDeclArea,
-			CodeArea closingBracketArea, ListView<String> functionList,
-			ListView<String> loopBoundList,
+	public CElectionEditor(CEditorElement electionCodeArea,
+			CodeArea funcDeclArea, CodeArea closingBracketArea,
+			ListView<String> functionList, ListView<String> loopBoundList,
 			ChoiceBox<String> openedElectionDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
-		this.codeGenOptions = codeGenOptions;
 
 		this.functionList = functionList;
 		this.loopBoundList = loopBoundList;
@@ -67,9 +66,13 @@ public class CElectionEditor {
 		initListViews();
 		initOpenedDescrChoiceBox();
 		handleWorkspaceUpdate();
+
+		beastWorkspace.registerUpdateListener(this);
 	}
 
 	private void selectedDescrChanged(String newSelectedName) {
+		if (newSelectedName == null)
+			return;
 		CElectionDescription descr = beastWorkspace
 				.getDescrByName(newSelectedName);
 		loadElectionDescr(descr);
@@ -83,7 +86,8 @@ public class CElectionEditor {
 				});
 	}
 
-	private void handleWorkspaceUpdate() {
+	public void handleWorkspaceUpdate() {
+		openedElectionDescriptionChoiceBox.getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
 			openedElectionDescriptionChoiceBox.getItems().add(descr.getName());
 		}
@@ -154,9 +158,11 @@ public class CElectionEditor {
 				return "unsigned int VAR[AMT_VOTERS][AMT_CANDIDATES]"
 						.replaceAll("VAR", varname)
 						.replaceAll("AMT_VOTERS",
-								codeGenOptions.getCbmcAmountVotersVarName())
-						.replaceAll("AMT_CANDIDATES", codeGenOptions
-								.getCbmcAmountCandidatesVarName());
+								beastWorkspace.getCodeGenOptions()
+										.getCbmcAmountVotersVarName())
+						.replaceAll("AMT_CANDIDATES",
+								beastWorkspace.getCodeGenOptions()
+										.getCbmcAmountCandidatesVarName());
 		}
 		return null;
 	}
@@ -211,12 +217,14 @@ public class CElectionEditor {
 		TextField indexField = new TextField();
 		TextField boundField = new TextField();
 
-		Optional<String> res = DialogHelper
+		Optional<ButtonType> res = DialogHelper
 				.generateDialog(List.of("index", "bound"),
 						List.of(indexField, boundField))
 				.showAndWait();
 
 		if (res.isPresent()) {
+			if (res.get().getButtonData().isCancelButton())
+				return;
 			String index = indexField.getText();
 			String bound = boundField.getText();
 
@@ -240,10 +248,12 @@ public class CElectionEditor {
 
 	public void addFunction() {
 		TextField nameField = new TextField();
-		Optional<String> res = DialogHelper
+		Optional<ButtonType> res = DialogHelper
 				.generateDialog(List.of("name"), List.of(nameField))
 				.showAndWait();
 		if (res.isPresent()) {
+			if (res.get().getButtonData().isCancelButton())
+				return;
 			String name = nameField.getText();
 			currentDescr.createNewVotingSigFunctionAndAdd(name);
 			populateFunctionList(currentDescr);
@@ -259,6 +269,41 @@ public class CElectionEditor {
 		currentDescr.removeFunction(functionName);
 		populateFunctionList(currentDescr);
 		functionList.getSelectionModel().select(selectionindex - 1);
+	}
+
+	public void createNewDescr() {
+		List<String> inputNames = List.of("name", "inputType", "outputType");
+		TextField nameField = new TextField();
+
+		ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<>();
+		for (VotingInputTypes it : VotingInputTypes.values()) {
+			inputTypeChoiceBox.getItems().add(it.toString());
+		}
+		inputTypeChoiceBox.getSelectionModel().selectFirst();
+
+		ChoiceBox<String> outputTypeChoiceBox = new ChoiceBox<>();
+		for (VotingOutputTypes ot : VotingOutputTypes.values()) {
+			outputTypeChoiceBox.getItems().add(ot.toString());
+		}
+		outputTypeChoiceBox.getSelectionModel().selectFirst();
+
+		List<Node> nodes = List.of(nameField, inputTypeChoiceBox,
+				outputTypeChoiceBox);
+
+		Optional<ButtonType> res = DialogHelper
+				.generateDialog(inputNames, nodes).showAndWait();
+		if (res.isPresent()) {
+			if (res.get().getButtonData().isCancelButton())
+				return;
+			String name = nameField.getText();
+			VotingInputTypes inputType = VotingInputTypes.valueOf(
+					inputTypeChoiceBox.getSelectionModel().getSelectedItem());
+			VotingOutputTypes outputType = VotingOutputTypes.valueOf(
+					outputTypeChoiceBox.getSelectionModel().getSelectedItem());
+			CElectionDescription descr = new CElectionDescription(inputType,
+					outputType, name);
+			beastWorkspace.addElectionDescription(descr);
+		}
 	}
 
 }

@@ -32,6 +32,8 @@ public class CBMCTestConfigController {
 	private TextField minSeats;
 	@FXML
 	private TextField maxSeats;
+	@FXML
+	private AnchorPane outputAnchorPane;
 
 	public AnchorPane getTopLevelAnchorPane() {
 		return topLevelAnchorPane;
@@ -81,4 +83,7 @@ public class CBMCTestConfigController {
 		return maxSeats;
 	}
 
+	public AnchorPane getOutputAnchorPane() {
+		return outputAnchorPane;
+	}
 }

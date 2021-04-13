@@ -2,19 +2,26 @@ package edu.pse.beast.gui;
 
 import java.io.IOException;
 
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+
+import com.sun.jna.platform.win32.COM.COMEarlyBindingObject;
+
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.TestConfiguration.TestTypes;
+import edu.pse.beast.gui.elements.CEditorElement;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValuePointer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
-public class TestConfigurationHandler {
+public class TestConfigurationHandler implements WorkspaceUpdateListener {
 
 	private final String cbmcTestConfigDetailFXML = "/edu/pse/beast/cbmcTestConfigDetailGUI.fxml";
 	private CBMCTestConfigController cbmcTestConfigController = new CBMCTestConfigController();
@@ -28,12 +35,43 @@ public class TestConfigurationHandler {
 	private FXMLLoader cbmcTestConfigDetailLoader = new FXMLLoader(
 			getClass().getResource(cbmcTestConfigDetailFXML));
 
-	public TestConfigurationHandler(TreeView testConfigTreeView,
+	private Button startTestConfigButton;
+	private Button stopTestConfigButton;
+
+	private CodeArea outputArea = new CodeArea();
+
+	private CBMCPropertyTestRunHandler cbmcTestRunHandler;
+
+	public TestConfigurationHandler(
+			Button startTestConfigButton,
+			Button stopTestConfigButton, 
+			TreeView testConfigTreeView, 
 			AnchorPane testConfigDetailsAnchorPane,
-			BeastWorkspace beastWorkspace) throws IOException {
+			BeastWorkspace beastWorkspace,
+			CBMCPropertyTestRunHandler cbmcTestRunHandler) throws IOException {
 
 		cbmcTestConfigDetailLoader.setController(cbmcTestConfigController);
 		Node n = (Node) cbmcTestConfigDetailLoader.load();
+
+		VirtualizedScrollPane<CodeArea> vsp = new VirtualizedScrollPane<>(
+				outputArea);
+		AnchorPane op = cbmcTestConfigController.getOutputAnchorPane();
+		op.getChildren().add(vsp);
+		AnchorPane.setTopAnchor(vsp, 0d);
+		AnchorPane.setLeftAnchor(vsp, 0d);
+		AnchorPane.setRightAnchor(vsp, 0d);
+		AnchorPane.setBottomAnchor(vsp, 0d);
+		outputArea.setEditable(false);
+
+		this.startTestConfigButton = startTestConfigButton;
+		startTestConfigButton.setOnAction((e) -> {
+			startTest();
+		});
+		
+
+		this.stopTestConfigButton = stopTestConfigButton;		
+		stopTestConfigButton.setOnAction(e -> stopTest());
+		
 
 		this.testConfigTreeView = testConfigTreeView;
 		this.testConfigDetailsAnchorPane = testConfigDetailsAnchorPane;
@@ -42,11 +80,31 @@ public class TestConfigurationHandler {
 		initTestConfigTreeView();
 		initCBMCTestConfigView();
 
+		this.cbmcTestRunHandler = cbmcTestRunHandler;
+		cbmcTestRunHandler.setDisplayArea(outputArea);
+
 		handleWorkspaceUpdate();
+		beastWorkspace.registerUpdateListener(this);
+	}
+	
+	private void stopTest() {
+		
+	}
+
+	private void startTest() {
+		TreeItem<String> selectedItem = testConfigTreeView.getSelectionModel()
+				.getSelectedItem();
+
+		CBMCPropertyTestConfiguration selectedConfig = getSelectedCBMCTestConfig(
+				selectedItem);
+
+		cbmcTestRunHandler.startTest(selectedConfig, beastWorkspace.getCodeGenOptions());		
 	}
 
 	private TestConfiguration getParentTestConfig(
 			TreeItem<String> selectedItem) {
+		if (selectedItem == null)
+			return null;
 		if (selectedItem.getParent() == root)
 			return null;
 		String parentName = selectedItem.getParent().getValue();
@@ -71,6 +129,8 @@ public class TestConfigurationHandler {
 	}
 
 	private void cbmcTestConfigDescrChanged(String newDescrName) {
+		if (newDescrName == null)
+			return;
 		TreeItem<String> selectedItem = testConfigTreeView.getSelectionModel()
 				.getSelectedItem();
 
@@ -79,24 +139,9 @@ public class TestConfigurationHandler {
 				selectedItem);
 		if (selectedConfig == null || oldParentConfig == null)
 			return;
-		if (selectedConfig.getDescr().getName().equals(newDescrName))
-			return;
 
-		TestConfiguration newParentTestConfig = beastWorkspace
-				.getTestConfigByDescrName(newDescrName);
-		if (newParentTestConfig == null) {
-			CElectionDescription descr = beastWorkspace
-					.getDescrByName(newDescrName);
-			newParentTestConfig = beastWorkspace
-					.createAndReturnTestConfigForDescr(descr);
-		}
-
-		newParentTestConfig.getCbmcPropertyTestConfigurations()
-				.add(selectedConfig);
-		oldParentConfig.getCbmcPropertyTestConfigurations()
-				.remove(selectedConfig);
-
-		handleWorkspaceUpdate();
+		beastWorkspace.changeDescrForCBMCTestConfig(selectedConfig,
+				newDescrName);
 	}
 
 	private void cbmcTestConfigMinVoterChanged(int newVal) {
@@ -105,6 +150,8 @@ public class TestConfigurationHandler {
 
 		CBMCPropertyTestConfiguration selectedConfig = getSelectedCBMCTestConfig(
 				selectedItem);
+		if (selectedConfig == null)
+			return;
 		selectedConfig.setMaxVoters(newVal);
 	}
 
@@ -157,9 +204,17 @@ public class TestConfigurationHandler {
 		cbmcTestConfigController.getMaxSeats()
 				.setText(String.valueOf(config.getMaxSeats()));
 
+		cbmcTestRunHandler.display(config);
+	}
+
+	private void displayTestConfig(TestConfiguration config) {
+		testConfigDetailsAnchorPane.getChildren().clear();
 	}
 
 	private void testConfigSelectionChanged(TreeItem<String> newlySelected) {
+		cbmcTestRunHandler.stopDisplay();
+		if (newlySelected == null)
+			return;
 		if (newlySelected.getParent() != root) {
 			TestConfiguration testConfig = getParentTestConfig(newlySelected);
 			TestConfiguration.TestTypes selectedTestType = testConfig
@@ -170,6 +225,10 @@ public class TestConfigurationHandler {
 								newlySelected.getValue());
 				displayCBMCPropertyTestConfigDetails(cbmcTestConfig);
 			}
+		} else {
+			TestConfiguration testConfig = beastWorkspace
+					.getTestConfigByName(newlySelected.getValue());
+			displayTestConfig(testConfig);
 		}
 	}
 
@@ -183,7 +242,7 @@ public class TestConfigurationHandler {
 				});
 	}
 
-	private void handleWorkspaceUpdate() {
+	public void handleWorkspaceUpdate() {
 		cbmcTestConfigController.getDescrChoiceBox().getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
 			cbmcTestConfigController.getDescrChoiceBox().getItems()
@@ -197,15 +256,34 @@ public class TestConfigurationHandler {
 					.add(propDescr.getName());
 		}
 
+		String selected = "";
+		if (!root.getChildren().isEmpty()) {
+			selected = testConfigTreeView.getSelectionModel().getSelectedItem()
+					.getValue();
+		}
+		TreeItem<String> toSelect = null;
+		root.getChildren().clear();
 		for (TestConfiguration tc : beastWorkspace.getTestConfigs()) {
 			TreeItem<String> tcItem = new TreeItem<>(tc.getName());
+			if (tc.getName().equals(selected)) {
+				toSelect = tcItem;
+			}
 			for (CBMCPropertyTestConfiguration cbmcTc : tc
 					.getCbmcPropertyTestConfigurations()) {
 				TreeItem<String> cbmcTcItem = new TreeItem<>(cbmcTc.getName());
 				tcItem.getChildren().add(cbmcTcItem);
+				if (cbmcTc.getName().equals(selected)) {
+					toSelect = cbmcTcItem;
+				}
 			}
 			root.getChildren().add(tcItem);
 		}
+		if (toSelect != null) {
+			testConfigTreeView.getSelectionModel().select(toSelect);
+		} else if (!root.getChildren().isEmpty()) {
+			testConfigTreeView.getSelectionModel().selectLast();
+		}
+
 	}
 
 }

@@ -12,10 +12,10 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 
 public class DialogHelper {
-	public static Dialog<String> generateDialog(List<String> inputNames,
+	public static Dialog<ButtonType> generateDialog(List<String> inputNames,
 			List<Node> inputs) {
 		Point position = MouseInfo.getPointerInfo().getLocation();
-		Dialog<String> dialog = new Dialog<String>();
+		Dialog<ButtonType> dialog = new Dialog<>();
 		dialog.setX(position.getX());
 		dialog.setY(position.getY());
 		ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
