@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -80,7 +81,18 @@ public class CElectionSaverLoader {
 	}
 
 	private static List<LoopBound> loopBoundsFromJsonArray(JSONArray arr) {
-		return List.of();
+		List<LoopBound> loopBounds = new ArrayList<>();
+		for(int i = 0; i < arr.length(); ++i) {
+			JSONObject json = (JSONObject) arr.get(i);
+			
+			String funcName = json.getString(LOOP_BOUND_FUNCTION_KEY);
+			int index = json.getInt(LOOP_BOUND_INDEX_KEY);
+			String bound = json.getString(LOOP_BOUND_BOUND_KEY);
+			
+			loopBounds.add(new LoopBound(funcName, index, bound));			
+		}
+		
+		return loopBounds;
 	}
 
 	public static CElectionDescription loadCElection(File f)

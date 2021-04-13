@@ -87,8 +87,14 @@ public class TestConfigurationHandler implements WorkspaceUpdateListener {
 		beastWorkspace.registerUpdateListener(this);
 	}
 	
-	private void stopTest() {
+	private void stopTest() {		
+		TreeItem<String> selectedItem = testConfigTreeView.getSelectionModel()
+				.getSelectedItem();
+
+		CBMCPropertyTestConfiguration selectedConfig = getSelectedCBMCTestConfig(
+				selectedItem);
 		
+		cbmcTestRunHandler.stopTest(selectedConfig);
 	}
 
 	private void startTest() {

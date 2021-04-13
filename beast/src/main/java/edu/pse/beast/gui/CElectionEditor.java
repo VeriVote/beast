@@ -155,6 +155,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		switch (inputType) {
 			case APPROVAL :
 			case WEIGHTED_APPROVAL :
+			case PREFERENCE :
 				return "unsigned int VAR[AMT_VOTERS][AMT_CANDIDATES]"
 						.replaceAll("VAR", varname)
 						.replaceAll("AMT_VOTERS",

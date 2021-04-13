@@ -56,7 +56,7 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 				BEASTPropertyCheckSession session = sessionUUIDToTestSession
 						.get(t.second());
 				currentActiveSession = session;
-				display = true;
+				startDisplay(session.getUuid());
 				return;
 			}
 		}
@@ -69,6 +69,20 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 		displayArea.clear();
 		startTestConfigButton.setDisable(true);
 		stopTestConfigButton.setDisable(true);
+	}
+
+	public void stopTest(CBMCPropertyTestConfiguration selectedConfig) {
+		for (Tuple<CBMCPropertyTestConfiguration, String> t : activeTests) {
+			if (t.first() == selectedConfig) {				
+				BEASTPropertyCheckSession session = sessionUUIDToTestSession
+						.get(t.second());
+				session.interruptAllTests();
+				
+				startTestConfigButton.setDisable(false);
+				stopTestConfigButton.setDisable(true);
+				return;
+			}
+		}
 	}
 
 	public void startTest(CBMCPropertyTestConfiguration selectedConfig,
@@ -104,7 +118,8 @@ public class CBMCPropertyTestRunHandler implements BEASTCallback {
 		sessionUUIDToLogs.put(session.getUuid(), new ArrayList<>());
 		activeTests.add(new Tuple<CBMCPropertyTestConfiguration, String>(
 				selectedConfig, session.getUuid()));
-
+		startTestConfigButton.setDisable(true);
+		stopTestConfigButton.setDisable(false);
 		startDisplay(session.getUuid());
 	}
 

@@ -3,6 +3,7 @@ package edu.pse.beast.gui;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
@@ -89,13 +90,25 @@ public class BeastGUIController {
 	private CElectionDescription getTestDescr() {
 		String name = "test";
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.APPROVAL,
+				VotingInputTypes.PREFERENCE,
 				VotingOutputTypes.CANDIDATE_LIST, "test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
 		descr.addLoopBoundForFunction("voting", 0, "V");
 
 		descr.createNewVotingSigFunctionAndAdd("votehelper");
+		
+		File f = new File("testfiles/borda.belec");
+		try {
+			descr = SavingLoadingInterface.loadCElection(f);
+		} catch (NotImplementedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return descr;
 	}
 
