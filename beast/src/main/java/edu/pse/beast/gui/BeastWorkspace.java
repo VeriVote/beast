@@ -10,6 +10,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
+	private List<TestConfiguration> testConfigs = new ArrayList<>();
 
 	public List<CElectionDescription> getLoadedDescrs() {
 		return loadedDescrs;
@@ -17,6 +18,10 @@ public class BeastWorkspace {
 
 	public List<PreAndPostConditionsDescription> getLoadedPropDescrs() {
 		return loadedPropDescrs;
+	}
+
+	public List<TestConfiguration> getTestConfigs() {
+		return testConfigs;
 	}
 
 	public CElectionDescription getDescrByName(String name) {
@@ -33,5 +38,28 @@ public class BeastWorkspace {
 				return propDescr;
 		}
 		return null;
+	}
+
+	public TestConfiguration getTestConfigByName(String name) {
+		for (TestConfiguration testConfiguration : testConfigs) {
+			if (testConfiguration.getName().equals(name))
+				return testConfiguration;
+		}
+		return null;
+	}
+
+	public TestConfiguration getTestConfigByDescrName(String newDescrName) {
+		for (TestConfiguration testConfiguration : testConfigs) {
+			if (testConfiguration.getDescr().getName().equals(newDescrName))
+				return testConfiguration;
+		}
+		return null;
+	}
+
+	public TestConfiguration createAndReturnTestConfigForDescr(
+			CElectionDescription descr) {
+		TestConfiguration config = new TestConfiguration(descr);
+		testConfigs.add(config);
+		return config;
 	}
 }

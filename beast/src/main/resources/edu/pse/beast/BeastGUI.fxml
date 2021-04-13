@@ -13,15 +13,11 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -38,7 +34,7 @@
                                     <ChoiceBox fx:id="openedElectionDescriptionChoiceBox" prefHeight="25.0" prefWidth="370.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                                     <AnchorPane fx:id="codePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                                     <Separator prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
-                                    <Button fx:id="addElectionDescriptionButton" layoutX="381.0" layoutY="5.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="381.0" AnchorPane.topAnchor="5.0" />
+                                    <Button fx:id="addElectionDescriptionButton" layoutX="381.0" layoutY="5.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="5.0" />
                                  </children></AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
@@ -127,6 +123,7 @@
                               </AnchorPane>
                            </items>
                         </SplitPane>
+                        <Button fx:id="addPropDescrButton" layoutX="380.0" layoutY="5.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="380.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -137,22 +134,22 @@
                      <children>
                         <HBox prefHeight="33.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                            <children>
-                              <Button fx:id="addPropertyTestRunButton" minWidth="41.0" mnemonicParsing="false" prefHeight="25.0" text="+">
+                              <Button fx:id="addTestConfigButton" minWidth="24.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="+">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="removePropertyTestRunButton" mnemonicParsing="false" text="-">
+                              <Button fx:id="removeTestConfigButton" mnemonicParsing="false" text="-">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="propertyTestStartButton" mnemonicParsing="false" text="Start">
+                              <Button fx:id="startTestConfigButton" mnemonicParsing="false" text="Start">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="propertyTestStopButton" mnemonicParsing="false" text="Stop">
+                              <Button fx:id="stopTestConfigButton" mnemonicParsing="false" text="Stop">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
@@ -163,84 +160,10 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TreeView layoutX="1.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TreeView fx:id="testConfigTreeView" layoutX="1.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="477.0">
-                                 <children>
-                                    <GridPane layoutX="116.0" layoutY="115.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label text="Election Description" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets />
-                                             </GridPane.margin>
-                                          </Label>
-                                          <Label text="Property Description" GridPane.rowIndex="2" />
-                                          <Label text="name" />
-                                          <TextField GridPane.columnIndex="1" />
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <children>
-                                                <ChoiceBox layoutX="14.0" layoutY="2.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
-                                                <Button layoutX="168.0" layoutY="3.0" mnemonicParsing="false" text="load" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                             </children>
-                                          </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <children>
-                                                <ChoiceBox layoutX="14.0" layoutY="4.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
-                                                <Button mnemonicParsing="false" text="load" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </GridPane>
-                                    <GridPane layoutX="106.0" layoutY="105.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="100.0">
-                                      <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label text="Voters" GridPane.rowIndex="1" />
-                                          <Label text="Candidates" GridPane.rowIndex="2" />
-                                          <Label text="Seats" GridPane.rowIndex="3" />
-                                          <Label text="min" GridPane.columnIndex="1" />
-                                          <Label text="max" GridPane.columnIndex="2" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <GridPane.margin>
-                                                <Insets right="5.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <GridPane.margin>
-                                                <Insets right="5.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                             <GridPane.margin>
-                                                <Insets right="5.0" />
-                                             </GridPane.margin>
-                                          </TextField>
-                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </AnchorPane>
+                            <AnchorPane fx:id="testConfigDetailsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="477.0" />
                           </items>
                         </SplitPane>
                      </children>

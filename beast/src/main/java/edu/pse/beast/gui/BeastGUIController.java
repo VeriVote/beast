@@ -59,10 +59,28 @@ public class BeastGUIController {
 
 	@FXML
 	private ChoiceBox<String> openedPropertyDescriptionChoiceBox;
+	@FXML
+	private Button addPropDescrButton;
+
+	// TestConfigHandler
+	@FXML
+	private TreeView testConfigTreeView;
+	@FXML
+	private Button addTestConfigButton;
+	@FXML
+	private Button removeTestConfigButton;
+	@FXML
+	private Button startTestConfigButton;
+	@FXML
+	private Button stopTestConfigButton;
+	@FXML
+	private AnchorPane testConfigDetailsAnchorPane;
+	// TestConfigHandler end
 
 	private CodeGenOptions codeGenOptions;
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
+	private TestConfigurationHandler testConfigurationHandler;
 
 	private BeastWorkspace beastWorkspace = new BeastWorkspace();
 
@@ -91,6 +109,29 @@ public class BeastGUIController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private TestConfiguration getTestConfig(CElectionDescription descr,
+			PreAndPostConditionsDescription propDescr) {
+
+		TestConfiguration created = new TestConfiguration(descr);
+		CBMCPropertyTestConfiguration cc = new CBMCPropertyTestConfiguration();
+		cc.setMinVoters(5);
+		cc.setMinCands(5);
+		cc.setMinSeats(5);
+
+		cc.setMaxCands(6);
+		cc.setMaxVoters(6);
+		cc.setMaxSeats(6);
+
+		cc.setDescr(descr);
+		cc.setPropDescr(propDescr);
+
+		cc.setName("5-6");
+
+		created.getCbmcPropertyTestConfigurations().add(cc);
+
+		return created;
 	}
 
 	@FXML
@@ -163,20 +204,27 @@ public class BeastGUIController {
 				beastWorkspace);
 	}
 
-	private void initPropertyRunner() {
-
+	private void initTestConfigHandler() throws IOException {
+		this.testConfigurationHandler = new TestConfigurationHandler(
+				testConfigTreeView, testConfigDetailsAnchorPane,
+				beastWorkspace);
 	}
 
 	@FXML
-	public void initialize() {
+	public void initialize() throws IOException {
 		this.codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountVotesVarName("V");
+		
+		CElectionDescription descr = getTestDescr();
+		PreAndPostConditionsDescription propDescr = getTestProperty();
 
 		beastWorkspace.getLoadedDescrs().add(getTestDescr());
 		beastWorkspace.getLoadedPropDescrs().add(getTestProperty());
+		beastWorkspace.getTestConfigs().add(getTestConfig(descr, propDescr));
 
 		initElectionEditor();
 		initPropertyEditor();
+		initTestConfigHandler();
 	}
 }

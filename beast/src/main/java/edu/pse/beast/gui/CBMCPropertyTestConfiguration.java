@@ -3,7 +3,7 @@ package edu.pse.beast.gui;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public class PropertyTestRunParameters {
+public class CBMCPropertyTestConfiguration {
 	private int minCands;
 	private int minVoters;
 	private int minSeats;
