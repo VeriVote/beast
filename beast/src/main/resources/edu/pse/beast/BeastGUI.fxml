@@ -161,7 +161,17 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TreeView fx:id="testConfigTreeView" layoutX="1.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <HBox prefHeight="34.0" prefWidth="234.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                       <children>
+                                          <Label text="sort by">
+                                             <padding>
+                                                <Insets right="5.0" top="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <ChoiceBox fx:id="sortCriteriumChoiceBox" prefWidth="150.0" />
+                                       </children>
+                                    </HBox>
+                                    <TreeView fx:id="testConfigTreeView" layoutX="1.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane fx:id="testConfigDetailsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="477.0" />

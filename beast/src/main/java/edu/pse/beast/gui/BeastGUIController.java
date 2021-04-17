@@ -2,7 +2,6 @@ package edu.pse.beast.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -20,15 +19,21 @@ import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.elements.CEditorElement;
-import edu.pse.beast.gui.elements.PropertyEditorElement;
+import edu.pse.beast.gui.ceditor.CEditorCodeElement;
+import edu.pse.beast.gui.ceditor.CElectionEditor;
+import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
+import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
+import edu.pse.beast.gui.testruneditor.CBMCPropertyTestRunHandler;
+import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationTopLevelGUIHandler;
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
@@ -78,6 +83,8 @@ public class BeastGUIController {
 
 	// TestConfigHandler
 	@FXML
+	private ChoiceBox<String> sortCriteriumChoiceBox;
+	@FXML
 	private TreeView testConfigTreeView;
 	@FXML
 	private Button addTestConfigButton;
@@ -93,7 +100,7 @@ public class BeastGUIController {
 	
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
-	private TestConfigurationHandler testConfigurationHandler;
+	private TestConfigurationTopLevelGUIHandler testConfigurationHandler;
 
 	private BeastWorkspace beastWorkspace;
 
@@ -139,8 +146,9 @@ public class BeastGUIController {
 	private TestConfiguration getTestConfig(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
 
-		TestConfiguration created = new TestConfiguration(descr);
+		TestConfiguration created = new TestConfiguration(descr, propDescr, "test");
 		CBMCPropertyTestConfiguration cc = new CBMCPropertyTestConfiguration();
+		
 		cc.setMinVoters(5);
 		cc.setMinCands(5);
 		cc.setMinSeats(5);
@@ -153,8 +161,7 @@ public class BeastGUIController {
 		cc.setPropDescr(propDescr);
 
 		cc.setName("test five");
-
-		created.getCbmcPropertyTestConfigurations().add(cc);
+		created.addCBMCTestConfiguration(cc);
 
 		return created;
 	}
@@ -201,8 +208,8 @@ public class BeastGUIController {
 		AnchorPane.setLeftAnchor(closingBracketArea, 0d);
 		AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
-		CEditorElement cEditor = new CEditorElement();
-		VirtualizedScrollPane<CEditorElement> vsp = new VirtualizedScrollPane(
+		CEditorCodeElement cEditor = new CEditorCodeElement();
+		VirtualizedScrollPane<CEditorCodeElement> vsp = new VirtualizedScrollPane(
 				cEditor);
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
@@ -214,12 +221,12 @@ public class BeastGUIController {
 	}
 
 	private void initPropertyEditor() {
-		PropertyEditorElement prePropertyEditor = new PropertyEditorElement();
-		PropertyEditorElement postPropertyEditor = new PropertyEditorElement();
+		PropertyEditorCodeElement prePropertyEditor = new PropertyEditorCodeElement();
+		PropertyEditorCodeElement postPropertyEditor = new PropertyEditorCodeElement();
 
-		VirtualizedScrollPane<PropertyEditorElement> preVsp = new VirtualizedScrollPane<>(
+		VirtualizedScrollPane<PropertyEditorCodeElement> preVsp = new VirtualizedScrollPane<>(
 				prePropertyEditor);
-		VirtualizedScrollPane<PropertyEditorElement> postVsp = new VirtualizedScrollPane<>(
+		VirtualizedScrollPane<PropertyEditorCodeElement> postVsp = new VirtualizedScrollPane<>(
 				postPropertyEditor);
 
 		prePropertyPane.setContent(preVsp);
@@ -254,11 +261,14 @@ public class BeastGUIController {
 						beast);
 		
 		
-		this.testConfigurationHandler = new TestConfigurationHandler(
+		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(				
 				startTestConfigButton,
 				stopTestConfigButton,
-				testConfigTreeView, testConfigDetailsAnchorPane			,
-				beastWorkspace, testRunHandler);
+				sortCriteriumChoiceBox,
+				testConfigTreeView, 
+				testConfigDetailsAnchorPane,			
+				beastWorkspace, 
+				testRunHandler);
 	}
 
 	@FXML
@@ -281,9 +291,9 @@ public class BeastGUIController {
 		File baseDir = new File(s);
 
 		beastWorkspace.setBaseDir(baseDir);
-		beastWorkspace.getLoadedDescrs().add(getTestDescr());
-		beastWorkspace.getLoadedPropDescrs().add(getTestProperty());
-		beastWorkspace.getTestConfigs().add(getTestConfig(descr, propDescr));
+		beastWorkspace.addElectionDescription(getTestDescr());
+		beastWorkspace.addPropertyDescription(getTestProperty());
+		beastWorkspace.addTestConfiguration(getTestConfig(descr, propDescr));
 
 		initElectionEditor();
 		initPropertyEditor();

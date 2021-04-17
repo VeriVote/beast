@@ -12,7 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-public class OpenDialogHelper {
+public class OpenFileDialogHelper {
 
 	public static CElectionDescription letUserLoadElectionDescription(
 			File baseDir, Stage primaryStage)

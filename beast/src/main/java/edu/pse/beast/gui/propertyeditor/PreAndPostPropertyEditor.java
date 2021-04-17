@@ -1,27 +1,27 @@
-package edu.pse.beast.gui;
+package edu.pse.beast.gui.propertyeditor;
 
 import java.util.List;
 
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.elements.PropertyEditorElement;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 public class PreAndPostPropertyEditor {
-	private PropertyEditorElement preEditor;
-	private PropertyEditorElement postEditor;
+	private PropertyEditorCodeElement preEditor;
+	private PropertyEditorCodeElement postEditor;
 	private TreeView<String> variableTreeView;
 	private PreAndPostConditionsDescription currentPropDescr;
 	private MenuButton addSymbVarMenu;
 	private ChoiceBox<String> openedPropertyDescriptionChoiceBox;
 	private BeastWorkspace beastWorkspace;
 
-	public PreAndPostPropertyEditor(PropertyEditorElement preEditor,
-			PropertyEditorElement postEditor, TreeView<String> variableTreeView,
+	public PreAndPostPropertyEditor(PropertyEditorCodeElement preEditor,
+			PropertyEditorCodeElement postEditor, TreeView<String> variableTreeView,
 			MenuButton addSymbVarMenu,
 			ChoiceBox<String> openedPropertyDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {

@@ -1,6 +1,5 @@
-package edu.pse.beast.gui;
+package edu.pse.beast.gui.ceditor;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -8,14 +7,17 @@ import java.util.Optional;
 import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.richtext.CodeArea;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.VotingSigFunction;
-import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.gui.elements.CEditorElement;
+import edu.pse.beast.gui.DialogHelper;
+import edu.pse.beast.gui.OpenFileDialogHelper;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateEvent;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateEventType;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +38,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	private CodeArea funcDeclArea;
 	private CodeArea closingBracketArea;
-	private CEditorElement electionCodeArea;
+	private CEditorCodeElement electionCodeArea;
 	private ChoiceBox<String> openedElectionDescriptionChoiceBox;
 
 	private CElectionDescription currentDescr;
@@ -45,9 +47,10 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	private Stage primaryStage;
 
-	public CElectionEditor(Stage primaryStage, CEditorElement electionCodeArea,
-			CodeArea funcDeclArea, CodeArea closingBracketArea,
-			ListView<String> functionList, ListView<String> loopBoundList,
+	public CElectionEditor(Stage primaryStage,
+			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
+			CodeArea closingBracketArea, ListView<String> functionList,
+			ListView<String> loopBoundList,
 			ChoiceBox<String> openedElectionDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
@@ -74,8 +77,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 		initListViews();
 		initOpenedDescrChoiceBox();
-		handleWorkspaceUpdate();
-
+		handleWorkspaceUpdate(
+				WorkspaceUpdateEvent.fromType(WorkspaceUpdateEventType.ALL));
 		beastWorkspace.registerUpdateListener(this);
 	}
 
@@ -95,7 +98,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				});
 	}
 
-	public void handleWorkspaceUpdate() {
+	public void handleWorkspaceUpdate(WorkspaceUpdateEvent evt) {
 		openedElectionDescriptionChoiceBox.getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
 			openedElectionDescriptionChoiceBox.getItems().add(descr.getName());
@@ -317,7 +320,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	public void letUserLoad() throws NotImplementedException, IOException {
-		CElectionDescription descr = OpenDialogHelper
+		CElectionDescription descr = OpenFileDialogHelper
 				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
 						primaryStage);
 		beastWorkspace.addElectionDescription(descr);

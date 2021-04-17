@@ -1,4 +1,4 @@
-package edu.pse.beast.gui;
+package edu.pse.beast.gui.testruneditor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.toolbox.Tuple;
 import javafx.application.Platform;
 import javafx.scene.control.Button;

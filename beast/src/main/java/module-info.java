@@ -92,7 +92,6 @@ module edu.pse.beast {
 	requires org.json;
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
-    opens edu.pse.beast.gui.elements to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
     opens edu.pse.beast.datatypes.electiondescription to gson;
     opens edu.pse.beast.datatypes.propertydescription to gson;

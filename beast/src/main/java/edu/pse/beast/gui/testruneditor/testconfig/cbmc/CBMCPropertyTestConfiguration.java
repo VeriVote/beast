@@ -1,4 +1,4 @@
-package edu.pse.beast.gui;
+package edu.pse.beast.gui.testruneditor.testconfig.cbmc;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;

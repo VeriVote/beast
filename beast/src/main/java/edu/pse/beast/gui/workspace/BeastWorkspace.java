@@ -1,20 +1,24 @@
-package edu.pse.beast.gui;
+package edu.pse.beast.gui.workspace;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
-	private List<TestConfiguration> testConfigs = new ArrayList<>();
 	private CodeGenOptions codeGenOptions;
+	private TestConfigurationList testConfigList = new TestConfigurationList();
 	private File baseDir;
-	
+
 	public BeastWorkspace(CodeGenOptions codeGenOptions) {
 		this.codeGenOptions = codeGenOptions;
 	}
@@ -33,8 +37,8 @@ public class BeastWorkspace {
 		return loadedPropDescrs;
 	}
 
-	public List<TestConfiguration> getTestConfigs() {
-		return testConfigs;
+	public void addTestConfiguration(TestConfiguration testConfig) {
+		testConfigList.add(testConfig);
 	}
 
 	public CElectionDescription getDescrByName(String name) {
@@ -53,32 +57,10 @@ public class BeastWorkspace {
 		return null;
 	}
 
-	public TestConfiguration getTestConfigByName(String name) {
-		for (TestConfiguration testConfiguration : testConfigs) {
-			if (testConfiguration.getName().equals(name))
-				return testConfiguration;
-		}
-		return null;
-	}
-
-	public TestConfiguration getTestConfigByDescrName(String newDescrName) {
-		for (TestConfiguration testConfiguration : testConfigs) {
-			if (testConfiguration.getDescr().getName().equals(newDescrName))
-				return testConfiguration;
-		}
-		return null;
-	}
-
-	private TestConfiguration createAndReturnTestConfigForDescr(
-			CElectionDescription descr) {
-		TestConfiguration config = new TestConfiguration(descr);
-		testConfigs.add(config);
-		return config;
-	}
-
 	private void messageUpdateListener() {
 		for (WorkspaceUpdateListener l : updateListener)
-			l.handleWorkspaceUpdate();
+			l.handleWorkspaceUpdate(WorkspaceUpdateEvent
+					.fromType(WorkspaceUpdateEventType.ALL));
 	}
 
 	public void addElectionDescription(CElectionDescription descr) {
@@ -88,25 +70,9 @@ public class BeastWorkspace {
 		messageUpdateListener();
 	}
 
-	public void changeDescrForCBMCTestConfig(
-			CBMCPropertyTestConfiguration selectedConfig, String newDescrName) {
-		CElectionDescription oldDescr = selectedConfig.getDescr();
-		if (oldDescr.getName().equals(newDescrName))
-			return;
-		TestConfiguration oldParentTestConfig = getTestConfigByDescrName(
-				oldDescr.getName());
-		TestConfiguration newParentTestConfig = getTestConfigByDescrName(
-				newDescrName);
-		CElectionDescription newDescr = getDescrByName(newDescrName);
-		if (newParentTestConfig == null) {
-			newParentTestConfig = createAndReturnTestConfigForDescr(newDescr);
-		}
-		newParentTestConfig.getCbmcPropertyTestConfigurations()
-				.add(selectedConfig);
-		oldParentTestConfig.getCbmcPropertyTestConfigurations()
-				.remove(selectedConfig);
-		selectedConfig.setDescr(newDescr);
-		messageUpdateListener();
+	public void addPropertyDescription(
+			PreAndPostConditionsDescription propDescr) {
+		loadedPropDescrs.add(propDescr);
 	}
 
 	public CodeGenOptions getCodeGenOptions() {
@@ -116,8 +82,17 @@ public class BeastWorkspace {
 	public void setBaseDir(File baseDir) {
 		this.baseDir = baseDir;
 	}
-	
+
 	public File getBaseDir() {
 		return baseDir;
 	}
+
+	public Map<String, List<TestConfiguration>> getConfigsByElectionDescription() {
+		return testConfigList.getConfigsByElectionDescription();
+	}
+
+	public Map<String, List<TestConfiguration>> getConfigsByPropertyDescription() {
+		return testConfigList.getConfigsByPropertyDescription();
+	}
+
 }
