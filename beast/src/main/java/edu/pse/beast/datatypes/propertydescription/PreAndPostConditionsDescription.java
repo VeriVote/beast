@@ -72,6 +72,11 @@ public final class PreAndPostConditionsDescription {
 		this.boundedVarDescription = boundedVarDesc;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 	/**
 	 * Gets the name.
 	 *

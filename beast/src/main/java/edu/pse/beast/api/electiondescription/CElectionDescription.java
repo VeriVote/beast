@@ -54,6 +54,11 @@ public class CElectionDescription {
 		return created;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
 	public VotingInputTypes getInputType() {
 		return inputType;
 	}

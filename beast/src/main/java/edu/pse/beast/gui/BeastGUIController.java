@@ -23,10 +23,10 @@ import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
-import edu.pse.beast.gui.testruneditor.CBMCPropertyTestRunHandler;
+import edu.pse.beast.gui.testruneditor.TestConfigurationTopLevelGUIHandler;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationTopLevelGUIHandler;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -85,7 +85,7 @@ public class BeastGUIController {
 	@FXML
 	private ChoiceBox<String> sortCriteriumChoiceBox;
 	@FXML
-	private TreeView testConfigTreeView;
+	private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
 	@FXML
 	private Button addTestConfigButton;
 	@FXML
@@ -253,22 +253,14 @@ public class BeastGUIController {
 			System.out.println("closing");
 			beast.shutdown();		
 		});
-		
-		CBMCPropertyTestRunHandler testRunHandler =
-				new CBMCPropertyTestRunHandler(
-						startTestConfigButton,
-						stopTestConfigButton,
-						beast);
-		
-		
+				
 		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(				
 				startTestConfigButton,
 				stopTestConfigButton,
 				sortCriteriumChoiceBox,
 				testConfigTreeView, 
 				testConfigDetailsAnchorPane,			
-				beastWorkspace, 
-				testRunHandler);
+				beastWorkspace);
 	}
 
 	@FXML
