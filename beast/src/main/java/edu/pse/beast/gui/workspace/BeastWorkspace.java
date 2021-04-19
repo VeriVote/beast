@@ -33,7 +33,7 @@ public class BeastWorkspace {
 	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
 		this.codeGenOptions = codeGenOptions;
 	}
-	
+
 	public void setCbmcProcessStarter(CBMCProcessStarter cbmcProcessStarter) {
 		this.cbmcProcessStarter = cbmcProcessStarter;
 	}
@@ -107,8 +107,7 @@ public class BeastWorkspace {
 		return testConfigList.getConfigsByPropertyDescription();
 	}
 
-	public void createCBMCTestRuns(
-			CBMCPropertyTestConfiguration config) {
+	public void createCBMCTestRuns(CBMCPropertyTestConfiguration config) {
 		try {
 			if (cbmcProcessStarter == null) {
 				for (WorkspaceUpdateListener l : updateListener) {
@@ -119,26 +118,25 @@ public class BeastWorkspace {
 
 			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 			File cbmcFile = beast.generateCodeFile(config.getDescr(),
-					config.getPropDescr(), codeGenOptions,
-					loopBoundHandler);
-			List<CBMCPropertyCheckWorkUnit> wus = beast.generateWorkUnits(cbmcFile,
-					config, codeGenOptions, loopBoundHandler,
+					config.getPropDescr(), codeGenOptions, loopBoundHandler);
+			List<CBMCPropertyCheckWorkUnit> wus = beast.generateWorkUnits(
+					cbmcFile, config, codeGenOptions, loopBoundHandler,
 					cbmcProcessStarter);
-			
+
 			List<CBMCTestRun> createdTestRuns = new ArrayList<>();
-			
-			for(CBMCPropertyCheckWorkUnit wu : wus) {
-				CBMCTestRun run = new CBMCTestRun(wu, cbmcFile);
+
+			for (CBMCPropertyCheckWorkUnit wu : wus) {
+				CBMCTestRun run = new CBMCTestRun(wu);
 				createdTestRuns.add(run);
 				config.addRun(run);
-				if(config.getStartRunsOnCreation()) {
+				if (config.getStartRunsOnCreation()) {
 					beast.addCBMCWorkItemToQueue(wu);
 				}
-			}			
-			for(WorkspaceUpdateListener l : updateListener) {
+			}
+			for (WorkspaceUpdateListener l : updateListener) {
 				l.handleWorkspaceUpdateAddedCBMCRuns(config, createdTestRuns);
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -146,6 +144,10 @@ public class BeastWorkspace {
 
 	public void shutdown() throws InterruptedException {
 		beast.shutdown();
+	}
+
+	public void addRunToQueue(CBMCTestRun run) {
+		beast.addCBMCWorkItemToQueue(run.getWorkUnit());
 	}
 
 }

@@ -74,7 +74,7 @@ public class TestConfigurationTopLevelGUIHandler
 		testConfigGuiController = new TestConfigGuiController(beastWorkspace);
 		cbmcTestConfigController = new CBMCTestConfigGuiController(
 				beastWorkspace);
-		cbmcTestRunGuiController = new CBMCTestRunGuiController();
+		cbmcTestRunGuiController = new CBMCTestRunGuiController(beastWorkspace);
 
 		this.testConfigDetailsAnchorPane = testConfigDetailsAnchorPane;
 

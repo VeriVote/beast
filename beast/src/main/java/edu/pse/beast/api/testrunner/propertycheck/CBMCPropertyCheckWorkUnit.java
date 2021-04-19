@@ -43,7 +43,8 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	private Process process;
 	private WorkUnitState state;
 
-	public CBMCPropertyCheckWorkUnit(String sessionUUID, CElectionDescription descr,
+	public CBMCPropertyCheckWorkUnit(String sessionUUID,
+			CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
 			String uuid, CBMCProcessStarter processStarter, File cbmcFile,
 			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions) {
@@ -58,12 +59,13 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		this.cbmcFile = cbmcFile;
 		this.loopBoundHandler = loopBoundHandler;
 		this.codeGenOptions = codeGenOptions;
+		this.state = WorkUnitState.CREATED;
 	}
-	
+
 	public void setCallback(CBMCTestCallback cb) {
 		this.cb = cb;
 	}
-	
+
 	public boolean hasCallback() {
 		return this.cb != null;
 	}
@@ -94,9 +96,10 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 			}
 			cb.onPropertyTestRawOutputComplete(descr, propertyDescr, s, c, v,
 					uuid, cbmcOutput);
-			cb.onPropertyTestFinished(descr, propertyDescr, s, c, v, uuid);
 			state = WorkUnitState.FINISHED;
 			process.destroy();
+			
+			cb.onPropertyTestFinished(descr, propertyDescr, s, c, v, uuid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,11 +115,13 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public void interrupt() {
 		process.destroyForcibly();
 		state = WorkUnitState.STOPPED;
+		cb.onPropertyTestStopped(descr, propertyDescr, s, c, v, uuid);
 	}
 
 	@Override
 	public void addedToQueue() {
 		state = WorkUnitState.ON_QUEUE;
+		cb.onPropertyTestAddedToQueue(descr, propertyDescr, s, c, v, uuid);
 	}
 
 	@Override
@@ -124,5 +129,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		return state;
 	}
 
-
+	public File getCbmcFile() {
+		return cbmcFile;
+	}
 }

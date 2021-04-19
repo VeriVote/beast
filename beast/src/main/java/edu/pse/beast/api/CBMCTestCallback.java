@@ -26,6 +26,13 @@ public interface CBMCTestCallback {
 	public default void onTestStopped() {
 	}
 
+	public default void onPropertyTestAddedToQueue(
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+
+	}
+
 	public default void onPropertyTestStart(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
@@ -63,6 +70,12 @@ public interface CBMCTestCallback {
 			CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid, List<String> cbmcOutput) {
+
+	}
+
+	public default void onPropertyTestStopped(CElectionDescription descr,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
 
 	}
 }
