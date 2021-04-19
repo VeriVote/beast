@@ -17,6 +17,10 @@ import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
+import edu.pse.beast.gui.workspace.events.WorkspaceErrorEvent;
+import edu.pse.beast.gui.workspace.events.WorkspaceErrorEventType;
+import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
+import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEventType;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
@@ -72,8 +76,7 @@ public class BeastWorkspace {
 
 	private void messageUpdateListener() {
 		for (WorkspaceUpdateListener l : updateListener)
-			l.handleWorkspaceUpdate(WorkspaceUpdateEvent
-					.fromType(WorkspaceUpdateEventType.ALL));
+			l.handleWorkspaceUpdateGeneric();
 	}
 
 	public void addElectionDescription(CElectionDescription descr) {
@@ -113,8 +116,7 @@ public class BeastWorkspace {
 		try {
 			if (cbmcProcessStarter == null) {
 				for (WorkspaceUpdateListener l : updateListener) {
-					l.handleWorkspaceError(WorkspaceErrorEvent
-							.from(WorkspaceErrorEventType.NO_CBMC_PROCESS_STARTER));
+					l.handleWorkspaceErrorNoCBMCProcessStarter();
 				}
 				return;
 			}
@@ -127,7 +129,7 @@ public class BeastWorkspace {
 					currentConfig, codeGenOptions, loopBoundHandler,
 					cbmcProcessStarter);
 			for(CBMCPropertyCheckWorkUnit wu : wus) {
-				CBMCTestRun run = new CBMCTestRun(wu);
+				CBMCTestRun run = new CBMCTestRun(wu, cbmcFile);
 				currentConfig.addRun(run);
 				if(currentConfig.getStartRunsOnCreation()) {
 					beast.addCBMCWorkItemToQueue(wu);

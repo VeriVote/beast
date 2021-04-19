@@ -15,10 +15,9 @@ import edu.pse.beast.api.electiondescription.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.OpenFileDialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
-import edu.pse.beast.gui.workspace.WorkspaceErrorEvent;
-import edu.pse.beast.gui.workspace.WorkspaceUpdateEvent;
-import edu.pse.beast.gui.workspace.WorkspaceUpdateEventType;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
+import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
+import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEventType;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,8 +77,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 		initListViews();
 		initOpenedDescrChoiceBox();
-		handleWorkspaceUpdate(
-				WorkspaceUpdateEvent.fromType(WorkspaceUpdateEventType.ALL));
+		handleWorkspaceUpdateGeneric();
 		beastWorkspace.registerUpdateListener(this);
 	}
 
@@ -99,7 +97,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				});
 	}
 
-	public void handleWorkspaceUpdate(WorkspaceUpdateEvent evt) {
+	public void handleWorkspaceUpdateGeneric() {
 		openedElectionDescriptionChoiceBox.getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
 			openedElectionDescriptionChoiceBox.getItems().add(descr.getName());
@@ -325,12 +323,6 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
 						primaryStage);
 		beastWorkspace.addElectionDescription(descr);
-	}
-
-	@Override
-	public void handleWorkspaceError(WorkspaceErrorEvent evt) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

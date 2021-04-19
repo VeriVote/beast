@@ -28,9 +28,9 @@ import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
-import edu.pse.beast.gui.workspace.WorkspaceErrorEvent;
-import edu.pse.beast.gui.workspace.WorkspaceUpdateEvent;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
+import edu.pse.beast.gui.workspace.events.WorkspaceErrorEvent;
+import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -322,10 +322,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	}
 
 	@Override
-	public void handleWorkspaceUpdate(WorkspaceUpdateEvent evt) {
+	public void handleWorkspaceUpdateGeneric() {
 	}
 
-	@Override
-	public void handleWorkspaceError(WorkspaceErrorEvent evt) {
-	}
 }

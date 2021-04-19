@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.workspace;
+package edu.pse.beast.gui.workspace.events;
 
 public class WorkspaceUpdateEvent {
 	
