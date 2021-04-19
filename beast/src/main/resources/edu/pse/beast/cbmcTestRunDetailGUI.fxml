@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
 
 <AnchorPane fx:id="topLevelAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <AnchorPane prefHeight="43.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Button fx:id="openCreatedFileButton" mnemonicParsing="false" text="display" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Label text="created File:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+            <TextField fx:id="createdFileTextField" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
       <HBox fx:id="stateHBox" prefHeight="37.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="state:">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Label>
             <Label fx:id="stateLabel" />
          </children>
       </HBox>
-      <HBox fx:id="fileHbox" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-         <children>
-            <Label text="created File:">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Label>
-            <Label fx:id="createdFileLabel" />
-            <Button fx:id="openCreatedFileButton" mnemonicParsing="false" text="open" />
-         </children>
-      </HBox>
-      <AnchorPane fx:id="outputAnchorPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+      <AnchorPane fx:id="outputAnchorPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
    </children>
 </AnchorPane>
