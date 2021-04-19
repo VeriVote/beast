@@ -16,8 +16,6 @@ import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.OpenFileDialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEventType;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -10,7 +10,6 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 
-import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
@@ -29,8 +28,6 @@ import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfigura
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
-import edu.pse.beast.gui.workspace.events.WorkspaceErrorEvent;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

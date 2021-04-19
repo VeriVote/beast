@@ -17,10 +17,6 @@ import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
-import edu.pse.beast.gui.workspace.events.WorkspaceErrorEvent;
-import edu.pse.beast.gui.workspace.events.WorkspaceErrorEventType;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEventType;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
@@ -112,7 +108,7 @@ public class BeastWorkspace {
 	}
 
 	public void createCBMCTestRuns(
-			CBMCPropertyTestConfiguration currentConfig) {
+			CBMCPropertyTestConfiguration config) {
 		try {
 			if (cbmcProcessStarter == null) {
 				for (WorkspaceUpdateListener l : updateListener) {
@@ -122,20 +118,26 @@ public class BeastWorkspace {
 			}
 
 			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-			File cbmcFile = beast.generateCodeFile(currentConfig.getDescr(),
-					currentConfig.getPropDescr(), codeGenOptions,
+			File cbmcFile = beast.generateCodeFile(config.getDescr(),
+					config.getPropDescr(), codeGenOptions,
 					loopBoundHandler);
 			List<CBMCPropertyCheckWorkUnit> wus = beast.generateWorkUnits(cbmcFile,
-					currentConfig, codeGenOptions, loopBoundHandler,
+					config, codeGenOptions, loopBoundHandler,
 					cbmcProcessStarter);
+			
+			List<CBMCTestRun> createdTestRuns = new ArrayList<>();
+			
 			for(CBMCPropertyCheckWorkUnit wu : wus) {
 				CBMCTestRun run = new CBMCTestRun(wu, cbmcFile);
-				currentConfig.addRun(run);
-				if(currentConfig.getStartRunsOnCreation()) {
+				createdTestRuns.add(run);
+				config.addRun(run);
+				if(config.getStartRunsOnCreation()) {
 					beast.addCBMCWorkItemToQueue(wu);
 				}
 			}			
-			messageUpdateListener();
+			for(WorkspaceUpdateListener l : updateListener) {
+				l.handleWorkspaceUpdateAddedCBMCRuns(config, createdTestRuns);
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();

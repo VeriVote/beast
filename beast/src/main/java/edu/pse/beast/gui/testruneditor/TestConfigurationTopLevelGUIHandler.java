@@ -1,7 +1,6 @@
 package edu.pse.beast.gui.testruneditor;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,16 +10,14 @@ import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfigura
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCTestConfigGuiController;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRunGuiController;
-import edu.pse.beast.gui.testruneditor.treeview.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigCBMCTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigCategoryTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
+import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemType;
+import edu.pse.beast.gui.testruneditor.treeview.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
-import edu.pse.beast.gui.workspace.events.WorkspaceErrorEvent;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEvent;
-import edu.pse.beast.gui.workspace.events.WorkspaceUpdateEventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -155,6 +152,7 @@ public class TestConfigurationTopLevelGUIHandler
 
 	private void addCBMCRunItems(TreeItem<TestConfigTreeItemSuper> treeItem,
 			CBMCPropertyTestConfiguration config) {
+		treeItem.getChildren().clear();
 		for (CBMCTestRun tr : config.getRuns()) {
 			treeItem.getChildren()
 					.add(new TreeItem<>(new TestRunCBMCTreeItem(tr)));
@@ -213,4 +211,15 @@ public class TestConfigurationTopLevelGUIHandler
 		updateTestConfigTreeView();
 	}
 
+	@Override
+	public void handleWorkspaceUpdateAddedCBMCRuns(
+			CBMCPropertyTestConfiguration config,
+			List<CBMCTestRun> createdTestRuns) {
+		TreeItem<TestConfigTreeItemSuper> item = TestConfigTreeViewHelper
+				.getItem(config, root);
+		for (CBMCTestRun r : createdTestRuns) {
+			item.getChildren().add(new TreeItem<TestConfigTreeItemSuper>(
+					new TestRunCBMCTreeItem(r)));
+		}
+	}
 }
