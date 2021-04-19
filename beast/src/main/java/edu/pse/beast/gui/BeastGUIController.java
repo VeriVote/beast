@@ -28,6 +28,9 @@ import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceErrorEvent;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateEvent;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -40,7 +43,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class BeastGUIController {
+public class BeastGUIController implements WorkspaceUpdateListener {
 
 	private Stage primaryStage;
 	
@@ -162,6 +165,8 @@ public class BeastGUIController {
 
 		cc.setName("test five");
 		created.addCBMCTestConfiguration(cc);
+		
+		cc.setStartRunsOnCreation(false);
 
 		return created;
 	}
@@ -244,14 +249,14 @@ public class BeastGUIController {
 		return ps;
 	}
 
-	private void initTestConfigHandler() throws IOException {
-		CBMCProcessStarter ps = getProcessStarter();
-		
-		BEAST beast = new BEAST(ps);
+	private void initTestConfigHandler() throws IOException {	
 		
 		primaryStage.onCloseRequestProperty().addListener(e -> {
-			System.out.println("closing");
-			beast.shutdown();		
+			try {
+				beastWorkspace.shutdown();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}		
 		});
 				
 		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(				
@@ -271,10 +276,13 @@ public class BeastGUIController {
 		codeGenOptions.setCbmcAmountVotesVarName("V");
 		
 		
-		beastWorkspace = new BeastWorkspace(codeGenOptions);
+		beastWorkspace = new BeastWorkspace();
 		
+		beastWorkspace.setCodeGenOptions(codeGenOptions);
 		
-
+		CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();		
+		beastWorkspace.setCbmcProcessStarter(cbmcProcessStarter);
+		
 		CElectionDescription descr = getTestDescr();
 		PreAndPostConditionsDescription propDescr = getTestProperty();
 
@@ -311,5 +319,13 @@ public class BeastGUIController {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		
+	}
+
+	@Override
+	public void handleWorkspaceUpdate(WorkspaceUpdateEvent evt) {
+	}
+
+	@Override
+	public void handleWorkspaceError(WorkspaceErrorEvent evt) {
 	}
 }

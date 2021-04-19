@@ -55,7 +55,7 @@ public class TestCompletePropertyCheckPipeline {
 		options.setCbmcAmountVotesVarName("V");
 		
 		BEASTPropertyCheckSession sess = beast.createCheckSession(
-				new BEASTCallback() {
+				new CBMCTestCallback() {
 					@Override
 					public void onCompleteCommand(
 							CElectionDescription description,

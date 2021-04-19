@@ -16,4 +16,8 @@ public class TestConfigCBMCTreeItem extends TestConfigTreeItemSuper {
 		return cbmcPropertyTestConfiguration.getName();
 	}
 	
+	public CBMCPropertyTestConfiguration getCbmcPropertyTestConfiguration() {
+		return cbmcPropertyTestConfiguration;
+	}
+	
 }

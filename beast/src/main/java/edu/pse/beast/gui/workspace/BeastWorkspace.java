@@ -1,16 +1,22 @@
 package edu.pse.beast.gui.workspace;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
@@ -18,12 +24,19 @@ public class BeastWorkspace {
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();
 	private File baseDir;
-
-	public BeastWorkspace(CodeGenOptions codeGenOptions) {
-		this.codeGenOptions = codeGenOptions;
-	}
+	private CBMCProcessStarter cbmcProcessStarter;
 
 	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
+
+	private BEAST beast = new BEAST();
+
+	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
+		this.codeGenOptions = codeGenOptions;
+	}
+	
+	public void setCbmcProcessStarter(CBMCProcessStarter cbmcProcessStarter) {
+		this.cbmcProcessStarter = cbmcProcessStarter;
+	}
 
 	public void registerUpdateListener(WorkspaceUpdateListener l) {
 		updateListener.add(l);
@@ -93,6 +106,42 @@ public class BeastWorkspace {
 
 	public Map<String, List<TestConfiguration>> getConfigsByPropertyDescription() {
 		return testConfigList.getConfigsByPropertyDescription();
+	}
+
+	public void createCBMCTestRuns(
+			CBMCPropertyTestConfiguration currentConfig) {
+		try {
+			if (cbmcProcessStarter == null) {
+				for (WorkspaceUpdateListener l : updateListener) {
+					l.handleWorkspaceError(WorkspaceErrorEvent
+							.from(WorkspaceErrorEventType.NO_CBMC_PROCESS_STARTER));
+				}
+				return;
+			}
+
+			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+			File cbmcFile = beast.generateCodeFile(currentConfig.getDescr(),
+					currentConfig.getPropDescr(), codeGenOptions,
+					loopBoundHandler);
+			List<CBMCPropertyCheckWorkUnit> wus = beast.generateWorkUnits(cbmcFile,
+					currentConfig, codeGenOptions, loopBoundHandler,
+					cbmcProcessStarter);
+			for(CBMCPropertyCheckWorkUnit wu : wus) {
+				CBMCTestRun run = new CBMCTestRun(wu);
+				currentConfig.addRun(run);
+				if(currentConfig.getStartRunsOnCreation()) {
+					beast.addCBMCWorkItemToQueue(wu);
+				}
+			}			
+			messageUpdateListener();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void shutdown() throws InterruptedException {
+		beast.shutdown();
 	}
 
 }

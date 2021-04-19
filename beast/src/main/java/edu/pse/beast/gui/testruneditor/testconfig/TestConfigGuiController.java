@@ -37,7 +37,7 @@ public class TestConfigGuiController {
 	public void display(TestConfiguration config) {
 		nameTextField.setText(config.getName());
 		descrChoiceBox.getSelectionModel().select(config.getDescr());
-		propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());
+		propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());		
 	}
 
 	@FXML

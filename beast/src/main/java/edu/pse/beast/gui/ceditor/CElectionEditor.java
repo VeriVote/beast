@@ -15,6 +15,7 @@ import edu.pse.beast.api.electiondescription.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.OpenFileDialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceErrorEvent;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateEvent;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateEventType;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
@@ -324,6 +325,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
 						primaryStage);
 		beastWorkspace.addElectionDescription(descr);
+	}
+
+	@Override
+	public void handleWorkspaceError(WorkspaceErrorEvent evt) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

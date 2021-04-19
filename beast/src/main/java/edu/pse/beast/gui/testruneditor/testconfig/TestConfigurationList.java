@@ -6,11 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+
 public class TestConfigurationList {
 	private Map<String, List<TestConfiguration>> testConfigsByDescr = new HashMap<>();
 	private Map<String, List<TestConfiguration>> testConfigsByPropDescr = new HashMap<>();
+	private Map<String, TestConfiguration> testConfigsByName = new HashMap<>();
 
 	public void add(TestConfiguration testConfig) {
+		if(testConfigsByName.containsKey(testConfig.getName())) {
+			//TODO Error
+		} else {
+			testConfigsByName.put(testConfig.getName(), testConfig);
+		}
+		
 		if (!testConfigsByDescr.containsKey(testConfig.getDescr().getName())) {
 			testConfigsByDescr.put(testConfig.getDescr().getName(),
 					new ArrayList<>());
@@ -23,7 +32,7 @@ public class TestConfigurationList {
 					new ArrayList<>());
 		}
 		testConfigsByPropDescr.get(testConfig.getPropDescr().getName())
-				.add(testConfig);
+				.add(testConfig);		
 	}
 
 	public Map<String, List<TestConfiguration>> getConfigsByElectionDescription() {
@@ -33,4 +42,6 @@ public class TestConfigurationList {
 	public Map<String, List<TestConfiguration>> getConfigsByPropertyDescription() {
 		return Collections.unmodifiableMap(testConfigsByPropDescr);
 	}
+
+
 }

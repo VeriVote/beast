@@ -7,7 +7,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public interface BEASTCallback {
+public interface CBMCTestCallback {
 	public default void onTestStarted() {
 	}
 

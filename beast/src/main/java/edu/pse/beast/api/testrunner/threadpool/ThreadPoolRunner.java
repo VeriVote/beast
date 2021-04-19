@@ -3,38 +3,29 @@ package edu.pse.beast.api.testrunner.threadpool;
 public class ThreadPoolRunner implements Runnable {
 
 	private boolean keepRunning = true;
-	private WorkSupplier workSupplier;
 	private String id;
 	private WorkUnit work;
+	private WorkSupplier workSupplier;
 
-	public ThreadPoolRunner(String id) {
+	public ThreadPoolRunner(String id, WorkSupplier workSupplier) {
 		this.id = id;
-	}
-
-	public void setWorkSupplier(WorkSupplier workSupplier) {
 		this.workSupplier = workSupplier;
 	}
 
 	@Override
 	public void run() {
 		while (keepRunning) {
-			if (workSupplier == null) {
+			work = workSupplier.getWorkIfAvailable();
+			if (work != null) {
+				work.doWork();			
+			} else {
 				try {
-					Thread.sleep(100);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			} else {
-				work = workSupplier.getWorkUnit();
-				if (work != null)
-					work.doWork();
-				else {
-					if (workSupplier.isFinished()) {
-						workSupplier = null;
-					}
-				}
-			}
-		}		
+			}				
+		}
 	}
 
 	public void shutdown() {

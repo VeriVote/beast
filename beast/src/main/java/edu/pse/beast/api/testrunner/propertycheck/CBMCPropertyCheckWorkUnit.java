@@ -18,34 +18,35 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import edu.pse.beast.api.BEASTCallback;
+import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
+import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 
-public class PropertyCheckWorkUnit implements WorkUnit {
+public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	CElectionDescription descr;
 	PreAndPostConditionsDescription propertyDescr;
 	int v, c, s;
 	String uuid;
 	CBMCProcessStarter processStarter;
-	BEASTCallback cb;
+	CBMCTestCallback cb;
 	private boolean finished = false;
 	File cbmcFile;
 	private LoopBoundHandler loopBoundHandler;
 	private CodeGenOptions codeGenOptions;
 	private String sessionUUID;
 	private Process process;
+	private WorkUnitState state;
 
-	public PropertyCheckWorkUnit(String sessionUUID, CElectionDescription descr,
+	public CBMCPropertyCheckWorkUnit(String sessionUUID, CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
-			String uuid, BEASTCallback cb, CBMCProcessStarter processStarter,
-			File cbmcFile, LoopBoundHandler loopBoundHandler,
-			CodeGenOptions codeGenOptions) {
+			String uuid, CBMCProcessStarter processStarter, File cbmcFile,
+			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions) {
 		this.sessionUUID = sessionUUID;
 		this.descr = descr;
 		this.propertyDescr = propertyDescr;
@@ -53,15 +54,23 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 		this.c = c;
 		this.s = s;
 		this.uuid = uuid;
-		this.cb = cb;
 		this.processStarter = processStarter;
 		this.cbmcFile = cbmcFile;
 		this.loopBoundHandler = loopBoundHandler;
 		this.codeGenOptions = codeGenOptions;
 	}
+	
+	public void setCallback(CBMCTestCallback cb) {
+		this.cb = cb;
+	}
+	
+	public boolean hasCallback() {
+		return this.cb != null;
+	}
 
 	@Override
 	public void doWork() {
+		state = WorkUnitState.WORKED_ON;
 		cb.onPropertyTestStart(descr, propertyDescr, s, c, v, uuid);
 
 		ProcessBuilder pb = processStarter.startTestForParam(sessionUUID, descr,
@@ -86,17 +95,12 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 			cb.onPropertyTestRawOutputComplete(descr, propertyDescr, s, c, v,
 					uuid, cbmcOutput);
 			cb.onPropertyTestFinished(descr, propertyDescr, s, c, v, uuid);
-			finished = true;
+			state = WorkUnitState.FINISHED;
 			process.destroy();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public boolean isFinished() {
-		return finished;
 	}
 
 	@Override
@@ -107,6 +111,18 @@ public class PropertyCheckWorkUnit implements WorkUnit {
 	@Override
 	public void interrupt() {
 		process.destroyForcibly();
+		state = WorkUnitState.STOPPED;
 	}
+
+	@Override
+	public void addedToQueue() {
+		state = WorkUnitState.ON_QUEUE;
+	}
+
+	@Override
+	public WorkUnitState getState() {
+		return state;
+	}
+
 
 }

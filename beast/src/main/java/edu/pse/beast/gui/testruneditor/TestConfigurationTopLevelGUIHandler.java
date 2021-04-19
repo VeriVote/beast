@@ -1,20 +1,23 @@
 package edu.pse.beast.gui.testruneditor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigGuiController;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCTestConfigGuiController;
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
+import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRunGuiController;
+import edu.pse.beast.gui.testruneditor.treeview.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigCBMCTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigCategoryTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItem;
 import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceErrorEvent;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateEvent;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateEventType;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
@@ -31,6 +34,7 @@ public class TestConfigurationTopLevelGUIHandler
 
 	private final String testConfigDetailFXML = "/edu/pse/beast/testConfigDetailGUI.fxml";
 	private final String cbmcTestConfigDetailFXML = "/edu/pse/beast/cbmcTestConfigDetailGUI.fxml";
+	private final String cbmcTestRunDetailFXML = "/edu/pse/beast/cbmcTestRunDetailGUI.fxml";
 
 	private ChoiceBox<String> sortCriteriumChoiceBox;
 	private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
@@ -44,9 +48,14 @@ public class TestConfigurationTopLevelGUIHandler
 	private FXMLLoader testConfigFXMLLoader = new FXMLLoader(
 			getClass().getResource(testConfigDetailFXML));
 
-	private CBMCTestConfigGuiController cbmcTestConfigController = new CBMCTestConfigGuiController();
+	private CBMCTestConfigGuiController cbmcTestConfigController;
 	private FXMLLoader cbmcTestConfigFXMLLoader = new FXMLLoader(
 			getClass().getResource(cbmcTestConfigDetailFXML));
+	
+	private CBMCTestRunGuiController cbmcTestRunGuiController;
+	private FXMLLoader cbmcTestRunFXMLLoader = new FXMLLoader(
+			getClass().getResource(cbmcTestRunDetailFXML));
+
 
 	private Button startTestConfigButton;
 	private Button stopTestConfigButton;
@@ -54,6 +63,8 @@ public class TestConfigurationTopLevelGUIHandler
 	private final String descrSortCrit = "Election Description";
 	private final String propDescrSortCrit = "Property Description";
 	private final String cbmcTestConfigHeading = "cbmc Properties";
+	
+	private String sortCriterium = descrSortCrit;
 
 	public TestConfigurationTopLevelGUIHandler(Button startTestConfigButton,
 			Button stopTestConfigButton,
@@ -62,10 +73,15 @@ public class TestConfigurationTopLevelGUIHandler
 			AnchorPane testConfigDetailsAnchorPane,
 			BeastWorkspace beastWorkspace) throws IOException {
 		this.beastWorkspace = beastWorkspace;
+		beastWorkspace.registerUpdateListener(this);
+		
 		testConfigGuiController = new TestConfigGuiController(beastWorkspace);
-		
+		cbmcTestConfigController = new CBMCTestConfigGuiController(
+				beastWorkspace);
+		cbmcTestRunGuiController = new CBMCTestRunGuiController();
+
 		this.testConfigDetailsAnchorPane = testConfigDetailsAnchorPane;
-		
+
 		this.sortCriteriumChoiceBox = sortCriteriumChoiceBox;
 		this.testConfigTreeView = testConfigTreeView;
 
@@ -87,6 +103,9 @@ public class TestConfigurationTopLevelGUIHandler
 
 		cbmcTestConfigFXMLLoader.setController(cbmcTestConfigController);
 		cbmcTestConfigFXMLLoader.load();
+		
+		cbmcTestRunFXMLLoader.setController(cbmcTestRunGuiController);
+		cbmcTestRunFXMLLoader.load();
 
 		setupSortCriteriumChoiceBox();
 
@@ -108,24 +127,50 @@ public class TestConfigurationTopLevelGUIHandler
 	private void testConfigSelectionChanged(TestConfigTreeItemSuper selected) {
 		switch (selected.getType()) {
 			case CATEGORY : {
-
+				testConfigDetailsAnchorPane.getChildren().clear();
 				break;
 			}
 			case TEST_CONFIG : {
 				TestConfigTreeItem casted = (TestConfigTreeItem) selected;
 				testConfigGuiController.display(casted.getTestConfig());
-				setDetailAnchorPane(testConfigGuiController.getTopLevelAnchorPane());
+				setDetailAnchorPane(
+						testConfigGuiController.getTopLevelAnchorPane());
 				break;
 			}
 			case CBMC : {
 				TestConfigCBMCTreeItem casted = (TestConfigCBMCTreeItem) selected;
+				cbmcTestConfigController
+						.display(casted.getCbmcPropertyTestConfiguration());
+				setDetailAnchorPane(
+						cbmcTestConfigController.getTopLevelAnchorPane());
+				break;
+			}
+			case CBMC_RUN: {
+				TestRunCBMCTreeItem casted = (TestRunCBMCTreeItem) selected;
+				cbmcTestRunGuiController.display(casted.getRun());
+				setDetailAnchorPane(cbmcTestRunGuiController.getTopLevelAnchorPane());
 				break;
 			}
 		}
 	}
 
-	private void updateTestConfigTreeView(
-			Map<String, List<TestConfiguration>> testConfigs) {
+	private void addCBMCRunItems(TreeItem<TestConfigTreeItemSuper> treeItem,
+			CBMCPropertyTestConfiguration config) {
+		for (CBMCTestRun tr : config.getRuns()) {
+			treeItem.getChildren()
+					.add(new TreeItem<>(new TestRunCBMCTreeItem(tr)));
+		}
+	}
+
+	private void updateTestConfigTreeView() {
+		root.getChildren().clear();
+		Map<String, List<TestConfiguration>> testConfigs;
+		if (sortCriterium.equals(descrSortCrit)) {
+			testConfigs = beastWorkspace.getConfigsByElectionDescription();
+		} else {// if (sortCriterium.equals(propDescrSortCrit)) {
+			testConfigs = beastWorkspace.getConfigsByPropertyDescription();
+		}
+
 		for (String k : testConfigs.keySet()) {
 			TreeItem<TestConfigTreeItemSuper> parentItem = new TreeItem<>(
 					new TestConfigCategoryTreeItem(k));
@@ -133,14 +178,16 @@ public class TestConfigurationTopLevelGUIHandler
 			for (TestConfiguration testConfig : testConfigsForParent) {
 				TreeItem<TestConfigTreeItemSuper> testConfigItem = new TreeItem<>(
 						new TestConfigTreeItem(testConfig));
-				List<CBMCPropertyTestConfiguration> cbcmConfigs = testConfig
-						.getCbmcTestConfigs();
+				Map<String, CBMCPropertyTestConfiguration> cbcmConfigs = testConfig
+						.getCbmcTestConfigsByName();
 				if (!cbcmConfigs.isEmpty()) {
 					TreeItem<TestConfigTreeItemSuper> cbmcParentItem = new TreeItem<>(
 							new TestConfigCategoryTreeItem("cbmc"));
-					for (CBMCPropertyTestConfiguration cbmcConfig : cbcmConfigs) {
+					for (CBMCPropertyTestConfiguration cbmcConfig : cbcmConfigs
+							.values()) {
 						TreeItem<TestConfigTreeItemSuper> cbmcConfigItem = new TreeItem<>(
 								new TestConfigCBMCTreeItem(cbmcConfig));
+						addCBMCRunItems(cbmcConfigItem, cbmcConfig);
 						cbmcParentItem.getChildren().add(cbmcConfigItem);
 					}
 					testConfigItem.getChildren().add(cbmcParentItem);
@@ -151,31 +198,29 @@ public class TestConfigurationTopLevelGUIHandler
 		}
 	}
 
-	private void sortCriteriumChoiceBoxSelectionChanged(String oldVal,
-			String newVal) {
-		root.getChildren().clear();
-		if (newVal.equals(descrSortCrit)) {
-			updateTestConfigTreeView(
-					beastWorkspace.getConfigsByElectionDescription());
-		} else if (newVal.equals(propDescrSortCrit)) {
-			updateTestConfigTreeView(
-					beastWorkspace.getConfigsByPropertyDescription());
-		}
-	}
-
 	private void setupSortCriteriumChoiceBox() {
 		sortCriteriumChoiceBox.getItems().add(descrSortCrit);
 		sortCriteriumChoiceBox.getItems().add(propDescrSortCrit);
 
 		sortCriteriumChoiceBox.getSelectionModel().selectedItemProperty()
 				.addListener((e, oldVal, newVal) -> {
-					sortCriteriumChoiceBoxSelectionChanged(oldVal, newVal);
+					sortCriterium = newVal;
+					updateTestConfigTreeView();
 				});
 	}
 
 	@Override
 	public void handleWorkspaceUpdate(WorkspaceUpdateEvent evt) {
+		updateTestConfigTreeView();
+	}
 
+	@Override
+	public void handleWorkspaceError(WorkspaceErrorEvent evt) {
+		switch (evt.getType()) {
+			case NO_CBMC_PROCESS_STARTER :
+
+				break;
+		}
 	}
 
 }

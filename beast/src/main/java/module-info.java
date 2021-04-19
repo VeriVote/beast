@@ -95,6 +95,7 @@ module edu.pse.beast {
     opens edu.pse.beast.gui to javafx.fxml;
     opens edu.pse.beast.gui.testruneditor.testconfig to javafx.fxml;
     opens edu.pse.beast.gui.testruneditor.testconfig.cbmc to javafx.fxml;
+    opens edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs to javafx.fxml;
     opens edu.pse.beast.datatypes.electiondescription to gson;
     opens edu.pse.beast.datatypes.propertydescription to gson;
     opens edu.pse.beast.types to gson;

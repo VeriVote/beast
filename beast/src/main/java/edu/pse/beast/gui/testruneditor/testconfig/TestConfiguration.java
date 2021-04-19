@@ -1,8 +1,11 @@
 package edu.pse.beast.gui.testruneditor.testconfig;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -14,8 +17,8 @@ public class TestConfiguration {
 	private PreAndPostConditionsDescription propDescr;
 	private String name;
 
-	private List<CBMCPropertyTestConfiguration> cbmcTestConfigs = new ArrayList<>();
-
+	private Map<String, CBMCPropertyTestConfiguration> cbmcTestConfigsByName = new HashMap<>();
+	
 	public TestConfiguration(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, String name) {
 		this.descr = descr;
@@ -36,11 +39,15 @@ public class TestConfiguration {
 	}
 
 	public void addCBMCTestConfiguration(CBMCPropertyTestConfiguration config) {
-		cbmcTestConfigs.add(config);
+		cbmcTestConfigsByName.put(config.getName(), config);
 	}
 
-	public List<CBMCPropertyTestConfiguration> getCbmcTestConfigs() {
-		return Collections.unmodifiableList(cbmcTestConfigs);
+	public Map<String, CBMCPropertyTestConfiguration> getCbmcTestConfigsByName() {
+		return Collections.unmodifiableMap(cbmcTestConfigsByName);
+	}
+	
+	public boolean contains(CBMCPropertyTestConfiguration config) {
+		return cbmcTestConfigsByName.containsKey(config.getName());
 	}
 
 }

@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.BEASTCallback;
+import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
@@ -39,7 +39,7 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, 
 			int V, int C, int S, 
-			String uuid, BEASTCallback cb,
+			String uuid, CBMCTestCallback cb,
 			File cbmcFile,
 			LoopBoundHandler loopBoundHandler,
 			CodeGenOptions codeGenOptions) {

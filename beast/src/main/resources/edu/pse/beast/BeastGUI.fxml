@@ -133,31 +133,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox prefHeight="33.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
-                           <children>
-                              <Button fx:id="addTestConfigButton" minWidth="24.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="+">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="removeTestConfigButton" mnemonicParsing="false" text="-">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="startTestConfigButton" mnemonicParsing="false" text="Start">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button fx:id="stopTestConfigButton" mnemonicParsing="false" text="Stop">
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <SplitPane dividerPositions="0.342809364548495" layoutX="118.0" layoutY="137.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+                        <SplitPane dividerPositions="0.342809364548495" layoutX="118.0" layoutY="137.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
