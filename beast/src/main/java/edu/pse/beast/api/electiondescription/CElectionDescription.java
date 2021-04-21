@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 
@@ -19,6 +20,7 @@ public class CElectionDescription {
 
 	private Map<String, List<LoopBound>> loopBounds = new HashMap();
 	private String name;
+	private String uuid;
 
 	private VotingSigFunction votingFunction;
 
@@ -31,6 +33,7 @@ public class CElectionDescription {
 		this.outputType = outputType;
 		this.name = name;
 		votingFunction = new VotingSigFunction("voting", inputType, outputType);
+		this.uuid = UUID.randomUUID().toString();
 	}
 
 	public VotingSigFunction getVotingFunction() {
