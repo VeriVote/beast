@@ -20,8 +20,6 @@ import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
-	
-	
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();

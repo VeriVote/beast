@@ -140,4 +140,7 @@ public class CElectionDescription {
 		}
 	}
 
+	public String getUuid() {
+		return uuid;
+	}
 }

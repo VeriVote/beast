@@ -3,6 +3,7 @@ package edu.pse.beast.datatypes.propertydescription;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
@@ -14,6 +15,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
  */
 public final class PreAndPostConditionsDescription {
 
+	private String uuid;
+	
 	/** The name. */
 	private String name;
 
@@ -38,8 +41,12 @@ public final class PreAndPostConditionsDescription {
 		this.preConditionsDescription = new FormalPropertiesDescription("");
 		this.postConditionsDescription = new FormalPropertiesDescription("");
 		this.boundedVarDescription = new FormalPropertiesDescription("");
+		this.uuid = UUID.randomUUID().toString();
 	}
 	
+	public String getUuid() {
+		return uuid;
+	}
 	
 
 	public PreAndPostConditionsDescription(String name,
