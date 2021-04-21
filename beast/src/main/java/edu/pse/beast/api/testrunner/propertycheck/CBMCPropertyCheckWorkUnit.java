@@ -75,7 +75,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		state = WorkUnitState.WORKED_ON;
 		cb.onPropertyTestStart(descr, propertyDescr, s, c, v, uuid);
 
-		ProcessBuilder pb = processStarter.startTestForParam(sessionUUID, descr,
+		ProcessBuilder pb = processStarter.startCheckForParam(sessionUUID, descr,
 				propertyDescr, v, c, s, uuid, cb, cbmcFile, loopBoundHandler,
 				codeGenOptions);
 		try {

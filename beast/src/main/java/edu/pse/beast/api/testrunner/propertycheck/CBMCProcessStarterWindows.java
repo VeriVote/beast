@@ -34,7 +34,7 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 	String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
 	@Override
-	public ProcessBuilder startTestForParam(
+	public ProcessBuilder startCheckForParam(
 			String sessionUUID,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, 

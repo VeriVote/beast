@@ -49,23 +49,20 @@ public class CBMCResult {
 		InputStream xmlStream = IOUtils.toInputStream(xmlString, Charset.forName("UTF-8"));
 
 		try {
+			
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			this.cbmcDocument = builder.parse(xmlStream);
 			NodeList resultElements = cbmcDocument.getElementsByTagName("cprover-status");
 			String resElemTextContext = resultElements.item(0).getTextContent();
 			success = resElemTextContext.equals("SUCCESS");
-			// TODO errorhandling
+
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

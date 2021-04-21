@@ -10,7 +10,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public interface CBMCProcessStarter {
-	public ProcessBuilder startTestForParam(
+	public ProcessBuilder startCheckForParam(
 			String sessionUUID,
 			CElectionDescription descr, 
 			PreAndPostConditionsDescription propertyDescr,
