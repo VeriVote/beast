@@ -43,10 +43,10 @@ import javafx.stage.Stage;
 public class BeastGUIController implements WorkspaceUpdateListener {
 
 	private Stage primaryStage;
-	
+
 	@FXML
 	private Button loadElectionDescriptionButton;
-	
+
 	@FXML
 	private AnchorPane codePane;
 
@@ -72,7 +72,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private TabPane propertyTestRunPane;
 
 	@FXML
-	private ChoiceBox<String> openedElectionDescriptionChoiceBox;
+	private ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox;
 	@FXML
 	private Button addElectionDescriptionButton;
 
@@ -97,7 +97,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	@FXML
 	private AnchorPane testConfigDetailsAnchorPane;
 	// TestConfigHandler end
-	
+
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigurationTopLevelGUIHandler testConfigurationHandler;
@@ -107,14 +107,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private CElectionDescription getTestDescr() {
 		String name = "test";
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.CANDIDATE_LIST, "test");
+				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
+				"test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
 		descr.addLoopBoundForFunction("voting", 0, "V");
 
 		descr.createNewVotingSigFunctionAndAdd("votehelper");
-		
+
 		File f = new File("testfiles/borda.belec");
 		try {
 			descr = SavingLoadingInterface.loadCElection(f);
@@ -125,7 +125,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return descr;
 	}
 
@@ -146,9 +146,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private TestConfiguration getTestConfig(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
 
-		TestConfiguration created = new TestConfiguration(descr, propDescr, "test");
+		TestConfiguration created = new TestConfiguration(descr, propDescr,
+				"test");
 		CBMCPropertyTestConfiguration cc = new CBMCPropertyTestConfiguration();
-		
+
 		cc.setMinVoters(5);
 		cc.setMinCands(5);
 		cc.setMinSeats(5);
@@ -162,7 +163,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		cc.setName("test five");
 		created.addCBMCTestConfiguration(cc);
-		
+
 		cc.setStartRunsOnCreation(false);
 
 		return created;
@@ -215,9 +216,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				cEditor);
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
-		cElectionEditor = new CElectionEditor(
-				primaryStage,
-				cEditor,
+		cElectionEditor = new CElectionEditor(primaryStage, cEditor,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
@@ -239,47 +238,43 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
 				beastWorkspace);
 	}
-	
+
 	private CBMCProcessStarter getProcessStarter() {
-		//TODO check os and get user input if needed
+		// TODO check os and get user input if needed
 		CBMCProcessStarter ps = new CBMCProcessStarterWindows();
 		return ps;
 	}
 
-	private void initTestConfigHandler() throws IOException {	
-		
+	private void initTestConfigHandler() throws IOException {
+
 		primaryStage.onCloseRequestProperty().addListener(e -> {
 			try {
 				beastWorkspace.shutdown();
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
-			}		
+			}
 		});
-				
-		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(				
-				startTestConfigButton,
-				stopTestConfigButton,
-				sortCriteriumChoiceBox,
-				testConfigTreeView, 
-				testConfigDetailsAnchorPane,			
-				beastWorkspace);
+
+		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(
+				startTestConfigButton, stopTestConfigButton,
+				sortCriteriumChoiceBox, testConfigTreeView,
+				testConfigDetailsAnchorPane, beastWorkspace);
 	}
 
 	@FXML
-	public void initialize() throws IOException {		
-		
+	public void initialize() throws IOException {
+
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountVotesVarName("V");
-		
-		
+
 		beastWorkspace = new BeastWorkspace();
-		
+
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
-		
-		CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();		
+
+		CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();
 		beastWorkspace.setCbmcProcessStarter(cbmcProcessStarter);
-		
+
 		CElectionDescription descr = getTestDescr();
 		PreAndPostConditionsDescription propDescr = getTestProperty();
 
@@ -299,7 +294,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		addElectionDescriptionButton.setOnAction(e -> {
 			cElectionEditor.createNewDescr();
 		});
-		
+
 		loadElectionDescriptionButton.setOnAction(e -> {
 			try {
 				cElectionEditor.letUserLoad();
@@ -312,10 +307,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 			}
 		});
 	}
-	
+
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		
+
 	}
 
 	@Override

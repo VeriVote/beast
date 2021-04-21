@@ -1,12 +1,10 @@
 package edu.pse.beast.datatypes.propertydescription;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
 
 /**
  * The Class PreAndPostConditionsDescription.
@@ -46,8 +44,7 @@ public final class PreAndPostConditionsDescription {
 	
 	public String getUuid() {
 		return uuid;
-	}
-	
+	}	
 
 	public PreAndPostConditionsDescription(String name,
 			List<SymbolicCBMCVar> cbmcVariables,

@@ -3,6 +3,7 @@ package edu.pse.beast.gui.workspace;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,13 @@ import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
+	private Map<String, File> filesPerDescr = new HashMap<>();
+	private List<CElectionDescription> descrWithUnsavedChanges = new ArrayList<>();
+
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
+	private Map<String, File> filesPerPropDescr = new HashMap<>();
+	private List<PreAndPostConditionsDescription> propDescrWithUnsavedChanges = new ArrayList<>();
+
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();
 	private File baseDir;
@@ -54,9 +61,9 @@ public class BeastWorkspace {
 		testConfigList.add(testConfig);
 	}
 
-	public CElectionDescription getDescrByName(String name) {
+	public CElectionDescription getDescrByUUID(String uuid) {
 		for (CElectionDescription descr : loadedDescrs) {
-			if (descr.getName().equals(name))
+			if (descr.getUuid().equals(uuid))
 				return descr;
 		}
 		return null;
@@ -76,9 +83,10 @@ public class BeastWorkspace {
 	}
 
 	public void addElectionDescription(CElectionDescription descr) {
-		if (getDescrByName(descr.getName()) != null)
+		if (getDescrByUUID(descr.getUuid()) != null)
 			return;
 		loadedDescrs.add(descr);
+		descrWithUnsavedChanges.add(descr);
 		messageUpdateListener();
 	}
 

@@ -37,7 +37,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private CodeArea funcDeclArea;
 	private CodeArea closingBracketArea;
 	private CEditorCodeElement electionCodeArea;
-	private ChoiceBox<String> openedElectionDescriptionChoiceBox;
+	private ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox;
 
 	private CElectionDescription currentDescr;
 
@@ -49,7 +49,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
 			CodeArea closingBracketArea, ListView<String> functionList,
 			ListView<String> loopBoundList,
-			ChoiceBox<String> openedElectionDescriptionChoiceBox,
+			ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
@@ -79,11 +79,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		beastWorkspace.registerUpdateListener(this);
 	}
 
-	private void selectedDescrChanged(String newSelectedName) {
-		if (newSelectedName == null)
+	private void selectedDescrChanged(CElectionDescription descr) {
+		if (descr == null)
 			return;
-		CElectionDescription descr = beastWorkspace
-				.getDescrByName(newSelectedName);
 		loadElectionDescr(descr);
 	}
 
@@ -98,7 +96,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	public void handleWorkspaceUpdateGeneric() {
 		openedElectionDescriptionChoiceBox.getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
-			openedElectionDescriptionChoiceBox.getItems().add(descr.getName());
+			openedElectionDescriptionChoiceBox.getItems().add(descr);
 		}
 		openedElectionDescriptionChoiceBox.getSelectionModel().selectLast();
 	}
