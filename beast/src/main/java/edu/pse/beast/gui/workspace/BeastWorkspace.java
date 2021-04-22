@@ -60,6 +60,14 @@ public class BeastWorkspace {
 	public void addTestConfiguration(TestConfiguration testConfig) {
 		testConfigList.add(testConfig);
 	}
+	
+	public Map<String, File> getFilesPerDescr() {
+		return filesPerDescr;
+	}
+	
+	public Map<String, File> getFilesPerPropDescr() {
+		return filesPerPropDescr;
+	}
 
 	public CElectionDescription getDescrByUUID(String uuid) {
 		for (CElectionDescription descr : loadedDescrs) {
@@ -157,5 +165,6 @@ public class BeastWorkspace {
 	public void addRunToQueue(CBMCTestRun run) {
 		beast.addCBMCWorkItemToQueue(run.getWorkUnit());
 	}
+	
 
 }

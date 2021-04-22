@@ -52,7 +52,7 @@ public class TestCompletePropertyCheckPipeline {
 		
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");
-		options.setCbmcAmountVotesVarName("V");
+		options.setCbmcAmountVotersVarName("V");
 		
 		BEASTPropertyCheckSession sess = beast.createCheckSession(
 				new CBMCTestCallback() {

@@ -11,6 +11,7 @@ import org.json.JSONException;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class SavingLoadingInterface {
 
@@ -45,5 +46,10 @@ public class SavingLoadingInterface {
 			File f) throws JSONException, IOException {
 		return PreAndPostPropertySaverLoader
 				.loadPreAndPostConditionDescription(f);
+	}
+
+	public static void storeBeastWorkspace(BeastWorkspace beastWorkspace,
+			File f) throws IOException {
+		WorkspaceSaverLoader.storeWorkspace(beastWorkspace, f);
 	}
 }

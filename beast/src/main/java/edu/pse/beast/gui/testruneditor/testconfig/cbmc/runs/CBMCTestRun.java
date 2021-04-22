@@ -20,6 +20,9 @@ public class CBMCTestRun implements CBMCTestCallback {
 		workUnit.setCallback(this);
 	}
 
+	public CBMCTestRun() {
+	}
+
 	public void setUpdateListener(CBMCTestRunGuiController updateListener) {
 		this.updateListener = updateListener;
 	}

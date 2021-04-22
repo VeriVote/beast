@@ -26,7 +26,7 @@ public class VotingMethodTest {
 
 		CodeGenOptions options = new CodeGenOptions();
 		options.setCbmcAmountCandidatesVarName("C");
-		options.setCbmcAmountVotesVarName("V");
+		options.setCbmcAmountVotersVarName("V");
 
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 

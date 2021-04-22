@@ -3,12 +3,14 @@ package edu.pse.beast.api.codegen;
 public class CodeGenOptions {
 	private String votesLowerBoundVarName;
 	private String votesUpperBoundVarName;
+	
 	private String cbmcAssumeName;
 	private String cbmcAssertName;
 	private String cbmcNondetUintName;
+	
 	private String cbmcAmountVotersVarName;
 	private String cbmcAmountCandidatesVarName;
-	private String voteFuncName;
+	private String cbmcAmountSeatsVarName;
 
 	public String getCbmcAmountVotersVarName() {
 		return cbmcAmountVotersVarName;
@@ -21,12 +23,20 @@ public class CodeGenOptions {
 	public void setCbmcAssertName(String cbmcAssertName) {
 		this.cbmcAssertName = cbmcAssertName;
 	}
+	
+	public String getCbmcAmountSeatsVarName() {
+		return cbmcAmountSeatsVarName;
+	}
+	
+	public void setCbmcAmountSeatsVarName(String cbmcAmountSeatsVarName) {
+		this.cbmcAmountSeatsVarName = cbmcAmountSeatsVarName;
+	}
 
 	public String getCbmcAmountCandidatesVarName() {
 		return cbmcAmountCandidatesVarName;
 	}
 
-	public void setCbmcAmountVotesVarName(String cbmcAmountVotesVarName) {
+	public void setCbmcAmountVotersVarName(String cbmcAmountVotesVarName) {
 		this.cbmcAmountVotersVarName = cbmcAmountVotesVarName;
 	}
 
@@ -65,15 +75,5 @@ public class CodeGenOptions {
 	public void setCbmcNondetUintName(String cbmcNondetUintName) {
 		this.cbmcNondetUintName = cbmcNondetUintName;
 	}
-
-	public String getVoteFuncName() {
-		return voteFuncName;
-	}
-
-	public void setVoteFuncName(String voteFuncName) {
-		this.voteFuncName = voteFuncName;
-	}
-	
-	
 
 }

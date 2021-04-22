@@ -266,7 +266,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
-		codeGenOptions.setCbmcAmountVotesVarName("V");
+		codeGenOptions.setCbmcAmountVotersVarName("V");
 
 		beastWorkspace = new BeastWorkspace();
 

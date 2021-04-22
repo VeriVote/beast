@@ -63,7 +63,6 @@ public class CBMCCodeGeneratorNEW {
 
 		options.setCbmcAssumeName("assume");
 		options.setCbmcAssertName("assert");
-		options.setVoteFuncName("voting");
 		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
 
 		ElectionTypeCStruct voteArrStruct = votingTypeToCStruct(

@@ -17,7 +17,7 @@ public class ThreadPoolRunner implements Runnable {
 		while (keepRunning) {
 			work = workSupplier.getWorkIfAvailable();
 			if (work != null) {
-				work.doWork();			
+				work.doWork();		
 			} else {
 				try {
 					Thread.sleep(200);
