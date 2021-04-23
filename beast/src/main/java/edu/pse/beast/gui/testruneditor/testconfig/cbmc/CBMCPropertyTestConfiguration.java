@@ -25,7 +25,10 @@ public class CBMCPropertyTestConfiguration {
 	private boolean startRunsOnCreation;
 	
 	private List<CBMCTestRun> runs = new ArrayList<>();
-		
+	
+	public void addRuns(List<CBMCTestRun> runs) {
+		this.runs.addAll(runs);
+	}
 	
 	public int getMinCands() {
 		return minCands;

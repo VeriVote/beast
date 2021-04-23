@@ -18,7 +18,7 @@ public class TestConfiguration {
 	private String name;
 
 	private Map<String, CBMCPropertyTestConfiguration> cbmcTestConfigsByName = new HashMap<>();
-	
+
 	public TestConfiguration(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, String name) {
 		this.descr = descr;
@@ -45,9 +45,17 @@ public class TestConfiguration {
 	public Map<String, CBMCPropertyTestConfiguration> getCbmcTestConfigsByName() {
 		return Collections.unmodifiableMap(cbmcTestConfigsByName);
 	}
-	
+
 	public boolean contains(CBMCPropertyTestConfiguration config) {
 		return cbmcTestConfigsByName.containsKey(config.getName());
+	}
+
+	public void addCBMCTestConfigurations(
+			List<CBMCPropertyTestConfiguration> cbmcTestConfigs) {
+		for (CBMCPropertyTestConfiguration config : cbmcTestConfigs) {
+			addCBMCTestConfiguration(config);
+		}
+
 	}
 
 }

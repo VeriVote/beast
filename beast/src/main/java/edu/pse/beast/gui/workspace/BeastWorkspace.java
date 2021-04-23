@@ -60,11 +60,19 @@ public class BeastWorkspace {
 	public void addTestConfiguration(TestConfiguration testConfig) {
 		testConfigList.add(testConfig);
 	}
-	
+
+	public void setTestConfigList(TestConfigurationList testConfigList) {
+		this.testConfigList = testConfigList;
+	}
+
+	public TestConfigurationList getTestConfigList() {
+		return testConfigList;
+	}
+
 	public Map<String, File> getFilesPerDescr() {
 		return filesPerDescr;
 	}
-	
+
 	public Map<String, File> getFilesPerPropDescr() {
 		return filesPerPropDescr;
 	}
@@ -165,6 +173,16 @@ public class BeastWorkspace {
 	public void addRunToQueue(CBMCTestRun run) {
 		beast.addCBMCWorkItemToQueue(run.getWorkUnit());
 	}
-	
+
+	public void addFileForDescr(CElectionDescription loadedDescr,
+			File descrFile) {
+		filesPerDescr.put(loadedDescr.getUuid(), descrFile);
+	}
+
+	public void addFileForPropDescr(
+			PreAndPostConditionsDescription loadedPropDescr,
+			File propDescrFile) {
+		filesPerPropDescr.put(loadedPropDescr.getUuid(), propDescrFile);
+	}
 
 }
