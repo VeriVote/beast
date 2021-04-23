@@ -52,4 +52,8 @@ public class SavingLoadingInterface {
 			File f) throws IOException {
 		WorkspaceSaverLoader.storeWorkspace(beastWorkspace, f);
 	}
+
+	public static BeastWorkspace loadBeastWorkspace(File f) throws IOException {
+		return WorkspaceSaverLoader.loadBeastWorkspaceFromFile(f);
+	}
 }

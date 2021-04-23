@@ -34,22 +34,26 @@ public final class PreAndPostConditionsDescription {
 	 *
 	 * @param nameString the name string
 	 */
-	public PreAndPostConditionsDescription(final String nameString) {
+	public PreAndPostConditionsDescription(final String nameString) {		
+		this.uuid = UUID.randomUUID().toString();
 		this.name = nameString;
 		this.preConditionsDescription = new FormalPropertiesDescription("");
 		this.postConditionsDescription = new FormalPropertiesDescription("");
 		this.boundedVarDescription = new FormalPropertiesDescription("");
-		this.uuid = UUID.randomUUID().toString();
 	}
+	
 	
 	public String getUuid() {
 		return uuid;
 	}	
 
-	public PreAndPostConditionsDescription(String name,
+	public PreAndPostConditionsDescription(
+			String uuid,
+			String name,
 			List<SymbolicCBMCVar> cbmcVariables,
 			FormalPropertiesDescription preConditionsDescription,
 			FormalPropertiesDescription postConditionsDescription) {
+		this.uuid = uuid;
 		this.name = name;
 		this.cbmcVariables = cbmcVariables;
 		this.preConditionsDescription = preConditionsDescription;

@@ -35,6 +35,17 @@ public class CElectionDescription {
 		votingFunction = new VotingSigFunction("voting", inputType, outputType);
 		this.uuid = UUID.randomUUID().toString();
 	}
+	
+	public CElectionDescription(String uuid, 
+			String name,
+			VotingInputTypes inputType,
+			VotingOutputTypes outputType) {
+		this.inputType = inputType;
+		this.outputType = outputType;
+		this.name = name;
+		votingFunction = new VotingSigFunction("voting", inputType, outputType);
+		this.uuid = UUID.randomUUID().toString();
+	}
 
 	public VotingSigFunction getVotingFunction() {
 		return votingFunction;

@@ -24,6 +24,7 @@ public class PreAndPostPropertySaverLoader {
 	private static final String SYMB_VAR_KEY = "symbolic_variables";
 	private static final String SYMB_VAR_NAME_KEY = "symb_var_name";
 	private static final String SYMB_VAR_TYPE_KEY = "symb_var_type";
+	private static final String PROP_DESCR_UUID_KEY = "prop_descr_uuid";
 
 	private static JSONArray fromSymbVarList(List<SymbolicCBMCVar> vars) {
 		JSONArray arr = new JSONArray();
@@ -57,6 +58,7 @@ public class PreAndPostPropertySaverLoader {
 				propDescr.getPostConditionsDescription()));
 		json.put(NAME_KEY, propDescr.getName());
 		json.put(SYMB_VAR_KEY, fromSymbVarList(propDescr.getCbmcVariables()));
+		json.put(PROP_DESCR_UUID_KEY, propDescr.getUuid());
 
 		SavingLoadingInterface.writeStringToFile(f, json.toString());
 	}
@@ -93,8 +95,9 @@ public class PreAndPostPropertySaverLoader {
 		FormalPropertiesDescription postProp = propertyDescriptionFromJson(
 				json.getJSONObject(POST_DESCR_KEY));
 		String name = json.getString(NAME_KEY);
-		return new PreAndPostConditionsDescription(name, symbVars, preProp,
-				postProp);
+		String uuid = json.getString(PROP_DESCR_UUID_KEY);
+		return new PreAndPostConditionsDescription(uuid, name, symbVars,
+				preProp, postProp);
 	}
 
 }

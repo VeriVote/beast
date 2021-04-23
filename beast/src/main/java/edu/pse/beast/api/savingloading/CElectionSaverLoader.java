@@ -32,6 +32,7 @@ public class CElectionSaverLoader {
 	private static final String LOOP_BOUND_FUNCTION_KEY = "loop_bound_function";
 	private static final String LOOP_BOUND_INDEX_KEY = "loop_bounds_index";
 	private static final String LOOP_BOUND_BOUND_KEY = "loop_bounds_bound";
+	private static final String DESCR_UUID_KEY = "descr_uuid";
 
 	private static boolean isVersionCompatible(int version) {
 		return true;
@@ -75,6 +76,7 @@ public class CElectionSaverLoader {
 				fromVotingFunction(descr.getVotingFunction()));
 		json.put(NAME_KEY, descr.getName());
 		json.put(LOOP_BOUNDS_KEY, fromLoopBounds(descr.getLoopBounds()));
+		json.put(DESCR_UUID_KEY, descr.getUuid());
 
 		String s = json.toString();
 		SavingLoadingInterface.writeStringToFile(f, s);
@@ -82,16 +84,16 @@ public class CElectionSaverLoader {
 
 	private static List<LoopBound> loopBoundsFromJsonArray(JSONArray arr) {
 		List<LoopBound> loopBounds = new ArrayList<>();
-		for(int i = 0; i < arr.length(); ++i) {
+		for (int i = 0; i < arr.length(); ++i) {
 			JSONObject json = (JSONObject) arr.get(i);
-			
+
 			String funcName = json.getString(LOOP_BOUND_FUNCTION_KEY);
 			int index = json.getInt(LOOP_BOUND_INDEX_KEY);
 			String bound = json.getString(LOOP_BOUND_BOUND_KEY);
-			
-			loopBounds.add(new LoopBound(funcName, index, bound));			
+
+			loopBounds.add(new LoopBound(funcName, index, bound));
 		}
-		
+
 		return loopBounds;
 	}
 
@@ -111,9 +113,10 @@ public class CElectionSaverLoader {
 				.valueOf(json.getString(OUTPUT_TYPE_KEY));
 
 		String name = json.getString(NAME_KEY);
+		String uuid = json.getString(DESCR_UUID_KEY);
 
-		CElectionDescription descr = new CElectionDescription(inputType,
-				outputType, name);
+		CElectionDescription descr = new CElectionDescription(uuid, name,
+				inputType, outputType);
 		VotingSigFunction votingFunction = toVotingFunction(
 				json.getJSONObject(VOTING_FUNC_KEY), inputType, outputType);
 		descr.setVotingFunction(votingFunction);
