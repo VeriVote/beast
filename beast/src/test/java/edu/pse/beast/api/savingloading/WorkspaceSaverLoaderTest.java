@@ -33,9 +33,9 @@ public class WorkspaceSaverLoaderTest {
 
 		descr.createNewVotingSigFunctionAndAdd("votehelper");
 
-		File f = new File("testfiles/borda.belec");
+		File descrFile = new File("testfiles/borda.belec");
 		try {
-			descr = SavingLoadingInterface.loadCElection(f);
+			descr = SavingLoadingInterface.loadCElection(descrFile);
 		} catch (NotImplementedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,12 +44,12 @@ public class WorkspaceSaverLoaderTest {
 			e.printStackTrace();
 		}
 
-		f = new File("testfiles/reinforcement.bprp");
+		File propDescrFile = new File("testfiles/reinforcement.bprp");
 		PreAndPostConditionsDescription propDescr = null;
 		try {
 			propDescr = SavingLoadingInterface
-					.loadPreAndPostConditionDescription(f);
-			
+					.loadPreAndPostConditionDescription(propDescrFile);
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -75,7 +75,7 @@ public class WorkspaceSaverLoaderTest {
 		testConfig.addCBMCTestConfiguration(cc);
 
 		cc.setStartRunsOnCreation(false);
-		
+
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 		codeGenOptions.setCbmcAmountCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountVotersVarName("V");
@@ -84,23 +84,28 @@ public class WorkspaceSaverLoaderTest {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
-		
+
 		Path currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 		File baseDir = new File(s);
 
 		beastWorkspace.setBaseDir(baseDir);
 		beastWorkspace.addElectionDescription(descr);
+		beastWorkspace.addFileForDescr(descr, descrFile);
+
 		beastWorkspace.addPropertyDescription(propDescr);
+		beastWorkspace.addFileForPropDescr(propDescr, propDescrFile);
+
 		beastWorkspace.addTestConfiguration(testConfig);
 
-		f = new File("testfiles");
+		File f = new File("testfiles");
 		f.mkdirs();
 		f = new File("testfiles/test.beastws");
-		
+
 		SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f);
-		BeastWorkspace loadedBeastWorkspace = SavingLoadingInterface.loadBeastWorkspace(f);
-		
+		BeastWorkspace loadedBeastWorkspace = SavingLoadingInterface
+				.loadBeastWorkspace(f);
+
 		int i = 0;
 	}
 }

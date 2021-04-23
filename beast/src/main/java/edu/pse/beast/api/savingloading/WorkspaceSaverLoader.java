@@ -302,7 +302,8 @@ public class WorkspaceSaverLoader {
 
 		for (int i = 0; i < arr.length(); ++i) {
 
-			testConfigurationList.add(testConfigFromJson(arr.getJSONObject(i),
+			testConfigurationList.add(testConfigFromJson(
+					arr.getJSONObject(i),
 					descrs, propDescrs));
 		}
 
@@ -332,14 +333,14 @@ public class WorkspaceSaverLoader {
 
 		JSONArray descrArr = json.getJSONArray(DESCR_FILES_KEY);
 		List<CElectionDescription> descrs = new ArrayList<>();
-		List<File> descrFiles = new ArrayList<>();
-
+		
 		for (int i = 0; i < descrArr.length(); ++i) {
 			String absolutePath = descrArr.getString(i);
 			File descrFile = new File(absolutePath);
 
 			CElectionDescription loadedDescr = SavingLoadingInterface
 					.loadCElection(descrFile);
+			descrs.add(loadedDescr);
 			
 			beastWorkspace.addElectionDescription(loadedDescr);
 			beastWorkspace.addFileForDescr(loadedDescr, descrFile);
@@ -352,8 +353,9 @@ public class WorkspaceSaverLoader {
 			String absolutePath = propDescrArr.getString(i);
 			File propDescrFile = new File(absolutePath);
 			PreAndPostConditionsDescription loadedPropDescr = SavingLoadingInterface
-					.loadPreAndPostConditionDescription(f);
+					.loadPreAndPostConditionDescription(propDescrFile);
 
+			propDescrs.add(loadedPropDescr);
 			beastWorkspace.addPropertyDescription(loadedPropDescr);
 			beastWorkspace.addFileForPropDescr(loadedPropDescr, propDescrFile);
 		}
