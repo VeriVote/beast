@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
@@ -22,6 +23,8 @@ import edu.pse.beast.highlevel.BEASTCommunicator;
 
 public class WorkspaceSaverLoader {
 	private static final String BASE_DIR_FILE_PATH_KEY = "base_dir_file";
+
+	private static final String CBMC_PROCESS_STARTER_KEY = "cbmc_process_starter";
 
 	private static final String DESCR_FILES_KEY = "descr_files";
 	private static final String PROP_DESCR_FILES_KEY = "prop_descr_files";
@@ -302,8 +305,7 @@ public class WorkspaceSaverLoader {
 
 		for (int i = 0; i < arr.length(); ++i) {
 
-			testConfigurationList.add(testConfigFromJson(
-					arr.getJSONObject(i),
+			testConfigurationList.add(testConfigFromJson(arr.getJSONObject(i),
 					descrs, propDescrs));
 		}
 
@@ -321,19 +323,22 @@ public class WorkspaceSaverLoader {
 		json.put(TEST_CONFIG_LIST_KEY,
 				testConfigurationListToJSON(ws.getTestConfigList()));
 		json.put(BASE_DIR_FILE_PATH_KEY, ws.getBaseDir().getAbsolutePath());
+		JSONObject cbmcProcessStarterJSON = CBMCProcessStarterSaverLoaderHelper
+				.cbmcProcessStarterToJSON(ws.getCbmcProcessStarter());
+		json.put(CBMC_PROCESS_STARTER_KEY, cbmcProcessStarterJSON);
 		return json;
 	}
 
 	public static BeastWorkspace loadBeastWorkspaceFromFile(File f)
 			throws IOException {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
-		
+
 		String fileContents = SavingLoadingInterface.readStringFromFile(f);
 		JSONObject json = new JSONObject(fileContents);
 
 		JSONArray descrArr = json.getJSONArray(DESCR_FILES_KEY);
 		List<CElectionDescription> descrs = new ArrayList<>();
-		
+
 		for (int i = 0; i < descrArr.length(); ++i) {
 			String absolutePath = descrArr.getString(i);
 			File descrFile = new File(absolutePath);
@@ -341,14 +346,14 @@ public class WorkspaceSaverLoader {
 			CElectionDescription loadedDescr = SavingLoadingInterface
 					.loadCElection(descrFile);
 			descrs.add(loadedDescr);
-			
+
 			beastWorkspace.addElectionDescription(loadedDescr);
 			beastWorkspace.addFileForDescr(loadedDescr, descrFile);
 		}
 
 		JSONArray propDescrArr = json.getJSONArray(PROP_DESCR_FILES_KEY);
 		List<PreAndPostConditionsDescription> propDescrs = new ArrayList<>();
-	
+
 		for (int i = 0; i < propDescrArr.length(); ++i) {
 			String absolutePath = propDescrArr.getString(i);
 			File propDescrFile = new File(absolutePath);
@@ -367,10 +372,15 @@ public class WorkspaceSaverLoader {
 		TestConfigurationList testConfigList = testConfigListFromJsonArr(
 				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
 
-		
 		beastWorkspace.setTestConfigList(testConfigList);
 		beastWorkspace.setBaseDir(baseDir);
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
+
+		JSONObject cbmcProcessStarterJSON = json
+				.getJSONObject(CBMC_PROCESS_STARTER_KEY);
+		CBMCProcessStarter ps = CBMCProcessStarterSaverLoaderHelper
+				.cbmcProcessStarterFromJSON(cbmcProcessStarterJSON);
+		beastWorkspace.setCbmcProcessStarter(ps);
 
 		return beastWorkspace;
 	}

@@ -9,8 +9,8 @@ import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 

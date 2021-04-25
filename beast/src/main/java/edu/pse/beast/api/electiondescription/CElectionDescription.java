@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
+import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
 public class CElectionDescription {
 	private List<VotingSigFunction> votingSigFunctions = new ArrayList<>();

@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.propertycheck;
+package edu.pse.beast.api.testrunner.propertycheck.process_starter;
 
 import java.io.File;
 
@@ -10,6 +10,9 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public interface CBMCProcessStarter {
+	
+	public CBMCProcessStarterType getType();
+	
 	public ProcessBuilder startCheckForParam(
 			String sessionUUID,
 			CElectionDescription descr, 

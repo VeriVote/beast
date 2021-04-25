@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public class TestConfigurationList {
@@ -20,18 +21,18 @@ public class TestConfigurationList {
 			testConfigsByName.put(testConfig.getName(), testConfig);
 		}
 		
-		if (!testConfigsByDescr.containsKey(testConfig.getDescr().getName())) {
-			testConfigsByDescr.put(testConfig.getDescr().getName(),
+		if (!testConfigsByDescr.containsKey(testConfig.getDescr().getUuid())) {
+			testConfigsByDescr.put(testConfig.getDescr().getUuid(),
 					new ArrayList<>());
 		}
-		testConfigsByDescr.get(testConfig.getDescr().getName()).add(testConfig);
+		testConfigsByDescr.get(testConfig.getDescr().getUuid()).add(testConfig);
 
 		if (!testConfigsByPropDescr
-				.containsKey(testConfig.getPropDescr().getName())) {
-			testConfigsByPropDescr.put(testConfig.getPropDescr().getName(),
+				.containsKey(testConfig.getPropDescr().getUuid())) {
+			testConfigsByPropDescr.put(testConfig.getPropDescr().getUuid(),
 					new ArrayList<>());
 		}
-		testConfigsByPropDescr.get(testConfig.getPropDescr().getName())
+		testConfigsByPropDescr.get(testConfig.getPropDescr().getUuid())
 				.add(testConfig);		
 	}
 
@@ -42,6 +43,14 @@ public class TestConfigurationList {
 	public Map<String, List<TestConfiguration>> getConfigsByPropertyDescription() {
 		return Collections.unmodifiableMap(testConfigsByPropDescr);
 	}
+
+	public void handleDescrChange(CElectionDescription descr) {
+		for(TestConfiguration tc : testConfigsByDescr.get(descr.getUuid())) {
+			tc.handleDescrChange();
+		}
+	}
+
+
 
 
 }

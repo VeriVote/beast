@@ -1,5 +1,7 @@
 package edu.pse.beast.api.savingloading;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,6 +15,7 @@ import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -97,6 +100,8 @@ public class WorkspaceSaverLoaderTest {
 		beastWorkspace.addFileForPropDescr(propDescr, propDescrFile);
 
 		beastWorkspace.addTestConfiguration(testConfig);
+		
+		beastWorkspace.setCbmcProcessStarter(new CBMCProcessStarterWindows());
 
 		File f = new File("testfiles");
 		f.mkdirs();
@@ -105,6 +110,7 @@ public class WorkspaceSaverLoaderTest {
 		SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f);
 		BeastWorkspace loadedBeastWorkspace = SavingLoadingInterface
 				.loadBeastWorkspace(f);
+		
 
 		int i = 0;
 	}

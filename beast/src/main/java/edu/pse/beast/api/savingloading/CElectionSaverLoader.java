@@ -16,7 +16,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.electiondescription.VotingSigFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
 public class CElectionSaverLoader {
 	private static final int CURRENT_VERSION = 1;
@@ -40,7 +40,7 @@ public class CElectionSaverLoader {
 	private static JSONObject fromVotingFunction(VotingSigFunction func) {
 		JSONObject json = new JSONObject();
 		json.put(VOTING_FUNC_NAME_KEY, func.getName());
-		json.put(VOTING_FUNC_CODE_KEY, func.getCodeAsString());
+		json.put(VOTING_FUNC_CODE_KEY, func.getCode());
 		return json;
 	}
 

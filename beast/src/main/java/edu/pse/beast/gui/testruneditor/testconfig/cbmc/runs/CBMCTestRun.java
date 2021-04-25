@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
@@ -14,6 +15,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private CBMCPropertyCheckWorkUnit workUnit;
 	private CBMCTestRunGuiController updateListener;
 	private List<String> testOutput = new ArrayList<>();
+	private boolean descrChanged = false;
 
 	public CBMCTestRun(CBMCPropertyCheckWorkUnit workUnit) {
 		this.workUnit = workUnit;
@@ -35,6 +37,10 @@ public class CBMCTestRun implements CBMCTestCallback {
 		return workUnit.getCbmcFile();
 	}
 
+	public void setCBMCFile(File cbmcFile) {
+		workUnit.setCbmcFile(cbmcFile);
+	}
+	
 	public WorkUnitState getState() {
 		return workUnit.getState();
 	}
@@ -81,11 +87,27 @@ public class CBMCTestRun implements CBMCTestCallback {
 		}
 		updateGui();
 	}
-	
+
 	@Override
 	public void onPropertyTestFinished(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
+		updateGui();
+	}
+
+	public void handleDescrChange() {
+		descrChanged = true;
+		updateGui();
+	}
+
+	public boolean isDescrChanged() {
+		return descrChanged;
+	}
+
+	public void updateDataForCheck(File cbmcFile,
+			LoopBoundHandler loopBoundHandler) {
+		workUnit.updateDataForCheck(cbmcFile, loopBoundHandler);
+		descrChanged = false;
 		updateGui();
 	}
 }

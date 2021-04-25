@@ -3,7 +3,7 @@ package edu.pse.beast.api.electiondescription.to_c;
 import edu.pse.beast.api.codegen.TypeManager;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
-import edu.pse.beast.api.electiondescription.VotingSigFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
 public class FunctionToC {
 

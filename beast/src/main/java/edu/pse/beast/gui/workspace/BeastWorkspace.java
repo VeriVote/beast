@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
@@ -22,17 +24,17 @@ import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
 	private Map<String, File> filesPerDescr = new HashMap<>();
-	private List<CElectionDescription> descrWithUnsavedChanges = new ArrayList<>();
+	private Set<CElectionDescription> descrWithUnsavedChanges = new HashSet();
 
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
 	private Map<String, File> filesPerPropDescr = new HashMap<>();
-	private List<PreAndPostConditionsDescription> propDescrWithUnsavedChanges = new ArrayList<>();
+	private Set<PreAndPostConditionsDescription> propDescrWithUnsavedChanges = new HashSet();
 
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();
 	private File baseDir;
 	private CBMCProcessStarter cbmcProcessStarter;
-
+	
 	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
 
 	private BEAST beast = new BEAST();
@@ -51,6 +53,10 @@ public class BeastWorkspace {
 
 	public List<CElectionDescription> getLoadedDescrs() {
 		return loadedDescrs;
+	}
+
+	public CBMCProcessStarter getCbmcProcessStarter() {
+		return cbmcProcessStarter;
 	}
 
 	public List<PreAndPostConditionsDescription> getLoadedPropDescrs() {
@@ -134,9 +140,7 @@ public class BeastWorkspace {
 	public void createCBMCTestRuns(CBMCPropertyTestConfiguration config) {
 		try {
 			if (cbmcProcessStarter == null) {
-				for (WorkspaceUpdateListener l : updateListener) {
-					l.handleWorkspaceErrorNoCBMCProcessStarter();
-				}
+				
 				return;
 			}
 
@@ -183,6 +187,26 @@ public class BeastWorkspace {
 			PreAndPostConditionsDescription loadedPropDescr,
 			File propDescrFile) {
 		filesPerPropDescr.put(loadedPropDescr.getUuid(), propDescrFile);
+	}
+
+	public void handleDescrChange(CElectionDescription descr) {
+		descrWithUnsavedChanges.add(descr);
+		testConfigList.handleDescrChange(descr);
+	}
+
+	public void updateFilesForRuns(
+			CBMCPropertyTestConfiguration currentConfig) throws IOException {
+		if (cbmcProcessStarter == null) {
+			
+			return;
+		}
+		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+		File cbmcFile = beast.generateCodeFile(currentConfig.getDescr(),
+				currentConfig.getPropDescr(), codeGenOptions, loopBoundHandler);		
+		
+		for(CBMCTestRun cbmcTr : currentConfig.getRuns()) {
+			cbmcTr.updateDataForCheck(cbmcFile, loopBoundHandler);
+		}
 	}
 
 }

@@ -15,8 +15,8 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarter;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
@@ -263,29 +263,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	public void initialize() throws IOException {
-
-		CodeGenOptions codeGenOptions = new CodeGenOptions();
-		codeGenOptions.setCbmcAmountCandidatesVarName("C");
-		codeGenOptions.setCbmcAmountVotersVarName("V");
-
-		beastWorkspace = new BeastWorkspace();
-
-		beastWorkspace.setCodeGenOptions(codeGenOptions);
-
-		CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();
-		beastWorkspace.setCbmcProcessStarter(cbmcProcessStarter);
-
-		CElectionDescription descr = getTestDescr();
-		PreAndPostConditionsDescription propDescr = getTestProperty();
-
-		Path currentRelativePath = Paths.get("");
-		String s = currentRelativePath.toAbsolutePath().toString();
-		File baseDir = new File(s);
-
-		beastWorkspace.setBaseDir(baseDir);
-		beastWorkspace.addElectionDescription(getTestDescr());
-		beastWorkspace.addPropertyDescription(getTestProperty());
-		beastWorkspace.addTestConfiguration(getTestConfig(descr, propDescr));
+		File f = new File("testfiles/test.beastws");
+		beastWorkspace = SavingLoadingInterface.loadBeastWorkspace(f);
 
 		initElectionEditor();
 		initPropertyEditor();

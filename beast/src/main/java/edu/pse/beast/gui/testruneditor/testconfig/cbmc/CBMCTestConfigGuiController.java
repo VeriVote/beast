@@ -1,5 +1,7 @@
 package edu.pse.beast.gui.testruneditor.testconfig.cbmc;
 
+import java.io.IOException;
+
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
@@ -40,9 +42,12 @@ public class CBMCTestConfigGuiController {
 	private Spinner<Integer> maxSeats;
 	
 	@FXML
+	private Button updateFilesButton;	
+	@FXML
 	private Button createTestRunsButton;
 	@FXML
 	private CheckBox startCreatedTestsCheckbox;	
+	
 	
 	private BeastWorkspace beastWorkspace;
 	
@@ -91,6 +96,14 @@ public class CBMCTestConfigGuiController {
 		
 		createTestRunsButton.setOnAction(ae -> {
 			beastWorkspace.createCBMCTestRuns(currentConfig);
+		});
+		
+		updateFilesButton.setOnAction(e -> {
+			try {
+				beastWorkspace.updateFilesForRuns(currentConfig);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		});
 	}
 	

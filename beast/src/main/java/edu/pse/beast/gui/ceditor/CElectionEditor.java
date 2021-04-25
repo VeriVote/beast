@@ -7,11 +7,13 @@ import java.util.Optional;
 import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.richtext.CodeArea;
 
+import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.electiondescription.VotingSigFunction;
+import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.OpenFileDialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
@@ -19,6 +21,7 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -40,6 +43,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox;
 
 	private CElectionDescription currentDescr;
+	private CElectionDescriptionFunction currentDisplayedFunction;	 
 
 	private BeastWorkspace beastWorkspace;
 
@@ -69,14 +73,19 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		electionCodeArea.getStylesheets().add(stylesheet);
 		funcDeclArea.getStylesheets().add(stylesheet);
 		closingBracketArea.getStylesheets().add(stylesheet);
-
+		
 		this.beastWorkspace = beastWorkspace;
-		this.openedElectionDescriptionChoiceBox = openedElectionDescriptionChoiceBox;
-
+		this.openedElectionDescriptionChoiceBox = openedElectionDescriptionChoiceBox;		
+		
 		initListViews();
 		initOpenedDescrChoiceBox();
 		handleWorkspaceUpdateGeneric();
 		beastWorkspace.registerUpdateListener(this);
+		
+		electionCodeArea.setChangeListener((text) -> {
+			currentDisplayedFunction.setCode(text);
+			beastWorkspace.handleDescrChange(currentDescr);
+		});
 	}
 
 	private void selectedDescrChanged(CElectionDescription descr) {
@@ -152,6 +161,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	private void loadVotingSigFunction(VotingSigFunction f) {
 		loadFunction(f);
+		currentDisplayedFunction = f;
 		List<LoopBound> loopbounds = currentDescr
 				.getLoopBoundsForFunction(f.getName());
 		populateLoopBoundList(loopbounds);
@@ -207,7 +217,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		closingBracketArea.clear();
 
 		funcDeclArea.insertText(0, votingSigFuncToCString(func) + "{");
-		electionCodeArea.insertText(0, func.getCodeAsString());
+		electionCodeArea.insertText(0, func.getCode());
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
 	}

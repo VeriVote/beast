@@ -2,6 +2,7 @@ package edu.pse.beast.gui.workspace;
 
 import java.util.List;
 
+import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
 
@@ -13,4 +14,5 @@ public interface WorkspaceUpdateListener {
 	}
 	public default void handleWorkspaceErrorNoCBMCProcessStarter() {
 	}
+	
 }

@@ -168,10 +168,13 @@ public class TestConfigurationTopLevelGUIHandler
 			testConfigs = beastWorkspace.getConfigsByPropertyDescription();
 		}
 
-		for (String k : testConfigs.keySet()) {
+		for (String uuid : testConfigs.keySet()) {
+			
+			String name = beastWorkspace.getDescrByUUID(uuid).getName();
+			
 			TreeItem<TestConfigTreeItemSuper> parentItem = new TreeItem<>(
-					new TestConfigCategoryTreeItem(k));
-			List<TestConfiguration> testConfigsForParent = testConfigs.get(k);
+					new TestConfigCategoryTreeItem(name));
+			List<TestConfiguration> testConfigsForParent = testConfigs.get(uuid);
 			for (TestConfiguration testConfig : testConfigsForParent) {
 				TreeItem<TestConfigTreeItemSuper> testConfigItem = new TreeItem<>(
 						new TestConfigTreeItem(testConfig));

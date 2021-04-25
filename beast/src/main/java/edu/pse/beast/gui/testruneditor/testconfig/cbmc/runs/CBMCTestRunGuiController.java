@@ -59,6 +59,8 @@ public class CBMCTestRunGuiController {
 	}
 
 	private void display() {
+		outputTextElement.clear();
+
 		File cbmcFile = run.getCbmcFile();
 		createdFileTextField.setText(cbmcFile.getAbsolutePath());
 		openCreatedFileButton.setOnAction(e -> {
@@ -76,6 +78,11 @@ public class CBMCTestRunGuiController {
 		WorkUnitState state = run.getState();
 		stateLabel.setText("state: " + state.toString());
 		stateHBox.getChildren().add(stateLabel);
+
+		if (run.isDescrChanged()) {
+			Label descrChangedLabel = new Label("the runs description got changed, test file is out of date");
+			stateHBox.getChildren().add(descrChangedLabel);
+		}
 
 		switch (state) {
 			case CREATED : {

@@ -15,18 +15,14 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 
 public class CBMCMainGenerator {
 
-
-	public static CFunction main(
-			BooleanExpASTData preAstData, 
-			BooleanExpASTData postAstData, 
-			List<SymbolicCBMCVar> symCbmcVars,
+	public static CFunction main(BooleanExpASTData preAstData,
+			BooleanExpASTData postAstData, List<SymbolicCBMCVar> symCbmcVars,
 			ElectionTypeCStruct voteArrStruct,
 			ElectionTypeCStruct voteResultStruct,
 			VotingInputTypes votingInputType,
-			VotingOutputTypes votingOutputType,
-			CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
-		
+			VotingOutputTypes votingOutputType, CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler, String votingFunctionName) {
+
 		List<String> code = new ArrayList<>();
 
 		String votesLowerBoundVarName = "votesLowerBound";
@@ -64,21 +60,12 @@ public class CBMCMainGenerator {
 			String varName = "voteNUMBER".replaceAll("NUMBER",
 					String.valueOf(i + 1));
 			code.add("//initializing VAR".replaceAll("VAR", varName));
-			code.add(
-					InitVoteHelper.generateCode(
-							varName, 
-							voteArrStruct,
-							votingInputType,
-							options, 
-							loopBoundHandler));
+			code.add(InitVoteHelper.generateCode(varName, voteArrStruct,
+					votingInputType, options, loopBoundHandler));
 		}
 
-		CodeGenASTVisitor visitor = new CodeGenASTVisitor(
-				voteArrStruct,
-				votingInputType,
-				voteResultStruct,
-				votingOutputType,
-				options, 
+		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,
+				votingInputType, voteResultStruct, votingOutputType, options,
 				loopBoundHandler);
 
 		// preconditions
@@ -103,7 +90,8 @@ public class CBMCMainGenerator {
 					generatedVarName));
 
 			code.add(PerformVoteHelper.generateCode(generatedVarName,
-					voteVarName, voteArrStruct, voteResultStruct, options));
+					voteVarName, voteArrStruct, voteResultStruct, options,
+					votingFunctionName));
 		}
 
 		// postconditions
@@ -118,7 +106,7 @@ public class CBMCMainGenerator {
 		}
 
 		code.add("return 0;");
-		
+
 		CFunction mainFunction = new CFunction("main",
 				List.of("int argc", "char ** argv"), "int");
 		mainFunction.setCode(code);
