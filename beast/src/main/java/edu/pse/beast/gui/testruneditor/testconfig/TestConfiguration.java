@@ -64,6 +64,10 @@ public class TestConfiguration {
 	}
 
 	public void handlePropDescrChanged() {
+		//TODO this can be made smarter by giving the run items a reference to the current
+		//propdescr and descr as well as a copy of the state they had when the runs were
+		//created. Then, the runs can figure out themselves whether they are out of
+		//date
 		for(CBMCPropertyTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
 			cbmctc.handlePropDescrChanged();
 		}

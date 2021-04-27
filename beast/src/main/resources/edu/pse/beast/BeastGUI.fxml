@@ -21,9 +21,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+      <TabPane fx:id="topLeveLTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
         <tabs>
-          <Tab text="Election Code">
+          <Tab fx:id="election" text="Election Code">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -67,7 +67,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Property Editor">
+          <Tab fx:id="property" text="Property Editor">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -129,7 +129,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Property Tests">
+            <Tab fx:id="tests" text="Property Tests">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -157,7 +157,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Logs">
+            <Tab fx:id="logs" text="Logs">
               <content>
                 <AnchorPane fx:id="logAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
@@ -190,7 +190,12 @@
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="saveAllButton" mnemonicParsing="false" text="save all" />
+            <Button fx:id="saveAllButton" mnemonicParsing="false" text="save all">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="saveWorkspaceButton" mnemonicParsing="false" text="save Workspace" />
          </children>
       </HBox>
    </children>

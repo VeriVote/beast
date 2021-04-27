@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigGuiController;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -163,26 +164,18 @@ public class TestConfigurationTopLevelGUIHandler
 		root.getChildren().clear();
 		Map<String, List<TestConfiguration>> testConfigs;
 		if (sortCriterium.equals(descrSortCrit)) {
-			testConfigs = beastWorkspace.getConfigsByElectionDescription();
+			testConfigs = beastWorkspace.getConfigsByElectionDescriptionName();
 		} else {// if (sortCriterium.equals(propDescrSortCrit)) {
-			testConfigs = beastWorkspace.getConfigsByPropertyDescription();
+			testConfigs = beastWorkspace.getConfigsByPropertyDescriptionName();
 		}
 
-		for (String uuid : testConfigs.keySet()) {
-			String name = null;
-
-			// TODO see where to get the name from depending on which criterium
-			// is selected
-			if (sortCriterium.equals(descrSortCrit)) {
-				name = beastWorkspace.getDescrByUUID(uuid).getName();
-			} else {// if (sortCriterium.equals(propDescrSortCrit)) {
-				name = beastWorkspace.getPropDescrByUUID(uuid).getName();
-			}
-
+		for (String name : testConfigs.keySet()) {
 			TreeItem<TestConfigTreeItemSuper> parentItem = new TreeItem<>(
 					new TestConfigCategoryTreeItem(name));
+
 			List<TestConfiguration> testConfigsForParent = testConfigs
-					.get(uuid);
+					.get(name);
+			
 			for (TestConfiguration testConfig : testConfigsForParent) {
 				TreeItem<TestConfigTreeItemSuper> testConfigItem = new TreeItem<>(
 						new TestConfigTreeItem(testConfig));

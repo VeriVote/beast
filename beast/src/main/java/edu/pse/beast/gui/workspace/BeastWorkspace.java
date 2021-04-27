@@ -3,6 +3,8 @@ package edu.pse.beast.gui.workspace;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,23 +17,27 @@ import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
+import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ErrorDialogHelper;
 import edu.pse.beast.gui.ErrorHandler;
+import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
+import javafx.stage.FileChooser;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
-	private Map<String, File> filesPerDescr = new HashMap<>();
+	private Map<CElectionDescription, File> filesPerDescr = new HashMap<>();
 	private Set<CElectionDescription> descrWithUnsavedChanges = new HashSet();
 
 	private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
-	private Map<String, File> filesPerPropDescr = new HashMap<>();
+	private Map<PreAndPostConditionsDescription, File> filesPerPropDescr = new HashMap<>();
 	private Set<PreAndPostConditionsDescription> propDescrWithUnsavedChanges = new HashSet();
 
 	private CodeGenOptions codeGenOptions;
@@ -44,6 +50,9 @@ public class BeastWorkspace {
 	private BEAST beast = new BEAST();
 
 	private ErrorHandler errorHandler;
+
+	private String name = "test";
+	private File workspaceFile;
 
 	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
 		this.codeGenOptions = codeGenOptions;
@@ -81,11 +90,11 @@ public class BeastWorkspace {
 		return testConfigList;
 	}
 
-	public Map<String, File> getFilesPerDescr() {
+	public Map<CElectionDescription, File> getFilesPerDescr() {
 		return filesPerDescr;
 	}
 
-	public Map<String, File> getFilesPerPropDescr() {
+	public Map<PreAndPostConditionsDescription, File> getFilesPerPropDescr() {
 		return filesPerPropDescr;
 	}
 
@@ -135,12 +144,12 @@ public class BeastWorkspace {
 		return baseDir;
 	}
 
-	public Map<String, List<TestConfiguration>> getConfigsByElectionDescription() {
-		return testConfigList.getConfigsByElectionDescription();
+	public Map<CElectionDescription, List<TestConfiguration>> getConfigsByElectionDescription() {
+		return testConfigList.getTestConfigsByDescr();
 	}
 
-	public Map<String, List<TestConfiguration>> getConfigsByPropertyDescription() {
-		return testConfigList.getConfigsByPropertyDescription();
+	public Map<PreAndPostConditionsDescription, List<TestConfiguration>> getConfigsByPropertyDescription() {
+		return testConfigList.getTestConfigsByPropDescr();
 	}
 
 	public void createCBMCTestRuns(CBMCPropertyTestConfiguration config) {
@@ -186,13 +195,13 @@ public class BeastWorkspace {
 
 	public void addFileForDescr(CElectionDescription loadedDescr,
 			File descrFile) {
-		filesPerDescr.put(loadedDescr.getUuid(), descrFile);
+		filesPerDescr.put(loadedDescr, descrFile);
 	}
 
 	public void addFileForPropDescr(
 			PreAndPostConditionsDescription loadedPropDescr,
 			File propDescrFile) {
-		filesPerPropDescr.put(loadedPropDescr.getUuid(), propDescrFile);
+		filesPerPropDescr.put(loadedPropDescr, propDescrFile);
 	}
 
 	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
@@ -222,9 +231,8 @@ public class BeastWorkspace {
 		}
 
 		propDescrWithUnsavedChanges.add(currentPropDescr);
-		for (TestConfiguration tc : testConfigList
-				.getConfigsByPropertyDescription()
-				.get(currentPropDescr.getUuid())) {
+		for (TestConfiguration tc : testConfigList.getTestConfigsByPropDescr()
+				.get(currentPropDescr)) {
 			tc.handlePropDescrChanged();
 		}
 
@@ -233,14 +241,23 @@ public class BeastWorkspace {
 		}
 	}
 
+	public void updateCodeForPropDescr(String code,
+			FormalPropertiesDescription conditionDescription,
+			PreAndPostConditionsDescription propDescr) {
+		propDescrWithUnsavedChanges.add(propDescr);
+		for (TestConfiguration tc : testConfigList.getTestConfigsByPropDescr()
+				.get(propDescr)) {
+			tc.handlePropDescrChanged();
+		}
+	}
+
 	public void updateCodeForDescrFunction(CElectionDescription currentDescr,
 			CElectionDescriptionFunction function, String code) {
 		function.setCode(code);
 		descrWithUnsavedChanges.add(currentDescr);
 
-		for (TestConfiguration tc : testConfigList
-				.getConfigsByElectionDescription()
-				.get(currentDescr.getUuid())) {
+		for (TestConfiguration tc : testConfigList.getTestConfigsByDescr()
+				.get(currentDescr)) {
 			tc.handleDescrCodeChange();
 		}
 
@@ -252,4 +269,100 @@ public class BeastWorkspace {
 	public void setErrorHandler(ErrorHandler errorHandler) {
 		this.errorHandler = errorHandler;
 	}
+
+	public void saveDescr(CElectionDescription descr) {
+		File f = null;
+		if (filesPerDescr.containsKey(descr)) {
+			f = filesPerDescr.get(descr);
+		} else {
+			f = FileDialogHelper.letUserSaveFile(baseDir, "choose save File",
+					descr.getName() + ".belec");
+			if (f == null) {
+				return;
+			}
+			filesPerDescr.put(descr, f);
+		}
+		try {
+			SavingLoadingInterface.storeCElection(descr, f);
+			descrWithUnsavedChanges.remove(descr);
+		} catch (IOException e) {
+			errorHandler.logAndDisplayError("save error",
+					e.getLocalizedMessage());
+		}
+	}
+
+	public void savePropDescr(PreAndPostConditionsDescription propDescr) {
+		File f = null;
+		if (filesPerPropDescr.containsKey(propDescr)) {
+			f = filesPerPropDescr.get(propDescr);
+		} else {
+			f = FileDialogHelper.letUserSaveFile(baseDir, "choose save File",
+					propDescr.getName() + ".bprp");
+			if (f == null) {
+				return;
+			}
+			filesPerPropDescr.put(propDescr, f);
+		}
+		try {
+			SavingLoadingInterface
+					.storePreAndPostConditionDescription(propDescr, f);
+			propDescrWithUnsavedChanges.remove(propDescr);
+		} catch (IOException e) {
+			errorHandler.logAndDisplayError("save error",
+					e.getLocalizedMessage());
+		}
+	}
+
+	public void saveAll() {
+		List<CElectionDescription> descrListCopy = new ArrayList<>(
+				descrWithUnsavedChanges);
+		for (CElectionDescription descr : descrListCopy) {
+			saveDescr(descr);
+		}
+		List<PreAndPostConditionsDescription> propDescrListCopy = new ArrayList<>(
+				propDescrWithUnsavedChanges);
+		for (PreAndPostConditionsDescription propDescr : propDescrListCopy) {
+			savePropDescr(propDescr);
+		}
+	}
+
+	public void setWorkspaceFile(File workspaceFile) {
+		this.workspaceFile = workspaceFile;
+	}
+
+	public void saveWorkspace() {
+		if (workspaceFile == null) {
+			workspaceFile = FileDialogHelper.letUserSaveFile(baseDir,
+					"file for workspace", name + ".beastws");
+		}
+		if (workspaceFile == null)
+			return;
+		try {
+			SavingLoadingInterface.storeBeastWorkspace(this, workspaceFile);
+		} catch (IOException e) {
+			errorHandler.logAndDisplayError("save error",
+					e.getLocalizedMessage());
+		}
+	}
+
+	public Map<String, List<TestConfiguration>> getConfigsByElectionDescriptionName() {
+		Map<String, List<TestConfiguration>> map = new HashMap<>();
+		for (CElectionDescription descr : getConfigsByElectionDescription()
+				.keySet()) {
+			map.put(descr.getName(),
+					getConfigsByElectionDescription().get(descr));
+		}
+		return map;
+	}
+
+	public Map<String, List<TestConfiguration>> getConfigsByPropertyDescriptionName() {
+		Map<String, List<TestConfiguration>> map = new HashMap<>();
+		for (PreAndPostConditionsDescription propDescr : getConfigsByPropertyDescription()
+				.keySet()) {
+			map.put(propDescr.getName(),
+					getConfigsByPropertyDescription().get(propDescr));
+		}
+		return map;
+	}
+
 }

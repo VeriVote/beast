@@ -12,7 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-public class OpenFileDialogHelper {
+public class FileDialogHelper {
 
 	public static CElectionDescription letUserLoadElectionDescription(
 			File baseDir, Stage primaryStage)
@@ -35,5 +35,13 @@ public class OpenFileDialogHelper {
 		fileChooser.setSelectedExtensionFilter(
 				new ExtensionFilter(extDescr, List.of(ext)));
 		return fileChooser.showOpenDialog(stage);
+	}
+	
+	public static File letUserSaveFile(File initDir, String title, String name) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(title);
+		fileChooser.setInitialDirectory(initDir);
+		fileChooser.setInitialFileName(name);
+		return fileChooser.showSaveDialog(null);
 	}
 }

@@ -35,6 +35,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
@@ -42,6 +43,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class BeastGUIController implements WorkspaceUpdateListener {
+	
+	@FXML
+	private TabPane topLeveLTabPane;
 
 	private Stage primaryStage;
 
@@ -106,6 +110,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private Button saveButton;
 	@FXML
 	private Button saveAllButton;
+	@FXML
+	private Button saveWorkspaceButton;
 
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
@@ -287,6 +293,24 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		initPropertyEditor();
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
+		
+		saveButton.setOnAction(e -> {
+			Tab selectedTab = topLeveLTabPane.getSelectionModel().getSelectedItem();
+			String id = selectedTab.getId().toString();
+			if(id.equals("election")) {
+				cElectionEditor.save();
+			} else if(id.equals("property")) {
+				preAndPostPropertyEditor.save();
+			}
+		});
+		
+		saveAllButton.setOnAction(e -> {
+			beastWorkspace.saveAll();
+		});
+		
+		saveWorkspaceButton.setOnAction(e -> {
+			beastWorkspace.saveWorkspace();
+		});
 
 		addElectionDescriptionButton.setOnAction(e -> {
 			cElectionEditor.createNewDescr();

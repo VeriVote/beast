@@ -15,7 +15,7 @@ import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
-import edu.pse.beast.gui.OpenFileDialogHelper;
+import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.beans.value.ObservableValue;
@@ -324,10 +324,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	public void letUserLoad() throws NotImplementedException, IOException {
-		CElectionDescription descr = OpenFileDialogHelper
+		CElectionDescription descr = FileDialogHelper
 				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
 						primaryStage);
 		beastWorkspace.addElectionDescription(descr);
+	}
+
+	public void save() {
+		beastWorkspace.saveDescr(currentDescr);
 	}
 
 }

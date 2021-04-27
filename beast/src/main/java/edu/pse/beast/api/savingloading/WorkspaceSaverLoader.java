@@ -393,6 +393,8 @@ public class WorkspaceSaverLoader {
 		CBMCProcessStarter ps = CBMCProcessStarterSaverLoaderHelper
 				.cbmcProcessStarterFromJSON(cbmcProcessStarterJSON);
 		beastWorkspace.setCbmcProcessStarter(ps);
+		
+		beastWorkspace.setWorkspaceFile(f);
 
 		return beastWorkspace;
 	}

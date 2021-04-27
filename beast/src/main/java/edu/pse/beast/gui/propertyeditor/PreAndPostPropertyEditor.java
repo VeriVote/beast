@@ -38,8 +38,18 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		this.addSymbVarMenu = addSymbVarMenu;
 		this.openedPropertyDescriptionChoiceBox = openedPropertyDescriptionChoiceBox;
 		this.beastWorkspace = beastWorkspace;
-		
+
 		beastWorkspace.registerUpdateListener(this);
+		preEditor.setChangeListener(text -> {
+			beastWorkspace.updateCodeForPropDescr(text,
+					currentPropDescr.getPreConditionsDescription(),
+					currentPropDescr);
+		});
+		postEditor.setChangeListener(text -> {
+			beastWorkspace.updateCodeForPropDescr(text,
+					currentPropDescr.getPostConditionsDescription(),
+					currentPropDescr);
+		});
 
 		initSymbVarMenu();
 		initPropDescrChoiceBox();
@@ -118,15 +128,17 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		this.currentPropDescr = propDescr;
 		populateVariableList(propDescr.getCbmcVariables());
 	}
-	
+
 	@Override
 	public void handleWorkspaceUpdateAddedVarToPropDescr(
-			PreAndPostConditionsDescription propDescr,
-			SymbolicCBMCVar var) {
-		if(propDescr == currentPropDescr) {
+			PreAndPostConditionsDescription propDescr, SymbolicCBMCVar var) {
+		if (propDescr == currentPropDescr) {
 			populateVariableList(currentPropDescr.getCbmcVariables());
 		}
 	}
 
+	public void save() {
+		beastWorkspace.savePropDescr(currentPropDescr);
+	}
 
 }
