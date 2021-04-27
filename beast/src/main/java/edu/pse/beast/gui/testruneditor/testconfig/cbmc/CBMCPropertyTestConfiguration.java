@@ -97,9 +97,15 @@ public class CBMCPropertyTestConfiguration {
 		return runs;
 	}
 
-	public void handleDescrChange() {
+	public void handleDescrCodeChange() {
 		for(CBMCTestRun r : runs) {
-			r.handleDescrChange();
+			r.handleDescrCodeChange();
+		}
+	}
+
+	public void handlePropDescrChanged() {
+		for(CBMCTestRun r : runs) {
+			r.handlePropDescrChanged();
 		}
 	}
 

@@ -48,7 +48,7 @@ public class SavingLoadingTest {
 				VotingInputTypes.PREFERENCE,
 				VotingOutputTypes.CANDIDATE_LIST,
 				"borda");
-		descr.getVotingFunction().getCode().add(bordaCode);
+		descr.getVotingFunction().getCodeAsList().add(bordaCode);
 	
 		File f = new File("testfiles");
 		f.mkdirs();
@@ -60,7 +60,7 @@ public class SavingLoadingTest {
 		assertEquals(descr.getInputType(), loadedDescr.getInputType());
 		assertEquals(descr.getOutputType(), loadedDescr.getOutputType());
 		assertEquals(descr.getVotingFunction().getName(), loadedDescr.getVotingFunction().getName());
-		assertEquals(descr.getVotingFunction().getCodeAsString(), loadedDescr.getVotingFunction().getCodeAsString());
+		assertEquals(descr.getVotingFunction().getCode(), loadedDescr.getVotingFunction().getCode());
 	}
 	
 	@Test

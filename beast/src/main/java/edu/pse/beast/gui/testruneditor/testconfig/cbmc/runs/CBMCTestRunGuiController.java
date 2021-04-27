@@ -79,8 +79,8 @@ public class CBMCTestRunGuiController {
 		stateLabel.setText("state: " + state.toString());
 		stateHBox.getChildren().add(stateLabel);
 
-		if (run.isDescrChanged()) {
-			Label descrChangedLabel = new Label("the runs description got changed, test file is out of date");
+		if (run.isDescrChanged() || run.isPropDescrChanged()) {
+			Label descrChangedLabel = new Label("Run out of date, has changes");
 			stateHBox.getChildren().add(descrChangedLabel);
 		}
 

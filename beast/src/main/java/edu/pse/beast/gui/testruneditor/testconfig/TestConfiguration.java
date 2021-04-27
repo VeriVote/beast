@@ -55,14 +55,18 @@ public class TestConfiguration {
 		for (CBMCPropertyTestConfiguration config : cbmcTestConfigs) {
 			addCBMCTestConfiguration(config);
 		}
-
 	}
 
-	public void handleDescrChange() {
-		for(CBMCPropertyTestConfiguration cbmcTc : cbmcTestConfigsByName.values()) {
-			cbmcTc.handleDescrChange();
+	public void handleDescrCodeChange() {
+		for(CBMCPropertyTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
+			cbmctc.handleDescrCodeChange();
 		}
 	}
 
+	public void handlePropDescrChanged() {
+		for(CBMCPropertyTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
+			cbmctc.handlePropDescrChanged();
+		}
+	}
 
 }

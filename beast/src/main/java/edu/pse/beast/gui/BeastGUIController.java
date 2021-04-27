@@ -20,6 +20,7 @@ import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessSta
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
+import edu.pse.beast.gui.log.LogGuiController;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
 import edu.pse.beast.gui.testruneditor.TestConfigurationTopLevelGUIHandler;
@@ -77,7 +78,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private Button addElectionDescriptionButton;
 
 	@FXML
-	private ChoiceBox<String> openedPropertyDescriptionChoiceBox;
+	private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
 	@FXML
 	private Button addPropDescrButton;
 
@@ -98,9 +99,18 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private AnchorPane testConfigDetailsAnchorPane;
 	// TestConfigHandler end
 
+	@FXML
+	private AnchorPane logAnchorPane;
+
+	@FXML
+	private Button saveButton;
+	@FXML
+	private Button saveAllButton;
+
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigurationTopLevelGUIHandler testConfigurationHandler;
+	private LogGuiController logGuiController;
 
 	private BeastWorkspace beastWorkspace;
 
@@ -261,14 +271,22 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				testConfigDetailsAnchorPane, beastWorkspace);
 	}
 
+	private void initLogHandler(ErrorHandler errorHandler) {
+		logGuiController = new LogGuiController(logAnchorPane, errorHandler);
+	}
+
 	@FXML
 	public void initialize() throws IOException {
 		File f = new File("testfiles/test.beastws");
 		beastWorkspace = SavingLoadingInterface.loadBeastWorkspace(f);
 
+		ErrorHandler errorHandler = new ErrorHandler(this);
+		beastWorkspace.setErrorHandler(errorHandler);
+
 		initElectionEditor();
 		initPropertyEditor();
 		initTestConfigHandler();
+		initLogHandler(errorHandler);
 
 		addElectionDescriptionButton.setOnAction(e -> {
 			cElectionEditor.createNewDescr();

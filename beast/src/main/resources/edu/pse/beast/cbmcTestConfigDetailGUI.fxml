@@ -88,6 +88,11 @@
       </GridPane>
       <HBox layoutX="30.0" layoutY="283.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="280.0">
          <children>
+            <Button fx:id="updateFilesButton" mnemonicParsing="false" text="update Files">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="createTestRunsButton" mnemonicParsing="false" text="create test runs">
                <HBox.margin>
                   <Insets right="5.0" />

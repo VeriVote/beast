@@ -62,6 +62,18 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		this.codeGenOptions = codeGenOptions;
 		this.state = WorkUnitState.CREATED;
 	}
+		
+	public int getC() {
+		return c;
+	}
+	
+	public int getS() {
+		return s;
+	}
+	
+	public int getV() {
+		return v;
+	}
 
 	public void setCallback(CBMCTestCallback cb) {
 		this.cb = cb;

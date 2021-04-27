@@ -11,11 +11,15 @@ import java.util.Set;
 
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.ErrorDialogHelper;
+import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -34,10 +38,12 @@ public class BeastWorkspace {
 	private TestConfigurationList testConfigList = new TestConfigurationList();
 	private File baseDir;
 	private CBMCProcessStarter cbmcProcessStarter;
-	
+
 	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
 
 	private BEAST beast = new BEAST();
+
+	private ErrorHandler errorHandler;
 
 	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
 		this.codeGenOptions = codeGenOptions;
@@ -91,9 +97,9 @@ public class BeastWorkspace {
 		return null;
 	}
 
-	public PreAndPostConditionsDescription getPropDescrByName(String name) {
+	public PreAndPostConditionsDescription getPropDescrByUUID(String uuid) {
 		for (PreAndPostConditionsDescription propDescr : loadedPropDescrs) {
-			if (propDescr.getName().equals(name))
+			if (propDescr.getUuid().equals(uuid))
 				return propDescr;
 		}
 		return null;
@@ -140,7 +146,7 @@ public class BeastWorkspace {
 	public void createCBMCTestRuns(CBMCPropertyTestConfiguration config) {
 		try {
 			if (cbmcProcessStarter == null) {
-				
+
 				return;
 			}
 
@@ -189,24 +195,61 @@ public class BeastWorkspace {
 		filesPerPropDescr.put(loadedPropDescr.getUuid(), propDescrFile);
 	}
 
-	public void handleDescrChange(CElectionDescription descr) {
-		descrWithUnsavedChanges.add(descr);
-		testConfigList.handleDescrChange(descr);
-	}
-
-	public void updateFilesForRuns(
-			CBMCPropertyTestConfiguration currentConfig) throws IOException {
+	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
+			throws IOException {
 		if (cbmcProcessStarter == null) {
-			
+
 			return;
 		}
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 		File cbmcFile = beast.generateCodeFile(currentConfig.getDescr(),
-				currentConfig.getPropDescr(), codeGenOptions, loopBoundHandler);		
-		
-		for(CBMCTestRun cbmcTr : currentConfig.getRuns()) {
+				currentConfig.getPropDescr(), codeGenOptions, loopBoundHandler);
+
+		for (CBMCTestRun cbmcTr : currentConfig.getRuns()) {
 			cbmcTr.updateDataForCheck(cbmcFile, loopBoundHandler);
 		}
 	}
 
+	public void addCBCMVarToPropDescr(
+			PreAndPostConditionsDescription currentPropDescr,
+			SymbolicCBMCVar var) {
+		try {
+			currentPropDescr.addCBMCVar(var);
+		} catch (Exception e) {
+			errorHandler.logAndDisplayError("invalid name",
+					"name already exists in Property Description");
+			return;
+		}
+
+		propDescrWithUnsavedChanges.add(currentPropDescr);
+		for (TestConfiguration tc : testConfigList
+				.getConfigsByPropertyDescription()
+				.get(currentPropDescr.getUuid())) {
+			tc.handlePropDescrChanged();
+		}
+
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleWorkspaceUpdateAddedVarToPropDescr(currentPropDescr, var);
+		}
+	}
+
+	public void updateCodeForDescrFunction(CElectionDescription currentDescr,
+			CElectionDescriptionFunction function, String code) {
+		function.setCode(code);
+		descrWithUnsavedChanges.add(currentDescr);
+
+		for (TestConfiguration tc : testConfigList
+				.getConfigsByElectionDescription()
+				.get(currentDescr.getUuid())) {
+			tc.handleDescrCodeChange();
+		}
+
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleCodeChangeInDescr(currentDescr, function, code);
+		}
+	}
+
+	public void setErrorHandler(ErrorHandler errorHandler) {
+		this.errorHandler = errorHandler;
+	}
 }

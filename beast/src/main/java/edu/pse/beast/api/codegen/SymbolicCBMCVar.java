@@ -2,7 +2,7 @@ package edu.pse.beast.api.codegen;
 
 public class SymbolicCBMCVar {
 	public enum CBMCVarType {
-		CANDIDATE, VOTER,
+		CANDIDATE, VOTER, SEAT
 	}
 	
 	private String name;

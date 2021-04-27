@@ -16,6 +16,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private CBMCTestRunGuiController updateListener;
 	private List<String> testOutput = new ArrayList<>();
 	private boolean descrChanged = false;
+	private boolean propDescrChanged = false;
 
 	public CBMCTestRun(CBMCPropertyCheckWorkUnit workUnit) {
 		this.workUnit = workUnit;
@@ -95,7 +96,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 		updateGui();
 	}
 
-	public void handleDescrChange() {
+	public void handleDescrCodeChange() {
 		descrChanged = true;
 		updateGui();
 	}
@@ -103,11 +104,23 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public boolean isDescrChanged() {
 		return descrChanged;
 	}
+	
+	public void handlePropDescrChanged() {
+		propDescrChanged = true;
+		updateGui();
+	}
+	
+	public boolean isPropDescrChanged() {
+		return propDescrChanged;
+	}
 
 	public void updateDataForCheck(File cbmcFile,
 			LoopBoundHandler loopBoundHandler) {
 		workUnit.updateDataForCheck(cbmcFile, loopBoundHandler);
 		descrChanged = false;
+		propDescrChanged = false;
 		updateGui();
 	}
+
+
 }

@@ -44,13 +44,4 @@ public class TestConfigurationList {
 		return Collections.unmodifiableMap(testConfigsByPropDescr);
 	}
 
-	public void handleDescrChange(CElectionDescription descr) {
-		for(TestConfiguration tc : testConfigsByDescr.get(descr.getUuid())) {
-			tc.handleDescrChange();
-		}
-	}
-
-
-
-
 }

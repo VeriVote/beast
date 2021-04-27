@@ -169,12 +169,20 @@ public class TestConfigurationTopLevelGUIHandler
 		}
 
 		for (String uuid : testConfigs.keySet()) {
-			
-			String name = beastWorkspace.getDescrByUUID(uuid).getName();
-			
+			String name = null;
+
+			// TODO see where to get the name from depending on which criterium
+			// is selected
+			if (sortCriterium.equals(descrSortCrit)) {
+				name = beastWorkspace.getDescrByUUID(uuid).getName();
+			} else {// if (sortCriterium.equals(propDescrSortCrit)) {
+				name = beastWorkspace.getPropDescrByUUID(uuid).getName();
+			}
+
 			TreeItem<TestConfigTreeItemSuper> parentItem = new TreeItem<>(
 					new TestConfigCategoryTreeItem(name));
-			List<TestConfiguration> testConfigsForParent = testConfigs.get(uuid);
+			List<TestConfiguration> testConfigsForParent = testConfigs
+					.get(uuid);
 			for (TestConfiguration testConfig : testConfigsForParent) {
 				TreeItem<TestConfigTreeItemSuper> testConfigItem = new TreeItem<>(
 						new TestConfigTreeItem(testConfig));

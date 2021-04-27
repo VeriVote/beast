@@ -83,8 +83,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		beastWorkspace.registerUpdateListener(this);
 		
 		electionCodeArea.setChangeListener((text) -> {
-			currentDisplayedFunction.setCode(text);
-			beastWorkspace.handleDescrChange(currentDescr);
+			beastWorkspace.updateCodeForDescrFunction(currentDescr, currentDisplayedFunction, text);
 		});
 	}
 

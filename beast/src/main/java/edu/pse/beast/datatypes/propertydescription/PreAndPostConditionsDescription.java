@@ -181,4 +181,15 @@ public final class PreAndPostConditionsDescription {
 	}
 
 
+	public void addCBMCVar(SymbolicCBMCVar newVar) throws Exception {
+		for(SymbolicCBMCVar var : cbmcVariables) {
+			if(var.getName().equals(newVar.getName())) {
+				//TODO create an actual exception that fits
+				throw new Exception("name exists already");
+			}
+		}
+		cbmcVariables.add(newVar);
+	}
+
+
 }

@@ -1,29 +1,36 @@
 package edu.pse.beast.gui.propertyeditor;
 
 import java.util.List;
+import java.util.Optional;
 
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
-public class PreAndPostPropertyEditor {
+public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	private PropertyEditorCodeElement preEditor;
 	private PropertyEditorCodeElement postEditor;
 	private TreeView<String> variableTreeView;
 	private PreAndPostConditionsDescription currentPropDescr;
 	private MenuButton addSymbVarMenu;
-	private ChoiceBox<String> openedPropertyDescriptionChoiceBox;
+	private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
 	private BeastWorkspace beastWorkspace;
 
 	public PreAndPostPropertyEditor(PropertyEditorCodeElement preEditor,
-			PropertyEditorCodeElement postEditor, TreeView<String> variableTreeView,
-			MenuButton addSymbVarMenu,
-			ChoiceBox<String> openedPropertyDescriptionChoiceBox,
+			PropertyEditorCodeElement postEditor,
+			TreeView<String> variableTreeView, MenuButton addSymbVarMenu,
+			ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		this.preEditor = preEditor;
 		this.postEditor = postEditor;
@@ -31,15 +38,40 @@ public class PreAndPostPropertyEditor {
 		this.addSymbVarMenu = addSymbVarMenu;
 		this.openedPropertyDescriptionChoiceBox = openedPropertyDescriptionChoiceBox;
 		this.beastWorkspace = beastWorkspace;
+		
+		beastWorkspace.registerUpdateListener(this);
 
+		initSymbVarMenu();
 		initPropDescrChoiceBox();
 		handleWorkspaceUpdate();
 	}
 
-	private void selectedPropDescrChanged(String newVal) {
-		PreAndPostConditionsDescription selectedDescr = beastWorkspace
-				.getPropDescrByName(newVal);
-		loadProperty(selectedDescr);
+	private void initSymbVarMenu() {
+		for (SymbolicCBMCVar.CBMCVarType symbVarType : SymbolicCBMCVar.CBMCVarType
+				.values()) {
+			MenuItem item = new MenuItem(symbVarType.toString());
+			item.setOnAction(e -> {
+				List<String> names = List.of("name");
+				TextField nameField = new TextField();
+				List<Node> inputs = List.of(nameField);
+				Optional<ButtonType> res = DialogHelper
+						.generateDialog(names, inputs).showAndWait();
+				if (res.isPresent()
+						&& !res.get().getButtonData().isCancelButton()) {
+					String name = nameField.getText();
+					// TODO name parsing
+					SymbolicCBMCVar var = new SymbolicCBMCVar(name,
+							symbVarType);
+					beastWorkspace.addCBCMVarToPropDescr(currentPropDescr, var);
+				}
+			});
+			addSymbVarMenu.getItems().add(item);
+		}
+	}
+
+	private void selectedPropDescrChanged(
+			PreAndPostConditionsDescription propDescr) {
+		loadProperty(propDescr);
 	}
 
 	private void initPropDescrChoiceBox() {
@@ -51,8 +83,9 @@ public class PreAndPostPropertyEditor {
 	}
 
 	private void handleWorkspaceUpdate() {
-		for(PreAndPostConditionsDescription propDescr : beastWorkspace.getLoadedPropDescrs()) {
-			openedPropertyDescriptionChoiceBox.getItems().add(propDescr.getName());
+		for (PreAndPostConditionsDescription propDescr : beastWorkspace
+				.getLoadedPropDescrs()) {
+			openedPropertyDescriptionChoiceBox.getItems().add(propDescr);
 		}
 		openedPropertyDescriptionChoiceBox.getSelectionModel().selectLast();
 	}
@@ -85,5 +118,15 @@ public class PreAndPostPropertyEditor {
 		this.currentPropDescr = propDescr;
 		populateVariableList(propDescr.getCbmcVariables());
 	}
+	
+	@Override
+	public void handleWorkspaceUpdateAddedVarToPropDescr(
+			PreAndPostConditionsDescription propDescr,
+			SymbolicCBMCVar var) {
+		if(propDescr == currentPropDescr) {
+			populateVariableList(currentPropDescr.getCbmcVariables());
+		}
+	}
+
 
 }
