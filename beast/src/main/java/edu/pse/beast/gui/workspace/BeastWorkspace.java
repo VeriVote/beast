@@ -25,10 +25,10 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.ErrorDialogHelper;
 import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.FileDialogHelper;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
+import edu.pse.beast.gui.runs.CBMCTestRun;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import javafx.stage.FileChooser;
 
 public class BeastWorkspace {
@@ -130,6 +130,7 @@ public class BeastWorkspace {
 	public void addPropertyDescription(
 			PreAndPostConditionsDescription propDescr) {
 		loadedPropDescrs.add(propDescr);
+		messageUpdateListener();
 	}
 
 	public CodeGenOptions getCodeGenOptions() {
@@ -231,8 +232,7 @@ public class BeastWorkspace {
 		}
 
 		propDescrWithUnsavedChanges.add(currentPropDescr);
-		for (TestConfiguration tc : testConfigList.getTestConfigsByPropDescr()
-				.get(currentPropDescr)) {
+		for (TestConfiguration tc : testConfigList.getTestConfigsByPropDescr(currentPropDescr)) {
 			tc.handlePropDescrChanged();
 		}
 

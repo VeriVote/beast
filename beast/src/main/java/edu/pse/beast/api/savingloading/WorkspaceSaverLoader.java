@@ -15,10 +15,10 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfigurationList;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
+import edu.pse.beast.gui.runs.CBMCTestRun;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 

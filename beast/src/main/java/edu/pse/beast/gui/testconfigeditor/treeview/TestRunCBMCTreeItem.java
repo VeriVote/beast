@@ -1,6 +1,6 @@
-package edu.pse.beast.gui.testruneditor.treeview;
+package edu.pse.beast.gui.testconfigeditor.treeview;
 
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
+import edu.pse.beast.gui.runs.CBMCTestRun;
 
 public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
 	

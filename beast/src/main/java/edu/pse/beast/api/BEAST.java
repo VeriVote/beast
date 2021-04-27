@@ -14,7 +14,7 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
 import edu.pse.beast.api.testrunner.threadpool.ThreadPool;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public class BEAST {
 

@@ -1,22 +1,22 @@
-package edu.pse.beast.gui.testruneditor;
+package edu.pse.beast.gui.testconfigeditor;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfigGuiController;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCTestConfigGuiController;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRun;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs.CBMCTestRunGuiController;
-import edu.pse.beast.gui.testruneditor.treeview.TestConfigCBMCTreeItem;
-import edu.pse.beast.gui.testruneditor.treeview.TestConfigCategoryTreeItem;
-import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItem;
-import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
-import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemType;
-import edu.pse.beast.gui.testruneditor.treeview.TestRunCBMCTreeItem;
+import edu.pse.beast.gui.runs.CBMCTestRun;
+import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigGuiController;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfigGuiController;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCBMCTreeItem;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCategoryTreeItem;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItem;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXMLLoader;

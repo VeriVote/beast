@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs;
+package edu.pse.beast.gui.runs;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.StyleClassedTextArea;

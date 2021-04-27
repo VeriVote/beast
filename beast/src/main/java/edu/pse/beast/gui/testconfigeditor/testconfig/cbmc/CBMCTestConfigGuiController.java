@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.testruneditor.testconfig.cbmc;
+package edu.pse.beast.gui.testconfigeditor.testconfig.cbmc;
 
 import java.io.IOException;
 

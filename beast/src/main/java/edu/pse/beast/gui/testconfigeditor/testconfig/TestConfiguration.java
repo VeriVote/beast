@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.testruneditor.testconfig;
+package edu.pse.beast.gui.testconfigeditor.testconfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public class TestConfiguration {
 

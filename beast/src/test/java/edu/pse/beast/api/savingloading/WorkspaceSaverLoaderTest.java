@@ -17,8 +17,8 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class WorkspaceSaverLoaderTest {

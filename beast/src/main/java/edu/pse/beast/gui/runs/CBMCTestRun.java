@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.testruneditor.testconfig.cbmc.runs;
+package edu.pse.beast.gui.runs;
 
 import java.io.File;
 import java.util.ArrayList;

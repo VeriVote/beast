@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.testruneditor.treeview;
+package edu.pse.beast.gui.testconfigeditor.treeview;
 
 public abstract class TestConfigTreeItemSuper {
 	

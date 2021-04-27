@@ -1,6 +1,6 @@
-package edu.pse.beast.gui.testruneditor.treeview;
+package edu.pse.beast.gui.testconfigeditor.treeview;
 
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 
 public class TestConfigTreeItem extends TestConfigTreeItemSuper {
 	private TestConfiguration testConfig;

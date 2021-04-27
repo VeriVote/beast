@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.testruneditor.testconfig;
+package edu.pse.beast.gui.testconfigeditor.testconfig;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public class TestConfigurationList {
 	private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr = new HashMap<>();
@@ -40,6 +40,14 @@ public class TestConfigurationList {
 
 	public Map<PreAndPostConditionsDescription, List<TestConfiguration>> getTestConfigsByPropDescr() {
 		return testConfigsByPropDescr;
+	}
+
+	public List<TestConfiguration> getTestConfigsByPropDescr(
+			PreAndPostConditionsDescription currentPropDescr) {
+		if (testConfigsByPropDescr.containsKey(currentPropDescr)) {
+			return testConfigsByPropDescr.get(currentPropDescr);
+		}
+		return List.of();
 	}
 
 }

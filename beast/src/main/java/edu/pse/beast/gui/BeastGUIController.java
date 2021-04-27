@@ -23,10 +23,10 @@ import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
-import edu.pse.beast.gui.testruneditor.TestConfigurationTopLevelGUIHandler;
-import edu.pse.beast.gui.testruneditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testruneditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
-import edu.pse.beast.gui.testruneditor.treeview.TestConfigTreeItemSuper;
+import edu.pse.beast.gui.testconfigeditor.TestConfigurationTopLevelGUIHandler;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXML;
@@ -250,7 +250,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		postPropertyPane.setContent(postVsp);
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
-				prePropertyEditor, postPropertyEditor, variableTreeView,
+				prePropertyEditor, postPropertyEditor,
+				addPropDescrButton,
+				variableTreeView,
 				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
 				beastWorkspace);
 	}

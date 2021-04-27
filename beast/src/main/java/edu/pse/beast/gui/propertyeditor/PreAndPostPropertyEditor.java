@@ -1,5 +1,6 @@
 package edu.pse.beast.gui.propertyeditor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuButton;
@@ -26,9 +28,10 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	private MenuButton addSymbVarMenu;
 	private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
 	private BeastWorkspace beastWorkspace;
+	private Button addPropDescrButton;
 
 	public PreAndPostPropertyEditor(PropertyEditorCodeElement preEditor,
-			PropertyEditorCodeElement postEditor,
+			PropertyEditorCodeElement postEditor, Button addPropDescrButton,
 			TreeView<String> variableTreeView, MenuButton addSymbVarMenu,
 			ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
@@ -38,6 +41,22 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		this.addSymbVarMenu = addSymbVarMenu;
 		this.openedPropertyDescriptionChoiceBox = openedPropertyDescriptionChoiceBox;
 		this.beastWorkspace = beastWorkspace;
+		this.addPropDescrButton = addPropDescrButton;
+
+		addPropDescrButton.setOnAction(e -> {
+			List<String> names = List.of("name");
+			TextField nameField = new TextField();
+			List<Node> nodes = List.of(nameField);
+			Optional<ButtonType> res = DialogHelper.generateDialog(names, nodes)
+					.showAndWait();
+			if (res.isPresent()
+					&& !res.get().getButtonData().isCancelButton()) {
+				String name = nameField.getText();
+				PreAndPostConditionsDescription propDescr = new PreAndPostConditionsDescription(
+						name);
+				beastWorkspace.addPropertyDescription(propDescr);
+			}
+		});
 
 		beastWorkspace.registerUpdateListener(this);
 		preEditor.setChangeListener(text -> {
@@ -53,6 +72,11 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 
 		initSymbVarMenu();
 		initPropDescrChoiceBox();
+		handleWorkspaceUpdate();
+	}
+
+	@Override
+	public void handleWorkspaceUpdateGeneric() {
 		handleWorkspaceUpdate();
 	}
 
@@ -81,6 +105,8 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 
 	private void selectedPropDescrChanged(
 			PreAndPostConditionsDescription propDescr) {
+		if (propDescr == null)
+			return;
 		loadProperty(propDescr);
 	}
 
@@ -88,11 +114,16 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		openedPropertyDescriptionChoiceBox.getSelectionModel()
 				.selectedItemProperty()
 				.addListener((observable, oldVal, newVal) -> {
-					selectedPropDescrChanged(newVal);
+					if (newVal != null)
+						selectedPropDescrChanged(newVal);
+					else if (oldVal != null) {
+						selectedPropDescrChanged(oldVal);
+					}
 				});
 	}
 
 	private void handleWorkspaceUpdate() {
+		openedPropertyDescriptionChoiceBox.getItems().clear();
 		for (PreAndPostConditionsDescription propDescr : beastWorkspace
 				.getLoadedPropDescrs()) {
 			openedPropertyDescriptionChoiceBox.getItems().add(propDescr);
