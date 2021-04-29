@@ -156,8 +156,7 @@ public class BeastWorkspace {
 	public void createCBMCTestRuns(CBMCPropertyTestConfiguration config) {
 		try {
 			if (cbmcProcessStarter == null) {
-
-				return;
+				
 			}
 
 			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();

@@ -56,8 +56,6 @@ public class WorkspaceSaverLoader {
 	private static final String START_RUNS_ON_CREATION_KEY = "start_runs_on_creation";
 	private static final String TEST_RUNS_KEY = "test_runs";
 
-	private static final String TEST_RUN_LOGS_KEY = "test_run_logs";
-	private static final String CBMC_TEST_RUN_CBMC_FILE_PATH_KEY = "cbmc_test_run_cbmc_file_path";
 
 	private static JSONArray fileCollectionToJsonArr(Collection<File> files) {
 		JSONArray arr = new JSONArray();
@@ -90,47 +88,7 @@ public class WorkspaceSaverLoader {
 		return codeGenOptions;
 	}
 
-	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run) {
-		JSONObject json = new JSONObject();
-
-		json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
-		json.put(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY,
-				run.getCbmcFile().getAbsolutePath());
-
-		return json;
-	}
-
-	private static CBMCTestRun genCBMCTestRun(JSONObject json) {
-		CBMCTestRun run = new CBMCTestRun();
-
-		String log = json.getString(TEST_RUN_LOGS_KEY);
-		String cbmcTestFilePath = json
-				.getString(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY);
-		File cbmcTestFile = new File(cbmcTestFilePath);
-
-		run.setCBMCFile(cbmcTestFile);
-
-		return run;
-	}
-
-	private static JSONArray cbmcTestRunListToJSON(List<CBMCTestRun> runs) {
-		JSONArray arr = new JSONArray();
-
-		for (CBMCTestRun r : runs) {
-			arr.put(cbmcTestRunToJSON(r));
-		}
-
-		return arr;
-	}
-
-	private static List<CBMCTestRun> cbmcTestRunListFromJsonArr(JSONArray arr) {
-		List<CBMCTestRun> runs = new ArrayList<>();
-		for (int i = 0; i < arr.length(); ++i) {
-			runs.add(genCBMCTestRun(arr.getJSONObject(i)));
-		}
-		return runs;
-	}
-
+	
 	private static JSONObject cbmcTestConfigToJSON(
 			CBMCPropertyTestConfiguration config) {
 		JSONObject json = new JSONObject();
@@ -150,7 +108,7 @@ public class WorkspaceSaverLoader {
 
 		json.put(START_RUNS_ON_CREATION_KEY, config.getStartRunsOnCreation());
 
-		json.put(TEST_RUNS_KEY, cbmcTestRunListToJSON(config.getRuns()));
+		json.put(TEST_RUNS_KEY, CBMCTestRunSaverLoaderHelper.cbmcTestRunListToJSON(config.getRuns()));
 
 		return json;
 	}
@@ -205,7 +163,7 @@ public class WorkspaceSaverLoader {
 
 		cbmcPropTestConfig.setStartRunsOnCreation(startRunsOnCreation);
 
-		List<CBMCTestRun> cbmcTestRuns = cbmcTestRunListFromJsonArr(
+		List<CBMCTestRun> cbmcTestRuns = CBMCTestRunSaverLoaderHelper.cbmcTestRunListFromJsonArr(
 				json.getJSONArray(TEST_RUNS_KEY));
 
 		cbmcPropTestConfig.addRuns(cbmcTestRuns);
