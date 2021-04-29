@@ -12,9 +12,16 @@ import edu.pse.beast.gui.runs.CBMCTestRun;
 public class CBMCTestRunSaverLoaderHelper {
 	private static final String TEST_RUN_LOGS_KEY = "test_run_logs";
 	private static final String CBMC_TEST_RUN_CBMC_FILE_PATH_KEY = "cbmc_test_run_cbmc_file_path";
+	private static final String AMT_VOTER_KEY = "amt_voter";
+	private static final String AMT_CANDS_KEY = "amt_cands";
+	private static final String AMT_SEATS_KEY = "amt_seats";
 
 	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run) {
 		JSONObject json = new JSONObject();
+
+		json.put(AMT_VOTER_KEY, run.getWorkUnit().getV());
+		json.put(AMT_CANDS_KEY, run.getWorkUnit().getC());
+		json.put(AMT_SEATS_KEY, run.getWorkUnit().getS());
 
 		json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
 		json.put(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY,
