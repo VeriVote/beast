@@ -62,7 +62,7 @@ public class CBMCTestRunGuiController {
 	private void display() {
 		outputTextElement.clear();
 
-		File cbmcFile = run.getCbmcFile();
+		File cbmcFile = run.getCbmcCodeFile();
 		createdFileTextField.setText(cbmcFile.getAbsolutePath());
 		openCreatedFileButton.setOnAction(e -> {
 			try {

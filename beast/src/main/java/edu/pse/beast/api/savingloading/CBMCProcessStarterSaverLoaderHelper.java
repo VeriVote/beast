@@ -45,8 +45,9 @@ public class CBMCProcessStarterSaverLoaderHelper {
 			case LINUX :
 				break;
 			case WINDOWS :
-				CBMCProcessHandlerWindows ps = new CBMCProcessHandlerWindows();
 				String pathToVsCmd = json.getString(PATH_TO_VS_CMD_DEV_KEY);
+				CBMCProcessHandlerWindows ps = new CBMCProcessHandlerWindows(
+						pathToVsCmd);
 				ps.setVsCmdPath(pathToVsCmd);
 				return ps;
 			default :

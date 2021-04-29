@@ -29,7 +29,12 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	private String RELATIVE_PATH_TO_CBMC = "/windows/cbmcWIN/" + CBMC_EXE;
 
 	// only needed in windows
-	private String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
+	private String vsCmdPath; // = "\"D:\\Visual
+								// studio\\Common7\\Tools\\VsDevCmd.bat\"";
+
+	public CBMCProcessHandlerWindows(String vsCmdPath) {
+		this.vsCmdPath = vsCmdPath;
+	}
 
 	public String getVsCmdPath() {
 		return vsCmdPath;

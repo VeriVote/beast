@@ -56,7 +56,6 @@ public class WorkspaceSaverLoader {
 	private static final String START_RUNS_ON_CREATION_KEY = "start_runs_on_creation";
 	private static final String TEST_RUNS_KEY = "test_runs";
 
-
 	private static JSONArray fileCollectionToJsonArr(Collection<File> files) {
 		JSONArray arr = new JSONArray();
 		for (File f : files) {
@@ -88,7 +87,6 @@ public class WorkspaceSaverLoader {
 		return codeGenOptions;
 	}
 
-	
 	private static JSONObject cbmcTestConfigToJSON(
 			CBMCPropertyTestConfiguration config) {
 		JSONObject json = new JSONObject();
@@ -108,7 +106,8 @@ public class WorkspaceSaverLoader {
 
 		json.put(START_RUNS_ON_CREATION_KEY, config.getStartRunsOnCreation());
 
-		json.put(TEST_RUNS_KEY, CBMCTestRunSaverLoaderHelper.cbmcTestRunListToJSON(config.getRuns()));
+		json.put(TEST_RUNS_KEY, CBMCTestRunSaverLoaderHelper
+				.cbmcTestRunListToJSON(config.getRuns()));
 
 		return json;
 	}
@@ -163,11 +162,6 @@ public class WorkspaceSaverLoader {
 
 		cbmcPropTestConfig.setStartRunsOnCreation(startRunsOnCreation);
 
-		List<CBMCTestRun> cbmcTestRuns = CBMCTestRunSaverLoaderHelper.cbmcTestRunListFromJsonArr(
-				json.getJSONArray(TEST_RUNS_KEY));
-
-		cbmcPropTestConfig.addRuns(cbmcTestRuns);
-
 		String descrUUID = json.getString(DESCR_UUID_KEY);
 		String propDescrUUID = json.getString(PROP_DESCR_UUID_KEY);
 
@@ -185,6 +179,12 @@ public class WorkspaceSaverLoader {
 		} else {
 			cbmcPropTestConfig.setPropDescr(propDescr);
 		}
+
+		List<CBMCTestRun> cbmcTestRuns = CBMCTestRunSaverLoaderHelper
+				.cbmcTestRunListFromJsonArr(json.getJSONArray(TEST_RUNS_KEY),
+						descr, propDescr);
+
+		cbmcPropTestConfig.addRuns(cbmcTestRuns);
 
 		return cbmcPropTestConfig;
 	}

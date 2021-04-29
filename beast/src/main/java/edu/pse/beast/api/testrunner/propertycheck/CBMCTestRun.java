@@ -61,12 +61,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.updateListener = null;
 	}
 
-	public File getCbmcFile() {
-		return workUnit.getCbmcFile();
-	}
-
-	public void setCBMCFile(File cbmcFile) {
-		workUnit.setCbmcFile(cbmcFile);
+	public File getCbmcCodeFile() {
+		return cbmcCodeFile;
 	}
 
 	public WorkUnitState getState() {

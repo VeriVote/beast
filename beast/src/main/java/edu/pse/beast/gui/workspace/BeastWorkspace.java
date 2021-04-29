@@ -24,6 +24,7 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.CBMCProcessHandlerGetter;
 import edu.pse.beast.gui.ErrorDialogHelper;
 import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.FileDialogHelper;
@@ -194,8 +195,8 @@ public class BeastWorkspace {
 	}
 
 	private void askUserForProcessStarter() {
-		// TODO Auto-generated method stub
-
+		CBMCProcessHandler processHandler = CBMCProcessHandlerGetter
+				.askUserForCBMCProcessHandler();
 	}
 
 	public void shutdown() throws InterruptedException {
@@ -219,8 +220,7 @@ public class BeastWorkspace {
 
 	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
 			throws IOException {
-		if (hasProcessStarter()) {
-
+		if (!hasProcessStarter()) {
 			return;
 		}
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();

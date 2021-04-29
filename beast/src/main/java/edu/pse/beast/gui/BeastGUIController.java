@@ -43,7 +43,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class BeastGUIController implements WorkspaceUpdateListener {
-	
+
 	@FXML
 	private TabPane topLeveLTabPane;
 
@@ -250,17 +250,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		postPropertyPane.setContent(postVsp);
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
-				prePropertyEditor, postPropertyEditor,
-				addPropDescrButton,
-				variableTreeView,
-				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
-				beastWorkspace);
-	}
-
-	private CBMCProcessHandler getProcessStarter() {
-		// TODO check os and get user input if needed
-		CBMCProcessHandler ps = new CBMCProcessHandlerWindows();
-		return ps;
+				prePropertyEditor, postPropertyEditor, addPropDescrButton,
+				variableTreeView, addSymbVarMenu,
+				openedPropertyDescriptionChoiceBox, beastWorkspace);
 	}
 
 	private void initTestConfigHandler() throws IOException {
@@ -291,25 +283,29 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		beastWorkspace.setErrorHandler(errorHandler);
 
+		// for testing
+		beastWorkspace.setCbmcProcessStarter(null);
+
 		initElectionEditor();
 		initPropertyEditor();
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
-		
+
 		saveButton.setOnAction(e -> {
-			Tab selectedTab = topLeveLTabPane.getSelectionModel().getSelectedItem();
+			Tab selectedTab = topLeveLTabPane.getSelectionModel()
+					.getSelectedItem();
 			String id = selectedTab.getId().toString();
-			if(id.equals("election")) {
+			if (id.equals("election")) {
 				cElectionEditor.save();
-			} else if(id.equals("property")) {
+			} else if (id.equals("property")) {
 				preAndPostPropertyEditor.save();
 			}
 		});
-		
+
 		saveAllButton.setOnAction(e -> {
 			beastWorkspace.saveAll();
 		});
-		
+
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
 		});
