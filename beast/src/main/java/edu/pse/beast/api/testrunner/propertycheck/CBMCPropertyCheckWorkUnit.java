@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -44,36 +45,18 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	private Process process;
 	private WorkUnitState state;
 
-	public CBMCPropertyCheckWorkUnit(String sessionUUID,
-			CElectionDescription descr,
-			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
-			String uuid, CBMCProcessHandler processStarter, File cbmcCodeFile,
-			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions) {
-		this.sessionUUID = sessionUUID;
-		this.descr = descr;
-		this.propDescr = propertyDescr;
-		this.v = v;
-		this.c = c;
-		this.s = s;
-		this.uuid = uuid;
+	public CBMCPropertyCheckWorkUnit(CBMCProcessHandler processStarter,
+			String sessionUUID) {
+		this.uuid = UUID.randomUUID().toString();
 		this.processStarter = processStarter;
-		this.cbmcCodeFile = cbmcCodeFile;
-		this.loopBoundHandler = loopBoundHandler;
-		this.codeGenOptions = codeGenOptions;
+		this.sessionUUID = sessionUUID;
 		this.state = WorkUnitState.CREATED;
-	}
-
-	public CBMCPropertyCheckWorkUnit(String uuid,
-			CBMCProcessHandler processStarter, String sessionUUID) {
-		this.uuid = uuid;
-		this.processStarter = processStarter;
-		this.sessionUUID = sessionUUID;
 	}
 
 	public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
 			LoopBoundHandler loopBoundHandler, File cbmcCodeFile,
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr) {
+			PreAndPostConditionsDescription propDescr, CBMCTestCallback cb) {
 		this.descr = descr;
 		this.propDescr = propDescr;
 		this.v = v;
@@ -82,7 +65,8 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		this.cbmcCodeFile = cbmcCodeFile;
 		this.loopBoundHandler = loopBoundHandler;
 		this.codeGenOptions = codeGenOptions;
-		this.state = WorkUnitState.CREATED;
+		this.cb = cb;
+		this.state = WorkUnitState.INITIALIZED;
 	}
 
 	public int getC() {

@@ -49,7 +49,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
 		workUnit.initialize(V, S, C, codeGenOptions, loopBoundHandler,
-				cbmcCodeFile, descr, propDescr);
+				cbmcCodeFile, descr, propDescr, this);
 		this.workUnit = workUnit;
 	}
 

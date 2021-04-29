@@ -94,7 +94,7 @@ public class CBMCTestConfigGuiController {
 		});
 		
 		createTestRunsButton.setOnAction(ae -> {
-			beastWorkspace.createCBMCTestRuns(currentConfig);
+			beastWorkspace.createCBMCTestRunsAndAddToConfig(currentConfig);
 		});
 		
 		updateFilesButton.setOnAction(e -> {

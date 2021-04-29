@@ -11,6 +11,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.threadpool.ThreadPool;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -27,7 +28,7 @@ public class BEAST {
 	public void shutdown() throws InterruptedException {
 		tp.shutdown();
 	}
-	
+
 	public void addCBMCWorkItemToQueue(CBMCPropertyCheckWorkUnit wu) {
 		tp.addWork(wu);
 	}
@@ -40,31 +41,22 @@ public class BEAST {
 				codeGenOptions, loopBoundHandler);
 	}
 
-	public List<CBMCPropertyCheckWorkUnit> generateWorkUnits(
-			File cbmcFile,
+	public List<CBMCTestRun> generateTestRuns(File cbmcCodeFile,
 			CBMCPropertyTestConfiguration testConfig,
-			CodeGenOptions codeGenOptions,
-			LoopBoundHandler loopBoundHandler,
-			CBMCProcessHandler processStarter) {
-		List<CBMCPropertyCheckWorkUnit>  workunits = new ArrayList<>();
-		String sessionUUID = UUID.randomUUID().toString();
-		for(int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {
-			for(int c = testConfig.getMinCands(); c <= testConfig.getMaxCands(); ++c) {
-				for(int s = testConfig.getMinSeats(); s <= testConfig.getMaxSeats(); ++s) {
-					String uuid = UUID.randomUUID().toString();
-					workunits.add(new CBMCPropertyCheckWorkUnit(
-							sessionUUID, 
-							testConfig.getDescr(), 
-							testConfig.getPropDescr(), 
-							v, c, s, 
-							uuid, 
-							processStarter,
-							cbmcFile,
-							loopBoundHandler,
-							codeGenOptions));
+			CodeGenOptions codeGenOptions, LoopBoundHandler loopBoundHandler) {
+		List<CBMCTestRun> runs = new ArrayList<>();
+		for (int v = testConfig.getMinVoters(); v <= testConfig
+				.getMaxVoters(); ++v) {
+			for (int c = testConfig.getMinCands(); c <= testConfig
+					.getMaxCands(); ++c) {
+				for (int s = testConfig.getMinSeats(); s <= testConfig
+						.getMaxSeats(); ++s) {
+					runs.add(new CBMCTestRun(v, s, c, codeGenOptions,
+							loopBoundHandler, cbmcCodeFile,
+							testConfig.getDescr(), testConfig.getPropDescr()));
 				}
 			}
 		}
-		return workunits;
-	}
+		return runs;
+	}	
 }

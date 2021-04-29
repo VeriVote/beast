@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -153,29 +154,31 @@ public class BeastWorkspace {
 		return testConfigList.getTestConfigsByPropDescr();
 	}
 
-	public void createCBMCTestRuns(CBMCPropertyTestConfiguration config) {
+	public void createCBMCTestRunsAndAddToConfig(
+			CBMCPropertyTestConfiguration config) {
 		try {
-			if (cbmcProcessStarter == null) {
-				
+			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+			File cbmcCodeFile = beast.generateCodeFile(config.getDescr(),
+					config.getPropDescr(), codeGenOptions, loopBoundHandler);
+
+			List<CBMCTestRun> createdTestRuns = beast.generateTestRuns(
+					cbmcCodeFile, config, codeGenOptions, loopBoundHandler);
+
+			if (!hasProcessStarter()) {
+				askUserForProcessStarter();
 			}
 
-			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-			File cbmcFile = beast.generateCodeFile(config.getDescr(),
-					config.getPropDescr(), codeGenOptions, loopBoundHandler);
-			List<CBMCPropertyCheckWorkUnit> wus = beast.generateWorkUnits(
-					cbmcFile, config, codeGenOptions, loopBoundHandler,
-					cbmcProcessStarter);
-
-			List<CBMCTestRun> createdTestRuns = new ArrayList<>();
-
-			for (CBMCPropertyCheckWorkUnit wu : wus) {
-				CBMCTestRun run = new CBMCTestRun(wu);
-				createdTestRuns.add(run);
-				config.addRun(run);
-				if (config.getStartRunsOnCreation()) {
-					beast.addCBMCWorkItemToQueue(wu);
+			if (hasProcessStarter()) {
+				String sessionUUID = UUID.randomUUID().toString();
+				for (CBMCTestRun run : createdTestRuns) {
+					CBMCPropertyCheckWorkUnit workUnit = new CBMCPropertyCheckWorkUnit(
+							cbmcProcessStarter, sessionUUID);
+					run.setAndInitializeWorkUnit(workUnit);
 				}
 			}
+
+			config.addRuns(createdTestRuns);
+
 			for (WorkspaceUpdateListener l : updateListener) {
 				l.handleWorkspaceUpdateAddedCBMCRuns(config, createdTestRuns);
 			}
@@ -183,6 +186,16 @@ public class BeastWorkspace {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	// TODO check if the process starter works?
+	private boolean hasProcessStarter() {
+		return cbmcProcessStarter != null;
+	}
+
+	private void askUserForProcessStarter() {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void shutdown() throws InterruptedException {
@@ -206,7 +219,7 @@ public class BeastWorkspace {
 
 	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
 			throws IOException {
-		if (cbmcProcessStarter == null) {
+		if (hasProcessStarter()) {
 
 			return;
 		}
@@ -231,7 +244,8 @@ public class BeastWorkspace {
 		}
 
 		propDescrWithUnsavedChanges.add(currentPropDescr);
-		for (TestConfiguration tc : testConfigList.getTestConfigsByPropDescr(currentPropDescr)) {
+		for (TestConfiguration tc : testConfigList
+				.getTestConfigsByPropDescr(currentPropDescr)) {
 			tc.handlePropDescrChanged();
 		}
 
