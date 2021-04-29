@@ -3,7 +3,7 @@ package edu.pse.beast.gui.testconfigeditor;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.gui.runs.CBMCTestRun;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCBMCTreeItem;

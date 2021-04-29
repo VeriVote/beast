@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.gui.runs.CBMCTestRun;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigGuiController;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;

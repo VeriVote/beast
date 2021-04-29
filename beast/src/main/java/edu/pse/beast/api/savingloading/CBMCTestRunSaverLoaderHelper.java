@@ -7,7 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.pse.beast.gui.runs.CBMCTestRun;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 
 public class CBMCTestRunSaverLoaderHelper {
 	private static final String TEST_RUN_LOGS_KEY = "test_run_logs";
@@ -31,16 +31,9 @@ public class CBMCTestRunSaverLoaderHelper {
 	}
 
 	private static CBMCTestRun genCBMCTestRun(JSONObject json) {
-		CBMCTestRun run = new CBMCTestRun();
+		
 
-		String log = json.getString(TEST_RUN_LOGS_KEY);
-		String cbmcTestFilePath = json
-				.getString(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY);
-		File cbmcTestFile = new File(cbmcTestFilePath);
-
-		run.setCBMCFile(cbmcTestFile);
-
-		return run;
+		return null;
 	}
 
 	public static JSONArray cbmcTestRunListToJSON(List<CBMCTestRun> runs) {

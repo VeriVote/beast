@@ -31,13 +31,13 @@ import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 
 public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	CElectionDescription descr;
-	PreAndPostConditionsDescription propertyDescr;
+	PreAndPostConditionsDescription propDescr;
 	int v, c, s;
 	String uuid;
 	CBMCProcessHandler processStarter;
 	CBMCTestCallback cb;
 	private boolean finished = false;
-	File cbmcFile;
+	File cbmcCodeFile;
 	private LoopBoundHandler loopBoundHandler;
 	private CodeGenOptions codeGenOptions;
 	private String sessionUUID;
@@ -47,17 +47,39 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public CBMCPropertyCheckWorkUnit(String sessionUUID,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
-			String uuid, CBMCProcessHandler processStarter, File cbmcFile,
+			String uuid, CBMCProcessHandler processStarter, File cbmcCodeFile,
 			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions) {
 		this.sessionUUID = sessionUUID;
 		this.descr = descr;
-		this.propertyDescr = propertyDescr;
+		this.propDescr = propertyDescr;
 		this.v = v;
 		this.c = c;
 		this.s = s;
 		this.uuid = uuid;
 		this.processStarter = processStarter;
-		this.cbmcFile = cbmcFile;
+		this.cbmcCodeFile = cbmcCodeFile;
+		this.loopBoundHandler = loopBoundHandler;
+		this.codeGenOptions = codeGenOptions;
+		this.state = WorkUnitState.CREATED;
+	}
+
+	public CBMCPropertyCheckWorkUnit(String uuid,
+			CBMCProcessHandler processStarter, String sessionUUID) {
+		this.uuid = uuid;
+		this.processStarter = processStarter;
+		this.sessionUUID = sessionUUID;
+	}
+
+	public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
+			LoopBoundHandler loopBoundHandler, File cbmcCodeFile,
+			CElectionDescription descr,
+			PreAndPostConditionsDescription propDescr) {
+		this.descr = descr;
+		this.propDescr = propDescr;
+		this.v = v;
+		this.c = c;
+		this.s = s;
+		this.cbmcCodeFile = cbmcCodeFile;
 		this.loopBoundHandler = loopBoundHandler;
 		this.codeGenOptions = codeGenOptions;
 		this.state = WorkUnitState.CREATED;
@@ -85,17 +107,17 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 
 	public void updateDataForCheck(File cbmcFile,
 			LoopBoundHandler loopBoundHandler) {
-		this.cbmcFile = cbmcFile;
+		this.cbmcCodeFile = cbmcFile;
 		this.loopBoundHandler = loopBoundHandler;
 	}
 
 	@Override
 	public void doWork() {
 		state = WorkUnitState.WORKED_ON;
-		cb.onPropertyTestStart(descr, propertyDescr, s, c, v, uuid);
+		cb.onPropertyTestStart(descr, propDescr, s, c, v, uuid);
 		try {
 			Process p = processStarter.startCheckForParam(sessionUUID, descr,
-					propertyDescr, v, c, s, uuid, cb, cbmcFile,
+					propDescr, v, c, s, uuid, cb, cbmcCodeFile,
 					loopBoundHandler, codeGenOptions);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
@@ -103,20 +125,20 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 			List<String> cbmcOutput = new ArrayList<>();
 			try {
 				while ((line = reader.readLine()) != null) {
-					cb.onPropertyTestRawOutput(sessionUUID, descr,
-							propertyDescr, s, c, v, uuid, line);
+					cb.onPropertyTestRawOutput(sessionUUID, descr, propDescr, s,
+							c, v, uuid, line);
 					cbmcOutput.add(line);
 				}
 				// TODO errorhandling
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			cb.onPropertyTestRawOutputComplete(descr, propertyDescr, s, c, v,
-					uuid, cbmcOutput);
+			cb.onPropertyTestRawOutputComplete(descr, propDescr, s, c, v, uuid,
+					cbmcOutput);
 			state = WorkUnitState.FINISHED;
 			process.destroy();
 
-			cb.onPropertyTestFinished(descr, propertyDescr, s, c, v, uuid);
+			cb.onPropertyTestFinished(descr, propDescr, s, c, v, uuid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,13 +154,13 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public void interrupt() {
 		process.destroyForcibly();
 		state = WorkUnitState.STOPPED;
-		cb.onPropertyTestStopped(descr, propertyDescr, s, c, v, uuid);
+		cb.onPropertyTestStopped(descr, propDescr, s, c, v, uuid);
 	}
 
 	@Override
 	public void addedToQueue() {
 		state = WorkUnitState.ON_QUEUE;
-		cb.onPropertyTestAddedToQueue(descr, propertyDescr, s, c, v, uuid);
+		cb.onPropertyTestAddedToQueue(descr, propDescr, s, c, v, uuid);
 	}
 
 	@Override
@@ -147,10 +169,10 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	}
 
 	public File getCbmcFile() {
-		return cbmcFile;
+		return cbmcCodeFile;
 	}
 
 	public void setCbmcFile(File cbmcFile) {
-		this.cbmcFile = cbmcFile;
+		this.cbmcCodeFile = cbmcFile;
 	}
 }
