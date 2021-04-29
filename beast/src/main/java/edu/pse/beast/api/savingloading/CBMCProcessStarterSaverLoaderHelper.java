@@ -5,9 +5,9 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterType;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessStarterType;
 
 public class CBMCProcessStarterSaverLoaderHelper {
 	private static final String PROCESS_STARTER_TYPE_KEY = "process_starter_type";
@@ -15,7 +15,7 @@ public class CBMCProcessStarterSaverLoaderHelper {
 	// windows
 	private static final String PATH_TO_VS_CMD_DEV_KEY = "path_to_vs_cmd_dev";
 
-	public static JSONObject cbmcProcessStarterToJSON(CBMCProcessStarter ps) {
+	public static JSONObject cbmcProcessStarterToJSON(CBMCProcessHandler ps) {
 		JSONObject json = new JSONObject();
 
 		CBMCProcessStarterType type = ps.getType();
@@ -26,7 +26,7 @@ public class CBMCProcessStarterSaverLoaderHelper {
 			case LINUX :
 				break;
 			case WINDOWS :
-				CBMCProcessStarterWindows casted = (CBMCProcessStarterWindows) ps;
+				CBMCProcessHandlerWindows casted = (CBMCProcessHandlerWindows) ps;
 				json.put(PATH_TO_VS_CMD_DEV_KEY, casted.getVsCmdPath());
 				break;
 			default :
@@ -36,7 +36,7 @@ public class CBMCProcessStarterSaverLoaderHelper {
 		return json;
 	}
 
-	public static CBMCProcessStarter cbmcProcessStarterFromJSON(
+	public static CBMCProcessHandler cbmcProcessStarterFromJSON(
 			JSONObject json) {
 		CBMCProcessStarterType type = CBMCProcessStarterType
 				.valueOf(json.getString(PROCESS_STARTER_TYPE_KEY));
@@ -45,7 +45,7 @@ public class CBMCProcessStarterSaverLoaderHelper {
 			case LINUX :
 				break;
 			case WINDOWS :
-				CBMCProcessStarterWindows ps = new CBMCProcessStarterWindows();
+				CBMCProcessHandlerWindows ps = new CBMCProcessHandlerWindows();
 				String pathToVsCmd = json.getString(PATH_TO_VS_CMD_DEV_KEY);
 				ps.setVsCmdPath(pathToVsCmd);
 				return ps;

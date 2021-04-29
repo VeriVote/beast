@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.propertycheck.process_starter;
+package edu.pse.beast.api.testrunner.propertycheck.processes.process_handler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,69 +19,47 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
-public class CBMCProcessStarterWindows implements CBMCProcessStarter {
+public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	/** The Constant CBMC_EXE. */
-	private final String CBMC_EXE = "cbmc.exe";
+	private String CBMC_EXE = "cbmc.exe";
 	/** The Constant CBMC64_EXE. */
-	private final String CBMC64_EXE = "cbmc64.exe";
+	private String CBMC64_EXE = "cbmc64.exe";
 
 	/** The Constant RELATIVE_PATH_TO_CBMC_64. */
-	private final String RELATIVE_PATH_TO_CBMC = "/windows/cbmcWIN/" + CBMC_EXE;
-
-	static final String CBMC_XML_OUTPUT = "--xml-ui";
+	private String RELATIVE_PATH_TO_CBMC = "/windows/cbmcWIN/" + CBMC_EXE;
 
 	// only needed in windows
-	String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
-	
+	private String vsCmdPath = "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
+
 	public String getVsCmdPath() {
 		return vsCmdPath;
 	}
-	
+
 	public void setVsCmdPath(String vsCmdPath) {
 		this.vsCmdPath = vsCmdPath;
 	}
-	
+
 	@Override
-	public ProcessBuilder startCheckForParam(String sessionUUID,
+	public Process startCheckForParam(String sessionUUID,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propertyDescr, int V, int C, int S,
 			String uuid, CBMCTestCallback cb, File cbmcFile,
-			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions) {
+			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions)
+			throws IOException {
 		String cbmcPath = "\"" + new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC)
 						.getPath()
 				+ "\"";
-		String BLANK = " ";
 
-		String voterArg = "V=" + V;
-		String candArg = "C=" + C;
-		String seatsArg = "S=" + S;
+		String arguments = CBMCCommandHelper.getVoterArguments(V, C, S);
 
-		String arguments = "-D " + voterArg + " -D " + candArg + " -D "
-				+ seatsArg;
+		String Space = " ";
+		String completeCommand = vsCmdPath + Space + "&" + Space + cbmcPath
+				+ Space + "\"" + cbmcFile.getPath() + "\"" + Space
+				+ CBMCCommandHelper.cbmcXMLOutput() + Space + arguments;
 
-		String completeCommand = vsCmdPath + BLANK + "&" + BLANK + cbmcPath
-				+ BLANK + "\"" + cbmcFile.getPath() + "\"" + BLANK
-				+ CBMC_XML_OUTPUT + BLANK + arguments;
-
-		if (!(V == C && C == S)) {
-			List<LoopBound> votingLoopbounds = loopBoundHandler
-					.getVotingLoopBounds(String.valueOf(V), String.valueOf(C),
-							String.valueOf(S));
-
-			List<LoopBound> mainLoopbounds = loopBoundHandler.getMainLoopBounds(
-					String.valueOf(V), String.valueOf(C), String.valueOf(S));
-
-			for (LoopBound votingLoopBound : votingLoopbounds) {
-				completeCommand += " " + votingLoopBound.getCBMCString();
-			}
-
-			for (LoopBound mainLoopBound : mainLoopbounds) {
-				completeCommand += " " + mainLoopBound.getCBMCString();
-			}
-		} else {
-			completeCommand += " --unwind " + String.valueOf(V);
-		}
+		completeCommand += CBMCCommandHelper.getUnwindArgument(loopBoundHandler,
+				V, C, S);
 
 		cb.onCompleteCommand(descr, propertyDescr, V, C, S, uuid,
 				completeCommand);
@@ -94,7 +72,7 @@ public class CBMCProcessStarterWindows implements CBMCProcessStarter {
 		FileSaver.writeStringLinesToFile(list, batFile);
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c",
 				batFile.getAbsolutePath());
-		return pb;
+		return pb.start();
 	}
 
 	@Override

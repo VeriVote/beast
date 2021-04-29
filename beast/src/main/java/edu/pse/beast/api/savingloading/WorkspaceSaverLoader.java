@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.runs.CBMCTestRun;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
@@ -59,7 +59,6 @@ public class WorkspaceSaverLoader {
 	private static final String TEST_RUN_LOGS_KEY = "test_run_logs";
 	private static final String CBMC_TEST_RUN_CBMC_FILE_PATH_KEY = "cbmc_test_run_cbmc_file_path";
 
-
 	private static JSONArray fileCollectionToJsonArr(Collection<File> files) {
 		JSONArray arr = new JSONArray();
 		for (File f : files) {
@@ -95,19 +94,20 @@ public class WorkspaceSaverLoader {
 		JSONObject json = new JSONObject();
 
 		json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
-		json.put(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY, run.getCbmcFile().getAbsolutePath());		
-		
+		json.put(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY,
+				run.getCbmcFile().getAbsolutePath());
 
 		return json;
 	}
 
 	private static CBMCTestRun genCBMCTestRun(JSONObject json) {
 		CBMCTestRun run = new CBMCTestRun();
-		
+
 		String log = json.getString(TEST_RUN_LOGS_KEY);
-		String cbmcTestFilePath = json.getString(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY);
+		String cbmcTestFilePath = json
+				.getString(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY);
 		File cbmcTestFile = new File(cbmcTestFilePath);
-		
+
 		run.setCBMCFile(cbmcTestFile);
 
 		return run;
@@ -299,8 +299,8 @@ public class WorkspaceSaverLoader {
 			TestConfigurationList list) {
 		JSONArray arr = new JSONArray();
 
-		for (List<TestConfiguration> tcl : list
-				.getConfigsByElectionDescription().values()) {
+		for (List<TestConfiguration> tcl : list.getTestConfigsByDescr()
+				.values()) {
 			for (TestConfiguration tc : tcl) {
 				arr.put(testConfigurationToJSON(tc));
 			}
@@ -380,7 +380,7 @@ public class WorkspaceSaverLoader {
 				json.getJSONObject(CODE_GEN_OPTIONS_KEY));
 		String baseDirAbsPath = json.getString(BASE_DIR_FILE_PATH_KEY);
 		File baseDir = new File(baseDirAbsPath);
-		
+
 		TestConfigurationList testConfigList = testConfigListFromJsonArr(
 				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
 
@@ -390,10 +390,10 @@ public class WorkspaceSaverLoader {
 
 		JSONObject cbmcProcessStarterJSON = json
 				.getJSONObject(CBMC_PROCESS_STARTER_KEY);
-		CBMCProcessStarter ps = CBMCProcessStarterSaverLoaderHelper
+		CBMCProcessHandler ps = CBMCProcessStarterSaverLoaderHelper
 				.cbmcProcessStarterFromJSON(cbmcProcessStarterJSON);
 		beastWorkspace.setCbmcProcessStarter(ps);
-		
+
 		beastWorkspace.setWorkspaceFile(f);
 
 		return beastWorkspace;

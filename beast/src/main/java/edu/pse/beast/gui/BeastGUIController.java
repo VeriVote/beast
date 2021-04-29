@@ -15,8 +15,8 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
@@ -257,9 +257,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				beastWorkspace);
 	}
 
-	private CBMCProcessStarter getProcessStarter() {
+	private CBMCProcessHandler getProcessStarter() {
 		// TODO check os and get user input if needed
-		CBMCProcessStarter ps = new CBMCProcessStarterWindows();
+		CBMCProcessHandler ps = new CBMCProcessHandlerWindows();
 		return ps;
 	}
 

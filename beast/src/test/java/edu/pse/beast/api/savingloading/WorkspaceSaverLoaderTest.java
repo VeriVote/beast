@@ -15,7 +15,7 @@ import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -101,7 +101,7 @@ public class WorkspaceSaverLoaderTest {
 
 		beastWorkspace.addTestConfiguration(testConfig);
 		
-		beastWorkspace.setCbmcProcessStarter(new CBMCProcessStarterWindows());
+		beastWorkspace.setCbmcProcessStarter(new CBMCProcessHandlerWindows());
 
 		File f = new File("testfiles");
 		f.mkdirs();

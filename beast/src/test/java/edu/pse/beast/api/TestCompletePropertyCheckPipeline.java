@@ -9,14 +9,14 @@ import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarterWindows;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class TestCompletePropertyCheckPipeline {
 	
-	CBMCProcessStarter cbmcProcessStarter = new CBMCProcessStarterWindows();			
+	CBMCProcessHandler cbmcProcessStarter = new CBMCProcessHandlerWindows();			
 	BEAST beast = new BEAST(cbmcProcessStarter);
 	
 	@Test

@@ -46,8 +46,7 @@ public class CBMCTestConfigGuiController {
 	@FXML
 	private Button createTestRunsButton;
 	@FXML
-	private CheckBox startCreatedTestsCheckbox;	
-	
+	private CheckBox startCreatedTestsCheckbox;		
 	
 	private BeastWorkspace beastWorkspace;
 	

@@ -11,7 +11,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.threadpool.ThreadPool;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -45,7 +45,7 @@ public class BEAST {
 			CBMCPropertyTestConfiguration testConfig,
 			CodeGenOptions codeGenOptions,
 			LoopBoundHandler loopBoundHandler,
-			CBMCProcessStarter processStarter) {
+			CBMCProcessHandler processStarter) {
 		List<CBMCPropertyCheckWorkUnit>  workunits = new ArrayList<>();
 		String sessionUUID = UUID.randomUUID().toString();
 		for(int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {

@@ -19,7 +19,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
-import edu.pse.beast.api.testrunner.propertycheck.process_starter.CBMCProcessStarter;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ErrorDialogHelper;
@@ -43,7 +43,7 @@ public class BeastWorkspace {
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();
 	private File baseDir;
-	private CBMCProcessStarter cbmcProcessStarter;
+	private CBMCProcessHandler cbmcProcessStarter;
 
 	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public class BeastWorkspace {
 		this.codeGenOptions = codeGenOptions;
 	}
 
-	public void setCbmcProcessStarter(CBMCProcessStarter cbmcProcessStarter) {
+	public void setCbmcProcessStarter(CBMCProcessHandler cbmcProcessStarter) {
 		this.cbmcProcessStarter = cbmcProcessStarter;
 	}
 
@@ -70,7 +70,7 @@ public class BeastWorkspace {
 		return loadedDescrs;
 	}
 
-	public CBMCProcessStarter getCbmcProcessStarter() {
+	public CBMCProcessHandler getCbmcProcessStarter() {
 		return cbmcProcessStarter;
 	}
 
