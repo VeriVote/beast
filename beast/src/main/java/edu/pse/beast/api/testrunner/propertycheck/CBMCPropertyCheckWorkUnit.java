@@ -38,7 +38,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	CBMCProcessHandler processStarter;
 	CBMCTestCallback cb;
 	private boolean finished = false;
-	File cbmcCodeFile;
+	CBMCCodeFile cbmcCodeFile;
 	private LoopBoundHandler loopBoundHandler;
 	private CodeGenOptions codeGenOptions;
 	private String sessionUUID;
@@ -54,7 +54,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	}
 
 	public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
-			LoopBoundHandler loopBoundHandler, File cbmcCodeFile,
+			LoopBoundHandler loopBoundHandler, CBMCCodeFile cbmcCodeFile,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, CBMCTestCallback cb) {
 		this.descr = descr;
@@ -89,7 +89,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		return this.cb != null;
 	}
 
-	public void updateDataForCheck(File cbmcFile,
+	public void updateDataForCheck(CBMCCodeFile cbmcFile,
 			LoopBoundHandler loopBoundHandler) {
 		this.cbmcCodeFile = cbmcFile;
 		this.loopBoundHandler = loopBoundHandler;
@@ -101,7 +101,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		cb.onPropertyTestStart(descr, propDescr, s, c, v, uuid);
 		try {
 			Process p = processStarter.startCheckForParam(sessionUUID, descr,
-					propDescr, v, c, s, uuid, cb, cbmcCodeFile,
+					propDescr, v, c, s, uuid, cb, cbmcCodeFile.getFile(),
 					loopBoundHandler, codeGenOptions);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
@@ -152,11 +152,11 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		return state;
 	}
 
-	public File getCbmcFile() {
+	public CBMCCodeFile getCbmcFile() {
 		return cbmcCodeFile;
 	}
 
-	public void setCbmcFile(File cbmcFile) {
+	public void setCbmcFile(CBMCCodeFile cbmcFile) {
 		this.cbmcCodeFile = cbmcFile;
 	}
 }

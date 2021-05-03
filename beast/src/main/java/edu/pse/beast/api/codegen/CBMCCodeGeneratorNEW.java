@@ -38,7 +38,7 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	public static String generateCode(CElectionDescription descr,
+	public static CBMCGeneratedCodeInfo generateCode(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, CodeGenOptions options,
 			LoopBoundHandler loopBoundHandler) {
 		CFile created = new CFile();
@@ -82,14 +82,21 @@ public class CBMCCodeGeneratorNEW {
 				propDescr.getPostConditionsDescription().getCode(),
 				propDescr.getCbmcVariables());
 
+		CBMCGeneratedCodeInfo cbmcGeneratedCode = new CBMCGeneratedCodeInfo();
+		cbmcGeneratedCode.setAmtMemberVarName(voteArrStruct.getAmtName());
+		cbmcGeneratedCode.setListMemberVarName(voteArrStruct.getListName());
+
 		CFunction mainFunction = CBMCMainGenerator.main(preAstData, postAstData,
 				propDescr.getCbmcVariables(), voteArrStruct, voteResultStruct,
 				descr.getInputType(), descr.getOutputType(), options,
-				loopBoundHandler, descr.getVotingFunction().getName());
+				loopBoundHandler, descr.getVotingFunction().getName(),
+				cbmcGeneratedCode);
 
 		created.addFunction(mainFunction);
 
-		return created.generateCode();
+		cbmcGeneratedCode.setCode(created.generateCode());
+
+		return cbmcGeneratedCode;
 	}
 
 	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func,

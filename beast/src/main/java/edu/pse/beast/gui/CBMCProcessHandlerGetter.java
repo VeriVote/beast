@@ -35,6 +35,8 @@ public class CBMCProcessHandlerGetter {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("please navigate to vsDevCmd file");
 			File chosenFile = fileChooser.showOpenDialog(null);
+			if (chosenFile == null)
+				return null;
 			String fileName = chosenFile.getName();
 			return chosenFile;
 		}

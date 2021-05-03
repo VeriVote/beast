@@ -9,6 +9,7 @@ import java.util.UUID;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFile;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
@@ -33,7 +34,7 @@ public class BEAST {
 		tp.addWork(wu);
 	}
 
-	public File generateCodeFile(CElectionDescription descr,
+	public CBMCCodeFile generateCodeFile(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
 			CodeGenOptions codeGenOptions, LoopBoundHandler loopBoundHandler)
 			throws IOException {
@@ -41,7 +42,7 @@ public class BEAST {
 				codeGenOptions, loopBoundHandler);
 	}
 
-	public List<CBMCTestRun> generateTestRuns(File cbmcCodeFile,
+	public List<CBMCTestRun> generateTestRuns(CBMCCodeFile cbmcCodeFile,
 			CBMCPropertyTestConfiguration testConfig,
 			CodeGenOptions codeGenOptions, LoopBoundHandler loopBoundHandler) {
 		List<CBMCTestRun> runs = new ArrayList<>();

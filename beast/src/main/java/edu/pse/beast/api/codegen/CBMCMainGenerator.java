@@ -21,7 +21,8 @@ public class CBMCMainGenerator {
 			ElectionTypeCStruct voteResultStruct,
 			VotingInputTypes votingInputType,
 			VotingOutputTypes votingOutputType, CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler, String votingFunctionName) {
+			LoopBoundHandler loopBoundHandler, String votingFunctionName,
+			CBMCGeneratedCodeInfo cbmcGeneratedCode) {
 
 		List<String> code = new ArrayList<>();
 
@@ -62,6 +63,8 @@ public class CBMCMainGenerator {
 			code.add("//initializing VAR".replaceAll("VAR", varName));
 			code.add(InitVoteHelper.generateCode(varName, voteArrStruct,
 					votingInputType, options, loopBoundHandler));
+			
+			cbmcGeneratedCode.addVotingVariableName(i, varName);
 		}
 
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,

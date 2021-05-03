@@ -19,6 +19,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFile;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
@@ -159,8 +160,9 @@ public class BeastWorkspace {
 			CBMCPropertyTestConfiguration config) {
 		try {
 			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-			File cbmcCodeFile = beast.generateCodeFile(config.getDescr(),
-					config.getPropDescr(), codeGenOptions, loopBoundHandler);
+			CBMCCodeFile cbmcCodeFile = beast.generateCodeFile(
+					config.getDescr(), config.getPropDescr(), codeGenOptions,
+					loopBoundHandler);
 
 			List<CBMCTestRun> createdTestRuns = beast.generateTestRuns(
 					cbmcCodeFile, config, codeGenOptions, loopBoundHandler);
@@ -224,7 +226,7 @@ public class BeastWorkspace {
 			return;
 		}
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-		File cbmcFile = beast.generateCodeFile(currentConfig.getDescr(),
+		CBMCCodeFile cbmcFile = beast.generateCodeFile(currentConfig.getDescr(),
 				currentConfig.getPropDescr(), codeGenOptions, loopBoundHandler);
 
 		for (CBMCTestRun cbmcTr : currentConfig.getRuns()) {
