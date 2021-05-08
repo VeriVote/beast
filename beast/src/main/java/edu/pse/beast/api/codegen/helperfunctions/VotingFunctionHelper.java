@@ -6,8 +6,8 @@ import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVotingFunctionResultCopy;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateVotingFunctionVoteArrayInit;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionResultCopy;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;

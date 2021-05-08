@@ -1,13 +1,14 @@
 package edu.pse.beast.api.codegen;
 
 public class CodeGenOptions {
+	public static final String MAIN_FUNC_NAME = "main";
 	private String votesLowerBoundVarName;
 	private String votesUpperBoundVarName;
-	
+
 	private String cbmcAssumeName;
 	private String cbmcAssertName;
 	private String cbmcNondetUintName;
-	
+
 	private String cbmcAmountVotersVarName;
 	private String cbmcAmountCandidatesVarName;
 	private String cbmcAmountSeatsVarName;
@@ -23,11 +24,11 @@ public class CodeGenOptions {
 	public void setCbmcAssertName(String cbmcAssertName) {
 		this.cbmcAssertName = cbmcAssertName;
 	}
-	
+
 	public String getCbmcAmountSeatsVarName() {
 		return cbmcAmountSeatsVarName;
 	}
-	
+
 	public void setCbmcAmountSeatsVarName(String cbmcAmountSeatsVarName) {
 		this.cbmcAmountSeatsVarName = cbmcAmountSeatsVarName;
 	}
@@ -40,7 +41,8 @@ public class CodeGenOptions {
 		this.cbmcAmountVotersVarName = cbmcAmountVotesVarName;
 	}
 
-	public void setCbmcAmountCandidatesVarName(String cbmcAmountCandidatesVarName) {
+	public void setCbmcAmountCandidatesVarName(
+			String cbmcAmountCandidatesVarName) {
 		this.cbmcAmountCandidatesVarName = cbmcAmountCandidatesVarName;
 	}
 

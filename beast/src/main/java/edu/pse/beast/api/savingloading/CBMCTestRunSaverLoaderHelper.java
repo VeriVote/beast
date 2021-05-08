@@ -62,7 +62,8 @@ public class CBMCTestRunSaverLoaderHelper {
 		return arr;
 	}
 
-	public static List<CBMCTestRun> cbmcTestRunListFromJsonArr(JSONArray arr,
+	public static List<CBMCTestRun> cbmcTestRunListFromJsonArr(
+			JSONArray arr,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
 		List<CBMCTestRun> runs = new ArrayList<>();

@@ -6,7 +6,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
-import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.elect.CodeTemplateElectPermutation;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectPermutation;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 

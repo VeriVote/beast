@@ -6,7 +6,8 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.codegen.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
-import edu.pse.beast.api.codegen.helperfunctions.templates.typeGenerator.vote.CodeTemplateVoteIntersection;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteIntersection;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -55,7 +56,7 @@ public class VoteIntersectionHelper {
 				);
 		
 		String code = null;
-		List<String> loopbounds = List.of();
+		List<LoopBound> loopbounds = List.of();
 		
 		switch(votingInputType) {
 			case APPROVAL : {				
@@ -81,7 +82,7 @@ public class VoteIntersectionHelper {
 			}			
 		}		
 
-		loopBoundHandler.addMainLoopBounds(loopbounds);
+		loopBoundHandler.addLoopBounds(options.MAIN_FUNC_NAME, loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, replacementMap);
 		return code;

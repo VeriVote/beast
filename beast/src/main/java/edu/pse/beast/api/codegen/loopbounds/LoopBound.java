@@ -1,47 +1,41 @@
 package edu.pse.beast.api.codegen.loopbounds;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.pse.beast.api.codegen.CodeGenOptions;
+
 public class LoopBound {
-	private String name;
-	private String bound;
+	private LoopBoundType loopBoundType;
 	private int index;
 	private String functionName;
 
-	public LoopBound(String name, String bound) {
-		super();
-		this.name = name;
-		this.bound = bound;
-	}
-
-	public LoopBound(String functionName, int loopIndex, String bound) {
-		this.index = loopIndex;
+	public LoopBound(LoopBoundType loopBoundType, int index,
+			String functionName) {
+		this.loopBoundType = loopBoundType;
+		this.index = index;
 		this.functionName = functionName;
-		this.name = functionName + ":" + loopIndex;
-		this.bound = bound;
 	}
 
-	public String getName() {
-		return name;
+	public LoopBound(LoopBoundType loopBoundType, String functionName) {
+		super();
+		this.loopBoundType = loopBoundType;
+		this.functionName = functionName;
 	}
 
-	public String getBound() {
-		return bound;
-	}
-	
-	public int getIndex() {
-		return index;
-	}
-	
-	public String getFunctionName() {
-		return functionName;
-	}
-	
-	@Override
-	public String toString() {
-		return name + ":" + bound;
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
-	public String getCBMCString() {
-		return "--unwindset " + name + ":" + bound;
+	public static List<LoopBound> functionLoopBounds(String funcName,
+			List<LoopBoundType> types) {
+		List<LoopBound> bounds = new ArrayList<>();
+
+		for (LoopBoundType type : types) {
+			bounds.add(new LoopBound(type, funcName));
+		}
+
+		return bounds;
 	}
 
 }

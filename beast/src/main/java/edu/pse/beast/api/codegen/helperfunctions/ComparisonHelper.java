@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.helperfunctions.templates.CodeTemplateComparison;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateComparison;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;

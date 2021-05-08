@@ -34,10 +34,10 @@ int main() {
 		votes1.votes[i] = nondet_uint();
 		assume(votes1.votes[i] < C);
 	}
-
+	assert(0, "");
 	ResultArr res = voting(votes1);
 
-	assert(0, "");
+	
 
 	return 1;
 }
