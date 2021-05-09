@@ -9,7 +9,7 @@ public class LoopBoundHandler {
 
 	private Map<String, List<LoopBound>> funcNameToLoopbounds = new HashMap<>();
 
-	public void addLoopBound(String funcname, int index,
+	public void pushLoopBound(String funcname, int index,
 			LoopBoundType loopBoundType) {
 		if (!funcNameToLoopbounds.containsKey(funcname)) {
 			funcNameToLoopbounds.put(funcname, new ArrayList<>());
@@ -19,7 +19,7 @@ public class LoopBoundHandler {
 
 	}
 
-	public void addLoopBounds(String funcname, List<LoopBound> loopbounds) {
+	public void pushLoopBounds(String funcname, List<LoopBound> loopbounds) {
 		if (!funcNameToLoopbounds.containsKey(funcname)) {
 			funcNameToLoopbounds.put(funcname, new ArrayList<>());
 		}

@@ -1,23 +1,11 @@
 package edu.pse.beast.api.testrunner.propertycheck;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.commons.io.IOUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.CodeGenOptions;
@@ -26,9 +14,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 
 public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	CElectionDescription descr;
@@ -39,7 +25,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	CBMCTestCallback cb;
 	private boolean finished = false;
 	CBMCCodeFile cbmcCodeFile;
-	private LoopBoundHandler loopBoundHandler;
+	private String loopboundString;
 	private CodeGenOptions codeGenOptions;
 	private String sessionUUID;
 	private Process process;
@@ -54,7 +40,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	}
 
 	public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
-			LoopBoundHandler loopBoundHandler, CBMCCodeFile cbmcCodeFile,
+			String loopboundString, CBMCCodeFile cbmcCodeFile,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, CBMCTestCallback cb) {
 		this.descr = descr;
@@ -63,7 +49,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		this.c = c;
 		this.s = s;
 		this.cbmcCodeFile = cbmcCodeFile;
-		this.loopBoundHandler = loopBoundHandler;
+		this.loopboundString = loopboundString;
 		this.codeGenOptions = codeGenOptions;
 		this.cb = cb;
 		this.state = WorkUnitState.INITIALIZED;
@@ -90,9 +76,9 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	}
 
 	public void updateDataForCheck(CBMCCodeFile cbmcFile,
-			LoopBoundHandler loopBoundHandler) {
+			String loopboundString) {
 		this.cbmcCodeFile = cbmcFile;
-		this.loopBoundHandler = loopBoundHandler;
+		this.loopboundString = loopboundString;
 	}
 
 	@Override
@@ -102,7 +88,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		try {
 			Process p = processStarter.startCheckForParam(sessionUUID, descr,
 					propDescr, v, c, s, uuid, cb, cbmcCodeFile.getFile(),
-					loopBoundHandler, codeGenOptions);
+					loopboundString, codeGenOptions);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
 			String line;

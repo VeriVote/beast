@@ -8,6 +8,7 @@ import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -26,25 +27,15 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 	}
 
 	@Override
-	public Process startCheckForParam(String sessionUUID,
-			CElectionDescription descr,
-			PreAndPostConditionsDescription propertyDescr, int V, int C, int S,
+	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
 			String uuid, CBMCTestCallback cb, File cbmcFile,
-			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions)
+			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException {
 		File cbmcProgFile = new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC_64);
 
-		String voterArg = "V=" + V;
-		String candArg = "C=" + C;
-		String seatsArg = "S=" + S;
-
-		String arguments = "-D " + voterArg + " -D " + candArg + " -D "
-				+ seatsArg;
-
-		arguments += CBMCCommandHelper.getUnwindArgument(loopBoundHandler, V, C,
-				S);
-		arguments += CBMCCommandHelper.cbmcXMLOutput();
+		String arguments = CBMCCommandHelper.getArgumentsForCBMCJsonOutput(
+				cbmcFile, codeGenOptions, loopBounds, V, C, S);
 
 		return Runtime.getRuntime().exec(arguments, null, cbmcProgFile);
 	}

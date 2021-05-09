@@ -23,10 +23,6 @@ public class LoopBound {
 		this.functionName = functionName;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
 	public static List<LoopBound> functionLoopBounds(String funcName,
 			List<LoopBoundType> types) {
 		List<LoopBound> bounds = new ArrayList<>();
@@ -36,6 +32,30 @@ public class LoopBound {
 		}
 
 		return bounds;
+	}
+
+	public LoopBoundType getLoopBoundType() {
+		return loopBoundType;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public String getFunctionName() {
+		return functionName;
+	}
+
+	public void setLoopBoundType(LoopBoundType loopBoundType) {
+		this.loopBoundType = loopBoundType;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public void setFunctionName(String functionName) {
+		this.functionName = functionName;
 	}
 
 }

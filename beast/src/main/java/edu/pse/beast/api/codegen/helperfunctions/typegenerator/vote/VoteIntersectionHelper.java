@@ -82,7 +82,7 @@ public class VoteIntersectionHelper {
 			}			
 		}		
 
-		loopBoundHandler.addLoopBounds(options.MAIN_FUNC_NAME, loopbounds);
+		loopBoundHandler.pushLoopBounds(options.MAIN_FUNC_NAME, loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, replacementMap);
 		return code;

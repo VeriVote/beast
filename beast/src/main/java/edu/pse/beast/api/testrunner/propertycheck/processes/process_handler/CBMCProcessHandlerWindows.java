@@ -45,35 +45,25 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	}
 
 	@Override
-	public Process startCheckForParam(String sessionUUID,
-			CElectionDescription descr,
-			PreAndPostConditionsDescription propertyDescr, int V, int C, int S,
+	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
 			String uuid, CBMCTestCallback cb, File cbmcFile,
-			LoopBoundHandler loopBoundHandler, CodeGenOptions codeGenOptions)
+			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException {
 		String cbmcPath = "\"" + new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC)
 						.getPath()
 				+ "\"";
 
-		String arguments = CBMCCommandHelper.getVoterArguments(V, C, S);
-
 		String Space = " ";
 		String completeCommand = vsCmdPath + Space + "&" + Space + cbmcPath
-				+ Space + "\"" + cbmcFile.getPath() + "\"" + Space
-				+ CBMCCommandHelper.cbmcXMLOutput() + Space + arguments;
-
-		completeCommand += CBMCCommandHelper.getUnwindArgument(loopBoundHandler,
-				V, C, S);
-
-		cb.onCompleteCommand(descr, propertyDescr, V, C, S, uuid,
-				completeCommand);
+				+ Space + CBMCCommandHelper.getArgumentsForCBMCJsonOutput(
+						cbmcFile, codeGenOptions, loopBounds, V, C, S);
 
 		final File batFile = new File(
 				cbmcFile.getParent() + "\\" + cbmcFile.getName().replace(
 						FileLoader.C_FILE_ENDING, FileLoader.BAT_FILE_ENDING));
-		List<String> list = new ArrayList<>();
-		list.add(completeCommand);
+
+		List<String> list = List.of(completeCommand);
 		FileSaver.writeStringLinesToFile(list, batFile);
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c",
 				batFile.getAbsolutePath());
