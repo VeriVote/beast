@@ -25,8 +25,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private int C;
 
 	private CodeGenOptions codeGenOptions;
-	private CBMCCodeFile cbmcCodeFile;
 	private List<LoopBound> loopbounds;
+	private CBMCCodeFile cbmcCodeFile;
 
 	private List<String> testOutput = new ArrayList<>();
 
