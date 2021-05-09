@@ -18,13 +18,13 @@ public class CBMCGeneratedCodeInfo {
 		this.code = code;
 	}
 
+	public void addVotingVariableName(int voteNumber, String varName) {
+		voteNumberToVariableName.put(voteNumber, varName);
+	}
+
 	public void setVoteNumberToVariableName(
 			Map<Integer, String> voteNumberToVariableName) {
 		this.voteNumberToVariableName = voteNumberToVariableName;
-	}
-
-	public void addVotingVariableName(int voteNumber, String varName) {
-		voteNumberToVariableName.put(voteNumber, varName);
 	}
 
 	public Map<Integer, String> getVoteNumberToVariableName() {

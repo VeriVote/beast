@@ -15,7 +15,7 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 
 	// TODO doesnt save the amt, list member var names since this is likely to
 	// change in the future
-	public static JSONObject CBMCGeneratedCodeInfoToJSON(
+	public static JSONObject generatedCodeInfoToJSON(
 			CBMCGeneratedCodeInfo generatedCodeInfo) {
 		JSONObject json = new JSONObject();
 
@@ -27,7 +27,7 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 		return json;
 	}
 
-	public static CBMCGeneratedCodeInfo CBMCGeneratedCodeInfoFromJSON(
+	public static CBMCGeneratedCodeInfo generatedCodeInfoFromJSON(
 			JSONObject json) {
 		CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
 
