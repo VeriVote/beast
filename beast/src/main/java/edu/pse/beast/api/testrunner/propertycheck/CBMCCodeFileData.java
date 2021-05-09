@@ -4,23 +4,23 @@ import java.io.File;
 
 import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
 
-public class CBMCCodeFile {
+public class CBMCCodeFileData {
 	private File f;
-	private CBMCGeneratedCodeInfo code;
+	private CBMCGeneratedCodeInfo codeInfo;
 
 	public File getFile() {
 		return f;
 	}
 
-	public CBMCGeneratedCodeInfo getCode() {
-		return code;
-	}
-
 	public void setFile(File f) {
 		this.f = f;
+	}	
+
+	public CBMCGeneratedCodeInfo getCodeInfo() {
+		return codeInfo;
 	}
 
-	public void setCode(CBMCGeneratedCodeInfo code) {
-		this.code = code;
+	public void setCodeInfo(CBMCGeneratedCodeInfo code) {
+		this.codeInfo = code;
 	}
 }

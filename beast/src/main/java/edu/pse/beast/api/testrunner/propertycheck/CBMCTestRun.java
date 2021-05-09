@@ -26,7 +26,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	private CodeGenOptions codeGenOptions;
 	private List<LoopBound> loopbounds;
-	private CBMCCodeFile cbmcCodeFile;
+	private CBMCCodeFileData cbmcCodeFile;
 
 	private List<String> testOutput = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private boolean propDescrChanged = false;
 
 	public CBMCTestRun(int v, int s, int c, CodeGenOptions codeGenOptions,
-			List<LoopBound> loopbounds, CBMCCodeFile cbmcCodeFile,
+			List<LoopBound> loopbounds, CBMCCodeFileData cbmcCodeFile,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
 		V = v;
@@ -64,7 +64,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.updateListener = null;
 	}
 
-	public CBMCCodeFile getCbmcCodeFile() {
+	public CBMCCodeFileData getCbmcCodeFile() {
 		return cbmcCodeFile;
 	}
 
@@ -142,7 +142,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 		return propDescrChanged;
 	}
 
-	public void updateDataForCheck(CBMCCodeFile cbmcFile,
+	public void updateDataForCheck(CBMCCodeFileData cbmcFile,
 			String loopboundString) {
 		workUnit.updateDataForCheck(cbmcFile, loopboundString);
 		descrChanged = false;

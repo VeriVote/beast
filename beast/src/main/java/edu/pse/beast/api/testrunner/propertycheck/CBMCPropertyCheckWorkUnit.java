@@ -22,7 +22,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	CElectionDescription descr;
 	PreAndPostConditionsDescription propDescr;
 	int v, c, s;
-	CBMCCodeFile cbmcCodeFile;
+	CBMCCodeFileData cbmcCodeFile;
 	private List<LoopBound> loopBounds;
 	private CodeGenOptions codeGenOptions;
 
@@ -46,7 +46,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	}
 
 	public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
-			List<LoopBound> loopBounds, CBMCCodeFile cbmcCodeFile,
+			List<LoopBound> loopBounds, CBMCCodeFileData cbmcCodeFile,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, CBMCTestCallback cb) {
 		this.descr = descr;
@@ -81,7 +81,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		return this.cb != null;
 	}
 
-	public void updateDataForCheck(CBMCCodeFile cbmcFile,
+	public void updateDataForCheck(CBMCCodeFileData cbmcFile,
 			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions) {
 		this.cbmcCodeFile = cbmcFile;
 		this.loopBounds = loopBounds;
@@ -145,11 +145,11 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		return state;
 	}
 
-	public CBMCCodeFile getCbmcFile() {
+	public CBMCCodeFileData getCbmcFile() {
 		return cbmcCodeFile;
 	}
 
-	public void setCbmcFile(CBMCCodeFile cbmcFile) {
+	public void setCbmcFile(CBMCCodeFileData cbmcFile) {
 		this.cbmcCodeFile = cbmcFile;
 	}
 }

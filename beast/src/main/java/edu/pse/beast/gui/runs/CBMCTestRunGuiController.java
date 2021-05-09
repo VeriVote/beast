@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFile;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.codeareajavafx.SaverLoader;
@@ -63,7 +63,7 @@ public class CBMCTestRunGuiController {
 	private void display() {
 		outputTextElement.clear();
 
-		CBMCCodeFile cbmcFile = run.getCbmcCodeFile();
+		CBMCCodeFileData cbmcFile = run.getCbmcCodeFile();
 		createdFileTextField.setText(cbmcFile.getFile().getAbsolutePath());
 		openCreatedFileButton.setOnAction(e -> {
 			try {

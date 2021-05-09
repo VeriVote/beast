@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFile;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCJsonOutputHandler;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 

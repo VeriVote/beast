@@ -29,7 +29,7 @@ public class CBMCCodeFileGeneratorNEW {
 
 	private static final String CANNOT_FIND_PARENT = "Cannot find a parent to your file!";
 
-	public static CBMCCodeFile createCodeFileTest(
+	public static CBMCCodeFileData createCodeFileTest(
 			final CElectionDescription descr,
 			final PreAndPostConditionsDescription propDescr,
 			CodeGenOptions options, LoopBoundHandler loopBoundHandler)
@@ -51,8 +51,8 @@ public class CBMCCodeFileGeneratorNEW {
 		}
 		FileUtils.writeStringToFile(file, code.getCode(),
 				Charset.defaultCharset());;
-		CBMCCodeFile codeFile = new CBMCCodeFile();
-		codeFile.setCode(code);
+		CBMCCodeFileData codeFile = new CBMCCodeFileData();
+		codeFile.setCodeInfo(code);
 		codeFile.setFile(file);
 		return codeFile;
 	}
