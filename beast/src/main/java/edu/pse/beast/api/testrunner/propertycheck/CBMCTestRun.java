@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
@@ -13,42 +14,44 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
 
 public class CBMCTestRun implements CBMCTestCallback {
+
+	private CElectionDescription descr;
+	private PreAndPostConditionsDescription propDescr;
+
 	private CBMCPropertyCheckWorkUnit workUnit;
-	// TODO move to gui decorator
-	private CBMCTestRunGuiController updateListener;
 
 	private int V;
 	private int S;
 	private int C;
 
 	private CodeGenOptions codeGenOptions;
-	private String loopboundString;
 	private CBMCCodeFile cbmcCodeFile;
+	private List<LoopBound> loopbounds;
 
 	private List<String> testOutput = new ArrayList<>();
 
+	// gui stuff:
+	// TODO move to gui decorator
+	private CBMCTestRunGuiController updateListener;
 	private boolean descrChanged = false;
 	private boolean propDescrChanged = false;
 
-	private CElectionDescription descr;
-	private PreAndPostConditionsDescription propDescr;
-
 	public CBMCTestRun(int v, int s, int c, CodeGenOptions codeGenOptions,
-			String loopboundString, CBMCCodeFile cbmcCodeFile,
+			List<LoopBound> loopbounds, CBMCCodeFile cbmcCodeFile,
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
 		V = v;
 		S = s;
 		C = c;
 		this.codeGenOptions = codeGenOptions;
-		loopboundString = loopboundString;
 		this.cbmcCodeFile = cbmcCodeFile;
 		this.descr = descr;
 		this.propDescr = propDescr;
+		this.loopbounds = loopbounds;
 	}
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
-		workUnit.initialize(V, S, C, codeGenOptions, loopboundString,
+		workUnit.initialize(V, S, C, codeGenOptions, loopbounds,
 				cbmcCodeFile, descr, propDescr, this);
 		this.workUnit = workUnit;
 	}
