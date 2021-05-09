@@ -8,7 +8,16 @@ import java.util.Map;
 public class LoopBoundHandler {
 
 	private Map<String, List<LoopBound>> funcNameToLoopbounds = new HashMap<>();
-
+	
+	public Map<String, List<LoopBound>> getFuncNameToLoopbounds() {
+		return funcNameToLoopbounds;
+	}
+	
+	public void setFuncNameToLoopbounds(
+			Map<String, List<LoopBound>> funcNameToLoopbounds) {
+		this.funcNameToLoopbounds = funcNameToLoopbounds;
+	}
+	
 	public void pushLoopBound(String funcname, int index,
 			LoopBoundType loopBoundType) {
 		if (!funcNameToLoopbounds.containsKey(funcname)) {
@@ -16,7 +25,6 @@ public class LoopBoundHandler {
 		}
 		funcNameToLoopbounds.get(funcname)
 				.add(new LoopBound(loopBoundType, index, funcname));
-
 	}
 
 	public void pushLoopBounds(String funcname, List<LoopBound> loopbounds) {

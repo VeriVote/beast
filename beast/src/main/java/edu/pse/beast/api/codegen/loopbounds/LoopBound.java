@@ -18,7 +18,6 @@ public class LoopBound {
 	}
 
 	public LoopBound(LoopBoundType loopBoundType, String functionName) {
-		super();
 		this.loopBoundType = loopBoundType;
 		this.functionName = functionName;
 	}
