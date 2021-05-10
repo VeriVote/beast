@@ -74,5 +74,19 @@ public class LoopBound {
 	public void incrementIndex() {
 		this.index++;		
 	}
+	public void decrementIndex() {
+		this.index--;
+	}
+	
+	@Override
+	public String toString() {
+		if(loopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+			return index + " (" + manualLoopBoundIfPresent.get() + ")";
+		} else {
+			return index + " (" + loopBoundType + ")";
+		}
+		  
+	}
+
 
 }

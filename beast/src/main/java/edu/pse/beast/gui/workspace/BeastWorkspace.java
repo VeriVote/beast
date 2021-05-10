@@ -445,4 +445,15 @@ public class BeastWorkspace {
 
 	}
 
+	public void removeLoopboundFromFunction(
+			CElectionDescription descr,
+			CElectionDescriptionFunction func,
+			LoopBound toRemove) {
+		descr.getLoopBoundHandler().removeLoopBoundForFunction(func, toRemove);
+		handleDescrChange(descr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleDescrChangeRemovedLoopBound(descr, func, toRemove);
+		}
+	}
+
 }

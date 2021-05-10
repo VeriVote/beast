@@ -231,6 +231,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		}
 	}
 	
+	@Override
+	public void handleDescrChangeRemovedLoopBound(CElectionDescription descr,
+			CElectionDescriptionFunction func, LoopBound toRemove) {
+		if(descr == currentDescr && func == currentDisplayedFunction) {
+			populateLoopBoundList(descr.getLoopBoundsForFunction(currentDisplayedFunction));
+		}
+	}
+	
 	/* ===== other stuff ====== */
 	private void initListViews() {
 		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -348,7 +356,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	public void removeLoopBound() {
-		throw new NotImplementedException();
+		LoopBound toRemove = loopBoundList.getSelectionModel().getSelectedItem();
+		beastWorkspace.removeLoopboundFromFunction(currentDescr, currentDisplayedFunction, toRemove);
 	}
 
 	public void removeFunction() {

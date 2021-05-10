@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 
 public class LoopBoundHandler {
 
@@ -73,13 +74,19 @@ public class LoopBoundHandler {
 		return lb;
 	}
 
-	public void removeLoopBoundForFunction(String functionName,
+	public void removeLoopBoundForFunction(
+			CElectionDescriptionFunction func,
 			LoopBound loopBound) {
-		if (!funcNameToLoopbounds.containsKey(functionName)) {
+		if (!funcNameToLoopbounds.containsKey(func.getName())) {
 			return;
 		}
-		List<LoopBound> list = funcNameToLoopbounds.get(functionName);
+		List<LoopBound> list = funcNameToLoopbounds.get(func.getName());		
 		list.removeIf(lb -> lb.getIndex() == loopBound.getIndex());
+		for (LoopBound lb : list) {
+			if (lb.getIndex() >= loopBound.getIndex()) {
+				lb.decrementIndex();
+			}
+		}
 	}
 
 	public List<LoopBound> getLoopBoundsAsList() {

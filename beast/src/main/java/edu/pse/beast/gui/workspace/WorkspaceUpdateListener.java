@@ -50,4 +50,9 @@ public interface WorkspaceUpdateListener {
 		
 	}
 
+	public default void handleDescrChangeRemovedLoopBound(CElectionDescription descr,
+			CElectionDescriptionFunction func, LoopBound toRemove) {
+		
+	}
+
 }

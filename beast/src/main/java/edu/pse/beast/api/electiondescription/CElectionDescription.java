@@ -93,11 +93,6 @@ public class CElectionDescription {
 				manualLoopBoundIfPresent);
 	}
 
-	public void removeLoopBoundForFunction(String functionName,
-			LoopBound loopBound) {
-		loopBoundHandler.removeLoopBoundForFunction(functionName, loopBound);
-	}
-
 	public void setLoopBoundHandler(LoopBoundHandler loopBoundHandler) {
 		this.loopBoundHandler = loopBoundHandler;
 	}
