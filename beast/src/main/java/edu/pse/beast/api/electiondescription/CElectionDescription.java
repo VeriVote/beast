@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
@@ -20,7 +21,7 @@ public class CElectionDescription {
 	private List<SimpleTypeFunction> simpleTypeFunctions = new ArrayList<>();
 	private Set<String> functionNames = new HashSet<>();
 
-	private Map<String, List<LoopBound>> loopBounds = new HashMap();
+	private LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 	private String name;
 	private String uuid;
 
@@ -85,18 +86,12 @@ public class CElectionDescription {
 		return votingSigFunctions;
 	}
 
+	
+
 	public List<LoopBound> getLoopBoundsForFunction(String name) {
-		if (!loopBounds.containsKey(name)) {
-			return List.of();
-		}
-		return loopBounds.get(name);
+		return loopBoundHandler.getLoopBoundsForFunction(name);
 	}
 
-	private void sortLoopBoundListByIndex(List<LoopBound> list) {
-		list.sort((LoopBound lhs, LoopBound rhs) -> {
-			return Integer.compare(lhs.getIndex(), rhs.getIndex());
-		});
-	}
 
 	public void addLoopBoundForFunction(String functionName, int loopIndex,
 			String bound) {

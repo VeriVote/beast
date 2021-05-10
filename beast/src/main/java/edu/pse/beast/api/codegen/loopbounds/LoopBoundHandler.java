@@ -32,7 +32,14 @@ public class LoopBoundHandler {
 			funcNameToLoopbounds.put(funcname, new ArrayList<>());
 		}
 		funcNameToLoopbounds.get(funcname).addAll(loopbounds);
-		
-	}
+	}	
 
+	private void sortLoopBoundListByIndex(List<LoopBound> list) {
+		list.sort((LoopBound lhs, LoopBound rhs) -> {
+			return Integer.compare(lhs.getIndex(), rhs.getIndex());
+		});
+	}
+	
+	
+	
 }
