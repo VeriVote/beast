@@ -1,6 +1,7 @@
 package edu.pse.beast.api.codegen;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -8,6 +9,8 @@ import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
 import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -38,6 +41,21 @@ public class CBMCCodeGenTest {
 				VotingOutputTypes.CANDIDATE_LIST,
 				"borda");
 		descr.getVotingFunction().setCode(bordaCode);
+		descr.getLoopBoundHandler().addLoopBoundForFunction(
+				"voting",
+				0,
+				LoopBoundType.LOOP_BOUND_AMT_CANDS, 
+				Optional.empty());
+		descr.getLoopBoundHandler().addLoopBoundForFunction(
+				"voting",
+				0,
+				LoopBoundType.LOOP_BOUND_AMT_VOTERS, 
+				Optional.empty());
+		descr.getLoopBoundHandler().addLoopBoundForFunction(
+				"voting",
+				0,
+				LoopBoundType.LOOP_BOUND_AMT_CANDS, 
+				Optional.empty());
 		
 		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
 		String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
@@ -54,5 +72,9 @@ public class CBMCCodeGenTest {
 		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGeneratorNEW.generateCode(
 				descr, propDescr, options);
 		System.out.println(codeInfo.getCode());
+		List<LoopBound> lbsVoting = descr.getLoopBoundsForFunction(descr.getVotingFunction());
+		for(LoopBound lb : lbsVoting) {
+			System.out.println(lb.toString());
+		}
 	}
 }
