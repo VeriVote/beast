@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+
 public class LoopBoundHandler {
 
 	private Map<String, List<LoopBound>> funcNameToLoopbounds = new HashMap<>();
@@ -27,13 +29,14 @@ public class LoopBoundHandler {
 		list.add(new LoopBound(loopBoundType, list.size() - 1, funcname));
 	}
 
-	public void pushLoopBounds(String funcname,
-			List<LoopBoundType> loopboundTypes) {
-		if (!funcNameToLoopbounds.containsKey(funcname)) {
-			funcNameToLoopbounds.put(funcname, new ArrayList<>());
+	public void pushMainLoopBounds(List<LoopBoundType> loopboundTypes) {
+		String funcName = CodeGenOptions.MAIN_FUNC_NAME;
+
+		if (!funcNameToLoopbounds.containsKey(funcName)) {
+			funcNameToLoopbounds.put(funcName, new ArrayList<>());
 		}
 		for (LoopBoundType t : loopboundTypes) {
-			pushLoopBound(funcname, t);
+			pushLoopBound(funcName, t);
 		}
 	}
 
@@ -77,15 +80,25 @@ public class LoopBoundHandler {
 		List<LoopBound> list = funcNameToLoopbounds.get(functionName);
 		list.removeIf(lb -> lb.getIndex() == loopBound.getIndex());
 	}
-	
+
 	public List<LoopBound> getLoopBoundsAsList() {
 		List<LoopBound> list = new ArrayList();
-		
-		for(List<LoopBound> functionLBs : funcNameToLoopbounds.values()) {
+
+		for (List<LoopBound> functionLBs : funcNameToLoopbounds.values()) {
 			list.addAll(functionLBs);
 		}
-		
+
 		return list;
+	}
+
+	public void pushVotingLoopBounds(String votingFunctionName,
+			List<LoopBoundType> loopbounds) {
+
+	}
+
+	public void addVotingInitLoopBounds(String votingFunctionName,
+			List<String> loopbounds) {
+		
 	}
 
 }

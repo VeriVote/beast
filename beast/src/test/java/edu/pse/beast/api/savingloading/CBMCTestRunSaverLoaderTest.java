@@ -11,8 +11,8 @@ import org.json.JSONArray;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
-import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;

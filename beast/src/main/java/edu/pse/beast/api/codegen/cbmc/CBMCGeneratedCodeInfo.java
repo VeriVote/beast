@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 import java.util.Collections;
 import java.util.HashMap;

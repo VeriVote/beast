@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 public class SymbolicCBMCVar {
 	public enum CBMCVarType {

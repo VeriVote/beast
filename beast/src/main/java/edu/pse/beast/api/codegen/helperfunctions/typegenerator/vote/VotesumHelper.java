@@ -4,12 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
-import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVoteComparison;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteSumForCandidate;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public class VotesumHelper {
@@ -33,7 +34,7 @@ public class VotesumHelper {
 				);
 
 		String code = null;
-		List<String> loopbounds = List.of();
+		List<LoopBoundType> loopbounds = List.of();
 		
 		switch(votingInputType) {
 			case APPROVAL : {					
@@ -56,7 +57,7 @@ public class VotesumHelper {
 			}
 		}
 		
-		loopBoundHandler.addMainLoopBounds(loopbounds);
+		loopBoundHandler.pushMainLoopBounds(loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(code, replaceMap);
 		return code;
 	}

@@ -3,6 +3,8 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+
 public class CodeTemplateVoteTuple {
 	public final static String templateVarSetup = 
 			  "        VOTE_TYPE VAR_NAME;\n"
@@ -20,6 +22,7 @@ public class CodeTemplateVoteTuple {
 			+ "        }\n";
 	
 
-	public final static List<String> loopBoundsPreference = Arrays.asList(
-			"AMT_VOTERS", "AMT_CANDIDATES");
+	public final static List<LoopBoundType> loopBoundsPreference = Arrays.asList(
+			LoopBoundType.LOOP_BOUND_AMT_VOTERS, 
+			LoopBoundType.LOOP_BOUND_AMT_CANDS);
 }

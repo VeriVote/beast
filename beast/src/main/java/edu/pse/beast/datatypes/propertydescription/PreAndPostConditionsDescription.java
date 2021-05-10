@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import edu.pse.beast.api.codegen.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
 /**
  * The Class PreAndPostConditionsDescription.

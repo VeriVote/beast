@@ -5,11 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteTuple;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public class VoteTupleHelper {
@@ -44,7 +45,7 @@ public class VoteTupleHelper {
 				);
 		
 		String code = CodeTemplateVoteTuple.templateVarSetup;
-		List<String> loopbounds = new ArrayList<>();
+		List<LoopBoundType> loopbounds = new ArrayList<>();
 		
 		switch(votingInputType) {
 			case APPROVAL : {					
@@ -57,7 +58,7 @@ public class VoteTupleHelper {
 				for (String voteVarName : voteNames) {
 					code += CodeTemplateVoteTuple.templatePreference.
 							replaceAll("CURRENT_VOTE", voteVarName);
-					loopbounds.addAll(CodeTemplateVoteTuple.loopBoundsPreference);
+					loopbounds = CodeTemplateVoteTuple.loopBoundsPreference;
 				}
 				break;
 			}
@@ -69,7 +70,7 @@ public class VoteTupleHelper {
 			}			
 		}				
 
-		loopBoundHandler.addMainLoopBounds(loopbounds);
+		loopBoundHandler.pushMainLoopBounds(loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

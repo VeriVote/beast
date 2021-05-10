@@ -25,11 +25,14 @@ public class DialogHelper {
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
 		grid.setVgap(10);
-
-		for (int i = 0; i < inputNames.size(); ++i) {
+		int i = 0;
+		for (; i < inputNames.size(); ++i) {
 			grid.add(new Label(inputNames.get(i)), 0, i);
 			grid.add(inputs.get(i), 1, i);
 		}
+		for(; i < inputs.size(); ++i) {
+			grid.add(inputs.get(i), 0, i);
+		}		
 
 		dialog.getDialogPane().setContent(grid);
 		return dialog;

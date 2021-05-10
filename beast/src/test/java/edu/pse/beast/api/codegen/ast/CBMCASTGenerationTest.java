@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
-import edu.pse.beast.api.codegen.InputAndOutputElectionStructs;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
+import edu.pse.beast.api.codegen.cbmc.InputAndOutputElectionStructs;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;

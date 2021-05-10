@@ -11,7 +11,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;

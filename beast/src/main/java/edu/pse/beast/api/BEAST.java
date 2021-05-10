@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
@@ -53,7 +53,7 @@ public class BEAST {
 				for (int s = testConfig.getMinSeats(); s <= testConfig
 						.getMaxSeats(); ++s) {
 					runs.add(new CBMCTestRun(v, s, c, codeGenOptions,
-							loopBoundHandler, cbmcCodeFile,
+							loopBoundHandler.getLoopBoundsAsList(), cbmcCodeFile,
 							testConfig.getDescr(), testConfig.getPropDescr()));
 				}
 			}

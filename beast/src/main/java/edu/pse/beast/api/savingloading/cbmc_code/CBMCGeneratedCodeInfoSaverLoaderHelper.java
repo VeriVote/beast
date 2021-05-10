@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.JSONHelper;
 
 public class CBMCGeneratedCodeInfoSaverLoaderHelper {

@@ -1,11 +1,11 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
 import edu.pse.beast.api.codegen.c_code.CFunction;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;

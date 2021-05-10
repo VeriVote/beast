@@ -9,7 +9,7 @@ import java.util.Map;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 
 public class CBMCGeneratedCodeInfoSaverLoaderHelperTest {

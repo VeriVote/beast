@@ -4,52 +4,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionResultCopy;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class VotingFunctionHelper {
 
-	public static String generateVoteResultInit(
-			String resultArrayVarName,
-			VotingOutputTypes votingOutputType, 
-			CodeGenOptions options) {
-
-		Map<String, String> replacementMap = Map.of(
-				"VAR_NAME",	resultArrayVarName, 
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName());
-
-		String code = null;
-
-		switch (votingOutputType) {
-			case CANDIDATE_LIST : {
-				code = "unsigned int VAR_NAME[AMT_CANDIDATES];\n";
-				break;
-			}
-			case PARLIAMENT : {
-				code = "unsigned int VAR_NAME[AMT_CANDIDATES];\n";
-				break;
-			}
-			case PARLIAMENT_STACK : {
-				code = "unsigned int VAR_NAME[AMT_CANDIDATES];\n";
-				break;
-			}
-			case SINGLE_CANDIDATE : {
-				code = "unsigned int VAR_NAME;\n";
-				break;
-			}
-
-		}
-
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-		return code;
-	}
-
 	public static String generateVoteResultCopy(
+			String votingFunctionName,
 			String resultArrayVarName,
 			String resultStructVarName, 
 			VotingOutputTypes votingOutputType,
@@ -68,7 +35,7 @@ public class VotingFunctionHelper {
 				"RESULT_ARR", resultArrayVarName);
 
 		String code = null;
-		List<String> loopbounds = Arrays.asList();
+		List<LoopBoundType> loopbounds = Arrays.asList();
 
 		switch (votingOutputType) {
 			case SINGLE_CANDIDATE : {
@@ -87,7 +54,7 @@ public class VotingFunctionHelper {
 			}
 		}
 		
-		loopBoundHandler.addVotingLoopBounds(loopbounds);
+		loopBoundHandler.pushVotingLoopBounds(votingFunctionName, loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, 
@@ -96,7 +63,8 @@ public class VotingFunctionHelper {
 		return code;
 	}	
 	
-	public static String generateVoteArrayInitAndCopy(
+	public static String generateVoteArrayCopy(
+			String votingFunctionName,
 			String voteArrayVarName,
 			String votingStructVarName, 
 			VotingInputTypes votingInputType,
@@ -141,7 +109,7 @@ public class VotingFunctionHelper {
 			}
 		}	
 		
-		loopBoundHandler.addVotingLoopBounds(loopbounds);
+		loopBoundHandler.addVotingInitLoopBounds(votingFunctionName, loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		

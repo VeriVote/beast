@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.BEAST;
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
@@ -272,8 +272,6 @@ public class BeastWorkspace {
 		}
 	}
 
-	
-
 	public void setErrorHandler(ErrorHandler errorHandler) {
 		this.errorHandler = errorHandler;
 	}
@@ -372,10 +370,14 @@ public class BeastWorkspace {
 		}
 		return map;
 	}
-	
-	
-	/*==============CelectionDescription changes==============*/
-	
+
+	/* ==============CelectionDescription changes============== */
+
+	// TODO(Holger), rn, we do all our sanity checks (dont remove the voting
+	// function, etc)
+	// in here. should we move that into CelectionDescription?
+	// I dont think so, i like it to remain just a data class, however
+	// reasonable ppl can disagree on that
 	private void handleDescrChange(CElectionDescription descr) {
 		descrWithUnsavedChanges.add(descr);
 
@@ -393,13 +395,35 @@ public class BeastWorkspace {
 			l.handleDescrChangeUpdatedFunctionCode(descr, function, code);
 		}
 	}
-	
+
 	public void addVotingSigFunctionToDescr(CElectionDescription descr,
 			String name) {
-		VotingSigFunction func = descr.createNewVotingSigFunctionAndAdd(name);
-		handleDescrChange(descr);
-		for (WorkspaceUpdateListener l : updateListener) {
-			l.handleDescrChangeAddedVotingSigFunction(descr, func);
+		if (descr.hasFunctionName(name)) {
+			errorHandler.logAndDisplayError("Duplicate Function name",
+					"A function with this name already exists. "
+							+ "Can't have 2 functions with the same name in a C program.");
+		} else {
+			VotingSigFunction func = descr
+					.createNewVotingSigFunctionAndAdd(name);
+			handleDescrChange(descr);
+			for (WorkspaceUpdateListener l : updateListener) {
+				l.handleDescrChangeAddedVotingSigFunction(descr, func);
+			}
+		}
+
+	}
+
+	public void removeFunctionFromDescr(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		if (func == descr.getVotingFunction()) {
+			errorHandler.logAndDisplayError("Removing Voting Function",
+					"You tried to remove the voting function, you cant do this my guy");
+		} else {
+			descr.removeFunction(func);
+			handleDescrChange(descr);
+			for (WorkspaceUpdateListener l : updateListener) {
+				l.handleDescrChangeRemovedFunction(descr, func);
+			}
 		}
 	}
 

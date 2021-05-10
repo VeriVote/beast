@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.helperfunctions.code_template.templates;
+package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote;
 
 public class CodeTemplateVoteEmpty {
 	public static String templatePreference = 

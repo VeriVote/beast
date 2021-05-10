@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
 public class LoopBound {
 	private LoopBoundType loopBoundType;

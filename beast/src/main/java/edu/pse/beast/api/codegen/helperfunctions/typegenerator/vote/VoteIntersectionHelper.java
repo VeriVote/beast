@@ -3,12 +3,13 @@ package edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteIntersection;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public class VoteIntersectionHelper {
@@ -56,7 +57,7 @@ public class VoteIntersectionHelper {
 				);
 		
 		String code = null;
-		List<LoopBound> loopbounds = List.of();
+		List<LoopBoundType> loopbounds = List.of();
 		
 		switch(votingInputType) {
 			case APPROVAL : {				
@@ -82,7 +83,7 @@ public class VoteIntersectionHelper {
 			}			
 		}		
 
-		loopBoundHandler.pushLoopBounds(options.MAIN_FUNC_NAME, loopbounds);
+		loopBoundHandler.pushMainLoopBounds(loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(
 				code, replacementMap);
 		return code;

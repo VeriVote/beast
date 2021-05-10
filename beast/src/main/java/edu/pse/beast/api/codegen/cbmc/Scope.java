@@ -1,9 +1,9 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 
 public class Scope {
 	private Map<String, SymbolicCBMCVar.CBMCVarType> containedVars = new HashMap<>();

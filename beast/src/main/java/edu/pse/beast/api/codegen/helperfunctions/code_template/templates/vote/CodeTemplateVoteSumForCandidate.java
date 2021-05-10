@@ -3,6 +3,8 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+
 public class CodeTemplateVoteSumForCandidate {
 	public static String templateSingleChoice = 
 			  "    unsigned int GENERATED_VAR = 0;\n"
@@ -12,7 +14,8 @@ public class CodeTemplateVoteSumForCandidate {
 			+ "        }\n"
 			+ "    }";
 	
-	public final static List<String> loopBoundsPreference = Arrays.asList("AMT_VOTERS");
+	public final static List<LoopBoundType> loopBoundsPreference = 
+			Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS);
 	
 	public static String templateSingleChoiceStack =
 			"unsigned int GENERATED_VAR = VOTE_VAR.LIST_MEMBER[CANDIDATE_VAR];\n";	

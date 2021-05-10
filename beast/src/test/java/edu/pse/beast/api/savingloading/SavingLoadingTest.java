@@ -14,8 +14,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import edu.pse.beast.api.CreationHelper;
-import edu.pse.beast.api.codegen.SymbolicCBMCVar;
-import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIndexException;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;

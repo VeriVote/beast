@@ -16,7 +16,6 @@ public class CodeTemplateComparison {
 			+ "		GENERATED_VAR |= LHS_VAR_NAME[i] != RHS_VAR_NAME[i];\n" 
 			+ "	}\n";
 
-	public final static List<String> template1dloopBounds = Arrays.asList("AMT");
 	
 	public final static String template0d = 
 			"unsigned int GENERATED_VAR = LHS_VAR_NAME COMP RHS_VAR_NAME;\n";	

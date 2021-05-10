@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.helperfunctions.code_template.templates;
+package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect;
 
 public class CodeTemplateElectEmpty {
 	public static String templateParliament =

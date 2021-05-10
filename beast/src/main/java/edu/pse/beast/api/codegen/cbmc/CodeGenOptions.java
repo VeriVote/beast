@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 public class CodeGenOptions {
 	public static final String MAIN_FUNC_NAME = "main";

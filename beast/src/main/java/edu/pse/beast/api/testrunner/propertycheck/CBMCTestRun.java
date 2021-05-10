@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
-import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;

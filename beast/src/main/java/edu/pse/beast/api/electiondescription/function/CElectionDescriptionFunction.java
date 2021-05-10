@@ -35,5 +35,10 @@ public abstract class CElectionDescriptionFunction {
 	}
 
 	public abstract String getDeclCString();
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

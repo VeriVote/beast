@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 import edu.pse.beast.api.codegen.c_code.CForLoop;
 import edu.pse.beast.api.codegen.c_code.CStruct;

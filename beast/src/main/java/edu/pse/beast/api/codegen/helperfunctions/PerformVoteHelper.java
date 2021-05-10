@@ -1,7 +1,7 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 
 public class PerformVoteHelper {
 

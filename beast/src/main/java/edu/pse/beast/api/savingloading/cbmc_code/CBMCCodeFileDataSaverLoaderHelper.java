@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.json.JSONObject;
 
-import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
 
 public class CBMCCodeFileDataSaverLoaderHelper {

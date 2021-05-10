@@ -1,7 +1,7 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
-import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 

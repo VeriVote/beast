@@ -1,8 +1,11 @@
 package edu.pse.beast.gui.ceditor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.richtext.CodeArea;
@@ -10,6 +13,7 @@ import org.fxmisc.richtext.CodeArea;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
@@ -24,8 +28,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventType;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
@@ -124,12 +130,55 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		}
 	}
 
+	// TODO(Holger) make this nicer, add error checking for wrong var names etc
 	private void addSimpleFunction() {
 		TextField nameField = new TextField();
-		// TODO make this nicer
-		TextField returnField = new TextField();
-		TextField argsField = new TextField();
 
+		ChoiceBox<CElectionSimpleTypes> returnTypeChoiceBox = new ChoiceBox<>();
+		returnTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
+		returnTypeChoiceBox.getSelectionModel().selectFirst();
+		Label argumentsLabel = new Label();
+
+		List<CElectionSimpleTypes> argTypes = new ArrayList<>();
+		List<String> argNames = new ArrayList<>();
+
+		TextField argsNameTextField = new TextField();
+		ChoiceBox<CElectionSimpleTypes> argsTypeChoiceBox = new ChoiceBox();
+		argsTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
+		argsTypeChoiceBox.getSelectionModel().selectFirst();
+
+		Button addArgButton = new Button("add argument");
+		Button removeArgButton = new Button("remove Last Argument");
+
+		Consumer<Label> updateArgLabel = l -> {
+			String text = "";
+			for (int i = 0; i < argNames.size(); ++i) {
+				text += argTypes.get(i) + " " + argNames.get(i) + ", ";
+			}
+			l.setText(text);
+		};
+
+		addArgButton.setOnAction(e -> {
+			if(!nameField.getText().isEmpty()) {
+				argTypes.add(
+						argsTypeChoiceBox.getSelectionModel().getSelectedItem());
+				argNames.add(argsNameTextField.getText());
+				updateArgLabel.accept(argumentsLabel);
+			}
+		});
+
+		removeArgButton.setOnAction(e -> {
+			if (!argTypes.isEmpty()) {
+				argTypes.remove(argTypes.size() - 1);
+				argNames.remove(argTypes.size() - 1);
+				updateArgLabel.accept(argumentsLabel);
+			}
+		});
+
+		DialogHelper.generateDialog(List.of("name", "return type"),
+				List.of(nameField, returnTypeChoiceBox, argsTypeChoiceBox,
+						argsNameTextField, addArgButton, removeArgButton))
+				.showAndWait();
 	}
 
 	private void selectedDescrChanged(CElectionDescription descr) {
@@ -146,8 +195,10 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				});
 	}
 
-	/* ===== handle workspace updates ====== */
+	/* ========== handle workspace updates =========== */
 
+	// TODO(Holger) This is where we would add undo/redo for higher level
+	// changes such as adding/removing functions etc
 	public void handleWorkspaceUpdateGeneric() {
 		openedElectionDescriptionChoiceBox.getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
@@ -159,7 +210,17 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	@Override
 	public void handleDescrChangeAddedVotingSigFunction(
 			CElectionDescription descr, VotingSigFunction func) {
-		functionList.getItems().add(func);
+		if (descr.equals(currentDescr)) {
+			functionList.getItems().add(func);
+		}
+	}
+
+	@Override
+	public void handleDescrChangeRemovedFunction(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		if (descr == currentDescr) {
+			functionList.getItems().remove(func);
+		}
 	}
 
 	/* ===== other stuff ====== */
@@ -176,7 +237,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	private void selectedFunctionChanged(CElectionDescriptionFunction func) {
-		loadFunction(func);
+		displayFunction(func);
+		currentDisplayedFunction = func;
 	}
 
 	private void populateFunctionList(CElectionDescription descr) {
@@ -185,7 +247,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 		observableList.add(descr.getVotingFunction());
 
-		for (VotingSigFunction f : descr.getVotingSigFunctions()) {
+		for (CElectionDescriptionFunction f : descr.getFunctions()) {
 			observableList.add(f);
 		}
 		functionList.setItems(observableList);
@@ -208,7 +270,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				cssLockedClassName);
 	}
 
-	private void loadFunction(CElectionDescriptionFunction func) {
+	private void displayFunction(CElectionDescriptionFunction func) {
 		electionCodeArea.clear();
 		funcDeclArea.clear();
 		closingBracketArea.clear();
@@ -235,12 +297,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		throw new NotImplementedException();
 	}
 
-	public void addFunction() {
-
-	}
-
 	public void removeFunction() {
-
+		beastWorkspace.removeFunctionFromDescr(currentDescr,
+				currentDisplayedFunction);
 	}
 
 	public void createNewDescr() {

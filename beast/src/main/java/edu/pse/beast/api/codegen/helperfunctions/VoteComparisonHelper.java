@@ -3,17 +3,18 @@ package edu.pse.beast.api.codegen.helperfunctions;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
-import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVoteComparison;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 
 public class VoteComparisonHelper {
 	
-	private static List<String> getLoopBounds(
+	private static List<LoopBoundType> getLoopBounds(
 			VotingInputTypes votingInputType) {
 		switch(votingInputType) {
 			case APPROVAL : {		
@@ -100,8 +101,8 @@ public class VoteComparisonHelper {
 			}
 		}
 		
-		List<String> loopbounds = getLoopBounds(votingInputType);
-		loopBoundHandler.addMainLoopBounds(loopbounds);
+		List<LoopBoundType> loopbounds = getLoopBounds(votingInputType);
+		loopBoundHandler.pushMainLoopBounds(loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);		
 		return code;

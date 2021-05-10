@@ -3,6 +3,8 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+
 public class CodeTemplateElectIntersection {
 	public final static String templateCandidateList = 
 			  "ELECT_TYPE GENERATED_VAR_NAME;\n"
@@ -21,9 +23,9 @@ public class CodeTemplateElectIntersection {
 			+ "}\n";
 	
 	
-	public final static List<String> loopboundsCandidateList = 
-			Arrays.asList("AMT_CANDIDATES");	
+	public final static List<LoopBoundType> loopboundsCandidateList = 
+			Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS);	
 	
 	public final static String templateParliament = templateCandidateList; 
-	public final static List<String> loopboundsParliament = loopboundsCandidateList;
+	public final static List<LoopBoundType> loopboundsParliament = loopboundsCandidateList;
 }

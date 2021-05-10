@@ -16,19 +16,18 @@ import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIn
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
 public class CElectionDescription {
-	private List<VotingSigFunction> votingSigFunctions = new ArrayList<>();
-	private List<SimpleTypeFunction> simpleTypeFunctions = new ArrayList<>();
+	private List<CElectionDescriptionFunction> functions = new ArrayList<>();
 	private Set<String> functionNames = new HashSet<>();
+	private VotingSigFunction votingFunction;
 
 	private LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 	private String name;
 	private String uuid;
-
-	private VotingSigFunction votingFunction;
 
 	private VotingInputTypes inputType;
 	private VotingOutputTypes outputType;
@@ -51,6 +50,10 @@ public class CElectionDescription {
 		this.uuid = uuid;
 	}
 
+	public boolean hasFunctionName(String name) {
+		return functionNames.contains(name);
+	}
+
 	public VotingSigFunction getVotingFunction() {
 		return votingFunction;
 	}
@@ -61,15 +64,16 @@ public class CElectionDescription {
 	}
 
 	public VotingSigFunction createNewVotingSigFunctionAndAdd(String name) {
-		if (functionNames.contains(name)) {
-			throw new IllegalArgumentException(
-					"function with this name already exists");
-		}
 		VotingSigFunction created = new VotingSigFunction(name, inputType,
 				outputType);
-		votingSigFunctions.add(created);
+		functions.add(created);
 		functionNames.add(name);
 		return created;
+	}
+
+	public void removeFunction(CElectionDescriptionFunction func) {
+		functionNames.remove(func.getName());
+		functions.remove(func);
 	}
 
 	@Override
@@ -83,10 +87,6 @@ public class CElectionDescription {
 
 	public VotingOutputTypes getOutputType() {
 		return outputType;
-	}
-
-	public List<VotingSigFunction> getVotingSigFunctions() {
-		return votingSigFunctions;
 	}
 
 	public List<LoopBound> getLoopBoundsForFunction(String name) {
@@ -104,11 +104,11 @@ public class CElectionDescription {
 			LoopBound loopBound) {
 		loopBoundHandler.removeLoopBoundForFunction(functionName, loopBound);
 	}
-	
+
 	public void setLoopBoundHandler(LoopBoundHandler loopBoundHandler) {
 		this.loopBoundHandler = loopBoundHandler;
 	}
-	
+
 	public LoopBoundHandler getLoopBoundHandler() {
 		return loopBoundHandler;
 	}
@@ -117,12 +117,8 @@ public class CElectionDescription {
 		return name;
 	}
 
-	public void removeFunction(String functionName) {
-		if (votingFunction.getName().equals(functionName))
-			return;
-		functionNames.remove(functionName);
-		votingSigFunctions.removeIf(f -> f.getName().equals(functionName));
-		simpleTypeFunctions.removeIf(f -> f.getName().equals(functionName));
+	public List<CElectionDescriptionFunction> getFunctions() {
+		return functions;
 	}
 
 	public String getUuid() {

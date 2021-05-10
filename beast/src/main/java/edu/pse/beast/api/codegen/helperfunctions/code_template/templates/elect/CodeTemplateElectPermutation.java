@@ -3,6 +3,8 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+
 public class CodeTemplateElectPermutation {
 	public final static String templateCandidateList = 
 			  "    ELECT_TYPE GENERATED_VAR_NAME;\n"
@@ -23,6 +25,9 @@ public class CodeTemplateElectPermutation {
 			+ "        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == RHS.LIST_MEMBER[PERM[i]]);\n"
 			+ "    }";
 	
-	public final static List<String> loopBoundsCandidateList = Arrays.asList(
-			"AMT_CANDIDATES", "AMT_CANDIDATES", "AMT_CANDIDATES", "AMT_CANDIDATES");
+	public final static List<LoopBoundType> loopBoundsCandidateList = Arrays.asList(
+			LoopBoundType.LOOP_BOUND_AMT_CANDS,
+			LoopBoundType.LOOP_BOUND_AMT_CANDS, 
+			LoopBoundType.LOOP_BOUND_AMT_CANDS,
+			LoopBoundType.LOOP_BOUND_AMT_CANDS);
 }

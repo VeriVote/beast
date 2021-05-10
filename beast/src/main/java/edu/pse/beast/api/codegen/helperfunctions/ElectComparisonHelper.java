@@ -3,18 +3,19 @@ package edu.pse.beast.api.codegen.helperfunctions;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
-import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateElectComparison;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectComparison;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class ElectComparisonHelper {
-	
-	private static List<String> getLoopBounds(
+
+	private static List<LoopBoundType> getLoopBounds(
 			VotingOutputTypes votingOutputType) {
-		switch(votingOutputType) {
+		switch (votingOutputType) {
 			case CANDIDATE_LIST : {
 				return CodeTemplateElectComparison.loopBoundsCandidateList;
 			}
@@ -30,31 +31,23 @@ public class ElectComparisonHelper {
 		}
 		return List.of();
 	}
-	
-	public static String generateCode(
-			String generatedVarName,
-			String lhsVarName,
-			String rhsVarName, 
+
+	public static String generateCode(String generatedVarName,
+			String lhsVarName, String rhsVarName,
 			ElectionTypeCStruct comparedType,
-			VotingOutputTypes votingOutputType,
-			CodeGenOptions options, 
-			String compareSymbol,
-			LoopBoundHandler loopBoundHandler) {
-		
-		Map<String, String> replacementMap = Map.of(
-				"GENERATED_VAR", generatedVarName,
-				"LHS_VAR", lhsVarName,
-				"RHS_VAR", rhsVarName,
-				"AMT_MEMBER", comparedType.getAmtName(),
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
-				"COMP", compareSymbol,
-				"LIST_MEMBER", comparedType.getListName()
-			);
-		
+			VotingOutputTypes votingOutputType, CodeGenOptions options,
+			String compareSymbol, LoopBoundHandler loopBoundHandler) {
+
+		Map<String, String> replacementMap = Map.of("GENERATED_VAR",
+				generatedVarName, "LHS_VAR", lhsVarName, "RHS_VAR", rhsVarName,
+				"AMT_MEMBER", comparedType.getAmtName(), "AMT_CANDIDATES",
+				options.getCbmcAmountCandidatesVarName(), "COMP", compareSymbol,
+				"LIST_MEMBER", comparedType.getListName());
+
 		String code = null;
-		
-		if(compareSymbol.equals("!=")) {
-			switch(votingOutputType) {
+
+		if (compareSymbol.equals("!=")) {
+			switch (votingOutputType) {
 				case CANDIDATE_LIST : {
 					code = CodeTemplateElectComparison.templateCandidateListUneq;
 					break;
@@ -72,7 +65,7 @@ public class ElectComparisonHelper {
 				}
 			}
 		} else {
-			switch(votingOutputType) {
+			switch (votingOutputType) {
 				case CANDIDATE_LIST : {
 					code = CodeTemplateElectComparison.templateCandidateList;
 					break;
@@ -90,11 +83,11 @@ public class ElectComparisonHelper {
 				}
 			}
 		}
-		
-		List<String> loopbounds = getLoopBounds(votingOutputType);
-		loopBoundHandler.addMainLoopBounds(loopbounds);
-		
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);		
+
+		List<LoopBoundType> loopbounds = getLoopBounds(votingOutputType);
+		loopBoundHandler.pushMainLoopBounds(loopbounds);
+
+		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}
 }

@@ -3,11 +3,12 @@ package edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectPermutation;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class ElectPermutationHelper {
@@ -32,7 +33,7 @@ public class ElectPermutationHelper {
 				);
 		
 		String code = null;		
-		List<String> loopbounds = List.of();
+		List<LoopBoundType> loopbounds = List.of();
 	
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {
@@ -51,7 +52,7 @@ public class ElectPermutationHelper {
 			}
 		}
 
-		loopBoundHandler.addMainLoopBounds(loopbounds);
+		loopBoundHandler.pushMainLoopBounds(loopbounds);
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}

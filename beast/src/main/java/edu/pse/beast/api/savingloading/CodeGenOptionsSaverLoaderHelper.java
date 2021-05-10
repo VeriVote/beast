@@ -2,7 +2,7 @@ package edu.pse.beast.api.savingloading;
 
 import org.json.JSONObject;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
 public class CodeGenOptionsSaverLoaderHelper {
 

@@ -3,11 +3,12 @@ package edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.CodeGenOptions;
-import edu.pse.beast.api.codegen.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectIntersection;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class ElectIntersectionHelper {
@@ -45,7 +46,7 @@ public class ElectIntersectionHelper {
 				"NONDET_UINT", options.getCbmcNondetUintName()
 				);
 		
-		List<String> loopbounds = List.of();
+		List<LoopBoundType> loopbounds = List.of();
 		String code = null;
 		
 		switch(votingOutputType) {

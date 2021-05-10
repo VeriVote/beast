@@ -1,9 +1,7 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.codegen.cbmc;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
@@ -13,14 +11,12 @@ import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
-import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
-import edu.pse.beast.api.electiondescription.to_c.CBMCVarNames;
 import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
@@ -38,9 +34,11 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	public static CBMCGeneratedCodeInfo generateCode(CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
+	public static CBMCGeneratedCodeInfo generateCode(
+			CElectionDescription descr,
+			PreAndPostConditionsDescription propDescr, 
+			CodeGenOptions options) {
+		
 		CFile created = new CFile();
 		created.include(STDLIB);
 		created.include(STDINT);
@@ -70,6 +68,8 @@ public class CBMCCodeGeneratorNEW {
 
 		created.addStructDef(voteArrStruct.getStruct());
 		created.addStructDef(voteResultStruct.getStruct());
+		
+		LoopBoundHandler loopBoundHandler = descr.getLoopBoundHandler();
 
 		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(),
 				descr.getInputType(), descr.getOutputType(), voteArrStruct,
@@ -118,12 +118,9 @@ public class CBMCCodeGeneratorNEW {
 		String voteArrayVarName = "votes";
 		String resultArrayVarName = "result";
 
-		code.add(VotingFunctionHelper.generateVoteArrayInitAndCopy(
+		code.add(VotingFunctionHelper.generateVoteArrayCopy(func.getName(),
 				voteArrayVarName, votingStructVarName, votingInputType,
 				inputStruct, options, loopBoundHandler));
-
-		code.add(VotingFunctionHelper.generateVoteResultInit(resultArrayVarName,
-				votingOutputType, options));
 
 		code.add("//user generated code");
 
@@ -132,8 +129,13 @@ public class CBMCCodeGeneratorNEW {
 		code.add("//end user generated code");
 
 		String resultStructVarName = "resultStruct";
-		code.add(VotingFunctionHelper.generateVoteResultCopy(resultArrayVarName,
-				resultStructVarName, votingOutputType, outputStruct, options,
+		code.add(VotingFunctionHelper.generateVoteResultCopy(
+				func.getName(),
+				resultArrayVarName,
+				resultStructVarName, 
+				votingOutputType, 
+				outputStruct, 
+				options,
 				loopBoundHandler));
 
 		created.setCode(code);
