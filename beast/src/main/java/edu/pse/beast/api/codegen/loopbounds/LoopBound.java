@@ -2,6 +2,7 @@ package edu.pse.beast.api.codegen.loopbounds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 
@@ -9,6 +10,15 @@ public class LoopBound {
 	private LoopBoundType loopBoundType;
 	private int index;
 	private String functionName;
+	private Optional<Integer> manualLoopBoundIfPresent = Optional.empty();
+
+	public LoopBound(LoopBoundType loopBoundType, int index,
+			String functionName, Optional<Integer> manualLoopBoundIfPresent) {
+		this.loopBoundType = loopBoundType;
+		this.index = index;
+		this.functionName = functionName;
+		this.manualLoopBoundIfPresent = manualLoopBoundIfPresent;
+	}
 
 	public LoopBound(LoopBoundType loopBoundType, int index,
 			String functionName) {

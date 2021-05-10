@@ -8,11 +8,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIndexException;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
@@ -86,34 +89,28 @@ public class CElectionDescription {
 		return votingSigFunctions;
 	}
 
-	
-
 	public List<LoopBound> getLoopBoundsForFunction(String name) {
 		return loopBoundHandler.getLoopBoundsForFunction(name);
 	}
 
-
 	public void addLoopBoundForFunction(String functionName, int loopIndex,
-			String bound) {
-		if (!loopBounds.containsKey(functionName)) {
-			loopBounds.put(functionName, new ArrayList<>());
-		}
-		List<LoopBound> list = loopBounds.get(functionName);
-		list.add(new LoopBound(functionName, loopIndex, bound));
-		sortLoopBoundListByIndex(list);
+			LoopBoundType type, Optional<Integer> manualLoopBoundIfPresent)
+			throws FunctionAlreadyContainsLoopboundAtIndexException {
+		loopBoundHandler.addLoopBoundForFunction(functionName, loopIndex, type,
+				manualLoopBoundIfPresent);
 	}
 
 	public void removeLoopBoundForFunction(String functionName,
-			String loopBoundString) {
-		if (!loopBounds.containsKey(functionName)) {
-			return;
-		}
-		List<LoopBound> list = loopBounds.get(functionName);
-		list.removeIf((LoopBound b) -> {
-			boolean rm = b.toString().equals(loopBoundString);
-			return rm;
-		});
-		loopBounds.put(functionName, list);
+			LoopBound loopBound) {
+		loopBoundHandler.removeLoopBoundForFunction(functionName, loopBound);
+	}
+	
+	public void setLoopBoundHandler(LoopBoundHandler loopBoundHandler) {
+		this.loopBoundHandler = loopBoundHandler;
+	}
+	
+	public LoopBoundHandler getLoopBoundHandler() {
+		return loopBoundHandler;
 	}
 
 	public String getName() {
@@ -126,24 +123,6 @@ public class CElectionDescription {
 		functionNames.remove(functionName);
 		votingSigFunctions.removeIf(f -> f.getName().equals(functionName));
 		simpleTypeFunctions.removeIf(f -> f.getName().equals(functionName));
-	}
-
-	public List<LoopBound> getLoopBounds() {
-		List<LoopBound> created = new ArrayList<>();
-		for (String k : loopBounds.keySet()) {
-			created.addAll(loopBounds.get(k));
-		}
-		return created;
-	}
-
-	public void setLoopBounds(List<LoopBound> loopBoundsFromJsonArray) {
-		for (LoopBound b : loopBoundsFromJsonArray) {
-			String functionName = b.getFunctionName();
-			if (loopBounds.containsKey(functionName)) {
-				loopBounds.put(functionName, Arrays.asList());
-			}
-			loopBounds.get(functionName).add(b);
-		}
 	}
 
 	public String getUuid() {
