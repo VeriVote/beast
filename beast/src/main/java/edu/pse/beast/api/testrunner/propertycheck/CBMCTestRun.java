@@ -2,6 +2,7 @@ package edu.pse.beast.api.testrunner.propertycheck;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
@@ -30,7 +31,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	private CBMCCodeFileData cbmcCodeFile;
 
-	private List<String> testOutput = new ArrayList<>();
+	private List<String> testRunLogs = new ArrayList<>();
 
 	// gui stuff:
 	// TODO move to gui decorator
@@ -81,9 +82,13 @@ public class CBMCTestRun implements CBMCTestCallback {
 	}
 
 	public String getTestOutput() {
-		synchronized (testOutput) {
-			return String.join("\n", testOutput);
+		synchronized (testRunLogs) {
+			return String.join("\n", testRunLogs);
 		}
+	}
+
+	public void setTestRunLogs(String testRunLogs) {
+		this.testRunLogs = Arrays.asList(testRunLogs.split("\n"));
 	}
 
 	private void updateGui() {
@@ -95,8 +100,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void onPropertyTestAddedToQueue(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
-		synchronized (testOutput) {
-			testOutput.clear();
+		synchronized (testRunLogs) {
+			testRunLogs.clear();
 		}
 		updateGui();
 	}
@@ -113,8 +118,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 			CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid, String output) {
-		synchronized (testOutput) {
-			testOutput.add(output);
+		synchronized (testRunLogs) {
+			testRunLogs.add(output);
 		}
 		updateGui();
 	}
@@ -150,6 +155,22 @@ public class CBMCTestRun implements CBMCTestCallback {
 		descrChanged = false;
 		propDescrChanged = false;
 		updateGui();
+	}
+
+	public List<LoopBound> getLoopboundList() {
+		return loopboundList;
+	}
+
+	public void setLoopboundList(List<LoopBound> loopboundList) {
+		this.loopboundList = loopboundList;
+	}
+
+	public CodeGenOptions getCodeGenOptions() {
+		return codeGenOptions;
+	}
+
+	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
+		this.codeGenOptions = codeGenOptions;
 	}
 
 }

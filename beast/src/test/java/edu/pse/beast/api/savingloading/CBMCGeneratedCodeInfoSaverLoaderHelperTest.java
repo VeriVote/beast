@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import edu.pse.beast.api.codegen.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.savingloading.testruns.CBMCGeneratedCodeInfoSaverLoaderHelper;
+import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 
 public class CBMCGeneratedCodeInfoSaverLoaderHelperTest {
 
