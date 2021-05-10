@@ -5,6 +5,7 @@ import java.util.List;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -28,9 +29,14 @@ public interface WorkspaceUpdateListener {
 
 	}
 
-	public default void handleCodeChangeInDescr(CElectionDescription currentDescr,
-			CElectionDescriptionFunction function, String code) {
-		
+	public default void handleDescrChangeAddedVotingSigFunction(
+			CElectionDescription descr, VotingSigFunction func) {
+	}
+
+	public default void handleDescrChangeUpdatedFunctionCode(
+			CElectionDescription descr, CElectionDescriptionFunction function,
+			String code) {
+
 	}
 
 }

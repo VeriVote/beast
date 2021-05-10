@@ -13,6 +13,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.CelectionDescriptionFunctionType;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.FileDialogHelper;
@@ -26,8 +27,15 @@ import javafx.scene.Node;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 
 public class CElectionEditor implements WorkspaceUpdateListener {
@@ -48,8 +56,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private BeastWorkspace beastWorkspace;
 
 	private Stage primaryStage;
+	private MenuButton addFunctionMenuButton;
 
-	public CElectionEditor(Stage primaryStage,
+	public CElectionEditor(Stage primaryStage, MenuButton addFunctionMenuButton,
 			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
 			CodeArea closingBracketArea,
 			ListView<CElectionDescriptionFunction> functionList,
@@ -60,6 +69,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				.toExternalForm();
 
 		this.primaryStage = primaryStage;
+		this.addFunctionMenuButton = addFunctionMenuButton;
 
 		this.functionList = functionList;
 		this.loopBoundList = loopBoundList;
@@ -78,6 +88,20 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		this.beastWorkspace = beastWorkspace;
 		this.openedElectionDescriptionChoiceBox = openedElectionDescriptionChoiceBox;
 
+		addFunctionMenuButton.setText("Add Function");
+		addFunctionMenuButton.getItems().clear();
+
+		MenuItem addSimpleFuncMenuItem = new MenuItem(
+				CelectionDescriptionFunctionType.SIMPLE.toString());
+		MenuItem addVotingFuncMenuItem = new MenuItem(
+				CelectionDescriptionFunctionType.VOTING.toString());
+
+		addSimpleFuncMenuItem.setOnAction(e -> addSimpleFunction());
+		addVotingFuncMenuItem.setOnAction(e -> addVotingFunction());
+
+		addFunctionMenuButton.getItems()
+				.addAll(List.of(addSimpleFuncMenuItem, addVotingFuncMenuItem));
+
 		initListViews();
 		initOpenedDescrChoiceBox();
 		handleWorkspaceUpdateGeneric();
@@ -87,6 +111,25 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			beastWorkspace.updateCodeForDescrFunction(currentDescr,
 					currentDisplayedFunction, text);
 		});
+	}
+
+	private void addVotingFunction() {
+		TextField nameField = new TextField();
+		Optional<ButtonType> res = DialogHelper
+				.generateDialog(List.of("name"), List.of(nameField))
+				.showAndWait();
+		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+			String name = nameField.getText();
+			beastWorkspace.addVotingSigFunctionToDescr(currentDescr, name);
+		}
+	}
+
+	private void addSimpleFunction() {
+		TextField nameField = new TextField();
+		// TODO make this nicer
+		TextField returnField = new TextField();
+		TextField argsField = new TextField();
+
 	}
 
 	private void selectedDescrChanged(CElectionDescription descr) {
@@ -103,6 +146,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				});
 	}
 
+	/* ===== handle workspace updates ====== */
+
 	public void handleWorkspaceUpdateGeneric() {
 		openedElectionDescriptionChoiceBox.getItems().clear();
 		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
@@ -111,6 +156,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		openedElectionDescriptionChoiceBox.getSelectionModel().selectLast();
 	}
 
+	@Override
+	public void handleDescrChangeAddedVotingSigFunction(
+			CElectionDescription descr, VotingSigFunction func) {
+		functionList.getItems().add(func);
+	}
+
+	/* ===== other stuff ====== */
 	private void initListViews() {
 		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		functionList.getSelectionModel().selectedItemProperty()
@@ -123,8 +175,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	}
 
-	private void selectedFunctionChanged(CElectionDescriptionFunction newVal) {
-
+	private void selectedFunctionChanged(CElectionDescriptionFunction func) {
+		loadFunction(func);
 	}
 
 	private void populateFunctionList(CElectionDescription descr) {
@@ -149,24 +201,6 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		loopBoundList.setItems(observableList);
 	}
 
-	private String votingInputTypeToCType(VotingInputTypes inputType,
-			String varname) {
-		switch (inputType) {
-			case APPROVAL :
-			case WEIGHTED_APPROVAL :
-			case PREFERENCE :
-				return "unsigned int VAR[AMT_VOTERS][AMT_CANDIDATES]"
-						.replaceAll("VAR", varname)
-						.replaceAll("AMT_VOTERS",
-								beastWorkspace.getCodeGenOptions()
-										.getCbmcAmountVotersVarName())
-						.replaceAll("AMT_CANDIDATES",
-								beastWorkspace.getCodeGenOptions()
-										.getCbmcAmountCandidatesVarName());
-		}
-		return null;
-	}
-
 	private void setLockedColor() {
 		funcDeclArea.setStyleClass(0, funcDeclArea.getLength(),
 				cssLockedClassName);
@@ -180,9 +214,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		closingBracketArea.clear();
 
 		funcDeclArea.insertText(0, func.getDeclCString() + "{");
-		
+
 		electionCodeArea.insertText(0, func.getCode());
-		
+
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
 	}
@@ -196,17 +230,17 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	public void addLoopBound() {
 		throw new NotImplementedException();
 	}
-	
+
 	public void removeLoopBound() {
 		throw new NotImplementedException();
 	}
 
-	public void addFunction() {		
-		throw new NotImplementedException();
+	public void addFunction() {
+
 	}
 
 	public void removeFunction() {
-		throw new NotImplementedException();
+
 	}
 
 	public void createNewDescr() {
@@ -248,7 +282,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		CElectionDescription descr = FileDialogHelper
 				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
 						primaryStage);
-		beastWorkspace.addElectionDescription(descr);
+		if (descr != null)
+			beastWorkspace.addElectionDescription(descr);
 	}
 
 	public void save() {

@@ -67,6 +67,11 @@ public class CBMCTestRunSaverLoaderTest {
 		
 		//TODO more testing
 		assertEquals(r1.getTestOutput(), loadedR1.getTestOutput());
-		assertEquals(r1.getCodeGenOptions(), loadedR1.getCodeGenOptions());
+		assertEquals(r1.getCodeGenOptions().getCbmcAmountCandidatesVarName(), 
+				loadedR1.getCodeGenOptions().getCbmcAmountCandidatesVarName());
+		assertEquals(r1.getCodeGenOptions().getCbmcAmountSeatsVarName(), 
+				loadedR1.getCodeGenOptions().getCbmcAmountSeatsVarName());
+		assertEquals(r1.getCodeGenOptions().getCbmcAmountVotersVarName(), 
+				loadedR1.getCodeGenOptions().getCbmcAmountVotersVarName());
 	}
 }

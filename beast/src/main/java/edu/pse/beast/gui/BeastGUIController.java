@@ -58,6 +58,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private AnchorPane codePane;
 
 	@FXML
+	private MenuButton addFunctionMenuButton;
+
+	@FXML
 	private ListView<LoopBound> loopBoundList;
 
 	@FXML
@@ -187,11 +190,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	}
 
 	@FXML
-	public void addFunction() {
-		cElectionEditor.addFunction();
-	}
-
-	@FXML
 	public void removeFunction() {
 		cElectionEditor.removeFunction();
 	}
@@ -228,13 +226,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		AnchorPane.setLeftAnchor(closingBracketArea, 0d);
 		AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
-		CEditorCodeElement cEditor = new CEditorCodeElement();
+		CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
 		VirtualizedScrollPane<CEditorCodeElement> vsp = new VirtualizedScrollPane(
-				cEditor);
+				cEditorGUIElement);
 		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
 
-		cElectionEditor = new CElectionEditor(primaryStage, cEditor,
-				funcDeclArea, closingBracketArea, functionList, loopBoundList,
+		cElectionEditor = new CElectionEditor(primaryStage,
+				addFunctionMenuButton, cEditorGUIElement, funcDeclArea,
+				closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
 

@@ -57,7 +57,7 @@ public class TestConfiguration {
 		}
 	}
 
-	public void handleDescrCodeChange() {
+	public void handleDescrChange() {
 		for(CBMCPropertyTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
 			cbmctc.handleDescrCodeChange();
 		}

@@ -18,6 +18,7 @@ import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
@@ -271,20 +272,7 @@ public class BeastWorkspace {
 		}
 	}
 
-	public void updateCodeForDescrFunction(CElectionDescription currentDescr,
-			CElectionDescriptionFunction function, String code) {
-		function.setCode(code);
-		descrWithUnsavedChanges.add(currentDescr);
-
-		for (TestConfiguration tc : testConfigList.getTestConfigsByDescr()
-				.get(currentDescr)) {
-			tc.handleDescrCodeChange();
-		}
-
-		for (WorkspaceUpdateListener l : updateListener) {
-			l.handleCodeChangeInDescr(currentDescr, function, code);
-		}
-	}
+	
 
 	public void setErrorHandler(ErrorHandler errorHandler) {
 		this.errorHandler = errorHandler;
@@ -383,6 +371,36 @@ public class BeastWorkspace {
 					getConfigsByPropertyDescription().get(propDescr));
 		}
 		return map;
+	}
+	
+	
+	/*==============CelectionDescription changes==============*/
+	
+	private void handleDescrChange(CElectionDescription descr) {
+		descrWithUnsavedChanges.add(descr);
+
+		for (TestConfiguration tc : testConfigList.getTestConfigsByDescr()
+				.get(descr)) {
+			tc.handleDescrChange();
+		}
+	}
+
+	public void updateCodeForDescrFunction(CElectionDescription descr,
+			CElectionDescriptionFunction function, String code) {
+		function.setCode(code);
+		handleDescrChange(descr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleDescrChangeUpdatedFunctionCode(descr, function, code);
+		}
+	}
+	
+	public void addVotingSigFunctionToDescr(CElectionDescription descr,
+			String name) {
+		VotingSigFunction func = descr.createNewVotingSigFunctionAndAdd(name);
+		handleDescrChange(descr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleDescrChangeAddedVotingSigFunction(descr, func);
+		}
 	}
 
 }
