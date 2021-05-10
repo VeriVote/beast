@@ -68,9 +68,13 @@ public class CBMCCodeGeneratorNEW {
 		
 		LoopBoundHandler loopBoundHandler = descr.getLoopBoundHandler();
 
+		String votingStructVarName = "voteStruct";
+		String resultStructVarName = "resultStruct";
+		
 		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(),
 				descr.getInputType(), descr.getOutputType(), voteArrStruct,
-				voteResultStruct, options, loopBoundHandler));
+				voteResultStruct, options, loopBoundHandler, votingStructVarName,
+				resultStructVarName));
 
 		BooleanExpASTData preAstData = BooleanCodeToAST.generateAST(
 				propDescr.getPreConditionsDescription().getCode(),
@@ -96,13 +100,17 @@ public class CBMCCodeGeneratorNEW {
 		return cbmcGeneratedCode;
 	}
 
-	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func,
+	private static CFunction votingSigFuncToPlainCFunc(
+			VotingSigFunction func,
 			VotingInputTypes votingInputType,
-			VotingOutputTypes votingOutputType, ElectionTypeCStruct inputStruct,
-			ElectionTypeCStruct outputStruct, CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
-
-		String votingStructVarName = "voteStruct";
+			VotingOutputTypes votingOutputType, 
+			ElectionTypeCStruct inputStruct,
+			ElectionTypeCStruct outputStruct, 
+			CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler,
+			String votingStructVarName,
+			String resultStructVarName
+			) {
 
 		List<String> votingFuncArguments = List.of(
 				inputStruct.getStruct().getName() + " " + votingStructVarName);
@@ -111,13 +119,14 @@ public class CBMCCodeGeneratorNEW {
 				outputStruct.getStruct().getName());
 
 		List<String> code = new ArrayList<>();
-
-		String voteArrayVarName = "votes";
-		String resultArrayVarName = "result";
-
+				
 		code.add(VotingFunctionHelper.generateVoteArrayCopy(func.getName(),
-				voteArrayVarName, votingStructVarName, votingInputType,
+				func.getVotesArrayName(), votingStructVarName, votingInputType,
 				inputStruct, options, loopBoundHandler));
+		
+		code.add(FunctionToC.votingTypeToC(
+				CElectionVotingType.of(func.getOutputType()),
+				func.getResultArrayName()).generateCode() + ";");
 
 		code.add("//user generated code");
 
@@ -125,15 +134,16 @@ public class CBMCCodeGeneratorNEW {
 
 		code.add("//end user generated code");
 
-		String resultStructVarName = "resultStruct";
 		code.add(VotingFunctionHelper.generateVoteResultCopy(
 				func.getName(),
-				resultArrayVarName,
+				func.getResultArrayName(),
 				resultStructVarName, 
 				votingOutputType, 
 				outputStruct, 
 				options,
 				loopBoundHandler));
+		
+		code.add("return " + resultStructVarName + ";");
 
 		created.setCode(code);
 		return created;

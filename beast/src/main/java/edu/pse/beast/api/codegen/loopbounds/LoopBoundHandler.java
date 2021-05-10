@@ -27,7 +27,7 @@ public class LoopBoundHandler {
 			funcNameToLoopbounds.put(funcname, new ArrayList<>());
 		}
 		List<LoopBound> list = funcNameToLoopbounds.get(funcname);
-		list.add(new LoopBound(loopBoundType, list.size() - 1, funcname));
+		list.add(new LoopBound(loopBoundType, list.size(), funcname));
 	}
 
 	public void pushMainLoopBounds(List<LoopBoundType> loopboundTypes) {
@@ -101,12 +101,30 @@ public class LoopBoundHandler {
 
 	public void pushVotingLoopBounds(String votingFunctionName,
 			List<LoopBoundType> loopbounds) {
-
+		if (!funcNameToLoopbounds.containsKey(votingFunctionName)) {
+			funcNameToLoopbounds.put(votingFunctionName, new ArrayList<>());
+		}
+		List<LoopBound> list = funcNameToLoopbounds.get(votingFunctionName);
+		for(LoopBoundType type : loopbounds) {
+			list.add(new LoopBound(type, list.size(), votingFunctionName));
+		}
 	}
 
 	public void addVotingInitLoopBounds(String votingFunctionName,
-			List<String> loopbounds) {
-		
+			List<LoopBoundType> loopbounds) {
+		if (!funcNameToLoopbounds.containsKey(votingFunctionName)) {
+			funcNameToLoopbounds.put(votingFunctionName, new ArrayList<>());
+		}
+		List<LoopBound> list = funcNameToLoopbounds.get(votingFunctionName);
+		int idx = 0;
+		for(LoopBoundType type : loopbounds) {
+			addLoopBoundForFunction(
+					votingFunctionName, 
+					idx, 
+					type,
+					Optional.empty());
+			idx++;
+		}
 	}
 
 }

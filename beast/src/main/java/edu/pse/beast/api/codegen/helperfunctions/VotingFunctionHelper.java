@@ -81,7 +81,7 @@ public class VotingFunctionHelper {
 				"LIST_MEMBER", inputStruct.getListName());
 
 		String code = null;		
-		List<String> loopbounds = Arrays.asList();
+		List<LoopBoundType> loopbounds = Arrays.asList();
 
 		switch (votingInputType) {
 			case APPROVAL : {

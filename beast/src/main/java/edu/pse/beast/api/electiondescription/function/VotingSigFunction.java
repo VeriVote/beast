@@ -13,6 +13,7 @@ import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
 public class VotingSigFunction extends CElectionDescriptionFunction {
 	private String name;
 	private String resultArrayName = "result";
+	private String votesArrayName = "votes";
 	private List<String> code = new ArrayList<>();
 	VotingInputTypes inputType;
 	VotingOutputTypes outputType;
@@ -87,6 +88,14 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 				.replaceAll("ARG", arg)
 				.replaceAll("NAME", getName())
 				.replaceAll("RESULT_ARR", resultType.generateCode());
+	}
+	
+	public String getResultArrayName() {
+		return resultArrayName;
+	}
+	
+	public String getVotesArrayName() {
+		return votesArrayName;
 	}
 
 }
