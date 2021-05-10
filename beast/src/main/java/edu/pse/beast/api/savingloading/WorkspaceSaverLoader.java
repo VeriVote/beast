@@ -263,9 +263,14 @@ public class WorkspaceSaverLoader {
 		json.put(TEST_CONFIG_LIST_KEY,
 				testConfigurationListToJSON(ws.getTestConfigList()));
 		json.put(BASE_DIR_FILE_PATH_KEY, ws.getBaseDir().getAbsolutePath());
-		JSONObject cbmcProcessStarterJSON = CBMCProcessStarterSaverLoaderHelper
-				.cbmcProcessStarterToJSON(ws.getCbmcProcessStarter());
-		json.put(CBMC_PROCESS_STARTER_KEY, cbmcProcessStarterJSON);
+			
+		
+		if(ws.getCbmcProcessStarter() != null) {
+			JSONObject cbmcProcessStarterJSON = CBMCProcessStarterSaverLoaderHelper
+					.cbmcProcessStarterToJSON(ws.getCbmcProcessStarter());
+			json.put(CBMC_PROCESS_STARTER_KEY, cbmcProcessStarterJSON);
+		} 
+				
 		return json;
 	}
 
@@ -318,11 +323,14 @@ public class WorkspaceSaverLoader {
 		beastWorkspace.setBaseDir(baseDir);
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
 
-		JSONObject cbmcProcessStarterJSON = json
-				.getJSONObject(CBMC_PROCESS_STARTER_KEY);
-		CBMCProcessHandler ps = CBMCProcessStarterSaverLoaderHelper
-				.cbmcProcessStarterFromJSON(cbmcProcessStarterJSON);
-		beastWorkspace.setCbmcProcessStarter(ps);
+		if(json.has(CBMC_PROCESS_STARTER_KEY)) {
+			JSONObject cbmcProcessStarterJSON = json
+					.getJSONObject(CBMC_PROCESS_STARTER_KEY);
+			CBMCProcessHandler ps = CBMCProcessStarterSaverLoaderHelper
+					.cbmcProcessStarterFromJSON(cbmcProcessStarterJSON);
+			beastWorkspace.setCbmcProcessStarter(ps);
+		}
+		
 
 		beastWorkspace.setWorkspaceFile(f);
 
