@@ -11,9 +11,11 @@ import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
@@ -56,10 +58,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private AnchorPane codePane;
 
 	@FXML
-	private ListView<String> loopBoundList;
+	private ListView<LoopBound> loopBoundList;
 
 	@FXML
-	private ListView<String> functionList;
+	private ListView<CElectionDescriptionFunction> functionList;
 
 	@FXML
 	private TitledPane prePropertyPane;
@@ -127,7 +129,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				"test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
-		descr.addLoopBoundForFunction("voting", 0, "V");
 
 		descr.createNewVotingSigFunctionAndAdd("votehelper");
 

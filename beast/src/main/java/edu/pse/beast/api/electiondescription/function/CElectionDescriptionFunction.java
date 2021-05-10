@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class CElectionDescriptionFunction {
-	private String name;
-	private List<String> code = new ArrayList<>();
+public abstract class CElectionDescriptionFunction {
+	protected String name;
+	protected List<String> code = new ArrayList<>();
 
 	public CElectionDescriptionFunction(String name) {
 		super();
@@ -34,8 +34,6 @@ public class CElectionDescriptionFunction {
 		return code;
 	}
 
-	public String getDeclCString() {
-		return "";
-	}
+	public abstract String getDeclCString();
 
 }

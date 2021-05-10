@@ -15,4 +15,18 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 		this.outputType = outputType;
 	}
 
+	@Override
+	public String getDeclCString() {
+		String template = "RETURN_TYPE NAME(ARGS)";
+		String args = "";
+
+		for (CElectionSimpleTypes st : arguments) {
+			args += st.toString();
+		}
+
+		return template.replaceAll("RETURN_TYPE", outputType.toString())
+				.replaceAll("NAME", getName()).replaceAll("ARGS", args);
+
+	}
+
 }
