@@ -45,19 +45,6 @@ public class CBMCTestRunSaverLoaderHelper {
 		return json;
 	}
 
-	/*
-	 * private CElectionDescription descr; private
-	 * PreAndPostConditionsDescription propDescr;
-	 * 
-	 * private CBMCPropertyCheckWorkUnit workUnit;
-	 * 
-	 * private int V; private int S; private int C;
-	 * 
-	 * private CodeGenOptions codeGenOptions; private List<LoopBound>
-	 * loopbounds; ;
-	 * 
-	 */
-
 	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run) {
 		JSONObject json = new JSONObject();
 

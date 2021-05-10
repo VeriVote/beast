@@ -25,7 +25,9 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private int C;
 
 	private CodeGenOptions codeGenOptions;
-	private List<LoopBound> loopbounds;
+
+	private List<LoopBound> loopboundList;
+
 	private CBMCCodeFileData cbmcCodeFile;
 
 	private List<String> testOutput = new ArrayList<>();
@@ -47,11 +49,11 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.cbmcCodeFile = cbmcCodeFile;
 		this.descr = descr;
 		this.propDescr = propDescr;
-		this.loopbounds = loopbounds;
+		this.loopboundList = loopbounds;
 	}
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
-		workUnit.initialize(V, S, C, codeGenOptions, loopbounds,
+		workUnit.initialize(V, S, C, codeGenOptions, loopboundList,
 				cbmcCodeFile, descr, propDescr, this);
 		this.workUnit = workUnit;
 	}
@@ -143,8 +145,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 	}
 
 	public void updateDataForCheck(CBMCCodeFileData cbmcFile,
-			String loopboundString) {
-		workUnit.updateDataForCheck(cbmcFile, loopboundString);
+			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions) {
+		workUnit.updateDataForCheck(cbmcFile, loopBounds, codeGenOptions);
 		descrChanged = false;
 		propDescrChanged = false;
 		updateGui();
