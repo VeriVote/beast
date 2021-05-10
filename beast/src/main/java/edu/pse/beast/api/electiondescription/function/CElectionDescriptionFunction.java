@@ -34,4 +34,8 @@ public class CElectionDescriptionFunction {
 		return code;
 	}
 
+	public String getDeclCString() {
+		return "";
+	}
+
 }

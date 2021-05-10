@@ -77,5 +77,15 @@ public class LoopBoundHandler {
 		List<LoopBound> list = funcNameToLoopbounds.get(functionName);
 		list.removeIf(lb -> lb.getIndex() == loopBound.getIndex());
 	}
+	
+	public List<LoopBound> getLoopBoundsAsList() {
+		List<LoopBound> list = new ArrayList();
+		
+		for(List<LoopBound> functionLBs : funcNameToLoopbounds.values()) {
+			list.addAll(functionLBs);
+		}
+		
+		return list;
+	}
 
 }

@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.savingloading.testruns.CBMCTestRunSaverLoaderHelper;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -21,7 +19,6 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
-import edu.pse.beast.highlevel.BEASTCommunicator;
 
 public class WorkspaceSaverLoader {
 	private static final String BASE_DIR_FILE_PATH_KEY = "base_dir_file";
@@ -248,7 +245,6 @@ public class WorkspaceSaverLoader {
 		TestConfigurationList testConfigurationList = new TestConfigurationList();
 
 		for (int i = 0; i < arr.length(); ++i) {
-
 			testConfigurationList.add(testConfigFromJson(arr.getJSONObject(i),
 					descrs, propDescrs));
 		}

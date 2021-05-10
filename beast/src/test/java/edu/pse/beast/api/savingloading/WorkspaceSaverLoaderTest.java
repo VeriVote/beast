@@ -32,7 +32,7 @@ public class WorkspaceSaverLoaderTest {
 				"test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
-		descr.addLoopBoundForFunction("voting", 0, "V");
+		
 
 		descr.createNewVotingSigFunctionAndAdd("votehelper");
 
@@ -101,7 +101,7 @@ public class WorkspaceSaverLoaderTest {
 
 		beastWorkspace.addTestConfiguration(testConfig);
 		
-		beastWorkspace.setCbmcProcessStarter(new CBMCProcessHandlerWindows());
+		beastWorkspace.setCbmcProcessStarter(new CBMCProcessHandlerWindows(""));
 
 		File f = new File("testfiles");
 		f.mkdirs();
