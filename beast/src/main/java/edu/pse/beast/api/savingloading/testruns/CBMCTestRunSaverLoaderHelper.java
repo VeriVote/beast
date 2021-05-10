@@ -56,9 +56,9 @@ public class CBMCTestRunSaverLoaderHelper {
 	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run) {
 		JSONObject json = new JSONObject();
 
-		json.put(AMT_VOTER_KEY, run.getWorkUnit().getV());
-		json.put(AMT_CANDS_KEY, run.getWorkUnit().getC());
-		json.put(AMT_SEATS_KEY, run.getWorkUnit().getS());
+		json.put(AMT_VOTER_KEY, run.getV());
+		json.put(AMT_CANDS_KEY, run.getC());
+		json.put(AMT_SEATS_KEY, run.getS());
 
 		json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
 		json.put(CBMC_CODE_FILE_DATA_KEY, CBMCCodeFileDataSaverLoaderHelper

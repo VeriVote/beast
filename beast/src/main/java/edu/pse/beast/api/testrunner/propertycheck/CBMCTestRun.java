@@ -173,4 +173,28 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.codeGenOptions = codeGenOptions;
 	}
 
+	public int getV() {
+		return V;
+	}
+
+	public int getS() {
+		return S;
+	}
+
+	public int getC() {
+		return C;
+	}
+
+	public void setV(int v) {
+		V = v;
+	}
+
+	public void setS(int s) {
+		S = s;
+	}
+
+	public void setC(int c) {
+		C = c;
+	}
+
 }
