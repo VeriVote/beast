@@ -18,5 +18,4 @@ public class FunctionToC {
 				TypeManager.SimpleTypeToCType(type.getSimpleType()), name,
 				arrayBracks);
 	}
-
 }

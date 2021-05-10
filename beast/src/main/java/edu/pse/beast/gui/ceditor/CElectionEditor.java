@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
-import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
@@ -23,25 +22,19 @@ import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 
 public class CElectionEditor implements WorkspaceUpdateListener {
@@ -63,9 +56,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	private Stage primaryStage;
 	private MenuButton addFunctionMenuButton;
-
-	public CElectionEditor(Stage primaryStage, MenuButton addFunctionMenuButton,
-			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
+	private VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp;
+	
+	
+	public CElectionEditor(Stage primaryStage, 
+			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
+			MenuButton addFunctionMenuButton,
+			CEditorCodeElement electionCodeArea, 
+			CodeArea funcDeclArea,
 			CodeArea closingBracketArea,
 			ListView<CElectionDescriptionFunction> functionList,
 			ListView<LoopBound> loopBoundList,
@@ -73,7 +71,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
-
+		
 		this.primaryStage = primaryStage;
 		this.addFunctionMenuButton = addFunctionMenuButton;
 
@@ -83,6 +81,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		this.electionCodeArea = electionCodeArea;
 		this.funcDeclArea = funcDeclArea;
 		this.closingBracketArea = closingBracketArea;
+		this.cEditorGUIElementVsp = cEditorGUIElementVsp;
 
 		this.funcDeclArea.setEditable(false);
 		this.closingBracketArea.setEditable(false);
@@ -275,7 +274,17 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		funcDeclArea.clear();
 		closingBracketArea.clear();
 
-		funcDeclArea.insertText(0, func.getDeclCString() + "{");
+		String declText = func.getDeclCString();
+		funcDeclArea.insertText(0, declText);
+		int amtLinesInDecl = declText.split("\n").length;
+		
+		//TODO(Holger) move this into an CeditorOptions Object
+		double currentTextSize = 20;
+		
+		AnchorPane.setTopAnchor(
+				cEditorGUIElementVsp, 
+				currentTextSize * amtLinesInDecl);
+		
 
 		electionCodeArea.insertText(0, func.getCode());
 

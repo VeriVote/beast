@@ -227,14 +227,20 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
 		CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
-		VirtualizedScrollPane<CEditorCodeElement> vsp = new VirtualizedScrollPane(
+		VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp = new VirtualizedScrollPane(
 				cEditorGUIElement);
-		addChildToAnchorPane(codePane, vsp, 20, 100, 0, 0);
+		addChildToAnchorPane(codePane, cEditorGUIElementVsp, 20, 100, 0, 0);
 
-		cElectionEditor = new CElectionEditor(primaryStage,
-				addFunctionMenuButton, cEditorGUIElement, funcDeclArea,
-				closingBracketArea, functionList, loopBoundList,
-				openedElectionDescriptionChoiceBox, beastWorkspace);
+		cElectionEditor = new CElectionEditor(
+				primaryStage,
+				cEditorGUIElementVsp,
+				addFunctionMenuButton, 
+				cEditorGUIElement, 
+				funcDeclArea,
+				closingBracketArea, 
+				functionList, loopBoundList,
+				openedElectionDescriptionChoiceBox,
+				beastWorkspace);
 	}
 
 	private void initPropertyEditor() {

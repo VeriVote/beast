@@ -49,9 +49,6 @@ public class CBMCCodeGeneratorNEW {
 		created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
 		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());
 
-		TypeManager typeManager = new TypeManager();
-		created.addTypeDef(typeManager.getTypeDefs());
-
 		CElectionVotingType votesNakedArr = CElectionVotingType
 				.of(descr.getVotingFunction().getInputType());
 		CElectionVotingType resultNakedArr = CElectionVotingType

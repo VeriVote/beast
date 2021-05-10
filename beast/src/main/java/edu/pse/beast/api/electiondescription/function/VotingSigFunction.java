@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
+import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
 
 public class VotingSigFunction extends CElectionDescriptionFunction {
 	private String name;
-	private String outputArrayName = "result";
+	private String resultArrayName = "result";
 	private List<String> code = new ArrayList<>();
 	VotingInputTypes inputType;
 	VotingOutputTypes outputType;
@@ -34,9 +37,12 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 		return outputType;
 	}
 
+	//TODO(Holger) This can be moves somewhere else, just dont know where yet.
+	//Probably together with the rest of code generation.
 	@Override
 	public String getDeclCString() {
-		String template = "RETURN_TYPE NAME(ARG)";
+		String template = "RETURN_TYPE NAME(ARG) {\n" 
+							+"    RESULT_ARR;";
 
 		String returnType = "";
 		switch (outputType) {
@@ -71,11 +77,16 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 			case SINGLE_CHOICE_STACK :
 				arg = "unsigned int[C] votes";
 				break;
-
 		}
 
-		return template.replaceAll("RETURN_TYPE", returnType)
-				.replaceAll("ARG", arg).replaceAll("NAME", getName());
+		CTypeNameBrackets resultType = FunctionToC.votingTypeToC(
+				CElectionVotingType.of(outputType), resultArrayName);
+
+		return template
+				.replaceAll("RETURN_TYPE", returnType)
+				.replaceAll("ARG", arg)
+				.replaceAll("NAME", getName())
+				.replaceAll("RESULT_ARR", resultType.generateCode());
 	}
 
 }

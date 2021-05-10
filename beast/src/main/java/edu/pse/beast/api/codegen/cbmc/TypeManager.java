@@ -16,14 +16,6 @@ public class TypeManager {
 		return null;
 	}
 
-	public List<CTypeDef> getTypeDefs() {
-		return List.of(
-				new CTypeDef(SimpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT),
-						SimpleTypeToCType(CElectionSimpleTypes.RESULT)),
-				new CTypeDef(SimpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT),
-						SimpleTypeToCType(CElectionSimpleTypes.VOTE)));
-	}
-
 	public void add(ElectionTypeCStruct electionTypeCStruct) {
 		this.elecTypeCStructs.add(electionTypeCStruct);
 	}
@@ -40,8 +32,6 @@ public class TypeManager {
 			return "unsigned int";
 		case VOTE:
 			return "Vote";
-		case RESULT:
-			return "VoteResult";
 		case VOID:
 			return "void";
 		case BOOL:

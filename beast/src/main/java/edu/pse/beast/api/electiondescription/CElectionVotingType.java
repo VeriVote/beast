@@ -64,22 +64,22 @@ public class CElectionVotingType {
 		CElectionVotingType created = new CElectionVotingType();
 		switch (outType) {
 		case CANDIDATE_LIST:
-			created.simpleType = CElectionSimpleTypes.RESULT;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_CANDIDATES);
 			break;
 		case PARLIAMENT:
-			created.simpleType = CElectionSimpleTypes.RESULT;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_CANDIDATES);
 			break;
 		case PARLIAMENT_STACK:
-			created.simpleType = CElectionSimpleTypes.RESULT;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_CANDIDATES);
 			break;
 		case SINGLE_CANDIDATE:
-			created.simpleType = CElectionSimpleTypes.RESULT;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 0;
 			created.listSizes = List.of();
 			break;
