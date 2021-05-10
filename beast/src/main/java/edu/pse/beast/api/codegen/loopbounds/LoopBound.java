@@ -66,5 +66,9 @@ public class LoopBound {
 	public void setFunctionName(String functionName) {
 		this.functionName = functionName;
 	}
+	
+	public Optional<Integer> getManualLoopBoundIfPresent() {
+		return manualLoopBoundIfPresent;
+	}
 
 }

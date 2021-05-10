@@ -11,7 +11,6 @@ import org.junit.Test;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
-import edu.pse.beast.api.savingloading.testruns.LoopBoundHandlerSaverLoaderHelper;
 
 public class LoopBoundHandlerSaverLoaderTest {
 

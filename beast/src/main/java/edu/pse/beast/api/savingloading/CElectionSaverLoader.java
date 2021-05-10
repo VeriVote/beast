@@ -18,7 +18,6 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
-import edu.pse.beast.api.savingloading.testruns.LoopBoundHandlerSaverLoaderHelper;
 
 public class CElectionSaverLoader {
 	private static final int CURRENT_VERSION = 1;

@@ -9,78 +9,91 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.FileAttribute;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.SymbolicCBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIndexException;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
-	
-	
+
 	@Test
-	public void testSavingLoadingOfElectionDescription() 
-			throws IOException {
-		String bordaCode = 
-				  "    unsigned int i = 0;\n"
-				+ "    unsigned int j = 0;\n"
-				+ "\n"
-				+ "    for (i = 0; i < C; i++) {\n"
-				+ "        result[i] = 0;\n"
-				+ "    }\n"
-				+ "    for (i = 0; i < V; i++) {\n"
+	public void testSavingLoadingOfElectionDescription() throws IOException {
+		String bordaCode = "    unsigned int i = 0;\n"
+				+ "    unsigned int j = 0;\n" + "\n"
+				+ "    for (i = 0; i < C; i++) {\n" + "        result[i] = 0;\n"
+				+ "    }\n" + "    for (i = 0; i < V; i++) {\n"
 				+ "        for (j = 0; j < C; j++) {\n"
 				+ "            if (votes[i][j] < C) {\n"
 				+ "                result[votes[i][j]] += (C - j) - 1;\n"
-				+ "            }\n"
-				+ "        }\n"
-				+ "    }";
-		
-		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
-		String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
-		
+				+ "            }\n" + "        }\n" + "    }";
+
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.PREFERENCE,
-				VotingOutputTypes.CANDIDATE_LIST,
+				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
 				"borda");
+
 		descr.getVotingFunction().getCodeAsList().add(bordaCode);
-	
+		try {
+			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
+					0, LoopBoundType.LOOP_BOUND_AMT_VOTERS, Optional.empty());
+			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
+					1, LoopBoundType.LOOP_BOUND_AMT_SEATS, Optional.empty());
+			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
+					2, LoopBoundType.LOOP_BOUND_AMT_CANDS, Optional.empty());
+			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
+					3, LoopBoundType.MANUALLY_ENTERED_INTEGER,
+					Optional.of(100));
+		} catch (FunctionAlreadyContainsLoopboundAtIndexException e) {
+			e.printStackTrace();
+		}
+
 		File f = new File("testfiles");
 		f.mkdirs();
 		f = new File("testfiles/borda.belec");
 		SavingLoadingInterface.storeCElection(descr, f);
-		
-		CElectionDescription loadedDescr = SavingLoadingInterface.loadCElection(f);
-		
+
+		CElectionDescription loadedDescr = SavingLoadingInterface
+				.loadCElection(f);
+
 		assertEquals(descr.getInputType(), loadedDescr.getInputType());
 		assertEquals(descr.getOutputType(), loadedDescr.getOutputType());
-		assertEquals(descr.getVotingFunction().getName(), loadedDescr.getVotingFunction().getName());
-		assertEquals(descr.getVotingFunction().getCode(), loadedDescr.getVotingFunction().getCode());
+		assertEquals(descr.getVotingFunction().getName(),
+				loadedDescr.getVotingFunction().getName());
+		assertEquals(descr.getVotingFunction().getCode(),
+				loadedDescr.getVotingFunction().getCode());
 	}
-	
+
 	@Test
-	public void testSavingLoadingOfPreAndPostConditionDescription() throws IOException {
+	public void testSavingLoadingOfPreAndPostConditionDescription()
+			throws IOException {
 		String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
 		String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
-		
-		List<PreAndPostConditionsDescription> propDecsr =
-				CreationHelper.createSimpleCondList("reinforce", pre, post);
-		
-		propDecsr.get(0).getCbmcVariables().add(new SymbolicCBMCVar("v1", CBMCVarType.VOTER));
-		propDecsr.get(0).getCbmcVariables().add(new SymbolicCBMCVar("v2", CBMCVarType.VOTER));
-		propDecsr.get(0).getCbmcVariables().add(new SymbolicCBMCVar("c", CBMCVarType.CANDIDATE));
+
+		List<PreAndPostConditionsDescription> propDecsr = CreationHelper
+				.createSimpleCondList("reinforce", pre, post);
+
+		propDecsr.get(0).getCbmcVariables()
+				.add(new SymbolicCBMCVar("v1", CBMCVarType.VOTER));
+		propDecsr.get(0).getCbmcVariables()
+				.add(new SymbolicCBMCVar("v2", CBMCVarType.VOTER));
+		propDecsr.get(0).getCbmcVariables()
+				.add(new SymbolicCBMCVar("c", CBMCVarType.CANDIDATE));
 
 		File f = new File("testfiles");
 		f.mkdirs();
 		f = new File("testfiles/reinforcement.bprp");
-		SavingLoadingInterface.storePreAndPostConditionDescription(propDecsr.get(0), f);
-		PreAndPostConditionsDescription loadedPropDescr = 
-				SavingLoadingInterface.loadPreAndPostConditionDescription(f);
+		SavingLoadingInterface
+				.storePreAndPostConditionDescription(propDecsr.get(0), f);
+		PreAndPostConditionsDescription loadedPropDescr = SavingLoadingInterface
+				.loadPreAndPostConditionDescription(f);
 		assertEquals(propDecsr.get(0), loadedPropDescr);
 	}
 }
