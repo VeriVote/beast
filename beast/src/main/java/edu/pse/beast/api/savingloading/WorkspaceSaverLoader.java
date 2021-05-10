@@ -35,9 +35,6 @@ public class WorkspaceSaverLoader {
 
 	private static final String TEST_CONFIG_LIST_KEY = "test_config_list";
 
-	private static final String AMT_VOTER_VAR_NAME_KEY = "amount_voter_var_name";
-	private static final String AMT_CANDS_VAR_NAME_KEY = "amount_cands_var_name";
-	private static final String AMT_SEATS_VAR_NAME_KEY = "amount_seats_var_name";
 
 	private static final String DESCR_UUID_KEY = "descr_uuid";
 	private static final String PROP_DESCR_UUID_KEY = "prop_descr_uuid";
@@ -63,29 +60,6 @@ public class WorkspaceSaverLoader {
 			arr.put(f.getAbsolutePath());
 		}
 		return arr;
-	}
-
-	private static JSONObject codeGenOptionsToJSON(CodeGenOptions opts) {
-		JSONObject json = new JSONObject();
-
-		json.put(AMT_VOTER_VAR_NAME_KEY, opts.getCbmcAmountVotersVarName());
-		json.put(AMT_CANDS_VAR_NAME_KEY, opts.getCbmcAmountCandidatesVarName());
-		json.put(AMT_SEATS_VAR_NAME_KEY, opts.getCbmcAmountSeatsVarName());
-
-		return json;
-	}
-
-	private static CodeGenOptions genCodeGenOptions(JSONObject json) {
-		CodeGenOptions codeGenOptions = new CodeGenOptions();
-		String amtVoters = json.getString(AMT_VOTER_VAR_NAME_KEY);
-		String amtCand = json.getString(AMT_CANDS_VAR_NAME_KEY);
-		String amtSeats = json.getString(AMT_SEATS_VAR_NAME_KEY);
-
-		codeGenOptions.setCbmcAmountVotersVarName(amtVoters);
-		codeGenOptions.setCbmcAmountCandidatesVarName(amtCand);
-		codeGenOptions.setCbmcAmountSeatsVarName(amtSeats);
-
-		return codeGenOptions;
 	}
 
 	private static JSONObject cbmcTestConfigToJSON(
@@ -288,8 +262,8 @@ public class WorkspaceSaverLoader {
 				fileCollectionToJsonArr(ws.getFilesPerDescr().values()));
 		json.put(PROP_DESCR_FILES_KEY,
 				fileCollectionToJsonArr(ws.getFilesPerPropDescr().values()));
-		json.put(CODE_GEN_OPTIONS_KEY,
-				codeGenOptionsToJSON(ws.getCodeGenOptions()));
+		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
+				.codeGenOptionsToJSON(ws.getCodeGenOptions()));
 		json.put(TEST_CONFIG_LIST_KEY,
 				testConfigurationListToJSON(ws.getTestConfigList()));
 		json.put(BASE_DIR_FILE_PATH_KEY, ws.getBaseDir().getAbsolutePath());
@@ -335,8 +309,9 @@ public class WorkspaceSaverLoader {
 			beastWorkspace.addFileForPropDescr(loadedPropDescr, propDescrFile);
 		}
 
-		CodeGenOptions codeGenOptions = genCodeGenOptions(
-				json.getJSONObject(CODE_GEN_OPTIONS_KEY));
+		CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
+				.codeGenOptionsFromJSON(
+						json.getJSONObject(CODE_GEN_OPTIONS_KEY));
 		String baseDirAbsPath = json.getString(BASE_DIR_FILE_PATH_KEY);
 		File baseDir = new File(baseDirAbsPath);
 

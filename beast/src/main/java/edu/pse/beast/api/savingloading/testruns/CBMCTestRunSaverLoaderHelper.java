@@ -39,9 +39,9 @@ public class CBMCTestRunSaverLoaderHelper {
 		json.put(CBMC_TEST_RUN_CBMC_FILE_PATH_KEY,
 				cbmcCodeFileData.getFile().getAbsolutePath());
 		json.put(CBMC_GENERATED_CODE_INFO_KEY,
-				CBMCGeneratedCodeInfoSaverLoaderHelper
-						.generatedCodeInfoToJSON(cbmcCodeFileData.getCodeInfo()));		
-		
+				CBMCGeneratedCodeInfoSaverLoaderHelper.generatedCodeInfoToJSON(
+						cbmcCodeFileData.getCodeInfo()));
+
 		return json;
 	}
 
@@ -54,9 +54,8 @@ public class CBMCTestRunSaverLoaderHelper {
 	 * private int V; private int S; private int C;
 	 * 
 	 * private CodeGenOptions codeGenOptions; private List<LoopBound>
-	 * loopbounds; private CBMCCodeFile cbmcCodeFile;
+	 * loopbounds; ;
 	 * 
-	 * private List<String> testOutput = new ArrayList<>();
 	 */
 
 	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run) {
@@ -69,6 +68,7 @@ public class CBMCTestRunSaverLoaderHelper {
 		json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
 		json.put(TEST_CODE_FILE_KEY,
 				cbmcCodeFileToJSONObject(run.getCbmcCodeFile()));
+		
 		
 
 		return json;
