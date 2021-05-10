@@ -19,20 +19,22 @@ public class LoopBoundHandler {
 		this.funcNameToLoopbounds = funcNameToLoopbounds;
 	}
 
-	public void pushLoopBound(String funcname, int index,
-			LoopBoundType loopBoundType) {
+	public void pushLoopBound(String funcname, LoopBoundType loopBoundType) {
 		if (!funcNameToLoopbounds.containsKey(funcname)) {
 			funcNameToLoopbounds.put(funcname, new ArrayList<>());
 		}
-		funcNameToLoopbounds.get(funcname)
-				.add(new LoopBound(loopBoundType, index, funcname));
+		List<LoopBound> list = funcNameToLoopbounds.get(funcname);
+		list.add(new LoopBound(loopBoundType, list.size() - 1, funcname));
 	}
 
-	public void pushLoopBounds(String funcname, List<LoopBound> loopbounds) {
+	public void pushLoopBounds(String funcname,
+			List<LoopBoundType> loopboundTypes) {
 		if (!funcNameToLoopbounds.containsKey(funcname)) {
 			funcNameToLoopbounds.put(funcname, new ArrayList<>());
 		}
-		funcNameToLoopbounds.get(funcname).addAll(loopbounds);
+		for (LoopBoundType t : loopboundTypes) {
+			pushLoopBound(funcname, t);
+		}
 	}
 
 	private void sortLoopBoundListByIndex(List<LoopBound> list) {
