@@ -54,22 +54,23 @@ public class LoopBoundHandler {
 		}
 	}
 
-	public void addLoopBoundForFunction(String functionName, int loopIndex,
+	public LoopBound addLoopBoundForFunction(String functionName, int loopIndex,
 			LoopBoundType loopBoundType,
-			Optional<Integer> manualLoopBoundIfPresent)
-			throws FunctionAlreadyContainsLoopboundAtIndexException {
+			Optional<Integer> manualLoopBoundIfPresent){
 		if (!funcNameToLoopbounds.containsKey(functionName)) {
 			funcNameToLoopbounds.put(functionName, new ArrayList<>());
 		}
 		List<LoopBound> list = funcNameToLoopbounds.get(functionName);
 		for (LoopBound lb : list) {
-			if (lb.getIndex() == loopIndex) {
-				throw new FunctionAlreadyContainsLoopboundAtIndexException(lb);
+			if (lb.getIndex() >= loopIndex) {
+				lb.incrementIndex();
 			}
 		}
-		list.add(new LoopBound(loopBoundType, loopIndex, functionName,
-				manualLoopBoundIfPresent));
+		LoopBound lb = new LoopBound(loopBoundType, loopIndex, functionName,
+				manualLoopBoundIfPresent);
+		list.add(lb);
 		sortLoopBoundListByIndex(list);
+		return lb;
 	}
 
 	public void removeLoopBoundForFunction(String functionName,

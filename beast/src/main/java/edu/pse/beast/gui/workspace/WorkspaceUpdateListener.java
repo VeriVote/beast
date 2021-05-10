@@ -3,6 +3,7 @@ package edu.pse.beast.gui.workspace;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
@@ -42,6 +43,11 @@ public interface WorkspaceUpdateListener {
 	public default void handleDescrChangeRemovedFunction(
 			CElectionDescription descr, CElectionDescriptionFunction func) {
 
+	}
+
+	public default void handleDescrChangeAddedLoopBound(CElectionDescription descr,
+			CElectionDescriptionFunction func, LoopBound lb) {
+		
 	}
 
 }

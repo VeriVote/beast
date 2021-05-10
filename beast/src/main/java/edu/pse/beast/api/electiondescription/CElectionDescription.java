@@ -1,23 +1,17 @@
 package edu.pse.beast.api.electiondescription;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIndexException;
+import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
 public class CElectionDescription {
@@ -89,13 +83,12 @@ public class CElectionDescription {
 		return outputType;
 	}
 
-	public List<LoopBound> getLoopBoundsForFunction(String name) {
-		return loopBoundHandler.getLoopBoundsForFunction(name);
+	public List<LoopBound> getLoopBoundsForFunction(CElectionDescriptionFunction func) {
+		return loopBoundHandler.getLoopBoundsForFunction(func.getName());
 	}
 
 	public void addLoopBoundForFunction(String functionName, int loopIndex,
-			LoopBoundType type, Optional<Integer> manualLoopBoundIfPresent)
-			throws FunctionAlreadyContainsLoopboundAtIndexException {
+			LoopBoundType type, Optional<Integer> manualLoopBoundIfPresent) {
 		loopBoundHandler.addLoopBoundForFunction(functionName, loopIndex, type,
 				manualLoopBoundIfPresent);
 	}

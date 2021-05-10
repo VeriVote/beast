@@ -3,19 +3,20 @@ package edu.pse.beast.gui.workspace;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
@@ -27,13 +28,11 @@ import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMC
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.CBMCProcessHandlerGetter;
-import edu.pse.beast.gui.ErrorDialogHelper;
 import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
-import javafx.stage.FileChooser;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
@@ -425,6 +424,25 @@ public class BeastWorkspace {
 				l.handleDescrChangeRemovedFunction(descr, func);
 			}
 		}
+	}
+
+	public void addLoopBoundForFunction(CElectionDescription descr,
+			CElectionDescriptionFunction func,
+			int loopIndex, 
+			LoopBoundType loopBoundType, 
+			Optional<Integer> manualLoopBoundIfPresent) {
+		
+		LoopBound lb = descr.getLoopBoundHandler().addLoopBoundForFunction(
+				func.getName(), 
+				loopIndex, 
+				loopBoundType, 
+				manualLoopBoundIfPresent);
+		
+		handleDescrChange(descr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleDescrChangeAddedLoopBound(descr, func, lb);
+		}
+
 	}
 
 }

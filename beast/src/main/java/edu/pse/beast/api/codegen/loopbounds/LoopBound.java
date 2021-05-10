@@ -71,4 +71,8 @@ public class LoopBound {
 		return manualLoopBoundIfPresent;
 	}
 
+	public void incrementIndex() {
+		this.index++;		
+	}
+
 }

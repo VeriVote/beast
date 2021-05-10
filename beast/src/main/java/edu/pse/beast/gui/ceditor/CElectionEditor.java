@@ -11,6 +11,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
@@ -222,6 +223,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		}
 	}
 
+	@Override
+	public void handleDescrChangeAddedLoopBound(CElectionDescription descr,
+			CElectionDescriptionFunction func, LoopBound lb) {
+		if(descr == currentDescr && func == currentDisplayedFunction) {
+			populateLoopBoundList(descr.getLoopBoundsForFunction(currentDisplayedFunction));
+		}
+	}
+	
 	/* ===== other stuff ====== */
 	private void initListViews() {
 		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -290,6 +299,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
+		
+		populateLoopBoundList(currentDescr.getLoopBoundsForFunction(func));
 	}
 
 	public void loadElectionDescr(CElectionDescription descr) {
@@ -299,7 +310,41 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	public void addLoopBound() {
-		throw new NotImplementedException();
+		ChoiceBox<LoopBoundType> typeBox = new ChoiceBox<>();
+		TextField indexTextField = new TextField();
+		TextField customBoundField = new TextField();
+		customBoundField.setVisible(false);
+		
+		typeBox.getItems().addAll(LoopBoundType.values());
+		typeBox.getSelectionModel().selectedItemProperty().addListener((o, oldval, newval) -> {
+			if(newval == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+				customBoundField.setVisible(true);
+			} else {
+				customBoundField.setVisible(false);
+			}
+		});
+		typeBox.getSelectionModel().selectFirst();
+		
+		Optional<ButtonType> res = DialogHelper.generateDialog(
+				List.of("type", "index", "custom bound if selected"),
+				List.of(typeBox, indexTextField, customBoundField)).showAndWait();
+		if(res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+			String indexString = indexTextField.getText();
+			int index = Integer.valueOf(indexString);
+			LoopBoundType type = typeBox.getValue();
+
+			Optional<Integer> manual = Optional.empty();
+			
+			if(type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+				String customString = customBoundField.getText();
+				int custom = Integer.valueOf(customString); 
+				manual = Optional.of(custom);
+			}
+			
+			beastWorkspace.addLoopBoundForFunction(currentDescr, currentDisplayedFunction, 
+					index, 
+					type, manual);				
+		}
 	}
 
 	public void removeLoopBound() {
