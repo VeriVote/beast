@@ -21,7 +21,6 @@ module edu.pse.beast {
     exports edu.pse.beast.types;
     exports edu.pse.beast.booleanexpeditor.booleanexpcodearea;
     exports edu.pse.beast.codearea.useractions;
-    exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
     exports edu.pse.beast.highlevel.javafx;   
     exports edu.pse.beast.gui;
     exports edu.pse.beast.saverloader.staticsaverloaders;
@@ -32,7 +31,6 @@ module edu.pse.beast {
     exports edu.pse.beast.types.cbmctypes.outputplugins;
     exports edu.pse.beast.highlevel;
     exports edu.pse.beast.electionsimulator.model;
-    exports edu.pse.beast.celectiondescriptioneditor.electiontemplates;
     exports edu.pse.beast.parametereditor;
     exports edu.pse.beast.pluginmanager;
     exports edu.pse.beast.codearea.autocompletion;
@@ -43,13 +41,11 @@ module edu.pse.beast {
     exports edu.pse.beast.toolbox.antlr.booleanexp.generateast;
     exports edu.pse.beast.toolbox.valueContainer;
     exports edu.pse.beast.codearea.actionlist.textaction;
-    exports edu.pse.beast.celectiondescriptioneditor.view;
     exports edu.pse.beast.codearea.actionlist;
     exports edu.pse.beast.booleanexpeditor.view;
     exports edu.pse.beast.options.codeareaoptions;
     exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
     exports edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
-    exports edu.pse.beast.celectiondescriptioneditor;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
     exports edu.pse.beast.highlevel.javafx.resultpresenter;
     exports edu.pse.beast.datatypes.propertydescription;
@@ -67,7 +63,6 @@ module edu.pse.beast {
     exports edu.pse.beast.datatypes.electiondescription;
     exports edu.pse.beast.booleanexpeditor;
     exports edu.pse.beast.datatypes.electioncheckparameter;
-    exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr;
 
     requires transitive com.google.gson;
     requires com.sun.jna;

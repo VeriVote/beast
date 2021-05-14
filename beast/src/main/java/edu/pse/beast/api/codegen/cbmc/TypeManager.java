@@ -30,8 +30,6 @@ public class TypeManager {
 			return "float";
 		case UNSIGNED_INT:
 			return "unsigned int";
-		case VOTE:
-			return "Vote";
 		case VOID:
 			return "void";
 		case BOOL:

@@ -93,28 +93,28 @@ public class CElectionVotingType {
 		CElectionVotingType created = new CElectionVotingType();
 		switch (inType) {
 		case APPROVAL:
-			created.simpleType = CElectionSimpleTypes.VOTE;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
 			break;
 		case PREFERENCE:
-			created.simpleType = CElectionSimpleTypes.VOTE;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
 			created.uniqueVotes = true;
 			break;
 		case SINGLE_CHOICE:
-			created.simpleType = CElectionSimpleTypes.VOTE;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS);
 			break;
 		case SINGLE_CHOICE_STACK:
-			created.simpleType = CElectionSimpleTypes.VOTE;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 1;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS);
 			break;
 		case WEIGHTED_APPROVAL:
-			created.simpleType = CElectionSimpleTypes.VOTE;
+			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 2;
 			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
 			break;
