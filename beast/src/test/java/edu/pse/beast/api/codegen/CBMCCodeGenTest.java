@@ -69,7 +69,7 @@ public class CBMCCodeGenTest {
 		options.setCbmcAmountCandidatesVarName("C");
 		options.setCbmcAmountVotersVarName("V");
 		
-		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGeneratorNEW.generateCode(
+		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, options);
 		System.out.println(codeInfo.getCode());
 		List<LoopBound> lbsVoting = descr.getLoopBoundsForFunction(descr.getVotingFunction());

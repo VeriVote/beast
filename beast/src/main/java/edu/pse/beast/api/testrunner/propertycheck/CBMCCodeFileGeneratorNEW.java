@@ -35,7 +35,7 @@ public class CBMCCodeFileGeneratorNEW {
 			CodeGenOptions options, LoopBoundHandler loopBoundHandler)
 			throws IOException {
 
-		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW.generateCode(descr,
+		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(descr,
 				propDescr, options);
 
 		final String absolutePath = SuperFolderFinder.getSuperFolder()

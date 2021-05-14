@@ -33,8 +33,14 @@ public class CBMCCodeGeneratorNEW {
 	private final static String INT = "int";
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
-
-	public static CBMCGeneratedCodeInfo generateCode(
+	
+	
+	public static CBMCGeneratedCodeInfo generateCodeForCBMCRunWithParameters(
+			SpecificCBMCRunParameters params) {
+		
+	}
+	
+	public static CBMCGeneratedCodeInfo generateCodeForCBMCPropertyTest(
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, 
 			CodeGenOptions options) {
