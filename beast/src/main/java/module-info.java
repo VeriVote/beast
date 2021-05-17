@@ -85,6 +85,7 @@ module edu.pse.beast {
     requires wellbehavedfx;
     requires java.base;
 	requires org.json;
+	requires antlr4;
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;

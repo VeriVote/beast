@@ -11,6 +11,7 @@ public class PreferenceParameters implements VotingParameters {
 
 	private int V = 0;
 	private int C;
+	private int S = 0;
 
 	private List<List<Integer>> votesPerVoter = new ArrayList<>();
 
@@ -39,27 +40,29 @@ public class PreferenceParameters implements VotingParameters {
 		String votingStructDeclString = votingDeclTemplate
 				.replaceAll("VOTE_STRUCT_TYPE", votingStructName)
 				.replaceAll("VOTE_VAR_NAME", votingVarName);
-		
+
 		code.add(votingStructDeclString);
-		
+
 		String amtDeclString = amtVotesTemplate
 				.replaceAll("VOTE_VAR_NAME", votingVarName)
 				.replaceAll("AMT_MEMBER", voteInputStruct.getAmtName())
 				.replaceAll("AMT_VOTES", String.valueOf(V));
-		
+
 		code.add(amtDeclString);
-		
-		for(int i = 0; i < votesPerVoter.size(); ++i) {
-			for(int j = 0; j < C; ++j) {
+
+		for (int i = 0; i < votesPerVoter.size(); ++i) {
+			for (int j = 0; j < C; ++j) {
 				String voteString = votesPerVoterTemplate
 						.replaceAll("VOTE_VAR_NAME", votingVarName)
-						.replaceAll("LIST_MEMBER", voteInputStruct.getListName())
+						.replaceAll("LIST_MEMBER",
+								voteInputStruct.getListName())
 						.replaceAll("LIST_INDEX", String.valueOf(i))
 						.replaceAll("CAND_INDEX", String.valueOf(j))
-						.replaceAll("VOTE_GIVEN", String.valueOf(votesPerVoter.get(i).get(j)));
-				
+						.replaceAll("VOTE_GIVEN",
+								String.valueOf(votesPerVoter.get(i).get(j)));
+
 				code.add(voteString);
-			}			
+			}
 		}
 
 		return code;
@@ -75,6 +78,19 @@ public class PreferenceParameters implements VotingParameters {
 		return "votes";
 	}
 	
+	@Override
+	public int getV() {
+		return V;
+	}
 	
+	@Override
+	public int getC() {
+		return C;
+	}
+	
+	@Override
+	public int getS() {
+		return S;
+	}
 
 }

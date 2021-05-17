@@ -9,7 +9,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 public class CBMCCommandHelper {
 
 	private final static String DEFINE_CONST_FLAG = " -D ";
-	private final static String LOOP_BOUND_TEMPLATE = " --unwindset FUNC_NAME:IDX BOUND ";
+	private final static String LOOP_BOUND_TEMPLATE = " --unwindset FUNC_NAME.IDX:BOUND ";
 	private final static String OUTPUT_FORMAT_JSON_STRING = " --json-ui ";
 
 	public static String getAmountConstantString(CodeGenOptions codeGenOptions,
@@ -42,13 +42,13 @@ public class CBMCCommandHelper {
 
 			switch (loopBound.getLoopBoundType()) {
 				case LOOP_BOUND_AMT_VOTERS :
-					bound = String.valueOf(V);
+					bound = String.valueOf(V + 1);
 					break;
 				case LOOP_BOUND_AMT_CANDS :
-					bound = String.valueOf(C);
+					bound = String.valueOf(C + 1);
 					break;
 				case LOOP_BOUND_AMT_SEATS :
-					bound = String.valueOf(S);
+					bound = String.valueOf(S + 1);
 					break;
 			}
 
@@ -65,7 +65,7 @@ public class CBMCCommandHelper {
 	public static String getArgumentsForCBMCJsonOutput(File codeFileToTest,
 			CodeGenOptions codeGenOptions, List<LoopBound> loopBounds, int V,
 			int C, int S) {
-		return codeFileToTest.getAbsolutePath() + " "
+		return "\"" + codeFileToTest.getAbsolutePath() + "\"" + " "
 				+ getAmountConstantString(codeGenOptions, V, C, S)
 				+ getOutputAsJsonArgument()
 				+ getUnwindArguments(loopBounds, V, C, S);

@@ -18,7 +18,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.savingloading.testruns.CBMCTestRunSaverLoaderHelper;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 

@@ -12,6 +12,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
@@ -93,7 +94,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		state = WorkUnitState.WORKED_ON;
 		cb.onPropertyTestStart(descr, propDescr, s, c, v, uuid);
 		try {
-			Process p = processStarter.startCheckForParam(sessionUUID, v, c, s,
+			process = processStarter.startCheckForParam(sessionUUID, v, c, s,
 					sessionUUID, cb, cbmcCodeFile.getFile(), loopBounds,
 					codeGenOptions);
 			BufferedReader reader = new BufferedReader(
@@ -106,8 +107,8 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 							c, v, uuid, line);
 					cbmcOutput.add(line);
 				}
-				// TODO errorhandling
 			} catch (IOException e) {
+				// TODO errorhandling
 				e.printStackTrace();
 			}
 			cb.onPropertyTestRawOutputComplete(descr, propDescr, s, c, v, uuid,
@@ -119,6 +120,9 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+
+			state = WorkUnitState.FINISHED;
+			process.destroy();
 		}
 	}
 

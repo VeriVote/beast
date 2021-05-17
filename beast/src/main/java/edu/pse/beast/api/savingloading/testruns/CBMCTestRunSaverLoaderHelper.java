@@ -14,7 +14,7 @@ import edu.pse.beast.api.savingloading.CodeGenOptionsSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCCodeFileDataSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.loopbound.LoopBoundSaverLoaderHelper;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;

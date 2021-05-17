@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.propertycheck;
+package edu.pse.beast.api.testrunner;
 
 import java.io.File;
 

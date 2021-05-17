@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.codeareajavafx.SaverLoader;

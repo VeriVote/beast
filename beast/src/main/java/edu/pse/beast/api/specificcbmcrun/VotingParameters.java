@@ -15,5 +15,9 @@ public interface VotingParameters {
 	int getAmtVotes();
 
 	String getVotingVarName(int i);
+	
+	int getV();
+	int getC();
+	int getS();
 
 }

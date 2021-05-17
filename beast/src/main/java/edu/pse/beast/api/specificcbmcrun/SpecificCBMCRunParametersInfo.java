@@ -22,4 +22,16 @@ public class SpecificCBMCRunParametersInfo {
 		this.votingParameters = votingParameters;
 	}
 
+	public int getV() {
+		return votingParameters.getV();
+	}
+
+	public int getS() {
+		return votingParameters.getS();
+	}
+
+	public int getC() {
+		return votingParameters.getC();
+	}
+
 }

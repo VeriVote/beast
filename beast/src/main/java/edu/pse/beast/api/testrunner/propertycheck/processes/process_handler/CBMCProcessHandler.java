@@ -9,6 +9,8 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
@@ -27,4 +29,5 @@ public interface CBMCProcessHandler {
 			String uuid, CBMCTestCallback cb, File cbmcFile,
 			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException;
+
 }

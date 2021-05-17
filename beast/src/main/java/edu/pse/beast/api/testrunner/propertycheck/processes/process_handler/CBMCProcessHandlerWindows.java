@@ -12,6 +12,8 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
@@ -29,11 +31,11 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	private String RELATIVE_PATH_TO_CBMC = "/windows/cbmcWIN/" + CBMC_EXE;
 
 	// only needed in windows
-	private String vsCmdPath; // = "\"D:\\Visual
-								// studio\\Common7\\Tools\\VsDevCmd.bat\"";
+	private String vsCmdPath; // =
+	// "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
 	public CBMCProcessHandlerWindows(String vsCmdPath) {
-		this.vsCmdPath = vsCmdPath;
+		this.vsCmdPath = "\"" + vsCmdPath + "\"";
 	}
 
 	public String getVsCmdPath() {
@@ -49,15 +51,15 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 			String uuid, CBMCTestCallback cb, File cbmcFile,
 			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException {
-		String cbmcPath = "\"" + new File(
+		String cbmcPath = new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC)
-						.getPath()
-				+ "\"";
+						.getPath();
 
 		String Space = " ";
-		String completeCommand = vsCmdPath + Space + "&" + Space + cbmcPath
-				+ Space + CBMCCommandHelper.getArgumentsForCBMCJsonOutput(
-						cbmcFile, codeGenOptions, loopBounds, V, C, S);
+		String completeCommand = vsCmdPath + Space + "&" + Space + "\""
+				+ cbmcPath + "\"" + Space
+				+ CBMCCommandHelper.getArgumentsForCBMCJsonOutput(cbmcFile,
+						codeGenOptions, loopBounds, V, C, S);
 
 		final File batFile = new File(
 				cbmcFile.getParent() + "\\" + cbmcFile.getName().replace(
@@ -74,4 +76,5 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	public CBMCProcessStarterType getType() {
 		return CBMCProcessStarterType.WINDOWS;
 	}
+
 }

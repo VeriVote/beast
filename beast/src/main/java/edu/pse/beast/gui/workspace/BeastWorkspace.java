@@ -21,7 +21,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
@@ -160,7 +160,7 @@ public class BeastWorkspace {
 			CBMCPropertyTestConfiguration config) {
 		try {
 			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-			CBMCCodeFileData cbmcCodeFile = beast.generateCodeFile(
+			CBMCCodeFileData cbmcCodeFile = beast.generateCodeFileCBMCPropertyTest(
 					config.getDescr(), config.getPropDescr(), codeGenOptions,
 					loopBoundHandler);
 
@@ -228,7 +228,7 @@ public class BeastWorkspace {
 		LoopBoundHandler loopBoundHandler = currentConfig.getDescr()
 				.getLoopBoundHandler();
 
-		CBMCCodeFileData cbmcFileData = beast.generateCodeFile(
+		CBMCCodeFileData cbmcFileData = beast.generateCodeFileCBMCPropertyTest(
 				currentConfig.getDescr(), currentConfig.getPropDescr(),
 				codeGenOptions, loopBoundHandler);
 
