@@ -44,8 +44,7 @@
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
                                                 <ListView fx:id="loopBoundList" prefHeight="180.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                                                <Button layoutX="14.0" layoutY="204.0" mnemonicParsing="false" onAction="#addLoopBound" text="+" AnchorPane.bottomAnchor="5.0" />
-                                                <Button layoutX="48.0" layoutY="204.0" mnemonicParsing="false" onAction="#removeLoopBound" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.bottomAnchor="5.0" />
+                                                <Button fx:id="testLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="test" AnchorPane.bottomAnchor="5.0" />
                                                 <Label text="Loopbounds" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                              </children>
                                           </AnchorPane>

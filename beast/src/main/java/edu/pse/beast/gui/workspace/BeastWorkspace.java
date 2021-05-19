@@ -201,9 +201,6 @@ public class BeastWorkspace {
 				.askUserForCBMCProcessHandler();
 	}
 
-	public void shutdown() throws InterruptedException {
-		beast.shutdown();
-	}
 
 	public void addRunToQueue(CBMCTestRun run) {
 		beast.addCBMCWorkItemToQueue(run.getWorkUnit());

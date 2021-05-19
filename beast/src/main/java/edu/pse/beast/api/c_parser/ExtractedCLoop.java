@@ -18,6 +18,7 @@ public class ExtractedCLoop {
 	private CLoopParseResultType loopParseResult;
 	private ExtractedCLoop parentLoop;
 	private LoopBoundType parsedLoopBoundType;
+	private int posInLine;
 
 	public ExtractedCLoop(IterationStatementContext ctx,
 			int loopNumberInFunction, CodeGenOptions codeGenOptions) {
@@ -32,6 +33,10 @@ public class ExtractedCLoop {
 
 	public int getLine() {
 		return line;
+	}
+	
+	public int getPosInLine() {
+		return posInLine;
 	}
 
 	public CLoopParseResultType getLoopParseResult() {
@@ -63,6 +68,7 @@ public class ExtractedCLoop {
 
 	private void init(CodeGenOptions codeGenOptions) {
 		line = ctx.start.getLine();
+		posInLine = ctx.start.getCharPositionInLine();
 
 		if (ctx.For() != null) {
 			loopType = CLoopTypes.FOR;

@@ -19,21 +19,13 @@ import edu.pse.beast.api.testrunner.run_with_specific_params.SpecificParamsTestR
 import edu.pse.beast.api.testrunner.threadpool.ThreadPool;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import javafx.application.Platform;
 
 public class BEAST {
-
-	private ThreadPool tp;
-
-	public BEAST() {
-		this.tp = new ThreadPool(4);
-	}
-
-	public void shutdown() throws InterruptedException {
-		tp.shutdown();
-	}
+	
 
 	public void addCBMCWorkItemToQueue(CBMCPropertyCheckWorkUnit wu) {
-		tp.addWork(wu);
+		
 	}
 
 	public CBMCCodeFileData generateCodeFileCBMCPropertyTest(

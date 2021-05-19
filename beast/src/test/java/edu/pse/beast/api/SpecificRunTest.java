@@ -25,7 +25,7 @@ public class SpecificRunTest {
 	public void testRunWithParams() throws IOException {
 		SpecificCBMCRunParametersInfo info = new SpecificCBMCRunParametersInfo();
 		String bordaCode = 
-				"    unsigned int i = 0;\n"
+				  "    unsigned int i = 0;\n"
 				+ "    unsigned int j = 0;\n" + "\n"
 				+ "    for (i = 0; i < C; i++) {\n" 
 				+ "        result[i] = 0;\n"
@@ -93,6 +93,5 @@ public class SpecificRunTest {
 		});
 		
 		workUnit.doWork();
-
 	}
 }

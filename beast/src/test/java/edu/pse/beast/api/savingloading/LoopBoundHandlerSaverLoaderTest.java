@@ -9,7 +9,6 @@ import java.util.Optional;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIndexException;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
@@ -18,7 +17,7 @@ import edu.pse.beast.api.savingloading.loopbound.LoopBoundHandlerSaverLoaderHelp
 public class LoopBoundHandlerSaverLoaderTest {
 
 	@Test
-	public void testLoopBoundSaverLoader() throws FunctionAlreadyContainsLoopboundAtIndexException {
+	public void testLoopBoundSaverLoader()  {
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 
 		for (int i = 0; i < 20; ++i) {

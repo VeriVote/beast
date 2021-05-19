@@ -35,6 +35,9 @@ public class SpecificRunParamTest {
 		PreferenceParameters parameters = new PreferenceParameters(10);
 		parameters.addVoter(List.of(1, 0, 1, 1, 1, 0, 0, 0, 1, 1));
 		parameters.addVoter(List.of(1, 1, 1, 0, 1, 0, 0, 0, 1, 1));
+		parameters.addVoter(List.of(1, 0, 1, 0, 1, 1, 0, 0, 1, 1));
+		parameters.addVoter(List.of(1, 1, 1, 1, 1, 0, 0, 0, 1, 1));
+		parameters.addVoter(List.of(1, 1, 1, 0, 1, 0, 1, 1, 1, 1));
 		info.setVotingParameters(parameters);
 		
 		CodeGenOptions options = new CodeGenOptions();

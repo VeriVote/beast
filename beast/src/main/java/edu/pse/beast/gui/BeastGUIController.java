@@ -10,6 +10,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.json.JSONException;
 
+import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
@@ -47,6 +48,9 @@ import javafx.stage.Stage;
 public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
+	private Button testLoopBoundButton;	
+	
+	@FXML
 	private TabPane topLeveLTabPane;
 
 	private Stage primaryStage;
@@ -61,7 +65,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private MenuButton addFunctionMenuButton;
 
 	@FXML
-	private ListView<LoopBound> loopBoundList;
+	private ListView<ExtractedCLoop> loopBoundList;
 
 	@FXML
 	private ListView<CElectionDescriptionFunction> functionList;
@@ -194,15 +198,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		cElectionEditor.removeFunction();
 	}
 
-	@FXML
-	public void addLoopBound() {
-		cElectionEditor.addLoopBound();
-	}
-
-	@FXML
-	public void removeLoopBound() {
-		cElectionEditor.removeLoopBound();
-	}
 
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
@@ -235,6 +230,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				primaryStage,
 				cEditorGUIElementVsp,
 				addFunctionMenuButton, 
+				testLoopBoundButton,
 				cEditorGUIElement, 
 				funcDeclArea,
 				closingBracketArea, 
@@ -262,14 +258,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	}
 
 	private void initTestConfigHandler() throws IOException {
-
-		primaryStage.onCloseRequestProperty().addListener(e -> {
-			try {
-				beastWorkspace.shutdown();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-		});
 
 		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(
 				startTestConfigButton, stopTestConfigButton,

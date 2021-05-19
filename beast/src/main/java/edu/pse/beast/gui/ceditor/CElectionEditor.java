@@ -10,6 +10,9 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
+import edu.pse.beast.api.c_parser.AntlrCLoopParser;
+import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.CLoopFinder;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
@@ -25,6 +28,7 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -43,7 +47,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private final String cssLockedClassName = "locked";
 
 	private ListView<CElectionDescriptionFunction> functionList;
-	private ListView<LoopBound> loopBoundList;
+	private ListView<ExtractedCLoop> loopBoundList;
 
 	private CodeArea funcDeclArea;
 	private CodeArea closingBracketArea;
@@ -58,26 +62,33 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private Stage primaryStage;
 	private MenuButton addFunctionMenuButton;
 	private VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp;
-	
-	
-	public CElectionEditor(Stage primaryStage, 
+
+	public CElectionEditor(Stage primaryStage,
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
-			MenuButton addFunctionMenuButton,
-			CEditorCodeElement electionCodeArea, 
-			CodeArea funcDeclArea,
+			MenuButton addFunctionMenuButton, Button testLoopBoundButton,
+			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
 			CodeArea closingBracketArea,
 			ListView<CElectionDescriptionFunction> functionList,
-			ListView<LoopBound> loopBoundList,
+			ListView<ExtractedCLoop> loopBoundList,
 			ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		final String stylesheet = this.getClass().getResource(cssResource)
 				.toExternalForm();
-		
+
 		this.primaryStage = primaryStage;
 		this.addFunctionMenuButton = addFunctionMenuButton;
 
 		this.functionList = functionList;
 		this.loopBoundList = loopBoundList;
+		loopBoundList.getSelectionModel().selectedItemProperty()
+				.addListener((e, oldVal, newVal) -> {
+					int line = newVal.getLine();
+					int position = electionCodeArea.position(line - 1, newVal.getPosInLine())
+							.toOffset();
+					electionCodeArea.moveTo(position);
+					electionCodeArea.selectLine();
+					electionCodeArea.requestFollowCaret();
+				});
 
 		this.electionCodeArea = electionCodeArea;
 		this.funcDeclArea = funcDeclArea;
@@ -117,6 +128,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			beastWorkspace.updateCodeForDescrFunction(currentDescr,
 					currentDisplayedFunction, text);
 		});
+
+		testLoopBoundButton.setOnAction(e -> {
+			tryFindLoopBounds();
+		});
+
 	}
 
 	private void addVotingFunction() {
@@ -159,9 +175,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		};
 
 		addArgButton.setOnAction(e -> {
-			if(!nameField.getText().isEmpty()) {
-				argTypes.add(
-						argsTypeChoiceBox.getSelectionModel().getSelectedItem());
+			if (!nameField.getText().isEmpty()) {
+				argTypes.add(argsTypeChoiceBox.getSelectionModel()
+						.getSelectedItem());
 				argNames.add(argsNameTextField.getText());
 				updateArgLabel.accept(argumentsLabel);
 			}
@@ -226,19 +242,22 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	@Override
 	public void handleDescrChangeAddedLoopBound(CElectionDescription descr,
 			CElectionDescriptionFunction func, LoopBound lb) {
-		if(descr == currentDescr && func == currentDisplayedFunction) {
-			populateLoopBoundList(descr.getLoopBoundsForFunction(currentDisplayedFunction));
-		}
+
 	}
-	
+
 	@Override
 	public void handleDescrChangeRemovedLoopBound(CElectionDescription descr,
 			CElectionDescriptionFunction func, LoopBound toRemove) {
-		if(descr == currentDescr && func == currentDisplayedFunction) {
-			populateLoopBoundList(descr.getLoopBoundsForFunction(currentDisplayedFunction));
-		}
+
 	}
-	
+
+	private void tryFindLoopBounds() {
+		String code = currentDisplayedFunction.getCode();
+		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(code,
+				beastWorkspace.getCodeGenOptions());
+		loopBoundList.getItems().setAll(loops);
+	}
+
 	/* ===== other stuff ====== */
 	private void initListViews() {
 		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -270,15 +289,6 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		functionList.getSelectionModel().clearAndSelect(0);
 	}
 
-	private void populateLoopBoundList(List<LoopBound> loopbounds) {
-		ObservableList<LoopBound> observableList = FXCollections
-				.observableArrayList();
-		for (LoopBound b : loopbounds) {
-			observableList.add(b);
-		}
-		loopBoundList.setItems(observableList);
-	}
-
 	private void setLockedColor() {
 		funcDeclArea.setStyleClass(0, funcDeclArea.getLength(),
 				cssLockedClassName);
@@ -294,21 +304,18 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		String declText = func.getDeclCString();
 		funcDeclArea.insertText(0, declText);
 		int amtLinesInDecl = declText.split("\n").length;
-		
-		//TODO(Holger) move this into an CeditorOptions Object
+
+		// TODO(Holger) move this into an CeditorOptions Object
 		double currentTextSize = 20;
-		
-		AnchorPane.setTopAnchor(
-				cEditorGUIElementVsp, 
+
+		AnchorPane.setTopAnchor(cEditorGUIElementVsp,
 				currentTextSize * amtLinesInDecl);
-		
 
 		electionCodeArea.insertText(0, func.getCode());
 
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
-		
-		populateLoopBoundList(currentDescr.getLoopBoundsForFunction(func));
+
 	}
 
 	public void loadElectionDescr(CElectionDescription descr) {
@@ -322,42 +329,39 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		TextField indexTextField = new TextField();
 		TextField customBoundField = new TextField();
 		customBoundField.setVisible(false);
-		
+
 		typeBox.getItems().addAll(LoopBoundType.values());
-		typeBox.getSelectionModel().selectedItemProperty().addListener((o, oldval, newval) -> {
-			if(newval == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
-				customBoundField.setVisible(true);
-			} else {
-				customBoundField.setVisible(false);
-			}
-		});
+		typeBox.getSelectionModel().selectedItemProperty()
+				.addListener((o, oldval, newval) -> {
+					if (newval == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+						customBoundField.setVisible(true);
+					} else {
+						customBoundField.setVisible(false);
+					}
+				});
 		typeBox.getSelectionModel().selectFirst();
-		
-		Optional<ButtonType> res = DialogHelper.generateDialog(
-				List.of("type", "index", "custom bound if selected"),
-				List.of(typeBox, indexTextField, customBoundField)).showAndWait();
-		if(res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+
+		Optional<ButtonType> res = DialogHelper
+				.generateDialog(
+						List.of("type", "index", "custom bound if selected"),
+						List.of(typeBox, indexTextField, customBoundField))
+				.showAndWait();
+		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
 			String indexString = indexTextField.getText();
 			int index = Integer.valueOf(indexString);
 			LoopBoundType type = typeBox.getValue();
 
 			Optional<Integer> manual = Optional.empty();
-			
-			if(type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+
+			if (type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
 				String customString = customBoundField.getText();
-				int custom = Integer.valueOf(customString); 
+				int custom = Integer.valueOf(customString);
 				manual = Optional.of(custom);
 			}
-			
-			beastWorkspace.addLoopBoundForFunction(currentDescr, currentDisplayedFunction, 
-					index, 
-					type, manual);				
-		}
-	}
 
-	public void removeLoopBound() {
-		LoopBound toRemove = loopBoundList.getSelectionModel().getSelectedItem();
-		beastWorkspace.removeLoopboundFromFunction(currentDescr, currentDisplayedFunction, toRemove);
+			beastWorkspace.addLoopBoundForFunction(currentDescr,
+					currentDisplayedFunction, index, type, manual);
+		}
 	}
 
 	public void removeFunction() {
