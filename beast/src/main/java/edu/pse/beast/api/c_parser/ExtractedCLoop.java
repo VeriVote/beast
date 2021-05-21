@@ -6,6 +6,7 @@ import java.util.List;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.ExpressionContext;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.IterationStatementContext;
@@ -134,7 +135,7 @@ public class ExtractedCLoop {
 		}
 	}
 
-	public String generateLoopBound() {
+	public LoopBound generateLoopBound() {
 		return null;
 	}
 

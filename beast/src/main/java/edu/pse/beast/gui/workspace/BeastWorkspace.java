@@ -170,6 +170,7 @@ public class BeastWorkspace {
 					errorHandler.logAndDisplayError("missing loop bounds",
 							"The function " + f.getName()
 									+ " has loopbounds which are not described.");
+					return;
 				}
 			}
 			
