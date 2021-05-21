@@ -136,7 +136,7 @@ public class ExtractedCLoop {
 	}
 
 	public LoopBound generateLoopBound() {
-		return null;
+		
 	}
 
 	public void addChild(ExtractedCLoop l) {

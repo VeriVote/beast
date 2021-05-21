@@ -102,9 +102,9 @@ public class CElectionDescription {
 		for (CElectionDescriptionFunction f : functions) {
 			List<ExtractedCLoop> loops = f.getExtractedLoops();
 			for (ExtractedCLoop l : loops) {
-				boundHandler.addLoopBoundForFunction(
-							l.generateLoopBound()
-						);
+				boundHandler.addLoopBoundToFunction(
+						l.generateLoopBound(),
+						f.getName());
 			}
 		}
 

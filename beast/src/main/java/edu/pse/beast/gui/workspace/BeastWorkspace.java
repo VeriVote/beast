@@ -239,8 +239,14 @@ public class BeastWorkspace {
 			return;
 		}
 
-		LoopBoundHandler loopBoundHandler = currentConfig.getDescr()
-				.getLoopBoundHandler();
+		for (CElectionDescriptionFunction f : currentConfig.getDescr().getFunctions()) {
+			if (!f.allLoopsDescribed()) {
+				errorHandler.logAndDisplayError("missing loop bounds",
+						"The function " + f.getName()
+								+ " has loopbounds which are not described.");
+				return;
+			}
+		}		
 
 		CBMCCodeFileData cbmcFileData = beast.generateCodeFileCBMCPropertyTest(
 				currentConfig.getDescr(), currentConfig.getPropDescr(),
