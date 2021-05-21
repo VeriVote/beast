@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
+import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
@@ -95,10 +96,19 @@ public class CElectionDescription {
 		return uuid;
 	}
 
-	public boolean hasAllLoopBounds() {
-		for(CElectionDescriptionFunction f : functions) {
-			if(f.getExtractedLoops().isEmpty()) {
+	public LoopBoundHandler generateLoopBoundHandler() {
+		LoopBoundHandler boundHandler = new LoopBoundHandler();
+
+		for (CElectionDescriptionFunction f : functions) {
+			List<ExtractedCLoop> loops = f.getExtractedLoops();
+			for (ExtractedCLoop l : loops) {
+				boundHandler.addLoopBoundForFunction(
+							l.generateLoopBound()
+						);
 			}
 		}
+
+		return boundHandler;
 	}
+
 }

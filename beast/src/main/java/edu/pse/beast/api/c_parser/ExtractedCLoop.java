@@ -1,5 +1,6 @@
 package edu.pse.beast.api.c_parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -16,9 +17,11 @@ public class ExtractedCLoop {
 	private int line;
 	private int loopNumberInFunction;
 	private CLoopParseResultType loopParseResult;
-	private ExtractedCLoop parentLoop;
 	private LoopBoundType parsedLoopBoundType;
 	private int posInLine;
+
+	private ExtractedCLoop parentLoop;
+	private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
 
 	public ExtractedCLoop(IterationStatementContext ctx,
 			int loopNumberInFunction, CodeGenOptions codeGenOptions) {
@@ -34,7 +37,7 @@ public class ExtractedCLoop {
 	public int getLine() {
 		return line;
 	}
-	
+
 	public int getPosInLine() {
 		return posInLine;
 	}
@@ -54,8 +57,6 @@ public class ExtractedCLoop {
 	public ExtractedCLoop getParentLoop() {
 		return parentLoop;
 	}
-	
-	
 
 	@Override
 	public String toString() {
@@ -131,6 +132,14 @@ public class ExtractedCLoop {
 		} else if (ctx.While() != null) {
 			loopType = CLoopTypes.WHILE;
 		}
+	}
+
+	public String generateLoopBound() {
+		return null;
+	}
+
+	public void addChild(ExtractedCLoop l) {
+		childrenLoops.add(l);
 	}
 
 }

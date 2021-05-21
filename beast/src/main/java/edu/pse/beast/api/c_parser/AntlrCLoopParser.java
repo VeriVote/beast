@@ -37,6 +37,7 @@ public class AntlrCLoopParser extends CBaseListener {
 						extractedCLoops.size(), codeGenOptions);
 				if (!loopStack.isEmpty()) {
 					extractedCLoop.setParentLoop(loopStack.peek());
+					loopStack.peek().addChild(extractedCLoop);
 				}
 				extractedCLoops.add(extractedCLoop);
 				loopStack.push(extractedCLoop);

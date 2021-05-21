@@ -162,13 +162,19 @@ public class BeastWorkspace {
 	public void createCBMCTestRunsAndAddToConfig(
 			CBMCPropertyTestConfiguration config) {
 		try {
-			
+
 			CElectionDescription descr = config.getDescr();
-			
-			if(!descr.hasAllLoopBounds()) {
-				
+
+			for (CElectionDescriptionFunction f : descr.getFunctions()) {
+				if (!f.allLoopsDescribed()) {
+					errorHandler.logAndDisplayError("missing loop bounds",
+							"The function " + f.getName()
+									+ " has loopbounds which are not described.");
+				}
 			}
 			
+			LoopBoundHandler loopBoundHandler = descr.generateLoopBoundHandler();
+
 			CBMCCodeFileData cbmcCodeFile = beast
 					.generateCodeFileCBMCPropertyTest(config.getDescr(),
 							config.getPropDescr(), codeGenOptions,
@@ -231,9 +237,7 @@ public class BeastWorkspace {
 		if (!hasProcessStarter()) {
 			return;
 		}
-		
-		
-		
+
 		LoopBoundHandler loopBoundHandler = currentConfig.getDescr()
 				.getLoopBoundHandler();
 
@@ -440,9 +444,10 @@ public class BeastWorkspace {
 	public void findLoopBounds(CElectionDescription descr,
 			CElectionDescriptionFunction func) {
 		String code = func.getCode();
-		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(code, codeGenOptions);
+		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(code,
+				codeGenOptions);
 		func.setExtractedLoops(loops);
-		
+
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleExtractedFunctionLoops(descr, func);
 		}

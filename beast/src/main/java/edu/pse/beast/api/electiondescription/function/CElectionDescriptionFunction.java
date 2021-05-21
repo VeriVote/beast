@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 
 
@@ -50,6 +51,13 @@ public abstract class CElectionDescriptionFunction {
 	
 	public void setExtractedLoops(List<ExtractedCLoop> extractedLoops) {
 		this.extractedLoops = extractedLoops;
+	}
+
+	public boolean allLoopsDescribed() {
+		if(extractedLoops.isEmpty()) {
+			if(AntlrCLoopParser.getAmtLoops(getCode()) != 0) return false;
+ 		}
+		return true;
 	}
 
 }
