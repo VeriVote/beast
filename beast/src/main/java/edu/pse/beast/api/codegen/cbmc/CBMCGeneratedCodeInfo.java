@@ -6,7 +6,9 @@ import java.util.Map;
 
 public class CBMCGeneratedCodeInfo {
 	private String code;
-	private Map<Integer, String> voteNumberToVariableName = new HashMap<>();
+	private Map<String, Integer> voteVariableNameToVoteNumber = new HashMap<>();
+	private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
+
 	private String amtMemberVarName;
 	private String listMemberVarName;
 
@@ -19,16 +21,29 @@ public class CBMCGeneratedCodeInfo {
 	}
 
 	public void addVotingVariableName(int voteNumber, String varName) {
-		voteNumberToVariableName.put(voteNumber, varName);
+		voteVariableNameToVoteNumber.put(varName, voteNumber);
 	}
 
-	public void setVoteNumberToVariableName(
-			Map<Integer, String> voteNumberToVariableName) {
-		this.voteNumberToVariableName = voteNumberToVariableName;
+	public void addElectVariable(int electNumber, String varName) {
+		electVariableNameToElectNumber.put(varName, electNumber);
 	}
 
-	public Map<Integer, String> getVoteNumberToVariableName() {
-		return Collections.unmodifiableMap(voteNumberToVariableName);
+	public void setVoteVariableNameToVoteNumber(
+			Map<String, Integer> voteVariableNameToVoteNumber) {
+		this.voteVariableNameToVoteNumber = voteVariableNameToVoteNumber;
+	}
+
+	public Map<String, Integer> getVoteVariableNameToVoteNumber() {
+		return voteVariableNameToVoteNumber;
+	}
+
+	public Map<String, Integer> getElectVariableNameToElectNumber() {
+		return electVariableNameToElectNumber;
+	}
+
+	public void setElectVariableNameToElectNumber(
+			Map<String, Integer> electVariableNameToElectNumber) {
+		this.electVariableNameToElectNumber = electVariableNameToElectNumber;
 	}
 
 	public String getAmtMemberVarName() {

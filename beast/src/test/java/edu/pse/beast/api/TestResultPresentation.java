@@ -9,7 +9,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCJsonOutputHandler;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonOutputHandler;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class TestResultPresentation {
@@ -2135,6 +2135,8 @@ public class TestResultPresentation {
 		cbmcGeneratedCodeInfo.addVotingVariableName(1, "votes1");
 		cbmcGeneratedCodeInfo.setAmtMemberVarName("amt");
 		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
+		
+		cbmcGeneratedCodeInfo.addElectVariable(1, "res");
 
 		CBMCJsonOutputHandler res = new CBMCJsonOutputHandler(
 				descr, 

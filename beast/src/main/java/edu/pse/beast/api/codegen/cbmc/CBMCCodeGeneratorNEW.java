@@ -85,10 +85,8 @@ public class CBMCCodeGeneratorNEW {
 		
 		created.addFunction(mainFunction);
 		
-		cbmcGeneratedCodeInfo.setCode(created.generateCode());
+		cbmcGeneratedCodeInfo.setCode(created.generateCode());		
 		
-		System.out.println(cbmcGeneratedCodeInfo.getCode());
-
 		return cbmcGeneratedCodeInfo;
 	}
 

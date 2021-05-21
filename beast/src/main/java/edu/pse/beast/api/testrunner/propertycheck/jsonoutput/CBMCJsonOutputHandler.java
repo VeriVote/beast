@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.propertycheck;
+package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +13,6 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class CBMCJsonOutputHandler {
-	private CElectionDescription descr;
-	private PreAndPostConditionsDescription propDescr;
-	private int s, c, v;
-	List<String> rawOutput = new ArrayList<>();
-	JSONArray resultArr;
-	JSONArray traceArr;
-	String cProverStatus;
 
 	private final String OUTPUT_KEY = "output";
 	private final String CBMC_JSON_RESULT_KEY = "result";
@@ -29,6 +22,17 @@ public class CBMCJsonOutputHandler {
 	private final String STEP_TYPE_VALUE_ASSIGNMENT = "assignment";
 	private final String ASSIGNMENT_VALUE_KEY = "value";
 	private final String ASSIGNMENT_TYPE_KEY = "assignmentType";
+
+	private CElectionDescription descr;
+	private PreAndPostConditionsDescription propDescr;
+	private int s, c, v;
+	private List<String> rawOutput = new ArrayList<>();
+	private JSONArray resultArr;
+	private JSONArray traceArr;
+	private String cProverStatus;
+
+	private List<VoteAssignment> voteAssignments = new ArrayList<>();
+	private List<ElectAssignment> electAssignments = new ArrayList<>();
 
 	public CBMCJsonOutputHandler(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
@@ -60,11 +64,9 @@ public class CBMCJsonOutputHandler {
 		}
 	}
 
-	private Map<Integer, JSONObject> voteNumberToStructJSON = new HashMap<>();
+	private void processCBMCJsonOutput(
+			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo) {
 
-	private void processCBMCJsonOutput(CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo) {
-		Map<Integer, String> voteNumbersToVarName = cbmcGeneratedCodeInfo.getVoteNumberToVariableName();
-		
 		// find the beginning of the json array
 		while (!rawOutput.get(0).startsWith("[")) {
 			rawOutput.remove(0);
@@ -74,44 +76,72 @@ public class CBMCJsonOutputHandler {
 		JSONObject resultJson = new JSONObject(jsonString);
 		JSONArray outputArr = resultJson.getJSONArray(OUTPUT_KEY);
 		parseOutputJSONArr(outputArr);
+
+		if (!cProverStatus.equals("failure")) {
+			return;
+		}
+
 		for (int i = 0; i < traceArr.length(); ++i) {
 			JSONObject traceJsonObj = traceArr.getJSONObject(i);
 			if (traceJsonObj.getString(STEP_TYPE_KEY)
 					.equals(STEP_TYPE_VALUE_ASSIGNMENT)) {
 				JSONObject valueJsonObj = traceJsonObj
 						.getJSONObject(ASSIGNMENT_VALUE_KEY);
+				JSONObject locationJsonObj = traceJsonObj
+						.getJSONObject("sourceLocation");
+				if (!locationJsonObj.has("function"))
+					continue;
+
+				String assignmentLine = locationJsonObj.getString("line");
+				String assignmentFunc = locationJsonObj.getString("function");
 				String assignmentType = traceJsonObj
 						.getString(ASSIGNMENT_TYPE_KEY);
 				String lhs = traceJsonObj.getString("lhs");
-				for(int voteNumber : voteNumbersToVarName.keySet()) {
-					String voteVarName = voteNumbersToVarName.get(voteNumber);
-					if(lhs.contains(voteVarName)) {
-						if(!voteNumberToStructJSON.containsKey(voteNumber)) {
-							voteNumberToStructJSON.put(voteNumber, new JSONObject());
-						}
-						JSONObject voteStructJson = voteNumberToStructJSON.get(voteNumber);
-						if(!valueJsonObj.getString("name").equals("struct")) {
-							if(lhs.contains(cbmcGeneratedCodeInfo.getAmtMemberVarName())) {
-								String assignedValueString = valueJsonObj.getString("data");
-								int assignedValue = Integer.valueOf(removeAnythingButDigits(assignedValueString));
-								voteStructJson.put(lhs, assignedValue);
-							} else if(lhs.contains(cbmcGeneratedCodeInfo.getListMemberVarName())) {
-								String assignedValueString = valueJsonObj.getString("data");
-								int assignedValue = Integer.valueOf(removeAnythingButDigits(assignedValueString));
-								voteStructJson.put(lhs, assignedValue);
-							}
-						}						
-					}
+
+				if (!lhs.contains("."))
+					continue;
+
+				if (!valueJsonObj.has("data"))
+					continue;
+
+				int dotIdx = lhs.indexOf('.');
+
+				String structName = lhs.substring(0, dotIdx);
+
+				String memberName = lhs.substring(dotIdx + 1);
+
+				String valueStr = removeAnythingButDigits(
+						valueJsonObj.getString("data"));
+				int value = Integer.valueOf(valueStr);
+
+				if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber()
+						.keySet().contains(structName)) {
+					VoteAssignment ass = new VoteAssignment(assignmentLine,
+							assignmentFunc,
+							cbmcGeneratedCodeInfo
+									.getVoteVariableNameToVoteNumber()
+									.get(structName),
+							structName, memberName, value);
+					voteAssignments.add(ass);
+				} else if (cbmcGeneratedCodeInfo
+						.getElectVariableNameToElectNumber().keySet()
+						.contains(structName)) {
+					ElectAssignment ass = new ElectAssignment(assignmentLine,
+							assignmentFunc,
+							cbmcGeneratedCodeInfo
+									.getElectVariableNameToElectNumber()
+									.get(structName),
+							structName, memberName, value);
+					electAssignments.add(ass);
 				}
 			}
 		}
-		System.out.println(voteNumberToStructJSON.get(1).toString(4));
 	}
-	
+
 	String removeAnythingButDigits(String s) {
 		String newString = "";
-		for(int i = 0; i < s.length(); ++i) {
-			if(Character.isDigit(s.charAt(i))) {
+		for (int i = 0; i < s.length(); ++i) {
+			if (Character.isDigit(s.charAt(i))) {
 				newString += s.charAt(i);
 			}
 		}
