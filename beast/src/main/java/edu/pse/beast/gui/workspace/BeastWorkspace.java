@@ -12,6 +12,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.BEAST;
+import edu.pse.beast.api.c_parser.AntlrCLoopParser;
+import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.CLoopFinder;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
@@ -159,10 +162,17 @@ public class BeastWorkspace {
 	public void createCBMCTestRunsAndAddToConfig(
 			CBMCPropertyTestConfiguration config) {
 		try {
-			LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-			CBMCCodeFileData cbmcCodeFile = beast.generateCodeFileCBMCPropertyTest(
-					config.getDescr(), config.getPropDescr(), codeGenOptions,
-					loopBoundHandler);
+			
+			CElectionDescription descr = config.getDescr();
+			
+			if(!descr.hasAllLoopBounds()) {
+				
+			}
+			
+			CBMCCodeFileData cbmcCodeFile = beast
+					.generateCodeFileCBMCPropertyTest(config.getDescr(),
+							config.getPropDescr(), codeGenOptions,
+							loopBoundHandler);
 
 			List<CBMCTestRun> createdTestRuns = beast.generateTestRuns(
 					cbmcCodeFile, config, codeGenOptions, loopBoundHandler);
@@ -201,7 +211,6 @@ public class BeastWorkspace {
 				.askUserForCBMCProcessHandler();
 	}
 
-
 	public void addRunToQueue(CBMCTestRun run) {
 		beast.addCBMCWorkItemToQueue(run.getWorkUnit());
 	}
@@ -222,6 +231,9 @@ public class BeastWorkspace {
 		if (!hasProcessStarter()) {
 			return;
 		}
+		
+		
+		
 		LoopBoundHandler loopBoundHandler = currentConfig.getDescr()
 				.getLoopBoundHandler();
 
@@ -387,6 +399,8 @@ public class BeastWorkspace {
 			CElectionDescriptionFunction function, String code) {
 		function.setCode(code);
 		handleDescrChange(descr);
+		function.getExtractedLoops().clear();
+
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleDescrChangeUpdatedFunctionCode(descr, function, code);
 		}
@@ -423,33 +437,14 @@ public class BeastWorkspace {
 		}
 	}
 
-	public void addLoopBoundForFunction(CElectionDescription descr,
-			CElectionDescriptionFunction func,
-			int loopIndex, 
-			LoopBoundType loopBoundType, 
-			Optional<Integer> manualLoopBoundIfPresent) {
+	public void findLoopBounds(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		String code = func.getCode();
+		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(code, codeGenOptions);
+		func.setExtractedLoops(loops);
 		
-		LoopBound lb = descr.getLoopBoundHandler().addLoopBoundForFunction(
-				func.getName(), 
-				loopIndex, 
-				loopBoundType, 
-				manualLoopBoundIfPresent);
-		
-		handleDescrChange(descr);
 		for (WorkspaceUpdateListener l : updateListener) {
-			l.handleDescrChangeAddedLoopBound(descr, func, lb);
-		}
-
-	}
-
-	public void removeLoopboundFromFunction(
-			CElectionDescription descr,
-			CElectionDescriptionFunction func,
-			LoopBound toRemove) {
-		descr.getLoopBoundHandler().removeLoopBoundForFunction(func, toRemove);
-		handleDescrChange(descr);
-		for (WorkspaceUpdateListener l : updateListener) {
-			l.handleDescrChangeRemovedLoopBound(descr, func, toRemove);
+			l.handleExtractedFunctionLoops(descr, func);
 		}
 	}
 

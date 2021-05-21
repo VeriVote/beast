@@ -64,9 +64,6 @@ public class CElectionSaverLoader {
 				fromVotingFunction(descr.getVotingFunction()));
 		json.put(NAME_KEY, descr.getName());
 
-		json.put(LOOP_BOUND_HANDLER_KEY, LoopBoundHandlerSaverLoaderHelper
-				.loopboundHandlerToJson(descr.getLoopBoundHandler()));
-
 		json.put(DESCR_UUID_KEY, descr.getUuid());
 
 		String s = json.toString();
@@ -100,7 +97,6 @@ public class CElectionSaverLoader {
 		LoopBoundHandler loopBoundHandler = LoopBoundHandlerSaverLoaderHelper
 				.loopBoundHandlerFromJSON(
 						json.getJSONObject(LOOP_BOUND_HANDLER_KEY));
-		descr.setLoopBoundHandler(loopBoundHandler);
 
 		return descr;
 	}

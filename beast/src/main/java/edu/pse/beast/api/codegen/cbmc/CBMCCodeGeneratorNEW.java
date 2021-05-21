@@ -36,7 +36,8 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
 	public static CBMCGeneratedCodeInfo generateCodeForCBMCRunWithParameters(
-			SpecificCBMCRunParametersInfo params, CodeGenOptions options) {
+			SpecificCBMCRunParametersInfo params, CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler) {
 
 		CFile created = new CFile();
 		created.include(STDLIB);
@@ -51,7 +52,7 @@ public class CBMCCodeGeneratorNEW {
 		options.setCbmcAssumeName("assume");
 		options.setCbmcAssertName("assert");
 		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
-		
+
 		CElectionVotingType votesNakedArr = CElectionVotingType
 				.of(params.getDescr().getVotingFunction().getInputType());
 		CElectionVotingType resultNakedArr = CElectionVotingType
@@ -67,8 +68,6 @@ public class CBMCCodeGeneratorNEW {
 
 		CElectionDescription descr = params.getDescr();
 
-		LoopBoundHandler loopBoundHandler = descr.getLoopBoundHandler();
-
 		String votingStructVarName = "voteStruct";
 		String resultStructVarName = "resultStruct";
 
@@ -82,17 +81,18 @@ public class CBMCCodeGeneratorNEW {
 		CFunction mainFunction = SpecificParamsMainGenerator.main(
 				voteInputStruct, voteResultStruct, params, options,
 				cbmcGeneratedCodeInfo);
-		
+
 		created.addFunction(mainFunction);
-		
-		cbmcGeneratedCodeInfo.setCode(created.generateCode());		
-		
+
+		cbmcGeneratedCodeInfo.setCode(created.generateCode());
+
 		return cbmcGeneratedCodeInfo;
 	}
 
 	public static CBMCGeneratedCodeInfo generateCodeForCBMCPropertyTest(
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CodeGenOptions options) {
+			PreAndPostConditionsDescription propDescr, CodeGenOptions options,
+			LoopBoundHandler loopBoundHandler) {
 
 		CFile created = new CFile();
 		created.include(STDLIB);
@@ -120,8 +120,6 @@ public class CBMCCodeGeneratorNEW {
 
 		created.addStructDef(voteInputStruct.getStruct());
 		created.addStructDef(voteResultStruct.getStruct());
-
-		LoopBoundHandler loopBoundHandler = descr.getLoopBoundHandler();
 
 		String votingStructVarName = "voteStruct";
 		String resultStructVarName = "resultStruct";

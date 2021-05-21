@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.c_parser.ExtractedCLoop;
+
 
 public abstract class CElectionDescriptionFunction {
 	protected String name;
 	protected List<String> code = new ArrayList<>();
-
+	protected List<ExtractedCLoop> extractedLoops = new ArrayList<>();
+	
 	public CElectionDescriptionFunction(String name) {
 		super();
 		this.name = name;
@@ -39,6 +42,14 @@ public abstract class CElectionDescriptionFunction {
 	@Override
 	public String toString() {
 		return name;
+	}
+	
+	public List<ExtractedCLoop> getExtractedLoops() {
+		return extractedLoops;
+	}
+	
+	public void setExtractedLoops(List<ExtractedCLoop> extractedLoops) {
+		this.extractedLoops = extractedLoops;
 	}
 
 }

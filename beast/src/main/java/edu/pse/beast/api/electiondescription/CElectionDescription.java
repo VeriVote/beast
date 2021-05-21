@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
@@ -19,7 +20,6 @@ public class CElectionDescription {
 	private Set<String> functionNames = new HashSet<>();
 	private VotingSigFunction votingFunction;
 
-	private LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
 	private String name;
 	private String uuid;
 
@@ -83,24 +83,6 @@ public class CElectionDescription {
 		return outputType;
 	}
 
-	public List<LoopBound> getLoopBoundsForFunction(CElectionDescriptionFunction func) {
-		return loopBoundHandler.getLoopBoundsForFunction(func.getName());
-	}
-
-	public void addLoopBoundForFunction(String functionName, int loopIndex,
-			LoopBoundType type, Optional<Integer> manualLoopBoundIfPresent) {
-		loopBoundHandler.addLoopBoundForFunction(functionName, loopIndex, type,
-				manualLoopBoundIfPresent);
-	}
-
-	public void setLoopBoundHandler(LoopBoundHandler loopBoundHandler) {
-		this.loopBoundHandler = loopBoundHandler;
-	}
-
-	public LoopBoundHandler getLoopBoundHandler() {
-		return loopBoundHandler;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -111,5 +93,12 @@ public class CElectionDescription {
 
 	public String getUuid() {
 		return uuid;
+	}
+
+	public boolean hasAllLoopBounds() {
+		for(CElectionDescriptionFunction f : functions) {
+			if(f.getExtractedLoops().isEmpty()) {
+			}
+		}
 	}
 }

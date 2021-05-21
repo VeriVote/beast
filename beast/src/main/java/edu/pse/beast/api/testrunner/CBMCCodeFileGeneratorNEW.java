@@ -37,7 +37,8 @@ public class CBMCCodeFileGeneratorNEW {
 			throws IOException {
 
 		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW
-				.generateCodeForCBMCPropertyTest(descr, propDescr, options);
+				.generateCodeForCBMCPropertyTest(descr, propDescr, options,
+						loopBoundHandler);
 
 		final String absolutePath = SuperFolderFinder.getSuperFolder()
 				+ PATH_TO_TEMP_FOLDER;
@@ -59,10 +60,11 @@ public class CBMCCodeFileGeneratorNEW {
 	}
 
 	public static CBMCCodeFileData createCodeFileSpecificParameters(
-			SpecificCBMCRunParametersInfo info, CodeGenOptions codeGenOptions)
-			throws IOException {
+			SpecificCBMCRunParametersInfo info, CodeGenOptions codeGenOptions,
+			LoopBoundHandler loopBoundHandler) throws IOException {
 		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW
-				.generateCodeForCBMCRunWithParameters(info, codeGenOptions);
+				.generateCodeForCBMCRunWithParameters(info, codeGenOptions,
+						loopBoundHandler);
 
 		// TODO(Holger) specific path to specific types of c files
 		final String absolutePath = SuperFolderFinder.getSuperFolder()

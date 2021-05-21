@@ -10,11 +10,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
-import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.CLoopFinder;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
@@ -28,7 +24,6 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -83,7 +78,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		loopBoundList.getSelectionModel().selectedItemProperty()
 				.addListener((e, oldVal, newVal) -> {
 					int line = newVal.getLine();
-					int position = electionCodeArea.position(line - 1, newVal.getPosInLine())
+					int position = electionCodeArea
+							.position(line - 1, newVal.getPosInLine())
 							.toOffset();
 					electionCodeArea.moveTo(position);
 					electionCodeArea.selectLine();
@@ -130,9 +126,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		});
 
 		testLoopBoundButton.setOnAction(e -> {
-			tryFindLoopBounds();
+			beastWorkspace.findLoopBounds(currentDescr,
+					currentDisplayedFunction);
 		});
-
 	}
 
 	private void addVotingFunction() {
@@ -240,22 +236,21 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	@Override
-	public void handleDescrChangeAddedLoopBound(CElectionDescription descr,
-			CElectionDescriptionFunction func, LoopBound lb) {
-
+	public void handleDescrChangeUpdatedFunctionCode(CElectionDescription descr,
+			CElectionDescriptionFunction function, String code) {
+		if (descr.equals(currentDescr)
+				&& function.equals(currentDisplayedFunction)) {
+			displayLoopBounds(function.getExtractedLoops());
+		}
 	}
-
+	
 	@Override
-	public void handleDescrChangeRemovedLoopBound(CElectionDescription descr,
-			CElectionDescriptionFunction func, LoopBound toRemove) {
-
-	}
-
-	private void tryFindLoopBounds() {
-		String code = currentDisplayedFunction.getCode();
-		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(code,
-				beastWorkspace.getCodeGenOptions());
-		loopBoundList.getItems().setAll(loops);
+	public void handleExtractedFunctionLoops(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		if (descr.equals(currentDescr)
+				&& func.equals(currentDisplayedFunction)) {
+			displayLoopBounds(func.getExtractedLoops());
+		}
 	}
 
 	/* ===== other stuff ====== */
@@ -316,6 +311,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		closingBracketArea.insertText(0, "}");
 		setLockedColor();
 
+		displayLoopBounds(func.getExtractedLoops());
+	}
+
+	private void displayLoopBounds(List<ExtractedCLoop> loops) {
+		loopBoundList.getItems().clear();
+		loopBoundList.getItems().addAll(loops);
 	}
 
 	public void loadElectionDescr(CElectionDescription descr) {
@@ -323,46 +324,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		populateFunctionList(descr);
 		functionList.getSelectionModel().clearAndSelect(0);
 	}
-
-	public void addLoopBound() {
-		ChoiceBox<LoopBoundType> typeBox = new ChoiceBox<>();
-		TextField indexTextField = new TextField();
-		TextField customBoundField = new TextField();
-		customBoundField.setVisible(false);
-
-		typeBox.getItems().addAll(LoopBoundType.values());
-		typeBox.getSelectionModel().selectedItemProperty()
-				.addListener((o, oldval, newval) -> {
-					if (newval == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
-						customBoundField.setVisible(true);
-					} else {
-						customBoundField.setVisible(false);
-					}
-				});
-		typeBox.getSelectionModel().selectFirst();
-
-		Optional<ButtonType> res = DialogHelper
-				.generateDialog(
-						List.of("type", "index", "custom bound if selected"),
-						List.of(typeBox, indexTextField, customBoundField))
-				.showAndWait();
-		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
-			String indexString = indexTextField.getText();
-			int index = Integer.valueOf(indexString);
-			LoopBoundType type = typeBox.getValue();
-
-			Optional<Integer> manual = Optional.empty();
-
-			if (type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
-				String customString = customBoundField.getText();
-				int custom = Integer.valueOf(customString);
-				manual = Optional.of(custom);
-			}
-
-			beastWorkspace.addLoopBoundForFunction(currentDescr,
-					currentDisplayedFunction, index, type, manual);
-		}
-	}
+	
 
 	public void removeFunction() {
 		beastWorkspace.removeFunctionFromDescr(currentDescr,

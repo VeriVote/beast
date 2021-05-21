@@ -20,9 +20,6 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 		JSONObject json = new JSONObject();
 
 		json.put(CODE_KEY, generatedCodeInfo.getCode());
-		json.put(VOTE_NUMBER_TO_VARIABLE_NAME_KEY,
-				JSONHelper.IntStringMapToJSON(
-						generatedCodeInfo.getVoteNumberToVariableName()));
 
 		return json;
 	}
@@ -37,8 +34,6 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 						json.getJSONObject(VOTE_NUMBER_TO_VARIABLE_NAME_KEY));
 
 		cbmcGeneratedCodeInfo.setCode(code);
-		cbmcGeneratedCodeInfo
-				.setVoteNumberToVariableName(voteNumberToVariableNameMap);
 
 		return cbmcGeneratedCodeInfo;
 	}

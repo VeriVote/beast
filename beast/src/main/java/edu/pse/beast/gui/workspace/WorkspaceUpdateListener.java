@@ -55,4 +55,9 @@ public interface WorkspaceUpdateListener {
 		
 	}
 
+	public default void handleExtractedFunctionLoops(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		
+	}
+
 }
