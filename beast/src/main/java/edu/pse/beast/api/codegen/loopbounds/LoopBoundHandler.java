@@ -20,4 +20,14 @@ public class LoopBoundHandler {
 		functionNamesToLoopbounds.get(funcName).add(b);
 	}
 
+	public List<LoopBound> getLoopBoundsAsList() {
+		List<LoopBound> loopbounds = new ArrayList<>();
+		for(List<LoopBound> lbl : functionNamesToLoopbounds.values()) {
+			loopbounds.addAll(lbl);
+		}
+		return loopbounds;
+	}
+
+	
+
 }

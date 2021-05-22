@@ -20,8 +20,8 @@ public class AntlrCLoopParser extends CBaseListener {
 	private static Stack<ExtractedCLoop> loopStack = new Stack<>();
 	private static int amtLoops = 0;
 
-	public static List<ExtractedCLoop> findLoops(String cCode,
-			CodeGenOptions codeGenOptions) {
+	public static List<ExtractedCLoop> findLoops(String functionName,
+			String cCode, CodeGenOptions codeGenOptions) {
 
 		CLexer l = new CLexer(CharStreams.fromString(cCode));
 		final CommonTokenStream ts = new CommonTokenStream(l);
@@ -31,10 +31,9 @@ public class AntlrCLoopParser extends CBaseListener {
 		loopStack.clear();
 
 		walker.walk(new CBaseListener() {
-			public void enterIterationStatement(
-					IterationStatementContext ctx) {
+			public void enterIterationStatement(IterationStatementContext ctx) {
 				ExtractedCLoop extractedCLoop = new ExtractedCLoop(ctx,
-						extractedCLoops.size(), codeGenOptions);
+						extractedCLoops.size(), codeGenOptions, functionName);
 				if (!loopStack.isEmpty()) {
 					extractedCLoop.setParentLoop(loopStack.peek());
 					loopStack.peek().addChild(extractedCLoop);

@@ -7,19 +7,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.CLoopFinder;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
@@ -173,8 +169,9 @@ public class BeastWorkspace {
 					return;
 				}
 			}
-			
-			LoopBoundHandler loopBoundHandler = descr.generateLoopBoundHandler();
+
+			LoopBoundHandler loopBoundHandler = descr
+					.generateLoopBoundHandler();
 
 			CBMCCodeFileData cbmcCodeFile = beast
 					.generateCodeFileCBMCPropertyTest(config.getDescr(),
@@ -239,14 +236,18 @@ public class BeastWorkspace {
 			return;
 		}
 
-		for (CElectionDescriptionFunction f : currentConfig.getDescr().getFunctions()) {
+		for (CElectionDescriptionFunction f : currentConfig.getDescr()
+				.getFunctions()) {
 			if (!f.allLoopsDescribed()) {
 				errorHandler.logAndDisplayError("missing loop bounds",
 						"The function " + f.getName()
 								+ " has loopbounds which are not described.");
 				return;
 			}
-		}		
+		}
+
+		LoopBoundHandler loopBoundHandler = currentConfig.getDescr()
+				.generateLoopBoundHandler();
 
 		CBMCCodeFileData cbmcFileData = beast.generateCodeFileCBMCPropertyTest(
 				currentConfig.getDescr(), currentConfig.getPropDescr(),

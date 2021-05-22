@@ -20,13 +20,16 @@ public class ExtractedCLoop {
 	private CLoopParseResultType loopParseResult;
 	private LoopBoundType parsedLoopBoundType;
 	private int posInLine;
+	private String functionName;
 
 	private ExtractedCLoop parentLoop;
 	private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
 
 	public ExtractedCLoop(IterationStatementContext ctx,
-			int loopNumberInFunction, CodeGenOptions codeGenOptions) {
+			int loopNumberInFunction, CodeGenOptions codeGenOptions,
+			String functionName) {
 		this.ctx = ctx;
+		this.functionName = functionName;
 		this.loopNumberInFunction = loopNumberInFunction;
 		init(codeGenOptions);
 	}
@@ -136,7 +139,18 @@ public class ExtractedCLoop {
 	}
 
 	public LoopBound generateLoopBound() {
+		LoopBound parent = parentLoop == null
+				? null
+				: parentLoop.generateLoopBound();
+		List<LoopBound> childrenLoopBounds = new ArrayList<>();
+		for (ExtractedCLoop cl : childrenLoops) {
+			childrenLoopBounds.add(cl.generateLoopBound());
+		}
+
+		LoopBound bound = new LoopBound(parent, childrenLoopBounds,
+				functionName, parsedLoopBoundType, loopNumberInFunction);
 		
+		return bound;
 	}
 
 	public void addChild(ExtractedCLoop l) {
