@@ -1,5 +1,7 @@
 package edu.pse.beast.api.savingloading.loopbound;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.json.JSONArray;
@@ -46,13 +48,21 @@ public class LoopBoundSaverLoaderHelper {
 		String funcname = json.getString(FUNCTION_NAME_KEY);
 		String typeString = json.getString(LOOP_BOUND_TYPE_KEY);
 		LoopBoundType type = LoopBoundType.valueOf(typeString);
-
-		if (type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
-			int manualBound = json.getInt(MANUAL_BOUND_INTEGER_KEY);
-			return new LoopBound(type, index, funcname,
-					Optional.of(manualBound));
-		} else {
-			return new LoopBound(type, index, funcname);
+		LoopBound parent = loopBoundFromJSON(json.getJSONObject(PARENT_KEY));
+		JSONArray childrenJSON = json.getJSONArray(CHILDREN_KEY);
+		List<LoopBound> children = new ArrayList<>();
+		
+		for(int i = 0; i < childrenJSON.length(); ++i) {
+			JSONObject childJSON = childrenJSON.getJSONObject(i);
+			children.add(loopBoundFromJSON(childJSON));
 		}
+		
+		if(type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+			int manualBound = json.getInt(MANUAL_BOUND_INTEGER_KEY);
+			return new LoopBound(parent, children, funcname, type, index, manualBound);
+		} else {
+			return new LoopBound(parent, children, funcname, type, index);
+		}	
+		
 	}
 }
