@@ -7,13 +7,14 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectComparison;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class ElectComparisonHelper {
 
-	private static List<LoopBoundType> getLoopBounds(
+	private static List<LoopBound> getLoopBounds(
 			VotingOutputTypes votingOutputType) {
 		switch (votingOutputType) {
 			case CANDIDATE_LIST : {
@@ -84,7 +85,7 @@ public class ElectComparisonHelper {
 			}
 		}
 
-		List<LoopBoundType> loopbounds = getLoopBounds(votingOutputType);
+		List<LoopBound> loopbounds = getLoopBounds(votingOutputType);
 		loopBoundHandler.pushMainLoopBounds(loopbounds);
 
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);

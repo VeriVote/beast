@@ -4,8 +4,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+
 public class CBMCGeneratedCodeInfo {
 	private String code;
+	private CodeGenLoopBoundHandler loopBoundHandler;
 	private Map<String, Integer> voteVariableNameToVoteNumber = new HashMap<>();
 	private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
 
@@ -53,7 +56,6 @@ public class CBMCGeneratedCodeInfo {
 	public String getListMemberVarName() {
 		return listMemberVarName;
 	}
-
 	public void setAmtMemberVarName(String amtMemberVarName) {
 		this.amtMemberVarName = amtMemberVarName;
 	}
@@ -61,5 +63,9 @@ public class CBMCGeneratedCodeInfo {
 	public void setListMemberVarName(String listMemberVarName) {
 		this.listMemberVarName = listMemberVarName;
 	}
+	
 
+	public void setLoopboundHandler(CodeGenLoopBoundHandler loopBoundHandler) {
+		this.loopBoundHandler = loopBoundHandler;
+	}
 }

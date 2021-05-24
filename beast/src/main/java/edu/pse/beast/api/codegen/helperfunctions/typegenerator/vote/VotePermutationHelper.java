@@ -9,6 +9,7 @@ import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVotePermutation;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteTuple;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -34,7 +35,7 @@ public class VotePermutationHelper {
 					"AMT_VOTERS", options.getCbmcAmountVotersVarName()
 				);
 		
-		List<LoopBoundType> loopbounds = List.of();
+		List<LoopBound> loopbounds = List.of();
 		String code = null;		
 		
 		switch(votingInputType) {

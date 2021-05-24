@@ -38,8 +38,7 @@ public class CBMCCodeGeneratorNEW {
 
 	public static CBMCGeneratedCodeInfo generateCodeForCBMCPropertyTest(
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler) {
+			PreAndPostConditionsDescription propDescr, CodeGenOptions options) {
 
 		CFile created = new CFile();
 		created.include(STDLIB);
@@ -70,6 +69,8 @@ public class CBMCCodeGeneratorNEW {
 
 		String votingStructVarName = "voteStruct";
 		String resultStructVarName = "resultStruct";
+		
+		CodeGenLoopBoundHandler loopBoundHandler = descr.generateLoopBoundHandler();
 
 		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(),
 				descr.getInputType(), descr.getOutputType(), voteInputStruct,
@@ -96,6 +97,8 @@ public class CBMCCodeGeneratorNEW {
 		created.addFunction(mainFunction);
 
 		cbmcGeneratedCode.setCode(created.generateCode());
+		
+		cbmcGeneratedCode.setLoopboundHandler(loopBoundHandler);
 
 		return cbmcGeneratedCode;
 	}

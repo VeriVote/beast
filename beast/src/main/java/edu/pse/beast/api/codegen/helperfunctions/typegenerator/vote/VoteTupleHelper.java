@@ -10,6 +10,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteTuple;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -45,7 +46,7 @@ public class VoteTupleHelper {
 				);
 		
 		String code = CodeTemplateVoteTuple.templateVarSetup;
-		List<LoopBoundType> loopbounds = new ArrayList<>();
+		List<LoopBound> loopbounds = new ArrayList<>();
 		
 		switch(votingInputType) {
 			case APPROVAL : {					

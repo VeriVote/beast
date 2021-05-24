@@ -1,36 +1,51 @@
 package edu.pse.beast.api.codegen.loopbounds;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class LoopBound {
 	private final static String LOOP_BOUND_TEMPLATE = " --unwindset FUNC_NAME.IDX:BOUND ";
 
-	private LoopBound parent;
 	private List<LoopBound> children;
 	private String functionName;
 	private LoopBoundType loopBoundType;
 	private int index;
 	private int manualBoundIfNeeded;
 
-	public LoopBound(LoopBound parent, List<LoopBound> children,
-			String functionName, LoopBoundType loopBoundType, int index) {
-		this.parent = parent;
+	private LoopBound() {
+
+	}
+
+	public LoopBound(List<LoopBound> children, String functionName,
+			LoopBoundType loopBoundType, int index) {
 		this.children = children;
 		this.functionName = functionName;
 		this.loopBoundType = loopBoundType;
 		this.index = index;
 	}
 
-	public LoopBound(LoopBound parent, List<LoopBound> children,
-			String functionName, LoopBoundType loopBoundType, int index,
-			int manualBound) {
-		this.parent = parent;
+	public LoopBound(List<LoopBound> children, String functionName,
+			LoopBoundType loopBoundType, int index, int manualBoundIfNeeded) {
 		this.children = children;
 		this.functionName = functionName;
 		this.loopBoundType = loopBoundType;
 		this.index = index;
 		this.manualBoundIfNeeded = manualBoundIfNeeded;
+	}
+
+	public static LoopBound codeGenLoopbound(LoopBoundType type) {
+		LoopBound bound = new LoopBound();
+		bound.loopBoundType = type;
+		return bound;
+	}
+
+	public static List<LoopBound> codeGenLoopboundList(
+			List<LoopBoundType> types) {
+		List<LoopBound> created = new ArrayList<>();
+		for (LoopBoundType lbt : types)
+			created.add(codeGenLoopbound(lbt));
+		return created;
 	}
 
 	public String getUnwindString(int v, int c, int s) {
@@ -59,10 +74,6 @@ public class LoopBound {
 		return currentUnwindArgument;
 	}
 
-	public LoopBound getParent() {
-		return parent;
-	}
-
 	public List<LoopBound> getChildren() {
 		return children;
 	}
@@ -83,10 +94,6 @@ public class LoopBound {
 		return manualBoundIfNeeded;
 	}
 
-	public void setParent(LoopBound parent) {
-		this.parent = parent;
-	}
-
 	public void setChildren(List<LoopBound> children) {
 		this.children = children;
 	}
@@ -105,6 +112,10 @@ public class LoopBound {
 
 	public void setManualBoundIfNeeded(int manualBoundIfNeeded) {
 		this.manualBoundIfNeeded = manualBoundIfNeeded;
+	}
+
+	public void incrementIndexBy(int amt) {
+		index += amt;
 	}
 
 }

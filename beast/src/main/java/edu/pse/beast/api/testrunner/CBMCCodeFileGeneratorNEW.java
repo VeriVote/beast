@@ -37,8 +37,7 @@ public class CBMCCodeFileGeneratorNEW {
 			throws IOException {
 
 		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW
-				.generateCodeForCBMCPropertyTest(descr, propDescr, options,
-						loopBoundHandler);
+				.generateCodeForCBMCPropertyTest(descr, propDescr, options);
 
 		final String absolutePath = SuperFolderFinder.getSuperFolder()
 				+ PATH_TO_TEMP_FOLDER;

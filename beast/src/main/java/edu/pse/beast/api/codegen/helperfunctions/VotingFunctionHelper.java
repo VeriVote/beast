@@ -9,6 +9,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionResultCopy;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -35,7 +36,7 @@ public class VotingFunctionHelper {
 				"RESULT_ARR", resultArrayVarName);
 
 		String code = null;
-		List<LoopBoundType> loopbounds = Arrays.asList();
+		List<LoopBound> loopbounds = Arrays.asList();
 
 		switch (votingOutputType) {
 			case SINGLE_CANDIDATE : {
@@ -81,7 +82,7 @@ public class VotingFunctionHelper {
 				"LIST_MEMBER", inputStruct.getListName());
 
 		String code = null;		
-		List<LoopBoundType> loopbounds = Arrays.asList();
+		List<LoopBound> loopbounds = Arrays.asList();
 
 		switch (votingInputType) {
 			case APPROVAL : {

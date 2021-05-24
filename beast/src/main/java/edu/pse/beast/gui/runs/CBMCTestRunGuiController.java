@@ -125,6 +125,8 @@ public class CBMCTestRunGuiController {
 				stateHBox.getChildren().add(putRunOnQueueButton);
 				break;
 			}
+			default :
+				break;
 		}
 
 	}

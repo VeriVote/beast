@@ -8,6 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectPermutation;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
@@ -33,7 +34,7 @@ public class ElectPermutationHelper {
 				);
 		
 		String code = null;		
-		List<LoopBoundType> loopbounds = List.of();
+		List<LoopBound> loopbounds = List.of();
 	
 		switch(votingOutputType) {
 			case CANDIDATE_LIST : {

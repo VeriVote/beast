@@ -10,6 +10,7 @@ import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteSumForCandidate;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -34,7 +35,7 @@ public class VotesumHelper {
 				);
 
 		String code = null;
-		List<LoopBoundType> loopbounds = List.of();
+		List<LoopBound> loopbounds = List.of();
 		
 		switch(votingInputType) {
 			case APPROVAL : {					

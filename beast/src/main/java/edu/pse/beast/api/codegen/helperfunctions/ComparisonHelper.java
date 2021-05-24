@@ -7,6 +7,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateComparison;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CBMCVars;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
@@ -40,14 +41,14 @@ public class ComparisonHelper {
 			CBMCVars listSize = type.getListSizes().get(0);
 			String amtString = null;
 			
-			List<LoopBoundType> loopbounds = new ArrayList<>();
+			List<LoopBound> loopbounds = new ArrayList<>();
 			
 			switch (listSize) {
 				case AMT_CANDIDATES:
-					loopbounds.add(LoopBoundType.LOOP_BOUND_AMT_CANDS);
+					loopbounds.add(LoopBound.codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_CANDS));
 					break;
 				case AMT_VOTERS:
-					loopbounds.add(LoopBoundType.LOOP_BOUND_AMT_VOTERS);
+					loopbounds.add(LoopBound.codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_VOTERS));
 					break;
 			}			
 			

@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateInitVote {
@@ -15,8 +16,11 @@ public class CodeTemplateInitVote {
 			+ "            ASSUME(VAR_NAME.votes[i] <= UPPER_VOTE_BOUND);\n"
 			+ "    }\n";
 
-	public final static List<LoopBoundType> loopBoundsSingleChoice = Arrays
-			.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS);
+	public final static List<LoopBound> loopBoundsSingleChoice =
+			LoopBound.codeGenLoopboundList(
+					Arrays.asList(
+							LoopBoundType.LOOP_BOUND_AMT_VOTERS)
+					);
 
 	public final static String templatePreference = "    VOTE_TYPE VAR_NAME;\n"
 			+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
@@ -43,13 +47,16 @@ public class CodeTemplateInitVote {
 			+ "                    tmp[k] = 1;\n" + "                }\n"
 			+ "            }\n" + "        }\n" + "    }\n";
 
-	public final static List<LoopBoundType> loopBoundsPreference = Arrays
-			.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-					LoopBoundType.LOOP_BOUND_AMT_CANDS,
-					LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-					LoopBoundType.LOOP_BOUND_AMT_CANDS,
-					LoopBoundType.LOOP_BOUND_AMT_CANDS,
-					LoopBoundType.LOOP_BOUND_AMT_CANDS);
+	public final static List<LoopBound> loopBoundsPreference =
+			LoopBound.codeGenLoopboundList(
+				Arrays
+				.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+						LoopBoundType.LOOP_BOUND_AMT_CANDS,
+						LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+						LoopBoundType.LOOP_BOUND_AMT_CANDS,
+						LoopBoundType.LOOP_BOUND_AMT_CANDS,
+						LoopBoundType.LOOP_BOUND_AMT_CANDS)
+			);
 
 	public final static String templateApproval = "    VOTE_TYPE VAR_NAME;\n"
 			+ "    VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
@@ -66,9 +73,12 @@ public class CodeTemplateInitVote {
 			+ "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] == UPPER_VOTE_BOUND);\n"
 			+ "        }\n" + "    }\n";
 
-	public final static List<LoopBoundType> loopBoundsApproval = Arrays.asList(
-			LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-			LoopBoundType.LOOP_BOUND_AMT_CANDS,
-			LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-			LoopBoundType.LOOP_BOUND_AMT_CANDS);
+	public final static List<LoopBound> loopBoundsApproval =
+			LoopBound.codeGenLoopboundList(
+				Arrays.asList(
+				LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+				LoopBoundType.LOOP_BOUND_AMT_CANDS,
+				LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+				LoopBoundType.LOOP_BOUND_AMT_CANDS)
+			);
 }

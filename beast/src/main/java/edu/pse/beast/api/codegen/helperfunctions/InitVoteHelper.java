@@ -7,6 +7,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateInitVote;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -28,7 +29,7 @@ public abstract class InitVoteHelper {
 				options.getVotesUpperBoundVarName());
 
 		String code = null;
-		List<LoopBoundType> loopbounds = List.of();
+		List<LoopBound> loopbounds = List.of();
 
 		switch (votingInputType) {
 			case APPROVAL : {

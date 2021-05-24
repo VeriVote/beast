@@ -139,15 +139,12 @@ public class ExtractedCLoop {
 	}
 
 	public LoopBound generateLoopBound() {
-		LoopBound parent = parentLoop == null
-				? null
-				: parentLoop.generateLoopBound();
 		List<LoopBound> childrenLoopBounds = new ArrayList<>();
 		for (ExtractedCLoop cl : childrenLoops) {
 			childrenLoopBounds.add(cl.generateLoopBound());
 		}
 
-		LoopBound bound = new LoopBound(parent, childrenLoopBounds,
+		LoopBound bound = new LoopBound(childrenLoopBounds,
 				functionName, parsedLoopBoundType, loopNumberInFunction);
 		
 		return bound;

@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateVoteIntersection {
@@ -22,8 +23,10 @@ public class CodeTemplateVoteIntersection {
 			+ "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);\n"
 			+ "}\n";
 	
-	public final static List<LoopBoundType> loopBoundsSingleChoice = 
-			Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS);
+	public final static List<LoopBound> loopBoundsSingleChoice = 
+			LoopBound.codeGenLoopboundList(
+					Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS)
+			);
 	
 	public final static String templatePreference = 
 			  "VOTE_TYPE GENERATED_VAR_NAME;\n"
@@ -46,11 +49,14 @@ public class CodeTemplateVoteIntersection {
 			+ "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);"
 			+ "}\n";
 
-	public final static List<LoopBoundType> loopBoundsPreference = Arrays.asList(
-			LoopBoundType.LOOP_BOUND_AMT_VOTERS, 
-			LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-			LoopBoundType.LOOP_BOUND_AMT_VOTERS);
+	public final static List<LoopBound> loopBoundsPreference = 
+			LoopBound.codeGenLoopboundList(
+				Arrays.asList(
+				LoopBoundType.LOOP_BOUND_AMT_VOTERS, 
+				LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+				LoopBoundType.LOOP_BOUND_AMT_VOTERS)
+			);
 	
 	public final static String templateApproval = templatePreference; 
-	public final static List<LoopBoundType> loopBoundsApproval = loopBoundsPreference;
+	public final static List<LoopBound> loopBoundsApproval = loopBoundsPreference;
 }

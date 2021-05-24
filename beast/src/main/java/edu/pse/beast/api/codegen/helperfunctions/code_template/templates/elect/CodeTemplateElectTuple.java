@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateElectTuple {
@@ -21,7 +22,9 @@ public class CodeTemplateElectTuple {
 			+ "            pos++;\n"
 			+ "        }\n";	
 
-	public final static List<LoopBoundType> loopBoundsCandidateList =
-			Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS);
+	public final static List<LoopBound> loopBoundsCandidateList =
+			LoopBound.codeGenLoopboundList(
+					Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS)
+			);
 	
 }

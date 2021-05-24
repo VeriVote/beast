@@ -57,7 +57,7 @@ public class VoteIntersectionHelper {
 				);
 		
 		String code = null;
-		List<LoopBoundType> loopbounds = List.of();
+		List<LoopBound> loopbounds = List.of();
 		
 		switch(votingInputType) {
 			case APPROVAL : {				

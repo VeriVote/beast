@@ -278,7 +278,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		beastWorkspace.setErrorHandler(errorHandler);
 
 		// for testing
-		beastWorkspace.setCbmcProcessStarter(null);
+		// beastWorkspace.setCbmcProcessStarter(null);
 
 		initElectionEditor();
 		initPropertyEditor();

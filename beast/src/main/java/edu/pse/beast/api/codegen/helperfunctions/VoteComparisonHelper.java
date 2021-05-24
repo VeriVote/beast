@@ -8,13 +8,14 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 
 public class VoteComparisonHelper {
 	
-	private static List<LoopBoundType> getLoopBounds(
+	private static List<LoopBound> getLoopBounds(
 			VotingInputTypes votingInputType) {
 		switch(votingInputType) {
 			case APPROVAL : {		
@@ -101,7 +102,7 @@ public class VoteComparisonHelper {
 			}
 		}
 		
-		List<LoopBoundType> loopbounds = getLoopBounds(votingInputType);
+		List<LoopBound> loopbounds = getLoopBounds(votingInputType);
 		loopBoundHandler.pushMainLoopBounds(loopbounds);
 		
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);		
