@@ -9,7 +9,6 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 public class CBMCCommandHelper {
 
 	private final static String DEFINE_CONST_FLAG = " -D ";
-	private final static String LOOP_BOUND_TEMPLATE = " --unwindset FUNC_NAME.IDX:BOUND ";
 	private final static String OUTPUT_FORMAT_JSON_STRING = " --json-ui ";
 
 	public static String getAmountConstantString(CodeGenOptions codeGenOptions,
@@ -35,28 +34,11 @@ public class CBMCCommandHelper {
 
 		StringBuilder unwindArgsStringBuilder = new StringBuilder();
 
-		for (LoopBound loopBound : loopBounds) {
-			String funcName = loopBound.getFunctionName();
-			String loopIdx = String.valueOf(loopBound.getIndex());
-			String bound = null;
+		for (LoopBound loopBound : loopBounds) {			
+			String unwindString = loopBound.getUnwindString(V, C, S);
+		
 
-			switch (loopBound.getLoopBoundType()) {
-				case LOOP_BOUND_AMT_VOTERS :
-					bound = String.valueOf(V + 1);
-					break;
-				case LOOP_BOUND_AMT_CANDS :
-					bound = String.valueOf(C + 1);
-					break;
-				case LOOP_BOUND_AMT_SEATS :
-					bound = String.valueOf(S + 1);
-					break;
-			}
-
-			String currentUnwindArgument = LOOP_BOUND_TEMPLATE
-					.replaceAll("FUNC_NAME", funcName)
-					.replaceAll("IDX", loopIdx).replaceAll("BOUND", bound);
-
-			unwindArgsStringBuilder.append(currentUnwindArgument);
+			unwindArgsStringBuilder.append(unwindString);
 		}
 
 		return unwindArgsStringBuilder.toString();
