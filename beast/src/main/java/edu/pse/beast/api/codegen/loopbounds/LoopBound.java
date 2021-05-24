@@ -55,8 +55,56 @@ public class LoopBound {
 				.replaceAll("FUNC_NAME", functionName)
 				.replaceAll("IDX", String.valueOf(index))
 				.replaceAll("BOUND", String.valueOf(bound));
-		
+
 		return currentUnwindArgument;
+	}
+
+	public LoopBound getParent() {
+		return parent;
+	}
+
+	public List<LoopBound> getChildren() {
+		return children;
+	}
+
+	public String getFunctionName() {
+		return functionName;
+	}
+
+	public LoopBoundType getLoopBoundType() {
+		return loopBoundType;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public int getManualBoundIfNeeded() {
+		return manualBoundIfNeeded;
+	}
+
+	public void setParent(LoopBound parent) {
+		this.parent = parent;
+	}
+
+	public void setChildren(List<LoopBound> children) {
+		this.children = children;
+	}
+
+	public void setFunctionName(String functionName) {
+		this.functionName = functionName;
+	}
+
+	public void setLoopBoundType(LoopBoundType loopBoundType) {
+		this.loopBoundType = loopBoundType;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public void setManualBoundIfNeeded(int manualBoundIfNeeded) {
+		this.manualBoundIfNeeded = manualBoundIfNeeded;
 	}
 
 }

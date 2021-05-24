@@ -452,8 +452,8 @@ public class BeastWorkspace {
 	public void findLoopBounds(CElectionDescription descr,
 			CElectionDescriptionFunction func) {
 		String code = func.getCode();
-		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(code,
-				codeGenOptions);
+		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops(func.getName(),
+				code, codeGenOptions);
 		func.setExtractedLoops(loops);
 
 		for (WorkspaceUpdateListener l : updateListener) {
