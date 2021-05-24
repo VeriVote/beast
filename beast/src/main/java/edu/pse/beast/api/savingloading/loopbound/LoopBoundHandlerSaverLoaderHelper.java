@@ -14,49 +14,32 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class LoopBoundHandlerSaverLoaderHelper {
-	private final static String LOOP_BOUND_MAP_KEY = "loop_bound_map";
+	private final static String LOOP_BOUND_LIST_KEY = "loop_bound_list";
 
 	public static JSONObject loopboundHandlerToJson(
 			LoopBoundHandler loopBoundHandler) {
 		JSONObject json = new JSONObject();
-
-		JSONObject loopBoundMapJSON = new JSONObject();
-		for (String functionName : loopBoundHandler.getFuncNameToLoopbounds()
-				.keySet()) {
-			JSONArray loopBoundJSONArr = new JSONArray();
-
-			for (LoopBound loopBound : loopBoundHandler
-					.getFuncNameToLoopbounds().get(functionName)) {
-				JSONObject currentJSON = LoopBoundSaverLoaderHelper
-						.loopBoundToJSON(loopBound);
-				loopBoundJSONArr.put(currentJSON);
-			}
-
-			loopBoundMapJSON.put(functionName, loopBoundJSONArr);
+		
+		List<LoopBound> loopbounds = loopBoundHandler.getLoopBoundsAsList();
+		JSONArray arr = new JSONArray();
+		for(LoopBound lb : loopbounds) {
+			arr.put(LoopBoundSaverLoaderHelper.loopBoundToJSON(lb));
 		}
-
-		json.put(LOOP_BOUND_MAP_KEY, loopBoundMapJSON);
+		
+		json.put(LOOP_BOUND_LIST_KEY, arr);
 		return json;
 	}
 
 	public static LoopBoundHandler loopBoundHandlerFromJSON(JSONObject json) {
-		JSONObject loopBoundMapJSON = json.getJSONObject(LOOP_BOUND_MAP_KEY);
-
-		Map<String, List<LoopBound>> loopBoundMap = new HashMap<>();
-		for (String funcName : loopBoundMapJSON.keySet()) {
-			JSONArray loopBoundArr = loopBoundMapJSON.getJSONArray(funcName);
-			List<LoopBound> loopboundList = new ArrayList<>();
-			for (int i = 0; i < loopBoundArr.length(); ++i) {
-				LoopBound loopBound = LoopBoundSaverLoaderHelper
-						.loopBoundFromJSON(loopBoundArr.getJSONObject(i));
-				loopboundList.add(loopBound);
-			}
-			loopBoundMap.put(funcName, loopboundList);
-		}
-
+		JSONArray loopboundArr = json.getJSONArray(LOOP_BOUND_LIST_KEY);
 		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
-		loopBoundHandler.setFuncNameToLoopbounds(loopBoundMap);
-
+		
+		for(int i = 0; i < loopboundArr.length(); ++i) {
+			JSONObject lbJson = loopboundArr.getJSONObject(i);
+			LoopBound lb = LoopBoundSaverLoaderHelper.loopBoundFromJSON(lbJson);
+			loopBoundHandler.addLoopBound(lb);
+		}
+		
 		return loopBoundHandler;
 	}
 }

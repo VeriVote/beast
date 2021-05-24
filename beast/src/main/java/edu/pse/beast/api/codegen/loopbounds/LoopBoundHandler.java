@@ -13,7 +13,8 @@ public class LoopBoundHandler {
 
 	private Map<String, List<LoopBound>> functionNamesToLoopbounds = new HashMap<>();
 
-	public void addLoopBoundToFunction(LoopBound b, String funcName) {
+	public void addLoopBound(LoopBound b) {
+		String funcName = b.getFunctionName();
 		if (!functionNamesToLoopbounds.containsKey(funcName)) {
 			functionNamesToLoopbounds.put(funcName, new ArrayList<>());
 		}
