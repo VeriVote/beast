@@ -15,7 +15,7 @@ import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
@@ -170,7 +170,7 @@ public class BeastWorkspace {
 				}
 			}
 
-			LoopBoundHandler loopBoundHandler = descr
+			CodeGenLoopBoundHandler loopBoundHandler = descr
 					.generateLoopBoundHandler();
 
 			CBMCCodeFileData cbmcCodeFile = beast
@@ -246,7 +246,7 @@ public class BeastWorkspace {
 			}
 		}
 
-		LoopBoundHandler loopBoundHandler = currentConfig.getDescr()
+		CodeGenLoopBoundHandler loopBoundHandler = currentConfig.getDescr()
 				.generateLoopBoundHandler();
 
 		CBMCCodeFileData cbmcFileData = beast.generateCodeFileCBMCPropertyTest(

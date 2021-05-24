@@ -7,7 +7,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteComparison;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
@@ -44,7 +44,7 @@ public class VoteComparisonHelper {
 			VotingInputTypes votingInputType,
 			CodeGenOptions options, 
 			String compareSymbol,
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 		
 		Map<String, String> replacementMap = Map.of(
 					"GENERATED_VAR", generatedVarName,

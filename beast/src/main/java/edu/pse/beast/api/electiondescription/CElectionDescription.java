@@ -11,7 +11,7 @@ import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
@@ -33,6 +33,7 @@ public class CElectionDescription {
 		this.outputType = outputType;
 		this.name = name;
 		votingFunction = new VotingSigFunction("voting", inputType, outputType);
+		functions.add(votingFunction);
 		this.uuid = UUID.randomUUID().toString();
 	}
 
@@ -42,6 +43,7 @@ public class CElectionDescription {
 		this.outputType = outputType;
 		this.name = name;
 		votingFunction = new VotingSigFunction("voting", inputType, outputType);
+		functions.add(votingFunction);
 		this.uuid = uuid;
 	}
 
@@ -52,12 +54,6 @@ public class CElectionDescription {
 	public VotingSigFunction getVotingFunction() {
 		return votingFunction;
 	}
-
-	public void setVotingFunction(VotingSigFunction votingFunction) {
-		this.votingFunction = votingFunction;
-		functionNames.add(votingFunction.getName());
-	}
-
 	public VotingSigFunction createNewVotingSigFunctionAndAdd(String name) {
 		VotingSigFunction created = new VotingSigFunction(name, inputType,
 				outputType);
@@ -96,15 +92,13 @@ public class CElectionDescription {
 		return uuid;
 	}
 
-	public LoopBoundHandler generateLoopBoundHandler() {
-		LoopBoundHandler boundHandler = new LoopBoundHandler();
+	public CodeGenLoopBoundHandler generateLoopBoundHandler() {
+		CodeGenLoopBoundHandler boundHandler = new CodeGenLoopBoundHandler();
 
 		for (CElectionDescriptionFunction f : functions) {
 			List<ExtractedCLoop> loops = f.getExtractedLoops();
 			for (ExtractedCLoop l : loops) {
-				boundHandler.addLoopBoundToFunction(
-						l.generateLoopBound(),
-						f.getName());
+				boundHandler.addLoopBound(l.generateLoopBound());
 			}
 		}
 

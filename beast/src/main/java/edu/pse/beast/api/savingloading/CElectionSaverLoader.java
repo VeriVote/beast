@@ -13,7 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -31,8 +31,6 @@ public class CElectionSaverLoader {
 	private static final String VOTING_FUNC_NAME_KEY = "voting_func_name";
 	private static final String VOTING_FUNC_CODE_KEY = "code";
 	private static final String DESCR_UUID_KEY = "descr_uuid";
-
-	private static final String LOOP_BOUND_HANDLER_KEY = "loop_bound_handler";
 
 	private static boolean isVersionCompatible(int version) {
 		return true;
@@ -92,11 +90,9 @@ public class CElectionSaverLoader {
 				inputType, outputType);
 		VotingSigFunction votingFunction = toVotingFunction(
 				json.getJSONObject(VOTING_FUNC_KEY), inputType, outputType);
-		descr.setVotingFunction(votingFunction);
 
-		LoopBoundHandler loopBoundHandler = LoopBoundHandlerSaverLoaderHelper
-				.loopBoundHandlerFromJSON(
-						json.getJSONObject(LOOP_BOUND_HANDLER_KEY));
+		descr.getVotingFunction().setName(votingFunction.getName());
+		descr.getVotingFunction().setCode(votingFunction.getCode());
 
 		return descr;
 	}

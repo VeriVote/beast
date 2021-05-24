@@ -6,7 +6,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateInitVote;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -14,7 +14,7 @@ public abstract class InitVoteHelper {
 
 	public static String generateCode(String varName,
 			ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
-			CodeGenOptions options, LoopBoundHandler loopBoundHandler) {
+			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler) {
 
 		Map<String, String> replacementMap = Map.of("AMT_CANDIDATES",
 				options.getCbmcAmountCandidatesVarName(), "AMT_VOTERS",

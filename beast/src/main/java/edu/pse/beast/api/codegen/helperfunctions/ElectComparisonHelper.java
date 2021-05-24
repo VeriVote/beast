@@ -6,7 +6,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectComparison;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -36,7 +36,7 @@ public class ElectComparisonHelper {
 			String lhsVarName, String rhsVarName,
 			ElectionTypeCStruct comparedType,
 			VotingOutputTypes votingOutputType, CodeGenOptions options,
-			String compareSymbol, LoopBoundHandler loopBoundHandler) {
+			String compareSymbol, CodeGenLoopBoundHandler loopBoundHandler) {
 
 		Map<String, String> replacementMap = Map.of("GENERATED_VAR",
 				generatedVarName, "LHS_VAR", lhsVarName, "RHS_VAR", rhsVarName,

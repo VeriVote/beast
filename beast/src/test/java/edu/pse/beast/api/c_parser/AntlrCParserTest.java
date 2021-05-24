@@ -28,7 +28,7 @@ public class AntlrCParserTest {
 		options.setCbmcAmountVotersVarName("V");
 		
 		List<ExtractedCLoop>extractedCLoops = 
-				AntlrCLoopParser.findLoops(bordaCode, options);
+				AntlrCLoopParser.findLoops("voting", bordaCode, options);
 		
 		for(ExtractedCLoop l : extractedCLoops) {
 			System.out.println(l.toString());

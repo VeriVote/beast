@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteIntersection;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -20,7 +20,7 @@ public class VoteIntersectionHelper {
 			ElectionTypeCStruct voteArrStruct,
 			VotingInputTypes votingInputType,
 			CodeGenOptions options, 
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 		
 		
 		String comparison = "";

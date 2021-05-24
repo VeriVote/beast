@@ -9,7 +9,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.vote.CodeTemplateVoteSumForCandidate;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
@@ -22,7 +22,7 @@ public class VotesumHelper {
 			ElectionTypeCStruct voteStruct,
 			VotingInputTypes votingInputType,
 			CodeGenOptions options, 
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 		
 		Map<String, String> replaceMap = Map.of(
 					"GENERATED_VAR", generatedVarName,

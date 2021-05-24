@@ -30,7 +30,7 @@ import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VoteIntersec
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VotePermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VoteTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VotesumHelper;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -53,7 +53,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		ASSUME, ASSERT
 	}
 
-	private LoopBoundHandler loopBoundHandler;
+	private CodeGenLoopBoundHandler loopBoundHandler;
 	private CCodeBlock codeBlock;
 
 	ScopeHandler scopeHandler = new ScopeHandler();
@@ -82,7 +82,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			ElectionTypeCStruct voteResultStruct,
 			VotingOutputTypes votingOutputType,
 			CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 		this.voteArrStruct = voteArrStruct;
 		this.votingInputType = votingInputType;
 		this.voteResultStruct = voteResultStruct;

@@ -10,14 +10,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class LoopBoundHandlerSaverLoaderHelper {
 	private final static String LOOP_BOUND_LIST_KEY = "loop_bound_list";
 
 	public static JSONObject loopboundHandlerToJson(
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 		JSONObject json = new JSONObject();
 		
 		List<LoopBound> loopbounds = loopBoundHandler.getLoopBoundsAsList();
@@ -30,9 +30,9 @@ public class LoopBoundHandlerSaverLoaderHelper {
 		return json;
 	}
 
-	public static LoopBoundHandler loopBoundHandlerFromJSON(JSONObject json) {
+	public static CodeGenLoopBoundHandler loopBoundHandlerFromJSON(JSONObject json) {
 		JSONArray loopboundArr = json.getJSONArray(LOOP_BOUND_LIST_KEY);
-		LoopBoundHandler loopBoundHandler = new LoopBoundHandler();
+		CodeGenLoopBoundHandler loopBoundHandler = new CodeGenLoopBoundHandler();
 		
 		for(int i = 0; i < loopboundArr.length(); ++i) {
 			JSONObject lbJson = loopboundArr.getJSONObject(i);

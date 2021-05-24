@@ -7,7 +7,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectPermutation;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
@@ -18,7 +18,7 @@ public class ElectPermutationHelper {
 			ElectionTypeCStruct electStruct,
 			VotingOutputTypes votingOutputType,
 			CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 		
 		Map<String, String> replacementMap = Map.of(
 					"ELECT_TYPE", electStruct.getStruct().getName(),

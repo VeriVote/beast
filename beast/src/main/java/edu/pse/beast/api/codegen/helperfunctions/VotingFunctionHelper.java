@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionResultCopy;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -22,7 +22,7 @@ public class VotingFunctionHelper {
 			VotingOutputTypes votingOutputType,
 			ElectionTypeCStruct outputStruct,
 			CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 
 		Map<String, String> replacementMap = Map.of(
 				"RESULT_TYPE", outputStruct.getStruct().getName(),
@@ -70,7 +70,7 @@ public class VotingFunctionHelper {
 			VotingInputTypes votingInputType,
 			ElectionTypeCStruct inputStruct, 
 			CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 
 		Map<String, String> replacementMap = Map.of(
 				"VOTE_ARR", voteArrayVarName,

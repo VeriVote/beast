@@ -10,7 +10,7 @@ import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
@@ -35,64 +35,11 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	public static CBMCGeneratedCodeInfo generateCodeForCBMCRunWithParameters(
-			SpecificCBMCRunParametersInfo params, CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
-
-		CFile created = new CFile();
-		created.include(STDLIB);
-		created.include(STDINT);
-		created.include(ASSERT);
-
-		created.define(ASSUME, CPROVER_ASSUME);
-
-		created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
-		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());
-
-		options.setCbmcAssumeName("assume");
-		options.setCbmcAssertName("assert");
-		options.setCbmcNondetUintName(CBMC_UINT_FUNC_NAME);
-
-		CElectionVotingType votesNakedArr = CElectionVotingType
-				.of(params.getDescr().getVotingFunction().getInputType());
-		CElectionVotingType resultNakedArr = CElectionVotingType
-				.of(params.getDescr().getVotingFunction().getOutputType());
-
-		ElectionTypeCStruct voteInputStruct = votingTypeToCStruct(votesNakedArr,
-				"VoteStruct", "votes", "amtVotes");
-		ElectionTypeCStruct voteResultStruct = votingTypeToCStruct(
-				resultNakedArr, "VoteResultStruct", "result", "amtResult");
-
-		created.addStructDef(voteInputStruct.getStruct());
-		created.addStructDef(voteResultStruct.getStruct());
-
-		CElectionDescription descr = params.getDescr();
-
-		String votingStructVarName = "voteStruct";
-		String resultStructVarName = "resultStruct";
-
-		created.addFunction(votingSigFuncToPlainCFunc(descr.getVotingFunction(),
-				descr.getInputType(), descr.getOutputType(), voteInputStruct,
-				voteResultStruct, options, loopBoundHandler,
-				votingStructVarName, resultStructVarName));
-
-		CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
-
-		CFunction mainFunction = SpecificParamsMainGenerator.main(
-				voteInputStruct, voteResultStruct, params, options,
-				cbmcGeneratedCodeInfo);
-
-		created.addFunction(mainFunction);
-
-		cbmcGeneratedCodeInfo.setCode(created.generateCode());
-
-		return cbmcGeneratedCodeInfo;
-	}
 
 	public static CBMCGeneratedCodeInfo generateCodeForCBMCPropertyTest(
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler) {
 
 		CFile created = new CFile();
 		created.include(STDLIB);
@@ -157,7 +104,7 @@ public class CBMCCodeGeneratorNEW {
 			VotingInputTypes votingInputType,
 			VotingOutputTypes votingOutputType, ElectionTypeCStruct inputStruct,
 			ElectionTypeCStruct outputStruct, CodeGenOptions options,
-			LoopBoundHandler loopBoundHandler, String votingStructVarName,
+			CodeGenLoopBoundHandler loopBoundHandler, String votingStructVarName,
 			String resultStructVarName) {
 
 		List<String> votingFuncArguments = List.of(

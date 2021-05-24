@@ -5,7 +5,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect.CodeTemplateElectEmpty;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundHandler;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class IsElectEmptyHelper {
@@ -15,7 +15,7 @@ public class IsElectEmptyHelper {
 				ElectionTypeCStruct electStruct,
 				VotingOutputTypes votingOutputType,
 				CodeGenOptions options,
-				LoopBoundHandler loopBoundHandler			
+				CodeGenLoopBoundHandler loopBoundHandler			
 			) {
 		
 		Map<String, String> replacementMap = Map.of(

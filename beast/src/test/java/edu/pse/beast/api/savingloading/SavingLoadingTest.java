@@ -4,23 +4,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.FileAttribute;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
-import edu.pse.beast.api.codegen.loopbounds.FunctionAlreadyContainsLoopboundAtIndexException;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
@@ -40,20 +34,7 @@ public class SavingLoadingTest {
 				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
 				"borda");
 
-		descr.getVotingFunction().getCodeAsList().add(bordaCode);
-		try {
-			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
-					0, LoopBoundType.LOOP_BOUND_AMT_VOTERS, Optional.empty());
-			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
-					1, LoopBoundType.LOOP_BOUND_AMT_SEATS, Optional.empty());
-			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
-					2, LoopBoundType.LOOP_BOUND_AMT_CANDS, Optional.empty());
-			descr.addLoopBoundForFunction(descr.getVotingFunction().getName(),
-					3, LoopBoundType.MANUALLY_ENTERED_INTEGER,
-					Optional.of(100));
-		} catch (FunctionAlreadyContainsLoopboundAtIndexException e) {
-			e.printStackTrace();
-		}
+		descr.getVotingFunction().setCode(bordaCode);
 
 		File f = new File("testfiles");
 		f.mkdirs();
