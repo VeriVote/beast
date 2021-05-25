@@ -17,6 +17,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 public interface CBMCProcessHandler {
 
 	public CBMCProcessStarterType getType();
+	
 
 	// at this point, the code file is final. This means the following wont
 	// change

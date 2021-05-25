@@ -122,6 +122,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 		synchronized (testRunLogs) {
 			testRunLogs.add(output);
 		}
+		System.out.println(output);
 		updateGui();
 	}
 

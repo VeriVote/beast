@@ -28,10 +28,12 @@ public class VoteTupleHelper {
 		String voteAmtSum = "";
 		for (int i = 0; i < voteNames.size() - 1; ++i) {
 			voteAmtSum += "CURRENT_VOTE.AMT_MEMBER + ".replaceAll("CURRENT_VOTE",
-					voteNames.get(i));
+					voteNames.get(i))
+					.replace("AMT_MEMBER", voteArrStruct.getAmtName());
 		}
 		voteAmtSum += "CURRENT_VOTE.AMT_MEMBER".replaceAll("CURRENT_VOTE",
-				voteNames.get(voteNames.size() - 1));
+				voteNames.get(voteNames.size() - 1))
+				.replace("AMT_MEMBER", voteArrStruct.getAmtName());
 
 		Map<String, String> replacementMap = Map.of(
 					"VOTE_AMT_SUM", voteAmtSum,

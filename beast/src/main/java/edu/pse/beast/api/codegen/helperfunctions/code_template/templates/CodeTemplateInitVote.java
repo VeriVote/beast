@@ -50,11 +50,11 @@ public class CodeTemplateInitVote {
 	public final static List<LoopBound> loopBoundsPreference =
 			LoopBound.codeGenLoopboundList(
 				Arrays
-				.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+				.asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
 						LoopBoundType.LOOP_BOUND_AMT_CANDS,
 						LoopBoundType.LOOP_BOUND_AMT_VOTERS,
 						LoopBoundType.LOOP_BOUND_AMT_CANDS,
-						LoopBoundType.LOOP_BOUND_AMT_CANDS,
+						LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS,
 						LoopBoundType.LOOP_BOUND_AMT_CANDS)
 			);
 
@@ -76,7 +76,7 @@ public class CodeTemplateInitVote {
 	public final static List<LoopBound> loopBoundsApproval =
 			LoopBound.codeGenLoopboundList(
 				Arrays.asList(
-				LoopBoundType.LOOP_BOUND_AMT_VOTERS,
+				LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
 				LoopBoundType.LOOP_BOUND_AMT_CANDS,
 				LoopBoundType.LOOP_BOUND_AMT_VOTERS,
 				LoopBoundType.LOOP_BOUND_AMT_CANDS)

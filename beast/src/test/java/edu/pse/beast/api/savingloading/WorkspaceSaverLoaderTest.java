@@ -32,7 +32,6 @@ public class WorkspaceSaverLoaderTest {
 				"test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
-		
 
 		descr.createNewVotingSigFunctionAndAdd("votehelper");
 
@@ -100,8 +99,9 @@ public class WorkspaceSaverLoaderTest {
 		beastWorkspace.addFileForPropDescr(propDescr, propDescrFile);
 
 		beastWorkspace.addTestConfiguration(testConfig);
-		
-		beastWorkspace.setCbmcProcessStarter(new CBMCProcessHandlerWindows(""));
+
+		beastWorkspace.setCbmcProcessStarter(new CBMCProcessHandlerWindows(
+				"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat"));
 
 		File f = new File("testfiles");
 		f.mkdirs();
@@ -110,7 +110,6 @@ public class WorkspaceSaverLoaderTest {
 		SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f);
 		BeastWorkspace loadedBeastWorkspace = SavingLoadingInterface
 				.loadBeastWorkspace(f);
-		
 
 		int i = 0;
 	}

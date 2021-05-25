@@ -19,12 +19,14 @@ public class BEAST {
 	private List<Thread> createdThreads = new ArrayList<>();
 
 	public void runWorkUnit(CBMCPropertyCheckWorkUnit wu) {
-		createdThreads.add(new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				wu.doWork();
 			}
-		}));
+		});
+		t.start();
+		createdThreads.add(t);
 	}
 
 	public CBMCCodeFileData generateCodeFileCBMCPropertyTest(

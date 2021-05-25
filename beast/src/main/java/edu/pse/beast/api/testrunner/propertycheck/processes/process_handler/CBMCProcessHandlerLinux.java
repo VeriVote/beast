@@ -34,9 +34,10 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC_64);
 
 		String arguments = CBMCArgumentHelper.getConstCommands(codeGenOptions,
-				V, C, S) + loopBounds;
+				V, C, S) + " " + loopBounds;
 
 		return Runtime.getRuntime().exec(arguments, null, cbmcProgFile);
 	}
+
 
 }

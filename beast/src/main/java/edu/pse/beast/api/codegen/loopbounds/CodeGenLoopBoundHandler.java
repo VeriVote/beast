@@ -63,7 +63,12 @@ public class CodeGenLoopBoundHandler {
 	}
 
 	public String generateCBMCString(int v, int c, int s) {		
-		String created = "";
+		
+		int max = Math.max(v, c);
+		max = Math.max(max, s);
+		return " --unwind " + (max + 1);
+		
+		/*String created = "";
 
 		for (int i = 0; i < mainLoopbounds.size(); ++i) {
 			LoopBound lb = mainLoopbounds.get(i);
@@ -84,7 +89,7 @@ public class CodeGenLoopBoundHandler {
 			}
 		}
 
-		return created;
+		return created;*/
 	}
 
 }

@@ -34,6 +34,7 @@ public class ElectIntersectionHelper {
 					+ intersectedElectNames.get(i + 1) + ".LIST_MEMBER[i]";
 		}		
 		
+		comparison = comparison.replaceAll("LIST_MEMBER", electStruct.getListName());		
 		
 		Map<String, String> replacementMap = Map.of(
 				"ELECT_TYPE", electStruct.getStruct().getName(),

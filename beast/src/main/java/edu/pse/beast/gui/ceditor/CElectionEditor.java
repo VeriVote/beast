@@ -275,8 +275,6 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		ObservableList<CElectionDescriptionFunction> observableList = FXCollections
 				.observableArrayList();
 
-		observableList.add(descr.getVotingFunction());
-
 		for (CElectionDescriptionFunction f : descr.getFunctions()) {
 			observableList.add(f);
 		}

@@ -52,8 +52,8 @@ public class CBMCTestRunGuiController {
 	}
 
 	public void display(CBMCTestRun run) {
-		if (run != null) {
-			run.removeUpdateListener();
+		if (this.run != null) {
+			this.run.removeUpdateListener();
 		}
 		this.run = run;
 		display();

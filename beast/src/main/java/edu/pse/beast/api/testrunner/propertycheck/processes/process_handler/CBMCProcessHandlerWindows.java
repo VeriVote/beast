@@ -1,22 +1,11 @@
 package edu.pse.beast.api.testrunner.propertycheck.processes.process_handler;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;
-import edu.pse.beast.api.testrunner.CBMCCodeFileData;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.electiontest.cbmb.CBMCCodeFileGenerator;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
@@ -44,9 +33,7 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 
 	public void setVsCmdPath(String vsCmdPath) {
 		this.vsCmdPath = vsCmdPath;
-	}
-
-	
+	}	
 
 	@Override
 	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
@@ -59,7 +46,10 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 		String Space = " ";
 		String completeCommand = vsCmdPath + Space + "&" + Space + "\""
 				+ cbmcPath + "\"" + Space
+				+ cbmcFile.getAbsolutePath() + Space
 				+ CBMCArgumentHelper.getConstCommands(codeGenOptions, V, C, S)
+				+ Space
+				+ "--json-ui "
 				+ loopBounds;
 
 		final File batFile = new File(
