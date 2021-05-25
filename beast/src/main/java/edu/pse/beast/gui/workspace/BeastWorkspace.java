@@ -175,11 +175,10 @@ public class BeastWorkspace {
 
 			CBMCCodeFileData cbmcCodeFile = beast
 					.generateCodeFileCBMCPropertyTest(config.getDescr(),
-							config.getPropDescr(), codeGenOptions,
-							loopBoundHandler);
+							config.getPropDescr(), codeGenOptions);
 
 			List<CBMCTestRun> createdTestRuns = beast.generateTestRuns(
-					cbmcCodeFile, config, codeGenOptions, loopBoundHandler);
+					cbmcCodeFile, config, codeGenOptions);
 
 			if (!hasProcessStarter()) {
 				askUserForProcessStarter();
@@ -246,16 +245,12 @@ public class BeastWorkspace {
 			}
 		}
 
-		CodeGenLoopBoundHandler loopBoundHandler = currentConfig.getDescr()
-				.generateLoopBoundHandler();
-
 		CBMCCodeFileData cbmcFileData = beast.generateCodeFileCBMCPropertyTest(
 				currentConfig.getDescr(), currentConfig.getPropDescr(),
-				codeGenOptions, loopBoundHandler);
+				codeGenOptions);
 
 		for (CBMCTestRun cbmcTr : currentConfig.getRuns()) {
 			cbmcTr.updateDataForCheck(cbmcFileData,
-					loopBoundHandler.getLoopBoundsAsList(),
 					cbmcTr.getCodeGenOptions());
 		}
 	}

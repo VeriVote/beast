@@ -15,34 +15,29 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public class BEAST {
-	
+
 	private List<Thread> createdThreads = new ArrayList<>();
-	
 
 	public void runWorkUnit(CBMCPropertyCheckWorkUnit wu) {
-		createdThreads.add(new Thread(new Runnable() {			
+		createdThreads.add(new Thread(new Runnable() {
 			@Override
 			public void run() {
 				wu.doWork();
 			}
 		}));
 	}
-	
-	
 
 	public CBMCCodeFileData generateCodeFileCBMCPropertyTest(
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
-			CodeGenOptions codeGenOptions,
-			CodeGenLoopBoundHandler loopBoundHandler) throws IOException {
+			CodeGenOptions codeGenOptions) throws IOException {
 		return CBMCCodeFileGeneratorNEW.createCodeFileTest(descr, propDescr,
-				codeGenOptions, loopBoundHandler);
+				codeGenOptions);
 	}
 
 	public List<CBMCTestRun> generateTestRuns(CBMCCodeFileData cbmcCodeFile,
 			CBMCPropertyTestConfiguration testConfig,
-			CodeGenOptions codeGenOptions,
-			CodeGenLoopBoundHandler loopBoundHandler) {
+			CodeGenOptions codeGenOptions) {
 		List<CBMCTestRun> runs = new ArrayList<>();
 		for (int v = testConfig.getMinVoters(); v <= testConfig
 				.getMaxVoters(); ++v) {
@@ -50,8 +45,11 @@ public class BEAST {
 					.getMaxCands(); ++c) {
 				for (int s = testConfig.getMinSeats(); s <= testConfig
 						.getMaxSeats(); ++s) {
+					String loopbounds = cbmcCodeFile.getCodeInfo().getLoopBoundHandler()
+							.generateCBMCString(v, c, s);
+
 					runs.add(new CBMCTestRun(v, s, c, codeGenOptions,
-							loopBoundHandler.getLoopBoundsAsList(),
+							loopbounds,
 							cbmcCodeFile, testConfig.getDescr(),
 							testConfig.getPropDescr()));
 				}

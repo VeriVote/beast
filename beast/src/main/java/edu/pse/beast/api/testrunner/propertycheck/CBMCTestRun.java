@@ -151,8 +151,10 @@ public class CBMCTestRun implements CBMCTestCallback {
 	}
 
 	public void updateDataForCheck(CBMCCodeFileData cbmcFile,
-			String loopBounds, CodeGenOptions codeGenOptions) {
-		workUnit.updateDataForCheck(cbmcFile, loopBounds, codeGenOptions);
+			CodeGenOptions codeGenOptions) {
+		String loopbounds = cbmcFile.getCodeInfo().getLoopBoundHandler()
+				.generateCBMCString(V, C, S);
+		workUnit.updateDataForCheck(cbmcFile, loopbounds, codeGenOptions);
 		descrChanged = false;
 		propDescrChanged = false;
 		updateGui();

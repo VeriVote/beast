@@ -33,7 +33,7 @@ public class CBMCCodeFileGeneratorNEW {
 	public static CBMCCodeFileData createCodeFileTest(
 			final CElectionDescription descr,
 			final PreAndPostConditionsDescription propDescr,
-			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler)
+			CodeGenOptions options)
 			throws IOException {
 
 		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW

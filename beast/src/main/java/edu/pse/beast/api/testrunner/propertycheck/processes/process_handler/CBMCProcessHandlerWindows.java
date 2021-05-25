@@ -46,11 +46,12 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 		this.vsCmdPath = vsCmdPath;
 	}
 
+	
+
 	@Override
 	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
-			String uuid, CBMCTestCallback cb, File cbmcFile,
-			String loopBounds, CodeGenOptions codeGenOptions)
-			throws IOException {
+			String uuid, CBMCTestCallback cb, File cbmcFile, String loopBounds,
+			CodeGenOptions codeGenOptions) throws IOException {
 		String cbmcPath = new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC)
 						.getPath();
@@ -58,8 +59,8 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 		String Space = " ";
 		String completeCommand = vsCmdPath + Space + "&" + Space + "\""
 				+ cbmcPath + "\"" + Space
-				+ CBMCCommandHelper.getArgumentsForCBMCJsonOutput(cbmcFile,
-						codeGenOptions, loopBounds, V, C, S);
+				+ CBMCArgumentHelper.getConstCommands(codeGenOptions, V, C, S)
+				+ loopBounds;
 
 		final File batFile = new File(
 				cbmcFile.getParent() + "\\" + cbmcFile.getName().replace(

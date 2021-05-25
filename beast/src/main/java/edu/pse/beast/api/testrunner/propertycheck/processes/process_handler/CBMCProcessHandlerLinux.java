@@ -28,14 +28,13 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 
 	@Override
 	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
-			String uuid, CBMCTestCallback cb, File cbmcFile,
-			String loopBounds, CodeGenOptions codeGenOptions)
-			throws IOException {
+			String uuid, CBMCTestCallback cb, File cbmcFile, String loopBounds,
+			CodeGenOptions codeGenOptions) throws IOException {
 		File cbmcProgFile = new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC_64);
 
-		String arguments = CBMCCommandHelper.getArgumentsForCBMCJsonOutput(
-				cbmcFile, codeGenOptions, loopBounds, V, C, S);
+		String arguments = CBMCArgumentHelper.getConstCommands(codeGenOptions,
+				V, C, S) + loopBounds;
 
 		return Runtime.getRuntime().exec(arguments, null, cbmcProgFile);
 	}

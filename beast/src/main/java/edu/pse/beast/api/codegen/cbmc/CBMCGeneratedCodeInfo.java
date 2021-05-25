@@ -56,6 +56,11 @@ public class CBMCGeneratedCodeInfo {
 	public String getListMemberVarName() {
 		return listMemberVarName;
 	}
+	
+	public CodeGenLoopBoundHandler getLoopBoundHandler() {
+		return loopBoundHandler;
+	}
+	
 	public void setAmtMemberVarName(String amtMemberVarName) {
 		this.amtMemberVarName = amtMemberVarName;
 	}
