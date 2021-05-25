@@ -87,7 +87,7 @@ public class CBMCTestRunGuiController {
 		}
 
 		switch (state) {
-			case CREATED : {
+			case INITIALIZED : {
 				Button putRunOnQueueButton = new Button("put Run on Queue");
 				putRunOnQueueButton.setOnAction(e -> {
 					beastWorkspace.addRunToQueue(run);

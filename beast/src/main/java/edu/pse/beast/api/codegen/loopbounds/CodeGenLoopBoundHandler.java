@@ -45,8 +45,8 @@ public class CodeGenLoopBoundHandler {
 			List<LoopBound> loopbounds) {
 		votingBackLoopbounds.put(votingFunctionName, loopbounds);
 	}
-
-	public String generateCBMCString(int v, int c, int s) {
+	
+	public void finishAddedLoopbounds() {
 		for (String k : votingInitLoopbounds.keySet()) {
 			List<LoopBound> lbsInVotingFunc = functionNamesToLoopbounds.get(k);
 			int amtInitLoops = votingInitLoopbounds.get(k).size();
@@ -60,6 +60,9 @@ public class CodeGenLoopBoundHandler {
 						.setIndex(i + amtLoopboundsInFunc);
 			}
 		}
+	}
+
+	public String generateCBMCString(int v, int c, int s) {		
 		String created = "";
 
 		for (int i = 0; i < mainLoopbounds.size(); ++i) {

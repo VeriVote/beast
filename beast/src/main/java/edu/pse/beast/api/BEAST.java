@@ -15,10 +15,20 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public class BEAST {
+	
+	private List<Thread> createdThreads = new ArrayList<>();
+	
 
-	public void addCBMCWorkItemToQueue(CBMCPropertyCheckWorkUnit wu) {
-
+	public void runWorkUnit(CBMCPropertyCheckWorkUnit wu) {
+		createdThreads.add(new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				wu.doWork();
+			}
+		}));
 	}
+	
+	
 
 	public CBMCCodeFileData generateCodeFileCBMCPropertyTest(
 			CElectionDescription descr,

@@ -32,8 +32,7 @@ public class CElectionDescription {
 		this.inputType = inputType;
 		this.outputType = outputType;
 		this.name = name;
-		votingFunction = new VotingSigFunction("voting", inputType, outputType);
-		functions.add(votingFunction);
+		votingFunction = createNewVotingSigFunctionAndAdd("voting");
 		this.uuid = UUID.randomUUID().toString();
 	}
 
@@ -42,8 +41,7 @@ public class CElectionDescription {
 		this.inputType = inputType;
 		this.outputType = outputType;
 		this.name = name;
-		votingFunction = new VotingSigFunction("voting", inputType, outputType);
-		functions.add(votingFunction);
+		votingFunction = createNewVotingSigFunctionAndAdd("voting");
 		this.uuid = uuid;
 	}
 

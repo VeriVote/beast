@@ -216,7 +216,7 @@ public class BeastWorkspace {
 	}
 
 	public void addRunToQueue(CBMCTestRun run) {
-		beast.addCBMCWorkItemToQueue(run.getWorkUnit());
+		beast.runWorkUnit(run.getWorkUnit());
 	}
 
 	public void addFileForDescr(CElectionDescription loadedDescr,

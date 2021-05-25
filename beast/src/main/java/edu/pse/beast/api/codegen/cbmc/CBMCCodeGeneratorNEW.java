@@ -98,6 +98,7 @@ public class CBMCCodeGeneratorNEW {
 
 		cbmcGeneratedCode.setCode(created.generateCode());
 		
+		loopBoundHandler.finishAddedLoopbounds();
 		cbmcGeneratedCode.setLoopboundHandler(loopBoundHandler);
 
 		return cbmcGeneratedCode;
