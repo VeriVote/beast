@@ -1,4 +1,3 @@
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
@@ -7,7 +6,6 @@ module edu.pse.beast {
     uses edu.pse.beast.types.InputType;
     uses edu.pse.beast.types.OutputType;
     uses edu.pse.beast.propertychecker.Result;
-    uses edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 
     exports edu.pse.beast.electionsimulator;
     exports edu.pse.beast.propertychecker;
@@ -21,13 +19,11 @@ module edu.pse.beast {
     exports edu.pse.beast.types;
     exports edu.pse.beast.booleanexpeditor.booleanexpcodearea;
     exports edu.pse.beast.codearea.useractions;
-    exports edu.pse.beast.highlevel.javafx;   
     exports edu.pse.beast.gui;
     exports edu.pse.beast.saverloader.staticsaverloaders;
     exports edu.pse.beast.propertylist.model;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes;
     exports edu.pse.beast.types.cbmctypes.outputplugins;
-    exports edu.pse.beast.highlevel;
     exports edu.pse.beast.electionsimulator.model;
     exports edu.pse.beast.parametereditor;
     exports edu.pse.beast.pluginmanager;
@@ -42,11 +38,8 @@ module edu.pse.beast {
     exports edu.pse.beast.codearea.actionlist;
     exports edu.pse.beast.options.codeareaoptions;
     exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
-    exports edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
-    exports edu.pse.beast.highlevel.javafx.resultpresenter;
     exports edu.pse.beast.datatypes.propertydescription;
-    exports edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
     exports edu.pse.beast.datatypes.booleanexpast;
     exports edu.pse.beast.codeareajavafx;
     exports edu.pse.beast.options;
@@ -109,10 +102,5 @@ module edu.pse.beast {
             edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
             edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
-    provides Result with edu.pse.beast.propertychecker.CBMCResult;
-
-    provides ResultPresentationType with
-            edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default,
-            edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput,
-            edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCError;
+    provides Result with edu.pse.beast.propertychecker.CBMCResult; 
 }
