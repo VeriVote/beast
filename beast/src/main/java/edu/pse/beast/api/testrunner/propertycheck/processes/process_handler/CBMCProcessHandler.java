@@ -27,7 +27,7 @@ public interface CBMCProcessHandler {
 	// however, in this case, just create a new Propertycheck imo
 	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
 			String uuid, CBMCTestCallback cb, File cbmcFile,
-			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
+			String loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException;
 
 }

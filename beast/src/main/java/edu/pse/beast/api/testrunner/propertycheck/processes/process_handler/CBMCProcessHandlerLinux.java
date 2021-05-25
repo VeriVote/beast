@@ -29,7 +29,7 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 	@Override
 	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
 			String uuid, CBMCTestCallback cb, File cbmcFile,
-			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
+			String loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException {
 		File cbmcProgFile = new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC_64);

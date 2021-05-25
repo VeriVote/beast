@@ -24,10 +24,8 @@ module edu.pse.beast {
     exports edu.pse.beast.highlevel.javafx;   
     exports edu.pse.beast.gui;
     exports edu.pse.beast.saverloader.staticsaverloaders;
-    exports edu.pse.beast.booleanexpeditor.useractions;
     exports edu.pse.beast.propertylist.model;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes;
-    exports edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder;
     exports edu.pse.beast.types.cbmctypes.outputplugins;
     exports edu.pse.beast.highlevel;
     exports edu.pse.beast.electionsimulator.model;
@@ -42,7 +40,6 @@ module edu.pse.beast {
     exports edu.pse.beast.toolbox.valueContainer;
     exports edu.pse.beast.codearea.actionlist.textaction;
     exports edu.pse.beast.codearea.actionlist;
-    exports edu.pse.beast.booleanexpeditor.view;
     exports edu.pse.beast.options.codeareaoptions;
     exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
     exports edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;

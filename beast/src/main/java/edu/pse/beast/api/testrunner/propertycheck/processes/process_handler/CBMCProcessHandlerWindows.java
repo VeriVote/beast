@@ -49,7 +49,7 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	@Override
 	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
 			String uuid, CBMCTestCallback cb, File cbmcFile,
-			List<LoopBound> loopBounds, CodeGenOptions codeGenOptions)
+			String loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException {
 		String cbmcPath = new File(
 				SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC)
