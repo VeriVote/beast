@@ -1,11 +1,11 @@
 package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
 
-public class VoteTypeAssignment {
+public class VoteOrElectTypeAssignment {
 	private String name;
 	private String member;
 	private int value;
 
-	public VoteTypeAssignment(String name, String member, int value) {
+	public VoteOrElectTypeAssignment(String name, String member, int value) {
 		this.name = name;
 		this.member = member;
 		this.value = value;

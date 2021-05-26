@@ -219,6 +219,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectIntersectionNode(ElectIntersectionNode node) {
 		String generatedVarName = codeBlock.newVarName("electIntersection");
+		cbmcGeneratedCode.addedElectVar(generatedVarName);
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
@@ -298,6 +299,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectPermutation(ElectPermutationNode node) {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
+		cbmcGeneratedCode.addedElectVar(generatedVarName);
+
 		String varName = "electNUMBER".replaceAll("NUMBER",
 				String.valueOf(node.getElectNumber()));
 		
@@ -318,7 +321,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectTuple(ElectTupleNode node) {
 		String generatedVarName = codeBlock.newVarName("electSequence");
-		
+		cbmcGeneratedCode.addedElectVar(generatedVarName);
+
 		List<String> electNames = new ArrayList<>();		
 		for (int number : node.getElectNumbers()) {
 			electNames.add("electNUMBER".replaceAll("NUMBER", String.valueOf(number)));

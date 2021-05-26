@@ -31,7 +31,8 @@ public class CBMCJsonOutputHandler {
 	private JSONArray traceArr;
 	private String cProverStatus;
 
-	private List<VoteTypeAssignment> voteTypeAssignments = new ArrayList<>();
+	private List<VoteOrElectTypeAssignment> voteTypeAssignments = new ArrayList<>();
+	private List<VoteOrElectTypeAssignment> electTypeAssignments = new ArrayList<>();
 	private List<VoteAssignment> voteAssignments = new ArrayList<>();
 	private List<ElectAssignment> electAssignments = new ArrayList<>();
 	private List<String> allAssignments = new ArrayList<>();
@@ -83,7 +84,7 @@ public class CBMCJsonOutputHandler {
 		}
 
 		Map<String, Map<String, Integer>> varNameToOtherVoteAssignments = new HashMap();
-		for (VoteTypeAssignment vta : voteTypeAssignments) {
+		for (VoteOrElectTypeAssignment vta : voteTypeAssignments) {
 			if (!varNameToOtherVoteAssignments.containsKey(vta.getName())) {
 				varNameToOtherVoteAssignments.put(vta.getName(),
 						new HashMap<>());
@@ -137,6 +138,36 @@ public class CBMCJsonOutputHandler {
 			});
 
 			completeString += "Elect" + electNumber + " {\n";
+			completeString += String.join("\n", list);
+			completeString += "\n}\n";
+		}
+		
+		Map<String, Map<String, Integer>> varNameToOtherElectAssignments = new HashMap();
+		for (VoteOrElectTypeAssignment eta : electTypeAssignments) {
+			if (!varNameToOtherElectAssignments.containsKey(eta.getName())) {
+				varNameToOtherElectAssignments.put(eta.getName(),
+						new HashMap<>());
+			}
+			Map<String, Integer> memberValueMap = varNameToOtherElectAssignments
+					.get(eta.getName());
+			memberValueMap.put(eta.getMember(), eta.getValue());
+		}
+
+		for (String varName : varNameToOtherElectAssignments.keySet()) {
+			List<String> list = new ArrayList<>();
+
+			Map<String, Integer> memberValueMap = varNameToOtherElectAssignments
+					.get(varName);
+
+			for (String member : memberValueMap.keySet()) {
+				list.add("    " + member + " = " + memberValueMap.get(member));
+			}
+
+			list.sort((s1, s2) -> {
+				return s1.compareTo(s2);
+			});
+
+			completeString += varName + " {\n";
 			completeString += String.join("\n", list);
 			completeString += "\n}\n";
 		}
@@ -232,7 +263,7 @@ public class CBMCJsonOutputHandler {
 					voteAssignments.add(ass);
 				} else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames()
 						.contains(structName)) {
-					voteTypeAssignments.add(new VoteTypeAssignment(structName,
+					voteTypeAssignments.add(new VoteOrElectTypeAssignment(structName,
 							memberName, value));
 				} else if (cbmcGeneratedCodeInfo
 						.getElectVariableNameToElectNumber().keySet()
@@ -244,6 +275,10 @@ public class CBMCJsonOutputHandler {
 									.get(structName),
 							structName, memberName, value);
 					electAssignments.add(ass);
+				}else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames()
+						.contains(structName)) {
+					electTypeAssignments.add(new VoteOrElectTypeAssignment(structName,
+							memberName, value));
 				}
 			}
 		}

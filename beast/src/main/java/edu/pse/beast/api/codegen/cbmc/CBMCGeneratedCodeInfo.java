@@ -16,12 +16,17 @@ public class CBMCGeneratedCodeInfo {
 	private Map<String, Integer> voteVariableNameToVoteNumber = new HashMap<>();
 	private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
 	private Set<String> generatedVotingVarNames = new HashSet();
+	private Set<String> generatedElectVarNames = new HashSet();
 
 	private String amtMemberVarName;
 	private String listMemberVarName;
-	
+
 	public void addedVotingVar(String name) {
 		generatedVotingVarNames.add(name);
+	}
+
+	public void addedElectVar(String name) {
+		generatedElectVarNames.add(name);
 	}
 
 	public String getCode() {
@@ -57,6 +62,10 @@ public class CBMCGeneratedCodeInfo {
 		return generatedVotingVarNames;
 	}
 	
+	public Set<String> getGeneratedElectVarNames() {
+		return generatedElectVarNames;
+	}
+
 	public void setElectVariableNameToElectNumber(
 			Map<String, Integer> electVariableNameToElectNumber) {
 		this.electVariableNameToElectNumber = electVariableNameToElectNumber;
@@ -69,11 +78,11 @@ public class CBMCGeneratedCodeInfo {
 	public String getListMemberVarName() {
 		return listMemberVarName;
 	}
-	
+
 	public CodeGenLoopBoundHandler getLoopBoundHandler() {
 		return loopBoundHandler;
 	}
-	
+
 	public void setAmtMemberVarName(String amtMemberVarName) {
 		this.amtMemberVarName = amtMemberVarName;
 	}
@@ -81,7 +90,6 @@ public class CBMCGeneratedCodeInfo {
 	public void setListMemberVarName(String listMemberVarName) {
 		this.listMemberVarName = listMemberVarName;
 	}
-	
 
 	public void setLoopboundHandler(CodeGenLoopBoundHandler loopBoundHandler) {
 		this.loopBoundHandler = loopBoundHandler;
