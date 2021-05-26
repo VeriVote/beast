@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -2136,7 +2136,7 @@ public class TestResultPresentation {
 		cbmcGeneratedCodeInfo.setAmtMemberVarName("amt");
 		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
 		
-		cbmcGeneratedCodeInfo.addElectVariable(1, "res");
+		cbmcGeneratedCodeInfo.addElectVariableName(1, "res");
 
 		CBMCJsonOutputHandler res = new CBMCJsonOutputHandler(
 				descr, 

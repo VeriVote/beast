@@ -8,7 +8,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
@@ -37,6 +37,8 @@ public class CBMCJsonOutputHandler {
 	private List<ElectAssignment> electAssignments = new ArrayList<>();
 	private List<String> allAssignments = new ArrayList<>();
 
+	private CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo;
+
 	public CBMCJsonOutputHandler(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
 			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo, int s, int c, int v,
@@ -47,6 +49,7 @@ public class CBMCJsonOutputHandler {
 		this.c = c;
 		this.v = v;
 		this.rawOutput.addAll(rawOutput);
+		this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
 		processCBMCJsonOutput(cbmcGeneratedCodeInfo);
 	}
 
@@ -108,7 +111,8 @@ public class CBMCJsonOutputHandler {
 				return s1.compareTo(s2);
 			});
 
-			completeString += varName + " {\n";
+			completeString += varName + " { "
+					+ cbmcGeneratedCodeInfo.getInfo(varName).getInfo() + "\n";
 			completeString += String.join("\n", list);
 			completeString += "\n}\n";
 		}
@@ -141,7 +145,7 @@ public class CBMCJsonOutputHandler {
 			completeString += String.join("\n", list);
 			completeString += "\n}\n";
 		}
-		
+
 		Map<String, Map<String, Integer>> varNameToOtherElectAssignments = new HashMap();
 		for (VoteOrElectTypeAssignment eta : electTypeAssignments) {
 			if (!varNameToOtherElectAssignments.containsKey(eta.getName())) {
@@ -167,7 +171,8 @@ public class CBMCJsonOutputHandler {
 				return s1.compareTo(s2);
 			});
 
-			completeString += varName + " {\n";
+			completeString += varName + " { "
+					+ cbmcGeneratedCodeInfo.getInfo(varName).getInfo() + "\n";
 			completeString += String.join("\n", list);
 			completeString += "\n}\n";
 		}
@@ -263,8 +268,8 @@ public class CBMCJsonOutputHandler {
 					voteAssignments.add(ass);
 				} else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames()
 						.contains(structName)) {
-					voteTypeAssignments.add(new VoteOrElectTypeAssignment(structName,
-							memberName, value));
+					voteTypeAssignments.add(new VoteOrElectTypeAssignment(
+							structName, memberName, value));
 				} else if (cbmcGeneratedCodeInfo
 						.getElectVariableNameToElectNumber().keySet()
 						.contains(structName)) {
@@ -275,10 +280,10 @@ public class CBMCJsonOutputHandler {
 									.get(structName),
 							structName, memberName, value);
 					electAssignments.add(ass);
-				}else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames()
+				} else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames()
 						.contains(structName)) {
-					electTypeAssignments.add(new VoteOrElectTypeAssignment(structName,
-							memberName, value));
+					electTypeAssignments.add(new VoteOrElectTypeAssignment(
+							structName, memberName, value));
 				}
 			}
 		}

@@ -2,7 +2,7 @@ package edu.pse.beast.api.testrunner;
 
 import java.io.File;
 
-import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 
 public class CBMCCodeFileData {
 	private File f;

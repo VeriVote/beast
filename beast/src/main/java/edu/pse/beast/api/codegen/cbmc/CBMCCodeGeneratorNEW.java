@@ -9,6 +9,7 @@ import edu.pse.beast.api.codegen.c_code.CFile;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
+import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;

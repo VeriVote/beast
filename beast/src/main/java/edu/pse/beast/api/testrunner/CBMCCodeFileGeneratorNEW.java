@@ -9,8 +9,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
-import edu.pse.beast.api.codegen.cbmc.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;

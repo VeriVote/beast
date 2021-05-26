@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.cbmc;
+package edu.pse.beast.api.codegen.cbmc.info;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,8 @@ public class CBMCGeneratedCodeInfo {
 	private CodeGenLoopBoundHandler loopBoundHandler;
 	private Map<String, Integer> voteVariableNameToVoteNumber = new HashMap<>();
 	private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
+	private Map<String, GeneratedTypeInfo> varNamesToInfo = new HashMap<>();
+
 	private Set<String> generatedVotingVarNames = new HashSet();
 	private Set<String> generatedElectVarNames = new HashSet();
 
@@ -41,7 +43,7 @@ public class CBMCGeneratedCodeInfo {
 		voteVariableNameToVoteNumber.put(varName, voteNumber);
 	}
 
-	public void addElectVariable(int electNumber, String varName) {
+	public void addElectVariableName(int electNumber, String varName) {
 		electVariableNameToElectNumber.put(varName, electNumber);
 	}
 
@@ -61,7 +63,7 @@ public class CBMCGeneratedCodeInfo {
 	public Set<String> getGeneratedVotingVarNames() {
 		return generatedVotingVarNames;
 	}
-	
+
 	public Set<String> getGeneratedElectVarNames() {
 		return generatedElectVarNames;
 	}
@@ -93,5 +95,13 @@ public class CBMCGeneratedCodeInfo {
 
 	public void setLoopboundHandler(CodeGenLoopBoundHandler loopBoundHandler) {
 		this.loopBoundHandler = loopBoundHandler;
+	}
+
+	public void addInfo(String varName, GeneratedTypeInfo info) {
+		varNamesToInfo.put(varName, info);
+	}
+
+	public GeneratedTypeInfo getInfo(String varName) {
+		return varNamesToInfo.get(varName);
 	}
 }
