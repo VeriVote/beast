@@ -34,11 +34,10 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	private List<String> testRunLogs = new ArrayList<>();
 
-	// gui stuff:
-	// TODO move to gui decorator
-	private CBMCTestRunGuiController updateListener;
 	private boolean descrChanged = false;
 	private boolean propDescrChanged = false;
+
+	private CBMCTestCallback cb;
 
 	public CBMCTestRun(int v, int s, int c, CodeGenOptions codeGenOptions,
 			String loopbounds, CBMCCodeFileData cbmcCodeFile,
@@ -54,18 +53,30 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.loopboundList = loopbounds;
 	}
 
+	@Override
+	public void onPropertyTestRawOutput(String sessionUUID,
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid, String output) {
+		testRunLogs.add(output);
+		if (cb != null)
+			cb.onPropertyTestRawOutput(sessionUUID, description, propertyDescr,
+					s, c, v, uuid, output);
+	}
+
+	@Override
+	public void onPropertyTestFinished(CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+		if (cb != null)
+			cb.onPropertyTestFinished(description, propertyDescr, s, c, v,
+					uuid);
+	}
+
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
 		workUnit.initialize(V, S, C, codeGenOptions, loopboundList,
 				cbmcCodeFile, descr, propDescr, this);
 		this.workUnit = workUnit;
-	}
-
-	public void setUpdateListener(CBMCTestRunGuiController updateListener) {
-		this.updateListener = updateListener;
-	}
-
-	public void removeUpdateListener() {
-		this.updateListener = null;
 	}
 
 	public CBMCCodeFileData getCbmcCodeFile() {
@@ -92,50 +103,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.testRunLogs = Arrays.asList(testRunLogs.split("\n"));
 	}
 
-	private void updateGui() {
-		if (updateListener != null)
-			updateListener.handleRunUpdate();
-	}
-
-	@Override
-	public void onPropertyTestAddedToQueue(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
-		synchronized (testRunLogs) {
-			testRunLogs.clear();
-		}
-		updateGui();
-	}
-
-	@Override
-	public void onPropertyTestStart(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
-		updateGui();
-	}
-
-	@Override
-	public void onPropertyTestRawOutput(String sessionUUID,
-			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid, String output) {
-		synchronized (testRunLogs) {
-			testRunLogs.add(output);
-		}
-		System.out.println(output);
-		updateGui();
-	}
-
-	@Override
-	public void onPropertyTestFinished(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
-		updateGui();
-	}
-
 	public void handleDescrCodeChange() {
 		descrChanged = true;
-		updateGui();
 	}
 
 	public boolean isDescrChanged() {
@@ -144,7 +113,6 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	public void handlePropDescrChanged() {
 		propDescrChanged = true;
-		updateGui();
 	}
 
 	public boolean isPropDescrChanged() {
@@ -158,7 +126,10 @@ public class CBMCTestRun implements CBMCTestCallback {
 		workUnit.updateDataForCheck(cbmcFile, loopbounds, codeGenOptions);
 		descrChanged = false;
 		propDescrChanged = false;
-		updateGui();
+	}
+
+	public void setCb(CBMCTestCallback cb) {
+		this.cb = cb;
 	}
 
 	public String getLoopboundList() {

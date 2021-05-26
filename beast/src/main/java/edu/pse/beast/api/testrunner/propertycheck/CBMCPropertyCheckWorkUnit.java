@@ -156,4 +156,8 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public void setCbmcFile(CBMCCodeFileData cbmcFile) {
 		this.cbmcCodeFile = cbmcFile;
 	}
+
+	public void shutdown() {
+		process.destroyForcibly();
+	}
 }

@@ -17,8 +17,10 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfig
 public class BEAST {
 
 	private List<Thread> createdThreads = new ArrayList<>();
+	private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<>();
 
 	public void runWorkUnit(CBMCPropertyCheckWorkUnit wu) {
+		wus.add(wu);
 		Thread t = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -27,6 +29,12 @@ public class BEAST {
 		});
 		t.start();
 		createdThreads.add(t);
+	}
+
+	public void shutdown() {
+		for(CBMCPropertyCheckWorkUnit wu : wus) {
+			wu.shutdown();
+		}
 	}
 
 	public CBMCCodeFileData generateCodeFileCBMCPropertyTest(
@@ -47,16 +55,16 @@ public class BEAST {
 					.getMaxCands(); ++c) {
 				for (int s = testConfig.getMinSeats(); s <= testConfig
 						.getMaxSeats(); ++s) {
-					String loopbounds = cbmcCodeFile.getCodeInfo().getLoopBoundHandler()
-							.generateCBMCString(v, c, s);
+					String loopbounds = cbmcCodeFile.getCodeInfo()
+							.getLoopBoundHandler().generateCBMCString(v, c, s);
 
 					runs.add(new CBMCTestRun(v, s, c, codeGenOptions,
-							loopbounds,
-							cbmcCodeFile, testConfig.getDescr(),
+							loopbounds, cbmcCodeFile, testConfig.getDescr(),
 							testConfig.getPropDescr()));
 				}
 			}
 		}
 		return runs;
 	}
+
 }

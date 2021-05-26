@@ -456,4 +456,8 @@ public class BeastWorkspace {
 		}
 	}
 
+	public void shutdown() {
+		beast.shutdown();
+	}
+
 }

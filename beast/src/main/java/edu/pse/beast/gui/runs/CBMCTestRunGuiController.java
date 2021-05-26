@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
+import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
@@ -19,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
-public class CBMCTestRunGuiController {
+public class CBMCTestRunGuiController implements CBMCTestCallback {
 
 	@FXML
 	private AnchorPane topLevelAnchorPane;
@@ -45,21 +46,14 @@ public class CBMCTestRunGuiController {
 		this.beastWorkspace = beastWorkspace;
 	}
 
-	public void handleRunUpdate() {
-		Platform.runLater(() -> {
-			display();
-		});
-	}
-
 	public void display(CBMCTestRun run) {
-		if (this.run != null) {
-			this.run.removeUpdateListener();
+		if(this.run != null) {
+			this.run.setCb(null);
 		}
 		this.run = run;
-		display();
-		run.setUpdateListener(this);
+		this.run.setCb(this);
 	}
-
+		
 	private void display() {
 		outputTextElement.clear();
 
@@ -147,5 +141,8 @@ public class CBMCTestRunGuiController {
 		AnchorPane.setLeftAnchor(vsp, 0d);
 		AnchorPane.setRightAnchor(vsp, 0d);
 	}
+
+
+
 
 }

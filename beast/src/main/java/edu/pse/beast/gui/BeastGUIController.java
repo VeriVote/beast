@@ -330,4 +330,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	public void handleWorkspaceUpdateGeneric() {
 	}
 
+	public void shutdown() {
+		beastWorkspace.shutdown();
+	}
+
 }

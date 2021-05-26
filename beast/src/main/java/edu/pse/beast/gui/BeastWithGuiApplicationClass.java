@@ -26,4 +26,9 @@ public class BeastWithGuiApplicationClass extends Application {
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}
+	
+	@Override
+	public void stop() throws Exception {
+		controller.shutdown();
+	}
 }

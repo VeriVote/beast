@@ -7,7 +7,6 @@ module edu.pse.beast {
     uses edu.pse.beast.types.OutputType;
     uses edu.pse.beast.propertychecker.Result;
 
-    exports edu.pse.beast.electionsimulator;
     exports edu.pse.beast.propertychecker;
     exports edu.pse.beast.options.parametereditoroptions;
     exports edu.pse.beast.types.cbmctypes;
@@ -24,13 +23,11 @@ module edu.pse.beast {
     exports edu.pse.beast.propertylist.model;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes;
     exports edu.pse.beast.types.cbmctypes.outputplugins;
-    exports edu.pse.beast.electionsimulator.model;
     exports edu.pse.beast.parametereditor;
     exports edu.pse.beast.pluginmanager;
     exports edu.pse.beast.codearea.autocompletion;
     exports edu.pse.beast.toolbox.antlr.booleanexp;
     exports edu.pse.beast.codearea;
-    exports edu.pse.beast.electionsimulator.programaccess;
     exports edu.pse.beast.stringresource;
     exports edu.pse.beast.toolbox.antlr.booleanexp.generateast;
     exports edu.pse.beast.toolbox.valueContainer;
