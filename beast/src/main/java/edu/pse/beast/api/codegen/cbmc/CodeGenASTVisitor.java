@@ -74,6 +74,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	private Mode mode;
 	private String assumeAssert;
+	
+	private CBMCGeneratedCodeInfo cbmcGeneratedCode;
 
 
 	public CodeGenASTVisitor(
@@ -82,13 +84,15 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			ElectionTypeCStruct voteResultStruct,
 			VotingOutputTypes votingOutputType,
 			CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler) {
+			CodeGenLoopBoundHandler loopBoundHandler,
+			CBMCGeneratedCodeInfo cbmcGeneratedCode) {
 		this.voteArrStruct = voteArrStruct;
 		this.votingInputType = votingInputType;
 		this.voteResultStruct = voteResultStruct;
 		this.votingOutputType = votingOutputType;
 		this.options = options;
 		this.loopBoundHandler = loopBoundHandler;
+		this.cbmcGeneratedCode = cbmcGeneratedCode;
 	}
 
 	public CCodeBlock getCodeBlock() {
@@ -189,6 +193,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteIntersectionNode(VoteIntersectionNode node) {
 		String generatedVarName = codeBlock.newVarName("voteIntersection");
+		
+		cbmcGeneratedCode.addedVotingVar(generatedVarName);
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
@@ -271,6 +277,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVotePermutation(VotePermutationNode node) {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
+		cbmcGeneratedCode.addedVotingVar(generatedVarName);
+
 		String varName = "voteNUMBER".replaceAll("NUMBER",
 				String.valueOf(node.getVoteNumber()));
 
@@ -331,6 +339,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteTuple(VoteTupleNode node) {
 		String generatedVarName = codeBlock.newVarName("voteSequence");
+		cbmcGeneratedCode.addedVotingVar(generatedVarName);
+
 		
 		List<String> voteNames = new ArrayList<>();		
 		for (int number : node.getNumbers()) {

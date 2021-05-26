@@ -69,7 +69,7 @@ public class CBMCMainGenerator {
 
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,
 				votingInputType, voteResultStruct, votingOutputType, options,
-				loopBoundHandler);
+				loopBoundHandler, cbmcGeneratedCode);
 
 		// preconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);

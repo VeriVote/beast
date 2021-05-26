@@ -59,6 +59,11 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public String getExampleText() {
 		return jsonOutputHandler.getExampleText();
 	}
+	
+	public String getAllAssignmentsText() {
+		return jsonOutputHandler.getAllAssignmentsText();
+	}
+
 
 	@Override
 	public void onPropertyTestRawOutput(String sessionUUID,
@@ -190,6 +195,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void setC(int c) {
 		C = c;
 	}
+
 
 
 

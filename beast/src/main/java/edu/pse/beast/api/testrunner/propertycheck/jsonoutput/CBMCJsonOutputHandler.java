@@ -31,8 +31,10 @@ public class CBMCJsonOutputHandler {
 	private JSONArray traceArr;
 	private String cProverStatus;
 
+	private List<VoteTypeAssignment> voteTypeAssignments = new ArrayList<>();
 	private List<VoteAssignment> voteAssignments = new ArrayList<>();
 	private List<ElectAssignment> electAssignments = new ArrayList<>();
+	private List<String> allAssignments = new ArrayList<>();
 
 	public CBMCJsonOutputHandler(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
@@ -47,6 +49,10 @@ public class CBMCJsonOutputHandler {
 		processCBMCJsonOutput(cbmcGeneratedCodeInfo);
 	}
 
+	public List<String> getAllAssignments() {
+		return allAssignments;
+	}
+
 	public String getExampleText() {
 		Map<Integer, Map<String, Integer>> voteNumberToAssignmentString = new HashMap<>();
 		for (VoteAssignment va : voteAssignments) {
@@ -59,17 +65,54 @@ public class CBMCJsonOutputHandler {
 			memberAssignments.put(va.getMemberName(), va.getValue());
 		}
 
-		String exampleString = "";
+		String completeString = "";
 		for (Integer voteNumber : voteNumberToAssignmentString.keySet()) {
+			List<String> exampleString = new ArrayList<>();
 			Map<String, Integer> memberAssignments = voteNumberToAssignmentString
 					.get(voteNumber);
-			exampleString += "Votes" + voteNumber + " {\n";
-			for(String member : memberAssignments.keySet()) {
-				exampleString += "    " + member + " " + memberAssignments.get(member) + "\n";
+			for (String member : memberAssignments.keySet()) {
+				exampleString.add(
+						"    " + member + " " + memberAssignments.get(member));
 			}
-			exampleString += "}\n";
+			exampleString.sort((s1, s2) -> {
+				return s1.compareTo(s2);
+			});
+			completeString += "Votes" + voteNumber + " {\n";
+			completeString += String.join("\n", exampleString);
+			completeString += "\n}\n";
 		}
-		return exampleString;
+
+		Map<String, Map<String, Integer>> varNameToOtherVoteAssignments = new HashMap();
+		for (VoteTypeAssignment vta : voteTypeAssignments) {
+			if (!varNameToOtherVoteAssignments.containsKey(vta.getName())) {
+				varNameToOtherVoteAssignments.put(vta.getName(),
+						new HashMap<>());
+			}
+			Map<String, Integer> memberValueMap = varNameToOtherVoteAssignments
+					.get(vta.getName());
+			memberValueMap.put(vta.getMember(), vta.getValue());
+		}
+
+		for (String varName : varNameToOtherVoteAssignments.keySet()) {
+			List<String> list = new ArrayList<>();
+
+			Map<String, Integer> memberValueMap = varNameToOtherVoteAssignments
+					.get(varName);
+
+			for (String member : memberValueMap.keySet()) {
+				list.add("    " + member + " = " + memberValueMap.get(member));
+			}
+
+			list.sort((s1, s2) -> {
+				return s1.compareTo(s2);
+			});
+			
+			completeString += varName + " {\n";
+			completeString += String.join("\n", list);
+			completeString += "\n}\n";
+		}
+
+		return completeString;
 	}
 
 	private void parseOutputJSONArr(JSONArray outputArr) {
@@ -87,6 +130,10 @@ public class CBMCJsonOutputHandler {
 				traceArr = currentJson.getJSONArray(CBMC_JSON_TRACE_KEY);
 			}
 		}
+	}
+
+	public String getAllAssignmentsText() {
+		return String.join("\n", allAssignments);
 	}
 
 	private void processCBMCJsonOutput(
@@ -142,6 +189,9 @@ public class CBMCJsonOutputHandler {
 						valueJsonObj.getString("data"));
 				int value = Integer.valueOf(valueStr);
 
+				allAssignments
+						.add(structName + "." + memberName + " = " + value);
+
 				if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber()
 						.keySet().contains(structName)) {
 					VoteAssignment ass = new VoteAssignment(assignmentLine,
@@ -151,6 +201,10 @@ public class CBMCJsonOutputHandler {
 									.get(structName),
 							structName, memberName, value);
 					voteAssignments.add(ass);
+				} else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames()
+						.contains(structName)) {
+					voteTypeAssignments.add(new VoteTypeAssignment(structName,
+							memberName, value));
 				} else if (cbmcGeneratedCodeInfo
 						.getElectVariableNameToElectNumber().keySet()
 						.contains(structName)) {

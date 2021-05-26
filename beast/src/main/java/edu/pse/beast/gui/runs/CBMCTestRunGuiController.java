@@ -140,11 +140,17 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 					});					
 					
 					Button showExampleButton = new Button("show generated Example");
-					showLogsButton.setOnAction(e -> {
+					showExampleButton.setOnAction(e -> {
 						outputTextElement.clear();
 						outputTextElement.insertText(0,run.getExampleText());
 					});					
+					Button showAllAssignments = new Button("show All");
+					showAllAssignments.setOnAction(e -> {
+						outputTextElement.clear();
+						outputTextElement.insertText(0,run.getAllAssignmentsText());
+					});					
 					stateHBox.getChildren().add(showLogsButton);
+					stateHBox.getChildren().add(showAllAssignments);
 					stateHBox.getChildren().add(showExampleButton);
 					break;
 				}

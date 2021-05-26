@@ -2145,6 +2145,7 @@ public class TestResultPresentation {
 				5, 5, 5, 
 				List.of(cbmcOutput.split("\n")));
 		System.out.println(res.getExampleText());
+		System.out.println(res.getAllAssignmentsText());
 		
 	}
 }
