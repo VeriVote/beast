@@ -71,8 +71,8 @@ public class CBMCJsonOutputHandler {
 			Map<String, Integer> memberAssignments = voteNumberToAssignmentString
 					.get(voteNumber);
 			for (String member : memberAssignments.keySet()) {
-				exampleString.add(
-						"    " + member + " " + memberAssignments.get(member));
+				exampleString.add("    " + member + " = "
+						+ memberAssignments.get(member));
 			}
 			exampleString.sort((s1, s2) -> {
 				return s1.compareTo(s2);
@@ -106,8 +106,37 @@ public class CBMCJsonOutputHandler {
 			list.sort((s1, s2) -> {
 				return s1.compareTo(s2);
 			});
-			
+
 			completeString += varName + " {\n";
+			completeString += String.join("\n", list);
+			completeString += "\n}\n";
+		}
+
+		Map<Integer, Map<String, Integer>> electNumberToAssignmentString = new HashMap<>();
+		for (ElectAssignment ea : electAssignments) {
+			if (!electNumberToAssignmentString
+					.containsKey(ea.getElectNumber())) {
+				electNumberToAssignmentString.put(ea.getElectNumber(),
+						new HashMap<>());
+			}
+			Map<String, Integer> memberAssignments = electNumberToAssignmentString
+					.get(ea.getElectNumber());
+			memberAssignments.put(ea.getMemberName(), ea.getValue());
+		}
+		for (Integer electNumber : electNumberToAssignmentString.keySet()) {
+			Map<String, Integer> memberAssignments = electNumberToAssignmentString
+					.get(electNumber);
+
+			List<String> list = new ArrayList();
+			for (String memberName : memberAssignments.keySet()) {
+				list.add("    " + memberName + " = "
+						+ memberAssignments.get(memberName));
+			}
+			list.sort((s1, s2) -> {
+				return s1.compareTo(s2);
+			});
+
+			completeString += "Elect" + electNumber + " {\n";
 			completeString += String.join("\n", list);
 			completeString += "\n}\n";
 		}

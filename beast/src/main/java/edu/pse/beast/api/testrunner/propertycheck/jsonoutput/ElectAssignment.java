@@ -18,6 +18,54 @@ public class ElectAssignment {
 		this.value = value;
 	}
 
+	public String getLine() {
+		return line;
+	}
+
+	public String getAssignmentFunc() {
+		return assignmentFunc;
+	}
+
+	public int getElectNumber() {
+		return electNumber;
+	}
+
+	public String getVarName() {
+		return varName;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setLine(String line) {
+		this.line = line;
+	}
+
+	public void setAssignmentFunc(String assignmentFunc) {
+		this.assignmentFunc = assignmentFunc;
+	}
+
+	public void setElectNumber(int electNumber) {
+		this.electNumber = electNumber;
+	}
+
+	public void setVarName(String varName) {
+		this.varName = varName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
 	@Override
 	public String toString() {
 		return "ElectAssignment [line=" + line + ", assignmentFunc="

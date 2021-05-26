@@ -52,6 +52,6 @@ public class TestResultPresentation2 {
 				5, 5, 5, 
 				List.of(output.split("\n")));
 		System.out.println(res.getExampleText());
-		System.out.println(res.getAllAssignmentsText());		
+		//System.out.println(res.getAllAssignmentsText());		
 	}
 }
