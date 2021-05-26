@@ -47,6 +47,31 @@ public class CBMCJsonOutputHandler {
 		processCBMCJsonOutput(cbmcGeneratedCodeInfo);
 	}
 
+	public String getExampleText() {
+		Map<Integer, Map<String, Integer>> voteNumberToAssignmentString = new HashMap<>();
+		for (VoteAssignment va : voteAssignments) {
+			if (!voteNumberToAssignmentString.containsKey(va.getVoteNumber())) {
+				voteNumberToAssignmentString.put(va.getVoteNumber(),
+						new HashMap<>());
+			}
+			Map<String, Integer> memberAssignments = voteNumberToAssignmentString
+					.get(va.getVoteNumber());
+			memberAssignments.put(va.getMemberName(), va.getValue());
+		}
+
+		String exampleString = "";
+		for (Integer voteNumber : voteNumberToAssignmentString.keySet()) {
+			Map<String, Integer> memberAssignments = voteNumberToAssignmentString
+					.get(voteNumber);
+			exampleString += "Votes" + voteNumber + " {\n";
+			for(String member : memberAssignments.keySet()) {
+				exampleString += "    " + member + " " + memberAssignments.get(member) + "\n";
+			}
+			exampleString += "}\n";
+		}
+		return exampleString;
+	}
+
 	private void parseOutputJSONArr(JSONArray outputArr) {
 		for (int i = 0; i < outputArr.length(); ++i) {
 			JSONObject currentJson = outputArr.getJSONObject(i);
@@ -87,6 +112,9 @@ public class CBMCJsonOutputHandler {
 					.equals(STEP_TYPE_VALUE_ASSIGNMENT)) {
 				JSONObject valueJsonObj = traceJsonObj
 						.getJSONObject(ASSIGNMENT_VALUE_KEY);
+				if (!traceJsonObj.has("sourceLocation")) {
+					continue;
+				}
 				JSONObject locationJsonObj = traceJsonObj
 						.getJSONObject("sourceLocation");
 				if (!locationJsonObj.has("function"))
@@ -147,4 +175,5 @@ public class CBMCJsonOutputHandler {
 		}
 		return newString;
 	}
+
 }

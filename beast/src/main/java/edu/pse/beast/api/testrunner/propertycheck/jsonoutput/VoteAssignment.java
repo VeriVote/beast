@@ -19,12 +19,52 @@ public class VoteAssignment {
 		this.value = value;
 	}
 
-	@Override
-	public String toString() {
-		return "VoteAssignment [line=" + line + ", assignmentFunc="
-				+ assignmentFunc + ", voteNumber=" + voteNumber + ", varName="
-				+ varName + ", memberName=" + memberName + ", value=" + value
-				+ "]";
+	public String getLine() {
+		return line;
+	}
+
+	public String getAssignmentFunc() {
+		return assignmentFunc;
+	}
+
+	public int getVoteNumber() {
+		return voteNumber;
+	}
+
+	public String getVarName() {
+		return varName;
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setLine(String line) {
+		this.line = line;
+	}
+
+	public void setAssignmentFunc(String assignmentFunc) {
+		this.assignmentFunc = assignmentFunc;
+	}
+
+	public void setVoteNumber(int voteNumber) {
+		this.voteNumber = voteNumber;
+	}
+
+	public void setVarName(String varName) {
+		this.varName = varName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 }

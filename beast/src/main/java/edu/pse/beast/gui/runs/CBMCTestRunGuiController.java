@@ -1,16 +1,17 @@
 package edu.pse.beast.gui.runs;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import edu.pse.beast.api.CBMCTestCallback;
+import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
-import edu.pse.beast.codeareajavafx.SaverLoader;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -52,77 +53,117 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 		}
 		this.run = run;
 		this.run.setCb(this);
+		display();
 	}
 		
+	@Override
+	public void onPropertyTestStart(CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+		display(); 
+	}
+	
+	@Override
+	public void onPropertyTestFinished(CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+		display(); 
+	}
+	
+	@Override
+	public void onPropertyTestRawOutput(String sessionUUID,
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid, String output) {
+	}
+	
+	@Override
+	public void onPropertyTestRawOutputComplete(
+			CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid, List<String> cbmcOutput) {
+		display(); 
+	}
+	
 	private void display() {
-		outputTextElement.clear();
+		
+		Platform.runLater(() -> {
+			outputTextElement.clear();
 
-		CBMCCodeFileData cbmcFile = run.getCbmcCodeFile();
-		createdFileTextField.setText(cbmcFile.getFile().getAbsolutePath());
-		openCreatedFileButton.setOnAction(e -> {
-			try {
-				String code = SavingLoadingInterface
-						.readStringFromFile(cbmcFile.getFile());
-				outputTextElement.clear();
-				outputTextElement.insertText(0, code);
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			CBMCCodeFileData cbmcFile = run.getCbmcCodeFile();
+			createdFileTextField.setText(cbmcFile.getFile().getAbsolutePath());
+			openCreatedFileButton.setOnAction(e -> {
+				try {
+					String code = SavingLoadingInterface
+							.readStringFromFile(cbmcFile.getFile());
+					outputTextElement.clear();
+					outputTextElement.insertText(0, code);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			});
+
+			stateHBox.getChildren().clear();
+			WorkUnitState state = run.getState();
+			stateLabel.setText("state: " + state.toString());
+			stateHBox.getChildren().add(stateLabel);
+
+			if (run.isDescrChanged() || run.isPropDescrChanged()) {
+				Label descrChangedLabel = new Label("Run out of date, has changes");
+				stateHBox.getChildren().add(descrChangedLabel);
+			}
+
+			switch (state) {
+				case INITIALIZED : {
+					Button putRunOnQueueButton = new Button("put Run on Queue");
+					putRunOnQueueButton.setOnAction(e -> {
+						beastWorkspace.addRunToQueue(run);
+					});
+					stateHBox.getChildren().add(putRunOnQueueButton);
+					break;
+				}
+				case ON_QUEUE :
+					break;
+				case WORKED_ON :
+					Button button = new Button("show logs");
+					button.setOnAction(e -> {
+						outputTextElement.clear();
+						outputTextElement.insertText(0, run.getTestOutput());
+					});					
+					stateHBox.getChildren().add(button);
+					break;
+				case FINISHED : {
+					Button showLogsButton = new Button("show logs");
+					showLogsButton.setOnAction(e -> {
+						outputTextElement.clear();
+						outputTextElement.insertText(0, run.getTestOutput());
+					});					
+					
+					Button showExampleButton = new Button("show generated Example");
+					showLogsButton.setOnAction(e -> {
+						outputTextElement.clear();
+						outputTextElement.insertText(0,run.getExampleText());
+					});					
+					stateHBox.getChildren().add(showLogsButton);
+					stateHBox.getChildren().add(showExampleButton);
+					break;
+				}
+
+				case STOPPED : {
+					outputTextElement.clear();
+					outputTextElement.insertText(0, run.getTestOutput());
+					outputTextElement.insertText(0, "INTERRUPTED BY USER :(\n");
+					Button putRunOnQueueButton = new Button("put Run on Queue");
+					putRunOnQueueButton.setOnAction(e -> {
+						beastWorkspace.addRunToQueue(run);
+					});
+					stateHBox.getChildren().add(putRunOnQueueButton);
+					break;
+				}
+				default :
+					break;
 			}
 		});
-
-		stateHBox.getChildren().clear();
-		WorkUnitState state = run.getState();
-		stateLabel.setText("state: " + state.toString());
-		stateHBox.getChildren().add(stateLabel);
-
-		if (run.isDescrChanged() || run.isPropDescrChanged()) {
-			Label descrChangedLabel = new Label("Run out of date, has changes");
-			stateHBox.getChildren().add(descrChangedLabel);
-		}
-
-		switch (state) {
-			case INITIALIZED : {
-				Button putRunOnQueueButton = new Button("put Run on Queue");
-				putRunOnQueueButton.setOnAction(e -> {
-					beastWorkspace.addRunToQueue(run);
-				});
-				stateHBox.getChildren().add(putRunOnQueueButton);
-				break;
-			}
-			case ON_QUEUE :
-				break;
-			case WORKED_ON :
-				outputTextElement.clear();
-				outputTextElement.insertText(0, run.getTestOutput());
-
-				break;
-			case FINISHED : {
-				outputTextElement.clear();
-				outputTextElement.insertText(0, run.getTestOutput());
-				outputTextElement.insertText(0, "FINISHED :)\n");
-				Button putRunOnQueueButton = new Button("put Run on Queue");
-				putRunOnQueueButton.setOnAction(e -> {
-					beastWorkspace.addRunToQueue(run);
-				});
-				stateHBox.getChildren().add(putRunOnQueueButton);
-				break;
-			}
-
-			case STOPPED : {
-				outputTextElement.clear();
-				outputTextElement.insertText(0, run.getTestOutput());
-				outputTextElement.insertText(0, "INTERRUPTED BY USER :(\n");
-				Button putRunOnQueueButton = new Button("put Run on Queue");
-				putRunOnQueueButton.setOnAction(e -> {
-					beastWorkspace.addRunToQueue(run);
-				});
-				stateHBox.getChildren().add(putRunOnQueueButton);
-				break;
-			}
-			default :
-				break;
-		}
-
 	}
 
 	public AnchorPane getTopLevelAnchorPane() {

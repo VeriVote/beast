@@ -64,8 +64,6 @@ public class CBMCTestRunSaverLoaderHelper {
 		json.put(CBMC_CODE_FILE_DATA_KEY, CBMCCodeFileDataSaverLoaderHelper
 				.cbmcCodeFileToJSON(run.getCbmcCodeFile()));
 
-		json.put(LOOP_BOUND_LIST_KEY,
-				loopBoundListToJSONArr(run.getLoopboundList()));
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(run.getCodeGenOptions()));
 

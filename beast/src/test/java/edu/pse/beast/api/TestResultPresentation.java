@@ -2144,6 +2144,7 @@ public class TestResultPresentation {
 				cbmcGeneratedCodeInfo,
 				5, 5, 5, 
 				List.of(cbmcOutput.split("\n")));
+		System.out.println(res.getExampleText());
 		
 	}
 }

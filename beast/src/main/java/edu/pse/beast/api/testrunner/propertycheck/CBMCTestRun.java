@@ -11,6 +11,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonOutputHandler;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
@@ -39,6 +40,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	private CBMCTestCallback cb;
 
+	private CBMCJsonOutputHandler jsonOutputHandler;
+
 	public CBMCTestRun(int v, int s, int c, CodeGenOptions codeGenOptions,
 			String loopbounds, CBMCCodeFileData cbmcCodeFile,
 			CElectionDescription descr,
@@ -51,6 +54,10 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.descr = descr;
 		this.propDescr = propDescr;
 		this.loopboundList = loopbounds;
+	}
+	
+	public String getExampleText() {
+		return jsonOutputHandler.getExampleText();
 	}
 
 	@Override
@@ -68,9 +75,21 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void onPropertyTestFinished(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
+
+		jsonOutputHandler = new CBMCJsonOutputHandler(description,
+				propertyDescr, cbmcCodeFile.getCodeInfo(), s, c, v, testRunLogs);
+
 		if (cb != null)
 			cb.onPropertyTestFinished(description, propertyDescr, s, c, v,
 					uuid);
+	}
+
+	@Override
+	public void onPropertyTestStart(CElectionDescription description,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+		if (cb != null)
+			cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
 	}
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
@@ -171,5 +190,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void setC(int c) {
 		C = c;
 	}
+
+
 
 }
