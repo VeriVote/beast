@@ -91,7 +91,7 @@ public class CBMCTestRunSaverLoaderHelper {
 				json.getJSONArray(LOOP_BOUND_LIST_KEY));
 
 		CBMCTestRun cbmcTestRun = new CBMCTestRun(v, s, c, codeGenOptions,
-				loopbounds, codeFileData, descr, propDescr);
+				"", codeFileData, descr, propDescr);
 		
 
 		return cbmcTestRun;

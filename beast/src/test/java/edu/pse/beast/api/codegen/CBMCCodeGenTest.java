@@ -23,14 +23,20 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 public class CBMCCodeGenTest {
 	@Test
 	public void testGenerateBordaCode() {
-		String bordaCode = "    unsigned int i = 0;\n"
-				+ "    unsigned int j = 0;\n" + "\n"
-				+ "    for (i = 0; i < C; i++) {\n" + "        result[i] = 0;\n"
-				+ "    }\n" + "    for (i = 0; i < V; i++) {\n"
+		String bordaCode =
+				  "    unsigned int i = 0;\n"
+				+ "    unsigned int j = 0;\n" 
+				+ "\n"
+				+ "    for (i = 0; i < C; i++) {\n" 
+				+ "        result[i] = 0;\n"
+				+ "    }\n" 
+				+ "    for (i = 0; i < V; i++) {\n"
 				+ "        for (j = 0; j < C; j++) {\n"
-				+ "            if (votes[i][j] < C) {\n"
+				+ "            if (IS_VALID_VOTE(votes[i][j])) {\n"
 				+ "                result[votes[i][j]] += (C - j) - 1;\n"
-				+ "            }\n" + "        }\n" + "    }";
+				+ "            }\n" 
+				+ "        }\n" 
+				+ "    }";
 
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
@@ -55,9 +61,8 @@ public class CBMCCodeGenTest {
 		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5,
 				10, 10, 10);
 
-		CodeGenLoopBoundHandler lbh = descr.generateLoopBoundHandler();
-		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(descr, propDescr,
-				codeGenOptions, lbh).getCode();
+		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+				descr, propDescr, codeGenOptions).getCode();
 		System.out.println(code);
 	}
 }

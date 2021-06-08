@@ -252,7 +252,13 @@ public class CBMCJsonOutputHandler {
 
 				String valueStr = removeAnythingButDigits(
 						valueJsonObj.getString("data"));
-				int value = Integer.valueOf(valueStr);
+				int value = 0;
+				//TODO make this cleaner
+				try {
+					value = Integer.valueOf(valueStr);	
+				} catch (Exception e) {
+					value = Integer.MAX_VALUE;
+				}				
 
 				allAssignments
 						.add(structName + "." + memberName + " = " + value);

@@ -21,8 +21,10 @@ public class CBMCMainGenerator {
 			ElectionTypeCStruct voteArrStruct,
 			ElectionTypeCStruct voteResultStruct,
 			VotingInputTypes votingInputType,
-			VotingOutputTypes votingOutputType, CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler, String votingFunctionName,
+			VotingOutputTypes votingOutputType, 
+			CodeGenOptions options,
+			CodeGenLoopBoundHandler loopBoundHandler, 
+			String votingFunctionName,
 			CBMCGeneratedCodeInfo cbmcGeneratedCode) {
 
 		List<String> code = new ArrayList<>();

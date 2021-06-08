@@ -1,7 +1,5 @@
 package edu.pse.beast.api.savingloading;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -28,7 +26,8 @@ public class WorkspaceSaverLoaderTest {
 
 		String name = "test";
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
+				VotingInputTypes.PREFERENCE, 
+				VotingOutputTypes.CANDIDATE_LIST,
 				"test");
 		descr.getVotingFunction()
 				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
