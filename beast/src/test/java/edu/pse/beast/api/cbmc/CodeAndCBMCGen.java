@@ -1,7 +1,6 @@
-package edu.pse.beast.api.codegen;
+package edu.pse.beast.api.cbmc;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Test;
 
@@ -11,18 +10,16 @@ import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCArgumentHelper;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public class CBMCCodeGenTest {
+public class CodeAndCBMCGen {
 	@Test
-	public void testGenerateBordaCode() {
+	public void generateCodeAndCBMCCall() {
 		String bordaCode =
 				  "    unsigned int i = 0;\n"
 				+ "    unsigned int j = 0;\n" 
@@ -53,8 +50,16 @@ public class CBMCCodeGenTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
-		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
-				descr, propDescr, codeGenOptions).getCode();
-		System.out.println(code);
+		int v = 10;
+		int c = 10;
+		int s = 10;		
+		
+		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5,
+				v, c, s);
+
+		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+				descr, propDescr, codeGenOptions);		
+		
+		System.out.println(codeInfo.getLoopBoundHandler().generateCBMCString(v, c, s)); 
 	}
 }
