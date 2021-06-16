@@ -104,4 +104,8 @@ public class CBMCGeneratedCodeInfo {
 	public GeneratedTypeInfo getInfo(String varName) {
 		return varNamesToInfo.get(varName);
 	}
+	
+	public boolean hasInfo(String varName) {
+		return varNamesToInfo.containsKey(varName);
+	}
 }

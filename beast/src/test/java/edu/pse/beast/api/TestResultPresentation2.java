@@ -56,7 +56,7 @@ public class TestResultPresentation2 {
 	@Test
 	public void testOutputParser2() throws IOException {
 		String output = SavingLoadingInterface.readStringFromFile(
-				new File("./src/test/resources/resources/output_2.txt"));
+				new File("./src/test/resources/output2"));
 
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.APPROVAL, VotingOutputTypes.CANDIDATE_LIST,
