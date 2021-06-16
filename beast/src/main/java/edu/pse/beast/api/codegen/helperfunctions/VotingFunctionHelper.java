@@ -30,6 +30,7 @@ public class VotingFunctionHelper {
 				"RESULT_VAR", resultStructVarName, 
 				"AMT_MEMBER", outputStruct.getAmtName(),
 				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
+				"CURRENT_AMT_CAND", options.getCurrentAmountCandsVarName(), 
 				"NONDET_UINT", options.getCbmcNondetUintName(),
 				"ASSUME", options.getCbmcAssumeName(),
 				"LIST_MEMBER", outputStruct.getListName(), 
@@ -77,6 +78,8 @@ public class VotingFunctionHelper {
 				"VOTE_ARR", voteArrayVarName,
 				"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(), 
 				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
+				"CURRENT_AMT_VOTER", options.getCurrentAmountVotersVarName(),
+				"CURRENT_AMT_CAND", options.getCurrentAmountCandsVarName(),
 				"VOTE_INPUT_STRUCT_VAR", votingStructVarName,
 				"AMT_MEMBER", inputStruct.getAmtName(), 
 				"LIST_MEMBER", inputStruct.getListName());

@@ -9,7 +9,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 public class CodeTemplateVotingFunctionVoteArrayInit {
 	public final static String templateSingleChoice = 
 			  " unsigned int VOTE_ARR[AMT_VOTERS];\n"
-			+ "	for (int i = 0; i < VOTE_INPUT_STRUCT_VAR.AMT_MEMBER; ++i) {\n"
+			+ "	for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {\n"
 			+ "     VOTE_ARR[i] = VOTE_INPUT_STRUCT_VAR.LIST_MEMBER[i];\n" 
 			+ " }";
 		
@@ -20,8 +20,8 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
 
 	public final static String templatePreference = 
 			  " unsigned int VOTE_ARR[AMT_VOTERS][AMT_CANDIDATES];\n"
-			+ "	for (int i = 0; i < VOTE_INPUT_STRUCT_VAR.AMT_MEMBER; ++i) {\n"
-			+ " 	for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
+			+ "	for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {\n"
+			+ " 	for (int j = 0; j < CURRENT_AMT_CAND; ++j) {\n"
 			+ "     	VOTE_ARR[i][j] = VOTE_INPUT_STRUCT_VAR.LIST_MEMBER[i][j];\n" 
 			+ "     }\n" 
 			+ " }";			
