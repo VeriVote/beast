@@ -271,9 +271,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	public void initialize() throws IOException {
-		File f = new File("testfiles/test.beastws");
-		beastWorkspace = SavingLoadingInterface.loadBeastWorkspace(f);
-
+		beastWorkspace = new BeastWorkspace();
+		
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		beastWorkspace.setErrorHandler(errorHandler);
 
