@@ -1,1 +1,1 @@
-"D:\Visual studio\Common7\Tools\VsDevCmd.bat" & "D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\cbmcWIN\cbmc.exe" "D:\code\eclipse-workspace\BEAST\BEAST\beast\testfiles\test.c" --trace-json-extended --json-ui -D V=1 -D C=10 -D S=5 --unwind 11
+"D:\Visual studio\Common7\Tools\VsDevCmd.bat" & "D:\code\eclipse-workspace\BEAST\BEAST\beast\windows\cbmcWIN\cbmc.exe" "D:\code\eclipse-workspace\BEAST\BEAST\beast\testfiles\test.c" --trace-json-extended --json-ui  -D MAX_AMT_VOTERS=3 -D MAX_AMT_CANDIDATES=3 -D MAX_AMT_SEATS=3 --unwind 4
