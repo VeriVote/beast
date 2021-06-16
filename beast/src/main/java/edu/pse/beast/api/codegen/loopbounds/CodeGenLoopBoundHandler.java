@@ -38,38 +38,72 @@ public class CodeGenLoopBoundHandler {
 
 	public void addVotingInitLoopBounds(String votingFunctionName,
 			List<LoopBound> loopbounds) {
+		/*for (int i = 0; i < loopbounds.size(); ++i) {
+			LoopBound lb = loopbounds.get(i);
+			lb.setFunctionName(votingFunctionName);
+			lb.setIndex(i);
+		}*/
 		votingInitLoopbounds.put(votingFunctionName, loopbounds);
+		/*List<LoopBound> extractedLoopbounds = functionNamesToLoopbounds
+				.get(votingFunctionName);
+		for (LoopBound lb : extractedLoopbounds) {
+			int newIndex = lb.getIndex() + loopbounds.size();
+			lb.setIndex(newIndex);
+		}*/
 	}
 
 	public void pushVotingLoopBounds(String votingFunctionName,
 			List<LoopBound> loopbounds) {
+		/*List<LoopBound> extractedLoopbounds = 
+				functionNamesToLoopbounds.get(votingFunctionName);
+		List<LoopBound> initLoopbounds = 
+				votingInitLoopbounds.get(votingFunctionName);
+
+		for(int i = 0 ; i < loopbounds.size(); ++i) {
+			LoopBound lb = loopbounds.get(i);
+			lb.setFunctionName(votingFunctionName);
+			lb.setIndex(i + extractedLoopbounds.size() + initLoopbounds.size()); 
+		}*/
+		
 		votingBackLoopbounds.put(votingFunctionName, loopbounds);
 	}
-	
+
 	public void finishAddedLoopbounds() {
-		for (String k : votingInitLoopbounds.keySet()) {
-			List<LoopBound> lbsInVotingFunc = functionNamesToLoopbounds.get(k);
-			int amtInitLoops = votingInitLoopbounds.get(k).size();
-			for (LoopBound lb : lbsInVotingFunc) {
-				lb.incrementIndexBy(amtInitLoops);
-			}
-			int amtLoopboundsInFunc = votingInitLoopbounds.get(k).size()
-					+ lbsInVotingFunc.size();
-			for (int i = 0; i < votingBackLoopbounds.get(k).size(); ++i) {
-				votingBackLoopbounds.get(k).get(i)
-						.setIndex(i + amtLoopboundsInFunc);
-			}
-		}
-	}
-
-	public String generateCBMCString(int v, int c, int s) {		
-			
-		String created = "";
-
 		for (int i = 0; i < mainLoopbounds.size(); ++i) {
 			LoopBound lb = mainLoopbounds.get(i);
 			lb.setFunctionName("main");
 			lb.setIndex(i);
+		}
+
+		for (String k : votingInitLoopbounds.keySet()) {
+			List<LoopBound> initLbs = votingInitLoopbounds.get(k);
+			for(int i = 0; i < initLbs.size(); ++i) {
+				initLbs.get(i).setIndex(i);
+				initLbs.get(i).setFunctionName(k);
+			}
+			
+			List<LoopBound> extractedLbs = functionNamesToLoopbounds.get(k);
+			int amtInitLoops = votingInitLoopbounds.get(k).size();
+			for (LoopBound lb : extractedLbs) {
+				lb.setFunctionName(k);
+				lb.incrementIndexBy(amtInitLoops);
+			}
+			int amtLoopboundsInFunc = votingInitLoopbounds.get(k).size()
+					+ extractedLbs.size();
+			for (int i = 0; i < votingBackLoopbounds.get(k).size(); ++i) {
+				LoopBound lb = votingBackLoopbounds.get(k).get(i);
+				lb.setIndex(i + amtLoopboundsInFunc);
+				lb.setFunctionName(k);
+			}
+		}
+	}
+
+	public String generateCBMCString(int v, int c, int s) {
+
+		String created = "";
+
+		for (int i = 0; i < mainLoopbounds.size(); ++i) {
+			LoopBound lb = mainLoopbounds.get(i);
 			created += lb.getUnwindString(v, c, s);
 		}
 

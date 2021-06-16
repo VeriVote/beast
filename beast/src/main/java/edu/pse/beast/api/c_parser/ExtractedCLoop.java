@@ -123,15 +123,15 @@ public class ExtractedCLoop {
 			if (lessThanText
 					.equals(codeGenOptions.getCurrentAmountVotersVarName())) {
 				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-				parsedLoopBoundType = LoopBoundType.LOOP_BOUND_AMT_VOTERS;
+				parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS;
 			} else if (lessThanText
 					.equals(codeGenOptions.getCurrentAmountCandsVarName())) {
 				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-				parsedLoopBoundType = LoopBoundType.LOOP_BOUND_AMT_CANDS;
+				parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS;
 			} else if (lessThanText
 					.equals(codeGenOptions.getCurrentAmountSeatsVarName())) {
 				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-				parsedLoopBoundType = LoopBoundType.LOOP_BOUND_AMT_SEATS;
+				parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_SEATS;
 			}
 		} else if (ctx.While() != null) {
 			loopType = CLoopTypes.WHILE;

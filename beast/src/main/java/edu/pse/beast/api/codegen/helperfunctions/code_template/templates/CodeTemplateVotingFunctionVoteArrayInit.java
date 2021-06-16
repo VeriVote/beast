@@ -15,7 +15,8 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
 		
 	public final static List<LoopBound> loopBoundsSingleChoice =
 			LoopBound.codeGenLoopboundList(
-					Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS)
+					Arrays.asList(
+							LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS)
 			);
 
 	public final static String templatePreference = 
@@ -28,7 +29,9 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
 	
 	public final static List<LoopBound> loopBoundsPreference =
 			LoopBound.codeGenLoopboundList(
-					Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS, LoopBoundType.LOOP_BOUND_AMT_CANDS)
+					Arrays.asList(
+							LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS, 
+							LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS)
 			);
 	
 	public final static String templateApproval = templatePreference;
