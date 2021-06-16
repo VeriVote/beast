@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -41,7 +42,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 	//TODO(Holger) This can be moves somewhere else, just dont know where yet.
 	//Probably together with the rest of code generation.
 	@Override
-	public String getDeclCString() {
+	public String getDeclCString(CodeGenOptions codeGenOptions) {
 		String template = "RETURN_TYPE NAME(ARG) {\n" 
 							+"    RESULT_ARR;";
 
@@ -81,7 +82,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 		}
 
 		CTypeNameBrackets resultType = FunctionToC.votingTypeToC(
-				CElectionVotingType.of(outputType), resultArrayName);
+				CElectionVotingType.of(outputType), resultArrayName, codeGenOptions);
 
 		return template
 				.replaceAll("RETURN_TYPE", returnType)

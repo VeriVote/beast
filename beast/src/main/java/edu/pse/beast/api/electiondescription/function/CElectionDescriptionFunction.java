@@ -7,6 +7,7 @@ import java.util.List;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.CLoopParseResultType;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
 public abstract class CElectionDescriptionFunction {
 	protected String name;
@@ -38,7 +39,7 @@ public abstract class CElectionDescriptionFunction {
 		return code;
 	}
 
-	public abstract String getDeclCString();
+	public abstract String getDeclCString(CodeGenOptions codeGenOptions);
 
 	@Override
 	public String toString() {

@@ -2,6 +2,7 @@ package edu.pse.beast.api.electiondescription.function;
 
 import java.util.List;
 
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 
 public class SimpleTypeFunction extends CElectionDescriptionFunction {
@@ -16,7 +17,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 	}
 
 	@Override
-	public String getDeclCString() {
+	public String getDeclCString(CodeGenOptions codeGenOptions) {
 		String template = "RETURN_TYPE NAME(ARGS)";
 		String args = "";
 

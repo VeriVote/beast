@@ -294,7 +294,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		funcDeclArea.clear();
 		closingBracketArea.clear();
 
-		String declText = func.getDeclCString();
+		String declText = func.getDeclCString(beastWorkspace.getCodeGenOptions());
 		funcDeclArea.insertText(0, declText);
 		int amtLinesInDecl = declText.split("\n").length;
 

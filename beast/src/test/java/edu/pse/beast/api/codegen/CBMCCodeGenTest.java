@@ -55,7 +55,7 @@ public class CBMCCodeGenTest {
 
 		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
-		//System.out.println(code);
+		System.out.println(code);
 	}
 	
 	@Test
