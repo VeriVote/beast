@@ -18,6 +18,7 @@ public class CodeTemplateVotingFunctionResultCopy {
 		public final static String templateCandidateList= 
 				  "	RESULT_TYPE RESULT_VAR;\n"
 				+ "	RESULT_VAR.AMT_MEMBER == NONDET_UINT();\n"
+				+ " ASSUME(RESULT_VAR.AMT_MEMBER == CURRENT_AMT_CAND);\n"
 				+ "	for(int i = 0; i < CURRENT_AMT_CAND; ++i) {\n"
 				+ " 	RESULT_VAR.LIST_MEMBER[i] = NONDET_UINT();\n"
 				+ "		ASSUME(RESULT_VAR.LIST_MEMBER[i] == RESULT_ARR[i]);\n"
@@ -25,7 +26,7 @@ public class CodeTemplateVotingFunctionResultCopy {
 		
 		public final static List<LoopBound> loopBoundsCandidateList = 
 				LoopBound.codeGenLoopboundList(
-						Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS)
+						Arrays.asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS)
 				);
 		
 		public final static String templateParliament = templateCandidateList;

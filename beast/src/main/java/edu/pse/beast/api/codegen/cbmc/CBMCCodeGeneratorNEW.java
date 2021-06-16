@@ -29,6 +29,8 @@ public class CBMCCodeGeneratorNEW {
 	private final static String STDINT = "stdint.h";
 	private final static String ASSERT = "assert.h";
 
+	private final static String INVALID_VOTE = "INVALID_VOTE";
+
 	private final static String ASSUME = "assume(x)";
 	private final static String CPROVER_ASSUME = "__CPROVER_assume(x)";
 
@@ -48,6 +50,7 @@ public class CBMCCodeGeneratorNEW {
 		created.include(ASSERT);
 
 		created.define(ASSUME, CPROVER_ASSUME);
+		created.define(INVALID_VOTE, "0xFFFFFFFE");
 
 		created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
 		created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());

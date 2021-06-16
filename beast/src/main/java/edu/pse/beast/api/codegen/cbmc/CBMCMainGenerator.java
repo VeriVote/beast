@@ -29,20 +29,6 @@ public class CBMCMainGenerator {
 
 		List<String> code = new ArrayList<>();
 
-		String votesLowerBoundVarName = "votesLowerBound";
-		String votesUpperBoundVarName = "votesUpperBound";
-
-		String lower = "unsigned int VAR = 0;".replaceAll("VAR",
-				votesLowerBoundVarName);
-		String upper = "unsigned int VAR = C;".replaceAll("VAR",
-				votesUpperBoundVarName);
-
-		code.add(lower);
-		code.add(upper);
-
-		options.setVotesLowerBoundVarName(votesLowerBoundVarName);
-		options.setVotesUpperBoundVarName(votesUpperBoundVarName);
-
 		// TODO cleanup
 		// init global symbolic vars
 		for (SymbolicCBMCVar var : symCbmcVars) {

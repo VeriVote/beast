@@ -6,7 +6,8 @@ import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 
 public class PerformVoteHelper {
 
-	private static String template = "ELECT_TYPE GENERATED_VAR = VOTE_FUNC_NAME(VOTE_VAR, CURRENT_AMT_VOTER, CURRENT_AMT_CAND, CURRENT_AMT_SEAT);\n";
+	private static String template = 
+			  "ELECT_TYPE GENERATED_VAR = VOTE_FUNC_NAME(VOTE_VAR, CURRENT_AMT_VOTER, CURRENT_AMT_CAND, CURRENT_AMT_SEAT);\n";
 
 	public static String getResultVarName(int voteNumber) {
 		String resultVarName = "result" + voteNumber;

@@ -50,9 +50,9 @@ public class CodeAndCBMCGen {
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
-		int v = 10;
-		int c = 10;
-		int s = 10;		
+		int v = 5;
+		int c = 5;
+		int s = 5;		
 		
 		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5,
 				v, c, s);
@@ -60,6 +60,10 @@ public class CodeAndCBMCGen {
 		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions);		
 		
+		System.out.println(codeInfo.getCode());
+		
 		System.out.println(codeInfo.getLoopBoundHandler().generateCBMCString(v, c, s)); 
+		
+		System.out.println(CBMCArgumentHelper.getConstCommands(codeGenOptions, v, c, s));
 	}
 }

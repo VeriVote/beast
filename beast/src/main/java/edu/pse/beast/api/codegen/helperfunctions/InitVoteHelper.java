@@ -43,8 +43,9 @@ public abstract class InitVoteHelper {
 		String currentAmtSeatVarName = getCurrentAmtSeat(voteNumber);
 
 		Map<String, String> replacementMap = StringReplacementMap.genMap(
-				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(), 
-				"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(), 
+				"MAX_AMT_CAND", options.getCbmcAmountMaxCandidatesVarName(), 
+				"MAX_AMT_VOTER", options.getCbmcAmountMaxVotersVarName(), 
+				"MAX_AMT_SEAT", options.getCbmcAmountMaxSeatsVarName(), 
 				"CURRENT_AMT_VOTER", currentAmtVoterVarName, 
 				"CURRENT_AMT_CAND", currentAmtCandVarName, 
 				"CURRENT_AMT_SEAT", currentAmtSeatVarName, 
@@ -53,9 +54,7 @@ public abstract class InitVoteHelper {
 				"LIST_MEMBER", voteArrStruct.getListName(), 
 				"VAR_NAME", varName, 
 				"ASSUME", options.getCbmcAssumeName(), 
-				"NONDET_UINT", options.getCbmcNondetUintName(),
-				"LOWER_VOTE_BOUND", options.getVotesLowerBoundVarName(), 
-				"UPPER_VOTE_BOUND", options.getVotesUpperBoundVarName());
+				"NONDET_UINT", options.getCbmcNondetUintName());
 
 		String code = null;
 		List<LoopBound> loopbounds = List.of();

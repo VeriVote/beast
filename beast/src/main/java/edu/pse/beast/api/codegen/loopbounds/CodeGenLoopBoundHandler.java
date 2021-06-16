@@ -38,43 +38,15 @@ public class CodeGenLoopBoundHandler {
 
 	public void addVotingInitLoopBounds(String votingFunctionName,
 			List<LoopBound> loopbounds) {
-		/*for (int i = 0; i < loopbounds.size(); ++i) {
-			LoopBound lb = loopbounds.get(i);
-			lb.setFunctionName(votingFunctionName);
-			lb.setIndex(i);
-		}*/
 		votingInitLoopbounds.put(votingFunctionName, loopbounds);
-		/*List<LoopBound> extractedLoopbounds = functionNamesToLoopbounds
-				.get(votingFunctionName);
-		for (LoopBound lb : extractedLoopbounds) {
-			int newIndex = lb.getIndex() + loopbounds.size();
-			lb.setIndex(newIndex);
-		}*/
 	}
 
 	public void pushVotingLoopBounds(String votingFunctionName,
 			List<LoopBound> loopbounds) {
-		/*List<LoopBound> extractedLoopbounds = 
-				functionNamesToLoopbounds.get(votingFunctionName);
-		List<LoopBound> initLoopbounds = 
-				votingInitLoopbounds.get(votingFunctionName);
-
-		for(int i = 0 ; i < loopbounds.size(); ++i) {
-			LoopBound lb = loopbounds.get(i);
-			lb.setFunctionName(votingFunctionName);
-			lb.setIndex(i + extractedLoopbounds.size() + initLoopbounds.size()); 
-		}*/
-		
 		votingBackLoopbounds.put(votingFunctionName, loopbounds);
 	}
 
 	public void finishAddedLoopbounds() {
-		for (int i = 0; i < mainLoopbounds.size(); ++i) {
-			LoopBound lb = mainLoopbounds.get(i);
-			lb.setFunctionName("main");
-			lb.setIndex(i);
-		}
-
 		for (String k : votingInitLoopbounds.keySet()) {
 			List<LoopBound> initLbs = votingInitLoopbounds.get(k);
 			for(int i = 0; i < initLbs.size(); ++i) {
@@ -104,6 +76,8 @@ public class CodeGenLoopBoundHandler {
 
 		for (int i = 0; i < mainLoopbounds.size(); ++i) {
 			LoopBound lb = mainLoopbounds.get(i);
+			lb.setFunctionName("main");
+			lb.setIndex(i);
 			created += lb.getUnwindString(v, c, s);
 		}
 

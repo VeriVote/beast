@@ -25,7 +25,7 @@ public class CodeTemplateElectComparison {
 		
 		public final static List<LoopBound> loopBoundsCandidateList = 
 											LoopBound.codeGenLoopboundList(
-													Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS)
+													Arrays.asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS)
 											);		
 
 		public static String templateParliamentUneq = templateCandidateListUneq;
