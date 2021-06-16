@@ -20,7 +20,7 @@ public class PerformVoteHelper {
 		String resultVarName = getResultVarName(voteNumber);
 		cbmcGeneratedCode.addedElectVar(resultVarName);
 		
-		String voteVarName = InitVoteHelper.getVotesVarName(voteNumber);
+		String voteVarName = InitVoteHelper.getVoteVarName(voteNumber);
 		
 		String code = template;
 		code = code.replaceAll("ELECT_TYPE",

@@ -15,7 +15,7 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public abstract class InitVoteHelper {
 	
-	public static String getVotesVarName(int voteNumber) {
+	public static String getVoteVarName(int voteNumber) {
 		return "votes" + voteNumber;
 	}
 	
@@ -35,7 +35,7 @@ public abstract class InitVoteHelper {
 			ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
 			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler, 
 			CBMCGeneratedCodeInfo codeInfo) {		
-		String varName = getVotesVarName(voteNumber);
+		String varName = getVoteVarName(voteNumber);
 		codeInfo.addedVotingVar(varName);
 		
 		String currentAmtVoterVarName = getCurrentAmtVoter(voteNumber);

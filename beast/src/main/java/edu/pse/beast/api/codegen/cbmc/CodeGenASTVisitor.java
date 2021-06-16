@@ -21,8 +21,10 @@ import edu.pse.beast.api.codegen.cbmc.info.GeneratedTypeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsElectEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsVoteEmptyHelper;
+import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectPermutationHelper;
@@ -179,8 +181,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			varNames.add(
-					"voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+			varNames.add(InitVoteHelper.getVoteVarName(number));
 		}
 
 		cbmcGeneratedCode.addInfo(generatedVarName,
@@ -202,8 +203,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			varNames.add(
-					"electNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+			varNames.add(PerformVoteHelper.getResultVarName(number));
 		}
 		cbmcGeneratedCode.addInfo(generatedVarName,
 				new GeneratedTypeInfo(String.join(" ", varNames)));
@@ -223,8 +223,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			expVarNameStack.push("vote" + node.getCount());
 			amtVoteVars++;
 		} else {
-			String voteVarName = "voteNUMBER".replaceAll("NUMBER",
-					node.getVoteNumber());
+			String voteVarName = InitVoteHelper.getVoteVarName(Integer.valueOf(node.getVoteNumber()));
 			String varName = VoteExpHelper.getVarFromVoteAccess(voteVarName,
 					node.getAccessingCBMCVars(), options, voteArrStruct);
 			expVarNameStack.push(varName);
@@ -244,7 +243,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectExpNode(ElectExp node) {
 		if (node.getAccessingVars().length == 0) {
-			expVarNameStack.push("elect" + node.getCount());
+			expVarNameStack.push(PerformVoteHelper.getResultVarName(node.getCount()));
 			expTypes.push(voteResultStruct.getVotingType());
 			amtElectVars++;
 		}
@@ -255,8 +254,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
 		cbmcGeneratedCode.addedVotingVar(generatedVarName);
 
-		String varName = "voteNUMBER".replaceAll("NUMBER",
-				String.valueOf(node.getVoteNumber()));
+		String varName = InitVoteHelper.getVoteVarName(node.getVoteNumber());
 		
 		cbmcGeneratedCode.addInfo(generatedVarName,
 				new GeneratedTypeInfo(String.join(" ", varName)));
@@ -275,8 +273,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
 		cbmcGeneratedCode.addedElectVar(generatedVarName);
 
-		String varName = "electNUMBER".replaceAll("NUMBER",
-				String.valueOf(node.getElectNumber()));		
+		String varName = PerformVoteHelper.getResultVarName(node.getElectNumber());		
 
 		cbmcGeneratedCode.addInfo(generatedVarName,
 				new GeneratedTypeInfo(String.join(" ", varName)));
@@ -296,8 +293,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> electNames = new ArrayList<>();
 		for (int number : node.getElectNumbers()) {
-			electNames.add(
-					"electNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+			electNames.add(PerformVoteHelper.getResultVarName(number));
 		}
 		
 
@@ -319,8 +315,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> voteNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			voteNames.add(
-					"voteNUMBER".replaceAll("NUMBER", String.valueOf(number)));
+			voteNames.add(InitVoteHelper.getVoteVarName(number));
 		}
 
 		cbmcGeneratedCode.addInfo(generatedVarName,
