@@ -9,12 +9,16 @@ public class CodeGenOptions {
 	private String cbmcAssertName;
 	private String cbmcNondetUintName;
 
-	private String cbmcAmountVotersVarName;
-	private String cbmcAmountCandidatesVarName;
-	private String cbmcAmountSeatsVarName;
+	private String cbmcAmountMaxVotersVarName = "MAX_AMT_VOTERS";
+	private String cbmcAmountMaxCandidatesVarName = "MAX_AMT_CANDIDATES";
+	private String cbmcAmountMaxSeatsVarName = "MAX_AMT_SEATS";
 
-	public String getCbmcAmountVotersVarName() {
-		return cbmcAmountVotersVarName;
+	private String currentAmountVotersVarName = "V";
+	private String currentAmountCandsVarName = "C";
+	private String currentAmountSeatsVarName = "S";
+
+	public String getCbmcAmountMaxVotersVarName() {
+		return cbmcAmountMaxVotersVarName;
 	}
 
 	public String getCbmcAssertName() {
@@ -25,25 +29,25 @@ public class CodeGenOptions {
 		this.cbmcAssertName = cbmcAssertName;
 	}
 
-	public String getCbmcAmountSeatsVarName() {
-		return cbmcAmountSeatsVarName;
+	public String getCbmcAmountMaxSeatsVarName() {
+		return cbmcAmountMaxSeatsVarName;
 	}
 
-	public void setCbmcAmountSeatsVarName(String cbmcAmountSeatsVarName) {
-		this.cbmcAmountSeatsVarName = cbmcAmountSeatsVarName;
+	public void setCbmcAmountMaxSeatsVarName(String cbmcAmountSeatsVarName) {
+		this.cbmcAmountMaxSeatsVarName = cbmcAmountSeatsVarName;
 	}
 
-	public String getCbmcAmountCandidatesVarName() {
-		return cbmcAmountCandidatesVarName;
+	public String getCbmcAmountMaxCandidatesVarName() {
+		return cbmcAmountMaxCandidatesVarName;
 	}
 
-	public void setCbmcAmountVotersVarName(String cbmcAmountVotesVarName) {
-		this.cbmcAmountVotersVarName = cbmcAmountVotesVarName;
+	public void setCbmcAmountMaxVotersVarName(String cbmcAmountVotesVarName) {
+		this.cbmcAmountMaxVotersVarName = cbmcAmountVotesVarName;
 	}
 
-	public void setCbmcAmountCandidatesVarName(
+	public void setCbmcAmountMaxCandidatesVarName(
 			String cbmcAmountCandidatesVarName) {
-		this.cbmcAmountCandidatesVarName = cbmcAmountCandidatesVarName;
+		this.cbmcAmountMaxCandidatesVarName = cbmcAmountCandidatesVarName;
 	}
 
 	public String getVotesLowerBoundVarName() {
@@ -76,6 +80,31 @@ public class CodeGenOptions {
 
 	public void setCbmcNondetUintName(String cbmcNondetUintName) {
 		this.cbmcNondetUintName = cbmcNondetUintName;
+	}
+
+	public String getCurrentAmountVotersVarName() {
+		return currentAmountVotersVarName;
+	}
+
+	public String getCurrentAmountCandsVarName() {
+		return currentAmountCandsVarName;
+	}
+
+	public String getCurrentAmountSeatsVarName() {
+		return currentAmountSeatsVarName;
+	}
+
+	public void setCurrentAmountVotersVarName(
+			String currentAmountVotersVarName) {
+		this.currentAmountVotersVarName = currentAmountVotersVarName;
+	}
+
+	public void setCurrentAmountCandsVarName(String currentAmountCandsVarName) {
+		this.currentAmountCandsVarName = currentAmountCandsVarName;
+	}
+
+	public void setCurrentAmountSeatsVarName(String currentAmountSeatsVarName) {
+		this.currentAmountSeatsVarName = currentAmountSeatsVarName;
 	}
 
 }

@@ -29,7 +29,7 @@ public class VotingFunctionHelper {
 				"RESULT_TYPE", outputStruct.getStruct().getName(),
 				"RESULT_VAR", resultStructVarName, 
 				"AMT_MEMBER", outputStruct.getAmtName(),
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
 				"NONDET_UINT", options.getCbmcNondetUintName(),
 				"ASSUME", options.getCbmcAssumeName(),
 				"LIST_MEMBER", outputStruct.getListName(), 
@@ -75,8 +75,8 @@ public class VotingFunctionHelper {
 
 		Map<String, String> replacementMap = Map.of(
 				"VOTE_ARR", voteArrayVarName,
-				"AMT_VOTERS", options.getCbmcAmountVotersVarName(), 
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+				"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(), 
+				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
 				"VOTE_INPUT_STRUCT_VAR", votingStructVarName,
 				"AMT_MEMBER", inputStruct.getAmtName(), 
 				"LIST_MEMBER", inputStruct.getListName());

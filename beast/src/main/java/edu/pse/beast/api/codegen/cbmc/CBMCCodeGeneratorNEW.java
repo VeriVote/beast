@@ -37,11 +37,7 @@ public class CBMCCodeGeneratorNEW {
 	private final static String CBMC_UINT_FUNC_NAME = "nondet_uint";
 	private final static String CBMC_INT_FUNC_NAME = "nondet_int";
 
-	private static void addMacros(CFile cfile, CElectionDescription descr) {
-		cfile.define("INVALID_VOTE", "0xFFFFFFFF");
-		cfile.define("IS_VALID_VOTE(x)", "(x != INVALID_VOTE)");
-	}
-
+	
 	public static CBMCGeneratedCodeInfo generateCodeForCBMCPropertyTest(
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, CodeGenOptions options) {
@@ -49,7 +45,7 @@ public class CBMCCodeGeneratorNEW {
 		CFile created = new CFile();
 		created.include(STDLIB);
 		created.include(STDINT);
-		created.include(ASSERT);
+		created.include(ASSERT);				
 
 		created.define(ASSUME, CPROVER_ASSUME);
 
@@ -73,8 +69,6 @@ public class CBMCCodeGeneratorNEW {
 		created.addStructDef(voteInputStruct.getStruct());
 		created.addStructDef(voteResultStruct.getStruct());
 		
-		addMacros(created, descr);
-
 		String votingStructVarName = "voteStruct";
 		String resultStructVarName = "resultStruct";
 
@@ -113,7 +107,7 @@ public class CBMCCodeGeneratorNEW {
 
 		return cbmcGeneratedCode;
 	}
-
+	
 	private static CFunction votingSigFuncToPlainCFunc(VotingSigFunction func,
 			VotingInputTypes votingInputType,
 			VotingOutputTypes votingOutputType, ElectionTypeCStruct inputStruct,

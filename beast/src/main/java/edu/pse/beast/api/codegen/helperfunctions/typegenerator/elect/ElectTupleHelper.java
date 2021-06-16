@@ -36,7 +36,7 @@ public class ElectTupleHelper {
 					"AMT_MEMBER", electStruct.getAmtName(),
 					"LIST_MEMBER", electStruct.getListName(),
 					"NONDET_UINT", options.getCbmcNondetUintName(),
-					"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+					"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
 					"VOTE_TYPE", electStruct.getStruct().getName(),
 					"VAR_NAME", generatedVarName,
 					"ASSUME", options.getCbmcAssumeName()

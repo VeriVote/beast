@@ -50,8 +50,8 @@ public class VoteIntersectionHelper {
 				"LIST_MEMBER", voteArrStruct.getListName(),
 				"GENERATED_VAR_NAME", generatedVarName,
 				"LHS_VAR_NAME", intersectedVotesVarNames.get(0),
-				"AMT_VOTERS", options.getCbmcAmountVotersVarName(),
-				"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+				"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(),
+				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
 				"ASSUME", options.getCbmcAssumeName(),
 				"NONDET_UINT", options.getCbmcNondetUintName()
 				);

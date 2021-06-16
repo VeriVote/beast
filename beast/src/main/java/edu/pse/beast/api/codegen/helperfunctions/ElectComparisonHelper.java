@@ -42,7 +42,7 @@ public class ElectComparisonHelper {
 		Map<String, String> replacementMap = Map.of("GENERATED_VAR",
 				generatedVarName, "LHS_VAR", lhsVarName, "RHS_VAR", rhsVarName,
 				"AMT_MEMBER", comparedType.getAmtName(), "AMT_CANDIDATES",
-				options.getCbmcAmountCandidatesVarName(), "COMP", compareSymbol,
+				options.getCbmcAmountMaxCandidatesVarName(), "COMP", compareSymbol,
 				"LIST_MEMBER", comparedType.getListName());
 
 		String code = null;

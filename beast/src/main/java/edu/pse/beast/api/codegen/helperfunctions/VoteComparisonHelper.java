@@ -52,7 +52,7 @@ public class VoteComparisonHelper {
 					"LHS_VAR", lhsVarName,
 					"RHS_VAR", rhsVarName,
 					"AMT_MEMBER", comparedType.getAmtName(),
-					"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+					"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
 					"COMP", compareSymbol,
 					"LIST_MEMBER", comparedType.getListName()
 				);

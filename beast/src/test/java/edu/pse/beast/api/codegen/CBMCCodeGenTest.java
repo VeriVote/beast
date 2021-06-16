@@ -44,10 +44,7 @@ public class CBMCCodeGenTest {
 		descr.getVotingFunction().setCode(bordaCode);
 
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
-		codeGenOptions.setCbmcAmountVotersVarName("V");
-		codeGenOptions.setCbmcAmountCandidatesVarName("C");
-		codeGenOptions.setCbmcAmountSeatsVarName("S");
-
+		
 		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops("voting",
 				bordaCode, codeGenOptions);
 		descr.getVotingFunction().setExtractedLoops(loops);

@@ -342,7 +342,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String code = "for(unsigned int VAR_NAME = 0; VAR_NAME < AMT_VOTERS; ++VAR_NAME) {\n";
 		code = code.replaceAll("VAR_NAME", symbVarName);
 		code = code.replaceAll("AMT_VOTERS",
-				options.getCbmcAmountVotersVarName());
+				options.getCbmcAmountMaxVotersVarName());
 
 		String varName = codeBlock.newVarName("forAllVoters");
 		codeBlock.addAssignment("unsigned int " + varName, "1");
@@ -377,7 +377,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String code = "for(unsigned int VAR_NAME = 0; VAR_NAME < AMT_CANDIDATES; ++VAR_NAME) {\n";
 		code = code.replaceAll("VAR_NAME", symbolicVarName);
 		code = code.replaceAll("AMT_CANDIDATES",
-				options.getCbmcAmountCandidatesVarName());
+				options.getCbmcAmountMaxCandidatesVarName());
 
 		codeBlock.addSnippet("unsigned int " + boolVarName + " = 0;");
 		codeBlock.addSnippet(code);

@@ -121,15 +121,15 @@ public class ExtractedCLoop {
 			String lessThanText = relCond.shiftExpression().getText();
 
 			if (lessThanText
-					.equals(codeGenOptions.getCbmcAmountVotersVarName())) {
+					.equals(codeGenOptions.getCbmcAmountMaxVotersVarName())) {
 				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
 				parsedLoopBoundType = LoopBoundType.LOOP_BOUND_AMT_VOTERS;
 			} else if (lessThanText
-					.equals(codeGenOptions.getCbmcAmountCandidatesVarName())) {
+					.equals(codeGenOptions.getCbmcAmountMaxCandidatesVarName())) {
 				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
 				parsedLoopBoundType = LoopBoundType.LOOP_BOUND_AMT_CANDS;
 			} else if (lessThanText
-					.equals(codeGenOptions.getCbmcAmountSeatsVarName())) {
+					.equals(codeGenOptions.getCbmcAmountMaxSeatsVarName())) {
 				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
 				parsedLoopBoundType = LoopBoundType.LOOP_BOUND_AMT_SEATS;
 			}

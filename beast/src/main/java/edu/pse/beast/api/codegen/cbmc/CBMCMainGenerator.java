@@ -61,13 +61,8 @@ public class CBMCMainGenerator {
 				postAstData.getHighestVoteOrElect());
 
 		for (int i = 0; i < highestVote; ++i) {
-			String varName = "voteNUMBER".replaceAll("NUMBER",
-					String.valueOf(i + 1));
-			code.add("//initializing VAR".replaceAll("VAR", varName));
-			code.add(InitVoteHelper.generateCode(varName, voteArrStruct,
-					votingInputType, options, loopBoundHandler));
-			
-			cbmcGeneratedCode.addVotingVariableName(i, varName);
+			code.add(InitVoteHelper.generateCode(i + 1, voteArrStruct,
+					votingInputType, options, loopBoundHandler, cbmcGeneratedCode));			
 		}
 
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,

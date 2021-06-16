@@ -24,8 +24,8 @@ public class AntlrCParserTest {
 				+ "    }";
 		
 		CodeGenOptions options = new CodeGenOptions();
-		options.setCbmcAmountCandidatesVarName("C");
-		options.setCbmcAmountVotersVarName("V");
+		options.setCbmcAmountMaxCandidatesVarName("C");
+		options.setCbmcAmountMaxVotersVarName("V");
 		
 		List<ExtractedCLoop>extractedCLoops = 
 				AntlrCLoopParser.findLoops("voting", bordaCode, options);

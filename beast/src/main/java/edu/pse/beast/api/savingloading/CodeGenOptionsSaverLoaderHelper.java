@@ -13,9 +13,9 @@ public class CodeGenOptionsSaverLoaderHelper {
 	public static JSONObject codeGenOptionsToJSON(CodeGenOptions opts) {
 		JSONObject json = new JSONObject();
 
-		json.put(AMT_VOTER_VAR_NAME_KEY, opts.getCbmcAmountVotersVarName());
-		json.put(AMT_CANDS_VAR_NAME_KEY, opts.getCbmcAmountCandidatesVarName());
-		json.put(AMT_SEATS_VAR_NAME_KEY, opts.getCbmcAmountSeatsVarName());
+		json.put(AMT_VOTER_VAR_NAME_KEY, opts.getCbmcAmountMaxVotersVarName());
+		json.put(AMT_CANDS_VAR_NAME_KEY, opts.getCbmcAmountMaxCandidatesVarName());
+		json.put(AMT_SEATS_VAR_NAME_KEY, opts.getCbmcAmountMaxSeatsVarName());
 
 		return json;
 	}
@@ -26,9 +26,9 @@ public class CodeGenOptionsSaverLoaderHelper {
 		String amtCand = json.getString(AMT_CANDS_VAR_NAME_KEY);
 		String amtSeats = json.getString(AMT_SEATS_VAR_NAME_KEY);
 
-		codeGenOptions.setCbmcAmountVotersVarName(amtVoters);
-		codeGenOptions.setCbmcAmountCandidatesVarName(amtCand);
-		codeGenOptions.setCbmcAmountSeatsVarName(amtSeats);
+		codeGenOptions.setCbmcAmountMaxVotersVarName(amtVoters);
+		codeGenOptions.setCbmcAmountMaxCandidatesVarName(amtCand);
+		codeGenOptions.setCbmcAmountMaxSeatsVarName(amtSeats);
 
 		return codeGenOptions;
 	}

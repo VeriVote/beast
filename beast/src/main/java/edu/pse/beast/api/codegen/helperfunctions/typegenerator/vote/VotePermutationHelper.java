@@ -27,12 +27,12 @@ public class VotePermutationHelper {
 					"AMT_MEMBER", voteArrStruct.getAmtName(),
 					"LIST_MEMBER", voteArrStruct.getListName(),
 					"GENERATED_VAR_NAME", generatedVarName,
-					"AMT_CANDIDATES", options.getCbmcAmountCandidatesVarName(),
+					"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
 					"ASSUME", options.getCbmcAssumeName(),
 					"NONDET_UINT", options.getCbmcNondetUintName(),
 					"RHS", varName,
 					"PERM", "permutationIndices",
-					"AMT_VOTERS", options.getCbmcAmountVotersVarName()
+					"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName()
 				);
 		
 		List<LoopBound> loopbounds = List.of();

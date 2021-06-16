@@ -30,7 +30,7 @@ public class VotesumHelper {
 					"AMT_MEMBER", voteStruct.getAmtName(),
 					"LIST_MEMBER", voteStruct.getListName(),
 					"CANDIDATE_VAR", symbolicVarCand,
-					"AMT_VOTERS", options.getCbmcAmountVotersVarName(),
+					"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(),
 					"VOTE_VAR", "voteNUMBER".replace("NUMBER", String.valueOf(voteNumber))
 				);
 

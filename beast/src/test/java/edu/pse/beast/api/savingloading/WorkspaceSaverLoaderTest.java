@@ -78,9 +78,9 @@ public class WorkspaceSaverLoaderTest {
 		cc.setStartRunsOnCreation(false);
 
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
-		codeGenOptions.setCbmcAmountCandidatesVarName("C");
-		codeGenOptions.setCbmcAmountVotersVarName("V");
-		codeGenOptions.setCbmcAmountSeatsVarName("S");
+		codeGenOptions.setCbmcAmountMaxCandidatesVarName("C");
+		codeGenOptions.setCbmcAmountMaxVotersVarName("V");
+		codeGenOptions.setCbmcAmountMaxSeatsVarName("S");
 
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
