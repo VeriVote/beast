@@ -242,8 +242,17 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final String name = ctx.getText();
 		CBMCVarType varType = scopeHandlerNew.getType(name);
 		expStack.push(new SymbolicVarExp(new SymbolicCBMCVar(name, varType)));
+		if(name.startsWith("V") || name.startsWith("C") || name.startsWith("S")) {
+			try {
+				int number = Integer.valueOf(name.substring(1));
+				if(highestElectInThisListNode < number) {
+					highestElectInThisListNode = number;
+				}
+			} catch (Exception e) {
+			}
+		}
 	}
-
+	
 	@Override
 	public void enterNotExp(final NotExpContext ctx) {
 	}

@@ -55,6 +55,43 @@ public class CBMCCodeGenTest {
 
 		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
+		//System.out.println(code);
+	}
+	
+	@Test
+	public void testConstants() {
+		String bordaCode =
+				  "    unsigned int i = 0;\n"
+				+ "    unsigned int j = 0;\n" 
+				+ "\n"
+				+ "    for (i = 0; i < C; i++) {\n" 
+				+ "        result[i] = 0;\n"
+				+ "    }\n" 
+				+ "    for (i = 0; i < V; i++) {\n"
+				+ "        for (j = 0; j < C; j++) {\n"
+				+ "            result[votes[i][j]] += (C - j) - 1;\n"
+				+ "        }\n" 
+				+ "    }";
+
+		CElectionDescription descr = new CElectionDescription(
+				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
+				"borda");
+		descr.getVotingFunction().setCode(bordaCode);
+
+		CodeGenOptions codeGenOptions = new CodeGenOptions();
+		
+		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops("voting",
+				bordaCode, codeGenOptions);
+		descr.getVotingFunction().setExtractedLoops(loops);
+
+		String pre = "V1 == V2;";
+		String post = "C1 == C2;";
+
+		PreAndPostConditionsDescription propDescr = CreationHelper
+				.createSimpleCondList("reinforce", pre, post).get(0);
+
+		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+				descr, propDescr, codeGenOptions).getCode();
 		System.out.println(code);
 	}
 }

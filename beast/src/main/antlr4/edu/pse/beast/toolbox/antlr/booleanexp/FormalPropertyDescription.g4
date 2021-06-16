@@ -159,10 +159,11 @@ passType
     ;
 
 constantExp
-    :   'V'
-    |   'C'
-    |   'S'
+    :   'V' 
+    |   'C' 
+    |   'S' 
     ;
+    
 
 voteSumExp
     :   Votesum passType
