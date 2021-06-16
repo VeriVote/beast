@@ -3,9 +3,9 @@ package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
 public class VoteOrElectTypeAssignment {
 	private String name;
 	private String member;
-	private int value;
+	private String value;
 
-	public VoteOrElectTypeAssignment(String name, String member, int value) {
+	public VoteOrElectTypeAssignment(String name, String member, String value) {
 		this.name = name;
 		this.member = member;
 		this.value = value;
@@ -19,7 +19,7 @@ public class VoteOrElectTypeAssignment {
 		return member;
 	}
 
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
 

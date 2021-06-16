@@ -7,10 +7,10 @@ public class VoteAssignment {
 	private int voteNumber;
 	private String varName;
 	private String memberName;
-	private int value;
+	private String value;
 
 	public VoteAssignment(String line, String assignmentFunc, int voteNumber,
-			String varName, String memberName, int value) {
+			String varName, String memberName, String value) {
 		this.line = line;
 		this.assignmentFunc = assignmentFunc;
 		this.voteNumber = voteNumber;
@@ -39,7 +39,7 @@ public class VoteAssignment {
 		return memberName;
 	}
 
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
 
@@ -63,7 +63,7 @@ public class VoteAssignment {
 		this.memberName = memberName;
 	}
 
-	public void setValue(int value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

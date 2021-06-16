@@ -56,19 +56,19 @@ public class CBMCJsonOutputHandler {
 	}
 
 	public String getExampleText() {
-		Map<Integer, Map<String, Integer>> voteNumberToAssignmentString = new HashMap<>();
+		Map<Integer, Map<String, String>> voteNumberToAssignmentString = new HashMap<>();
 		for (VoteAssignment va : voteAssignments) {
 			if (!voteNumberToAssignmentString.containsKey(va.getVoteNumber())) {
 				voteNumberToAssignmentString.put(va.getVoteNumber(), new HashMap<>());
 			}
-			Map<String, Integer> memberAssignments = voteNumberToAssignmentString.get(va.getVoteNumber());
+			Map<String, String> memberAssignments = voteNumberToAssignmentString.get(va.getVoteNumber());
 			memberAssignments.put(va.getMemberName(), va.getValue());
 		}
 
 		String completeString = "";
 		for (Integer voteNumber : voteNumberToAssignmentString.keySet()) {
 			List<String> exampleString = new ArrayList<>();
-			Map<String, Integer> memberAssignments = voteNumberToAssignmentString.get(voteNumber);
+			Map<String, String> memberAssignments = voteNumberToAssignmentString.get(voteNumber);
 			for (String member : memberAssignments.keySet()) {
 				exampleString.add("    " + member + " = " + memberAssignments.get(member));
 			}
@@ -80,19 +80,19 @@ public class CBMCJsonOutputHandler {
 			completeString += "\n}\n";
 		}
 
-		Map<String, Map<String, Integer>> varNameToOtherVoteAssignments = new HashMap();
+		Map<String, Map<String, String>> varNameToOtherVoteAssignments = new HashMap();
 		for (VoteOrElectTypeAssignment vta : voteTypeAssignments) {
 			if (!varNameToOtherVoteAssignments.containsKey(vta.getName())) {
 				varNameToOtherVoteAssignments.put(vta.getName(), new HashMap<>());
 			}
-			Map<String, Integer> memberValueMap = varNameToOtherVoteAssignments.get(vta.getName());
+			Map<String, String> memberValueMap = varNameToOtherVoteAssignments.get(vta.getName());
 			memberValueMap.put(vta.getMember(), vta.getValue());
 		}
 
 		for (String varName : varNameToOtherVoteAssignments.keySet()) {
 			List<String> list = new ArrayList<>();
 
-			Map<String, Integer> memberValueMap = varNameToOtherVoteAssignments.get(varName);
+			Map<String, String> memberValueMap = varNameToOtherVoteAssignments.get(varName);
 
 			for (String member : memberValueMap.keySet()) {
 				list.add("    " + member + " = " + memberValueMap.get(member));
@@ -112,16 +112,16 @@ public class CBMCJsonOutputHandler {
 			completeString += "\n}\n";
 		}
 
-		Map<Integer, Map<String, Integer>> electNumberToAssignmentString = new HashMap<>();
+		Map<Integer, Map<String, String>> electNumberToAssignmentString = new HashMap<>();
 		for (ElectAssignment ea : electAssignments) {
 			if (!electNumberToAssignmentString.containsKey(ea.getElectNumber())) {
 				electNumberToAssignmentString.put(ea.getElectNumber(), new HashMap<>());
 			}
-			Map<String, Integer> memberAssignments = electNumberToAssignmentString.get(ea.getElectNumber());
+			Map<String, String> memberAssignments = electNumberToAssignmentString.get(ea.getElectNumber());
 			memberAssignments.put(ea.getMemberName(), ea.getValue());
 		}
 		for (Integer electNumber : electNumberToAssignmentString.keySet()) {
-			Map<String, Integer> memberAssignments = electNumberToAssignmentString.get(electNumber);
+			Map<String, String> memberAssignments = electNumberToAssignmentString.get(electNumber);
 
 			List<String> list = new ArrayList();
 			for (String memberName : memberAssignments.keySet()) {
@@ -136,19 +136,19 @@ public class CBMCJsonOutputHandler {
 			completeString += "\n}\n";
 		}
 
-		Map<String, Map<String, Integer>> varNameToOtherElectAssignments = new HashMap();
+		Map<String, Map<String, String>> varNameToOtherElectAssignments = new HashMap();
 		for (VoteOrElectTypeAssignment eta : electTypeAssignments) {
 			if (!varNameToOtherElectAssignments.containsKey(eta.getName())) {
 				varNameToOtherElectAssignments.put(eta.getName(), new HashMap<>());
 			}
-			Map<String, Integer> memberValueMap = varNameToOtherElectAssignments.get(eta.getName());
+			Map<String, String> memberValueMap = varNameToOtherElectAssignments.get(eta.getName());
 			memberValueMap.put(eta.getMember(), eta.getValue());
 		}
 
 		for (String varName : varNameToOtherElectAssignments.keySet()) {
 			List<String> list = new ArrayList<>();
 
-			Map<String, Integer> memberValueMap = varNameToOtherElectAssignments.get(varName);
+			Map<String, String> memberValueMap = varNameToOtherElectAssignments.get(varName);
 
 			for (String member : memberValueMap.keySet()) {
 				list.add("    " + member + " = " + memberValueMap.get(member));
@@ -234,31 +234,30 @@ public class CBMCJsonOutputHandler {
 
 				String memberName = lhs.substring(dotIdx + 1);
 
-				String valueStr = removeAnythingButDigits(valueJsonObj.getString("data"));
-				int value = 0;
-				// TODO make this cleaner
+				String valueStr = removeAnythingButDigits(valueJsonObj.getString("data"));		
+				
 				try {
-					value = Integer.valueOf(valueStr);
+					Integer.valueOf(valueStr);
 				} catch (Exception e) {
-					value = Integer.MAX_VALUE;
+					valueStr = "NOT_A_VOTE";
 				}
 
-				allAssignments.add(structName + "." + memberName + " = " + value);
+				allAssignments.add(structName + "." + memberName + " = " + valueStr);
 
 				if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber().keySet().contains(structName)) {
 					VoteAssignment ass = new VoteAssignment(assignmentLine, assignmentFunc,
 							cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber().get(structName), structName,
-							memberName, value);
+							memberName, valueStr);
 					voteAssignments.add(ass);
 				} else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames().contains(structName)) {
-					voteTypeAssignments.add(new VoteOrElectTypeAssignment(structName, memberName, value));
+					voteTypeAssignments.add(new VoteOrElectTypeAssignment(structName, memberName, valueStr));
 				} else if (cbmcGeneratedCodeInfo.getElectVariableNameToElectNumber().keySet().contains(structName)) {
 					ElectAssignment ass = new ElectAssignment(assignmentLine, assignmentFunc,
 							cbmcGeneratedCodeInfo.getElectVariableNameToElectNumber().get(structName), structName,
-							memberName, value);
+							memberName, valueStr);
 					electAssignments.add(ass);
 				} else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames().contains(structName)) {
-					electTypeAssignments.add(new VoteOrElectTypeAssignment(structName, memberName, value));
+					electTypeAssignments.add(new VoteOrElectTypeAssignment(structName, memberName, valueStr));
 				}
 			}
 		}

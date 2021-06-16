@@ -6,10 +6,10 @@ public class ElectAssignment {
 	private int electNumber;
 	private String varName;
 	private String memberName;
-	private int value;
+	private String value;
 
 	public ElectAssignment(String line, String assignmentFunc, int electNumber,
-			String varName, String memberName, int value) {
+			String varName, String memberName, String value) {
 		this.line = line;
 		this.assignmentFunc = assignmentFunc;
 		this.electNumber = electNumber;
@@ -38,7 +38,7 @@ public class ElectAssignment {
 		return memberName;
 	}
 
-	public int getValue() {
+	public String getValue() {
 		return value;
 	}
 
@@ -62,7 +62,7 @@ public class ElectAssignment {
 		this.memberName = memberName;
 	}
 
-	public void setValue(int value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
