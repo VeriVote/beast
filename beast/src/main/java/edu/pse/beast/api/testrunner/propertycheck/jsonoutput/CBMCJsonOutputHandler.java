@@ -222,8 +222,17 @@ public class CBMCJsonOutputHandler {
 				String assignmentType = traceJsonObj.getString(ASSIGNMENT_TYPE_KEY);
 				String lhs = traceJsonObj.getString("lhs");
 
-				if (!lhs.contains("."))
+				if (!lhs.contains(".")) {
+					if(lhs.startsWith("V") || lhs.startsWith("C") || lhs.startsWith("S")) {
+						try {
+							Integer.valueOf(lhs.substring(1));
+							System.out.println(lhs + " " + valueJsonObj.getString("data"));
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
 					continue;
+				}
 
 				if (!valueJsonObj.has("data"))
 					continue;
@@ -258,7 +267,7 @@ public class CBMCJsonOutputHandler {
 					electAssignments.add(ass);
 				} else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames().contains(structName)) {
 					electTypeAssignments.add(new VoteOrElectTypeAssignment(structName, memberName, valueStr));
-				}
+				} 
 			}
 		}
 	}

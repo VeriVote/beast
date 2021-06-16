@@ -19,6 +19,7 @@ public class CBMCGeneratedCodeInfo {
 
 	private Set<String> generatedVotingVarNames = new HashSet();
 	private Set<String> generatedElectVarNames = new HashSet();
+	
 
 	private String amtMemberVarName;
 	private String listMemberVarName;
