@@ -82,19 +82,9 @@ public class CBMCMainGenerator {
 
 		// vote
 		for (int i = 0; i < highestVote; ++i) {
-			String generatedVarName = "electNUMBER".replaceAll("NUMBER",
-					String.valueOf(i + 1));
-			String voteVarName = "voteNUMBER".replaceAll("NUMBER",
-					String.valueOf(i + 1));
-
-			code.add("//performing vote VAR".replaceAll("VAR",
-					generatedVarName));
-
-			code.add(PerformVoteHelper.generateCode(generatedVarName,
-					voteVarName, voteArrStruct, voteResultStruct, options,
-					votingFunctionName));
-			
-			cbmcGeneratedCode.addElectVariableName(i, generatedVarName);
+			code.add(PerformVoteHelper.generateCode(i + 1,
+					voteArrStruct, voteResultStruct, options,
+					votingFunctionName, cbmcGeneratedCode));			
 		}
 
 		// postconditions

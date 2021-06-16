@@ -14,17 +14,33 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public abstract class InitVoteHelper {
+	
+	public static String getVotesVarName(int voteNumber) {
+		return "votes" + voteNumber;
+	}
+	
+	public static String getCurrentAmtVoter(int voteNumber) {
+		return "V" + voteNumber;
+	}
+	
+	public static String getCurrentAmtCand(int voteNumber) {
+		return "C" + voteNumber;
+	}
+	
+	public static String getCurrentAmtSeat(int voteNumber) {
+		return "S" + voteNumber;
+	}
 
 	public static String generateCode(int voteNumber,
 			ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
 			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler, 
 			CBMCGeneratedCodeInfo codeInfo) {		
-		String varName = "vote" + voteNumber;
+		String varName = getVotesVarName(voteNumber);
 		codeInfo.addedVotingVar(varName);
 		
-		String currentAmtVoterVarName = "V" + voteNumber;
-		String currentAmtCandVarName = "C" + voteNumber;
-		String currentAmtSeatVarName = "S" + voteNumber;
+		String currentAmtVoterVarName = getCurrentAmtVoter(voteNumber);
+		String currentAmtCandVarName = getCurrentAmtCand(voteNumber);
+		String currentAmtSeatVarName = getCurrentAmtSeat(voteNumber);
 
 		Map<String, String> replacementMap = StringReplacementMap.genMap(
 				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(), 
