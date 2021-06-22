@@ -108,7 +108,7 @@ public class CBMCTestConfigGuiController {
 		
 		minSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		minSeats.getValueFactory().valueProperty().addListener((e, o , n) -> {
-			currentConfig.setMinCands(minSeats.getValue());
+			currentConfig.setMinSeats(minSeats.getValue());
 			updateView();
 		});	
 		

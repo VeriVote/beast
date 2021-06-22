@@ -24,6 +24,8 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
+import edu.pse.beast.gui.options.OptionCategory;
+import edu.pse.beast.gui.options.OptionsGuiController;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
@@ -48,6 +50,13 @@ import javafx.stage.Stage;
 
 public class BeastGUIController implements WorkspaceUpdateListener {
 
+	// =================options start
+	@FXML
+	private ListView<OptionCategory> optionCategoriesListView;
+	@FXML
+	private AnchorPane optionTopLevelAnchorPane;
+
+	// =================options end
 	@FXML
 	private Button testLoopBoundButton;
 
@@ -129,46 +138,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigTopLevelGUIHandler testConfigurationHandler;
 	private LogGuiController logGuiController;
+	private OptionsGuiController optionsGuiController;
 
 	private BeastWorkspace beastWorkspace;
-
-	private CElectionDescription getTestDescr() {
-		String name = "test";
-		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
-				"test");
-		descr.getVotingFunction()
-				.setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
-
-		descr.createNewVotingSigFunctionAndAdd("votehelper");
-
-		File f = new File("testfiles/borda.belec");
-		try {
-			descr = SavingLoadingInterface.loadCElection(f);
-		} catch (NotImplementedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return descr;
-	}
-
-	private PreAndPostConditionsDescription getTestProperty() {
-		File f = new File("testfiles/reinforcement.bprp");
-		PreAndPostConditionsDescription test;
-		try {
-			test = SavingLoadingInterface.loadPreAndPostConditionDescription(f);
-			return test;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
@@ -236,6 +208,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		logGuiController = new LogGuiController(logAnchorPane, errorHandler);
 	}
 
+	private void initOptionController() throws IOException {
+		optionsGuiController = new OptionsGuiController(
+				optionCategoriesListView, optionTopLevelAnchorPane,
+				beastWorkspace);
+	}
+
 	@FXML
 	public void initialize() throws IOException {
 		PathHandler pathHandler = new PathHandler();
@@ -251,6 +229,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		initPropertyEditor();
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
+		initOptionController();
 
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
