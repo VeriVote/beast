@@ -186,6 +186,10 @@ public class BeastWorkspace {
 	public File getBaseDir() {
 		return baseDir;
 	}
+	
+	public ErrorHandler getErrorHandler() {
+		return errorHandler;
+	}
 
 	public Map<CElectionDescription, List<TestConfiguration>> getConfigsByElectionDescription() {
 		return testConfigList.getTestConfigsByDescr();

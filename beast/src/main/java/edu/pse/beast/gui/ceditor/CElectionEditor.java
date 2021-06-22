@@ -58,8 +58,12 @@ public class CElectionEditor
 
 	private Stage primaryStage;
 
+	private Button addElectionDescriptionButton;
+	private Button loadElectionDescriptionButton;
+
 	private MenuButton addFunctionMenuButton;
 	private Button removeFunctionButton;
+
 	private Button testLoopBoundButton;
 
 	private VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp;
@@ -68,6 +72,8 @@ public class CElectionEditor
 
 	public CElectionEditor(Stage primaryStage,
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
+			Button addElectionDescriptionButton,
+			Button loadElectionDescriptionButton,
 			MenuButton addFunctionMenuButton,
 			Button removeFunctionButton,
 			Button testLoopBoundButton,
@@ -83,12 +89,17 @@ public class CElectionEditor
 
 		this.primaryStage = primaryStage;
 
+		this.addElectionDescriptionButton = addElectionDescriptionButton;
+		this.loadElectionDescriptionButton = loadElectionDescriptionButton;
+
+		setupNewElectionButtons();
+
 		this.testLoopBoundButton = testLoopBoundButton;
 		testLoopBoundButton.setOnAction(e -> {
 			beastWorkspace.findLoopBounds(currentDescr,
 					currentDisplayedFunction);
 		});
-		
+
 		this.functionList = functionList;
 		this.loopBoundList = loopBoundList;
 		loopBoundList.getSelectionModel()
@@ -102,7 +113,7 @@ public class CElectionEditor
 					electionCodeArea.moveTo(position);
 					electionCodeArea.selectLine();
 					electionCodeArea.requestFollowCaret();
-				});		
+				});
 
 		this.electionCodeArea = electionCodeArea;
 		this.funcDeclArea = funcDeclArea;
@@ -112,9 +123,11 @@ public class CElectionEditor
 		this.funcDeclArea.setEditable(false);
 		this.closingBracketArea.setEditable(false);
 
-		electionCodeArea.getStylesheets().add(codeStyleSheet);
+		electionCodeArea.getStylesheets()
+				.add(codeStyleSheet);
 		funcDeclArea.getStylesheets().add(codeStyleSheet);
-		closingBracketArea.getStylesheets().add(codeStyleSheet);
+		closingBracketArea.getStylesheets()
+				.add(codeStyleSheet);
 
 		this.beastWorkspace = beastWorkspace;
 		this.openedElectionDescriptionChoiceBox = openedElectionDescriptionChoiceBox;
@@ -134,6 +147,15 @@ public class CElectionEditor
 					text);
 		});
 
+	}
+
+	private void setupNewElectionButtons() {
+		addElectionDescriptionButton.setOnAction(e -> {
+			createNewDescr();
+		});
+		loadElectionDescriptionButton.setOnAction(e -> {
+			letUserLoadDescr();
+		});
 	}
 
 	private void setupFunctionButtons() {
@@ -345,8 +367,8 @@ public class CElectionEditor
 			selectedFunctionChanged(null);
 		} else {
 			addFunctionMenuButton.setDisable(false);
-			removeFunctionButton.setDisable(false);		
-			
+			removeFunctionButton.setDisable(false);
+
 			ObservableList<CElectionDescriptionFunction> observableList = FXCollections
 					.observableArrayList();
 
@@ -356,7 +378,7 @@ public class CElectionEditor
 			}
 			functionList.setItems(observableList);
 			functionList.getSelectionModel()
-					.clearAndSelect(0);	
+					.clearAndSelect(0);
 		}
 	}
 
@@ -364,7 +386,7 @@ public class CElectionEditor
 		codeArea.setStyleClass(0, codeArea.getLength(),
 				cssLockedClassName);
 	}
-	
+
 	private void setUnlockedColor(CodeArea codeArea) {
 		codeArea.setStyleClass(0, codeArea.getLength(),
 				cssUnlockedClassName);
@@ -479,14 +501,20 @@ public class CElectionEditor
 		}
 	}
 
-	public void letUserLoad()
-			throws NotImplementedException, IOException {
-		CElectionDescription descr = FileDialogHelper
-				.letUserLoadElectionDescription(
-						beastWorkspace.getBaseDir(),
-						primaryStage);
-		if (descr != null)
-			beastWorkspace.addElectionDescription(descr);
+	private void letUserLoadDescr() {
+		try {
+			CElectionDescription descr = FileDialogHelper
+					.letUserLoadElectionDescription(
+							beastWorkspace.getBaseDir(),
+							primaryStage);
+			if (descr != null)
+				beastWorkspace
+						.addElectionDescription(descr);
+		} catch (IOException exception) {
+			beastWorkspace.getErrorHandler()
+					.logAndDisplayError("Loading descr",
+							"There was an error trying to load the election descr");
+		}
 	}
 
 	public void save() {

@@ -202,6 +202,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		cElectionEditor = new CElectionEditor(
 				primaryStage,
 				cEditorGUIElementVsp,
+				addElectionDescriptionButton,
+				loadElectionDescriptionButton,
 				addFunctionMenuButton, 
 				removeFunctionButton,
 				testLoopBoundButton,
@@ -275,23 +277,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
-		});
-
-		addElectionDescriptionButton.setOnAction(e -> {
-			cElectionEditor.createNewDescr();
-		});
-
-		loadElectionDescriptionButton.setOnAction(e -> {
-			try {
-				cElectionEditor.letUserLoad();
-			} catch (NotImplementedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		});
+		});		
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {
