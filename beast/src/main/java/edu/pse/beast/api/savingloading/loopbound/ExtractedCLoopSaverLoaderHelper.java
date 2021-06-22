@@ -1,5 +1,6 @@
 package edu.pse.beast.api.savingloading.loopbound;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +45,10 @@ public class ExtractedCLoopSaverLoaderHelper {
 
 		json.put(FUNCTION_NAME_KEY, loop.getFunctionName());
 
-		json.put(PARENT_UUID_KEY, loop.getParentLoop().getUuid());
+		String parentUUID = "";
+		if (loop.getParentLoop() != null) {
+			json.put(PARENT_UUID_KEY, loop.getParentLoop().getUuid());
+		}
 		JSONArray childrenUUIDs = new JSONArray();
 		for (ExtractedCLoop child : loop.getChildrenLoops()) {
 			childrenUUIDs.put(child.getUuid());
@@ -75,10 +79,46 @@ public class ExtractedCLoopSaverLoaderHelper {
 	}
 
 	public static JSONArray fromExtractedLoops(List<ExtractedCLoop> loops) {
-		return null;
+		JSONArray arr = new JSONArray();
+		for (ExtractedCLoop loop : loops) {
+			arr.put(fromExtractedLoop(loop));
+		}
+		return arr;
+	}
+
+	private static void setupParentsAndChildren(ExtractedCLoop loop,
+			JSONObject json, List<ExtractedCLoop> loops) {
+		if (json.has(PARENT_UUID_KEY)) {
+			String parentUUID = json.getString(PARENT_UUID_KEY);
+			for (ExtractedCLoop possibleParent : loops) {
+				if (possibleParent.getUuid().equals(parentUUID)) {
+					loop.setParentLoop(possibleParent);
+					break;
+				}
+			}
+		}
+		JSONArray childrenUUIDs = json.getJSONArray(CHILDREN_UUIDS_KEY);
+		for (int i = 0; i < childrenUUIDs.length(); ++i) {
+			String currentChildUUID = childrenUUIDs.getString(i);
+			for (ExtractedCLoop possibleChild : loops) {
+				if (possibleChild.getUuid().equals(currentChildUUID)) {
+					loop.addChild(possibleChild);
+				}
+			}
+		}
 	}
 
 	public static List<ExtractedCLoop> toExtractedLoops(JSONArray arr) {
-		return null;
+		List<ExtractedCLoop> loops = new ArrayList<>();
+		for (int i = 0; i < arr.length(); ++i) {
+			loops.add(toExtractedLoop(arr.getJSONObject(i)));
+		}
+
+		for (int i = 0; i < arr.length(); ++i) {
+			setupParentsAndChildren(loops.get(i), arr.getJSONObject(i), loops);
+		}
+
+		return loops;
 	}
+
 }

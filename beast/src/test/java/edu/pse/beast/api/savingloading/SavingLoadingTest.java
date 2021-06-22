@@ -1,6 +1,7 @@
 package edu.pse.beast.api.savingloading;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.migrationsupport.rules.adapter.ExternalResourceAdapter;
 
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
@@ -62,7 +64,22 @@ public class SavingLoadingTest {
 				loadedDescr.getVotingFunction().getCode());
 
 		assertEquals(descr.getVotingFunction().getExtractedLoops().size(),
-				loadedDescr.getVotingFunction().getExtractedLoops().size());		
+				loadedDescr.getVotingFunction().getExtractedLoops().size());
+
+		for (int i = 0; i < descr.getVotingFunction().getExtractedLoops()
+				.size(); ++i) {
+			ExtractedCLoop loop = descr.getVotingFunction().getExtractedLoops()
+					.get(i);
+			ExtractedCLoop loadedLoop = loadedDescr.getVotingFunction()
+					.getExtractedLoops().get(i);
+			assertEquals(loop.getChildrenLoops().size(),
+					loadedLoop.getChildrenLoops().size());
+			if (loop.getParentLoop() == null) {
+				assertNull(loadedLoop.getParentLoop());
+			} else {
+				assertEquals(loop.getParentLoop().getUuid(), loadedLoop.getParentLoop().getUuid());
+			}
+		}
 	}
 
 	@Ignore
