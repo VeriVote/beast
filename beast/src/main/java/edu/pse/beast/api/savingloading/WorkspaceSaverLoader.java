@@ -15,6 +15,7 @@ import edu.pse.beast.api.savingloading.testruns.CBMCTestRunSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -261,9 +262,7 @@ public class WorkspaceSaverLoader {
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(ws.getCodeGenOptions()));
 		json.put(TEST_CONFIG_LIST_KEY,
-				testConfigurationListToJSON(ws.getTestConfigList()));
-		json.put(BASE_DIR_FILE_PATH_KEY, ws.getBaseDir().getAbsolutePath());
-			
+				testConfigurationListToJSON(ws.getTestConfigList()));			
 		
 		if(ws.getCbmcProcessStarter() != null) {
 			JSONObject cbmcProcessStarterJSON = CBMCProcessStarterSaverLoaderHelper
@@ -320,7 +319,6 @@ public class WorkspaceSaverLoader {
 				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
 
 		beastWorkspace.setTestConfigList(testConfigList);
-		beastWorkspace.setBaseDir(baseDir);
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
 
 		if(json.has(CBMC_PROCESS_STARTER_KEY)) {
@@ -330,10 +328,10 @@ public class WorkspaceSaverLoader {
 					.cbmcProcessStarterFromJSON(cbmcProcessStarterJSON);
 			beastWorkspace.setCbmcProcessStarter(ps);
 		}
-		
 
 		beastWorkspace.setWorkspaceFile(f);
-
+		beastWorkspace.setPathHandler(new PathHandler());
+		
 		return beastWorkspace;
 	}
 

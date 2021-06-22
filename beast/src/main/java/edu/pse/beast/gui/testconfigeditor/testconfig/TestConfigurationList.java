@@ -15,6 +15,10 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 	private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr = new HashMap<>();
 	private Map<PreAndPostConditionsDescription, List<TestConfiguration>> testConfigsByPropDescr = new HashMap<>();
 	private Map<String, TestConfiguration> testConfigsByName = new HashMap<>();
+	
+	public boolean canAdd(TestConfiguration testConfig) {
+		return !testConfigsByName.containsKey(testConfig.getName());
+	}
 
 	public void add(TestConfiguration testConfig) {
 		if (testConfigsByName.containsKey(testConfig.getName())) {

@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import org.reactfx.util.Tuple2;
-
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
@@ -38,6 +36,11 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfig
 import edu.pse.beast.toolbox.Tuple;
 
 public class BeastWorkspace {
+
+	private BEAST beast = new BEAST();
+	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
+	private ErrorHandler errorHandler;
+	
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
 	private Map<CElectionDescription, File> filesPerDescr = new HashMap<>();
 	private Set<CElectionDescription> descrWithUnsavedChanges = new HashSet();
@@ -48,14 +51,7 @@ public class BeastWorkspace {
 
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();
-	private File baseDir;
-	private CBMCProcessHandler cbmcProcessStarter;
-
-	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
-
-	private BEAST beast = new BEAST();
-
-	private ErrorHandler errorHandler;
+	private CBMCProcessHandler cbmcProcessStarter;	
 
 	private String name = "test";
 	private File workspaceFile;
@@ -192,14 +188,6 @@ public class BeastWorkspace {
 
 	public PathHandler getPathHandler() {
 		return pathHandler;
-	}
-
-	public void setBaseDir(File baseDir) {
-		this.baseDir = baseDir;
-	}
-
-	public File getBaseDir() {
-		return baseDir;
 	}
 
 	public ErrorHandler getErrorHandler() {
@@ -416,13 +404,31 @@ public class BeastWorkspace {
 		this.workspaceFile = workspaceFile;
 	}
 
-	private void loadWorkspace(BeastWorkspace ws) {
 
+	private void loadWorkspace(BeastWorkspace ws) {
+		loadedDescrs = ws.loadedDescrs;
+		filesPerDescr = ws.filesPerDescr;
+		descrWithUnsavedChanges = ws.descrWithUnsavedChanges;
+		
+		loadedPropDescrs = ws.loadedPropDescrs;
+		filesPerPropDescr = ws.filesPerPropDescr;
+		propDescrWithUnsavedChanges = ws.propDescrWithUnsavedChanges;
+		
+		codeGenOptions = ws.codeGenOptions;
+		testConfigList = ws.testConfigList;
+		cbmcProcessStarter = ws.cbmcProcessStarter;
+		
+		name = ws.name;
+		workspaceFile = ws.workspaceFile;
+		
+		pathHandler = ws.pathHandler;
+		
+		messageUpdateListener();
 	}
 
 	public void letUserLoadWorkSpace() {
 		File f = FileDialogHelper.letUserOpenFile("Workspace", ".beastws",
-				"open the workspace file", pathHandler.getBaseDir(), null);
+				"open the workspace file", pathHandler.getWorkspaceDir(), null);
 		if (f != null) {
 			try {
 				BeastWorkspace ws = SavingLoadingInterface
@@ -443,7 +449,7 @@ public class BeastWorkspace {
 		}
 
 		if (workspaceFile == null) {
-			workspaceFile = FileDialogHelper.letUserSaveFile(baseDir,
+			workspaceFile = FileDialogHelper.letUserSaveFile(pathHandler.getWorkspaceDir(),
 					"file for workspace", name + ".beastws");
 		}
 		if (workspaceFile == null)
@@ -565,7 +571,10 @@ public class BeastWorkspace {
 
 	public void createTestConfig(String name, CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
-
+		TestConfiguration tc = new TestConfiguration(descr, propDescr, name);
+		CBMCPropertyTestConfiguration configuration = new CBMCPropertyTestConfiguration();
+		tc.addCBMCTestConfiguration(configuration);
+		testConfigList.add(tc);
 	}
 
 }

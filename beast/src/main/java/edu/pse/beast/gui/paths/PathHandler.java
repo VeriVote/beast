@@ -22,6 +22,10 @@ public class PathHandler {
 		return new File(baseDir);
 	}
 	
+	public File getWorkspaceDir() {
+		return new File(baseDir + relPathToSaveFiles + relPathToWorkspaceSaveFiles);
+	}
+	
 	public File getElectionDescrDir() {
 		return new File(baseDir + relPathToSaveFiles + relPathToDescrSaveFiles);
 	}
@@ -40,7 +44,5 @@ public class PathHandler {
 		} else {
 			
 		}
-	}
-
-	
+	}	
 }

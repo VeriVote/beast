@@ -38,11 +38,14 @@ public class TestConfigCategoryGUIController
 
 	private BeastWorkspace beastWorkspace;
 
+	private String currentCategory;
+
 	public TestConfigCategoryGUIController(BeastWorkspace beastWorkspace,
 			String descrSortCrit) {
 		this.beastWorkspace = beastWorkspace;
 		this.descrSortCrit = descrSortCrit;
 		beastWorkspace.registerUpdateListener(this);
+		currentCategory = descrSortCrit;
 	}
 
 	@FXML
@@ -65,31 +68,41 @@ public class TestConfigCategoryGUIController
 		return topLevelAnchorPane;
 	}
 
-	public void display(String category) {
+	private void updateView() {
 		descrChoiceBox.getItems().clear();
 		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
 		propDescrChoiceBox.getItems().clear();
 		propDescrChoiceBox.getItems()
 				.addAll(beastWorkspace.getLoadedPropDescrs());
-		
+
 		testConfigListView.getItems().clear();
-		if (category.equals(descrSortCrit)) {
+		if (currentCategory.equals(descrSortCrit)) {
 			Map<CElectionDescription, List<TestConfiguration>> map = beastWorkspace
 					.getConfigsByElectionDescription();
-			for(CElectionDescription descr : map.keySet()) {
-				for(TestConfiguration tc : map.get(descr)) {
+			for (CElectionDescription descr : map.keySet()) {
+				for (TestConfiguration tc : map.get(descr)) {
 					testConfigListView.getItems().add(tc);
 				}
 			}
 		} else {
 			Map<PreAndPostConditionsDescription, List<TestConfiguration>> map = beastWorkspace
 					.getConfigsByPropertyDescription();
-			for(PreAndPostConditionsDescription propDescr : map.keySet()) {
-				for(TestConfiguration tc : map.get(propDescr)) {
+			for (PreAndPostConditionsDescription propDescr : map.keySet()) {
+				for (TestConfiguration tc : map.get(propDescr)) {
 					testConfigListView.getItems().add(tc);
 				}
 			}
 		}
+	}
+
+	public void display(String category) {
+		currentCategory = category;
+		updateView();
+	}
+
+	@Override
+	public void handleWorkspaceUpdateGeneric() {
+		updateView();
 	}
 
 }
