@@ -18,8 +18,8 @@ public class PathHandler {
 		tryload();
 	}
 	
-	public String getBaseDir() {
-		return baseDir;
+	public File getBaseDir() {
+		return new File(baseDir);
 	}
 	
 	public File getElectionDescrDir() {

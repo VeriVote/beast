@@ -12,4 +12,8 @@ public class TestConfigCategoryTreeItem extends TestConfigTreeItemSuper {
 	public String toString() {
 		return category;
 	}
+	
+	public String getCategory() {
+		return category;
+	}
 }

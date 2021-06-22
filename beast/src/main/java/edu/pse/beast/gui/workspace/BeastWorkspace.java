@@ -217,7 +217,6 @@ public class BeastWorkspace {
 	public void createCBMCTestRunsAndAddToConfig(
 			CBMCPropertyTestConfiguration config) {
 		try {
-
 			CElectionDescription descr = config.getDescr();
 
 			for (CElectionDescriptionFunction f : descr.getFunctions()) {
@@ -417,8 +416,23 @@ public class BeastWorkspace {
 		this.workspaceFile = workspaceFile;
 	}
 
-	public void loadWorkSpace() {
-		
+	private void loadWorkspace(BeastWorkspace ws) {
+
+	}
+
+	public void letUserLoadWorkSpace() {
+		File f = FileDialogHelper.letUserOpenFile("Workspace", ".beastws",
+				"open the workspace file", pathHandler.getBaseDir(), null);
+		if (f != null) {
+			try {
+				BeastWorkspace ws = SavingLoadingInterface
+						.loadBeastWorkspace(f);
+
+			} catch (Exception e) {
+				errorHandler.logAndDisplayError("save error",
+						e.getLocalizedMessage());
+			}
+		}
 	}
 
 	public void saveWorkspace() {
@@ -427,14 +441,14 @@ public class BeastWorkspace {
 			errorHandler.logAndDisplayError("Saving Workspace",
 					"There was an error when trying to save all descr and prop descr, wont save workspace.");
 		}
-		
+
 		if (workspaceFile == null) {
 			workspaceFile = FileDialogHelper.letUserSaveFile(baseDir,
 					"file for workspace", name + ".beastws");
 		}
 		if (workspaceFile == null)
 			return;
-		
+
 		try {
 			SavingLoadingInterface.storeBeastWorkspace(this, workspaceFile);
 		} catch (IOException e) {
@@ -547,6 +561,11 @@ public class BeastWorkspace {
 			errorHandler.logAndDisplayError("Loading descr",
 					"There was an error trying to load the election descr");
 		}
+	}
+
+	public void createTestConfig(String name, CElectionDescription descr,
+			PreAndPostConditionsDescription propDescr) {
+
 	}
 
 }

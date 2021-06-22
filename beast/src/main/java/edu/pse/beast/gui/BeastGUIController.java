@@ -27,7 +27,7 @@ import edu.pse.beast.gui.log.LogGuiController;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
-import edu.pse.beast.gui.testconfigeditor.TestConfigurationTopLevelGUIHandler;
+import edu.pse.beast.gui.testconfigeditor.TestConfigTopLevelGUIHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
@@ -114,14 +114,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	@FXML
 	private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
 	@FXML
-	private Button addTestConfigButton;
-	@FXML
-	private Button removeTestConfigButton;
-	@FXML
-	private Button startTestConfigButton;
-	@FXML
-	private Button stopTestConfigButton;
-	@FXML
 	private AnchorPane testConfigDetailsAnchorPane;
 	// TestConfigHandler end
 
@@ -135,7 +127,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	private CElectionEditor cElectionEditor;
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
-	private TestConfigurationTopLevelGUIHandler testConfigurationHandler;
+	private TestConfigTopLevelGUIHandler testConfigurationHandler;
 	private LogGuiController logGuiController;
 
 	private BeastWorkspace beastWorkspace;
@@ -208,9 +200,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		cElectionEditor = new CElectionEditor(primaryStage,
 				cEditorGUIElementVsp, addElectionDescriptionButton,
 				loadElectionDescriptionButton, saveElectionDescriptionButton,
-				addFunctionMenuButton,
-				removeFunctionButton, testLoopBoundButton, cEditorGUIElement,
-				funcDeclArea, closingBracketArea, functionList, loopBoundList,
+				addFunctionMenuButton, removeFunctionButton,
+				testLoopBoundButton, cEditorGUIElement, funcDeclArea,
+				closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
 
@@ -228,16 +220,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
 				prePropertyEditor, postPropertyEditor, addPropDescrButton,
-				loadPropDescrButton, savePropDescrButton,
-				removeSymbVarButton, variableTreeView,
-				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
-				beastWorkspace);
+				loadPropDescrButton, savePropDescrButton, removeSymbVarButton,
+				variableTreeView, addSymbVarMenu,
+				openedPropertyDescriptionChoiceBox, beastWorkspace);
 	}
 
 	private void initTestConfigHandler() throws IOException {
 
-		this.testConfigurationHandler = new TestConfigurationTopLevelGUIHandler(
-				startTestConfigButton, stopTestConfigButton,
+		this.testConfigurationHandler = new TestConfigTopLevelGUIHandler(
 				sortCriteriumChoiceBox, testConfigTreeView,
 				testConfigDetailsAnchorPane, beastWorkspace);
 	}
@@ -265,9 +255,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
 		});
-		
+
 		loadWorkspaceButton.setOnAction(e -> {
-			beastWorkspace.loadWorkSpace();
+			beastWorkspace.letUserLoadWorkSpace();
 		});
 	}
 

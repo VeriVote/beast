@@ -36,8 +36,15 @@ public class TestConfigGuiController {
 
 	public void display(TestConfiguration config) {
 		nameTextField.setText(config.getName());
+
+		descrChoiceBox.getItems().clear();
+		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
 		descrChoiceBox.getSelectionModel().select(config.getDescr());
-		propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());		
+
+		propDescrChoiceBox.getItems().clear();
+		propDescrChoiceBox.getItems()
+				.addAll(beastWorkspace.getLoadedPropDescrs());
+		propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());
 	}
 
 	@FXML
@@ -46,4 +53,5 @@ public class TestConfigGuiController {
 		propDescrChoiceBox.getItems()
 				.addAll(beastWorkspace.getLoadedPropDescrs());
 	}
+
 }
