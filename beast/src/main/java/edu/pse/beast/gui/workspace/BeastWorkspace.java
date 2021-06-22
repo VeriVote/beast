@@ -158,7 +158,8 @@ public class BeastWorkspace {
 	public void addPropertyDescription(
 			PreAndPostConditionsDescription propDescr) {
 		loadedPropDescrs.add(propDescr);
-		messageUpdateListener();
+		for (WorkspaceUpdateListener l : updateListener)
+			l.handleAddedPropDescr(propDescr);
 	}
 
 	public CodeGenOptions getCodeGenOptions() {

@@ -26,39 +26,32 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	private TreeView<String> variableTreeView;
 	private PreAndPostConditionsDescription currentPropDescr;
 	private MenuButton addSymbVarMenu;
+	private Button removeSymbVarButton;
 	private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
 	private BeastWorkspace beastWorkspace;
 	private Button addPropDescrButton;
 
+
+	
 	public PreAndPostPropertyEditor(PropertyEditorCodeElement preEditor,
 			PropertyEditorCodeElement postEditor, Button addPropDescrButton,
-			TreeView<String> variableTreeView, MenuButton addSymbVarMenu,
+			Button removeSymbVarButton, TreeView<String> variableTreeView,
+			MenuButton addSymbVarMenu,
 			ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		this.preEditor = preEditor;
 		this.postEditor = postEditor;
 		this.variableTreeView = variableTreeView;
 		this.addSymbVarMenu = addSymbVarMenu;
+		this.removeSymbVarButton = removeSymbVarButton;
 		this.openedPropertyDescriptionChoiceBox = openedPropertyDescriptionChoiceBox;
 		this.beastWorkspace = beastWorkspace;
 		this.addPropDescrButton = addPropDescrButton;
-
-		addPropDescrButton.setOnAction(e -> {
-			List<String> names = List.of("name");
-			TextField nameField = new TextField();
-			List<Node> nodes = List.of(nameField);
-			Optional<ButtonType> res = DialogHelper.generateDialog(names, nodes)
-					.showAndWait();
-			if (res.isPresent()
-					&& !res.get().getButtonData().isCancelButton()) {
-				String name = nameField.getText();
-				PreAndPostConditionsDescription propDescr = new PreAndPostConditionsDescription(
-						name);
-				beastWorkspace.addPropertyDescription(propDescr);
-			}
-		});
+		
+		initAddPropDescrButton();
 
 		beastWorkspace.registerUpdateListener(this);
+		
 		preEditor.setChangeListener(text -> {
 			beastWorkspace.updateCodeForPropDescr(text,
 					currentPropDescr.getPreConditionsDescription(),
@@ -73,6 +66,23 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		initSymbVarMenu();
 		initPropDescrChoiceBox();
 		handleWorkspaceUpdate();
+	}
+
+	private void initAddPropDescrButton() {
+		addPropDescrButton.setOnAction(e -> {
+			List<String> names = List.of("name");
+			TextField nameField = new TextField();
+			List<Node> nodes = List.of(nameField);
+			Optional<ButtonType> res = DialogHelper.generateDialog(names, nodes)
+					.showAndWait();
+			if (res.isPresent()
+					&& !res.get().getButtonData().isCancelButton()) {
+				String name = nameField.getText();
+				PreAndPostConditionsDescription propDescr = new PreAndPostConditionsDescription(
+						name);
+				beastWorkspace.addPropertyDescription(propDescr);
+			}
+		});
 	}
 
 	@Override
@@ -101,12 +111,18 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 			});
 			addSymbVarMenu.getItems().add(item);
 		}
+		
+		removeSymbVarButton.setOnAction(e -> {
+			removeSelectedSymbVar();
+		});
+	}
+	
+	private void removeSelectedSymbVar() {
+		
 	}
 
 	private void selectedPropDescrChanged(
 			PreAndPostConditionsDescription propDescr) {
-		if (propDescr == null)
-			return;
 		loadProperty(propDescr);
 	}
 
@@ -122,41 +138,67 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 				});
 	}
 
-	private void handleWorkspaceUpdate() {
+	private void updatePropDescrChoiceBox() {
 		openedPropertyDescriptionChoiceBox.getItems().clear();
 		for (PreAndPostConditionsDescription propDescr : beastWorkspace
 				.getLoadedPropDescrs()) {
 			openedPropertyDescriptionChoiceBox.getItems().add(propDescr);
 		}
-		openedPropertyDescriptionChoiceBox.getSelectionModel().selectLast();
+		if(openedPropertyDescriptionChoiceBox.getItems().isEmpty()) {
+			selectedPropDescrChanged(null);
+		} else {
+			openedPropertyDescriptionChoiceBox.getSelectionModel().selectLast();
+		}
+	}
+
+	private void handleWorkspaceUpdate() {
+		updatePropDescrChoiceBox();
 	}
 
 	private void populateVariableList(List<SymbolicCBMCVar> vars) {
-		TreeItem<String> voter = new TreeItem("Voter");
-		TreeItem<String> candidate = new TreeItem("Candidate");
-		for (SymbolicCBMCVar v : vars) {
-			TreeItem<String> item = new TreeItem(v.getName());
-			if (v.getVarType() == CBMCVarType.VOTER) {
-				voter.getChildren().add(item);
-			} else {
-				candidate.getChildren().add(item);
+		if(vars == null) {
+			variableTreeView.setRoot(null);
+			addSymbVarMenu.setDisable(true);
+			removeSymbVarButton.setDisable(true);
+		} else {
+			addSymbVarMenu.setDisable(false);
+			removeSymbVarButton.setDisable(false);
+			
+			TreeItem<String> voter = new TreeItem("Voter");
+			TreeItem<String> candidate = new TreeItem("Candidate");
+			for (SymbolicCBMCVar v : vars) {
+				TreeItem<String> item = new TreeItem(v.getName());
+				if (v.getVarType() == CBMCVarType.VOTER) {
+					voter.getChildren().add(item);
+				} else {
+					candidate.getChildren().add(item);
+				}
 			}
-		}
-		TreeItem<String> root = new TreeItem();
-		root.getChildren().add(voter);
-		root.getChildren().add(candidate);
-		variableTreeView.setRoot(root);
-		variableTreeView.setShowRoot(false);
+			TreeItem<String> root = new TreeItem();
+			root.getChildren().add(voter);
+			root.getChildren().add(candidate);
+			variableTreeView.setRoot(root);
+			variableTreeView.setShowRoot(false);
+		}		
 	}
 
 	public void loadProperty(PreAndPostConditionsDescription propDescr) {
-		preEditor.clear();
-		preEditor.insertText(0,
-				propDescr.getPreConditionsDescription().getCode());
-		postEditor.clear();
-		postEditor.insertText(0,
-				propDescr.getPostConditionsDescription().getCode());
 		this.currentPropDescr = propDescr;
+
+		if(propDescr == null) {
+			preEditor.setDisable(true);
+			postEditor.setDisable(true);
+		} else {
+			preEditor.setDisable(false);
+			preEditor.clear();
+			preEditor.insertText(0,
+					propDescr.getPreConditionsDescription().getCode());
+			postEditor.setDisable(false);
+			postEditor.clear();
+			postEditor.insertText(0,
+					propDescr.getPostConditionsDescription().getCode());
+		}
+		
 		populateVariableList(propDescr.getCbmcVariables());
 	}
 
@@ -166,6 +208,12 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		if (propDescr == currentPropDescr) {
 			populateVariableList(currentPropDescr.getCbmcVariables());
 		}
+	}
+
+	@Override
+	public void handleAddedPropDescr(
+			PreAndPostConditionsDescription propDescr) {
+		updatePropDescrChoiceBox();
 	}
 
 	public void save() {

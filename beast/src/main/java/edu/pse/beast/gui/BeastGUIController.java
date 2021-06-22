@@ -49,8 +49,8 @@ import javafx.stage.Stage;
 public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
-	private Button testLoopBoundButton;	
-	
+	private Button testLoopBoundButton;
+
 	@FXML
 	private TabPane topLeveLTabPane;
 
@@ -64,7 +64,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	private MenuButton addFunctionMenuButton;
-	
+
 	@FXML
 	private Button removeFunctionButton;
 
@@ -85,6 +85,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	private MenuButton addSymbVarMenu;
+
+	@FXML
+	private Button removeSymbVarButton;
 
 	@FXML
 	private TabPane propertyTestRunPane;
@@ -171,7 +174,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		return null;
 	}
 
-	
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
 		codePane.getChildren().add(child);
@@ -199,20 +201,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				cEditorGUIElement);
 		addChildToAnchorPane(codePane, cEditorGUIElementVsp, 20, 100, 0, 0);
 
-		cElectionEditor = new CElectionEditor(
-				primaryStage,
-				cEditorGUIElementVsp,
-				addElectionDescriptionButton,
-				loadElectionDescriptionButton,
-				addFunctionMenuButton, 
-				removeFunctionButton,
-				testLoopBoundButton,
-				cEditorGUIElement, 
-				funcDeclArea,
-				closingBracketArea, 
-				functionList, loopBoundList,
-				openedElectionDescriptionChoiceBox,
-				beastWorkspace);
+		cElectionEditor = new CElectionEditor(primaryStage,
+				cEditorGUIElementVsp, addElectionDescriptionButton,
+				loadElectionDescriptionButton, addFunctionMenuButton,
+				removeFunctionButton, testLoopBoundButton, cEditorGUIElement,
+				funcDeclArea, closingBracketArea, functionList, loopBoundList,
+				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
 
 	private void initPropertyEditor() {
@@ -229,7 +223,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
 				prePropertyEditor, postPropertyEditor, addPropDescrButton,
-				variableTreeView, addSymbVarMenu,
+				removeSymbVarButton, variableTreeView, addSymbVarMenu,
 				openedPropertyDescriptionChoiceBox, beastWorkspace);
 	}
 
@@ -248,10 +242,11 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	@FXML
 	public void initialize() throws IOException {
 		PathHandler pathHandler = new PathHandler();
-		
-		//TODO check if we have a a workspace which was open in the last session
+
+		// TODO check if we have a a workspace which was open in the last
+		// session
 		beastWorkspace = BeastWorkspace.getStandardWorkspace();
-		
+
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		beastWorkspace.setErrorHandler(errorHandler);
 
@@ -277,7 +272,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
-		});		
+		});
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {

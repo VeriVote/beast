@@ -60,4 +60,8 @@ public interface WorkspaceUpdateListener {
 		
 	}
 
+	public default void handleAddedPropDescr(PreAndPostConditionsDescription propDescr) {
+		
+	}
+
 }
