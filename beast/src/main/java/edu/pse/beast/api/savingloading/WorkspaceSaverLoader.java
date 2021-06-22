@@ -22,8 +22,6 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfig
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class WorkspaceSaverLoader {
-	private static final String BASE_DIR_FILE_PATH_KEY = "base_dir_file";
-
 	private static final String CBMC_PROCESS_STARTER_KEY = "cbmc_process_starter";
 
 	private static final String DESCR_FILES_KEY = "descr_files";
@@ -312,8 +310,6 @@ public class WorkspaceSaverLoader {
 		CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsFromJSON(
 						json.getJSONObject(CODE_GEN_OPTIONS_KEY));
-		String baseDirAbsPath = json.getString(BASE_DIR_FILE_PATH_KEY);
-		File baseDir = new File(baseDirAbsPath);
 
 		TestConfigurationList testConfigList = testConfigListFromJsonArr(
 				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
