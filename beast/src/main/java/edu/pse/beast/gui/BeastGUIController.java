@@ -64,6 +64,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	private MenuButton addFunctionMenuButton;
+	
+	@FXML
+	private Button removeFunctionButton;
 
 	@FXML
 	private ListView<ExtractedCLoop> loopBoundList;
@@ -168,12 +171,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		return null;
 	}
 
-	@FXML
-	public void removeFunction() {
-		cElectionEditor.removeFunction();
-	}
-
-
+	
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
 		codePane.getChildren().add(child);
@@ -205,6 +203,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				primaryStage,
 				cEditorGUIElementVsp,
 				addFunctionMenuButton, 
+				removeFunctionButton,
 				testLoopBoundButton,
 				cEditorGUIElement, 
 				funcDeclArea,
@@ -247,9 +246,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	@FXML
 	public void initialize() throws IOException {
 		PathHandler pathHandler = new PathHandler();
-
 		
-		beastWorkspace = new BeastWorkspace();		
+		//TODO check if we have a a workspace which was open in the last session
+		beastWorkspace = BeastWorkspace.getStandardWorkspace();
 		
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		beastWorkspace.setErrorHandler(errorHandler);

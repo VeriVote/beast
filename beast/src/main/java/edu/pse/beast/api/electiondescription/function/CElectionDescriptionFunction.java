@@ -68,4 +68,7 @@ public abstract class CElectionDescriptionFunction {
 		return true;
 	}
 
+	public abstract String getReturnText(
+			CodeGenOptions codeGenOptions);
+
 }

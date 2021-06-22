@@ -30,4 +30,10 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 
 	}
 
+	@Override
+	public String getReturnText(
+			CodeGenOptions codeGenOptions) {
+		return "}";
+	}
+
 }

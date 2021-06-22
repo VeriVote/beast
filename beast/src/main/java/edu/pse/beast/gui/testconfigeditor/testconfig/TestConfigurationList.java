@@ -50,4 +50,13 @@ public class TestConfigurationList {
 		return List.of();
 	}
 
+	public void handleDescrChange(
+			CElectionDescription descr) {
+		if(testConfigsByDescr.containsKey(descr)) {
+			for(TestConfiguration tc : testConfigsByDescr.get(descr)) {
+				tc.handleDescrChange();
+			}
+		}
+	}
+
 }

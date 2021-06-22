@@ -37,9 +37,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class CElectionEditor implements WorkspaceUpdateListener {
+public class CElectionEditor
+		implements WorkspaceUpdateListener {
 	private final String cssResource = "/edu/pse/beast/ceditor.css";
 	private final String cssLockedClassName = "locked";
+	private final String cssUnlockedClassName = "unlocked";
 
 	private ListView<CElectionDescriptionFunction> functionList;
 	private ListView<ExtractedCLoop> loopBoundList;
@@ -55,36 +57,52 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private BeastWorkspace beastWorkspace;
 
 	private Stage primaryStage;
+
 	private MenuButton addFunctionMenuButton;
+	private Button removeFunctionButton;
+	private Button testLoopBoundButton;
+
 	private VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp;
+
+	private String codeStyleSheet;
 
 	public CElectionEditor(Stage primaryStage,
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
-			MenuButton addFunctionMenuButton, Button testLoopBoundButton,
-			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
+			MenuButton addFunctionMenuButton,
+			Button removeFunctionButton,
+			Button testLoopBoundButton,
+			CEditorCodeElement electionCodeArea,
+			CodeArea funcDeclArea,
 			CodeArea closingBracketArea,
 			ListView<CElectionDescriptionFunction> functionList,
 			ListView<ExtractedCLoop> loopBoundList,
 			ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
-		final String stylesheet = this.getClass().getResource(cssResource)
-				.toExternalForm();
+		codeStyleSheet = this.getClass()
+				.getResource(cssResource).toExternalForm();
 
 		this.primaryStage = primaryStage;
-		this.addFunctionMenuButton = addFunctionMenuButton;
 
+		this.testLoopBoundButton = testLoopBoundButton;
+		testLoopBoundButton.setOnAction(e -> {
+			beastWorkspace.findLoopBounds(currentDescr,
+					currentDisplayedFunction);
+		});
+		
 		this.functionList = functionList;
 		this.loopBoundList = loopBoundList;
-		loopBoundList.getSelectionModel().selectedItemProperty()
+		loopBoundList.getSelectionModel()
+				.selectedItemProperty()
 				.addListener((e, oldVal, newVal) -> {
 					int line = newVal.getLine();
 					int position = electionCodeArea
-							.position(line - 1, newVal.getPosInLine())
+							.position(line - 1,
+									newVal.getPosInLine())
 							.toOffset();
 					electionCodeArea.moveTo(position);
 					electionCodeArea.selectLine();
 					electionCodeArea.requestFollowCaret();
-				});
+				});		
 
 		this.electionCodeArea = electionCodeArea;
 		this.funcDeclArea = funcDeclArea;
@@ -94,26 +112,16 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		this.funcDeclArea.setEditable(false);
 		this.closingBracketArea.setEditable(false);
 
-		electionCodeArea.getStylesheets().add(stylesheet);
-		funcDeclArea.getStylesheets().add(stylesheet);
-		closingBracketArea.getStylesheets().add(stylesheet);
+		electionCodeArea.getStylesheets().add(codeStyleSheet);
+		funcDeclArea.getStylesheets().add(codeStyleSheet);
+		closingBracketArea.getStylesheets().add(codeStyleSheet);
 
 		this.beastWorkspace = beastWorkspace;
 		this.openedElectionDescriptionChoiceBox = openedElectionDescriptionChoiceBox;
 
-		addFunctionMenuButton.setText("Add Function");
-		addFunctionMenuButton.getItems().clear();
-
-		MenuItem addSimpleFuncMenuItem = new MenuItem(
-				CelectionDescriptionFunctionType.SIMPLE.toString());
-		MenuItem addVotingFuncMenuItem = new MenuItem(
-				CelectionDescriptionFunctionType.VOTING.toString());
-
-		addSimpleFuncMenuItem.setOnAction(e -> addSimpleFunction());
-		addVotingFuncMenuItem.setOnAction(e -> addVotingFunction());
-
-		addFunctionMenuButton.getItems()
-				.addAll(List.of(addSimpleFuncMenuItem, addVotingFuncMenuItem));
+		this.addFunctionMenuButton = addFunctionMenuButton;
+		this.removeFunctionButton = removeFunctionButton;
+		setupFunctionButtons();
 
 		initListViews();
 		initOpenedDescrChoiceBox();
@@ -121,24 +129,53 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		beastWorkspace.registerUpdateListener(this);
 
 		electionCodeArea.setChangeListener((text) -> {
-			beastWorkspace.updateCodeForDescrFunction(currentDescr,
-					currentDisplayedFunction, text);
+			beastWorkspace.updateCodeForDescrFunction(
+					currentDescr, currentDisplayedFunction,
+					text);
 		});
 
-		testLoopBoundButton.setOnAction(e -> {
-			beastWorkspace.findLoopBounds(currentDescr,
-					currentDisplayedFunction);
+	}
+
+	private void setupFunctionButtons() {
+		addFunctionMenuButton.setText("Add Function");
+		addFunctionMenuButton.getItems().clear();
+
+		MenuItem addSimpleFuncMenuItem = new MenuItem(
+				CelectionDescriptionFunctionType.SIMPLE
+						.toString());
+		MenuItem addVotingFuncMenuItem = new MenuItem(
+				CelectionDescriptionFunctionType.VOTING
+						.toString());
+
+		addSimpleFuncMenuItem
+				.setOnAction(e -> addSimpleFunction());
+		addVotingFuncMenuItem
+				.setOnAction(e -> addVotingFunction());
+
+		addFunctionMenuButton.getItems()
+				.addAll(List.of(addSimpleFuncMenuItem,
+						addVotingFuncMenuItem));
+
+		removeFunctionButton.setOnAction(e -> {
+			removeSelectedFunction();
 		});
+	}
+
+	private void removeSelectedFunction() {
+		throw new NotImplementedException();
 	}
 
 	private void addVotingFunction() {
 		TextField nameField = new TextField();
 		Optional<ButtonType> res = DialogHelper
-				.generateDialog(List.of("name"), List.of(nameField))
+				.generateDialog(List.of("name"),
+						List.of(nameField))
 				.showAndWait();
-		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+		if (res.isPresent() && !res.get().getButtonData()
+				.isCancelButton()) {
 			String name = nameField.getText();
-			beastWorkspace.addVotingSigFunctionToDescr(currentDescr, name);
+			beastWorkspace.addVotingSigFunctionToDescr(
+					currentDescr, name);
 		}
 	}
 
@@ -147,8 +184,10 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		TextField nameField = new TextField();
 
 		ChoiceBox<CElectionSimpleTypes> returnTypeChoiceBox = new ChoiceBox<>();
-		returnTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
-		returnTypeChoiceBox.getSelectionModel().selectFirst();
+		returnTypeChoiceBox.getItems()
+				.addAll(CElectionSimpleTypes.values());
+		returnTypeChoiceBox.getSelectionModel()
+				.selectFirst();
 		Label argumentsLabel = new Label();
 
 		List<CElectionSimpleTypes> argTypes = new ArrayList<>();
@@ -156,23 +195,27 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 		TextField argsNameTextField = new TextField();
 		ChoiceBox<CElectionSimpleTypes> argsTypeChoiceBox = new ChoiceBox();
-		argsTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
+		argsTypeChoiceBox.getItems()
+				.addAll(CElectionSimpleTypes.values());
 		argsTypeChoiceBox.getSelectionModel().selectFirst();
 
 		Button addArgButton = new Button("add argument");
-		Button removeArgButton = new Button("remove Last Argument");
+		Button removeArgButton = new Button(
+				"remove Last Argument");
 
 		Consumer<Label> updateArgLabel = l -> {
 			String text = "";
 			for (int i = 0; i < argNames.size(); ++i) {
-				text += argTypes.get(i) + " " + argNames.get(i) + ", ";
+				text += argTypes.get(i) + " "
+						+ argNames.get(i) + ", ";
 			}
 			l.setText(text);
 		};
 
 		addArgButton.setOnAction(e -> {
 			if (!nameField.getText().isEmpty()) {
-				argTypes.add(argsTypeChoiceBox.getSelectionModel()
+				argTypes.add(argsTypeChoiceBox
+						.getSelectionModel()
 						.getSelectedItem());
 				argNames.add(argsNameTextField.getText());
 				updateArgLabel.accept(argumentsLabel);
@@ -187,22 +230,25 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			}
 		});
 
-		DialogHelper.generateDialog(List.of("name", "return type"),
-				List.of(nameField, returnTypeChoiceBox, argsTypeChoiceBox,
-						argsNameTextField, addArgButton, removeArgButton))
+		DialogHelper.generateDialog(
+				List.of("name", "return type"),
+				List.of(nameField, returnTypeChoiceBox,
+						argsTypeChoiceBox,
+						argsNameTextField, addArgButton,
+						removeArgButton))
 				.showAndWait();
 	}
 
-	private void selectedDescrChanged(CElectionDescription descr) {
-		if (descr == null)
-			return;
+	private void selectedDescrChanged(
+			CElectionDescription descr) {
 		loadElectionDescr(descr);
 	}
 
 	private void initOpenedDescrChoiceBox() {
-		openedElectionDescriptionChoiceBox.getSelectionModel()
-				.selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> {
+		openedElectionDescriptionChoiceBox
+				.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue,
+						newValue) -> {
 					selectedDescrChanged(newValue);
 				});
 	}
@@ -212,23 +258,36 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	// TODO(Holger) This is where we would add undo/redo for higher level
 	// changes such as adding/removing functions etc
 	public void handleWorkspaceUpdateGeneric() {
-		openedElectionDescriptionChoiceBox.getItems().clear();
-		for (CElectionDescription descr : beastWorkspace.getLoadedDescrs()) {
-			openedElectionDescriptionChoiceBox.getItems().add(descr);
+		openedElectionDescriptionChoiceBox.getItems()
+				.clear();
+		for (CElectionDescription descr : beastWorkspace
+				.getLoadedDescrs()) {
+			openedElectionDescriptionChoiceBox.getItems()
+					.add(descr);
 		}
-		openedElectionDescriptionChoiceBox.getSelectionModel().selectLast();
+		// I think we need to do this here, because the selectLast doesnt trigger
+		// our selectionchanged handler if the items are empty?
+		if (openedElectionDescriptionChoiceBox.getItems()
+				.size() == 0) {
+			loadElectionDescr(null);
+		} else {
+			openedElectionDescriptionChoiceBox
+					.getSelectionModel().selectLast();
+		}
 	}
 
 	@Override
 	public void handleDescrChangeAddedVotingSigFunction(
-			CElectionDescription descr, VotingSigFunction func) {
+			CElectionDescription descr,
+			VotingSigFunction func) {
 		if (descr.equals(currentDescr)) {
 			functionList.getItems().add(func);
 		}
 	}
 
 	@Override
-	public void handleDescrChangeRemovedFunction(CElectionDescription descr,
+	public void handleDescrChangeRemovedFunction(
+			CElectionDescription descr,
 			CElectionDescriptionFunction func) {
 		if (descr == currentDescr) {
 			functionList.getItems().remove(func);
@@ -236,16 +295,19 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	@Override
-	public void handleDescrChangeUpdatedFunctionCode(CElectionDescription descr,
-			CElectionDescriptionFunction function, String code) {
-		if (descr.equals(currentDescr)
-				&& function.equals(currentDisplayedFunction)) {
+	public void handleDescrChangeUpdatedFunctionCode(
+			CElectionDescription descr,
+			CElectionDescriptionFunction function,
+			String code) {
+		if (descr.equals(currentDescr) && function
+				.equals(currentDisplayedFunction)) {
 			displayLoopBounds(function.getExtractedLoops());
 		}
 	}
-	
+
 	@Override
-	public void handleExtractedFunctionLoops(CElectionDescription descr,
+	public void handleExtractedFunctionLoops(
+			CElectionDescription descr,
 			CElectionDescriptionFunction func) {
 		if (descr.equals(currentDescr)
 				&& func.equals(currentDisplayedFunction)) {
@@ -255,8 +317,10 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	/* ===== other stuff ====== */
 	private void initListViews() {
-		functionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		functionList.getSelectionModel().selectedItemProperty()
+		functionList.getSelectionModel()
+				.setSelectionMode(SelectionMode.SINGLE);
+		functionList.getSelectionModel()
+				.selectedItemProperty()
 				.addListener((o, oldVal, newVal) -> {
 					selectedFunctionChanged(newVal);
 				});
@@ -266,107 +330,160 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	}
 
-	private void selectedFunctionChanged(CElectionDescriptionFunction func) {
-		displayFunction(func);
+	private void selectedFunctionChanged(
+			CElectionDescriptionFunction func) {
 		currentDisplayedFunction = func;
+		displayFunction(func);
 	}
 
-	private void populateFunctionList(CElectionDescription descr) {
-		ObservableList<CElectionDescriptionFunction> observableList = FXCollections
-				.observableArrayList();
+	private void populateFunctionList(
+			CElectionDescription descr) {
+		if (descr == null) {
+			functionList.getItems().clear();
+			addFunctionMenuButton.setDisable(true);
+			removeFunctionButton.setDisable(true);
+			selectedFunctionChanged(null);
+		} else {
+			addFunctionMenuButton.setDisable(false);
+			removeFunctionButton.setDisable(false);		
+			
+			ObservableList<CElectionDescriptionFunction> observableList = FXCollections
+					.observableArrayList();
 
-		for (CElectionDescriptionFunction f : descr.getFunctions()) {
-			observableList.add(f);
+			for (CElectionDescriptionFunction f : descr
+					.getFunctions()) {
+				observableList.add(f);
+			}
+			functionList.setItems(observableList);
+			functionList.getSelectionModel()
+					.clearAndSelect(0);	
 		}
-		functionList.setItems(observableList);
-		functionList.getSelectionModel().clearAndSelect(0);
 	}
 
-	private void setLockedColor() {
-		funcDeclArea.setStyleClass(0, funcDeclArea.getLength(),
-				cssLockedClassName);
-		closingBracketArea.setStyleClass(0, closingBracketArea.getLength(),
+	private void setLockedColor(CodeArea codeArea) {
+		codeArea.setStyleClass(0, codeArea.getLength(),
 				cssLockedClassName);
 	}
+	
+	private void setUnlockedColor(CodeArea codeArea) {
+		codeArea.setStyleClass(0, codeArea.getLength(),
+				cssUnlockedClassName);
+	}
 
-	private void displayFunction(CElectionDescriptionFunction func) {
+	private void displayFunction(
+			CElectionDescriptionFunction func) {
 		electionCodeArea.clear();
 		funcDeclArea.clear();
 		closingBracketArea.clear();
 
-		String declText = func.getDeclCString(beastWorkspace.getCodeGenOptions());
-		funcDeclArea.insertText(0, declText);
-		int amtLinesInDecl = declText.split("\n").length;
+		if (func == null) {
+			electionCodeArea.setDisable(true);
+			setLockedColor(funcDeclArea);
+			setLockedColor(electionCodeArea);
+			setLockedColor(closingBracketArea);
+			displayLoopBounds(null);
+		} else {
+			String declText = func.getDeclCString(
+					beastWorkspace.getCodeGenOptions());
+			funcDeclArea.insertText(0, declText);
+			setLockedColor(funcDeclArea);
 
-		// TODO(Holger) move this into an CeditorOptions Object
-		double currentTextSize = 20;
+			int amtLinesInDecl = declText
+					.split("\n").length;
 
-		AnchorPane.setTopAnchor(cEditorGUIElementVsp,
-				currentTextSize * amtLinesInDecl);
+			// TODO(Holger) move this into an CeditorOptions Object
+			double currentTextSize = 20;
 
-		electionCodeArea.insertText(0, func.getCode());
+			AnchorPane.setTopAnchor(cEditorGUIElementVsp,
+					currentTextSize * amtLinesInDecl);
 
-		closingBracketArea.insertText(0, "}");
-		setLockedColor();
+			electionCodeArea.setDisable(false);
+			electionCodeArea.insertText(0, func.getCode());
 
-		displayLoopBounds(func.getExtractedLoops());
+			String returnText = func.getReturnText(
+					beastWorkspace.getCodeGenOptions());
+
+			closingBracketArea.insertText(0, returnText);
+			setLockedColor(closingBracketArea);
+
+			displayLoopBounds(func.getExtractedLoops());
+		}
 	}
 
-	private void displayLoopBounds(List<ExtractedCLoop> loops) {
+	private void displayLoopBounds(
+			List<ExtractedCLoop> loops) {
 		loopBoundList.getItems().clear();
-		loopBoundList.getItems().addAll(loops);
+		if (loops == null) {
+			testLoopBoundButton.setDisable(true);
+		} else {
+			testLoopBoundButton.setDisable(false);
+			loopBoundList.getItems().addAll(loops);
+		}
 	}
 
-	public void loadElectionDescr(CElectionDescription descr) {
+	private void disableControls() {
+		electionCodeArea.setDisable(true);
+
+	}
+
+	public void loadElectionDescr(
+			CElectionDescription descr) {
 		this.currentDescr = descr;
 		populateFunctionList(descr);
-		functionList.getSelectionModel().clearAndSelect(0);
-	}
-	
-
-	public void removeFunction() {
-		beastWorkspace.removeFunctionFromDescr(currentDescr,
-				currentDisplayedFunction);
 	}
 
 	public void createNewDescr() {
-		List<String> inputNames = List.of("name", "inputType", "outputType");
+		List<String> inputNames = List.of("name",
+				"inputType", "outputType");
 		TextField nameField = new TextField();
 
 		ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<>();
-		for (VotingInputTypes it : VotingInputTypes.values()) {
-			inputTypeChoiceBox.getItems().add(it.toString());
+		for (VotingInputTypes it : VotingInputTypes
+				.values()) {
+			inputTypeChoiceBox.getItems()
+					.add(it.toString());
 		}
-		inputTypeChoiceBox.getSelectionModel().selectFirst();
+		inputTypeChoiceBox.getSelectionModel()
+				.selectFirst();
 
 		ChoiceBox<String> outputTypeChoiceBox = new ChoiceBox<>();
-		for (VotingOutputTypes ot : VotingOutputTypes.values()) {
-			outputTypeChoiceBox.getItems().add(ot.toString());
+		for (VotingOutputTypes ot : VotingOutputTypes
+				.values()) {
+			outputTypeChoiceBox.getItems()
+					.add(ot.toString());
 		}
-		outputTypeChoiceBox.getSelectionModel().selectFirst();
+		outputTypeChoiceBox.getSelectionModel()
+				.selectFirst();
 
-		List<Node> nodes = List.of(nameField, inputTypeChoiceBox,
-				outputTypeChoiceBox);
+		List<Node> nodes = List.of(nameField,
+				inputTypeChoiceBox, outputTypeChoiceBox);
 
 		Optional<ButtonType> res = DialogHelper
-				.generateDialog(inputNames, nodes).showAndWait();
+				.generateDialog(inputNames, nodes)
+				.showAndWait();
 		if (res.isPresent()) {
 			if (res.get().getButtonData().isCancelButton())
 				return;
 			String name = nameField.getText();
-			VotingInputTypes inputType = VotingInputTypes.valueOf(
-					inputTypeChoiceBox.getSelectionModel().getSelectedItem());
-			VotingOutputTypes outputType = VotingOutputTypes.valueOf(
-					outputTypeChoiceBox.getSelectionModel().getSelectedItem());
-			CElectionDescription descr = new CElectionDescription(inputType,
-					outputType, name);
+			VotingInputTypes inputType = VotingInputTypes
+					.valueOf(inputTypeChoiceBox
+							.getSelectionModel()
+							.getSelectedItem());
+			VotingOutputTypes outputType = VotingOutputTypes
+					.valueOf(outputTypeChoiceBox
+							.getSelectionModel()
+							.getSelectedItem());
+			CElectionDescription descr = new CElectionDescription(
+					inputType, outputType, name);
 			beastWorkspace.addElectionDescription(descr);
 		}
 	}
 
-	public void letUserLoad() throws NotImplementedException, IOException {
+	public void letUserLoad()
+			throws NotImplementedException, IOException {
 		CElectionDescription descr = FileDialogHelper
-				.letUserLoadElectionDescription(beastWorkspace.getBaseDir(),
+				.letUserLoadElectionDescription(
+						beastWorkspace.getBaseDir(),
 						primaryStage);
 		if (descr != null)
 			beastWorkspace.addElectionDescription(descr);

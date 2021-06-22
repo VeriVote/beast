@@ -22,6 +22,7 @@ public class PathHandler {
 	private void tryload() {
 		workingDir = System.getProperty("user.dir");
 		File lastLoadedConfigFile = new File(workingDir + relPathToSaveFiles + lastLoadedConfigFileName);
+
 		if(lastLoadedConfigFile.exists()) {
 			
 		} else {
