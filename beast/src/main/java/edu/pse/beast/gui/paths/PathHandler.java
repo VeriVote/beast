@@ -37,12 +37,14 @@ public class PathHandler {
 	
 	private void tryload() {
 		baseDir = System.getProperty("user.dir");
-		File lastLoadedConfigFile = new File(baseDir + relPathToSaveFiles + lastLoadedConfigFileName);
-
-		if(lastLoadedConfigFile.exists()) {
-			
-		} else {
-			
+		if(!getWorkspaceDir().exists()) {
+			getWorkspaceDir().mkdirs();
+		}
+		if(!getElectionDescrDir().exists()) {
+			getElectionDescrDir().mkdirs();
+		}
+		if(!getPropDescrDir().exists()) {
+			getPropDescrDir().mkdirs();
 		}
 	}	
 }
