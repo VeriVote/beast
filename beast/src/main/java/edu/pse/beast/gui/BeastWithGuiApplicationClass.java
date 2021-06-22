@@ -27,7 +27,7 @@ public class BeastWithGuiApplicationClass extends Application {
 		primaryStage.show();
 	}
 	
-	@Override
+	@Override	
 	public void stop() throws Exception {
 		controller.shutdown();
 	}

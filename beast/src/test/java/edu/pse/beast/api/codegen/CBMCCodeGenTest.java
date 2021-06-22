@@ -34,6 +34,18 @@ public class CBMCCodeGenTest {
 				+ "        for (j = 0; j < C; j++) {\n"
 				+ "            result[votes[i][j]] += (C - j) - 1;\n"
 				+ "        }\n" 
+				+ "    }"
+				+ "    unsigned int max = 0;\n"
+				+ "    for (i = 0; i < C; i++) {\n"
+				+ "        if (max < res[i]) {\n"
+				+ "            max = res[i];\n"
+				+ "            for (j = 0; j < C; j++) {\n"
+				+ "                r.arr[j] = 0;\n"
+				+ "            }\n"
+				+ "            r.arr[i] = 1;\n"
+				+ "        } else if (max == res[i]) {\n"
+				+ "            r.arr[i] = 1;\n"
+				+ "        }\n"
 				+ "    }";
 
 		CElectionDescription descr = new CElectionDescription(
@@ -55,7 +67,7 @@ public class CBMCCodeGenTest {
 
 		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
-		System.out.println(code);
+		//System.out.println(code);
 	}
 	
 	@Test
@@ -71,7 +83,19 @@ public class CBMCCodeGenTest {
 				+ "        for (j = 0; j < C; j++) {\n"
 				+ "            result[votes[i][j]] += (C - j) - 1;\n"
 				+ "        }\n" 
-				+ "    }";
+				+ "    }"
+				+ "    unsigned int max = 0;\n"
+				+ "    for (i = 0; i < C; i++) {\n"
+				+ "        if (max < result[i]) {\n"
+				+ "            max = result[i];\n"
+				+ "            for (j = 0; j < C; j++) {\n"
+				+ "                result[j] = 0;\n"
+				+ "            }\n"
+				+ "            result[i] = 1;\n"
+				+ "        } else if (max == result[i]) {\n"
+				+ "            result[i] = 1;\n"
+				+ "        }\n"
+				+ "    }\n";
 
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,

@@ -24,6 +24,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
+import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
 import edu.pse.beast.gui.testconfigeditor.TestConfigurationTopLevelGUIHandler;
@@ -167,32 +168,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		return null;
 	}
 
-	private TestConfiguration getTestConfig(CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr) {
-
-		TestConfiguration created = new TestConfiguration(descr, propDescr,
-				"test");
-		CBMCPropertyTestConfiguration cc = new CBMCPropertyTestConfiguration();
-
-		cc.setMinVoters(5);
-		cc.setMinCands(5);
-		cc.setMinSeats(5);
-
-		cc.setMaxCands(5);
-		cc.setMaxVoters(5);
-		cc.setMaxSeats(5);
-
-		cc.setDescr(descr);
-		cc.setPropDescr(propDescr);
-
-		cc.setName("test five");
-		created.addCBMCTestConfiguration(cc);
-
-		cc.setStartRunsOnCreation(false);
-
-		return created;
-	}
-
 	@FXML
 	public void removeFunction() {
 		cElectionEditor.removeFunction();
@@ -271,13 +246,13 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	public void initialize() throws IOException {
-		beastWorkspace = new BeastWorkspace();
+		PathHandler pathHandler = new PathHandler();
+
+		
+		beastWorkspace = new BeastWorkspace();		
 		
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		beastWorkspace.setErrorHandler(errorHandler);
-
-		// for testing
-		// beastWorkspace.setCbmcProcessStarter(null);
 
 		initElectionEditor();
 		initPropertyEditor();

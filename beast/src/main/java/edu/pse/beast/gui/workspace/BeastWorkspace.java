@@ -29,6 +29,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.CBMCProcessHandlerGetter;
 import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.FileDialogHelper;
+import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -55,6 +56,8 @@ public class BeastWorkspace {
 
 	private String name = "test";
 	private File workspaceFile;
+	
+	private PathHandler pathHandler;
 
 	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
 		this.codeGenOptions = codeGenOptions;
@@ -137,6 +140,14 @@ public class BeastWorkspace {
 
 	public CodeGenOptions getCodeGenOptions() {
 		return codeGenOptions;
+	}
+	
+	public void setPathHandler(PathHandler pathHandler) {
+		this.pathHandler = pathHandler;
+	}
+	
+	public PathHandler getPathHandler() {
+		return pathHandler;
 	}
 
 	public void setBaseDir(File baseDir) {
