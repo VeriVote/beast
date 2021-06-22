@@ -55,6 +55,7 @@ public class CBMCProcessHandlerGetter {
 				if (vsDevCmd != null) {
 					CBMCProcessHandlerWindows processHandlerWindows = new CBMCProcessHandlerWindows(
 							vsDevCmd.getAbsolutePath());
+					return processHandlerWindows;
 				}
 				break;
 			case UNKNOWN :

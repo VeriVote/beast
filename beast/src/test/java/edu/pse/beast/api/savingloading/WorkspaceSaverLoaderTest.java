@@ -19,7 +19,8 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
-public class WorkspaceSaverLoaderTest {
+public class WorkspaceSaverLoaderTest {	
+	
 	@Test
 	public void testSavingLoading() throws IOException {
 		BeastWorkspace ws = new BeastWorkspace();
@@ -90,7 +91,6 @@ public class WorkspaceSaverLoaderTest {
 		String s = currentRelativePath.toAbsolutePath().toString();
 		File baseDir = new File(s);
 
-		beastWorkspace.setBaseDir(baseDir);
 		beastWorkspace.addElectionDescription(descr);
 		beastWorkspace.addFileForDescr(descr, descrFile);
 

@@ -258,6 +258,7 @@ public class BeastWorkspace {
 	private void askUserForProcessStarter() {
 		CBMCProcessHandler processHandler = CBMCProcessHandlerGetter
 				.askUserForCBMCProcessHandler();
+		cbmcProcessStarter = processHandler;
 	}
 
 	public void addRunToQueue(CBMCTestRun run) {

@@ -76,6 +76,7 @@ module edu.pse.beast {
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
+    opens edu.pse.beast.gui.options.workspace to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor.testconfig to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor.testconfig.cbmc to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;

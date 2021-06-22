@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class OptionsGuiController {	
 	
-	private final String workspaceOptionsFXML = "/edu/pse/beast/options/testConfigDetailGUI.fxml";
+	private final String workspaceOptionsFXML = "/edu/pse/beast/options/workspaceOptionsGUI.fxml";
 	private FXMLLoader workspaceOptionsFXMLLoader = new FXMLLoader(
 			getClass().getResource(workspaceOptionsFXML));
 	private BeastWorkspaceOptionsGUI beastWorkspaceOptionsGUI;
@@ -30,7 +30,7 @@ public class OptionsGuiController {
 		
 		beastWorkspaceOptionsGUI = new BeastWorkspaceOptionsGUI(beastWorkspace);
 		workspaceOptionsFXMLLoader.setController(beastWorkspaceOptionsGUI);
-		//workspaceOptionsFXMLLoader.load();
+		workspaceOptionsFXMLLoader.load();
 		
 		setup();
 	}

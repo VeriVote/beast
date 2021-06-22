@@ -33,13 +33,7 @@ public class CBMCMainGenerator {
 		// init global symbolic vars
 		for (SymbolicCBMCVar var : symCbmcVars) {
 			code.add("unsigned int " + var.getName() + " = "
-					+ options.getCbmcNondetUintName() + "();\n");
-			if (var.getVarType() == CBMCVarType.CANDIDATE) {
-				code.add(options.getCbmcAssumeName() + "(" + var.getName()
-						+ " <= C);\n");
-				code.add(options.getCbmcAssumeName() + "(" + var.getName()
-						+ " >= 0);\n");
-			}
+					+ options.getCbmcNondetUintName() + "();\n");			
 		}
 
 		// init votes
