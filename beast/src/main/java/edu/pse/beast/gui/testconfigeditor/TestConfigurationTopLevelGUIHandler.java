@@ -214,6 +214,7 @@ public class TestConfigurationTopLevelGUIHandler
 	public void handleWorkspaceUpdateGeneric() {
 		updateTestConfigTreeView();
 	}
+	
 
 	@Override
 	public void handleWorkspaceUpdateAddedCBMCRuns(

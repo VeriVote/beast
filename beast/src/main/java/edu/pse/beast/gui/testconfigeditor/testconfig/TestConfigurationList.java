@@ -9,8 +9,9 @@ import java.util.Map;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
-public class TestConfigurationList {
+public class TestConfigurationList implements WorkspaceUpdateListener {
 	private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr = new HashMap<>();
 	private Map<PreAndPostConditionsDescription, List<TestConfiguration>> testConfigsByPropDescr = new HashMap<>();
 	private Map<String, TestConfiguration> testConfigsByName = new HashMap<>();

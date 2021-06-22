@@ -43,7 +43,6 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 	private BeastWorkspace beastWorkspace;
 
 	public CBMCTestRunGuiController(BeastWorkspace beastWorkspace) {
-		super();
 		this.beastWorkspace = beastWorkspace;
 	}
 

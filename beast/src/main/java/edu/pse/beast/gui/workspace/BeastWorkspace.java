@@ -115,6 +115,7 @@ public class BeastWorkspace {
 
 	public void setTestConfigList(TestConfigurationList testConfigList) {
 		this.testConfigList = testConfigList;
+		
 	}
 
 	public TestConfigurationList getTestConfigList() {
