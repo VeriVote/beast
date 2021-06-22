@@ -59,22 +59,25 @@ public class CBMCTestConfigGuiController {
 	public AnchorPane getTopLevelAnchorPane() {
 		return topLevelAnchorPane;
 	}
+	
+	private void updateView() {
+		nameTextField.setText(currentConfig.getName());
+		descrChoiceBox.getSelectionModel().select(currentConfig.getDescr());
+		propDescrChoiceBox.getSelectionModel().select(currentConfig.getPropDescr());
+		
+		minVoters.getValueFactory().setValue(currentConfig.getMinVoters());
+		maxVoters.getValueFactory().setValue(currentConfig.getMaxVoters());
+		minCandidates.getValueFactory().setValue(currentConfig.getMinCands());
+		maxCandidates.getValueFactory().setValue(currentConfig.getMaxCands());
+		minSeats.getValueFactory().setValue(currentConfig.getMinSeats());
+		maxSeats.getValueFactory().setValue(currentConfig.getMaxSeats());
+		
+		startCreatedTestsCheckbox.setSelected(currentConfig.getStartRunsOnCreation());
+	}
 
 	public void display(CBMCPropertyTestConfiguration config) {
 		currentConfig = config;
-		
-		nameTextField.setText(config.getName());
-		descrChoiceBox.getSelectionModel().select(config.getDescr());
-		propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());
-		
-		minVoters.getValueFactory().setValue(config.getMinVoters());
-		maxVoters.getValueFactory().setValue(config.getMaxVoters());
-		minCandidates.getValueFactory().setValue(config.getMinCands());
-		maxCandidates.getValueFactory().setValue(config.getMaxCands());
-		minSeats.getValueFactory().setValue(config.getMinSeats());
-		maxSeats.getValueFactory().setValue(config.getMaxSeats());
-		
-		startCreatedTestsCheckbox.setSelected(config.getStartRunsOnCreation());
+		updateView();
 	}
 	
 	@FXML
@@ -82,31 +85,37 @@ public class CBMCTestConfigGuiController {
 		minVoters.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		minVoters.getValueFactory().valueProperty().addListener((e, o , n) -> {
 			currentConfig.setMinVoters(minVoters.getValue());
+			updateView();
 		});		
 		
 		maxVoters.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		maxVoters.getValueFactory().valueProperty().addListener((e, o , n) -> {
 			currentConfig.setMaxVoters(maxVoters.getValue());
+			updateView();
 		});		
 		
 		minCandidates.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		minCandidates.getValueFactory().valueProperty().addListener((e, o , n) -> {
 			currentConfig.setMinCands(minCandidates.getValue());
+			updateView();
 		});	
 		
 		maxCandidates.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		maxCandidates.getValueFactory().valueProperty().addListener((e, o , n) -> {
 			currentConfig.setMaxCands(maxCandidates.getValue());
+			updateView();
 		});			
 		
 		minSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		minSeats.getValueFactory().valueProperty().addListener((e, o , n) -> {
 			currentConfig.setMinCands(minSeats.getValue());
+			updateView();
 		});	
 		
 		maxSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
 		maxSeats.getValueFactory().valueProperty().addListener((e, o , n) -> {
 			currentConfig.setMaxSeats(maxSeats.getValue());
+			updateView();
 		});	
 				
 		startCreatedTestsCheckbox.selectedProperty().addListener((o, oldVal, newVal) -> {

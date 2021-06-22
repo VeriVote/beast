@@ -61,7 +61,8 @@ public class TestConfigCategoryGUIController
 				.getSelectedItem();
 		PreAndPostConditionsDescription propDescr = propDescrChoiceBox
 				.getSelectionModel().getSelectedItem();
-		beastWorkspace.createTestConfig(name, descr, propDescr);
+		if (!name.isEmpty() && descr != null && propDescr != null)
+			beastWorkspace.createTestConfig(name, descr, propDescr);
 	}
 
 	public AnchorPane getTopLevelAnchorPane() {
@@ -104,7 +105,7 @@ public class TestConfigCategoryGUIController
 	public void handleWorkspaceUpdateGeneric() {
 		updateView();
 	}
-	
+
 	@Override
 	public void handleAddedTestConfig(TestConfiguration tc) {
 		updateView();

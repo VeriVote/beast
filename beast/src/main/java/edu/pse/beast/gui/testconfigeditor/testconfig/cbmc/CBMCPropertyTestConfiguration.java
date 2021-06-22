@@ -67,7 +67,7 @@ public class CBMCPropertyTestConfiguration {
 	public void setMaxCands(int maxCands) {
 		this.maxCands = maxCands;
 		if(maxCands < minCands) {
-			maxCands = minCands;
+			minCands = maxCands;
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class CBMCPropertyTestConfiguration {
 	public void setMaxVoters(int maxVoters) {
 		this.maxVoters = maxVoters;
 		if(maxVoters < minVoters) {
-			maxVoters = minVoters;
+			minVoters = maxVoters;
 		}
 	}
 	
@@ -93,7 +93,7 @@ public class CBMCPropertyTestConfiguration {
 	public void setMaxSeats(int maxSeats) {
 		this.maxSeats = maxSeats;
 		if(maxSeats < minSeats) {
-			maxSeats = minSeats;
+			minSeats = maxSeats;
 		}
 	}
 	
