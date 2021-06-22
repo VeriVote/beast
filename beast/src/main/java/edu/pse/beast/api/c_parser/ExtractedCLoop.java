@@ -15,14 +15,14 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 
 public class ExtractedCLoop {
 	private IterationStatementContext ctx;
-	
-	private String uuid = UUID.randomUUID().toString();	
+
+	private String uuid = UUID.randomUUID().toString();
 	private CLoopTypes loopType;
-	
+
 	private int line;
 	private int loopNumberInFunction;
 	private int posInLine;
-	
+
 	private CLoopParseResultType loopParseResult;
 	private LoopBoundType parsedLoopBoundType;
 	private String functionName;
@@ -38,15 +38,15 @@ public class ExtractedCLoop {
 		this.loopNumberInFunction = loopNumberInFunction;
 		init(codeGenOptions);
 	}
-	
+
 	public List<ExtractedCLoop> getChildrenLoops() {
 		return childrenLoops;
 	}
-	
+
 	public CLoopTypes getLoopType() {
 		return loopType;
 	}
-	
+
 	public String getFunctionName() {
 		return functionName;
 	}
@@ -101,7 +101,8 @@ public class ExtractedCLoop {
 			String semi = ctx.Semi(0).getText();
 			for (; firstSemiPos < ctx.getChildCount()
 					&& !ctx.getChild(firstSemiPos).getText()
-							.equals(semi); ++firstSemiPos);
+							.equals(semi); ++firstSemiPos)
+				;
 
 			if (!ctx.getChild(firstSemiPos + 1).getText().equals(semi)) {
 				condExp = (ExpressionContext) ctx.getChild(firstSemiPos + 1);
@@ -161,21 +162,38 @@ public class ExtractedCLoop {
 			childrenLoopBounds.add(cl.generateLoopBound());
 		}
 
-		LoopBound bound = new LoopBound(childrenLoopBounds,
-				functionName, parsedLoopBoundType, loopNumberInFunction);
-		
+		LoopBound bound = new LoopBound(childrenLoopBounds, functionName,
+				parsedLoopBoundType, loopNumberInFunction);
+
 		return bound;
 	}
 
 	public void addChild(ExtractedCLoop l) {
 		childrenLoops.add(l);
 	}
-	
+
 	public String getUuid() {
 		return uuid;
 	}
 	
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	private ExtractedCLoop() {		
+	}
+
+	public static ExtractedCLoop fromStoredValues(String uuid,
+			CLoopTypes loopType, int line, int posInLine, int numberInFunc,
+			CLoopParseResultType parseResultType, LoopBoundType loopBoundType,
+			String functionName) {
+		
+		ExtractedCLoop cLoop = new ExtractedCLoop();
+		cLoop.uuid = uuid;
+		cLoop.loopType = loopType;
+		cLoop.line = line;
+		cLoop.posInLine = posInLine;
+		cLoop.loopNumberInFunction = numberInFunc;
+		cLoop.loopParseResult = parseResultType;
+		cLoop.parsedLoopBoundType = loopBoundType;
+		cLoop.functionName = functionName;
+		
+		return cLoop;
 	}
 }
