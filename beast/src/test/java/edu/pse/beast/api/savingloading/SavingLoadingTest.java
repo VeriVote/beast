@@ -82,7 +82,7 @@ public class SavingLoadingTest {
 		}
 	}
 
-	@Ignore
+	
 	@Test
 	public void testSavingLoadingOfPreAndPostConditionDescription()
 			throws IOException {

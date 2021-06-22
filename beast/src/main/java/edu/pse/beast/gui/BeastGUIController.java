@@ -129,9 +129,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private AnchorPane logAnchorPane;
 
 	@FXML
-	private Button saveButton;
-	@FXML
-	private Button saveAllButton;
+	private Button loadWorkspaceButton;
 	@FXML
 	private Button saveWorkspaceButton;
 
@@ -264,23 +262,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
 
-		saveButton.setOnAction(e -> {
-			Tab selectedTab = topLeveLTabPane.getSelectionModel()
-					.getSelectedItem();
-			String id = selectedTab.getId().toString();
-			if (id.equals("election")) {
-				cElectionEditor.save();
-			} else if (id.equals("property")) {
-				preAndPostPropertyEditor.save();
-			}
-		});
-
-		saveAllButton.setOnAction(e -> {
-			beastWorkspace.saveAll();
-		});
-
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
+		});
+		
+		loadWorkspaceButton.setOnAction(e -> {
+			beastWorkspace.loadWorkSpace();
 		});
 	}
 

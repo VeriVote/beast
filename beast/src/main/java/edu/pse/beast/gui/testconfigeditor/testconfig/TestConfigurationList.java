@@ -59,5 +59,11 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 			}
 		}
 	}
+	
+	@Override
+	public void handleAddedPropDescr(
+			PreAndPostConditionsDescription propDescr) {
+		
+	}
 
 }

@@ -82,6 +82,8 @@ public class BeastWorkspace {
 
 		beastWorkspace.setPathHandler(new PathHandler());
 
+		beastWorkspace.setTestConfigList(new TestConfigurationList());
+
 		return beastWorkspace;
 	}
 
@@ -115,7 +117,7 @@ public class BeastWorkspace {
 
 	public void setTestConfigList(TestConfigurationList testConfigList) {
 		this.testConfigList = testConfigList;
-		
+		registerUpdateListener(testConfigList);
 	}
 
 	public TestConfigurationList getTestConfigList() {
@@ -161,7 +163,7 @@ public class BeastWorkspace {
 
 	public void letUserLoadPropDescr() {
 		try {
-			Tuple<PreAndPostConditionsDescription, File> t= FileDialogHelper
+			Tuple<PreAndPostConditionsDescription, File> t = FileDialogHelper
 					.letUserLoadPropDescr(pathHandler.getPropDescrDir(), null);
 			if (t.first() != null) {
 				addPropertyDescription(t.first());
@@ -347,15 +349,16 @@ public class BeastWorkspace {
 		this.errorHandler = errorHandler;
 	}
 
-	public void saveDescr(CElectionDescription descr) {
+	public boolean saveDescr(CElectionDescription descr) {
 		File f = null;
 		if (filesPerDescr.containsKey(descr)) {
 			f = filesPerDescr.get(descr);
 		} else {
-			f = FileDialogHelper.letUserSaveFile(baseDir, "choose save File",
+			f = FileDialogHelper.letUserSaveFile(
+					pathHandler.getElectionDescrDir(), "choose save File",
 					descr.getName() + ".belec");
 			if (f == null) {
-				return;
+				return false;
 			}
 			filesPerDescr.put(descr, f);
 		}
@@ -365,18 +368,20 @@ public class BeastWorkspace {
 		} catch (IOException e) {
 			errorHandler.logAndDisplayError("save error",
 					e.getLocalizedMessage());
+			return false;
 		}
+		return true;
 	}
 
-	public void savePropDescr(PreAndPostConditionsDescription propDescr) {
+	public boolean savePropDescr(PreAndPostConditionsDescription propDescr) {
 		File f = null;
 		if (filesPerPropDescr.containsKey(propDescr)) {
 			f = filesPerPropDescr.get(propDescr);
 		} else {
-			f = FileDialogHelper.letUserSaveFile(baseDir, "choose save File",
-					propDescr.getName() + ".bprp");
+			f = FileDialogHelper.letUserSaveFile(pathHandler.getPropDescrDir(),
+					"choose save File", propDescr.getName() + ".bprp");
 			if (f == null) {
-				return;
+				return false;
 			}
 			filesPerPropDescr.put(propDescr, f);
 		}
@@ -387,33 +392,49 @@ public class BeastWorkspace {
 		} catch (IOException e) {
 			errorHandler.logAndDisplayError("save error",
 					e.getLocalizedMessage());
+			return false;
 		}
+		return true;
 	}
 
-	public void saveAll() {
+	private boolean saveAll() {
 		List<CElectionDescription> descrListCopy = new ArrayList<>(
 				descrWithUnsavedChanges);
 		for (CElectionDescription descr : descrListCopy) {
-			saveDescr(descr);
+			if (!saveDescr(descr))
+				return false;
 		}
 		List<PreAndPostConditionsDescription> propDescrListCopy = new ArrayList<>(
 				propDescrWithUnsavedChanges);
 		for (PreAndPostConditionsDescription propDescr : propDescrListCopy) {
-			savePropDescr(propDescr);
+			if (!savePropDescr(propDescr))
+				return false;
 		}
+		return true;
 	}
 
 	public void setWorkspaceFile(File workspaceFile) {
 		this.workspaceFile = workspaceFile;
 	}
 
+	public void loadWorkSpace() {
+		
+	}
+
 	public void saveWorkspace() {
+		boolean allSaved = saveAll();
+		if (!allSaved) {
+			errorHandler.logAndDisplayError("Saving Workspace",
+					"There was an error when trying to save all descr and prop descr, wont save workspace.");
+		}
+		
 		if (workspaceFile == null) {
 			workspaceFile = FileDialogHelper.letUserSaveFile(baseDir,
 					"file for workspace", name + ".beastws");
 		}
 		if (workspaceFile == null)
 			return;
+		
 		try {
 			SavingLoadingInterface.storeBeastWorkspace(this, workspaceFile);
 		} catch (IOException e) {
@@ -451,9 +472,7 @@ public class BeastWorkspace {
 	// reasonable ppl can disagree on that
 	private void handleDescrChange(CElectionDescription descr) {
 		descrWithUnsavedChanges.add(descr);
-
 		testConfigList.handleDescrChange(descr);
-
 	}
 
 	public void updateCodeForDescrFunction(CElectionDescription descr,
