@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import org.reactfx.util.Tuple2;
+
 import edu.pse.beast.api.BEAST;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
@@ -33,6 +35,7 @@ import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.toolbox.Tuple;
 
 public class BeastWorkspace {
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
@@ -76,7 +79,7 @@ public class BeastWorkspace {
 		codeGenOptions.setCbmcAssumeName("assume");
 
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
-		
+
 		beastWorkspace.setPathHandler(new PathHandler());
 
 		return beastWorkspace;
@@ -153,6 +156,20 @@ public class BeastWorkspace {
 		loadedDescrs.add(descr);
 		descrWithUnsavedChanges.add(descr);
 		messageUpdateListener();
+	}
+
+	public void letUserLoadPropDescr() {
+		try {
+			Tuple<PreAndPostConditionsDescription, File> t= FileDialogHelper
+					.letUserLoadPropDescr(pathHandler.getPropDescrDir(), null);
+			if (t.first() != null) {
+				addPropertyDescription(t.first());
+				addFileForPropDescr(t.first(), t.second());
+			}
+		} catch (IOException e) {
+			errorHandler.logAndDisplayError("Loading prop descr",
+					"There was an error trying to load the prop election descr");
+		}
 	}
 
 	public void addPropertyDescription(
@@ -498,11 +515,14 @@ public class BeastWorkspace {
 
 	public void letUserLoadDescr() {
 		try {
-			CElectionDescription descr = FileDialogHelper
+			Tuple<CElectionDescription, File> t = FileDialogHelper
 					.letUserLoadElectionDescription(
 							pathHandler.getElectionDescrDir(), null);
-			if (descr != null)
-				addElectionDescription(descr);
+			if (t.first() != null) {
+				addElectionDescription(t.first());
+				addFileForDescr(t.first(), t.second());
+			}
+
 		} catch (IOException exception) {
 			errorHandler.logAndDisplayError("Loading descr",
 					"There was an error trying to load the election descr");

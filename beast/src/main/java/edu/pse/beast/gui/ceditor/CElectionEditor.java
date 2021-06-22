@@ -60,6 +60,7 @@ public class CElectionEditor
 
 	private Button addElectionDescriptionButton;
 	private Button loadElectionDescriptionButton;
+	private Button saveElectionDescriptionButton;
 
 	private MenuButton addFunctionMenuButton;
 	private Button removeFunctionButton;
@@ -74,6 +75,7 @@ public class CElectionEditor
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
 			Button addElectionDescriptionButton,
 			Button loadElectionDescriptionButton,
+			Button saveElectionDescriptionButton,
 			MenuButton addFunctionMenuButton,
 			Button removeFunctionButton,
 			Button testLoopBoundButton,
@@ -91,7 +93,8 @@ public class CElectionEditor
 
 		this.addElectionDescriptionButton = addElectionDescriptionButton;
 		this.loadElectionDescriptionButton = loadElectionDescriptionButton;
-
+		this.saveElectionDescriptionButton = saveElectionDescriptionButton;
+		
 		setupNewElectionButtons();
 
 		this.testLoopBoundButton = testLoopBoundButton;

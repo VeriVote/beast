@@ -96,11 +96,17 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox;
 	@FXML
 	private Button addElectionDescriptionButton;
+	@FXML
+	private Button saveElectionDescriptionButton;
 
 	@FXML
 	private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
 	@FXML
 	private Button addPropDescrButton;
+	@FXML
+	private Button loadPropDescrButton;
+	@FXML
+	private Button savePropDescrButton;
 
 	// TestConfigHandler
 	@FXML
@@ -203,7 +209,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		cElectionEditor = new CElectionEditor(primaryStage,
 				cEditorGUIElementVsp, addElectionDescriptionButton,
-				loadElectionDescriptionButton, addFunctionMenuButton,
+				loadElectionDescriptionButton, saveElectionDescriptionButton,
+				addFunctionMenuButton,
 				removeFunctionButton, testLoopBoundButton, cEditorGUIElement,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
@@ -223,8 +230,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
 				prePropertyEditor, postPropertyEditor, addPropDescrButton,
-				removeSymbVarButton, variableTreeView, addSymbVarMenu,
-				openedPropertyDescriptionChoiceBox, beastWorkspace);
+				loadPropDescrButton, savePropDescrButton,
+				removeSymbVarButton, variableTreeView,
+				addSymbVarMenu, openedPropertyDescriptionChoiceBox,
+				beastWorkspace);
 	}
 
 	private void initTestConfigHandler() throws IOException {

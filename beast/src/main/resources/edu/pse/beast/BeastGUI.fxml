@@ -35,7 +35,8 @@
                                     <AnchorPane fx:id="codePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                                     <Separator prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
                                     <Button fx:id="addElectionDescriptionButton" layoutX="381.0" layoutY="5.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="loadElectionDescriptionButton" layoutX="416.0" layoutY="5.0" mnemonicParsing="false" text="Open" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="5.0" />
+                                    <Button fx:id="loadElectionDescriptionButton" layoutX="416.0" layoutY="5.0" mnemonicParsing="false" text="Load" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="5.0" />
+                                    <Button fx:id="saveElectionDescriptionButton" layoutX="460.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="460.0" />
                                  </children></AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
@@ -103,7 +104,7 @@
                                                          <bottom>
                                                             <BorderPane BorderPane.alignment="CENTER">
                                                                <left>
-                                                                  <Button alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="remove" BorderPane.alignment="CENTER" />
+                                                                  <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="remove" BorderPane.alignment="CENTER" />
                                                                </left>
                                                             </BorderPane>
                                                          </bottom>
@@ -129,6 +130,8 @@
                            </items>
                         </SplitPane>
                         <Button fx:id="addPropDescrButton" layoutX="380.0" layoutY="5.0" mnemonicParsing="false" text="+" AnchorPane.leftAnchor="380.0" />
+                        <Button fx:id="loadPropDescrButton" layoutX="414.0" layoutY="5.0" mnemonicParsing="false" text="Load" AnchorPane.leftAnchor="410.0" />
+                        <Button fx:id="savePropDescrButton" layoutX="459.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="460.0" />
                      </children>
                   </AnchorPane>
             </content>

@@ -30,13 +30,15 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
 	private BeastWorkspace beastWorkspace;
 	private Button addPropDescrButton;
-
-
+	private Button loadPropDescrButton;
+	private Button savePropDescrButton;
 	
 	public PreAndPostPropertyEditor(PropertyEditorCodeElement preEditor,
 			PropertyEditorCodeElement postEditor, Button addPropDescrButton,
-			Button removeSymbVarButton, TreeView<String> variableTreeView,
-			MenuButton addSymbVarMenu,
+			Button loadPropDescrButton, 
+			Button savePropDescrButton,			
+			Button removeSymbVarButton,
+			TreeView<String> variableTreeView, MenuButton addSymbVarMenu,
 			ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		this.preEditor = preEditor;
@@ -47,11 +49,13 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		this.openedPropertyDescriptionChoiceBox = openedPropertyDescriptionChoiceBox;
 		this.beastWorkspace = beastWorkspace;
 		this.addPropDescrButton = addPropDescrButton;
+		this.loadPropDescrButton = loadPropDescrButton;
+		this.savePropDescrButton = savePropDescrButton;
 		
 		initAddPropDescrButton();
 
 		beastWorkspace.registerUpdateListener(this);
-		
+
 		preEditor.setChangeListener(text -> {
 			beastWorkspace.updateCodeForPropDescr(text,
 					currentPropDescr.getPreConditionsDescription(),
@@ -83,6 +87,9 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 				beastWorkspace.addPropertyDescription(propDescr);
 			}
 		});
+		loadPropDescrButton.setOnAction(e -> {
+			beastWorkspace.letUserLoadPropDescr();
+		});
 	}
 
 	@Override
@@ -111,14 +118,14 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 			});
 			addSymbVarMenu.getItems().add(item);
 		}
-		
+
 		removeSymbVarButton.setOnAction(e -> {
 			removeSelectedSymbVar();
 		});
 	}
-	
+
 	private void removeSelectedSymbVar() {
-		
+
 	}
 
 	private void selectedPropDescrChanged(
@@ -144,7 +151,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 				.getLoadedPropDescrs()) {
 			openedPropertyDescriptionChoiceBox.getItems().add(propDescr);
 		}
-		if(openedPropertyDescriptionChoiceBox.getItems().isEmpty()) {
+		if (openedPropertyDescriptionChoiceBox.getItems().isEmpty()) {
 			selectedPropDescrChanged(null);
 		} else {
 			openedPropertyDescriptionChoiceBox.getSelectionModel().selectLast();
@@ -156,14 +163,14 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	}
 
 	private void populateVariableList(List<SymbolicCBMCVar> vars) {
-		if(vars == null) {
+		if (vars == null) {
 			variableTreeView.setRoot(null);
 			addSymbVarMenu.setDisable(true);
 			removeSymbVarButton.setDisable(true);
 		} else {
 			addSymbVarMenu.setDisable(false);
 			removeSymbVarButton.setDisable(false);
-			
+
 			TreeItem<String> voter = new TreeItem("Voter");
 			TreeItem<String> candidate = new TreeItem("Candidate");
 			for (SymbolicCBMCVar v : vars) {
@@ -179,15 +186,16 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 			root.getChildren().add(candidate);
 			variableTreeView.setRoot(root);
 			variableTreeView.setShowRoot(false);
-		}		
+		}
 	}
 
 	public void loadProperty(PreAndPostConditionsDescription propDescr) {
 		this.currentPropDescr = propDescr;
 
-		if(propDescr == null) {
+		if (propDescr == null) {
 			preEditor.setDisable(true);
 			postEditor.setDisable(true);
+			populateVariableList(null);
 		} else {
 			preEditor.setDisable(false);
 			preEditor.clear();
@@ -197,9 +205,8 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 			postEditor.clear();
 			postEditor.insertText(0,
 					propDescr.getPostConditionsDescription().getCode());
+			populateVariableList(propDescr.getCbmcVariables());
 		}
-		
-		populateVariableList(propDescr.getCbmcVariables());
 	}
 
 	@Override

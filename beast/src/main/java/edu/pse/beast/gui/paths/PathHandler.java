@@ -26,6 +26,11 @@ public class PathHandler {
 		return new File(baseDir + relPathToSaveFiles + relPathToDescrSaveFiles);
 	}
 	
+	public File getPropDescrDir() {
+		return new File(baseDir + relPathToSaveFiles + relPathToPropDescrSaveFiles);
+
+	}
+	
 	private void tryload() {
 		baseDir = System.getProperty("user.dir");
 		File lastLoadedConfigFile = new File(baseDir + relPathToSaveFiles + lastLoadedConfigFileName);
@@ -36,4 +41,6 @@ public class PathHandler {
 			
 		}
 	}
+
+	
 }
