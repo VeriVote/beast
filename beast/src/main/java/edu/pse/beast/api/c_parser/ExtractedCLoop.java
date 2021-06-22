@@ -2,6 +2,7 @@ package edu.pse.beast.api.c_parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 
@@ -15,6 +16,7 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 public class ExtractedCLoop {
 	private IterationStatementContext ctx;
 	
+	private String uuid = UUID.randomUUID().toString();	
 	private CLoopTypes loopType;
 	
 	private int line;
@@ -35,6 +37,18 @@ public class ExtractedCLoop {
 		this.functionName = functionName;
 		this.loopNumberInFunction = loopNumberInFunction;
 		init(codeGenOptions);
+	}
+	
+	public List<ExtractedCLoop> getChildrenLoops() {
+		return childrenLoops;
+	}
+	
+	public CLoopTypes getLoopType() {
+		return loopType;
+	}
+	
+	public String getFunctionName() {
+		return functionName;
 	}
 
 	public int getLoopNumberInFunction() {
@@ -156,5 +170,12 @@ public class ExtractedCLoop {
 	public void addChild(ExtractedCLoop l) {
 		childrenLoops.add(l);
 	}
-
+	
+	public String getUuid() {
+		return uuid;
+	}
+	
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 }
