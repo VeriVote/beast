@@ -3,7 +3,7 @@ package edu.pse.beast.gui.paths;
 import java.io.File;
 
 public class PathHandler {
-	private String workingDir;
+	private String baseDir;
 	private String lastLoadedWorkspaceUUID;
 	
 	private final String lastLoadedConfigFileName = "lastLoadedWorkspace";
@@ -14,14 +14,21 @@ public class PathHandler {
 	private String relPathToDescrSaveFiles = "./electionDescriptions/";
 	private String relPathToPropDescrSaveFiles = "./propertyDescriptions/";
 	
-	
 	public PathHandler() {
 		tryload();
 	}
 	
+	public String getBaseDir() {
+		return baseDir;
+	}
+	
+	public File getElectionDescrDir() {
+		return new File(baseDir + relPathToSaveFiles + relPathToDescrSaveFiles);
+	}
+	
 	private void tryload() {
-		workingDir = System.getProperty("user.dir");
-		File lastLoadedConfigFile = new File(workingDir + relPathToSaveFiles + lastLoadedConfigFileName);
+		baseDir = System.getProperty("user.dir");
+		File lastLoadedConfigFile = new File(baseDir + relPathToSaveFiles + lastLoadedConfigFileName);
 
 		if(lastLoadedConfigFile.exists()) {
 			

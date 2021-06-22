@@ -43,7 +43,7 @@ public class ElectIntersectionHelper {
 				"LIST_MEMBER", electStruct.getListName(),
 				"GENERATED_VAR_NAME", generatedVarName,
 				"LHS_VAR_NAME", intersectedElectNames.get(0),
-				"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
+				"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
 				"ASSUME", options.getCbmcAssumeName(),
 				"NONDET_UINT", options.getCbmcNondetUintName()
 				);

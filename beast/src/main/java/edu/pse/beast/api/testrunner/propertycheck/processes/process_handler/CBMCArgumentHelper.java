@@ -6,7 +6,7 @@ public class CBMCArgumentHelper {
 	public static String getConstCommands(CodeGenOptions codeGenOptions, int V, int C,
 			int S) {
 		return 	" -D " + codeGenOptions.getCbmcAmountMaxVotersVarName() + "=" + V +
-				" -D " + codeGenOptions.getCbmcAmountMaxCandidatesVarName() + "=" + C +
+				" -D " + codeGenOptions.getCbmcAmountMaxCandsVarName() + "=" + C +
 				" -D " + codeGenOptions.getCbmcAmountMaxSeatsVarName() + "=" + S;
 	}
 }

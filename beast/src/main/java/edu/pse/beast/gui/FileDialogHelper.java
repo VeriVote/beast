@@ -16,7 +16,7 @@ public class FileDialogHelper {
 
 	public static CElectionDescription letUserLoadElectionDescription(
 			File baseDir, Stage primaryStage)
-			throws NotImplementedException, IOException {
+			throws IOException {
 		File f = letUserOpenFile("beast election description", "belec",
 				"choose election description", baseDir, primaryStage);
 		if (f != null) {

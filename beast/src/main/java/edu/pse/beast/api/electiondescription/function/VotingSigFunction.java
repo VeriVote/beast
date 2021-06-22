@@ -11,8 +11,7 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
 
-public class VotingSigFunction
-		extends CElectionDescriptionFunction {
+public class VotingSigFunction extends CElectionDescriptionFunction {
 	private String name;
 	private String resultArrayName = "result";
 	private String votesArrayName = "votes";
@@ -20,8 +19,7 @@ public class VotingSigFunction
 	VotingInputTypes inputType;
 	VotingOutputTypes outputType;
 
-	public VotingSigFunction(String name,
-			VotingInputTypes inputType,
+	public VotingSigFunction(String name, VotingInputTypes inputType,
 			VotingOutputTypes outputType) {
 		super(name);
 		this.name = name;
@@ -74,26 +72,34 @@ public class VotingSigFunction
 	// TODO(Holger) This can be moves somewhere else, just dont know where yet.
 	// Probably together with the rest of code generation.
 	@Override
-	public String getDeclCString(
-			CodeGenOptions codeGenOptions) {
-		String template = "RETURN_TYPE NAME(ARG) {\n"
-				+ "    RESULT_ARR;";
+	public String getDeclCString(CodeGenOptions codeGenOptions) {
+		String template = "RETURN_TYPE NAME(ARG) {\n" + "    RESULT_ARR;";
 
 		String returnType = getReturnType();
+		returnType = returnType.replaceAll("[V]",
+				codeGenOptions.getCurrentAmountVotersVarName());
+		returnType = returnType.replaceAll("[C]",
+				codeGenOptions.getCurrentAmountCandsVarName());
+		returnType = returnType.replaceAll("[S]",
+				codeGenOptions.getCurrentAmountSeatsVarName());
 
 		String arg = getArgType();
+		arg = arg.replaceAll("[V]",
+				codeGenOptions.getCurrentAmountVotersVarName());
+		arg = arg.replaceAll("[C]",
+				codeGenOptions.getCurrentAmountCandsVarName());
+		arg = arg.replaceAll("[S]",
+				codeGenOptions.getCurrentAmountSeatsVarName());
 
-		CTypeNameBrackets resultType = FunctionToC
-				.votingTypeToC(
-						CElectionVotingType.of(outputType),
-						resultArrayName, codeGenOptions);
+		CTypeNameBrackets resultType = FunctionToC.votingTypeToC(
+				CElectionVotingType.of(outputType), resultArrayName,
+				codeGenOptions.getCurrentAmountVotersVarName(),
+				codeGenOptions.getCurrentAmountCandsVarName(),
+				codeGenOptions.getCurrentAmountSeatsVarName());
 
-		return template
-				.replaceAll("RETURN_TYPE", returnType)
-				.replaceAll("ARG", arg)
-				.replaceAll("NAME", getName())
-				.replaceAll("RESULT_ARR",
-						resultType.generateCode());
+		return template.replaceAll("RETURN_TYPE", returnType)
+				.replaceAll("ARG", arg).replaceAll("NAME", getName())
+				.replaceAll("RESULT_ARR", resultType.generateCode());
 	}
 
 	public String getResultArrayName() {
@@ -105,11 +111,8 @@ public class VotingSigFunction
 	}
 
 	@Override
-	public String getReturnText(
-			CodeGenOptions codeGenOptions) {
+	public String getReturnText(CodeGenOptions codeGenOptions) {
 		String template = "return RETURN_NAME;\n}";
-		return template.replaceAll("RETURN_NAME",
-				resultArrayName);
+		return template.replaceAll("RETURN_NAME", resultArrayName);
 	}
-
 }

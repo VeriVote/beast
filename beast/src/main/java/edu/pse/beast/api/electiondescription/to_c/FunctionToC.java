@@ -9,19 +9,19 @@ import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 public class FunctionToC {
 
 	public static CTypeNameBrackets votingTypeToC(CElectionVotingType type,
-			String name, CodeGenOptions codeGenOptions) {
+			String name, String V, String C, String S) {
 		String arrayBracks = "";
 		for (int i = 0; i < type.getListDimensions(); ++i) {
 			String arraySize = "";
 			switch (type.getListSizes().get(i)) {
 				case AMT_VOTERS:
-					arraySize = codeGenOptions.getCbmcAmountMaxVotersVarName();
+					arraySize = V;
 					break;
 				case AMT_CANDIDATES :
-					arraySize = codeGenOptions.getCbmcAmountMaxCandidatesVarName();
+					arraySize = C;
 					break;
 				case AMT_SEATS :
-					arraySize = codeGenOptions.getCbmcAmountMaxSeatsVarName();
+					arraySize = S;
 					break;
 			}
 			arrayBracks += "[" + arraySize + "]";

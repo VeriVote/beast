@@ -40,7 +40,7 @@ public class VoteTupleHelper {
 					"AMT_MEMBER", voteArrStruct.getAmtName(),
 					"LIST_MEMBER", voteArrStruct.getListName(),
 					"NONDET_UINT", options.getCbmcNondetUintName(),
-					"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
+					"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
 					"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(),
 					"VOTE_TYPE", voteArrStruct.getStruct().getName(),
 					"VAR_NAME", generatedVarName,

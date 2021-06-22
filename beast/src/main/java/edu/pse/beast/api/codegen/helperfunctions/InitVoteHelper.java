@@ -43,7 +43,7 @@ public abstract class InitVoteHelper {
 		String currentAmtSeatVarName = getCurrentAmtSeat(voteNumber);
 
 		Map<String, String> replacementMap = StringReplacementMap.genMap(
-				"MAX_AMT_CAND", options.getCbmcAmountMaxCandidatesVarName(), 
+				"MAX_AMT_CAND", options.getCbmcAmountMaxCandsVarName(), 
 				"MAX_AMT_VOTER", options.getCbmcAmountMaxVotersVarName(), 
 				"MAX_AMT_SEAT", options.getCbmcAmountMaxSeatsVarName(), 
 				"CURRENT_AMT_VOTER", currentAmtVoterVarName, 

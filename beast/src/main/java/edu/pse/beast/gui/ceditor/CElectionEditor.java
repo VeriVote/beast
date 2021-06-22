@@ -502,19 +502,7 @@ public class CElectionEditor
 	}
 
 	private void letUserLoadDescr() {
-		try {
-			CElectionDescription descr = FileDialogHelper
-					.letUserLoadElectionDescription(
-							beastWorkspace.getBaseDir(),
-							primaryStage);
-			if (descr != null)
-				beastWorkspace
-						.addElectionDescription(descr);
-		} catch (IOException exception) {
-			beastWorkspace.getErrorHandler()
-					.logAndDisplayError("Loading descr",
-							"There was an error trying to load the election descr");
-		}
+		beastWorkspace.letUserLoadDescr();		
 	}
 
 	public void save() {

@@ -14,7 +14,7 @@ public class CodeGenOptionsSaverLoaderHelper {
 		JSONObject json = new JSONObject();
 
 		json.put(AMT_VOTER_VAR_NAME_KEY, opts.getCbmcAmountMaxVotersVarName());
-		json.put(AMT_CANDS_VAR_NAME_KEY, opts.getCbmcAmountMaxCandidatesVarName());
+		json.put(AMT_CANDS_VAR_NAME_KEY, opts.getCbmcAmountMaxCandsVarName());
 		json.put(AMT_SEATS_VAR_NAME_KEY, opts.getCbmcAmountMaxSeatsVarName());
 
 		return json;

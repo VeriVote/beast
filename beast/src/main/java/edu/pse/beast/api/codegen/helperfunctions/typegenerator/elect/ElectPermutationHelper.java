@@ -30,7 +30,7 @@ public class ElectPermutationHelper {
 					"NONDET_UINT", options.getCbmcNondetUintName(),
 					"RHS", varName,
 					"PERM", "permutationIndices",
-					"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName()
+					"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName()
 				);
 		
 		String code = null;		

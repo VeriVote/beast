@@ -27,7 +27,7 @@ public class VotePermutationHelper {
 					"AMT_MEMBER", voteArrStruct.getAmtName(),
 					"LIST_MEMBER", voteArrStruct.getListName(),
 					"GENERATED_VAR_NAME", generatedVarName,
-					"AMT_CANDIDATES", options.getCbmcAmountMaxCandidatesVarName(),
+					"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
 					"ASSUME", options.getCbmcAssumeName(),
 					"NONDET_UINT", options.getCbmcNondetUintName(),
 					"RHS", varName,

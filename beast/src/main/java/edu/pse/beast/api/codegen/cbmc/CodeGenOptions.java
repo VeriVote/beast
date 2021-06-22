@@ -37,7 +37,7 @@ public class CodeGenOptions {
 		this.cbmcAmountMaxSeatsVarName = cbmcAmountSeatsVarName;
 	}
 
-	public String getCbmcAmountMaxCandidatesVarName() {
+	public String getCbmcAmountMaxCandsVarName() {
 		return cbmcAmountMaxCandidatesVarName;
 	}
 
