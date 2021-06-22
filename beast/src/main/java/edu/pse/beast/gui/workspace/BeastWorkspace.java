@@ -433,7 +433,7 @@ public class BeastWorkspace {
 			try {
 				BeastWorkspace ws = SavingLoadingInterface
 						.loadBeastWorkspace(f);
-
+				loadWorkspace(ws);
 			} catch (Exception e) {
 				errorHandler.logAndDisplayError("save error",
 						e.getLocalizedMessage());
@@ -573,8 +573,14 @@ public class BeastWorkspace {
 			PreAndPostConditionsDescription propDescr) {
 		TestConfiguration tc = new TestConfiguration(descr, propDescr, name);
 		CBMCPropertyTestConfiguration configuration = new CBMCPropertyTestConfiguration();
+		configuration.setDescr(descr);
+		configuration.setPropDescr(propDescr);
+		configuration.setName(name);
 		tc.addCBMCTestConfiguration(configuration);
 		testConfigList.add(tc);
+		for(WorkspaceUpdateListener l : updateListener) {
+			l.handleAddedTestConfig(tc);
+		}
 	}
 
 }

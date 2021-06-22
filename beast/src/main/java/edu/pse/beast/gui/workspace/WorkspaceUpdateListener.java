@@ -9,6 +9,7 @@ import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFuncti
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 
 public interface WorkspaceUpdateListener {
@@ -61,6 +62,10 @@ public interface WorkspaceUpdateListener {
 	}
 
 	public default void handleAddedPropDescr(PreAndPostConditionsDescription propDescr) {
+		
+	}
+
+	public default void handleAddedTestConfig(TestConfiguration tc) {
 		
 	}
 

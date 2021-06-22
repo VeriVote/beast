@@ -225,6 +225,11 @@ public class TestConfigTopLevelGUIHandler
 	public void handleWorkspaceUpdateGeneric() {
 		updateTestConfigTreeView();
 	}
+	
+	@Override
+	public void handleAddedTestConfig(TestConfiguration tc) {
+		updateTestConfigTreeView();
+	}
 
 	@Override
 	public void handleWorkspaceUpdateAddedCBMCRuns(

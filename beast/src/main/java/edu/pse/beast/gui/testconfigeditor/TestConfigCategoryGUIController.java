@@ -104,5 +104,10 @@ public class TestConfigCategoryGUIController
 	public void handleWorkspaceUpdateGeneric() {
 		updateView();
 	}
+	
+	@Override
+	public void handleAddedTestConfig(TestConfiguration tc) {
+		updateView();
+	}
 
 }
