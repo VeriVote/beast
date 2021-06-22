@@ -1,12 +1,12 @@
 package edu.pse.beast.api.savingloading;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
