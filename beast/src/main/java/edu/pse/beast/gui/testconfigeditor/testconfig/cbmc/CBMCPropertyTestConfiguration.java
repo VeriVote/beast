@@ -57,39 +57,66 @@ public class CBMCPropertyTestConfiguration {
 	public PreAndPostConditionsDescription getPropDescr() {
 		return propDescr;
 	}
+	
 	public void setMinCands(int minCands) {
 		this.minCands = minCands;
-	}
-	public void setMinVoters(int minVoters) {
-		this.minVoters = minVoters;
-	}
-	public void setMinSeats(int minSeats) {
-		this.minSeats = minSeats;
+		if(maxCands < minCands) {
+			maxCands = minCands;
+		}
 	}
 	public void setMaxCands(int maxCands) {
 		this.maxCands = maxCands;
+		if(maxCands < minCands) {
+			maxCands = minCands;
+		}
+	}
+	
+	public void setMinVoters(int minVoters) {
+		this.minVoters = minVoters;
+		if(maxVoters < minVoters) {
+			maxVoters = minVoters;
+		}
 	}
 	public void setMaxVoters(int maxVoters) {
 		this.maxVoters = maxVoters;
+		if(maxVoters < minVoters) {
+			maxVoters = minVoters;
+		}
+	}
+	
+	public void setMinSeats(int minSeats) {
+		this.minSeats = minSeats;
+		if(maxSeats < minSeats) {
+			maxSeats = minSeats;
+		}
 	}
 	public void setMaxSeats(int maxSeats) {
 		this.maxSeats = maxSeats;
+		if(maxSeats < minSeats) {
+			maxSeats = minSeats;
+		}
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public void setDescr(CElectionDescription descr) {
 		this.descr = descr;
 	}
+	
 	public void setPropDescr(PreAndPostConditionsDescription propDescr) {
 		this.propDescr = propDescr;
 	}
+	
 	public boolean getStartRunsOnCreation() {
 		return startRunsOnCreation;
 	}
+	
 	public void setStartRunsOnCreation(boolean startRunsOnCreation) {
 		this.startRunsOnCreation = startRunsOnCreation;
 	}
+	
 	public void addRun(CBMCTestRun run) {
 		runs.add(run);
 	}

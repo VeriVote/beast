@@ -80,22 +80,45 @@ public class CBMCTestConfigGuiController {
 	@FXML
 	private void initialize() {
 		minVoters.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+		minVoters.getValueFactory().valueProperty().addListener((e, o , n) -> {
+			currentConfig.setMinVoters(minVoters.getValue());
+		});		
+		
 		maxVoters.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+		maxVoters.getValueFactory().valueProperty().addListener((e, o , n) -> {
+			currentConfig.setMaxVoters(maxVoters.getValue());
+		});		
+		
 		minCandidates.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+		minCandidates.getValueFactory().valueProperty().addListener((e, o , n) -> {
+			currentConfig.setMinCands(minCandidates.getValue());
+		});	
+		
 		maxCandidates.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+		maxCandidates.getValueFactory().valueProperty().addListener((e, o , n) -> {
+			currentConfig.setMaxCands(maxCandidates.getValue());
+		});			
+		
 		minSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+		minSeats.getValueFactory().valueProperty().addListener((e, o , n) -> {
+			currentConfig.setMinCands(minSeats.getValue());
+		});	
+		
 		maxSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
-		
-		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
-		propDescrChoiceBox.getItems().addAll(beastWorkspace.getLoadedPropDescrs());
-		
+		maxSeats.getValueFactory().valueProperty().addListener((e, o , n) -> {
+			currentConfig.setMaxSeats(maxSeats.getValue());
+		});	
+				
 		startCreatedTestsCheckbox.selectedProperty().addListener((o, oldVal, newVal) -> {
 			currentConfig.setStartRunsOnCreation(newVal);
 		});
 		
 		createTestRunsButton.setOnAction(ae -> {
 			beastWorkspace.createCBMCTestRunsAndAddToConfig(currentConfig);
-		});
+		});		
+
+		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
+		propDescrChoiceBox.getItems().addAll(beastWorkspace.getLoadedPropDescrs());
 		
 		updateFilesButton.setOnAction(e -> {
 			try {
