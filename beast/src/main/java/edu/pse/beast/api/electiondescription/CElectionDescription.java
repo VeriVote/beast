@@ -44,6 +44,14 @@ public class CElectionDescription {
 		votingFunction = createNewVotingSigFunctionAndAdd("voting");
 		this.uuid = uuid;
 	}
+	
+	public void setFunctions(List<CElectionDescriptionFunction> functions) {
+		this.functions = functions;
+	}
+	
+	public void setVotingFunction(VotingSigFunction votingFunction) {
+		this.votingFunction = votingFunction;
+	}
 
 	public boolean hasFunctionName(String name) {
 		return functionNames.contains(name);

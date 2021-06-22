@@ -14,12 +14,15 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 
 public class ExtractedCLoop {
 	private IterationStatementContext ctx;
+	
 	private CLoopTypes loopType;
+	
 	private int line;
 	private int loopNumberInFunction;
+	private int posInLine;
+	
 	private CLoopParseResultType loopParseResult;
 	private LoopBoundType parsedLoopBoundType;
-	private int posInLine;
 	private String functionName;
 
 	private ExtractedCLoop parentLoop;

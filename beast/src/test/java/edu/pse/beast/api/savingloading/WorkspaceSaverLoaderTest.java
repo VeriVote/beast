@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;

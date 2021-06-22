@@ -13,9 +13,8 @@ public abstract class CElectionDescriptionFunction {
 	protected String name;
 	protected List<String> code = new ArrayList<>();
 	protected List<ExtractedCLoop> extractedLoops = new ArrayList<>();
-
+	
 	public CElectionDescriptionFunction(String name) {
-		super();
 		this.name = name;
 	}
 
