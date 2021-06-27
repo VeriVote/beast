@@ -20,6 +20,7 @@ import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsGUIController;
+import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
 import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
@@ -229,17 +230,32 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private void initMenu() {
 		Menu fileMenu = new Menu();
 		fileMenu.setText("File");
+		
+		MenuItem loadWorkspaceMenuItem = new MenuItem("Load Workspace");	
+		MenuItem saveWorkspaceMenuItem = new MenuItem("Save Workspace");
+		
+		loadWorkspaceMenuItem.setOnAction(e -> {
+			beastWorkspace.letUserLoadWorkSpace();
+		});
+
+		saveWorkspaceMenuItem.setOnAction(e -> {
+			beastWorkspace.saveWorkspace();
+		});
+
+		fileMenu.getItems().add(loadWorkspaceMenuItem);
+		fileMenu.getItems().add(saveWorkspaceMenuItem);
 
 		Menu prefMenu = new Menu();
 		prefMenu.setText("Preferences");
 
 		MenuItem optionsMenuItem = new MenuItem();
-		optionsMenuItem.setText("options");
+		optionsMenuItem.setText("Options");
 		optionsMenuItem.setOnAction(e -> {
 			optionsGUIController.display();
 		});
 		prefMenu.getItems().add(optionsMenuItem);
 
+		menuBar.getMenus().add(fileMenu);
 		menuBar.getMenus().add(prefMenu);
 	}
 
@@ -255,6 +271,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 					cbmcProcessHandlerCreator);
 			options.add(processHandlerWindowsOptions);
 		}
+		
+		options.add(new CEditorOptionsGUI());
 		
 		OptionsSaverLoader.saveOptions(optionsFile, options);
 
@@ -293,7 +311,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
 		initMenu();
-
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {
