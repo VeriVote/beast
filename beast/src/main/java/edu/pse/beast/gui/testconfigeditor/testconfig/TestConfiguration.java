@@ -62,6 +62,12 @@ public class TestConfiguration {
 			cbmctc.handleDescrCodeChange();
 		}
 	}
+	
+	public List<CBMCPropertyTestConfiguration> getCBMCTestConfigs() {
+		List<CBMCPropertyTestConfiguration> list = new ArrayList<>();
+		list.addAll(cbmcTestConfigsByName.values());
+		return list;
+	}
 
 	public void handlePropDescrChanged() {
 		//TODO this can be made smarter by giving the run items a reference to the current

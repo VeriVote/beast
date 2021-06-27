@@ -59,10 +59,11 @@ public class BeastWorkspace {
 
 	private PathHandler pathHandler;
 
-	public static BeastWorkspace getStandardWorkspace() {
+	public static BeastWorkspace getStandardWorkspace(
+			CBMCProcessHandlerCreator cbmcProcessHandlerCreator) {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
-		beastWorkspace.cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
+		beastWorkspace.cbmcProcessHandlerCreator = cbmcProcessHandlerCreator;
 
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 
@@ -84,11 +85,6 @@ public class BeastWorkspace {
 		beastWorkspace.setTestConfigList(new TestConfigurationList());
 
 		return beastWorkspace;
-	}
-
-	public void setCbmcProcessHandlerCreator(
-			CBMCProcessHandlerCreator cbmcProcessHandlerCreator) {
-		this.cbmcProcessHandlerCreator = cbmcProcessHandlerCreator;
 	}
 
 	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
@@ -113,6 +109,11 @@ public class BeastWorkspace {
 
 	public void setTestConfigList(TestConfigurationList testConfigList) {
 		this.testConfigList = testConfigList;
+		for (CBMCTestRun run : testConfigList.getCBMCTestRuns()) {
+			CBMCPropertyCheckWorkUnit wu = new CBMCPropertyCheckWorkUnit(
+					cbmcProcessHandlerCreator, UUID.randomUUID().toString());
+			run.setAndInitializeWorkUnit(wu);
+		}
 		registerUpdateListener(testConfigList);
 	}
 

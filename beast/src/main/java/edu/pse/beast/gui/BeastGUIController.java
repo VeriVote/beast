@@ -103,7 +103,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	private TabPane propertyTestRunPane;
-	
+
 	@FXML
 	private Button editLoopboundButton;
 
@@ -149,6 +149,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	private File optionsSaveFile;
 
+	private CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();;
+
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
 		codePane.getChildren().add(child);
@@ -180,8 +182,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				cEditorGUIElementVsp, addElectionDescriptionButton,
 				loadElectionDescriptionButton, saveElectionDescriptionButton,
 				addFunctionMenuButton, removeFunctionButton,
-				testLoopBoundButton, editLoopboundButton, cEditorGUIElement, funcDeclArea,
-				closingBracketArea, functionList, loopBoundList,
+				testLoopBoundButton, editLoopboundButton, cEditorGUIElement,
+				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
 
@@ -216,7 +218,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	}
 
 	private void initWorkspace(ErrorHandler errorHandler) {
-		beastWorkspace = BeastWorkspace.getStandardWorkspace();
+		beastWorkspace = BeastWorkspace
+				.getStandardWorkspace(cbmcProcessHandlerCreator);
 
 		beastWorkspace.setErrorHandler(errorHandler);
 
@@ -264,9 +267,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 			File optionsFile) throws IOException {
 		OS os = OSHelper.getOS();
 		List<OptionsCategoryGUI> options = new ArrayList<>();
-
 		if (os == OS.WINDOWS) {
-			CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 			cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
 			ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions = new ProcessHandlerWindowsOptionsGUI(
 					cbmcProcessHandlerCreator);
@@ -289,18 +290,13 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 			options = createStandardOptionsAndSave(optionsSaveFile);
 		} else {
 			options = OptionsSaverLoader.loadOptions(optionsSaveFile);
-		}
-
-		for (OptionsCategoryGUI option : options) {
-			switch (option.getCategory()) {
-			case PROCESS_HANDLER_WINDOWS:
-				beastWorkspace.setCbmcProcessHandlerCreator(
-						((ProcessHandlerWindowsOptionsGUI) option)
-								.getCbmcProcessHandlerCreator());
-				break;
-			case C_DESCR_EDITOR:
-				((CEditorOptionsGUI) option)
-						.setcElectionEditor(cElectionEditor);
+			for (OptionsCategoryGUI cat : options) {
+				switch (cat.getCategory()) {
+				case PROCESS_HANDLER_WINDOWS:
+					cbmcProcessHandlerCreator = ((ProcessHandlerWindowsOptionsGUI) cat)
+							.getCbmcProcessHandlerCreator();
+					break;
+				}
 			}
 		}
 
@@ -310,9 +306,22 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		optionsFXMLLoader.load();
 	}
 
+	private void linkOptions() {
+		for (OptionsCategoryGUI cat : optionsGUIController.getCategories()) {
+			switch (cat.getCategory()) {
+			case C_DESCR_EDITOR:
+				((CEditorOptionsGUI) cat).setcElectionEditor(cElectionEditor);
+				break;
+			}
+		}
+
+	}
+
 	@FXML
 	public void initialize() throws IOException {
+		// option Controller
 		PathHandler pathHandler = new PathHandler();
+		initOptionsGUIController(pathHandler);
 
 		// init gui
 		ErrorHandler errorHandler = new ErrorHandler(this);
@@ -323,8 +332,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
 
-		// option Controller
-		initOptionsGUIController(pathHandler);
+		linkOptions();
 
 		initMenu();
 	}
@@ -336,8 +344,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@Override
 	public void handleWorkspaceUpdateGeneric() {
-	}	
-	
+	}
 
 	public void shutdown() {
 		optionsGUIController.saveOptions();

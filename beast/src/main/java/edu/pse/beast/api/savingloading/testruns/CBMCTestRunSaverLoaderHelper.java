@@ -67,6 +67,8 @@ public class CBMCTestRunSaverLoaderHelper {
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(run.getCodeGenOptions()));
 
+		json.put(LOOP_BOUND_LIST_KEY, run.getLoopboundList());
+
 		return json;
 	}
 
@@ -87,12 +89,10 @@ public class CBMCTestRunSaverLoaderHelper {
 		CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsFromJSON(
 						json.getJSONObject(CODE_GEN_OPTIONS_KEY));
-		List<LoopBound> loopbounds = loopBoundListFromJSONArr(
-				json.getJSONArray(LOOP_BOUND_LIST_KEY));
+		String loopbounds = json.getString(LOOP_BOUND_LIST_KEY);
 
 		CBMCTestRun cbmcTestRun = new CBMCTestRun(v, s, c, codeGenOptions,
-				"", codeFileData, descr, propDescr);
-		
+				loopbounds, codeFileData, descr, propDescr);
 
 		return cbmcTestRun;
 	}

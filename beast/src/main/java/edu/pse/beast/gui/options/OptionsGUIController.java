@@ -34,6 +34,10 @@ public class OptionsGUIController {
 			cat.setOptionsGUIController(this);
 		}
 	}
+	
+	public List<OptionsCategoryGUI> getCategories() {
+		return categories;
+	}
 
 	@FXML
 	public void initialize() {

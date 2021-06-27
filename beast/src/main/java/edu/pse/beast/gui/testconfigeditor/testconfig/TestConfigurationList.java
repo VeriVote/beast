@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
@@ -15,7 +16,7 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 	private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr = new HashMap<>();
 	private Map<PreAndPostConditionsDescription, List<TestConfiguration>> testConfigsByPropDescr = new HashMap<>();
 	private Map<String, TestConfiguration> testConfigsByName = new HashMap<>();
-	
+
 	public boolean canAdd(TestConfiguration testConfig) {
 		return !testConfigsByName.containsKey(testConfig.getName());
 	}
@@ -55,19 +56,34 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 		return List.of();
 	}
 
-	public void handleDescrChange(
-			CElectionDescription descr) {
-		if(testConfigsByDescr.containsKey(descr)) {
-			for(TestConfiguration tc : testConfigsByDescr.get(descr)) {
+	public void handleDescrChange(CElectionDescription descr) {
+		if (testConfigsByDescr.containsKey(descr)) {
+			for (TestConfiguration tc : testConfigsByDescr.get(descr)) {
 				tc.handleDescrChange();
 			}
 		}
 	}
-	
+
+	public List<CBMCTestRun> getCBMCTestRuns() {
+		List<CBMCTestRun> list = new ArrayList<>();
+
+		for (CElectionDescription descr : testConfigsByDescr.keySet()) {
+			List<TestConfiguration> configs = testConfigsByDescr.get(descr);
+			for (TestConfiguration config : configs) {
+				for (CBMCPropertyTestConfiguration cbmcTestConfig : config
+						.getCBMCTestConfigs()) {
+					list.addAll(cbmcTestConfig.getRuns());
+				}
+			}
+		}
+
+		return list;
+	}
+
 	@Override
 	public void handleAddedPropDescr(
 			PreAndPostConditionsDescription propDescr) {
-		
+
 	}
 
 }
