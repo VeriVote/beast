@@ -14,7 +14,7 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfig
 
 public interface WorkspaceUpdateListener {
 	public default void handleWorkspaceUpdateGeneric() {
-
+		
 	}
 
 	public default void handleWorkspaceUpdateAddedCBMCRuns(

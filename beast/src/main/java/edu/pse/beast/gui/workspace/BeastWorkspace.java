@@ -59,11 +59,11 @@ public class BeastWorkspace {
 
 	private PathHandler pathHandler;
 
-	public static BeastWorkspace getStandardWorkspace(
-			CBMCProcessHandlerCreator cbmcProcessHandlerCreator) {
+	public static BeastWorkspace getStandardWorkspace() {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
-		beastWorkspace.cbmcProcessHandlerCreator = cbmcProcessHandlerCreator;
+		beastWorkspace.cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
+		
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 
 		codeGenOptions.setCbmcAmountMaxCandidatesVarName("MAX_CANDIDATES");
@@ -84,6 +84,11 @@ public class BeastWorkspace {
 		beastWorkspace.setTestConfigList(new TestConfigurationList());
 
 		return beastWorkspace;
+	}
+	
+	public void setCbmcProcessHandlerCreator(
+			CBMCProcessHandlerCreator cbmcProcessHandlerCreator) {
+		this.cbmcProcessHandlerCreator = cbmcProcessHandlerCreator;
 	}
 
 	public void setCodeGenOptions(CodeGenOptions codeGenOptions) {

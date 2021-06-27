@@ -20,6 +20,7 @@ import edu.pse.beast.api.electiondescription.function.CelectionDescriptionFuncti
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.FileDialogHelper;
+import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.collections.FXCollections;
@@ -70,7 +71,9 @@ public class CElectionEditor
 	private VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp;
 
 	private String codeStyleSheet;
-
+	
+	private double currentTextSize;
+	
 	public CElectionEditor(Stage primaryStage,
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
 			Button addElectionDescriptionButton,
@@ -108,6 +111,7 @@ public class CElectionEditor
 		loopBoundList.getSelectionModel()
 				.selectedItemProperty()
 				.addListener((e, oldVal, newVal) -> {
+					if(newVal == null) return;
 					int line = newVal.getLine();
 					int position = electionCodeArea
 							.position(line - 1,
@@ -416,11 +420,8 @@ public class CElectionEditor
 			int amtLinesInDecl = declText
 					.split("\n").length;
 
-			// TODO(Holger) move this into an CeditorOptions Object
-			double currentTextSize = 20;
-
 			AnchorPane.setTopAnchor(cEditorGUIElementVsp,
-					currentTextSize * amtLinesInDecl);
+					currentTextSize * 1.3 * amtLinesInDecl);
 
 			electionCodeArea.setDisable(false);
 			electionCodeArea.insertText(0, func.getCode());
@@ -510,6 +511,28 @@ public class CElectionEditor
 
 	public void save() {
 		beastWorkspace.saveDescr(currentDescr);
+	}
+	
+	private void setFont(double font) {
+		currentTextSize = font;
+		String styleString = "-fx-font-size: " + font + "px;";
+		electionCodeArea.setStyle(styleString);
+		funcDeclArea.setStyle(styleString);
+		closingBracketArea.setStyle(styleString);
+		
+		if(currentDescr == null) {
+			return;
+		}
+		String declText = currentDisplayedFunction.getDeclCString(
+				beastWorkspace.getCodeGenOptions());
+		int amtLinesInDecl = declText
+				.split("\n").length;
+		AnchorPane.setTopAnchor(cEditorGUIElementVsp,
+				currentTextSize * 1.3 * amtLinesInDecl);
+	}
+
+	public void applyOptions(CEditorOptions options) {
+		setFont(options.getFontSize());
 	}
 
 }

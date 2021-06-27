@@ -112,7 +112,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 
 	@Override
 	public String getReturnText(CodeGenOptions codeGenOptions) {
-		String template = "return RETURN_NAME;\n}";
+		String template = "    return RETURN_NAME;\n}";
 		return template.replaceAll("RETURN_NAME", resultArrayName);
 	}
 }

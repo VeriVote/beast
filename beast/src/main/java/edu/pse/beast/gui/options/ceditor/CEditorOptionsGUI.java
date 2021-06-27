@@ -23,21 +23,46 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
 	private FXMLLoader fxmlLoader = new FXMLLoader(
 			getClass().getResource(fxml));
 	
-	//============options start
-	private int fontSize;
 	
+	private CEditorOptions options;	
 	
 	private CElectionEditor cElectionEditor;
 	
-	public CEditorOptionsGUI() throws IOException {
+	public CEditorOptionsGUI(CEditorOptions options) throws IOException {
 		super(OptionsCategoryType.C_DESCR_EDITOR);
+		this.options = options;
 		fxmlLoader.setController(this);
 		fxmlLoader.load();
 	}
 	
+	public CEditorOptions getOptions() {
+		return options;
+	}
+	
+	public void setcElectionEditor(CElectionEditor cElectionEditor) {
+		this.cElectionEditor = cElectionEditor;
+		cElectionEditor.applyOptions(options);
+	}
+	
 	@FXML
 	public void initialize() {
-		System.out.println("ceditor options init");
+		fontSizeTextField.setText(String.valueOf(options.getFontSize()));
+		fontSizeSlider.setMin(4.0);
+		fontSizeSlider.setMax(50.0);
+		fontSizeSlider.setValue(options.getFontSize());
+		fontSizeSlider.setShowTickLabels(true);
+		fontSizeSlider.valueProperty().addListener((ob, o, n) -> {
+			double newVal = Math.round((double) n * 100) / 100;
+			fontSizeTextField.setText(String.valueOf(newVal));
+			fontSizeSlider.setValue(newVal);
+			options.setFontSize(newVal);
+			applyOptions();
+		});
+	}
+	
+	private void applyOptions() {		
+		optionsGUIController.optionUpdated();	
+		cElectionEditor.applyOptions(options);
 	}
 
 	@Override

@@ -10,14 +10,18 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
+import edu.pse.beast.gui.options.ceditor.CEditorOptions;
+import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
 import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 
 public class OptionsSaverLoader {
 
 	private final static String PROCESS_HANDLER_WINDOWS_KEY = "process_handler_windows";
-
 	private static final String PATH_TO_VS_DEV_CMD_KEY = "path_to_vs_dev_cmd";
+
+	private final static String C_EDITOR_KEY = "c_editor";
+	private final static String FONT_SIZE_KEY = "font_size";
 
 	private static void addToSaveJSON(
 			ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptionsGUI,
@@ -34,6 +38,13 @@ public class OptionsSaverLoader {
 		saveJson.put(PROCESS_HANDLER_WINDOWS_KEY, json);
 	}
 
+	private static void addToSaveJSON(CEditorOptionsGUI cEditorOptionsGUI,
+			JSONObject saveJson) {
+		JSONObject json = new JSONObject();
+		json.put(FONT_SIZE_KEY, cEditorOptionsGUI.getOptions().getFontSize());
+		saveJson.put(C_EDITOR_KEY, json);
+	}
+
 	public static void saveOptions(File f, List<OptionsCategoryGUI> options)
 			throws IOException {
 		JSONObject json = new JSONObject();
@@ -41,6 +52,9 @@ public class OptionsSaverLoader {
 			switch (option.getCategory()) {
 			case PROCESS_HANDLER_WINDOWS:
 				addToSaveJSON((ProcessHandlerWindowsOptionsGUI) option, json);
+				break;
+			case C_DESCR_EDITOR:
+				addToSaveJSON((CEditorOptionsGUI) option, json);
 				break;
 			}
 		}
@@ -59,9 +73,19 @@ public class OptionsSaverLoader {
 		return gui;
 	}
 
-	private static OptionsCategoryGUI fromJson(String key, JSONObject json) throws IOException {
+	private static CEditorOptionsGUI cEditorFromJson(JSONObject json)
+			throws IOException {
+		CEditorOptions options = new CEditorOptions();
+		options.setFontSize(json.getDouble(FONT_SIZE_KEY));
+		return new CEditorOptionsGUI(options);
+	}
+
+	private static OptionsCategoryGUI fromJson(String key, JSONObject json)
+			throws IOException {
 		if (key.equals(PROCESS_HANDLER_WINDOWS_KEY)) {
 			return processHandlerWindowsFromJson(json);
+		} else if (key.equals(C_EDITOR_KEY)) {
+			return cEditorFromJson(json);
 		}
 		throw new NotImplementedException();
 	}

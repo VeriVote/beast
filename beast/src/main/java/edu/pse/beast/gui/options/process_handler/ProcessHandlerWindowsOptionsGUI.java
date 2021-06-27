@@ -5,6 +5,7 @@ import java.io.IOException;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsCategoryType;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,7 +37,7 @@ public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
 	@FXML
 	public void initialize() {
 		vsDevCmdPathTextField.setText(cbmcProcessHandlerCreator.getVsDevCmdPath());
-		vsDevCmdPathTextField.setDisable(true);
+		vsDevCmdPathTextField.setEditable(false);
 		vsDevCmdButton.setOnAction(e -> askForProcessHandler());
 	}
 

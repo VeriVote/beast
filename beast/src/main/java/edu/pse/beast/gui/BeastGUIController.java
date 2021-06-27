@@ -20,6 +20,7 @@ import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsGUIController;
+import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
 import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
 import edu.pse.beast.gui.paths.PathHandler;
@@ -140,10 +141,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigTopLevelGUIHandler testConfigurationHandler;
 	private LogGuiController logGuiController;
-	private CBMCProcessHandlerCreator cbmcProcessHandlerCreator;
 
 	private BeastWorkspace beastWorkspace;
-	
+
 	private File optionsSaveFile;
 
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
@@ -212,10 +212,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		logGuiController = new LogGuiController(logAnchorPane, errorHandler);
 	}
 
-	private void initWorkspace(ErrorHandler errorHandler,
-			CBMCProcessHandlerCreator cbmcProcessHandlerCreator2) {
-		beastWorkspace = BeastWorkspace
-				.getStandardWorkspace(cbmcProcessHandlerCreator);
+	private void initWorkspace(ErrorHandler errorHandler) {
+		beastWorkspace = BeastWorkspace.getStandardWorkspace();
 
 		beastWorkspace.setErrorHandler(errorHandler);
 
@@ -230,10 +228,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private void initMenu() {
 		Menu fileMenu = new Menu();
 		fileMenu.setText("File");
-		
-		MenuItem loadWorkspaceMenuItem = new MenuItem("Load Workspace");	
+
+		MenuItem loadWorkspaceMenuItem = new MenuItem("Load Workspace");
 		MenuItem saveWorkspaceMenuItem = new MenuItem("Save Workspace");
-		
+
 		loadWorkspaceMenuItem.setOnAction(e -> {
 			beastWorkspace.letUserLoadWorkSpace();
 		});
@@ -264,16 +262,16 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		OS os = OSHelper.getOS();
 		List<OptionsCategoryGUI> options = new ArrayList<>();
 
-		cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 		if (os == OS.WINDOWS) {
+			CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 			cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
 			ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions = new ProcessHandlerWindowsOptionsGUI(
 					cbmcProcessHandlerCreator);
 			options.add(processHandlerWindowsOptions);
 		}
-		
-		options.add(new CEditorOptionsGUI());
-		
+
+		options.add(new CEditorOptionsGUI(new CEditorOptions()));
+
 		OptionsSaverLoader.saveOptions(optionsFile, options);
 
 		return options;
@@ -290,7 +288,21 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 			options = OptionsSaverLoader.loadOptions(optionsSaveFile);
 		}
 
-		optionsGUIController = new OptionsGUIController(options, optionsSaveFile);
+		for (OptionsCategoryGUI option : options) {
+			switch (option.getCategory()) {
+			case PROCESS_HANDLER_WINDOWS:
+				beastWorkspace.setCbmcProcessHandlerCreator(
+						((ProcessHandlerWindowsOptionsGUI) option)
+								.getCbmcProcessHandlerCreator());
+				break;
+			case C_DESCR_EDITOR:
+				((CEditorOptionsGUI) option)
+						.setcElectionEditor(cElectionEditor);
+			}
+		}
+
+		optionsGUIController = new OptionsGUIController(options,
+				optionsSaveFile);
 		optionsFXMLLoader.setController(optionsGUIController);
 		optionsFXMLLoader.load();
 	}
@@ -299,17 +311,18 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	public void initialize() throws IOException {
 		PathHandler pathHandler = new PathHandler();
 
-		// option Controller
-		initOptionsGUIController(pathHandler);
-
 		// init gui
 		ErrorHandler errorHandler = new ErrorHandler(this);
 
-		initWorkspace(errorHandler, cbmcProcessHandlerCreator);
+		initWorkspace(errorHandler);
 		initElectionEditor();
 		initPropertyEditor();
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
+
+		// option Controller
+		initOptionsGUIController(pathHandler);
+
 		initMenu();
 	}
 
