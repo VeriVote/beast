@@ -78,7 +78,7 @@ public class TestConfigTopLevelGUIHandler
 		testConfigGuiController = new TestConfigGuiController(beastWorkspace);
 		cbmcTestConfigController = new CBMCTestConfigGuiController(
 				beastWorkspace);
-		cbmcTestRunGuiController = new CBMCTestRunGuiController(beastWorkspace);
+		cbmcTestRunGuiController = new CBMCTestRunGuiController(beastWorkspace, testConfigTreeView);
 
 		this.testConfigDetailsAnchorPane = testConfigDetailsAnchorPane;
 
@@ -169,7 +169,7 @@ public class TestConfigTopLevelGUIHandler
 		}
 	}
 
-	private void updateTestConfigTreeView() {
+	private void updateTestConfigTreeView() {		
 		root = new TreeItem<>(new TestConfigCategoryTreeItem(sortCriterium));
 		testConfigTreeView.setRoot(root);
 		

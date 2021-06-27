@@ -19,6 +19,7 @@ public class BEAST {
 	private List<Thread> createdThreads = new ArrayList<>();
 	private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<>();
 
+
 	public void runWorkUnit(CBMCPropertyCheckWorkUnit wu) {
 		wus.add(wu);
 		Thread t = new Thread(new Runnable() {
@@ -30,9 +31,15 @@ public class BEAST {
 		t.start();
 		createdThreads.add(t);
 	}
+	
+	public void stopRun(CBMCTestRun run) {
+		run.getWorkUnit().interrupt();
+	}
+
+
 
 	public void shutdown() {
-		for(CBMCPropertyCheckWorkUnit wu : wus) {
+		for (CBMCPropertyCheckWorkUnit wu : wus) {
 			wu.shutdown();
 		}
 	}
@@ -67,4 +74,6 @@ public class BEAST {
 		return runs;
 	}
 
+
+	
 }

@@ -114,18 +114,19 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 			} catch (IOException e) {
 				// TODO errorhandling
 				e.printStackTrace();
+				state = WorkUnitState.STOPPED;
+				process.destroy();
+				return;
 			}
 			cb.onPropertyTestRawOutputComplete(descr, propDescr, s, c, v, uuid,
 					cbmcOutput);
 			state = WorkUnitState.FINISHED;
 			process.destroy();
-
 			cb.onPropertyTestFinished(descr, propDescr, s, c, v, uuid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
-			state = WorkUnitState.FINISHED;
+			state = WorkUnitState.STOPPED;
 			process.destroy();
 		}
 	}

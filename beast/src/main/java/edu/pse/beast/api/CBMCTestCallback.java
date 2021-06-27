@@ -8,6 +8,7 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public interface CBMCTestCallback {
+	
 	public default void onTestStarted() {
 	}
 

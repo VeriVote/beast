@@ -55,15 +55,14 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.propDescr = propDescr;
 		this.loopboundList = loopbounds;
 	}
-	
+
 	public String getExampleText() {
 		return jsonOutputHandler.getExampleText();
 	}
-	
+
 	public String getAllAssignmentsText() {
 		return jsonOutputHandler.getAllAssignmentsText();
 	}
-
 
 	@Override
 	public void onPropertyTestRawOutput(String sessionUUID,
@@ -82,7 +81,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 			String uuid) {
 
 		jsonOutputHandler = new CBMCJsonOutputHandler(description,
-				propertyDescr, cbmcCodeFile.getCodeInfo(), s, c, v, testRunLogs);
+				propertyDescr, cbmcCodeFile.getCodeInfo(), s, c, v,
+				testRunLogs);
 
 		if (cb != null)
 			cb.onPropertyTestFinished(description, propertyDescr, s, c, v,
@@ -95,6 +95,14 @@ public class CBMCTestRun implements CBMCTestCallback {
 			String uuid) {
 		if (cb != null)
 			cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
+	}
+
+	@Override
+	public void onPropertyTestStopped(CElectionDescription descr,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+		if (cb != null)
+			cb.onPropertyTestStopped(descr, propertyDescr, s, c, v, uuid);
 	}
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
@@ -195,8 +203,5 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void setC(int c) {
 		C = c;
 	}
-
-
-
 
 }

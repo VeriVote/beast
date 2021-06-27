@@ -568,4 +568,8 @@ public class BeastWorkspace {
 		}
 	}
 
+	public void stopRun(CBMCTestRun run) {
+		beast.stopRun(run);
+	}
+
 }

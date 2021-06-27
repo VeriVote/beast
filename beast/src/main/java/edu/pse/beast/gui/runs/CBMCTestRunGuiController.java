@@ -12,12 +12,14 @@ import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -36,56 +38,66 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 	@FXML
 	private AnchorPane outputAnchorPane;
 
+	private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
 	private OutputTextElement outputTextElement = new OutputTextElement();
 
 	private CBMCTestRun run;
 
 	private BeastWorkspace beastWorkspace;
 
-	public CBMCTestRunGuiController(BeastWorkspace beastWorkspace) {
+	public CBMCTestRunGuiController(BeastWorkspace beastWorkspace,
+			TreeView<TestConfigTreeItemSuper> testConfigTreeView) {
 		this.beastWorkspace = beastWorkspace;
+		this.testConfigTreeView = testConfigTreeView;
 	}
 
 	public void display(CBMCTestRun run) {
-		if(this.run != null) {
+		if (this.run != null) {
 			this.run.setCb(null);
 		}
 		this.run = run;
 		this.run.setCb(this);
 		display();
 	}
-		
+
 	@Override
 	public void onPropertyTestStart(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
-		display(); 
+		display();
 	}
-	
+
 	@Override
 	public void onPropertyTestFinished(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
-		display(); 
+		display();
 	}
-	
+
+	@Override
+	public void onPropertyTestStopped(CElectionDescription descr,
+			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+			String uuid) {
+		display();
+	}
+
 	@Override
 	public void onPropertyTestRawOutput(String sessionUUID,
 			CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid, String output) {
 	}
-	
+
 	@Override
 	public void onPropertyTestRawOutputComplete(
 			CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid, List<String> cbmcOutput) {
-		display(); 
+		display();
 	}
-	
+
 	private void display() {
-		
+
 		Platform.runLater(() -> {
 			outputTextElement.clear();
 
@@ -108,65 +120,73 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 			stateHBox.getChildren().add(stateLabel);
 
 			if (run.isDescrChanged() || run.isPropDescrChanged()) {
-				Label descrChangedLabel = new Label("Run out of date, has changes");
+				Label descrChangedLabel = new Label(
+						"Run out of date, has changes");
 				stateHBox.getChildren().add(descrChangedLabel);
 			}
 
+			testConfigTreeView.refresh();
 			switch (state) {
-				case INITIALIZED : {
-					Button putRunOnQueueButton = new Button("put Run on Queue");
-					putRunOnQueueButton.setOnAction(e -> {
-						beastWorkspace.addRunToQueue(run);
-					});
-					stateHBox.getChildren().add(putRunOnQueueButton);
-					break;
-				}
-				case ON_QUEUE :
-					break;
-				case WORKED_ON :
-					Button button = new Button("show logs");
-					button.setOnAction(e -> {
-						outputTextElement.clear();
-						outputTextElement.insertText(0, run.getTestOutput());
-					});					
-					stateHBox.getChildren().add(button);
-					break;
-				case FINISHED : {
-					Button showLogsButton = new Button("show logs");
-					showLogsButton.setOnAction(e -> {
-						outputTextElement.clear();
-						outputTextElement.insertText(0, run.getTestOutput());
-					});					
-					
-					Button showExampleButton = new Button("show generated Example");
-					showExampleButton.setOnAction(e -> {
-						outputTextElement.clear();
-						outputTextElement.insertText(0,run.getExampleText());
-					});					
-					Button showAllAssignments = new Button("show All");
-					showAllAssignments.setOnAction(e -> {
-						outputTextElement.clear();
-						outputTextElement.insertText(0,run.getAllAssignmentsText());
-					});					
-					stateHBox.getChildren().add(showLogsButton);
-					stateHBox.getChildren().add(showAllAssignments);
-					stateHBox.getChildren().add(showExampleButton);
-					break;
-				}
-
-				case STOPPED : {
+			case INITIALIZED: {
+				Button putRunOnQueueButton = new Button("put Run on Queue");
+				putRunOnQueueButton.setOnAction(e -> {
+					beastWorkspace.addRunToQueue(run);
+				});
+				stateHBox.getChildren().add(putRunOnQueueButton);
+				break;
+			}
+			case ON_QUEUE:
+				break;
+			case WORKED_ON:
+				Button button = new Button("show logs");
+				button.setOnAction(e -> {
 					outputTextElement.clear();
 					outputTextElement.insertText(0, run.getTestOutput());
-					outputTextElement.insertText(0, "INTERRUPTED BY USER :(\n");
-					Button putRunOnQueueButton = new Button("put Run on Queue");
-					putRunOnQueueButton.setOnAction(e -> {
-						beastWorkspace.addRunToQueue(run);
-					});
-					stateHBox.getChildren().add(putRunOnQueueButton);
-					break;
-				}
-				default :
-					break;
+				});
+				Button stopCBMCButton = new Button("stop");
+				stopCBMCButton.setOnAction(e -> {
+					beastWorkspace.stopRun(run);
+				});
+				stateHBox.getChildren().add(button);
+				stateHBox.getChildren().add(stopCBMCButton);
+				break;
+			case FINISHED: {
+				Button showLogsButton = new Button("show logs");
+				showLogsButton.setOnAction(e -> {
+					outputTextElement.clear();
+					outputTextElement.insertText(0, run.getTestOutput());
+				});
+
+				Button showExampleButton = new Button("show generated Example");
+				showExampleButton.setOnAction(e -> {
+					outputTextElement.clear();
+					outputTextElement.insertText(0, run.getExampleText());
+				});
+				Button showAllAssignments = new Button("show All");
+				showAllAssignments.setOnAction(e -> {
+					outputTextElement.clear();
+					outputTextElement.insertText(0,
+							run.getAllAssignmentsText());
+				});
+				stateHBox.getChildren().add(showLogsButton);
+				stateHBox.getChildren().add(showAllAssignments);
+				stateHBox.getChildren().add(showExampleButton);
+				break;
+			}
+
+			case STOPPED: {
+				outputTextElement.clear();
+				outputTextElement.insertText(0, run.getTestOutput());
+				outputTextElement.insertText(0, "INTERRUPTED BY USER :(\n");
+				Button putRunOnQueueButton = new Button("put Run on Queue");
+				putRunOnQueueButton.setOnAction(e -> {
+					beastWorkspace.addRunToQueue(run);
+				});
+				stateHBox.getChildren().add(putRunOnQueueButton);
+				break;
+			}
+			default:
+				break;
 			}
 		});
 	}
@@ -187,8 +207,5 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 		AnchorPane.setLeftAnchor(vsp, 0d);
 		AnchorPane.setRightAnchor(vsp, 0d);
 	}
-
-
-
 
 }
