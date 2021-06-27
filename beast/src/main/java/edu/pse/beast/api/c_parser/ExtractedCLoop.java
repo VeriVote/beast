@@ -23,9 +23,10 @@ public class ExtractedCLoop {
 	private int loopNumberInFunction;
 	private int posInLine;
 
+	private String functionName;
 	private CLoopParseResultType loopParseResult;
 	private LoopBoundType parsedLoopBoundType;
-	private String functionName;
+	private int manualInteger;
 
 	private ExtractedCLoop parentLoop;
 	private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
@@ -71,12 +72,24 @@ public class ExtractedCLoop {
 		return parsedLoopBoundType;
 	}
 
+	public void setParsedLoopBoundType(LoopBoundType parsedLoopBoundType) {
+		this.parsedLoopBoundType = parsedLoopBoundType;
+	}
+
 	public void setParentLoop(ExtractedCLoop parentLoop) {
 		this.parentLoop = parentLoop;
 	}
 
 	public ExtractedCLoop getParentLoop() {
 		return parentLoop;
+	}
+
+	public int getManualInteger() {
+		return manualInteger;
+	}
+
+	public void setManualInteger(int manualInteger) {
+		this.manualInteger = manualInteger;
 	}
 
 	@Override
@@ -175,15 +188,15 @@ public class ExtractedCLoop {
 	public String getUuid() {
 		return uuid;
 	}
-	
-	private ExtractedCLoop() {		
+
+	private ExtractedCLoop() {
 	}
 
 	public static ExtractedCLoop fromStoredValues(String uuid,
 			CLoopTypes loopType, int line, int posInLine, int numberInFunc,
 			CLoopParseResultType parseResultType, LoopBoundType loopBoundType,
 			String functionName) {
-		
+
 		ExtractedCLoop cLoop = new ExtractedCLoop();
 		cLoop.uuid = uuid;
 		cLoop.loopType = loopType;
@@ -193,7 +206,7 @@ public class ExtractedCLoop {
 		cLoop.loopParseResult = parseResultType;
 		cLoop.parsedLoopBoundType = loopBoundType;
 		cLoop.functionName = functionName;
-		
+
 		return cLoop;
 	}
 }

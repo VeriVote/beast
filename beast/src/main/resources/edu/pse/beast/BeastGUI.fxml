@@ -44,8 +44,9 @@
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
                                                 <ListView fx:id="loopBoundList" prefHeight="180.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                                                <Button fx:id="testLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="test" AnchorPane.bottomAnchor="5.0" />
+                                                <Button fx:id="testLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="Test" AnchorPane.bottomAnchor="5.0" />
                                                 <Label text="Loopbounds" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <Button fx:id="editLoopboundButton" layoutX="62.0" layoutY="175.0" mnemonicParsing="false" text="Edit" />
                                              </children>
                                           </AnchorPane>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -194,12 +195,12 @@
       <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <HBox prefHeight="38.0" prefWidth="692.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Button fx:id="loadWorkspaceButton" mnemonicParsing="false" text="load Workspace">
+            <Button fx:id="loadWorkspaceButton" mnemonicParsing="false" text="Load Workspace">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="saveWorkspaceButton" mnemonicParsing="false" text="save Workspace" />
+            <Button fx:id="saveWorkspaceButton" mnemonicParsing="false" text="Save Workspace" />
          </children>
       </HBox>
    </children>

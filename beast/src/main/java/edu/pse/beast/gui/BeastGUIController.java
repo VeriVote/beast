@@ -103,6 +103,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	private TabPane propertyTestRunPane;
+	
+	@FXML
+	private Button editLoopboundButton;
 
 	@FXML
 	private ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox;
@@ -177,7 +180,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 				cEditorGUIElementVsp, addElectionDescriptionButton,
 				loadElectionDescriptionButton, saveElectionDescriptionButton,
 				addFunctionMenuButton, removeFunctionButton,
-				testLoopBoundButton, cEditorGUIElement, funcDeclArea,
+				testLoopBoundButton, editLoopboundButton, cEditorGUIElement, funcDeclArea,
 				closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
 	}
