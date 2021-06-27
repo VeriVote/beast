@@ -99,9 +99,6 @@ public class WorkspaceSaverLoaderTest {
 
 		beastWorkspace.addTestConfiguration(testConfig);
 
-		beastWorkspace.setCbmcProcessStarter(new CBMCProcessHandlerWindows(
-				"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat"));
-
 		File f = new File("testfiles");
 		f.mkdirs();
 		f = new File("testfiles/test.beastws");

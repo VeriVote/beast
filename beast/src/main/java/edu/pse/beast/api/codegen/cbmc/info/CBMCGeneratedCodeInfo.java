@@ -19,7 +19,7 @@ public class CBMCGeneratedCodeInfo {
 
 	private Set<String> generatedVotingVarNames = new HashSet();
 	private Set<String> generatedElectVarNames = new HashSet();
-	
+
 	private String amtMemberVarName;
 	private String listMemberVarName;
 
@@ -29,6 +29,14 @@ public class CBMCGeneratedCodeInfo {
 
 	public void addedElectVar(String name) {
 		generatedElectVarNames.add(name);
+	}
+
+	public Map<String, String> getVarNamesToInfo() {
+		return varNamesToInfo;
+	}
+
+	public void setVarNamesToInfo(Map<String, String> varNamesToInfo) {
+		this.varNamesToInfo = varNamesToInfo;
 	}
 
 	public String getCode() {
@@ -64,8 +72,17 @@ public class CBMCGeneratedCodeInfo {
 		return generatedVotingVarNames;
 	}
 
+	public void setGeneratedVotingVarNames(
+			Set<String> generatedVotingVarNames) {
+		this.generatedVotingVarNames = generatedVotingVarNames;
+	}
+
 	public Set<String> getGeneratedElectVarNames() {
 		return generatedElectVarNames;
+	}
+
+	public void setGeneratedElectVarNames(Set<String> generatedElectVarNames) {
+		this.generatedElectVarNames = generatedElectVarNames;
 	}
 
 	public void setElectVariableNameToElectNumber(
@@ -104,7 +121,7 @@ public class CBMCGeneratedCodeInfo {
 	public String getInfo(String varName) {
 		return varNamesToInfo.get(varName);
 	}
-	
+
 	public boolean hasInfo(String varName) {
 		return varNamesToInfo.containsKey(varName);
 	}
