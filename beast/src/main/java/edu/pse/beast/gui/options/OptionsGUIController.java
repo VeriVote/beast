@@ -1,8 +1,11 @@
 package edu.pse.beast.gui.options;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -21,8 +24,15 @@ public class OptionsGUIController {
 	
 	private List<OptionsCategoryGUI> categories;	
 	
-	public OptionsGUIController(List<OptionsCategoryGUI> categories) {
+	private File optionsSaveFile;
+	
+	public OptionsGUIController(List<OptionsCategoryGUI> categories, File optionsSaveFile) {
 		this.categories = categories;
+		this.optionsSaveFile = optionsSaveFile;
+		
+		for(OptionsCategoryGUI cat : categories) {
+			cat.setOptionsGUIController(this);
+		}
 	}
 
 	@FXML
@@ -45,5 +55,13 @@ public class OptionsGUIController {
 
 	public void display() {
 		optionStage.showAndWait();
+	}
+	
+	public void optionUpdated() {
+		try {
+			OptionsSaverLoader.saveOptions(optionsSaveFile, categories);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

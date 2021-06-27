@@ -142,6 +142,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private CBMCProcessHandlerCreator cbmcProcessHandlerCreator;
 
 	private BeastWorkspace beastWorkspace;
+	
+	private File optionsSaveFile;
 
 	private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
 			double bottom, double left, double right) {
@@ -263,14 +265,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 			throws IOException {
 		List<OptionsCategoryGUI> options = new ArrayList<>();
 
-		File optionsFile = pathHandler.getOptionsFile();
-		if (!optionsFile.exists()) {
-			options = createStandardOptionsAndSave(optionsFile);
+		optionsSaveFile = pathHandler.getOptionsFile();
+		if (!optionsSaveFile.exists()) {
+			options = createStandardOptionsAndSave(optionsSaveFile);
 		} else {
-			options = OptionsSaverLoader.loadOptions(optionsFile);
+			options = OptionsSaverLoader.loadOptions(optionsSaveFile);
 		}
 
-		optionsGUIController = new OptionsGUIController(options);
+		optionsGUIController = new OptionsGUIController(options, optionsSaveFile);
 		optionsFXMLLoader.setController(optionsGUIController);
 		optionsFXMLLoader.load();
 	}

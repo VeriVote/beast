@@ -5,16 +5,14 @@ import java.util.Optional;
 
 import edu.pse.beast.api.os.OS;
 import edu.pse.beast.api.os.OSHelper;
-import edu.pse.beast.api.savingloading.CBMCProcessStarterSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerLinux;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerSource;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.stage.FileChooser;
 
 public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 
