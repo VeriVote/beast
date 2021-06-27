@@ -400,7 +400,7 @@ public class BeastWorkspace {
 		propDescrWithUnsavedChanges = ws.propDescrWithUnsavedChanges;
 
 		codeGenOptions = ws.codeGenOptions;
-		testConfigList = ws.testConfigList;
+		setTestConfigList(ws.testConfigList);
 
 		name = ws.name;
 		workspaceFile = ws.workspaceFile;
