@@ -8,7 +8,6 @@ module edu.pse.beast {
     uses edu.pse.beast.propertychecker.Result;
 
     exports edu.pse.beast.propertychecker;
-    exports edu.pse.beast.options.parametereditoroptions;
     exports edu.pse.beast.types.cbmctypes;
     exports edu.pse.beast.saverloader.adapter;
     exports edu.pse.beast.types.cbmctypes.inputplugins;
@@ -33,13 +32,11 @@ module edu.pse.beast {
     exports edu.pse.beast.toolbox.valueContainer;
     exports edu.pse.beast.codearea.actionlist.textaction;
     exports edu.pse.beast.codearea.actionlist;
-    exports edu.pse.beast.options.codeareaoptions;
     exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
     exports edu.pse.beast.datatypes.propertydescription;
     exports edu.pse.beast.datatypes.booleanexpast;
     exports edu.pse.beast.codeareajavafx;
-    exports edu.pse.beast.options;
     exports edu.pse.beast.propertychecker.jna;
     exports edu.pse.beast.saverloader;
     exports edu.pse.beast.codearea.actionadder;
@@ -76,7 +73,7 @@ module edu.pse.beast {
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
-    opens edu.pse.beast.gui.options.workspace to javafx.fxml;
+    opens edu.pse.beast.gui.options to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor.testconfig to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor.testconfig.cbmc to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;

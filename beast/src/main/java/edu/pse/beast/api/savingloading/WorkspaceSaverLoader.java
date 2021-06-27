@@ -310,7 +310,7 @@ public class WorkspaceSaverLoader {
 		CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsFromJSON(
 						json.getJSONObject(CODE_GEN_OPTIONS_KEY));
-
+		
 		TestConfigurationList testConfigList = testConfigListFromJsonArr(
 				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
 

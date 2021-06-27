@@ -1,47 +1,36 @@
 package edu.pse.beast.gui;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import org.json.JSONException;
+
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
-import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
-import edu.pse.beast.gui.options.OptionCategory;
-import edu.pse.beast.gui.options.OptionsGuiController;
+import edu.pse.beast.gui.options.OptionsGUIController;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
 import edu.pse.beast.gui.testconfigeditor.TestConfigTopLevelGUIHandler;
-import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.Tab;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
@@ -51,15 +40,19 @@ import javafx.stage.Stage;
 public class BeastGUIController implements WorkspaceUpdateListener {
 
 	// =================options start
-	@FXML
-	private ListView<OptionCategory> optionCategoriesListView;
-	@FXML
-	private AnchorPane optionTopLevelAnchorPane;
-
+	private String optionsFXML = "/edu/pse/beast/optionsGUI.fxml";
+	private OptionsGUIController optionsGUIController;
+	private FXMLLoader optionsFXMLLoader = new FXMLLoader(
+			getClass().getResource(optionsFXML));
 	// =================options end
+
+	// =================Menu start
+	@FXML
+	private MenuBar menuBar;
+	// =================Menu end
+
 	@FXML
 	private Button testLoopBoundButton;
-
 	@FXML
 	private TabPane topLeveLTabPane;
 
@@ -138,7 +131,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigTopLevelGUIHandler testConfigurationHandler;
 	private LogGuiController logGuiController;
-	private OptionsGuiController optionsGuiController;
 
 	private BeastWorkspace beastWorkspace;
 
@@ -208,36 +200,57 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		logGuiController = new LogGuiController(logAnchorPane, errorHandler);
 	}
 
-	private void initOptionController() throws IOException {
-		optionsGuiController = new OptionsGuiController(
-				optionCategoriesListView, optionTopLevelAnchorPane,
-				beastWorkspace);
-	}
-
-	@FXML
-	public void initialize() throws IOException {
-		PathHandler pathHandler = new PathHandler();
-
+	private void initWorkspace(ErrorHandler errorHandler) {
 		// TODO check if we have a a workspace which was open in the last
 		// session
 		beastWorkspace = BeastWorkspace.getStandardWorkspace();
 
-		ErrorHandler errorHandler = new ErrorHandler(this);
 		beastWorkspace.setErrorHandler(errorHandler);
+		
+		saveWorkspaceButton.setOnAction(e -> {
+			beastWorkspace.saveWorkspace();
+		});
+		loadWorkspaceButton.setOnAction(e -> {
+			beastWorkspace.letUserLoadWorkSpace();
+		});		
+	}
 
+	private void initOptionsController() throws IOException {
+		optionsGUIController = new OptionsGUIController();
+		optionsFXMLLoader.setController(optionsGUIController);
+		optionsFXMLLoader.load();
+	}
+
+	private void initMenu() {
+		Menu fileMenu = new Menu();
+		fileMenu.setText("File");
+		
+		Menu prefMenu = new Menu();
+		prefMenu.setText("Preferences");
+		
+		MenuItem optionsMenuItem = new MenuItem();
+		optionsMenuItem.setText("options");
+		optionsMenuItem.setOnAction(e -> {
+			optionsGUIController.display();
+		});
+		prefMenu.getItems().add(optionsMenuItem);
+		
+		
+		menuBar.getMenus().add(prefMenu);
+	}
+
+	@FXML
+	public void initialize() throws IOException {
+		ErrorHandler errorHandler = new ErrorHandler(this);
+		PathHandler pathHandler = new PathHandler();
+		
+		initOptionsController();
+		initWorkspace(errorHandler);
 		initElectionEditor();
 		initPropertyEditor();
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
-		initOptionController();
-
-		saveWorkspaceButton.setOnAction(e -> {
-			beastWorkspace.saveWorkspace();
-		});
-
-		loadWorkspaceButton.setOnAction(e -> {
-			beastWorkspace.letUserLoadWorkSpace();
-		});
+		initMenu();
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {
