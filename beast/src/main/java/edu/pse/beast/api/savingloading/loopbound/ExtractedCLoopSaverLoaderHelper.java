@@ -24,6 +24,8 @@ public class ExtractedCLoopSaverLoaderHelper {
 	private static final String PARSE_RESULT_KEY = "parse_result";
 	private static final String PARSED_BOUND_TYPE_KEY = "parsed_bound_type";
 
+	private static final String MANUAL_BOUND_KEY = "manual_bound";
+	
 	private static final String FUNCTION_NAME_KEY = "function_name";
 
 	private static final String PARENT_UUID_KEY = "parent_uuid";
@@ -42,6 +44,10 @@ public class ExtractedCLoopSaverLoaderHelper {
 		json.put(PARSE_RESULT_KEY, loop.getLoopParseResult().toString());
 		json.put(PARSED_BOUND_TYPE_KEY,
 				loop.getParsedLoopBoundType().toString());
+		
+		if(loop.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+			json.put(MANUAL_BOUND_KEY, loop.getManualInteger());
+		}
 
 		json.put(FUNCTION_NAME_KEY, loop.getFunctionName());
 
@@ -70,12 +76,18 @@ public class ExtractedCLoopSaverLoaderHelper {
 		CLoopParseResultType parseResultType = CLoopParseResultType
 				.valueOf(json.getString(PARSE_RESULT_KEY));
 		LoopBoundType loopBoundType = LoopBoundType
-				.valueOf(json.getString(PARSED_BOUND_TYPE_KEY));
+				.valueOf(json.getString(PARSED_BOUND_TYPE_KEY));		
 
 		String functionName = json.getString(FUNCTION_NAME_KEY);
 
-		return ExtractedCLoop.fromStoredValues(uuid, loopType, line, posInLine,
+		ExtractedCLoop extractedCLoop = ExtractedCLoop.fromStoredValues(uuid, loopType, line, posInLine,
 				numberInFunc, parseResultType, loopBoundType, functionName);
+		
+		if(loopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+			extractedCLoop.setManualInteger(json.getInt(MANUAL_BOUND_KEY));
+		}
+		
+		return extractedCLoop;
 	}
 
 	public static JSONArray fromExtractedLoops(List<ExtractedCLoop> loops) {
