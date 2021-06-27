@@ -23,4 +23,9 @@ public abstract class OptionsCategory {
 
 	public abstract void displayOptions(
 			AnchorPane currentOptionDisplayAnchorpane);
+	
+	@Override
+	public String toString() {
+		return category.toString();
+	}
 }

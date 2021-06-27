@@ -17,6 +17,7 @@ import edu.pse.beast.gui.options.OptionsCategory;
 import edu.pse.beast.gui.options.OptionsGUIController;
 import edu.pse.beast.gui.options.ProcessHandlerWindowsOptions;
 import edu.pse.beast.gui.paths.PathHandler;
+import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
 import edu.pse.beast.gui.testconfigeditor.TestConfigTopLevelGUIHandler;
@@ -133,6 +134,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private PreAndPostPropertyEditor preAndPostPropertyEditor;
 	private TestConfigTopLevelGUIHandler testConfigurationHandler;
 	private LogGuiController logGuiController;
+	private CBMCProcessHandlerCreator cbmcProcessHandlerCreator;
 
 	private BeastWorkspace beastWorkspace;
 
@@ -202,10 +204,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		logGuiController = new LogGuiController(logAnchorPane, errorHandler);
 	}
 
-	private void initWorkspace(ErrorHandler errorHandler) {
-		// TODO check if we have a a workspace which was open in the last
-		// session
-		beastWorkspace = BeastWorkspace.getStandardWorkspace();
+	private void initWorkspace(ErrorHandler errorHandler,
+			CBMCProcessHandlerCreator cbmcProcessHandlerCreator2) {
+		beastWorkspace = BeastWorkspace
+				.getStandardWorkspace(cbmcProcessHandlerCreator);
 
 		beastWorkspace.setErrorHandler(errorHandler);
 
@@ -245,16 +247,22 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@FXML
 	public void initialize() throws IOException {
+		// load options
+		cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
+
+		//init gui
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		PathHandler pathHandler = new PathHandler();
 
-		initOptionsController();
-		initWorkspace(errorHandler);
+		initWorkspace(errorHandler, cbmcProcessHandlerCreator);
 		initElectionEditor();
 		initPropertyEditor();
 		initTestConfigHandler();
 		initLogHandler(errorHandler);
 		initMenu();
+
+		//option Controller
+		initOptionsController();
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {

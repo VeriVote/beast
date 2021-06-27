@@ -1,10 +1,11 @@
-package edu.pse.beast.gui;
+package edu.pse.beast.gui.processHandler;
 
 import java.io.File;
 import java.util.Optional;
 
 import edu.pse.beast.api.os.OS;
 import edu.pse.beast.api.os.OSHelper;
+import edu.pse.beast.api.savingloading.CBMCProcessStarterSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerLinux;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
@@ -14,16 +15,18 @@ import javafx.stage.FileChooser;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 
-public class CBMCProcessHandlerGetter {
+public class CBMCProcessHandlerCreator {
 
-	private static String vsDevCmdExplanationString = "It seems like you are using windows. "
+	private String vsDevCmdExplanationString = "It seems like you are using windows. "
 			+ "To run cbmc on windows, a file called vsDevCmd.bat is needed. "
 			+ "this file is usually bundled with visual studio, usually in the relative path "
 			+ "Visual studio\\Common7\\Tools\\VsDevCmd.bat. "
 			+ "Please navigate to and choose this file by clicking ok."
 			+ "Otherwise, you can still create test runs but not start them";
+	
+	private CBMCProcessHandler processHandler;
 
-	private static File getVsDevCmdFromUser() {
+	private File getVsDevCmdFromUser() {
 		Alert needVsDevCmdAlert = new Alert(AlertType.INFORMATION);
 		needVsDevCmdAlert.setContentText(vsDevCmdExplanationString);
 		needVsDevCmdAlert.getButtonTypes().add(ButtonType.CANCEL);
@@ -44,24 +47,30 @@ public class CBMCProcessHandlerGetter {
 		return null;
 	}
 
-	public static CBMCProcessHandler askUserForCBMCProcessHandler() {
+	public void askUserForCBMCProcessHandler() {
 		OS osType = OSHelper.getOS();
 
 		switch (osType) {
 			case LINUX :
-				return new CBMCProcessHandlerLinux();
+				processHandler = new CBMCProcessHandlerLinux();
 			case WINDOWS :
 				File vsDevCmd = getVsDevCmdFromUser();
 				if (vsDevCmd != null) {
 					CBMCProcessHandlerWindows processHandlerWindows = new CBMCProcessHandlerWindows(
 							vsDevCmd.getAbsolutePath());
-					return processHandlerWindows;
+					processHandler = processHandlerWindows;
 				}
 				break;
 			case UNKNOWN :
 				break;
 		}
-
-		return null;
+	}
+	
+	public CBMCProcessHandler getProcessHandler() {
+		return processHandler;
+	}
+	
+	public boolean hasProcessHandler() {
+		return processHandler != null;
 	}
 }

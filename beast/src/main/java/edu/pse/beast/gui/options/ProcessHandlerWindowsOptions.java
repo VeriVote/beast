@@ -1,11 +1,11 @@
 package edu.pse.beast.gui.options;
 
-import java.awt.TextField;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class ProcessHandlerWindowsOptions extends OptionsCategory {

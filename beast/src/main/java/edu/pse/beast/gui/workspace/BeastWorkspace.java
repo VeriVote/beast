@@ -26,10 +26,10 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.CBMCProcessHandlerGetter;
 import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.paths.PathHandler;
+import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -37,10 +37,12 @@ import edu.pse.beast.toolbox.Tuple;
 
 public class BeastWorkspace {
 
+	private CBMCProcessHandlerCreator cbmcProcessHandlerCreator;
+
 	private BEAST beast = new BEAST();
 	private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
 	private ErrorHandler errorHandler;
-	
+
 	private List<CElectionDescription> loadedDescrs = new ArrayList<>();
 	private Map<CElectionDescription, File> filesPerDescr = new HashMap<>();
 	private Set<CElectionDescription> descrWithUnsavedChanges = new HashSet();
@@ -51,16 +53,17 @@ public class BeastWorkspace {
 
 	private CodeGenOptions codeGenOptions;
 	private TestConfigurationList testConfigList = new TestConfigurationList();
-	private CBMCProcessHandler cbmcProcessStarter;	
 
 	private String name = "test";
 	private File workspaceFile;
 
 	private PathHandler pathHandler;
 
-	public static BeastWorkspace getStandardWorkspace() {
+	public static BeastWorkspace getStandardWorkspace(
+			CBMCProcessHandlerCreator cbmcProcessHandlerCreator) {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
+		beastWorkspace.cbmcProcessHandlerCreator = cbmcProcessHandlerCreator;
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 
 		codeGenOptions.setCbmcAmountMaxCandidatesVarName("MAX_CANDIDATES");
@@ -87,20 +90,12 @@ public class BeastWorkspace {
 		this.codeGenOptions = codeGenOptions;
 	}
 
-	public void setCbmcProcessStarter(CBMCProcessHandler cbmcProcessStarter) {
-		this.cbmcProcessStarter = cbmcProcessStarter;
-	}
-
 	public void registerUpdateListener(WorkspaceUpdateListener l) {
 		updateListener.add(l);
 	}
 
 	public List<CElectionDescription> getLoadedDescrs() {
 		return loadedDescrs;
-	}
-
-	public CBMCProcessHandler getCbmcProcessStarter() {
-		return cbmcProcessStarter;
 	}
 
 	public List<PreAndPostConditionsDescription> getLoadedPropDescrs() {
@@ -226,15 +221,16 @@ public class BeastWorkspace {
 			List<CBMCTestRun> createdTestRuns = beast
 					.generateTestRuns(cbmcCodeFile, config, codeGenOptions);
 
-			if (!hasProcessStarter()) {
-				askUserForProcessStarter();
+			if (!cbmcProcessHandlerCreator.hasProcessHandler()) {
+				cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
 			}
 
-			if (hasProcessStarter()) {
+			if (cbmcProcessHandlerCreator.hasProcessHandler()) {
 				String sessionUUID = UUID.randomUUID().toString();
 				for (CBMCTestRun run : createdTestRuns) {
 					CBMCPropertyCheckWorkUnit workUnit = new CBMCPropertyCheckWorkUnit(
-							cbmcProcessStarter, sessionUUID);
+							cbmcProcessHandlerCreator.getProcessHandler(),
+							sessionUUID);
 					run.setAndInitializeWorkUnit(workUnit);
 				}
 			}
@@ -248,17 +244,6 @@ public class BeastWorkspace {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	// TODO check if the process starter works?
-	private boolean hasProcessStarter() {
-		return cbmcProcessStarter != null;
-	}
-
-	private void askUserForProcessStarter() {
-		CBMCProcessHandler processHandler = CBMCProcessHandlerGetter
-				.askUserForCBMCProcessHandler();
-		cbmcProcessStarter = processHandler;
 	}
 
 	public void addRunToQueue(CBMCTestRun run) {
@@ -278,7 +263,7 @@ public class BeastWorkspace {
 
 	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
 			throws IOException {
-		if (!hasProcessStarter()) {
+		if (!cbmcProcessHandlerCreator.hasProcessHandler()) {
 			return;
 		}
 
@@ -405,25 +390,23 @@ public class BeastWorkspace {
 		this.workspaceFile = workspaceFile;
 	}
 
-
 	private void loadWorkspace(BeastWorkspace ws) {
 		loadedDescrs = ws.loadedDescrs;
 		filesPerDescr = ws.filesPerDescr;
 		descrWithUnsavedChanges = ws.descrWithUnsavedChanges;
-		
+
 		loadedPropDescrs = ws.loadedPropDescrs;
 		filesPerPropDescr = ws.filesPerPropDescr;
 		propDescrWithUnsavedChanges = ws.propDescrWithUnsavedChanges;
-		
+
 		codeGenOptions = ws.codeGenOptions;
 		testConfigList = ws.testConfigList;
-		cbmcProcessStarter = ws.cbmcProcessStarter;
-		
+
 		name = ws.name;
 		workspaceFile = ws.workspaceFile;
-		
+
 		pathHandler = ws.pathHandler;
-		
+
 		messageUpdateListener();
 	}
 
@@ -450,8 +433,9 @@ public class BeastWorkspace {
 		}
 
 		if (workspaceFile == null) {
-			workspaceFile = FileDialogHelper.letUserSaveFile(pathHandler.getWorkspaceDir(),
-					"file for workspace", name + ".beastws");
+			workspaceFile = FileDialogHelper.letUserSaveFile(
+					pathHandler.getWorkspaceDir(), "file for workspace",
+					name + ".beastws");
 		}
 		if (workspaceFile == null)
 			return;
@@ -579,7 +563,7 @@ public class BeastWorkspace {
 		configuration.setName(name);
 		tc.addCBMCTestConfiguration(configuration);
 		testConfigList.add(tc);
-		for(WorkspaceUpdateListener l : updateListener) {
+		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleAddedTestConfig(tc);
 		}
 	}
