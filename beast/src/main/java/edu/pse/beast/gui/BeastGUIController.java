@@ -1,10 +1,10 @@
 package edu.pse.beast.gui;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
@@ -13,7 +13,9 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
+import edu.pse.beast.gui.options.OptionsCategory;
 import edu.pse.beast.gui.options.OptionsGUIController;
+import edu.pse.beast.gui.options.ProcessHandlerWindowsOptions;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
@@ -206,17 +208,20 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		beastWorkspace = BeastWorkspace.getStandardWorkspace();
 
 		beastWorkspace.setErrorHandler(errorHandler);
-		
+
 		saveWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.saveWorkspace();
 		});
 		loadWorkspaceButton.setOnAction(e -> {
 			beastWorkspace.letUserLoadWorkSpace();
-		});		
+		});
 	}
 
 	private void initOptionsController() throws IOException {
-		optionsGUIController = new OptionsGUIController();
+		ProcessHandlerWindowsOptions processHandlerWindowsOptions = new ProcessHandlerWindowsOptions();
+
+		List<OptionsCategory> options = List.of(processHandlerWindowsOptions);
+		optionsGUIController = new OptionsGUIController(options);
 		optionsFXMLLoader.setController(optionsGUIController);
 		optionsFXMLLoader.load();
 	}
@@ -224,18 +229,17 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private void initMenu() {
 		Menu fileMenu = new Menu();
 		fileMenu.setText("File");
-		
+
 		Menu prefMenu = new Menu();
 		prefMenu.setText("Preferences");
-		
+
 		MenuItem optionsMenuItem = new MenuItem();
 		optionsMenuItem.setText("options");
 		optionsMenuItem.setOnAction(e -> {
 			optionsGUIController.display();
 		});
 		prefMenu.getItems().add(optionsMenuItem);
-		
-		
+
 		menuBar.getMenus().add(prefMenu);
 	}
 
@@ -243,7 +247,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	public void initialize() throws IOException {
 		ErrorHandler errorHandler = new ErrorHandler(this);
 		PathHandler pathHandler = new PathHandler();
-		
+
 		initOptionsController();
 		initWorkspace(errorHandler);
 		initElectionEditor();
