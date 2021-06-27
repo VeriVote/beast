@@ -221,18 +221,12 @@ public class BeastWorkspace {
 			List<CBMCTestRun> createdTestRuns = beast
 					.generateTestRuns(cbmcCodeFile, config, codeGenOptions);
 
-			if (!cbmcProcessHandlerCreator.hasProcessHandler()) {
-				cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
-			}
-
-			if (cbmcProcessHandlerCreator.hasProcessHandler()) {
-				String sessionUUID = UUID.randomUUID().toString();
-				for (CBMCTestRun run : createdTestRuns) {
-					CBMCPropertyCheckWorkUnit workUnit = new CBMCPropertyCheckWorkUnit(
-							cbmcProcessHandlerCreator.getProcessHandler(),
-							sessionUUID);
-					run.setAndInitializeWorkUnit(workUnit);
-				}
+			String sessionUUID = UUID.randomUUID().toString();
+			for (CBMCTestRun run : createdTestRuns) {
+				CBMCPropertyCheckWorkUnit workUnit = 
+						new CBMCPropertyCheckWorkUnit(
+						cbmcProcessHandlerCreator, sessionUUID);
+				run.setAndInitializeWorkUnit(workUnit);
 			}
 
 			config.addRuns(createdTestRuns);
@@ -263,9 +257,6 @@ public class BeastWorkspace {
 
 	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
 			throws IOException {
-		if (!cbmcProcessHandlerCreator.hasProcessHandler()) {
-			return;
-		}
 
 		for (CElectionDescriptionFunction f : currentConfig.getDescr()
 				.getFunctions()) {

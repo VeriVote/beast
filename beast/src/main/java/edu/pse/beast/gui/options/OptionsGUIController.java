@@ -13,21 +13,21 @@ public class OptionsGUIController {
 	@FXML
 	private AnchorPane topLevelAnchorpane;
 	@FXML
-	private ListView<OptionsCategory> optionsCategoryListview;
+	private ListView<OptionsCategoryGUI> optionsCategoryListview;
 	@FXML
 	private AnchorPane currentOptionDisplayAnchorpane;
 	
 	private Stage optionStage;
 	
-	private List<OptionsCategory> categories;	
+	private List<OptionsCategoryGUI> categories;	
 	
-	public OptionsGUIController(List<OptionsCategory> categories) {
+	public OptionsGUIController(List<OptionsCategoryGUI> categories) {
 		this.categories = categories;
 	}
 
 	@FXML
 	public void initialize() {
-		for(OptionsCategory cat : categories) {
+		for(OptionsCategoryGUI cat : categories) {
 			optionsCategoryListview.getItems().add(cat);
 		}
 		optionsCategoryListview.getSelectionModel().selectedItemProperty().addListener((e, o, n) -> {
@@ -38,7 +38,7 @@ public class OptionsGUIController {
 		optionStage.setScene(new Scene(topLevelAnchorpane));
 	}
 
-	private void displayCategory(OptionsCategory category) {
+	private void displayCategory(OptionsCategoryGUI category) {
 		currentOptionDisplayAnchorpane.getChildren().clear();
 		category.displayOptions(currentOptionDisplayAnchorpane);
 	}

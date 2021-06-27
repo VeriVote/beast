@@ -1,6 +1,8 @@
 package edu.pse.beast.gui;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -9,13 +11,16 @@ import org.fxmisc.richtext.CodeArea;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.os.OS;
+import edu.pse.beast.api.os.OSHelper;
+import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.log.LogGuiController;
-import edu.pse.beast.gui.options.OptionsCategory;
+import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsGUIController;
-import edu.pse.beast.gui.options.ProcessHandlerWindowsOptions;
+import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
@@ -219,15 +224,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		});
 	}
 
-	private void initOptionsController() throws IOException {
-		ProcessHandlerWindowsOptions processHandlerWindowsOptions = new ProcessHandlerWindowsOptions();
-
-		List<OptionsCategory> options = List.of(processHandlerWindowsOptions);
-		optionsGUIController = new OptionsGUIController(options);
-		optionsFXMLLoader.setController(optionsGUIController);
-		optionsFXMLLoader.load();
-	}
-
 	private void initMenu() {
 		Menu fileMenu = new Menu();
 		fileMenu.setText("File");
@@ -245,14 +241,47 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		menuBar.getMenus().add(prefMenu);
 	}
 
+	private List<OptionsCategoryGUI> createStandardOptionsAndSave(
+			File optionsFile) throws IOException {
+		OS os = OSHelper.getOS();
+		List<OptionsCategoryGUI> options = new ArrayList<>();
+
+		if (os == OS.WINDOWS) {
+			ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions = new ProcessHandlerWindowsOptionsGUI(
+					cbmcProcessHandlerCreator);
+			options.add(processHandlerWindowsOptions);
+		}
+		
+		OptionsSaverLoader.saveOptions(optionsFile, options);
+
+		return options;
+	}
+
+	private void initOptionsGUIController(PathHandler pathHandler)
+			throws IOException {
+		List<OptionsCategoryGUI> options = new ArrayList<>();
+
+		File optionsFile = pathHandler.getOptionsFile();
+		if (!optionsFile.exists()) {
+			options = createStandardOptionsAndSave(optionsFile);
+		} else {
+			options = OptionsSaverLoader.loadOptions(optionsFile);
+		}
+
+		optionsGUIController = new OptionsGUIController(options);
+		optionsFXMLLoader.setController(optionsGUIController);
+		optionsFXMLLoader.load();
+	}
+
 	@FXML
 	public void initialize() throws IOException {
-		// load options
-		cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
-
-		//init gui
-		ErrorHandler errorHandler = new ErrorHandler(this);
 		PathHandler pathHandler = new PathHandler();
+
+		// option Controller
+		initOptionsGUIController();
+
+		// init gui
+		ErrorHandler errorHandler = new ErrorHandler(this);
 
 		initWorkspace(errorHandler, cbmcProcessHandlerCreator);
 		initElectionEditor();
@@ -261,8 +290,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		initLogHandler(errorHandler);
 		initMenu();
 
-		//option Controller
-		initOptionsController();
 	}
 
 	public void setPrimaryStage(Stage primaryStage) {

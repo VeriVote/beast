@@ -14,6 +14,7 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
+import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerSource;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -33,15 +34,15 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	String uuid;
 	private String sessionUUID;
 
-	CBMCProcessHandler processStarter;
+	CBMCProcessHandlerSource processStarterSource;
 	private Process process;
 
 	private WorkUnitState state;
 
-	public CBMCPropertyCheckWorkUnit(CBMCProcessHandler processStarter,
-			String sessionUUID) {
+	public CBMCPropertyCheckWorkUnit(
+			CBMCProcessHandlerSource processStarterSource, String sessionUUID) {
 		this.uuid = UUID.randomUUID().toString();
-		this.processStarter = processStarter;
+		this.processStarterSource = processStarterSource;
 		this.sessionUUID = sessionUUID;
 		this.state = WorkUnitState.CREATED;
 	}
@@ -82,8 +83,8 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		return this.cb != null;
 	}
 
-	public void updateDataForCheck(CBMCCodeFileData cbmcFile,
-			String loopBounds, CodeGenOptions codeGenOptions) {
+	public void updateDataForCheck(CBMCCodeFileData cbmcFile, String loopBounds,
+			CodeGenOptions codeGenOptions) {
 		this.cbmcCodeFile = cbmcFile;
 		this.loopBounds = loopBounds;
 		this.codeGenOptions = codeGenOptions;
@@ -91,12 +92,15 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 
 	@Override
 	public void doWork() {
+		if (!processStarterSource.hasProcessHandler()) {
+			return;
+		}
 		state = WorkUnitState.WORKED_ON;
 		cb.onPropertyTestStart(descr, propDescr, s, c, v, uuid);
 		try {
-			process = processStarter.startCheckForParam(sessionUUID, v, c, s,
-					sessionUUID, cb, cbmcCodeFile.getFile(), loopBounds,
-					codeGenOptions);
+			process = processStarterSource.getProcessHandler()
+					.startCheckForParam(sessionUUID, v, c, s, sessionUUID, cb,
+							cbmcCodeFile.getFile(), loopBounds, codeGenOptions);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
 			String line;

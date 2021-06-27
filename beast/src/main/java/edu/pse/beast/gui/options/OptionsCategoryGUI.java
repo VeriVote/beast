@@ -2,10 +2,10 @@ package edu.pse.beast.gui.options;
 
 import javafx.scene.layout.AnchorPane;
 
-public abstract class OptionsCategory {
+public abstract class OptionsCategoryGUI {
 	private OptionsCategoryType category;
 	
-	public OptionsCategory(OptionsCategoryType category) {
+	public OptionsCategoryGUI(OptionsCategoryType category) {
 		this.category = category;
 	}
 	

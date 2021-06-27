@@ -72,6 +72,7 @@ module edu.pse.beast {
 	requires antlr4;
 
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
+    opens edu.pse.beast.gui.options.process_handler to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
     opens edu.pse.beast.gui.options to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor.testconfig to javafx.fxml;
