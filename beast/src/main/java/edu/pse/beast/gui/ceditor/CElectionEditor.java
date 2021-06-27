@@ -175,6 +175,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 				.addListener((ob, o, n) -> {
 					if (n == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
 						manualBound.setVisible(true);
+						if (selectedLoop
+								.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+							manualBound.setText(String
+									.valueOf(selectedLoop.getManualInteger()));
+						}
 					} else {
 						manualBound.setVisible(false);
 					}
