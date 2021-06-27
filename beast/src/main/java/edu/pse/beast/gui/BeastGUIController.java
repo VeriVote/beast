@@ -246,7 +246,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		OS os = OSHelper.getOS();
 		List<OptionsCategoryGUI> options = new ArrayList<>();
 
+		cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 		if (os == OS.WINDOWS) {
+			cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
 			ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions = new ProcessHandlerWindowsOptionsGUI(
 					cbmcProcessHandlerCreator);
 			options.add(processHandlerWindowsOptions);
@@ -278,7 +280,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		PathHandler pathHandler = new PathHandler();
 
 		// option Controller
-		initOptionsGUIController();
+		initOptionsGUIController(pathHandler);
 
 		// init gui
 		ErrorHandler errorHandler = new ErrorHandler(this);

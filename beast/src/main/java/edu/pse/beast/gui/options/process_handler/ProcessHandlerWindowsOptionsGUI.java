@@ -49,5 +49,9 @@ public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
 	public void displayOptions(AnchorPane currentOptionDisplayAnchorpane) {
 		displayOptionsAnchorpane(currentOptionDisplayAnchorpane, topLevelAnchorpane);
 	}
+	
+	public CBMCProcessHandlerCreator getCbmcProcessHandlerCreator() {
+		return cbmcProcessHandlerCreator;
+	}
 
 }

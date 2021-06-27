@@ -87,4 +87,8 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 	public String getVsDevCmdPath() {
 		return vsDevCmdPath;
 	}
+	
+	public void setVsDevCmdPath(String vsDevCmdPath) {
+		this.vsDevCmdPath = vsDevCmdPath;
+	}
 }
