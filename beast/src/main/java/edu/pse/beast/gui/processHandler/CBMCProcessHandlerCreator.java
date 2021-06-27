@@ -38,7 +38,8 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("please navigate to vsDevCmd file");
 			if (vsDevCmdPath != null)
-				fileChooser.setInitialDirectory(new File(vsDevCmdPath).getParentFile());
+				fileChooser.setInitialDirectory(
+						new File(vsDevCmdPath).getParentFile());
 			File chosenFile = fileChooser.showOpenDialog(null);
 			if (chosenFile == null)
 				return null;
@@ -49,9 +50,14 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 	}
 
 	public boolean testIsVsDevCmd(File vsDevCmd) {
-		if(vsDevCmd == null) return false;
+		if (vsDevCmd == null)
+			return false;
+		if(!vsDevCmd.exists()) {
+			return false;
+		}
 		String name = vsDevCmd.getName();
-		if(!name.toLowerCase().equals("vsdevcmd.bat")) return false;
+		if (!name.toLowerCase().equals("vsdevcmd.bat"))
+			return false;
 		return true;
 	}
 
@@ -64,7 +70,7 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 		case WINDOWS:
 			File vsDevCmd = getVsDevCmdFromUser();
 			if (testIsVsDevCmd(vsDevCmd)) {
-				CBMCProcessHandlerWindows processHandlerWindows = new CBMCProcessHandlerWindows(
+				processHandler = new CBMCProcessHandlerWindows(
 						vsDevCmd.getAbsolutePath());
 				vsDevCmdPath = vsDevCmd.getAbsolutePath();
 			}
@@ -85,8 +91,12 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 	public String getVsDevCmdPath() {
 		return vsDevCmdPath;
 	}
-	
+
 	public void setVsDevCmdPath(String vsDevCmdPath) {
-		this.vsDevCmdPath = vsDevCmdPath;
+		if (testIsVsDevCmd(new File(vsDevCmdPath))) {
+			this.vsDevCmdPath = vsDevCmdPath;
+			processHandler = new CBMCProcessHandlerWindows(
+					vsDevCmdPath);
+		}
 	}
 }

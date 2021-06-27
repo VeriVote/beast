@@ -260,8 +260,7 @@ public class WorkspaceSaverLoader {
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(ws.getCodeGenOptions()));
 		json.put(TEST_CONFIG_LIST_KEY,
-				testConfigurationListToJSON(ws.getTestConfigList()));		
-		
+				testConfigurationListToJSON(ws.getTestConfigList()));				
 	
 		return json;
 	}

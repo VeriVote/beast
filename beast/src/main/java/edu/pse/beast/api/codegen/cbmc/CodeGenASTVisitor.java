@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import edu.pse.beast.api.codegen.booleanExpAst.BinaryCombinationSymbols;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
@@ -17,7 +16,6 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutat
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.cbmc.info.GeneratedTypeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
@@ -184,8 +182,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 			varNames.add(InitVoteHelper.getVoteVarName(number));
 		}
 
-		cbmcGeneratedCode.addInfo(generatedVarName,
-				new GeneratedTypeInfo(String.join(" ", varNames)));
+		cbmcGeneratedCode.addInfo(generatedVarName, String.join(" ", varNames));
 
 		codeBlock.addSnippet(VoteIntersectionHelper.generateVoteIntersection(
 				generatedVarName, varNames, voteArrStruct, votingInputType,
@@ -205,8 +202,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		for (int number : node.getNumbers()) {
 			varNames.add(PerformVoteHelper.getResultVarName(number));
 		}
-		cbmcGeneratedCode.addInfo(generatedVarName,
-				new GeneratedTypeInfo(String.join(" ", varNames)));
+		cbmcGeneratedCode.addInfo(generatedVarName, String.join(" ", varNames));
 
 		codeBlock.addSnippet(ElectIntersectionHelper.generateCode(
 				generatedVarName, varNames, voteResultStruct, votingOutputType,
@@ -220,10 +216,12 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteExpNode(VoteExp node) {
 		if (node.getAccessingCBMCVars().size() == 0) {
-			expVarNameStack.push(InitVoteHelper.getVoteVarName(node.getCount()));
+			expVarNameStack
+					.push(InitVoteHelper.getVoteVarName(node.getCount()));
 			amtVoteVars++;
 		} else {
-			String voteVarName = InitVoteHelper.getVoteVarName(Integer.valueOf(node.getVoteNumber()));
+			String voteVarName = InitVoteHelper
+					.getVoteVarName(Integer.valueOf(node.getVoteNumber()));
 			String varName = VoteExpHelper.getVarFromVoteAccess(voteVarName,
 					node.getAccessingCBMCVars(), options, voteArrStruct);
 			expVarNameStack.push(varName);
@@ -243,7 +241,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectExpNode(ElectExp node) {
 		if (node.getAccessingVars().length == 0) {
-			expVarNameStack.push(PerformVoteHelper.getResultVarName(node.getCount()));
+			expVarNameStack
+					.push(PerformVoteHelper.getResultVarName(node.getCount()));
 			expTypes.push(voteResultStruct.getVotingType());
 			amtElectVars++;
 		}
@@ -255,10 +254,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		cbmcGeneratedCode.addedVotingVar(generatedVarName);
 
 		String varName = InitVoteHelper.getVoteVarName(node.getVoteNumber());
-		
-		cbmcGeneratedCode.addInfo(generatedVarName,
-				new GeneratedTypeInfo(String.join(" ", varName)));
 
+		cbmcGeneratedCode.addInfo(generatedVarName, String.join(" ", varName));
 
 		codeBlock.addSnippet(VotePermutationHelper.generateCode(
 				generatedVarName, varName, voteArrStruct, votingInputType,
@@ -273,10 +270,10 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
 		cbmcGeneratedCode.addedElectVar(generatedVarName);
 
-		String varName = PerformVoteHelper.getResultVarName(node.getElectNumber());		
+		String varName = PerformVoteHelper
+				.getResultVarName(node.getElectNumber());
 
-		cbmcGeneratedCode.addInfo(generatedVarName,
-				new GeneratedTypeInfo(String.join(" ", varName)));
+		cbmcGeneratedCode.addInfo(generatedVarName, String.join(" ", varName));
 
 		codeBlock.addSnippet(ElectPermutationHelper.generateCode(
 				generatedVarName, varName, voteResultStruct, votingOutputType,
@@ -295,10 +292,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		for (int number : node.getElectNumbers()) {
 			electNames.add(PerformVoteHelper.getResultVarName(number));
 		}
-		
 
 		cbmcGeneratedCode.addInfo(generatedVarName,
-				new GeneratedTypeInfo(String.join(" ", electNames)));
+				String.join(" ", electNames));
 
 		codeBlock.addSnippet(ElectTupleHelper.generateCode(generatedVarName,
 				electNames, voteResultStruct, votingOutputType, options,
@@ -319,8 +315,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		}
 
 		cbmcGeneratedCode.addInfo(generatedVarName,
-				new GeneratedTypeInfo(String.join(" ", voteNames)));
-		
+				String.join(" ", voteNames));
+
 		codeBlock.addSnippet(VoteTupleHelper.generateCode(generatedVarName,
 				voteNames, voteArrStruct, votingInputType, options,
 				loopBoundHandler));

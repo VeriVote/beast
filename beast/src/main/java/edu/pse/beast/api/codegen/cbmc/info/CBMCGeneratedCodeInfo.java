@@ -15,12 +15,11 @@ public class CBMCGeneratedCodeInfo {
 	private CodeGenLoopBoundHandler loopBoundHandler;
 	private Map<String, Integer> voteVariableNameToVoteNumber = new HashMap<>();
 	private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
-	private Map<String, GeneratedTypeInfo> varNamesToInfo = new HashMap<>();
+	private Map<String, String> varNamesToInfo = new HashMap<>();
 
 	private Set<String> generatedVotingVarNames = new HashSet();
 	private Set<String> generatedElectVarNames = new HashSet();
 	
-
 	private String amtMemberVarName;
 	private String listMemberVarName;
 
@@ -98,11 +97,11 @@ public class CBMCGeneratedCodeInfo {
 		this.loopBoundHandler = loopBoundHandler;
 	}
 
-	public void addInfo(String varName, GeneratedTypeInfo info) {
+	public void addInfo(String varName, String info) {
 		varNamesToInfo.put(varName, info);
 	}
 
-	public GeneratedTypeInfo getInfo(String varName) {
+	public String getInfo(String varName) {
 		return varNamesToInfo.get(varName);
 	}
 	

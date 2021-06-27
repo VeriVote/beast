@@ -61,7 +61,7 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
 	}
 	
 	private void applyOptions() {		
-		optionsGUIController.optionUpdated();	
+		optionsGUIController.saveOptions();	
 		cElectionEditor.applyOptions(options);
 	}
 

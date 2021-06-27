@@ -44,7 +44,7 @@ public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
 	private void askForProcessHandler() {
 		cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
 		vsDevCmdPathTextField.setText(cbmcProcessHandlerCreator.getVsDevCmdPath());
-		optionsGUIController.optionUpdated();
+		optionsGUIController.saveOptions();
 	}
 
 	@Override

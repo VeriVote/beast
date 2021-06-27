@@ -57,7 +57,7 @@ public class OptionsGUIController {
 		optionStage.showAndWait();
 	}
 	
-	public void optionUpdated() {
+	public void saveOptions() {
 		try {
 			OptionsSaverLoader.saveOptions(optionsSaveFile, categories);
 		} catch (IOException e) {

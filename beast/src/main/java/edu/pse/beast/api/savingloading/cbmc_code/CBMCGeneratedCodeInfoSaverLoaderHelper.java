@@ -11,15 +11,32 @@ import edu.pse.beast.api.savingloading.JSONHelper;
 public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 
 	private static final String CODE_KEY = "code";
-	private static final String VOTE_NUMBER_TO_VARIABLE_NAME_KEY = "vote_number_to_variable_name";
+	private static final String VOTE_VAR_NAME_TO_VOTE_NUMBER_KEY = "vote_number_to_variable_name";
+	private static final String ELECT_VAR_NAME_TO_VOTE_NUMBER_KEY = "elect_number_to_variable_name";
 
-	// TODO doesnt save the amt, list member var names since this is likely to
-	// change in the future
+	private static final String GENERATED_VOTE_VAR_NAME_SET_KEY = "generated_vote_var_name";
+	private static final String GENERATED_ELECT_VAR_NAME_SET_KEY = "generated_elect_var_name";
+
+	private static final String AMT_MEMBER_VAR_NAME_KEY = "amt_member_var_name";
+	private static final String LIST_MEMBER_VAR_NAME_KEY = "list_member_var_name";
+
 	public static JSONObject generatedCodeInfoToJSON(
 			CBMCGeneratedCodeInfo generatedCodeInfo) {
 		JSONObject json = new JSONObject();
 
 		json.put(CODE_KEY, generatedCodeInfo.getCode());
+		json.put(VOTE_VAR_NAME_TO_VOTE_NUMBER_KEY, new JSONObject(
+				generatedCodeInfo.getVoteVariableNameToVoteNumber()));
+		json.put(ELECT_VAR_NAME_TO_VOTE_NUMBER_KEY, new JSONObject(
+				generatedCodeInfo.getElectVariableNameToElectNumber()));
+
+		json.put(GENERATED_VOTE_VAR_NAME_SET_KEY,
+				new JSONObject(generatedCodeInfo.getGeneratedVotingVarNames()));
+		json.put(GENERATED_ELECT_VAR_NAME_SET_KEY,
+				new JSONObject(generatedCodeInfo.getGeneratedElectVarNames()));
+		
+		json.put(AMT_MEMBER_VAR_NAME_KEY, generatedCodeInfo.getAmtMemberVarName());
+		json.put(LIST_MEMBER_VAR_NAME_KEY, generatedCodeInfo.getListMemberVarName());
 
 		return json;
 	}
@@ -31,7 +48,7 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 		String code = json.getString(CODE_KEY);
 		Map<Integer, String> voteNumberToVariableNameMap = JSONHelper
 				.jsonObjectToIntStringMap(
-						json.getJSONObject(VOTE_NUMBER_TO_VARIABLE_NAME_KEY));
+						json.getJSONObject(VOTE_VAR_NAME_TO_VOTE_NUMBER_KEY));
 
 		cbmcGeneratedCodeInfo.setCode(code);
 

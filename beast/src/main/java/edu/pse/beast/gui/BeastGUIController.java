@@ -336,9 +336,11 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	@Override
 	public void handleWorkspaceUpdateGeneric() {
-	}
+	}	
+	
 
 	public void shutdown() {
+		optionsGUIController.saveOptions();
 		beastWorkspace.shutdown();
 	}
 

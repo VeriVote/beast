@@ -63,7 +63,7 @@ public class BeastWorkspace {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
 		beastWorkspace.cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
-		
+
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
 
 		codeGenOptions.setCbmcAmountMaxCandidatesVarName("MAX_CANDIDATES");
@@ -85,7 +85,7 @@ public class BeastWorkspace {
 
 		return beastWorkspace;
 	}
-	
+
 	public void setCbmcProcessHandlerCreator(
 			CBMCProcessHandlerCreator cbmcProcessHandlerCreator) {
 		this.cbmcProcessHandlerCreator = cbmcProcessHandlerCreator;
@@ -228,8 +228,7 @@ public class BeastWorkspace {
 
 			String sessionUUID = UUID.randomUUID().toString();
 			for (CBMCTestRun run : createdTestRuns) {
-				CBMCPropertyCheckWorkUnit workUnit = 
-						new CBMCPropertyCheckWorkUnit(
+				CBMCPropertyCheckWorkUnit workUnit = new CBMCPropertyCheckWorkUnit(
 						cbmcProcessHandlerCreator, sessionUUID);
 				run.setAndInitializeWorkUnit(workUnit);
 			}
@@ -246,7 +245,11 @@ public class BeastWorkspace {
 	}
 
 	public void addRunToQueue(CBMCTestRun run) {
-		beast.runWorkUnit(run.getWorkUnit());
+		if (!cbmcProcessHandlerCreator.hasProcessHandler()) {
+			cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
+		}
+		if (cbmcProcessHandlerCreator.hasProcessHandler())
+			beast.runWorkUnit(run.getWorkUnit());
 	}
 
 	public void addFileForDescr(CElectionDescription loadedDescr,
