@@ -109,9 +109,13 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 
 	private void handlePropDescrChanged(
 			PreAndPostConditionsDescription propDescr) {
-		for (TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
-			tc.handlePropDescrChanged();
+
+		if (testConfigsByPropDescr.containsKey(propDescr)) {
+			for (TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
+				tc.handlePropDescrChanged();
+			}
 		}
+
 	}
 
 	@Override

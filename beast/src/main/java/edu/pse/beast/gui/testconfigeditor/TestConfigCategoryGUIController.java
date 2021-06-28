@@ -6,6 +6,7 @@ import java.util.Map;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -45,12 +47,16 @@ public class TestConfigCategoryGUIController
 
 	private String currentCategory;
 
+	private TreeView<TestConfigTreeItemSuper> tcTreeView;
+
 	public TestConfigCategoryGUIController(BeastWorkspace beastWorkspace,
-			String descrSortCrit) {
+			String descrSortCrit,
+			TreeView<TestConfigTreeItemSuper> tcTreeView) {
 		this.beastWorkspace = beastWorkspace;
 		this.descrSortCrit = descrSortCrit;
 		beastWorkspace.registerUpdateListener(this);
 		currentCategory = descrSortCrit;
+		this.tcTreeView = tcTreeView;
 	}
 
 	@FXML
@@ -59,7 +65,10 @@ public class TestConfigCategoryGUIController
 			createTestConfig();
 		});
 		gotoConfigButton.setOnAction(e -> {
-
+			tcTreeView.getSelectionModel().select(TestConfigTreeViewHelper
+					.getItem(testConfigListView.getSelectionModel()
+							.getSelectedItem().getCBMCTestConfigs().get(0),
+							tcTreeView.getRoot()));
 		});
 		deleteConfigButton.setOnAction(e -> {
 			beastWorkspace.deleteTestConfig(
@@ -84,9 +93,12 @@ public class TestConfigCategoryGUIController
 	private void updateView() {
 		descrChoiceBox.getItems().clear();
 		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
+		descrChoiceBox.getSelectionModel().select(0);
+
 		propDescrChoiceBox.getItems().clear();
 		propDescrChoiceBox.getItems()
 				.addAll(beastWorkspace.getLoadedPropDescrs());
+		propDescrChoiceBox.getSelectionModel().select(0);
 
 		testConfigListView.getItems().clear();
 		if (beastWorkspace.getConfigsByElectionDescription().isEmpty()) {
@@ -128,6 +140,12 @@ public class TestConfigCategoryGUIController
 
 	@Override
 	public void handleAddedTestConfig(TestConfiguration tc) {
+		updateView();
+	}
+
+	@Override
+	public void handleAddedPropDescr(
+			PreAndPostConditionsDescription propDescr) {
 		updateView();
 	}
 

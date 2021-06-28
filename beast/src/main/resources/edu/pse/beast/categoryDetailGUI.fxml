@@ -48,6 +48,8 @@
             <Button fx:id="createTestConfigButton" mnemonicParsing="false" text="Create" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ListView fx:id="testConfigListView" layoutX="45.0" layoutY="183.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0" />
+      <ListView fx:id="testConfigListView" layoutX="45.0" layoutY="183.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0" />
+      <Button fx:id="gotoConfigButton" layoutX="32.0" layoutY="358.0" mnemonicParsing="false" text="Go To" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
+      <Button fx:id="deleteConfigButton" layoutX="42.0" layoutY="368.0" mnemonicParsing="false" text="Delete" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="70.0" />
    </children>
 </AnchorPane>
