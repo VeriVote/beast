@@ -17,6 +17,8 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.electiondescription.VotingInputTypes;
+import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
@@ -585,6 +587,17 @@ public class BeastWorkspace {
 		handleDescrChange(descr);
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleDescrChangeAddedSimpleFunction(descr, f);
+		}
+	}
+
+	public void editDescr(CElectionDescription descr, String name,
+			VotingInputTypes inType, VotingOutputTypes outType) {
+		descr.setName(name);
+		descr.setInputType(inType);
+		descr.setOutputType(outType);
+		handleDescrChange(descr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleDescrChangeInOutName(descr);
 		}
 	}
 

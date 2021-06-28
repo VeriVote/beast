@@ -23,7 +23,6 @@ import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -62,6 +61,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	private Button addElectionDescriptionButton;
 	private Button loadElectionDescriptionButton;
 	private Button saveElectionDescriptionButton;
+	private Button editDescrButton;
 
 	private MenuButton addFunctionMenuButton;
 	private Button removeFunctionButton;
@@ -79,7 +79,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
 			Button addElectionDescriptionButton,
 			Button loadElectionDescriptionButton,
-			Button saveElectionDescriptionButton,
+			Button saveElectionDescriptionButton, Button editDescrButton,
 			MenuButton addFunctionMenuButton, Button removeFunctionButton,
 			Button testLoopBoundButton, Button editLoopboundButton,
 			CEditorCodeElement electionCodeArea, CodeArea funcDeclArea,
@@ -96,6 +96,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		this.addElectionDescriptionButton = addElectionDescriptionButton;
 		this.loadElectionDescriptionButton = loadElectionDescriptionButton;
 		this.saveElectionDescriptionButton = saveElectionDescriptionButton;
+		this.editDescrButton = editDescrButton;
+
+		editDescrButton.setOnAction(e -> {
+			editDescr();
+		});
 
 		setupNewElectionButtons();
 
@@ -157,6 +162,32 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 					currentDisplayedFunction, text);
 		});
 
+	}
+
+	private void editDescr() {
+		if (currentDescr == null)
+			return;
+		TextField nameTextField = new TextField();
+		nameTextField.setText(currentDescr.getName());
+		ChoiceBox<VotingInputTypes> inputTypeCB = new ChoiceBox<>();
+		inputTypeCB.getItems().addAll(VotingInputTypes.values());
+		inputTypeCB.getSelectionModel().select(currentDescr.getInputType());
+		ChoiceBox<VotingOutputTypes> outTypeCB = new ChoiceBox<>();
+		outTypeCB.getItems().addAll(VotingOutputTypes.values());
+		outTypeCB.getSelectionModel().select(currentDescr.getOutputType());
+
+		Optional<ButtonType> res = DialogHelper
+				.generateDialog(List.of("name", "input type", "output type"),
+						List.of(nameTextField, inputTypeCB, outTypeCB))
+				.showAndWait();
+		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+			String name = nameTextField.getText();
+			VotingInputTypes inType = inputTypeCB.getValue();
+			VotingOutputTypes outType = outTypeCB.getValue();
+			if (!name.isBlank()) {
+				beastWorkspace.editDescr(currentDescr, name, inType, outType);
+			}
+		}
 	}
 
 	private void editSelectedLoopbound() {
@@ -377,6 +408,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	@Override
+	public void handleDescrChangeInOutName(CElectionDescription descr) {
+		handleWorkspaceUpdateGeneric();
+		openedElectionDescriptionChoiceBox.getSelectionModel().select(descr);
+	}
+	
+	@Override
 	public void handleDescrChangeAddedSimpleFunction(CElectionDescription descr,
 			SimpleTypeFunction f) {
 		if (descr.equals(currentDescr)) {
@@ -501,6 +538,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 	public void loadElectionDescr(CElectionDescription descr) {
 		this.currentDescr = descr;
+		if (descr == null) {
+			editDescrButton.setDisable(true);
+		} else {
+			editDescrButton.setDisable(false);
+		}
 		populateFunctionList(descr);
 	}
 

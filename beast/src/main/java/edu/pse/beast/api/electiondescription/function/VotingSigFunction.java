@@ -39,6 +39,14 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 	public VotingOutputTypes getOutputType() {
 		return outputType;
 	}
+	
+	public void setInputType(VotingInputTypes inputType) {
+		this.inputType = inputType;
+	}
+	
+	public void setOutputType(VotingOutputTypes outputType) {
+		this.outputType = outputType;
+	}
 
 	private String getReturnType() {
 		switch (outputType) {

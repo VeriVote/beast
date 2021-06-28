@@ -30,12 +30,13 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0">
                                  <children>
-                                    <ChoiceBox fx:id="openedElectionDescriptionChoiceBox" prefHeight="25.0" prefWidth="370.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                                    <ChoiceBox fx:id="openedElectionDescriptionChoiceBox" prefHeight="25.0" prefWidth="287.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                                     <AnchorPane fx:id="codePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                                     <Separator prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
-                                    <Button fx:id="addElectionDescriptionButton" layoutX="381.0" layoutY="5.0" mnemonicParsing="false" text="New" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="loadElectionDescriptionButton" layoutX="428.0" layoutY="5.0" mnemonicParsing="false" text="Load" AnchorPane.leftAnchor="428.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="saveElectionDescriptionButton" layoutX="476.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="476.0" />
+                                    <Button fx:id="addElectionDescriptionButton" layoutX="301.0" layoutY="5.0" mnemonicParsing="false" text="New" AnchorPane.leftAnchor="301.0" AnchorPane.topAnchor="5.0" />
+                                    <Button fx:id="loadElectionDescriptionButton" layoutX="348.0" layoutY="5.0" mnemonicParsing="false" text="Load" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="5.0" />
+                                    <Button fx:id="saveElectionDescriptionButton" layoutX="396.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="396.0" AnchorPane.topAnchor="5.0" />
+                                    <Button fx:id="editDescrButton" layoutX="445.0" layoutY="5.0" mnemonicParsing="false" text="Edit" AnchorPane.leftAnchor="445.0" AnchorPane.topAnchor="5.0" />
                                  </children></AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>

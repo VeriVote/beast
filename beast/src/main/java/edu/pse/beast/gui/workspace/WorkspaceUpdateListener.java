@@ -77,4 +77,8 @@ public interface WorkspaceUpdateListener {
 
 	}
 
+	public default void handleDescrChangeInOutName(CElectionDescription descr) {
+		
+	}
+
 }

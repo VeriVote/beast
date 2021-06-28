@@ -82,6 +82,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private Button removeFunctionButton;
 
 	@FXML
+	private Button editDescrButton;
+
+	@FXML
 	private ListView<ExtractedCLoop> loopBoundList;
 
 	@FXML
@@ -182,7 +185,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		cElectionEditor = new CElectionEditor(primaryStage,
 				cEditorGUIElementVsp, addElectionDescriptionButton,
 				loadElectionDescriptionButton, saveElectionDescriptionButton,
-				addFunctionMenuButton, removeFunctionButton,
+				editDescrButton, addFunctionMenuButton, removeFunctionButton,
 				testLoopBoundButton, editLoopboundButton, cEditorGUIElement,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);
@@ -340,7 +343,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-
 	}
 
 	@Override
