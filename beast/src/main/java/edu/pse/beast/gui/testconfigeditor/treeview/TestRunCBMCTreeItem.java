@@ -18,6 +18,12 @@ public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
 	@Override
 	public String toString() {
 		String template = "V=AMT_VOTER, C=AMT_CAND, S=AMT_SEAT | STATUS";
+		if (run.isDescrChanged()) {
+			template += " | c descr changed";
+		}
+		if (run.isPropDescrChanged()) {
+			template += " | prop descr changed";
+		}
 		return template.replaceAll("STATUS", run.getState().toString())
 				.replaceAll("AMT_VOTER", String.valueOf(run.getV()))
 				.replaceAll("AMT_CAND", String.valueOf(run.getC()))

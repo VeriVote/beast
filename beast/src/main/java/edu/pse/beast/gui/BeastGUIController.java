@@ -9,6 +9,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.os.OS;
@@ -93,7 +94,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private TitledPane postPropertyPane;
 
 	@FXML
-	private TreeView<String> variableTreeView;
+	private ListView<SymbolicCBMCVar> symbVarsListView;
 
 	@FXML
 	private MenuButton addSymbVarMenu;
@@ -202,7 +203,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 		preAndPostPropertyEditor = new PreAndPostPropertyEditor(
 				prePropertyEditor, postPropertyEditor, addPropDescrButton,
 				loadPropDescrButton, savePropDescrButton, removeSymbVarButton,
-				variableTreeView, addSymbVarMenu,
+				symbVarsListView, addSymbVarMenu,
 				openedPropertyDescriptionChoiceBox, beastWorkspace);
 	}
 

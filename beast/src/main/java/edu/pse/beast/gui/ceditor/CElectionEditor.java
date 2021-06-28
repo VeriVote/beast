@@ -11,6 +11,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
@@ -18,6 +19,7 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.CelectionDescriptionFunctionType;
+import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.FileDialogHelper;
@@ -36,6 +38,7 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -225,14 +228,20 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
 		MenuItem addSimpleFuncMenuItem = new MenuItem(
 				CelectionDescriptionFunctionType.SIMPLE.toString());
-		MenuItem addVotingFuncMenuItem = new MenuItem(
-				CelectionDescriptionFunctionType.VOTING.toString());
+		/*
+		 * MenuItem addVotingFuncMenuItem = new MenuItem(
+		 * CelectionDescriptionFunctionType.VOTING.toString());
+		 */
 
 		addSimpleFuncMenuItem.setOnAction(e -> addSimpleFunction());
-		addVotingFuncMenuItem.setOnAction(e -> addVotingFunction());
+		// addVotingFuncMenuItem.setOnAction(e -> addVotingFunction());
 
-		addFunctionMenuButton.getItems()
-				.addAll(List.of(addSimpleFuncMenuItem, addVotingFuncMenuItem));
+		addFunctionMenuButton.getItems().add(addSimpleFuncMenuItem);
+
+		/*
+		 * addFunctionMenuButton.getItems()
+		 * .addAll(List.of(addSimpleFuncMenuItem, addVotingFuncMenuItem));
+		 */
 
 		removeFunctionButton.setOnAction(e -> {
 			removeSelectedFunction();
@@ -299,10 +308,23 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			}
 		});
 
-		DialogHelper.generateDialog(List.of("name", "return type"),
+		Optional<ButtonType> res = DialogHelper.generateDialog(
+				List.of("name", "return type"),
 				List.of(nameField, returnTypeChoiceBox, argsTypeChoiceBox,
 						argsNameTextField, addArgButton, removeArgButton))
 				.showAndWait();
+		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+			// TODO add error checking here to make sure the function data is
+			// valid
+			CElectionSimpleTypes returnType = returnTypeChoiceBox
+					.getSelectionModel().getSelectedItem();
+			String name = nameField.getText();
+
+			SimpleTypeFunction function = new SimpleTypeFunction(name, argTypes,
+					argNames, returnType);
+
+			beastWorkspace.addSimpleFunctionToDescr(currentDescr, function);
+		}
 	}
 
 	private void selectedDescrChanged(CElectionDescription descr) {
@@ -349,6 +371,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 			CElectionDescriptionFunction func) {
 		if (descr == currentDescr) {
 			functionList.getItems().remove(func);
+		}
+	}
+
+	@Override
+	public void handleDescrChangeAddedSimpleFunction(CElectionDescription descr,
+			SimpleTypeFunction f) {
+		if (descr.equals(currentDescr)) {
+			functionList.getItems().add(f);
 		}
 	}
 

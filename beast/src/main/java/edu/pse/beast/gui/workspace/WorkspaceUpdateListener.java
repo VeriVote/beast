@@ -6,6 +6,7 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -62,7 +63,18 @@ public interface WorkspaceUpdateListener {
 
 	public default void handlePropDescrChangedCode(
 			PreAndPostConditionsDescription propDescr) {
-		
+
+	}
+
+	public default void handlePropDescrRemovedVar(
+			PreAndPostConditionsDescription propDescr,
+			SymbolicCBMCVar selectedVar) {
+
+	}
+
+	public default void handleDescrChangeAddedSimpleFunction(
+			CElectionDescription descr, SimpleTypeFunction f) {
+
 	}
 
 }

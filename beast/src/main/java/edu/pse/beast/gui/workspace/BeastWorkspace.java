@@ -18,6 +18,7 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
@@ -564,6 +565,24 @@ public class BeastWorkspace {
 
 	public void stopRun(CBMCTestRun run) {
 		beast.stopRun(run);
+	}
+
+	public void removeSymbolicVar(PreAndPostConditionsDescription propDescr,
+			SymbolicCBMCVar selectedVar) {
+		propDescr.getCbmcVariables().remove(selectedVar);
+		propDescrWithUnsavedChanges.add(propDescr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handlePropDescrRemovedVar(propDescr, selectedVar);
+		}
+	}
+
+	public void addSimpleFunctionToDescr(CElectionDescription descr,
+			SimpleTypeFunction f) {
+		descr.addSimpleFunction(f);
+		handleDescrChange(descr);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleDescrChangeAddedSimpleFunction(descr, f);
+		}
 	}
 
 }

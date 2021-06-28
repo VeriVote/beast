@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -23,7 +24,7 @@ import javafx.scene.control.TreeView;
 public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	private PropertyEditorCodeElement preEditor;
 	private PropertyEditorCodeElement postEditor;
-	private TreeView<String> variableTreeView;
+	private ListView<SymbolicCBMCVar> symbVarsListView;
 	private PreAndPostConditionsDescription currentPropDescr;
 	private MenuButton addSymbVarMenu;
 	private Button removeSymbVarButton;
@@ -32,18 +33,18 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	private Button addPropDescrButton;
 	private Button loadPropDescrButton;
 	private Button savePropDescrButton;
-	
+
 	public PreAndPostPropertyEditor(PropertyEditorCodeElement preEditor,
 			PropertyEditorCodeElement postEditor, Button addPropDescrButton,
-			Button loadPropDescrButton, 
-			Button savePropDescrButton,			
+			Button loadPropDescrButton, Button savePropDescrButton,
 			Button removeSymbVarButton,
-			TreeView<String> variableTreeView, MenuButton addSymbVarMenu,
+			ListView<SymbolicCBMCVar> symbVarsListView,
+			MenuButton addSymbVarMenu,
 			ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox,
 			BeastWorkspace beastWorkspace) {
 		this.preEditor = preEditor;
 		this.postEditor = postEditor;
-		this.variableTreeView = variableTreeView;
+		this.symbVarsListView = symbVarsListView;
 		this.addSymbVarMenu = addSymbVarMenu;
 		this.removeSymbVarButton = removeSymbVarButton;
 		this.openedPropertyDescriptionChoiceBox = openedPropertyDescriptionChoiceBox;
@@ -51,7 +52,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		this.addPropDescrButton = addPropDescrButton;
 		this.loadPropDescrButton = loadPropDescrButton;
 		this.savePropDescrButton = savePropDescrButton;
-		
+
 		initAddPropDescrButton();
 
 		beastWorkspace.registerUpdateListener(this);
@@ -125,7 +126,9 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	}
 
 	private void removeSelectedSymbVar() {
-
+		SymbolicCBMCVar selectedVar = symbVarsListView.getSelectionModel()
+				.getSelectedItem();
+		beastWorkspace.removeSymbolicVar(currentPropDescr, selectedVar);
 	}
 
 	private void selectedPropDescrChanged(
@@ -164,28 +167,16 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 
 	private void populateVariableList(List<SymbolicCBMCVar> vars) {
 		if (vars == null) {
-			variableTreeView.setRoot(null);
+			symbVarsListView.getItems().clear();
 			addSymbVarMenu.setDisable(true);
 			removeSymbVarButton.setDisable(true);
 		} else {
+			symbVarsListView.getItems().clear();
 			addSymbVarMenu.setDisable(false);
 			removeSymbVarButton.setDisable(false);
-
-			TreeItem<String> voter = new TreeItem("Voter");
-			TreeItem<String> candidate = new TreeItem("Candidate");
 			for (SymbolicCBMCVar v : vars) {
-				TreeItem<String> item = new TreeItem(v.getName());
-				if (v.getVarType() == CBMCVarType.VOTER) {
-					voter.getChildren().add(item);
-				} else {
-					candidate.getChildren().add(item);
-				}
+				symbVarsListView.getItems().add(v);
 			}
-			TreeItem<String> root = new TreeItem();
-			root.getChildren().add(voter);
-			root.getChildren().add(candidate);
-			variableTreeView.setRoot(root);
-			variableTreeView.setShowRoot(false);
 		}
 	}
 
@@ -212,6 +203,15 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 	@Override
 	public void handleWorkspaceUpdateAddedVarToPropDescr(
 			PreAndPostConditionsDescription propDescr, SymbolicCBMCVar var) {
+		if (propDescr == currentPropDescr) {
+			populateVariableList(currentPropDescr.getCbmcVariables());
+		}
+	}
+
+	@Override
+	public void handlePropDescrRemovedVar(
+			PreAndPostConditionsDescription propDescr,
+			SymbolicCBMCVar selectedVar) {
 		if (propDescr == currentPropDescr) {
 			populateVariableList(currentPropDescr.getCbmcVariables());
 		}

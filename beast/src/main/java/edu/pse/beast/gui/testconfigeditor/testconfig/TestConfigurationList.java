@@ -106,23 +106,31 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 			CElectionDescriptionFunction func) {
 		handleDescrChange(descr);
 	}
-	
-	private void handlePropDescrChanged(PreAndPostConditionsDescription propDescr) {
-		for(TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
+
+	private void handlePropDescrChanged(
+			PreAndPostConditionsDescription propDescr) {
+		for (TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
 			tc.handlePropDescrChanged();
 		}
 	}
-	
+
 	@Override
 	public void handleWorkspaceUpdateAddedVarToPropDescr(
 			PreAndPostConditionsDescription currentPropDescr,
 			SymbolicCBMCVar var) {
 		handlePropDescrChanged(currentPropDescr);
 	}
-	
+
 	@Override
 	public void handlePropDescrChangedCode(
 			PreAndPostConditionsDescription propDescr) {
+		handlePropDescrChanged(propDescr);
+	}
+
+	@Override
+	public void handlePropDescrRemovedVar(
+			PreAndPostConditionsDescription propDescr,
+			SymbolicCBMCVar selectedVar) {
 		handlePropDescrChanged(propDescr);
 	}
 

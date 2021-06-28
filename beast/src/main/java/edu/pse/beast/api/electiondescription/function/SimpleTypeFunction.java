@@ -2,17 +2,20 @@ package edu.pse.beast.api.electiondescription.function;
 
 import java.util.List;
 
+import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 
 public class SimpleTypeFunction extends CElectionDescriptionFunction {
-	private List<CElectionSimpleTypes> arguments;
+	private List<CElectionSimpleTypes> argTypes;
+	private List<String> argNames;
 	private CElectionSimpleTypes outputType;
 
-	public SimpleTypeFunction(String name, List<CElectionSimpleTypes> arguments,
-			CElectionSimpleTypes outputType) {
+	public SimpleTypeFunction(String name, List<CElectionSimpleTypes> argTypes,
+			List<String> argNames, CElectionSimpleTypes outputType) {
 		super(name);
-		this.arguments = arguments;
+		this.argTypes = argTypes;
+		this.argNames = argNames;
 		this.outputType = outputType;
 	}
 
@@ -21,7 +24,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 		String template = "RETURN_TYPE NAME(ARGS)";
 		String args = "";
 
-		for (CElectionSimpleTypes st : arguments) {
+		for (CElectionSimpleTypes st : argTypes) {
 			args += st.toString();
 		}
 
@@ -31,8 +34,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 	}
 
 	@Override
-	public String getReturnText(
-			CodeGenOptions codeGenOptions) {
+	public String getReturnText(CodeGenOptions codeGenOptions) {
 		return "}";
 	}
 

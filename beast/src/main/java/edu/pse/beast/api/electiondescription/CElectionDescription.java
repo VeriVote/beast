@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import com.sun.jna.platform.win32.WinNT.SECURITY_IMPERSONATION_LEVEL;
+
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.c_code.CFunction;
@@ -14,6 +16,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 
 public class CElectionDescription {
@@ -96,6 +99,11 @@ public class CElectionDescription {
 
 	public String getUuid() {
 		return uuid;
+	}
+	
+	public void addSimpleFunction(SimpleTypeFunction  f) {
+		functions.add(f);
+		functionNames.add(f.getName());
 	}
 
 	public CodeGenLoopBoundHandler generateLoopBoundHandler() {
