@@ -11,6 +11,7 @@ public class CFile {
 	private List<CDefine> defines = new ArrayList<>();
 	private List<CStruct> structs = new ArrayList<>();
 	private List<CTypeDef> typedefs = new ArrayList<>();
+	private List<String> declarations = new ArrayList<>();
 
 	public void addTypeDef(CTypeDef typeDef) {
 		this.typedefs.add(typeDef);
@@ -25,7 +26,8 @@ public class CFile {
 		this.funcs.add(func);
 	}
 
-	public void addFunctionDecl(String returnType, String name, List<String> args) {
+	public void addFunctionDecl(String returnType, String name,
+			List<String> args) {
 		funcDecls.add(new CFunction(name, args, returnType));
 	}
 
@@ -45,23 +47,38 @@ public class CFile {
 		List<String> created = new ArrayList<>();
 		for (CInclude inc : includes) {
 			created.add(inc.generateCode());
-		}		
+		}
+		created.add("\n");
 		for (CDefine def : defines) {
 			created.add(def.generateCode());
 		}
+		created.add("\n");
 		for (CTypeDef tdef : typedefs) {
 			created.add(tdef.generateCode());
 		}
+		created.add("\n");
+		for (String decl : declarations) {
+			created.add(decl);
+		}
+		created.add("\n");
 		for (CStruct s : structs) {
 			created.add(s.generateDefCode());
 		}
+		created.add("\n");
 		for (CFunction func : funcDecls) {
 			created.add(func.generateDeclCode());
 		}
+		created.add("\n");
 		for (CFunction func : funcs) {
 			created.add(func.generateDefCode());
+			created.add("\n");
 		}
+		created.add("\n");
 		return String.join("\n", created);
+	}
+
+	public void declare(String declCString) {
+		declarations.add(declCString + ";\n");
 	}
 
 }

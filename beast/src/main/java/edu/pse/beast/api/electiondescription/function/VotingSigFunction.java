@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
@@ -115,4 +116,5 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 		String template = "    return RETURN_NAME;\n}";
 		return template.replaceAll("RETURN_NAME", resultArrayName);
 	}
+	
 }

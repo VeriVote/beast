@@ -7,13 +7,14 @@ import java.util.List;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.CLoopParseResultType;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
 public abstract class CElectionDescriptionFunction {
 	protected String name;
 	protected List<String> code = new ArrayList<>();
 	protected List<ExtractedCLoop> extractedLoops = new ArrayList<>();
-	
+
 	public CElectionDescriptionFunction(String name) {
 		this.name = name;
 	}
@@ -67,7 +68,6 @@ public abstract class CElectionDescriptionFunction {
 		return true;
 	}
 
-	public abstract String getReturnText(
-			CodeGenOptions codeGenOptions);
+	public abstract String getReturnText(CodeGenOptions codeGenOptions);
 
 }

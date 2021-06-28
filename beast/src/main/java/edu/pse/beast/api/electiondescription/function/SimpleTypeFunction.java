@@ -1,8 +1,9 @@
 package edu.pse.beast.api.electiondescription.function;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
+import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 
@@ -19,23 +20,51 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 		this.outputType = outputType;
 	}
 
+	private List<String> getArgs() {
+		List<String> args = new ArrayList<>();
+
+		for (int i = 0; i < argTypes.size(); ++i) {
+			CElectionSimpleTypes st = argTypes.get(i);
+			String argVar = argNames.get(i);
+			args.add(st.toString() + " " + argVar);
+		}
+
+		return args;
+	}
+
+	private String getArgString() {
+		List<String> argsList = getArgs();
+
+		String args = "";
+		for (int i = 0; i < argsList.size() - 1; ++i) {
+			args += argsList.get(i) + ", ";
+		}
+		if (!argsList.isEmpty()) {
+			args += argsList.get(argsList.size() - 1);
+		}
+		return args;
+	}
+
 	@Override
 	public String getDeclCString(CodeGenOptions codeGenOptions) {
 		String template = "RETURN_TYPE NAME(ARGS)";
-		String args = "";
-
-		for (CElectionSimpleTypes st : argTypes) {
-			args += st.toString();
-		}
-
-		return template.replaceAll("RETURN_TYPE", outputType.toString())
+		String args = getArgString();
+		template =  template.replaceAll("RETURN_TYPE", outputType.toString())
 				.replaceAll("NAME", getName()).replaceAll("ARGS", args);
-
+		return template;
 	}
 
 	@Override
 	public String getReturnText(CodeGenOptions codeGenOptions) {
 		return "}";
+	}
+
+	public CFunction toCFunc() {
+		List<String> args = getArgs();
+		CFunction created = new CFunction(getName(), args,
+				outputType.toString());
+		created.setCode(getCodeAsList());
+		return created;
 	}
 
 }

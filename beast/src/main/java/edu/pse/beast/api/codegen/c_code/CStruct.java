@@ -7,7 +7,7 @@ public class CStruct {
 	private String name;
 	private List<CTypeNameBrackets> members = new ArrayList<>();
 
-	private final String template = "typedef struct STRUCT_NAME { MEMBER_LIST } STRUCT_NAME;";
+	private final String template = "typedef struct STRUCT_NAME {\nMEMBER_LIST\n} STRUCT_NAME;\n";
 
 	public CStruct(String name, List<CTypeNameBrackets> members) {
 		this.name = name;
