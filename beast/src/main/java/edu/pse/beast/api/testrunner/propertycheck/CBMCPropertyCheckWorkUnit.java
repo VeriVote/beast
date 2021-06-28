@@ -115,19 +115,19 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 				// TODO errorhandling
 				e.printStackTrace();
 				state = WorkUnitState.STOPPED;
-				process.destroy();
+				processStarterSource.getProcessHandler().endProcess(process);
 				return;
 			}
 			cb.onPropertyTestRawOutputComplete(descr, propDescr, s, c, v, uuid,
 					cbmcOutput);
 			state = WorkUnitState.FINISHED;
-			process.destroy();
+			processStarterSource.getProcessHandler().endProcess(process);
 			cb.onPropertyTestFinished(descr, propDescr, s, c, v, uuid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			state = WorkUnitState.STOPPED;
-			process.destroy();
+			processStarterSource.getProcessHandler().endProcess(process);
 		}
 	}
 
@@ -138,7 +138,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 
 	@Override
 	public void interrupt() {
-		process.destroyForcibly();
+		processStarterSource.getProcessHandler().endProcess(process);
 		state = WorkUnitState.STOPPED;
 		cb.onPropertyTestStopped(descr, propDescr, s, c, v, uuid);
 	}

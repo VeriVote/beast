@@ -41,8 +41,9 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 
 	@Override
 	public void endProcess(Process p) {
+		if (!p.isAlive())
+			return;
 		p.destroyForcibly();
 	}
-
 
 }
