@@ -49,11 +49,11 @@ public class CodeGenLoopBoundHandler {
 	public void finishAddedLoopbounds() {
 		for (String k : votingInitLoopbounds.keySet()) {
 			List<LoopBound> initLbs = votingInitLoopbounds.get(k);
-			for(int i = 0; i < initLbs.size(); ++i) {
+			for (int i = 0; i < initLbs.size(); ++i) {
 				initLbs.get(i).setIndex(i);
 				initLbs.get(i).setFunctionName(k);
 			}
-			
+
 			List<LoopBound> extractedLbs = functionNamesToLoopbounds.get(k);
 			int amtInitLoops = votingInitLoopbounds.get(k).size();
 			for (LoopBound lb : extractedLbs) {
@@ -92,6 +92,8 @@ public class CodeGenLoopBoundHandler {
 				created += lb.getUnwindString(v, c, s);
 			}
 		}
+
+		created += " --unwind " + Math.max(Math.max(v, c), s);
 
 		return created;
 	}

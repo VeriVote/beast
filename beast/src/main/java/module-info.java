@@ -7,6 +7,7 @@ module edu.pse.beast {
     uses edu.pse.beast.types.OutputType;
     uses edu.pse.beast.propertychecker.Result;
 
+    
     exports edu.pse.beast.propertychecker;
     exports edu.pse.beast.types.cbmctypes;
     exports edu.pse.beast.saverloader.adapter;
@@ -71,6 +72,7 @@ module edu.pse.beast {
 	requires org.json;
 	requires antlr4;
 
+
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.gui.options.process_handler to javafx.fxml;
     opens edu.pse.beast.gui.options.ceditor to javafx.fxml;
@@ -86,6 +88,7 @@ module edu.pse.beast {
     opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
     opens edu.pse.beast.propertychecker to gson;
     opens edu.pse.beast.toolbox.valueContainer to gson;
+    
 
     // TODO maybe extract the types into their own modules
     provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,

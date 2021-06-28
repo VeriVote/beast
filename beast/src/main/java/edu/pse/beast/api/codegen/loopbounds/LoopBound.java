@@ -12,6 +12,7 @@ public class LoopBound {
 	private LoopBoundType loopBoundType;
 	private int index;
 	private int manualBoundIfNeeded;
+	
 
 	private LoopBound() {
 
@@ -66,6 +67,11 @@ public class LoopBound {
 			default :
 				return "";
 		}
+		
+		if(bound == 0) {
+			int i = 0;
+		}
+		
 		String currentUnwindArgument = LOOP_BOUND_TEMPLATE
 				.replaceAll("FUNC_NAME", functionName)
 				.replaceAll("IDX", String.valueOf(index))

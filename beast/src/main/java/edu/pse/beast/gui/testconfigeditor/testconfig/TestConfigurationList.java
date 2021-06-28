@@ -6,7 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
@@ -81,9 +84,46 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 	}
 
 	@Override
-	public void handleAddedPropDescr(
-			PreAndPostConditionsDescription propDescr) {
+	public void handleExtractedFunctionLoops(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		handleDescrChange(descr);
+	}
 
+	@Override
+	public void handleDescrChangeUpdatedFunctionCode(CElectionDescription descr,
+			CElectionDescriptionFunction function, String code) {
+		handleDescrChange(descr);
+	}
+
+	@Override
+	public void handleDescrChangeAddedVotingSigFunction(
+			CElectionDescription descr, VotingSigFunction func) {
+		handleDescrChange(descr);
+	}
+
+	@Override
+	public void handleDescrChangeRemovedFunction(CElectionDescription descr,
+			CElectionDescriptionFunction func) {
+		handleDescrChange(descr);
+	}
+	
+	private void handlePropDescrChanged(PreAndPostConditionsDescription propDescr) {
+		for(TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
+			tc.handlePropDescrChanged();
+		}
+	}
+	
+	@Override
+	public void handleWorkspaceUpdateAddedVarToPropDescr(
+			PreAndPostConditionsDescription currentPropDescr,
+			SymbolicCBMCVar var) {
+		handlePropDescrChanged(currentPropDescr);
+	}
+	
+	@Override
+	public void handlePropDescrChangedCode(
+			PreAndPostConditionsDescription propDescr) {
+		handlePropDescrChanged(propDescr);
 	}
 
 }

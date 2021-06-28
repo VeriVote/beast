@@ -30,7 +30,7 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
 public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	private static final String BLANK = " ";
 	private static final long WAITING_TIME_FOR_TERMINATION = 8000;
-    private static final double A_VERY_LONG_TIME = 1000d;
+	private static final double A_VERY_LONG_TIME = 1000d;
 	/** The Constant CBMC_EXE. */
 	private String CBMC_EXE = "cbmc.exe";
 	/** The Constant CBMC64_EXE. */
@@ -168,25 +168,14 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 				|| proc.getClass().getName().equals("java.lang.ProcessImpl")) {
 			/* Determine the pid on windows plattforms */
 			try {
-				// Get the handle by reflection
-				final Field f = proc.getClass().getDeclaredField("handle");
-				f.setAccessible(true);
-				final long handLong = f.getLong(proc);
-				final Kernel32 kernel = Kernel32.INSTANCE;
-				final WinNT.HANDLE handle = new WinNT.HANDLE();
-				// Get the immutable value and set it accessible so we do not
-				// run into errors.
-				final Field toSet = handle.getClass()
-						.getDeclaredField("immutable");
-				toSet.setAccessible(true);
-				final boolean savedState = toSet.getBoolean(handle);
-				handle.setPointer(Pointer.createConstant(handLong));
-				final int pid = kernel.GetProcessId(handle);
-				// Set it back to the original value and make it unaccessible
-				// again.
-				toSet.setBoolean(handle, savedState);
-				toSet.setAccessible(false);
-				return pid;
+				Field field = proc.getClass().getDeclaredField("handle");
+				if (field != null) {
+					WinNT.HANDLE handle = new WinNT.HANDLE();
+					field.setAccessible(true);
+					handle.setPointer(
+							Pointer.createConstant(field.getLong(proc)));
+					return Kernel32.INSTANCE.GetProcessId(handle);
+				}			
 			} catch (NoSuchFieldException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {

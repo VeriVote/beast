@@ -298,10 +298,6 @@ public class BeastWorkspace {
 		}
 
 		propDescrWithUnsavedChanges.add(currentPropDescr);
-		for (TestConfiguration tc : testConfigList
-				.getTestConfigsByPropDescr(currentPropDescr)) {
-			tc.handlePropDescrChanged();
-		}
 
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleWorkspaceUpdateAddedVarToPropDescr(currentPropDescr, var);
@@ -312,9 +308,8 @@ public class BeastWorkspace {
 			FormalPropertiesDescription conditionDescription,
 			PreAndPostConditionsDescription propDescr) {
 		propDescrWithUnsavedChanges.add(propDescr);
-		for (TestConfiguration tc : testConfigList.getTestConfigsByPropDescr()
-				.get(propDescr)) {
-			tc.handlePropDescrChanged();
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handlePropDescrChangedCode(propDescr);
 		}
 	}
 
@@ -477,7 +472,6 @@ public class BeastWorkspace {
 	// reasonable ppl can disagree on that
 	private void handleDescrChange(CElectionDescription descr) {
 		descrWithUnsavedChanges.add(descr);
-		testConfigList.handleDescrChange(descr);
 	}
 
 	public void updateCodeForDescrFunction(CElectionDescription descr,

@@ -14,7 +14,7 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfig
 
 public interface WorkspaceUpdateListener {
 	public default void handleWorkspaceUpdateGeneric() {
-		
+
 	}
 
 	public default void handleWorkspaceUpdateAddedCBMCRuns(
@@ -46,26 +46,22 @@ public interface WorkspaceUpdateListener {
 
 	}
 
-	public default void handleDescrChangeAddedLoopBound(CElectionDescription descr,
-			CElectionDescriptionFunction func, LoopBound lb) {
-		
-	}
-
-	public default void handleDescrChangeRemovedLoopBound(CElectionDescription descr,
-			CElectionDescriptionFunction func, LoopBound toRemove) {
-		
-	}
-
 	public default void handleExtractedFunctionLoops(CElectionDescription descr,
 			CElectionDescriptionFunction func) {
-		
+
 	}
 
-	public default void handleAddedPropDescr(PreAndPostConditionsDescription propDescr) {
-		
+	public default void handleAddedPropDescr(
+			PreAndPostConditionsDescription propDescr) {
+
 	}
 
 	public default void handleAddedTestConfig(TestConfiguration tc) {
+
+	}
+
+	public default void handlePropDescrChangedCode(
+			PreAndPostConditionsDescription propDescr) {
 		
 	}
 
