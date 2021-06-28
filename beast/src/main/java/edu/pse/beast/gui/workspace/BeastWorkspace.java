@@ -109,6 +109,8 @@ public class BeastWorkspace {
 	}
 
 	public void setTestConfigList(TestConfigurationList testConfigList) {
+		//remove the old list so it doesnt receive updates
+		updateListener.remove(this.testConfigList);
 		this.testConfigList = testConfigList;
 		for (CBMCTestRun run : testConfigList.getCBMCTestRuns()) {
 			CBMCPropertyCheckWorkUnit wu = new CBMCPropertyCheckWorkUnit(

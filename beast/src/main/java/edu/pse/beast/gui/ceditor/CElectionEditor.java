@@ -1,6 +1,5 @@
 package edu.pse.beast.gui.ceditor;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +10,6 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
@@ -22,10 +20,10 @@ import edu.pse.beast.api.electiondescription.function.CelectionDescriptionFuncti
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
-import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -38,7 +36,6 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -284,6 +281,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		Button removeArgButton = new Button("remove Last Argument");
 
 		Consumer<Label> updateArgLabel = l -> {
+			if (argNames.isEmpty()) {
+				l.setVisible(false);
+				return;
+			}
+			l.setVisible(true);
 			String text = "";
 			for (int i = 0; i < argNames.size(); ++i) {
 				text += argTypes.get(i) + " " + argNames.get(i) + ", ";
@@ -292,26 +294,26 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		};
 
 		addArgButton.setOnAction(e -> {
-			if (!nameField.getText().isEmpty()) {
-				argTypes.add(argsTypeChoiceBox.getSelectionModel()
-						.getSelectedItem());
-				argNames.add(argsNameTextField.getText());
-				updateArgLabel.accept(argumentsLabel);
-			}
+			argTypes.add(
+					argsTypeChoiceBox.getSelectionModel().getSelectedItem());
+			argNames.add(argsNameTextField.getText());
+			updateArgLabel.accept(argumentsLabel);
 		});
 
 		removeArgButton.setOnAction(e -> {
 			if (!argTypes.isEmpty()) {
-				argTypes.remove(argTypes.size() - 1);
-				argNames.remove(argTypes.size() - 1);
+				int idx = argTypes.size() - 1;
+				argTypes.remove(idx);
+				argNames.remove(idx);
 				updateArgLabel.accept(argumentsLabel);
 			}
 		});
 
-		Optional<ButtonType> res = DialogHelper.generateDialog(
-				List.of("name", "return type"),
-				List.of(nameField, returnTypeChoiceBox, argsTypeChoiceBox,
-						argsNameTextField, addArgButton, removeArgButton))
+		Optional<ButtonType> res = DialogHelper
+				.generateDialog(List.of("name", "return type"),
+						List.of(nameField, returnTypeChoiceBox,
+								argsTypeChoiceBox, argsNameTextField,
+								addArgButton, removeArgButton, argumentsLabel))
 				.showAndWait();
 		if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
 			// TODO add error checking here to make sure the function data is

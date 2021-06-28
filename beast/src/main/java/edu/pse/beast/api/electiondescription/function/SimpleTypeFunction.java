@@ -66,5 +66,17 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 		created.setCode(getCodeAsList());
 		return created;
 	}
+	
+	public CElectionSimpleTypes getOutputType() {
+		return outputType;
+	}
+	
+	public List<String> getArgNames() {
+		return argNames;
+	}
+	
+	public List<CElectionSimpleTypes> getArgTypes() {
+		return argTypes;
+	}
 
 }

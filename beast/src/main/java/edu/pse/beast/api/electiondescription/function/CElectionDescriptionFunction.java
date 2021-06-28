@@ -9,6 +9,7 @@ import edu.pse.beast.api.c_parser.CLoopParseResultType;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public abstract class CElectionDescriptionFunction {
 	protected String name;
@@ -60,7 +61,8 @@ public abstract class CElectionDescriptionFunction {
 				return false;
 		} else {
 			for (ExtractedCLoop l : extractedLoops) {
-				if (l.getLoopParseResult() != CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP) {
+				if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER
+						&& l.getManualInteger() == null) {
 					return false;
 				}
 			}

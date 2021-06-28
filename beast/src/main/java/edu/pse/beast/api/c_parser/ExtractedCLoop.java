@@ -26,7 +26,7 @@ public class ExtractedCLoop {
 	private String functionName;
 	private CLoopParseResultType loopParseResult;
 	private LoopBoundType parsedLoopBoundType;
-	private int manualInteger;
+	private Integer manualInteger;
 
 	private ExtractedCLoop parentLoop;
 	private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
@@ -84,7 +84,7 @@ public class ExtractedCLoop {
 		return parentLoop;
 	}
 
-	public int getManualInteger() {
+	public Integer getManualInteger() {
 		return manualInteger;
 	}
 
@@ -94,11 +94,23 @@ public class ExtractedCLoop {
 
 	@Override
 	public String toString() {
-		return "ExtractedCLoop [loopType=" + loopType + ", line=" + line
-				+ ", loopNumberInFunction=" + loopNumberInFunction
-				+ ", loopParseResult=" + loopParseResult + ", parentLoop="
-				+ parentLoop + ", parsedLoopBoundType=" + parsedLoopBoundType
-				+ "]";
+		String template = "LOOP_TYPE LOOP_NUMBER: LOOP_BOUND";
+		template = template.replaceAll("LOOP_TYPE", loopType.toString())
+				.replaceAll("LOOP_NUMBER", String.valueOf(loopNumberInFunction))
+				.replaceAll("LOOP_BOUND", parsedLoopBoundType.toString());
+		if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+			if (manualInteger == null) {
+				template = "MISSING MANUAL BOUND :: " + template;
+			} else {
+				template += "(" + manualInteger + ")";
+			}
+		}
+		return template;
+	}
+
+	private void handleParseFail(CLoopParseResultType res) {
+		loopParseResult = res;
+		parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED_INTEGER;
 	}
 
 	private void init(CodeGenOptions codeGenOptions) {
@@ -122,7 +134,7 @@ public class ExtractedCLoop {
 			}
 
 			if (condExp == null) {
-				loopParseResult = CLoopParseResultType.NO_CONDITIONAL_STATEMENT;
+				handleParseFail(CLoopParseResultType.NO_CONDITIONAL_STATEMENT);
 				return;
 			}
 
@@ -133,19 +145,22 @@ public class ExtractedCLoop {
 			}
 
 			if (parseRule.getClass() != RelationalExpressionContext.class) {
-				loopParseResult = CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM;
+				handleParseFail(
+						CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
 				return;
 			}
 
 			RelationalExpressionContext relCond = (RelationalExpressionContext) parseRule;
 
 			if (relCond.Less() == null) {
-				loopParseResult = CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_LESS;
+				handleParseFail(
+						CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_LESS);
 				return;
 			}
 
 			if (relCond.shiftExpression() == null) {
-				loopParseResult = CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM;
+				handleParseFail(
+						CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
 				return;
 			}
 
