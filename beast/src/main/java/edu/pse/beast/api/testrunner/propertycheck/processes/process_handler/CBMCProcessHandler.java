@@ -30,5 +30,7 @@ public interface CBMCProcessHandler {
 			String uuid, CBMCTestCallback cb, File cbmcFile,
 			String loopBounds, CodeGenOptions codeGenOptions)
 			throws IOException;
+	
+	public void endProcess(Process p);
 
 }

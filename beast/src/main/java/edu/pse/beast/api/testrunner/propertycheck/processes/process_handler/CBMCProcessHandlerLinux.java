@@ -39,5 +39,10 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 		return Runtime.getRuntime().exec(arguments, null, cbmcProgFile);
 	}
 
+	@Override
+	public void endProcess(Process p) {
+		p.destroyForcibly();
+	}
+
 
 }
