@@ -138,4 +138,10 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 		run.getTc().deleteRun(run);
 	}
 
+	public void deleteTestConfiguration(TestConfiguration tc) {
+		testConfigsByName.remove(tc.getName());
+		testConfigsByDescr.get(tc.getDescr()).remove(tc);
+		testConfigsByPropDescr.get(tc.getPropDescr()).remove(tc);
+	}
+
 }

@@ -608,4 +608,11 @@ public class BeastWorkspace {
 		}
 	}
 
+	public void deleteTestConfig(TestConfiguration tc) {
+		testConfigList.deleteTestConfiguration(tc);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleTestConfigDeleted(tc);
+		}
+	}
+
 }

@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class TestConfigCategoryGUIController
@@ -33,6 +34,10 @@ public class TestConfigCategoryGUIController
 	private Button createTestConfigButton;
 	@FXML
 	private ListView<TestConfiguration> testConfigListView;
+	@FXML
+	private Button gotoConfigButton;
+	@FXML
+	private Button deleteConfigButton;
 
 	private final String descrSortCrit;
 
@@ -52,6 +57,13 @@ public class TestConfigCategoryGUIController
 	public void initialize() {
 		createTestConfigButton.setOnAction(e -> {
 			createTestConfig();
+		});
+		gotoConfigButton.setOnAction(e -> {
+
+		});
+		deleteConfigButton.setOnAction(e -> {
+			beastWorkspace.deleteTestConfig(
+					testConfigListView.getSelectionModel().getSelectedItem());
 		});
 	}
 
@@ -77,6 +89,14 @@ public class TestConfigCategoryGUIController
 				.addAll(beastWorkspace.getLoadedPropDescrs());
 
 		testConfigListView.getItems().clear();
+		if (beastWorkspace.getConfigsByElectionDescription().isEmpty()) {
+			gotoConfigButton.setDisable(true);
+			deleteConfigButton.setDisable(true);
+			return;
+		}
+		gotoConfigButton.setDisable(false);
+		deleteConfigButton.setDisable(false);
+
 		if (currentCategory.equals(descrSortCrit)) {
 			Map<CElectionDescription, List<TestConfiguration>> map = beastWorkspace
 					.getConfigsByElectionDescription();

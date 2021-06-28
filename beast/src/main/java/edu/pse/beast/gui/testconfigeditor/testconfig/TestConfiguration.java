@@ -68,6 +68,15 @@ public class TestConfiguration {
 		list.addAll(cbmcTestConfigsByName.values());
 		return list;
 	}
+	
+	@Override
+	public String toString() {
+		String template = "CONFIG_NAME: DESCR_NAME + PROP_NAME";
+		template = template.replaceAll("CONFIG_NAME", name)
+				.replaceAll("DESCR_NAME", descr.getName())
+				.replaceAll("PROP_NAME", propDescr.getName());
+		return template;
+	}
 
 	public void handlePropDescrChanged() {
 		//TODO this can be made smarter by giving the run items a reference to the current

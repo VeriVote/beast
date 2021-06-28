@@ -19,8 +19,7 @@ public interface WorkspaceUpdateListener {
 	}
 
 	public default void handleWorkspaceUpdateAddedCBMCRuns(
-			CBMCTestConfiguration config,
-			List<CBMCTestRun> createdTestRuns) {
+			CBMCTestConfiguration config, List<CBMCTestRun> createdTestRuns) {
 	}
 
 	public default void handleWorkspaceErrorNoCBMCProcessStarter() {
@@ -78,11 +77,15 @@ public interface WorkspaceUpdateListener {
 	}
 
 	public default void handleDescrChangeInOutName(CElectionDescription descr) {
-		
+
 	}
 
 	public default void handleCBMCRunDeleted(CBMCTestRun run) {
-		
+
+	}
+
+	public default void handleTestConfigDeleted(TestConfiguration tc) {
+
 	}
 
 }

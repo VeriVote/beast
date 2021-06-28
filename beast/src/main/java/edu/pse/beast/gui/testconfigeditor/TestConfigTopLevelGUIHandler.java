@@ -208,6 +208,7 @@ public class TestConfigTopLevelGUIHandler
 			}
 			root.getChildren().add(parentItem);
 		}
+		testConfigTreeView.getSelectionModel().select(0);
 	}
 
 	private void setupSortCriteriumChoiceBox() {
@@ -245,6 +246,11 @@ public class TestConfigTopLevelGUIHandler
 	
 	@Override
 	public void handleCBMCRunDeleted(CBMCTestRun run) {
+		updateTestConfigTreeView();
+	}
+	
+	@Override
+	public void handleTestConfigDeleted(TestConfiguration tc) {
 		updateTestConfigTreeView();
 	}
 }
