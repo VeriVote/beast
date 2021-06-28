@@ -242,4 +242,9 @@ public class TestConfigTopLevelGUIHandler
 					new TestRunCBMCTreeItem(r)));
 		}
 	}
+	
+	@Override
+	public void handleCBMCRunDeleted(CBMCTestRun run) {
+		updateTestConfigTreeView();
+	}
 }

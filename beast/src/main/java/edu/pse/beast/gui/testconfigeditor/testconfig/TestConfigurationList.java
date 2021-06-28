@@ -135,7 +135,7 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 	}
 
 	public void deleteCBMCRun(CBMCTestRun run) {
-		
+		run.getTc().deleteRun(run);
 	}
 
 }

@@ -81,4 +81,8 @@ public interface WorkspaceUpdateListener {
 		
 	}
 
+	public default void handleCBMCRunDeleted(CBMCTestRun run) {
+		
+	}
+
 }

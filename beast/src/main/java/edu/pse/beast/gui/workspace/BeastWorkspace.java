@@ -603,6 +603,9 @@ public class BeastWorkspace {
 
 	public void deleteCBMCRun(CBMCTestRun run) {
 		testConfigList.deleteCBMCRun(run);
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleCBMCRunDeleted(run);
+		}
 	}
 
 }

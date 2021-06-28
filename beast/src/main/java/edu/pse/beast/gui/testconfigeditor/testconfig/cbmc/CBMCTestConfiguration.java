@@ -150,5 +150,9 @@ public class CBMCTestConfiguration {
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+
+	public void deleteRun(CBMCTestRun run) {
+		runs.remove(run);
+	}
 	
 }
