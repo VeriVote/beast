@@ -9,7 +9,7 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigGuiController;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfigGuiController;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCBMCTreeItem;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCategoryTreeItem;
@@ -161,7 +161,7 @@ public class TestConfigTopLevelGUIHandler
 	}
 
 	private void addCBMCRunItems(TreeItem<TestConfigTreeItemSuper> treeItem,
-			CBMCPropertyTestConfiguration config) {
+			CBMCTestConfiguration config) {
 		treeItem.getChildren().clear();
 		for (CBMCTestRun tr : config.getRuns()) {
 			treeItem.getChildren()
@@ -190,12 +190,12 @@ public class TestConfigTopLevelGUIHandler
 			for (TestConfiguration testConfig : testConfigsForParent) {
 				TreeItem<TestConfigTreeItemSuper> testConfigItem = new TreeItem<>(
 						new TestConfigTreeItem(testConfig));
-				Map<String, CBMCPropertyTestConfiguration> cbcmConfigs = testConfig
+				Map<String, CBMCTestConfiguration> cbcmConfigs = testConfig
 						.getCbmcTestConfigsByName();
 				if (!cbcmConfigs.isEmpty()) {
 					TreeItem<TestConfigTreeItemSuper> cbmcParentItem = new TreeItem<>(
 							new TestConfigCategoryTreeItem("cbmc"));
-					for (CBMCPropertyTestConfiguration cbmcConfig : cbcmConfigs
+					for (CBMCTestConfiguration cbmcConfig : cbcmConfigs
 							.values()) {
 						TreeItem<TestConfigTreeItemSuper> cbmcConfigItem = new TreeItem<>(
 								new TestConfigCBMCTreeItem(cbmcConfig));
@@ -233,7 +233,7 @@ public class TestConfigTopLevelGUIHandler
 
 	@Override
 	public void handleWorkspaceUpdateAddedCBMCRuns(
-			CBMCPropertyTestConfiguration config,
+			CBMCTestConfiguration config,
 			List<CBMCTestRun> createdTestRuns) {
 		TreeItem<TestConfigTreeItemSuper> item = TestConfigTreeViewHelper
 				.getItem(config, root);

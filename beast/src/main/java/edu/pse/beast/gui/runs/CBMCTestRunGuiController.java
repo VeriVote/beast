@@ -132,7 +132,11 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 				putRunOnQueueButton.setOnAction(e -> {
 					beastWorkspace.addRunToQueue(run);
 				});
-				stateHBox.getChildren().add(putRunOnQueueButton);
+				Button deleteButton = new Button("delete");
+				deleteButton.setOnAction(e -> {
+					beastWorkspace.deleteCBMCRun(run);
+				});
+				stateHBox.getChildren().addAll(List.of(putRunOnQueueButton, deleteButton));
 				break;
 			}
 			case ON_QUEUE:
@@ -168,9 +172,14 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 					outputTextElement.insertText(0,
 							run.getAllAssignmentsText());
 				});
+				Button deleteButton = new Button("delete");
+				deleteButton.setOnAction(e -> {
+					beastWorkspace.deleteCBMCRun(run);
+				});
 				stateHBox.getChildren().add(showLogsButton);
 				stateHBox.getChildren().add(showAllAssignments);
 				stateHBox.getChildren().add(showExampleButton);
+				stateHBox.getChildren().add(deleteButton);
 				break;
 			}
 
@@ -182,7 +191,12 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 				putRunOnQueueButton.setOnAction(e -> {
 					beastWorkspace.addRunToQueue(run);
 				});
+				Button deleteButton = new Button("delete");
+				deleteButton.setOnAction(e -> {
+					beastWorkspace.deleteCBMCRun(run);
+				});
 				stateHBox.getChildren().add(putRunOnQueueButton);
+				stateHBox.getChildren().add(deleteButton);
 				break;
 			}
 			default:

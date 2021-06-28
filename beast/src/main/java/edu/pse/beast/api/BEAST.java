@@ -12,7 +12,7 @@ import edu.pse.beast.api.testrunner.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class BEAST {
 
@@ -53,7 +53,7 @@ public class BEAST {
 	}
 
 	public List<CBMCTestRun> generateTestRuns(CBMCCodeFileData cbmcCodeFile,
-			CBMCPropertyTestConfiguration testConfig,
+			CBMCTestConfiguration testConfig,
 			CodeGenOptions codeGenOptions) {
 		List<CBMCTestRun> runs = new ArrayList<>();
 		for (int v = testConfig.getMinVoters(); v <= testConfig
@@ -67,7 +67,7 @@ public class BEAST {
 
 					runs.add(new CBMCTestRun(v, s, c, codeGenOptions,
 							loopbounds, cbmcCodeFile, testConfig.getDescr(),
-							testConfig.getPropDescr()));
+							testConfig.getPropDescr(), testConfig));
 				}
 			}
 		}

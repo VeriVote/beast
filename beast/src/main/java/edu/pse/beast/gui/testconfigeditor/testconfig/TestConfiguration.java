@@ -9,7 +9,7 @@ import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class TestConfiguration {
 
@@ -17,7 +17,7 @@ public class TestConfiguration {
 	private PreAndPostConditionsDescription propDescr;
 	private String name;
 
-	private Map<String, CBMCPropertyTestConfiguration> cbmcTestConfigsByName = new HashMap<>();
+	private Map<String, CBMCTestConfiguration> cbmcTestConfigsByName = new HashMap<>();
 
 	public TestConfiguration(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr, String name) {
@@ -38,33 +38,33 @@ public class TestConfiguration {
 		return name;
 	}
 
-	public void addCBMCTestConfiguration(CBMCPropertyTestConfiguration config) {
+	public void addCBMCTestConfiguration(CBMCTestConfiguration config) {
 		cbmcTestConfigsByName.put(config.getName(), config);
 	}
 
-	public Map<String, CBMCPropertyTestConfiguration> getCbmcTestConfigsByName() {
+	public Map<String, CBMCTestConfiguration> getCbmcTestConfigsByName() {
 		return Collections.unmodifiableMap(cbmcTestConfigsByName);
 	}
 
-	public boolean contains(CBMCPropertyTestConfiguration config) {
+	public boolean contains(CBMCTestConfiguration config) {
 		return cbmcTestConfigsByName.containsKey(config.getName());
 	}
 
 	public void addCBMCTestConfigurations(
-			List<CBMCPropertyTestConfiguration> cbmcTestConfigs) {
-		for (CBMCPropertyTestConfiguration config : cbmcTestConfigs) {
+			List<CBMCTestConfiguration> cbmcTestConfigs) {
+		for (CBMCTestConfiguration config : cbmcTestConfigs) {
 			addCBMCTestConfiguration(config);
 		}
 	}
 
 	public void handleDescrChange() {
-		for(CBMCPropertyTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
+		for(CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
 			cbmctc.handleDescrCodeChange();
 		}
 	}
 	
-	public List<CBMCPropertyTestConfiguration> getCBMCTestConfigs() {
-		List<CBMCPropertyTestConfiguration> list = new ArrayList<>();
+	public List<CBMCTestConfiguration> getCBMCTestConfigs() {
+		List<CBMCTestConfiguration> list = new ArrayList<>();
 		list.addAll(cbmcTestConfigsByName.values());
 		return list;
 	}
@@ -74,7 +74,7 @@ public class TestConfiguration {
 		//propdescr and descr as well as a copy of the state they had when the runs were
 		//created. Then, the runs can figure out themselves whether they are out of
 		//date
-		for(CBMCPropertyTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
+		for(CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
 			cbmctc.handlePropDescrChanged();
 		}
 	}

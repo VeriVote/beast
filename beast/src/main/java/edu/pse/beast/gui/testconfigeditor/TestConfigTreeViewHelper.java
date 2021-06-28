@@ -5,7 +5,7 @@ import java.util.Map;
 
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCBMCTreeItem;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCategoryTreeItem;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItem;
@@ -18,13 +18,13 @@ import javafx.scene.control.TreeView;
 
 public class TestConfigTreeViewHelper {
 	public static TreeItem<TestConfigTreeItemSuper> getItem(
-			CBMCPropertyTestConfiguration config,
+			CBMCTestConfiguration config,
 			TreeItem<TestConfigTreeItemSuper> root) {
 		return getItemRec(config, root);
 	}
 
 	private static TreeItem<TestConfigTreeItemSuper> getItemRec(
-			CBMCPropertyTestConfiguration config,
+			CBMCTestConfiguration config,
 			TreeItem<TestConfigTreeItemSuper> root) {
 		if (root.getValue() != null
 				&& root.getValue().getType() == TestConfigTreeItemType.CBMC) {

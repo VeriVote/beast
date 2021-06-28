@@ -277,7 +277,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	private void removeSelectedFunction() {
-		throw new NotImplementedException();
+		beastWorkspace.removeFunctionFromDescr(currentDescr, currentDisplayedFunction);
 	}
 
 	private void addVotingFunction() {

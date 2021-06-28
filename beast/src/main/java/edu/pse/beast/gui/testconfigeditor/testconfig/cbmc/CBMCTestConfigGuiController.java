@@ -50,7 +50,7 @@ public class CBMCTestConfigGuiController {
 	
 	private BeastWorkspace beastWorkspace;
 	
-	private CBMCPropertyTestConfiguration currentConfig;
+	private CBMCTestConfiguration currentConfig;
 
 	public CBMCTestConfigGuiController(BeastWorkspace beastWorkspace) {
 		this.beastWorkspace = beastWorkspace;
@@ -75,7 +75,7 @@ public class CBMCTestConfigGuiController {
 		startCreatedTestsCheckbox.setSelected(currentConfig.getStartRunsOnCreation());
 	}
 
-	public void display(CBMCPropertyTestConfiguration config) {
+	public void display(CBMCTestConfiguration config) {
 		currentConfig = config;
 		updateView();
 	}

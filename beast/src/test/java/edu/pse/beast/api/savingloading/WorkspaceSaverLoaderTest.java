@@ -16,7 +16,7 @@ import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class WorkspaceSaverLoaderTest {	
@@ -60,7 +60,7 @@ public class WorkspaceSaverLoaderTest {
 
 		TestConfiguration testConfig = new TestConfiguration(descr, propDescr,
 				"test");
-		CBMCPropertyTestConfiguration cc = new CBMCPropertyTestConfiguration();
+		CBMCTestConfiguration cc = new CBMCTestConfiguration();
 
 		cc.setMinVoters(5);
 		cc.setMinCands(5);

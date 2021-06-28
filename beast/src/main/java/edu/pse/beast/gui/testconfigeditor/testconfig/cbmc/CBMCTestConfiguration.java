@@ -2,13 +2,14 @@ package edu.pse.beast.gui.testconfigeditor.testconfig.cbmc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public class CBMCPropertyTestConfiguration {
+public class CBMCTestConfiguration {
 	private int minCands;
 	private int minVoters;
 	private int minSeats;
@@ -25,6 +26,12 @@ public class CBMCPropertyTestConfiguration {
 	private boolean startRunsOnCreation;
 	
 	private List<CBMCTestRun> runs = new ArrayList<>();
+	
+	private String uuid;
+	
+	public CBMCTestConfiguration() {
+		uuid = UUID.randomUUID().toString();
+	}
 	
 	public void addRuns(List<CBMCTestRun> runs) {
 		this.runs.addAll(runs);
@@ -136,4 +143,12 @@ public class CBMCPropertyTestConfiguration {
 		}
 	}
 
+	public String getUuid() {
+		return uuid;
+	}
+	
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	
 }

@@ -35,7 +35,7 @@ import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.toolbox.Tuple;
 
 public class BeastWorkspace {
@@ -209,7 +209,7 @@ public class BeastWorkspace {
 	}
 
 	public void createCBMCTestRunsAndAddToConfig(
-			CBMCPropertyTestConfiguration config) {
+			CBMCTestConfiguration config) {
 		try {
 			CElectionDescription descr = config.getDescr();
 
@@ -269,7 +269,7 @@ public class BeastWorkspace {
 		filesPerPropDescr.put(loadedPropDescr, propDescrFile);
 	}
 
-	public void updateFilesForRuns(CBMCPropertyTestConfiguration currentConfig)
+	public void updateFilesForRuns(CBMCTestConfiguration currentConfig)
 			throws IOException {
 
 		for (CElectionDescriptionFunction f : currentConfig.getDescr()
@@ -557,7 +557,7 @@ public class BeastWorkspace {
 	public void createTestConfig(String name, CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr) {
 		TestConfiguration tc = new TestConfiguration(descr, propDescr, name);
-		CBMCPropertyTestConfiguration configuration = new CBMCPropertyTestConfiguration();
+		CBMCTestConfiguration configuration = new CBMCTestConfiguration();
 		configuration.setDescr(descr);
 		configuration.setPropDescr(propDescr);
 		configuration.setName(name);
@@ -599,6 +599,10 @@ public class BeastWorkspace {
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleDescrChangeInOutName(descr);
 		}
+	}
+
+	public void deleteCBMCRun(CBMCTestRun run) {
+		testConfigList.deleteCBMCRun(run);
 	}
 
 }

@@ -15,6 +15,7 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonOutputHandl
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class CBMCTestRun implements CBMCTestCallback {
 
@@ -41,11 +42,13 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private CBMCTestCallback cb;
 
 	private CBMCJsonOutputHandler jsonOutputHandler;
+	
+	private CBMCTestConfiguration tc;
 
 	public CBMCTestRun(int v, int s, int c, CodeGenOptions codeGenOptions,
 			String loopbounds, CBMCCodeFileData cbmcCodeFile,
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr) {
+			PreAndPostConditionsDescription propDescr, CBMCTestConfiguration tc) {
 		V = v;
 		S = s;
 		C = c;
@@ -54,6 +57,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.descr = descr;
 		this.propDescr = propDescr;
 		this.loopboundList = loopbounds;
+		this.tc = tc;
 	}
 
 	public String getExampleText() {
@@ -203,6 +207,18 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	public void setC(int c) {
 		C = c;
+	}
+	
+	public CElectionDescription getDescr() {
+		return descr;
+	}
+	
+	public PreAndPostConditionsDescription getPropDescr() {
+		return propDescr;
+	}
+	
+	public CBMCTestConfiguration getTc() {
+		return tc;
 	}
 
 }

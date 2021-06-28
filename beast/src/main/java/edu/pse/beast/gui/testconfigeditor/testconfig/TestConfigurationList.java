@@ -12,7 +12,7 @@ import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFuncti
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class TestConfigurationList implements WorkspaceUpdateListener {
@@ -73,7 +73,7 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 		for (CElectionDescription descr : testConfigsByDescr.keySet()) {
 			List<TestConfiguration> configs = testConfigsByDescr.get(descr);
 			for (TestConfiguration config : configs) {
-				for (CBMCPropertyTestConfiguration cbmcTestConfig : config
+				for (CBMCTestConfiguration cbmcTestConfig : config
 						.getCBMCTestConfigs()) {
 					list.addAll(cbmcTestConfig.getRuns());
 				}
@@ -132,6 +132,10 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 			PreAndPostConditionsDescription propDescr,
 			SymbolicCBMCVar selectedVar) {
 		handlePropDescrChanged(propDescr);
+	}
+
+	public void deleteCBMCRun(CBMCTestRun run) {
+		
 	}
 
 }

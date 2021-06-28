@@ -1,12 +1,12 @@
 package edu.pse.beast.gui.testconfigeditor.treeview;
 
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class TestConfigCBMCTreeItem extends TestConfigTreeItemSuper {
-	private CBMCPropertyTestConfiguration cbmcPropertyTestConfiguration;
+	private CBMCTestConfiguration cbmcPropertyTestConfiguration;
 
 	public TestConfigCBMCTreeItem(
-			CBMCPropertyTestConfiguration cbmcPropertyTestConfiguration) {
+			CBMCTestConfiguration cbmcPropertyTestConfiguration) {
 		super(TestConfigTreeItemType.CBMC);
 		this.cbmcPropertyTestConfiguration = cbmcPropertyTestConfiguration;
 	}
@@ -16,7 +16,7 @@ public class TestConfigCBMCTreeItem extends TestConfigTreeItemSuper {
 		return cbmcPropertyTestConfiguration.getName();
 	}
 	
-	public CBMCPropertyTestConfiguration getCbmcPropertyTestConfiguration() {
+	public CBMCTestConfiguration getCbmcPropertyTestConfiguration() {
 		return cbmcPropertyTestConfiguration;
 	}
 	

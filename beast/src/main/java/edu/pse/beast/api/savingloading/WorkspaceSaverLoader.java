@@ -18,7 +18,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCPropertyTestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class WorkspaceSaverLoader {
@@ -59,7 +59,7 @@ public class WorkspaceSaverLoader {
 	}
 
 	private static JSONObject cbmcTestConfigToJSON(
-			CBMCPropertyTestConfiguration config) {
+			CBMCTestConfiguration config) {
 		JSONObject json = new JSONObject();
 
 		json.put(DESCR_UUID_KEY, config.getDescr().getUuid());
@@ -103,10 +103,10 @@ public class WorkspaceSaverLoader {
 		return null;
 	}
 
-	private static CBMCPropertyTestConfiguration cbmcPropTestConfigFromJson(
+	private static CBMCTestConfiguration cbmcPropTestConfigFromJson(
 			JSONObject json, List<CElectionDescription> descrs,
 			List<PreAndPostConditionsDescription> propDescrs) {
-		CBMCPropertyTestConfiguration cbmcPropTestConfig = new CBMCPropertyTestConfiguration();
+		CBMCTestConfiguration cbmcPropTestConfig = new CBMCTestConfiguration();
 
 		int minVoters = json.getInt(MIN_VOTERS_KEY);
 		int minCands = json.getInt(MIN_CANDS_KEY);
@@ -153,7 +153,7 @@ public class WorkspaceSaverLoader {
 
 		List<CBMCTestRun> cbmcTestRuns = CBMCTestRunSaverLoaderHelper
 				.cbmcTestRunListFromJsonArr(json.getJSONArray(TEST_RUNS_KEY),
-						descr, propDescr);
+						descr, propDescr, cbmcPropTestConfig);
 
 		cbmcPropTestConfig.addRuns(cbmcTestRuns);
 
@@ -161,20 +161,20 @@ public class WorkspaceSaverLoader {
 	}
 
 	private static JSONArray cbmcTestConfigCollectionToJSON(
-			Collection<CBMCPropertyTestConfiguration> collection) {
+			Collection<CBMCTestConfiguration> collection) {
 		JSONArray arr = new JSONArray();
 
-		for (CBMCPropertyTestConfiguration config : collection) {
+		for (CBMCTestConfiguration config : collection) {
 			arr.put(cbmcTestConfigToJSON(config));
 		}
 
 		return arr;
 	}
 
-	private static List<CBMCPropertyTestConfiguration> cbmcPropTestConfigListFromJsonArr(
+	private static List<CBMCTestConfiguration> cbmcPropTestConfigListFromJsonArr(
 			JSONArray arr, List<CElectionDescription> descrs,
 			List<PreAndPostConditionsDescription> propDescrs) {
-		List<CBMCPropertyTestConfiguration> list = new ArrayList<>();
+		List<CBMCTestConfiguration> list = new ArrayList<>();
 
 		for (int i = 0; i < arr.length(); ++i) {
 			list.add(cbmcPropTestConfigFromJson(arr.getJSONObject(i), descrs,
@@ -203,7 +203,7 @@ public class WorkspaceSaverLoader {
 		String descrUUID = json.getString(DESCR_UUID_KEY);
 		String propDescrUUID = json.getString(PROP_DESCR_UUID_KEY);
 		String name = json.getString(TEST_CONFIG_NAME_KEY);
-		List<CBMCPropertyTestConfiguration> cbmcTestConfigs = cbmcPropTestConfigListFromJsonArr(
+		List<CBMCTestConfiguration> cbmcTestConfigs = cbmcPropTestConfigListFromJsonArr(
 				json.getJSONArray(CBMC_TEST_CONFIG_LIST_KEY), descrs,
 				propDescrs);
 
