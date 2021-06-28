@@ -21,6 +21,56 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class CBMCCodeGenTest {
+	
+	@Test
+	public void testGenerateSimpleCode() {
+		String bordaCode =
+				  "    unsigned int i = 0;\n"
+				+ "    unsigned int j = 0;\n" 
+				+ "\n"
+				+ "    for (i = 0; i < C; i++) {\n" 
+				+ "        result[i] = 0;\n"
+				+ "    }\n" 
+				+ "    for (i = 0; i < V; i++) {\n"
+				+ "        for (j = 0; j < C; j++) {\n"
+				+ "            result[votes[i][j]] += (C - j) - 1;\n"
+				+ "        }\n" 
+				+ "    }"
+				+ "    unsigned int max = 0;\n"
+				+ "    for (i = 0; i < C; i++) {\n"
+				+ "        if (max < res[i]) {\n"
+				+ "            max = res[i];\n"
+				+ "            for (j = 0; j < C; j++) {\n"
+				+ "                r.arr[j] = 0;\n"
+				+ "            }\n"
+				+ "            r.arr[i] = 1;\n"
+				+ "        } else if (max == res[i]) {\n"
+				+ "            r.arr[i] = 1;\n"
+				+ "        }\n"
+				+ "    }";
+
+		CElectionDescription descr = new CElectionDescription(
+				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
+				"borda");
+		descr.getVotingFunction().setCode(bordaCode);
+
+		CodeGenOptions codeGenOptions = new CodeGenOptions();
+		
+		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops("voting",
+				bordaCode, codeGenOptions);
+		descr.getVotingFunction().setExtractedLoops(loops);
+
+		String pre = "VOTES2 == VOTES1;";
+		String post = "ELECT2 == ELECT1;";
+
+		PreAndPostConditionsDescription propDescr = CreationHelper
+				.createSimpleCondList("reinforce", pre, post).get(0);
+
+		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+				descr, propDescr, codeGenOptions).getCode();
+		System.out.println(code);
+	}
+	
 	@Test
 	public void testGenerateBordaCode() {
 		String bordaCode =
@@ -116,6 +166,6 @@ public class CBMCCodeGenTest {
 
 		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
-		System.out.println(code);
+		//System.out.println(code);
 	}
 }
