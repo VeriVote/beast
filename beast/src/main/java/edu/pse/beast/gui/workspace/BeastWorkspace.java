@@ -310,6 +310,7 @@ public class BeastWorkspace {
 	public void updateCodeForPropDescr(String code,
 			FormalPropertiesDescription conditionDescription,
 			PreAndPostConditionsDescription propDescr) {
+		conditionDescription.setCode(code);
 		propDescrWithUnsavedChanges.add(propDescr);
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handlePropDescrChangedCode(propDescr);

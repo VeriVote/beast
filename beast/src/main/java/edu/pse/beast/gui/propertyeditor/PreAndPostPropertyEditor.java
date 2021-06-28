@@ -52,6 +52,10 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 		this.addPropDescrButton = addPropDescrButton;
 		this.loadPropDescrButton = loadPropDescrButton;
 		this.savePropDescrButton = savePropDescrButton;
+		
+		savePropDescrButton.setOnAction(e -> {
+			save();
+		});
 
 		initAddPropDescrButton();
 
