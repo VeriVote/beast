@@ -39,6 +39,8 @@ public class CBMCJsonOutputHandler {
 
 	private CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo;
 
+	private boolean foundCounterExample;
+
 	public CBMCJsonOutputHandler(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
 			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo, int s, int c, int v,
@@ -222,8 +224,11 @@ public class CBMCJsonOutputHandler {
 		parseOutputJSONArr(outputArr);
 
 		if (!cProverStatus.equals("failure")) {
+			foundCounterExample = false;
 			return;
 		}
+
+		foundCounterExample = true;
 
 		for (int i = 0; i < traceArr.length(); ++i) {
 			JSONObject traceJsonObj = traceArr.getJSONObject(i);
@@ -320,6 +325,10 @@ public class CBMCJsonOutputHandler {
 			}
 		}
 		return newString;
+	}
+
+	public boolean getFoundCounterExample() {
+		return foundCounterExample;
 	}
 
 }

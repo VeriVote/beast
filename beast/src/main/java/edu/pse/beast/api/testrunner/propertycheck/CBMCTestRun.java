@@ -59,13 +59,13 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.loopboundList = loopbounds;
 		this.tc = tc;
 	}
-
-	public String getExampleText() {
-		return jsonOutputHandler.getExampleText();
+	
+	public CBMCJsonOutputHandler getJsonOutputHandler() {
+		return jsonOutputHandler;
 	}
-
-	public String getAllAssignmentsText() {
-		return jsonOutputHandler.getAllAssignmentsText();
+	
+	public void setJsonOutputHandler(CBMCJsonOutputHandler jsonOutputHandler) {
+		this.jsonOutputHandler = jsonOutputHandler;
 	}
 
 	@Override
@@ -219,6 +219,18 @@ public class CBMCTestRun implements CBMCTestCallback {
 	
 	public CBMCTestConfiguration getTc() {
 		return tc;
+	}
+
+	public String getStatusString() {
+		String status = getState().toString();
+		if(getState() == WorkUnitState.FINISHED) {
+			if(getJsonOutputHandler().getFoundCounterExample()) {
+				status = "Verification failed";
+			} else {
+				status = "Verification succeded";
+			}
+		}
+		return status;
 	}
 
 }

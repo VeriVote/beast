@@ -1,6 +1,9 @@
-package edu.pse.beast.gui.testconfigeditor.treeview;
+package edu.pse.beast.gui.testconfigeditor.treeview.runs;
 
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
+import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
 
 public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
 
@@ -24,9 +27,12 @@ public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
 		if (run.isPropDescrChanged()) {
 			template += " | prop descr changed";
 		}
-		return template.replaceAll("STATUS", run.getState().toString())
-				.replaceAll("AMT_VOTER", String.valueOf(run.getV()))
+		template = template.replaceAll("AMT_VOTER", String.valueOf(run.getV()))
 				.replaceAll("AMT_CAND", String.valueOf(run.getC()))
 				.replaceAll("AMT_SEAT", String.valueOf(run.getS()));
+
+		template = template.replaceAll("STATUS", run.getStatusString());
+
+		return template;
 	}
 }

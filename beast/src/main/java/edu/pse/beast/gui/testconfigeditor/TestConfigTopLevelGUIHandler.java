@@ -16,7 +16,7 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCategoryTreeItem;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItem;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
-import edu.pse.beast.gui.testconfigeditor.treeview.TestRunCBMCTreeItem;
+import edu.pse.beast.gui.testconfigeditor.treeview.runs.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXMLLoader;

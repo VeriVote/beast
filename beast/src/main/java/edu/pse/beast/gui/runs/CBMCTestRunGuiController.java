@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
@@ -37,6 +38,8 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 	private Button openCreatedFileButton;
 	@FXML
 	private AnchorPane outputAnchorPane;
+	@FXML
+	private Slider runTextfieldFontSizeSlider;
 
 	private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
 	private OutputTextElement outputTextElement = new OutputTextElement();
@@ -44,6 +47,8 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 	private CBMCTestRun run;
 
 	private BeastWorkspace beastWorkspace;
+
+	private double currentDisplayFontSize = 12;
 
 	public CBMCTestRunGuiController(BeastWorkspace beastWorkspace,
 			TreeView<TestConfigTreeItemSuper> testConfigTreeView) {
@@ -116,7 +121,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 
 			stateHBox.getChildren().clear();
 			WorkUnitState state = run.getState();
-			stateLabel.setText("state: " + state.toString());
+			stateLabel.setText("state: " + run.getStatusString());
 			stateHBox.getChildren().add(stateLabel);
 
 			if (run.isDescrChanged() || run.isPropDescrChanged()) {
@@ -136,7 +141,8 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 				deleteButton.setOnAction(e -> {
 					beastWorkspace.deleteCBMCRun(run);
 				});
-				stateHBox.getChildren().addAll(List.of(putRunOnQueueButton, deleteButton));
+				stateHBox.getChildren()
+						.addAll(List.of(putRunOnQueueButton, deleteButton));
 				break;
 			}
 			case ON_QUEUE:
@@ -161,24 +167,29 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 					outputTextElement.insertText(0, run.getTestOutput());
 				});
 
-				Button showExampleButton = new Button("show generated Example");
-				showExampleButton.setOnAction(e -> {
-					outputTextElement.clear();
-					outputTextElement.insertText(0, run.getExampleText());
-				});
-				Button showAllAssignments = new Button("show All");
-				showAllAssignments.setOnAction(e -> {
-					outputTextElement.clear();
-					outputTextElement.insertText(0,
-							run.getAllAssignmentsText());
-				});
+				if(run.getJsonOutputHandler().getFoundCounterExample()) {
+					Button showExampleButton = new Button("show generated Example");
+					showExampleButton.setOnAction(e -> {
+						outputTextElement.clear();
+						outputTextElement.insertText(0,
+								run.getJsonOutputHandler().getExampleText());
+					});
+					Button showAllAssignments = new Button("show All");
+					showAllAssignments.setOnAction(e -> {
+						outputTextElement.clear();
+						outputTextElement.insertText(0,
+								run.getJsonOutputHandler().getAllAssignmentsText());
+					});
+
+					stateHBox.getChildren().add(showAllAssignments);
+					stateHBox.getChildren().add(showExampleButton);
+				} 
+				
 				Button deleteButton = new Button("delete");
 				deleteButton.setOnAction(e -> {
 					beastWorkspace.deleteCBMCRun(run);
 				});
 				stateHBox.getChildren().add(showLogsButton);
-				stateHBox.getChildren().add(showAllAssignments);
-				stateHBox.getChildren().add(showExampleButton);
 				stateHBox.getChildren().add(deleteButton);
 				break;
 			}
@@ -220,6 +231,17 @@ public class CBMCTestRunGuiController implements CBMCTestCallback {
 		AnchorPane.setBottomAnchor(vsp, 0d);
 		AnchorPane.setLeftAnchor(vsp, 0d);
 		AnchorPane.setRightAnchor(vsp, 0d);
+
+		runTextfieldFontSizeSlider.setShowTickMarks(true);
+		runTextfieldFontSizeSlider.setMin(4.0);
+		runTextfieldFontSizeSlider.setMax(30.0);
+		runTextfieldFontSizeSlider.setValue(currentDisplayFontSize);
+		runTextfieldFontSizeSlider.valueProperty().addListener((ob, o, n) -> {
+			double currentDisplayFontSize = Math.round((double) n * 100) / 100;
+			String styleString = "-fx-font-size: " + currentDisplayFontSize
+					+ "px;";
+			outputTextElement.setStyle(styleString);
+		});
 	}
 
 }
