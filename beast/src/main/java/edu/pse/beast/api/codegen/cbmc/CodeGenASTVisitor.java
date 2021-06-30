@@ -8,6 +8,7 @@ import java.util.Stack;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
@@ -481,5 +482,11 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		booleanVarNameStack.push(generatedVarName);
 		codeBlock.addSnippet(code);
+	}
+
+	@Override
+	public void visitBooleanExpFalseNode(FalseNode falseNode) {
+		String zeroVarBecauseFalse = "0";
+		booleanVarNameStack.push(zeroVarBecauseFalse);
 	}
 }

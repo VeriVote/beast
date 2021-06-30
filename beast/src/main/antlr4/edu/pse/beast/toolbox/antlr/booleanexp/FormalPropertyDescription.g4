@@ -6,6 +6,11 @@ booleanExpList
 
 booleanExpListElement
     :   booleanExp ';'
+    |   falseExp ';'
+    ;
+    
+falseExp
+    :   'FALSE'
     ;
 
 booleanExp

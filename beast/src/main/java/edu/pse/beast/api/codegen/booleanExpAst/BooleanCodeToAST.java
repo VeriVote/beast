@@ -12,6 +12,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
@@ -54,6 +55,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Co
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ConstantExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ElectTupleExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.FalseExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntegerContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectElectContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectVotesContext;
@@ -133,6 +135,11 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		AST = new BooleanExpListNode();
 		highestElect = 0;
 	}
+	
+	@Override
+	public void exitFalseExp(FalseExpContext ctx) {
+		nodeStack.push(new FalseNode());
+	}
 
 	@Override
 	public void exitBooleanExpList(final BooleanExpListContext ctx) {
@@ -152,7 +159,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 			final BooleanExpListElementContext ctx) {
 		BooleanExpListElementNode node = new BooleanExpListElementNode(
 				ctx.getText(), nodeStack.pop());
-		AST.addNode(node, highestElectInThisListNode);
+		AST.addNode(node);
 		setHighestElect(highestElectInThisListNode);
 	}
 

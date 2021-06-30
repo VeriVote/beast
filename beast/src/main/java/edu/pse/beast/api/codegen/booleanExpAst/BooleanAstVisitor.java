@@ -2,6 +2,7 @@ package edu.pse.beast.api.codegen.booleanExpAst;
 
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
@@ -64,6 +65,7 @@ public interface BooleanAstVisitor {
 	public void visitEmptyNode(BooleanExpIsEmptyNode booleanExpIsEmptyNode);
 	public void visitElectIntersectionNode(
 			ElectIntersectionNode electIntersectionNode);
+	public void visitBooleanExpFalseNode(FalseNode falseNode);
 	
 	
 	

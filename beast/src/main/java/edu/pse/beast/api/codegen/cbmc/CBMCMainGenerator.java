@@ -21,10 +21,8 @@ public class CBMCMainGenerator {
 			ElectionTypeCStruct voteArrStruct,
 			ElectionTypeCStruct voteResultStruct,
 			VotingInputTypes votingInputType,
-			VotingOutputTypes votingOutputType, 
-			CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler, 
-			String votingFunctionName,
+			VotingOutputTypes votingOutputType, CodeGenOptions options,
+			CodeGenLoopBoundHandler loopBoundHandler, String votingFunctionName,
 			CBMCGeneratedCodeInfo cbmcGeneratedCode) {
 
 		List<String> code = new ArrayList<>();
@@ -33,7 +31,7 @@ public class CBMCMainGenerator {
 		// init global symbolic vars
 		for (SymbolicCBMCVar var : symCbmcVars) {
 			code.add("unsigned int " + var.getName() + " = "
-					+ options.getCbmcNondetUintName() + "();\n");			
+					+ options.getCbmcNondetUintName() + "();\n");
 		}
 
 		// init votes
@@ -42,7 +40,8 @@ public class CBMCMainGenerator {
 
 		for (int i = 0; i < highestVote; ++i) {
 			code.add(InitVoteHelper.generateCode(i + 1, voteArrStruct,
-					votingInputType, options, loopBoundHandler, cbmcGeneratedCode));			
+					votingInputType, options, loopBoundHandler,
+					cbmcGeneratedCode));
 		}
 
 		CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,
@@ -51,31 +50,27 @@ public class CBMCMainGenerator {
 
 		// preconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);
-		for (List<BooleanExpressionNode> nodesList : preAstData.getTopAstNode()
-				.getBooleanExpressions()) {
-			for (BooleanExpressionNode node : nodesList) {
-				String s = node.getTreeString(0);
-				node.getVisited(visitor);
-				code.add(visitor.getCodeBlock().generateCode());
-			}
+		for (BooleanExpressionNode node : preAstData.getTopAstNode()
+				.getBooleanNodes()) {
+			String s = node.getTreeString(0);
+			node.getVisited(visitor);
+			code.add(visitor.getCodeBlock().generateCode());
 		}
 
 		// vote
 		for (int i = 0; i < highestVote; ++i) {
-			code.add(PerformVoteHelper.generateCode(i + 1,
-					voteArrStruct, voteResultStruct, options,
-					votingFunctionName, cbmcGeneratedCode));			
+			code.add(PerformVoteHelper.generateCode(i + 1, voteArrStruct,
+					voteResultStruct, options, votingFunctionName,
+					cbmcGeneratedCode));
 		}
 
 		// postconditions
 		visitor.setMode(CodeGenASTVisitor.Mode.ASSERT);
-		for (List<BooleanExpressionNode> nodesList : postAstData.getTopAstNode()
-				.getBooleanExpressions()) {
-			for (BooleanExpressionNode node : nodesList) {
-				String s = node.getTreeString(0);
-				node.getVisited(visitor);
-				code.add(visitor.getCodeBlock().generateCode());
-			}
+		for (BooleanExpressionNode node : postAstData.getTopAstNode()
+				.getBooleanNodes()) {
+			String s = node.getTreeString(0);
+			node.getVisited(visitor);
+			code.add(visitor.getCodeBlock().generateCode());
 		}
 
 		code.add("return 0;");
