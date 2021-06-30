@@ -1,83 +1,9 @@
-Gemacht:
+Relative pfade speichern
+ergebnisdarst "besser" und speichern
+slider für font vlt
+herausnehmen von descr und probdescr handlen
+exception/error handling bzw nicht impl pfade offensichtlich machen
 
-idee: 
-default-postcondition for
-well formed ness, 
-wie zb nur 0en oder 1en bei candidate list
-
-Code generation :)
-
-Naja zumindest fast:
-
-Main methode:
-init votes für verschiedene votinginputtypes komplett möglich
-voting methode aufruf möglich
-            
-Code generation für properties, fertig bis auf:
-    todo: isempty 
-    (
-        3-4 stunden für alles, 
-        also zusammen mit dummy werten und testen.
-        Was bedeutet isEmpty für zb Parliament? 
-        Preference? Wie und wann kann es passieren
-    )
-    
-NO_CANDIDATE abhängig von wahlverfahren
-als define mitgenerieren #define NO_CANDIDATE C (zb)
-Preference: C (<= anstatt < falls gewählt) 
-single choice: C
-single choice stack: "0"
-approval: "0"
-weighted approval: "0"
-
-Ausgabe:
-Single candidate C
-candidate list 0
-parliament C
-parliament stack 0
-
-verdrahtung mit threadpool, etc, funktioniert
-
-TODO: Gui rework
-
-symboltabelle:
-    prop descr language alle möglichkeiten
-    für election description dinge wie NO_CANDIDATE
-
-Preferenz oder single choice: Möglichkeit für enthaltung
-approval als default zumindest eine 1 (?) möglichkeit ab und anschalten
-
-Wiederverwertbar: 
-- fxml und Controller skelett (aber stark gestrippt), 
-- code highlighting (?)
-- sonst nichts 
-
-todo:
-c code templates als externe Textdatei speichern
-code area rework auf unsere idee mit bausteinen wie loops etc (1-2 wochen)
-back and forth communication mit threadpool (1 woche)
-linux process starter (1-3 stunden)
-error checker für property description (kann sich vermutlich gut nach dem code gen richten)
-(4 stunden)
-error checker für election description
-(keine ahnung)
-
-löschen nicht mehr benötigter code, wie zb Alten Code visitor (4-5h)
-restliche ast nodes in das neue booleanExpAst Package (3-5h)
-
-threadpool workitem exceptions speichern und kommunizieren (3h)
-threadpool timeout (2h)
-
-documentation (beliebig lang, aber sagen wir mal ne woche)
-
-code generation:    Performance für cbmc erforschen, 
-                    was ist der einfluss verschiedener
-                    möglichkeiten die diversen typen zu erstellen, 
-                    die vergleiche etc zu machen,
-                    loops aufzurollen (1 monat locker)
-                    
-Election Description etc speichern
-                    
-borda code: maximum finden und alle candidaten die maximum haben bekommen 1, rest 0
-Code Generation BUG: LIST_MEMBER wird nicht ersetzt bei elect intersection
-Fehler bei aufruf  --unwindset loop1:depth1,loop2:depth2, nur einmal unwindset dann loops
+Dokumentation
+Code cleanup
+- evtl code in extra verzeichnis falls funktionalität

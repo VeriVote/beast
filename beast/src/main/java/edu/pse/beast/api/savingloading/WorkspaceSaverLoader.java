@@ -31,7 +31,6 @@ public class WorkspaceSaverLoader {
 
 	private static final String TEST_CONFIG_LIST_KEY = "test_config_list";
 
-
 	private static final String DESCR_UUID_KEY = "descr_uuid";
 	private static final String PROP_DESCR_UUID_KEY = "prop_descr_uuid";
 	private static final String TEST_CONFIG_NAME_KEY = "name";
@@ -50,10 +49,11 @@ public class WorkspaceSaverLoader {
 	private static final String START_RUNS_ON_CREATION_KEY = "start_runs_on_creation";
 	private static final String TEST_RUNS_KEY = "test_runs";
 
-	private static JSONArray fileCollectionToJsonArr(Collection<File> files) {
+	private static JSONArray fileCollectionToJsonArr(Collection<File> files,
+			RelativePathConverter relativePathConverter) {
 		JSONArray arr = new JSONArray();
 		for (File f : files) {
-			arr.put(f.getAbsolutePath());
+			arr.put(relativePathConverter.getRelativePathTo(f));
 		}
 		return arr;
 	}
@@ -114,7 +114,7 @@ public class WorkspaceSaverLoader {
 
 		cbmcPropTestConfig.setMinVoters(minVoters);
 		cbmcPropTestConfig.setMinCands(minCands);
-		cbmcPropTestConfig.setMinSeats(minSeats);;
+		cbmcPropTestConfig.setMinSeats(minSeats);
 
 		int maxVoters = json.getInt(MAX_VOTERS_KEY);
 		int maxCands = json.getInt(MAX_CANDS_KEY);
@@ -251,22 +251,23 @@ public class WorkspaceSaverLoader {
 		return testConfigurationList;
 	}
 
-	private static JSONObject generateWorkspaceJSON(BeastWorkspace ws) {
+	private static JSONObject generateWorkspaceJSON(BeastWorkspace ws,
+			RelativePathConverter relativePathConverter) {
 		JSONObject json = new JSONObject();
-		json.put(DESCR_FILES_KEY,
-				fileCollectionToJsonArr(ws.getFilesPerDescr().values()));
-		json.put(PROP_DESCR_FILES_KEY,
-				fileCollectionToJsonArr(ws.getFilesPerPropDescr().values()));
+		json.put(DESCR_FILES_KEY, fileCollectionToJsonArr(
+				ws.getFilesPerDescr().values(), relativePathConverter));
+		json.put(PROP_DESCR_FILES_KEY, fileCollectionToJsonArr(
+				ws.getFilesPerPropDescr().values(), relativePathConverter));
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(ws.getCodeGenOptions()));
 		json.put(TEST_CONFIG_LIST_KEY,
-				testConfigurationListToJSON(ws.getTestConfigList()));				
-	
+				testConfigurationListToJSON(ws.getTestConfigList()));
+
 		return json;
 	}
 
-	public static BeastWorkspace loadBeastWorkspaceFromFile(File f)
-			throws IOException {
+	public static BeastWorkspace loadBeastWorkspaceFromFile(File f,
+			RelativePathConverter relativePathConverter) throws IOException {
 		BeastWorkspace beastWorkspace = new BeastWorkspace();
 
 		String fileContents = SavingLoadingInterface.readStringFromFile(f);
@@ -276,8 +277,9 @@ public class WorkspaceSaverLoader {
 		List<CElectionDescription> descrs = new ArrayList<>();
 
 		for (int i = 0; i < descrArr.length(); ++i) {
-			String absolutePath = descrArr.getString(i);
-			File descrFile = new File(absolutePath);
+			String relativePath = descrArr.getString(i);
+			File descrFile = relativePathConverter
+					.getFileFromRelativePath(relativePath);
 
 			CElectionDescription loadedDescr = SavingLoadingInterface
 					.loadCElection(descrFile);
@@ -291,8 +293,10 @@ public class WorkspaceSaverLoader {
 		List<PreAndPostConditionsDescription> propDescrs = new ArrayList<>();
 
 		for (int i = 0; i < propDescrArr.length(); ++i) {
-			String absolutePath = propDescrArr.getString(i);
-			File propDescrFile = new File(absolutePath);
+			String relativePath = propDescrArr.getString(i);
+			File propDescrFile = relativePathConverter
+					.getFileFromRelativePath(relativePath);
+			
 			PreAndPostConditionsDescription loadedPropDescr = SavingLoadingInterface
 					.loadPreAndPostConditionDescription(propDescrFile);
 
@@ -304,22 +308,23 @@ public class WorkspaceSaverLoader {
 		CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsFromJSON(
 						json.getJSONObject(CODE_GEN_OPTIONS_KEY));
-		
+
 		TestConfigurationList testConfigList = testConfigListFromJsonArr(
 				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
 
 		beastWorkspace.setTestConfigList(testConfigList);
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
-	
+
 		beastWorkspace.setWorkspaceFile(f);
 		beastWorkspace.setPathHandler(new PathHandler());
-		
+
 		return beastWorkspace;
 	}
 
-	public static void storeWorkspace(BeastWorkspace beastWorkspace, File f)
-			throws IOException {
-		JSONObject json = generateWorkspaceJSON(beastWorkspace);
+	public static void storeWorkspace(BeastWorkspace beastWorkspace, File f,
+			RelativePathConverter relativePathConverter) throws IOException {
+		JSONObject json = generateWorkspaceJSON(beastWorkspace,
+				relativePathConverter);
 		SavingLoadingInterface.writeStringToFile(f, json.toString());
 	}
 }

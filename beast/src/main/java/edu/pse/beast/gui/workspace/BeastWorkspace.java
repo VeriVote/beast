@@ -111,7 +111,7 @@ public class BeastWorkspace {
 	}
 
 	public void setTestConfigList(TestConfigurationList testConfigList) {
-		//remove the old list so it doesnt receive updates
+		// remove the old list so it doesnt receive updates
 		updateListener.remove(this.testConfigList);
 		this.testConfigList = testConfigList;
 		for (CBMCTestRun run : testConfigList.getCBMCTestRuns()) {
@@ -208,8 +208,7 @@ public class BeastWorkspace {
 		return testConfigList.getTestConfigsByPropDescr();
 	}
 
-	public void createCBMCTestRunsAndAddToConfig(
-			CBMCTestConfiguration config) {
+	public void createCBMCTestRunsAndAddToConfig(CBMCTestConfiguration config) {
 		try {
 			CElectionDescription descr = config.getDescr();
 
@@ -417,7 +416,7 @@ public class BeastWorkspace {
 		if (f != null) {
 			try {
 				BeastWorkspace ws = SavingLoadingInterface
-						.loadBeastWorkspace(f);
+						.loadBeastWorkspace(f, pathHandler);
 				loadWorkspace(ws);
 			} catch (Exception e) {
 				errorHandler.logAndDisplayError("save error",
@@ -442,7 +441,8 @@ public class BeastWorkspace {
 			return;
 
 		try {
-			SavingLoadingInterface.storeBeastWorkspace(this, workspaceFile);
+			SavingLoadingInterface.storeBeastWorkspace(this, workspaceFile,
+					pathHandler);
 		} catch (IOException e) {
 			errorHandler.logAndDisplayError("save error",
 					e.getLocalizedMessage());

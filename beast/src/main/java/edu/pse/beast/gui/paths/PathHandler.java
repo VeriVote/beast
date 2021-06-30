@@ -2,7 +2,9 @@ package edu.pse.beast.gui.paths;
 
 import java.io.File;
 
-public class PathHandler {
+import edu.pse.beast.api.savingloading.RelativePathConverter;
+
+public class PathHandler implements RelativePathConverter {
 	private String baseDir;
 	
 	private String relPathToSaveFiles = "./saveFiles/";
@@ -37,8 +39,10 @@ public class PathHandler {
 		return new File(baseDir + relPathToOptionsFile);
 	}
 	
+
+	
 	private void tryload() {
-		baseDir = System.getProperty("user.dir");
+		baseDir = System.getProperty("user.dir") + "/";
 		if(!getWorkspaceDir().exists()) {
 			getWorkspaceDir().mkdirs();
 		}
@@ -48,5 +52,15 @@ public class PathHandler {
 		if(!getPropDescrDir().exists()) {
 			getPropDescrDir().mkdirs();
 		}
+	}
+	
+	@Override
+	public String getRelativePathTo(File f) {
+		return new File(baseDir).toURI().relativize(f.toURI()).getPath();
+	}
+
+	@Override
+	public File getFileFromRelativePath(String relativePath) {
+		return new File(baseDir + relativePath);
 	}	
 }

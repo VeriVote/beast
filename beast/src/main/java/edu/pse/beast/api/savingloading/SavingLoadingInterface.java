@@ -49,11 +49,15 @@ public class SavingLoadingInterface {
 	}
 
 	public static void storeBeastWorkspace(BeastWorkspace beastWorkspace,
-			File f) throws IOException {
-		WorkspaceSaverLoader.storeWorkspace(beastWorkspace, f);
+			File f, RelativePathConverter relativePathConverter)
+			throws IOException {
+		WorkspaceSaverLoader.storeWorkspace(beastWorkspace, f,
+				relativePathConverter);
 	}
 
-	public static BeastWorkspace loadBeastWorkspace(File f) throws IOException {
-		return WorkspaceSaverLoader.loadBeastWorkspaceFromFile(f);
+	public static BeastWorkspace loadBeastWorkspace(File f,
+			RelativePathConverter relativePathConverter) throws IOException {
+		return WorkspaceSaverLoader.loadBeastWorkspaceFromFile(f,
+				relativePathConverter);
 	}
 }
