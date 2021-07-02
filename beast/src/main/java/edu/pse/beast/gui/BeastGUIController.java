@@ -112,6 +112,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 	private Button editLoopboundButton;
 
 	@FXML
+	private Button deleteDescrButton;
+	@FXML
+	private Button deletePropDescrButton;
+	@FXML
 	private ChoiceBox<CElectionDescription> openedElectionDescriptionChoiceBox;
 	@FXML
 	private Button addElectionDescriptionButton;
@@ -184,8 +188,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
 		cElectionEditor = new CElectionEditor(primaryStage,
 				cEditorGUIElementVsp, addElectionDescriptionButton,
-				loadElectionDescriptionButton, saveElectionDescriptionButton,
-				editDescrButton, addFunctionMenuButton, removeFunctionButton,
+				deleteDescrButton, loadElectionDescriptionButton,
+				saveElectionDescriptionButton, editDescrButton,
+				addFunctionMenuButton, removeFunctionButton,
 				testLoopBoundButton, editLoopboundButton, cEditorGUIElement,
 				funcDeclArea, closingBracketArea, functionList, loopBoundList,
 				openedElectionDescriptionChoiceBox, beastWorkspace);

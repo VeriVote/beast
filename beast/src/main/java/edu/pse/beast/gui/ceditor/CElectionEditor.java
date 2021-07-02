@@ -78,6 +78,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	public CElectionEditor(Stage primaryStage,
 			VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
 			Button addElectionDescriptionButton,
+			Button deleteElectionDescriptionButton,
 			Button loadElectionDescriptionButton,
 			Button saveElectionDescriptionButton, Button editDescrButton,
 			MenuButton addFunctionMenuButton, Button removeFunctionButton,
@@ -277,7 +278,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 	}
 
 	private void removeSelectedFunction() {
-		beastWorkspace.removeFunctionFromDescr(currentDescr, currentDisplayedFunction);
+		beastWorkspace.removeFunctionFromDescr(currentDescr,
+				currentDisplayedFunction);
 	}
 
 	private void addVotingFunction() {
@@ -412,7 +414,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 		handleWorkspaceUpdateGeneric();
 		openedElectionDescriptionChoiceBox.getSelectionModel().select(descr);
 	}
-	
+
 	@Override
 	public void handleDescrChangeAddedSimpleFunction(CElectionDescription descr,
 			SimpleTypeFunction f) {
