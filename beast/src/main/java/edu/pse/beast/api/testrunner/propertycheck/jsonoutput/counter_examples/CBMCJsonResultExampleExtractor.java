@@ -48,7 +48,6 @@ public class CBMCJsonResultExampleExtractor {
 		this.v = v;
 		this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
 	}
-	
 
 	public boolean didCBMCFindExample() {
 		return cbmcFoundExample;
@@ -132,6 +131,8 @@ public class CBMCJsonResultExampleExtractor {
 
 				String valueStr = removeAnythingButDigits(
 						valueJsonObj.getString("data"));
+				System.out.println(valueJsonObj.getString("data"));
+				System.out.println(valueJsonObj);
 
 				try {
 					Integer.valueOf(valueStr);
@@ -156,7 +157,8 @@ public class CBMCJsonResultExampleExtractor {
 				}
 
 				String info = cbmcGeneratedCodeInfo.getInfo(structName);
-				generatedExample.add(structName, assType, memberName, valueStr, info);
+				generatedExample.add(structName, assType, memberName, valueStr,
+						info);
 			}
 		}
 	}
@@ -170,10 +172,9 @@ public class CBMCJsonResultExampleExtractor {
 		}
 		return newString;
 	}
-	
+
 	public CBMCCounterExample getGeneratedExample() {
 		return generatedExample;
 	}
-
 
 }

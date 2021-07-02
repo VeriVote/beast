@@ -102,10 +102,10 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 		cbmcGeneratedCodeInfo.setVotesListMemberVarName(
 				json.getString(VOTES_LIST_MEMBER_VAR_NAME_KEY));
 
-		cbmcGeneratedCodeInfo
-				.setResultAmtMemberVarName(RESULT_AMT_MEMBER_VAR_NAME_KEY);
-		cbmcGeneratedCodeInfo
-				.setResultListMemberVarName(RESULT_LIST_MEMBER_VAR_NAME_KEY);
+		cbmcGeneratedCodeInfo.setResultAmtMemberVarName(
+				json.getString(RESULT_AMT_MEMBER_VAR_NAME_KEY));
+		cbmcGeneratedCodeInfo.setResultListMemberVarName(
+				json.getString(RESULT_LIST_MEMBER_VAR_NAME_KEY));
 
 		return cbmcGeneratedCodeInfo;
 	}

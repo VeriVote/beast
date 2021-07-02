@@ -98,7 +98,7 @@ public class CBMCTestRunGuiController
 
 		messages.clear();
 		for (CBMCJsonMessage m : run.getMessagesAsList()) {
-			messages.appendText(m.toString());
+			messages.appendText(m.toString() + "\n");
 		}
 
 		logs.clear();
@@ -155,11 +155,10 @@ public class CBMCTestRunGuiController
 	private void display() {
 
 		Platform.runLater(() -> {
-			outputAnchorPane.getChildren().clear();
-
 			if (run == null)
 				return;
 
+			outputAnchorPane.getChildren().clear();
 
 			testConfigTreeView.refresh();
 
@@ -263,7 +262,7 @@ public class CBMCTestRunGuiController
 	private void displayCodeArea(CodeArea codeArea) {
 		VirtualizedScrollPane<CodeArea> vsp = new VirtualizedScrollPane<>(
 				codeArea);
-		displayNode(codeArea);
+		displayNode(vsp);
 	}
 
 	private void displayNode(Node n) {

@@ -1,7 +1,10 @@
 package edu.pse.beast.gui.runs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -89,17 +92,88 @@ public class CounterExampleGuiController {
 			listVarName = codeInfo.getVotesListMemberVarName();
 		}
 
-		String s = structName + " " + ass.getVarName() + "{\n";
-		s += amtVarName + " " + ass.getAssignmentFor(amtVarName) + "\n";
+		Map<List<Integer>, String> positionsToStrings = new HashMap<>();
+		int amtBrackets = 0;
 
 		for (String key : ass.getMemberToAssignment().keySet()) {
+			if (key.equals(amtVarName))
+				continue;
+			if (key.equals(listVarName)) {// no brackets
+				continue;
+			}
 			String brackets = key.substring(listVarName.length());
-			int j = 0;
+			List<Integer> bracketNumbers = numbersFromBrackets(brackets);
+
+			amtBrackets = bracketNumbers.size();
+
+			positionsToStrings.put(bracketNumbers,
+					ass.getMemberToAssignment().get(key));
 		}
 
-		s += "}";
+		String assignmentString = "";
+		if (!positionsToStrings.keySet().isEmpty()) {
+			if (amtBrackets == 0) {
+				String value = ass.getAssignmentFor(listVarName);
+				assignmentString = listVarName + " " + value;
+			} else if (amtBrackets == 1) {
+				for (int i = 0; i < 100; ++i) {
+					boolean foundNew = false;
+
+					for (List<Integer> positions : positionsToStrings
+							.keySet()) {
+						if (positions.get(0) == i) {
+							assignmentString += positionsToStrings
+									.get(positions) + ", ";
+							foundNew = true;
+							continue;
+						}
+					}
+				}
+				assignmentString += "\n";
+			} else if (amtBrackets == 2) {
+				for (int i = 0; i < 100; ++i) {
+					boolean foundNew = false;
+					for (int j = 0; j < 100; ++j) {
+						for (List<Integer> positions : positionsToStrings
+								.keySet()) {
+							if (positions.get(0) == i
+									&& positions.get(1) == j) {
+								assignmentString += positionsToStrings
+										.get(positions) + ", ";
+								foundNew = true;
+								continue;
+							}
+						}
+					}
+					if (foundNew)
+						assignmentString += "\n";
+				}
+			}
+		}
+
+		String s = structName + " " + ass.getVarName() + "{\n";
+		s += amtVarName + " " + ass.getAssignmentFor(amtVarName) + "\n";
+		s += assignmentString;
+		s += "}\n-----------------------\n";
 
 		displayCodearea.appendText(s);
+	}
+
+	private List<Integer> numbersFromBrackets(String brackets) {
+		List<Integer> bracketNumbers = new ArrayList<>();
+
+		String number = "";
+		for (int i = 0; i < brackets.length(); ++i) {
+			char c = brackets.charAt(i);
+			if (Character.isDigit(c)) {
+				number += c;
+			} else if (!number.isBlank()) {
+				bracketNumbers.add(Integer.valueOf(number));
+				number = "";
+			}
+		}
+
+		return bracketNumbers;
 	}
 
 	private void displayOnChange(CheckBox cb) {

@@ -83,10 +83,17 @@ public class TestConfigCategoryGUIController
 						gotoConfigButton.setDisable(false);
 						deleteConfigButton.setDisable(false);
 					}
-					if(n == o) {
+					if (n == o) {
 						System.out.println("anotha oen");
 					}
 				});
+		loadDescrButton.setOnAction(e -> {
+			beastWorkspace.letUserLoadDescr();
+		});
+
+		loadPropDescrButton.setOnAction(e -> {
+			beastWorkspace.letUserLoadPropDescr();
+		});
 	}
 
 	private void createTestConfig() {
@@ -139,7 +146,7 @@ public class TestConfigCategoryGUIController
 				}
 			}
 		}
-		
+
 		testConfigListView.getSelectionModel().selectFirst();
 	}
 

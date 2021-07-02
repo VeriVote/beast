@@ -29,7 +29,7 @@ public class VotingFunctionHelper {
 				"RESULT_TYPE", outputStruct.getStruct().getName(),
 				"RESULT_VAR", resultStructVarName, 
 				"AMT_MEMBER", outputStruct.getAmtName(),
-				"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
+				"MAX_AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
 				"CURRENT_AMT_CAND", options.getCurrentAmountCandsVarName(),
 				"NONDET_UINT", options.getCbmcNondetUintName(),
 				"ASSUME", options.getCbmcAssumeName(),

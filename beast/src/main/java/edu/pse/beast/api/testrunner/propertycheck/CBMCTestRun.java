@@ -115,6 +115,8 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void onPropertyTestStart(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
+		this.testRunLogs.clear();
+
 		if (cb != null)
 			cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
 	}
@@ -169,8 +171,9 @@ public class CBMCTestRun implements CBMCTestCallback {
 		for (int i = 0; i < arr.length; ++i) {
 			list.add(arr[i]);
 		}
-		cbmcJsonRunningDataExtractor.initializeWithRawOutput(list);
-		cmbcJsonExampleExtractor.processCBMCJsonOutput(list);
+		this.testRunLogs = list;
+		cbmcJsonRunningDataExtractor.initializeWithRawOutput(testRunLogs);
+		cmbcJsonExampleExtractor.processCBMCJsonOutput(testRunLogs);
 	}
 
 	public void handleDescrCodeChange() {
@@ -266,7 +269,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 		}
 		return status;
 	}
-	
+
 	CBMCCounterExample getGeneratedExample() {
 		return cmbcJsonExampleExtractor.getGeneratedExample();
 	}

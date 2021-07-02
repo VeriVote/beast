@@ -49,7 +49,7 @@
          </children>
       </GridPane>
       <ListView fx:id="testConfigListView" layoutX="45.0" layoutY="183.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0" />
-      <Button fx:id="gotoConfigButton" layoutX="32.0" layoutY="358.0" mnemonicParsing="false" text="Go To" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" />
-      <Button fx:id="deleteConfigButton" layoutX="42.0" layoutY="368.0" mnemonicParsing="false" text="Delete" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="70.0" />
+      <Button fx:id="gotoConfigButton" layoutX="14.0" layoutY="174.0" mnemonicParsing="false" text="Go To" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="170.0" />
+      <Button fx:id="deleteConfigButton" layoutX="62.0" layoutY="174.0" mnemonicParsing="false" text="Delete" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="170.0" />
    </children>
 </AnchorPane>
