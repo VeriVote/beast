@@ -286,8 +286,11 @@ public class BeastWorkspace {
 				codeGenOptions);
 
 		for (CBMCTestRun cbmcTr : currentConfig.getRuns()) {
-			cbmcTr.updateDataForCheck(cbmcFileData, cbmcTr.getCodeGenOptions());
+			cbmcTr.updateDataForCheck(cbmcFileData, cbmcTr.getCodeGenOptions());			
 		}
+		for (WorkspaceUpdateListener l : updateListener) {
+			l.handleCBMConfigUpdatedFiles(currentConfig);
+		}		
 	}
 
 	public void addCBCMVarToPropDescr(

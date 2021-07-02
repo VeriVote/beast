@@ -194,7 +194,7 @@ public final class CheckerFactoryFactory {
             // results.add(new UnprocessedCBMCResult()); TODO find all classes
             // which extend
             // Result, then match the ID of the checker with the ID of all types
-            results.add(new CBMCJsonOutputHandler());
+            results.add(new CBMCJsonResultExampleExtractor());
         }
         return results;
     }

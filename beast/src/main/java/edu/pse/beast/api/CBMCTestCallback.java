@@ -4,11 +4,12 @@ import java.io.File;
 import java.util.List;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public interface CBMCTestCallback {
-	
+
 	public default void onTestStarted() {
 	}
 
@@ -59,6 +60,9 @@ public interface CBMCTestCallback {
 	}
 
 	public default void onException(Exception ex) throws Exception {
+	}
+
+	public default void onNewCBMCMessage(CBMCJsonMessage msg) {
 	}
 
 	public default void onPropertyTestFinished(CElectionDescription description,

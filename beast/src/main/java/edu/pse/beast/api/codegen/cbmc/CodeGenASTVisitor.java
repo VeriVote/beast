@@ -217,8 +217,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteExpNode(VoteExp node) {
 		if (node.getAccessingCBMCVars().size() == 0) {
-			expVarNameStack
-					.push(InitVoteHelper.getVoteVarName(node.getCount()));
+			expVarNameStack.push(InitVoteHelper
+					.getVoteVarName(Integer.valueOf(node.getVoteNumber())));
 			amtVoteVars++;
 		} else {
 			String voteVarName = InitVoteHelper

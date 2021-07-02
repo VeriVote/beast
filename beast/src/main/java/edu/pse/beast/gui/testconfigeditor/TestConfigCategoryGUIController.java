@@ -74,6 +74,19 @@ public class TestConfigCategoryGUIController
 			beastWorkspace.deleteTestConfig(
 					testConfigListView.getSelectionModel().getSelectedItem());
 		});
+		testConfigListView.getSelectionModel().selectedItemProperty()
+				.addListener((ob, o, n) -> {
+					if (n == null) {
+						gotoConfigButton.setDisable(true);
+						deleteConfigButton.setDisable(true);
+					} else {
+						gotoConfigButton.setDisable(false);
+						deleteConfigButton.setDisable(false);
+					}
+					if(n == o) {
+						System.out.println("anotha oen");
+					}
+				});
 	}
 
 	private void createTestConfig() {
@@ -126,6 +139,8 @@ public class TestConfigCategoryGUIController
 				}
 			}
 		}
+		
+		testConfigListView.getSelectionModel().selectFirst();
 	}
 
 	public void display(String category) {

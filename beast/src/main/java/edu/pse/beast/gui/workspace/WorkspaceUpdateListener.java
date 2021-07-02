@@ -88,4 +88,9 @@ public interface WorkspaceUpdateListener {
 
 	}
 
+	public default void handleCBMConfigUpdatedFiles(
+			CBMCTestConfiguration currentConfig) {
+		
+	}
+
 }

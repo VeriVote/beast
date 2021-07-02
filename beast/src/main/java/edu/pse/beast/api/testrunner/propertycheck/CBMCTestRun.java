@@ -1,20 +1,21 @@
 package edu.pse.beast.api.testrunner.propertycheck;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
-import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonOutputHandler;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonResultExampleExtractor;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonRunningDataExtractor;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class CBMCTestRun implements CBMCTestCallback {
@@ -41,14 +42,17 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	private CBMCTestCallback cb;
 
-	private CBMCJsonOutputHandler jsonOutputHandler;
-	
+	private CBMCJsonResultExampleExtractor jsonOutputHandler;
+
 	private CBMCTestConfiguration tc;
+
+	private CBMCJsonRunningDataExtractor cbmcJsonRunningDataExtractor;
 
 	public CBMCTestRun(int v, int s, int c, CodeGenOptions codeGenOptions,
 			String loopbounds, CBMCCodeFileData cbmcCodeFile,
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CBMCTestConfiguration tc) {
+			PreAndPostConditionsDescription propDescr,
+			CBMCTestConfiguration tc) {
 		V = v;
 		S = s;
 		C = c;
@@ -58,13 +62,16 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.propDescr = propDescr;
 		this.loopboundList = loopbounds;
 		this.tc = tc;
+		cbmcJsonRunningDataExtractor = new CBMCJsonRunningDataExtractor(descr,
+				propDescr, s, c, v, cbmcCodeFile.getCodeInfo());
 	}
-	
-	public CBMCJsonOutputHandler getJsonOutputHandler() {
+
+	public CBMCJsonResultExampleExtractor getJsonOutputHandler() {
 		return jsonOutputHandler;
 	}
-	
-	public void setJsonOutputHandler(CBMCJsonOutputHandler jsonOutputHandler) {
+
+	public void setJsonOutputHandler(
+			CBMCJsonResultExampleExtractor jsonOutputHandler) {
 		this.jsonOutputHandler = jsonOutputHandler;
 	}
 
@@ -74,6 +81,11 @@ public class CBMCTestRun implements CBMCTestCallback {
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid, String output) {
 		testRunLogs.add(output);
+		CBMCJsonMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
+		if (msg != null) {
+			if (cb != null)
+				cb.onNewCBMCMessage(msg);
+		}
 		if (cb != null)
 			cb.onPropertyTestRawOutput(sessionUUID, description, propertyDescr,
 					s, c, v, uuid, output);
@@ -84,7 +96,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
 
-		jsonOutputHandler = new CBMCJsonOutputHandler(description,
+		jsonOutputHandler = new CBMCJsonResultExampleExtractor(description,
 				propertyDescr, cbmcCodeFile.getCodeInfo(), s, c, v,
 				testRunLogs);
 
@@ -107,6 +119,10 @@ public class CBMCTestRun implements CBMCTestCallback {
 			String uuid) {
 		if (cb != null)
 			cb.onPropertyTestStopped(descr, propertyDescr, s, c, v, uuid);
+	}
+
+	public List<CBMCJsonMessage> getMessagesAsList() {
+		return cbmcJsonRunningDataExtractor.getMessages();
 	}
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
@@ -208,23 +224,23 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void setC(int c) {
 		C = c;
 	}
-	
+
 	public CElectionDescription getDescr() {
 		return descr;
 	}
-	
+
 	public PreAndPostConditionsDescription getPropDescr() {
 		return propDescr;
 	}
-	
+
 	public CBMCTestConfiguration getTc() {
 		return tc;
 	}
 
 	public String getStatusString() {
 		String status = getState().toString();
-		if(getState() == WorkUnitState.FINISHED) {
-			if(getJsonOutputHandler().getFoundCounterExample()) {
+		if (getState() == WorkUnitState.FINISHED) {
+			if (getJsonOutputHandler().getFoundCounterExample()) {
 				status = "Verification failed";
 			} else {
 				status = "Verification succeded";

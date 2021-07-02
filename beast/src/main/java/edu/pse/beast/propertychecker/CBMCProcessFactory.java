@@ -394,7 +394,7 @@ public final class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public Result getMatchingResult() {
-        return new CBMCJsonOutputHandler();
+        return new CBMCJsonResultExampleExtractor();
     }
 
     /**

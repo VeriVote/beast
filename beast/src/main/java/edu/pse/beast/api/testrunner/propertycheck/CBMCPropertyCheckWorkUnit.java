@@ -88,6 +88,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		this.cbmcCodeFile = cbmcFile;
 		this.loopBounds = loopBounds;
 		this.codeGenOptions = codeGenOptions;
+		this.state = WorkUnitState.INITIALIZED;
 	}
 
 	@Override

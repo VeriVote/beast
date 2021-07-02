@@ -93,7 +93,7 @@ public class CodeGenLoopBoundHandler {
 			}
 		}
 
-		created += " --unwind " + Math.max(Math.max(v, c), s);
+		created += " --unwind " + (Math.max(Math.max(v, c), s) + 1);
 
 		return created;
 	}

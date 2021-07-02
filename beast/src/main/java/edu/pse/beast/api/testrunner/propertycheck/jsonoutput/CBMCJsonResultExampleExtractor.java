@@ -12,9 +12,8 @@ import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
-public class CBMCJsonOutputHandler {
+public class CBMCJsonResultExampleExtractor {
 
-	private final String OUTPUT_KEY = "output";
 	private final String CBMC_JSON_RESULT_KEY = "result";
 	private final String CBMC_JSON_TRACE_KEY = "trace";
 	private final String CBMC_CPROVER_STATUS_KEY = "cProverStatus";
@@ -41,7 +40,7 @@ public class CBMCJsonOutputHandler {
 
 	private boolean foundCounterExample;
 
-	public CBMCJsonOutputHandler(CElectionDescription descr,
+	public CBMCJsonResultExampleExtractor(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
 			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo, int s, int c, int v,
 			List<String> rawOutput) {
@@ -212,15 +211,7 @@ public class CBMCJsonOutputHandler {
 
 	private void processCBMCJsonOutput(
 			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo) {
-
-		// find the beginning of the json array
-		while (!rawOutput.get(0).startsWith("[")) {
-			rawOutput.remove(0);
-		}
-		String jsonString = "{ " + OUTPUT_KEY + " : "
-				+ String.join("\n", rawOutput) + "}";
-		JSONObject resultJson = new JSONObject(jsonString);
-		JSONArray outputArr = resultJson.getJSONArray(OUTPUT_KEY);
+		JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
 		parseOutputJSONArr(outputArr);
 
 		if (!cProverStatus.equals("failure")) {

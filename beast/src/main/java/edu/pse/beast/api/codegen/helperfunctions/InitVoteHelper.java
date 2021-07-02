@@ -51,6 +51,7 @@ public abstract class InitVoteHelper {
 				"CURRENT_AMT_SEAT", currentAmtSeatVarName, 
 				"VOTE_TYPE", voteArrStruct.getStruct().getName(), 
 				"AMT_MEMBER", voteArrStruct.getAmtName(), 
+				"VOTE_NUMBER", String.valueOf(voteNumber), 
 				"LIST_MEMBER", voteArrStruct.getListName(), 
 				"VAR_NAME", varName, 
 				"ASSUME", options.getCbmcAssumeName(), 

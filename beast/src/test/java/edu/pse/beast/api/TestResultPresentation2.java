@@ -13,7 +13,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonOutputHandler;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonResultExampleExtractor;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class TestResultPresentation2 {
@@ -47,7 +47,7 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection0");
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection3");
 		
-		CBMCJsonOutputHandler res = new CBMCJsonOutputHandler(descr, propDescr,
+		CBMCJsonResultExampleExtractor res = new CBMCJsonResultExampleExtractor(descr, propDescr,
 				cbmcGeneratedCodeInfo, 5, 5, 5, List.of(output.split("\n")));
 		//System.out.println(res.getExampleText());
 		// System.out.println(res.getAllAssignmentsText());
@@ -82,7 +82,7 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection0");
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection3");
 		
-		CBMCJsonOutputHandler res = new CBMCJsonOutputHandler(descr, propDescr,
+		CBMCJsonResultExampleExtractor res = new CBMCJsonResultExampleExtractor(descr, propDescr,
 				cbmcGeneratedCodeInfo, 5, 5, 5, List.of(output.split("\n")));
 		System.out.println(res.getExampleText());
 		//System.out.println(res.getAllAssignmentsText());
