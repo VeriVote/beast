@@ -155,8 +155,11 @@ public class CBMCTestRunGuiController
 	private void display() {
 
 		Platform.runLater(() -> {
+			outputAnchorPane.getChildren().clear();
+
 			if (run == null)
 				return;
+
 
 			testConfigTreeView.refresh();
 
