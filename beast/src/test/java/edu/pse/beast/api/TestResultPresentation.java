@@ -9,7 +9,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
-import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonResultExampleExtractor;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCJsonResultExampleExtractor;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class TestResultPresentation {

@@ -1,19 +1,18 @@
-package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
+package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 
-public class VoteAssignment {
+public class ElectAssignment {
 	private String line;
 	private String assignmentFunc;
-
-	private int voteNumber;
+	private int electNumber;
 	private String varName;
 	private String memberName;
 	private String value;
 
-	public VoteAssignment(String line, String assignmentFunc, int voteNumber,
+	public ElectAssignment(String line, String assignmentFunc, int electNumber,
 			String varName, String memberName, String value) {
 		this.line = line;
 		this.assignmentFunc = assignmentFunc;
-		this.voteNumber = voteNumber;
+		this.electNumber = electNumber;
 		this.varName = varName;
 		this.memberName = memberName;
 		this.value = value;
@@ -27,8 +26,8 @@ public class VoteAssignment {
 		return assignmentFunc;
 	}
 
-	public int getVoteNumber() {
-		return voteNumber;
+	public int getElectNumber() {
+		return electNumber;
 	}
 
 	public String getVarName() {
@@ -51,8 +50,8 @@ public class VoteAssignment {
 		this.assignmentFunc = assignmentFunc;
 	}
 
-	public void setVoteNumber(int voteNumber) {
-		this.voteNumber = voteNumber;
+	public void setElectNumber(int electNumber) {
+		this.electNumber = electNumber;
 	}
 
 	public void setVarName(String varName) {
@@ -65,6 +64,14 @@ public class VoteAssignment {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return "ElectAssignment [line=" + line + ", assignmentFunc="
+				+ assignmentFunc + ", electNumber=" + electNumber + ", varName="
+				+ varName + ", memberName=" + memberName + ", value=" + value
+				+ "]";
 	}
 
 }

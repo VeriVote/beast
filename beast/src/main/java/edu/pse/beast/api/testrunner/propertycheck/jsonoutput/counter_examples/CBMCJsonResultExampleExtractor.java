@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
+package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonHelper;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class CBMCJsonResultExampleExtractor {

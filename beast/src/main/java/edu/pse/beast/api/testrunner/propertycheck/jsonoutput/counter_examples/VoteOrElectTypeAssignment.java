@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
+package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 
 public class VoteOrElectTypeAssignment {
 	private String name;

@@ -1,5 +1,6 @@
 ---Relative pfade speichern
-ergebnisdarst "besser" und speichern
+ergebnisdarst "besser" 
+---und speichern
 ---slider für font vlt
 herausnehmen von descr und probdescr handlen
 exception/error handling bzw nicht impl pfade offensichtlich machen
