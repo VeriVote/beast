@@ -13,6 +13,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonRunningDataExtractor;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCCounterExample;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCJsonResultExampleExtractor;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -257,13 +258,21 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public String getStatusString() {
 		String status = getState().toString();
 		if (getState() == WorkUnitState.FINISHED) {
-			if (getJsonOutputHandler().getFoundCounterExample()) {
+			if (getJsonOutputHandler().didCBMCFindExample()) {
 				status = "Verification failed";
 			} else {
 				status = "Verification succeded";
 			}
 		}
 		return status;
+	}
+	
+	CBMCCounterExample getGeneratedExample() {
+		return cmbcJsonExampleExtractor.getGeneratedExample();
+	}
+
+	public boolean didFindCounterExample() {
+		return cmbcJsonExampleExtractor.didCBMCFindExample();
 	}
 
 }

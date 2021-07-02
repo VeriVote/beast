@@ -19,7 +19,7 @@ public class PerformVoteHelper {
 			CodeGenOptions options, String votingFunctionName,
 			CBMCGeneratedCodeInfo cbmcGeneratedCode) {
 		String resultVarName = getResultVarName(voteNumber);
-		cbmcGeneratedCode.addedElectVar(resultVarName);
+		cbmcGeneratedCode.addElectVariableName(voteNumber, resultVarName);
 		
 		String voteVarName = InitVoteHelper.getVoteVarName(voteNumber);
 		

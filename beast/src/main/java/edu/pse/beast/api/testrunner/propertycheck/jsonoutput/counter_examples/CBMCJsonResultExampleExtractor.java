@@ -1,5 +1,6 @@
 package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 
+import java.lang.reflect.GenericSignatureFormatError;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,15 +32,11 @@ public class CBMCJsonResultExampleExtractor {
 	private JSONArray traceArr;
 	private String cProverStatus;
 
-	private List<VoteOrElectTypeAssignment> voteTypeAssignments = new ArrayList<>();
-	private List<VoteOrElectTypeAssignment> electTypeAssignments = new ArrayList<>();
-	private List<VoteAssignment> voteAssignments = new ArrayList<>();
-	private List<ElectAssignment> electAssignments = new ArrayList<>();
-	private List<String> allAssignments = new ArrayList<>();
+	private CBMCCounterExample generatedExample;
 
 	private CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo;
 
-	private boolean foundCounterExample;
+	private boolean cbmcFoundExample;
 
 	public CBMCJsonResultExampleExtractor(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
@@ -51,139 +48,10 @@ public class CBMCJsonResultExampleExtractor {
 		this.v = v;
 		this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
 	}
+	
 
-	public List<String> getAllAssignments() {
-		return allAssignments;
-	}
-
-	public String getExampleText() {
-		Map<Integer, Map<String, String>> voteNumberToAssignmentString = new HashMap<>();
-		for (VoteAssignment va : voteAssignments) {
-			if (!voteNumberToAssignmentString.containsKey(va.getVoteNumber())) {
-				voteNumberToAssignmentString.put(va.getVoteNumber(),
-						new HashMap<>());
-			}
-			Map<String, String> memberAssignments = voteNumberToAssignmentString
-					.get(va.getVoteNumber());
-			memberAssignments.put(va.getMemberName(), va.getValue());
-		}
-
-		String completeString = "";
-		for (Integer voteNumber : voteNumberToAssignmentString.keySet()) {
-			List<String> exampleString = new ArrayList<>();
-			Map<String, String> memberAssignments = voteNumberToAssignmentString
-					.get(voteNumber);
-			for (String member : memberAssignments.keySet()) {
-				exampleString.add("    " + member + " = "
-						+ memberAssignments.get(member));
-			}
-			exampleString.sort((s1, s2) -> {
-				return s1.compareTo(s2);
-			});
-			completeString += "Votes" + voteNumber + " {\n";
-			completeString += String.join("\n", exampleString);
-			completeString += "\n}\n";
-		}
-
-		Map<String, Map<String, String>> varNameToOtherVoteAssignments = new HashMap();
-		for (VoteOrElectTypeAssignment vta : voteTypeAssignments) {
-			if (!varNameToOtherVoteAssignments.containsKey(vta.getName())) {
-				varNameToOtherVoteAssignments.put(vta.getName(),
-						new HashMap<>());
-			}
-			Map<String, String> memberValueMap = varNameToOtherVoteAssignments
-					.get(vta.getName());
-			memberValueMap.put(vta.getMember(), vta.getValue());
-		}
-
-		for (String varName : varNameToOtherVoteAssignments.keySet()) {
-			List<String> list = new ArrayList<>();
-
-			Map<String, String> memberValueMap = varNameToOtherVoteAssignments
-					.get(varName);
-
-			for (String member : memberValueMap.keySet()) {
-				list.add("    " + member + " = " + memberValueMap.get(member));
-			}
-
-			list.sort((s1, s2) -> {
-				return s1.compareTo(s2);
-			});
-
-			completeString += varName + " {\n";
-
-			if (cbmcGeneratedCodeInfo.hasInfo(varName)) {
-				completeString += cbmcGeneratedCodeInfo.getInfo(varName) + "\n";
-			}
-
-			completeString += String.join("\n", list);
-			completeString += "\n}\n";
-		}
-
-		Map<Integer, Map<String, String>> electNumberToAssignmentString = new HashMap<>();
-		for (ElectAssignment ea : electAssignments) {
-			if (!electNumberToAssignmentString
-					.containsKey(ea.getElectNumber())) {
-				electNumberToAssignmentString.put(ea.getElectNumber(),
-						new HashMap<>());
-			}
-			Map<String, String> memberAssignments = electNumberToAssignmentString
-					.get(ea.getElectNumber());
-			memberAssignments.put(ea.getMemberName(), ea.getValue());
-		}
-		for (Integer electNumber : electNumberToAssignmentString.keySet()) {
-			Map<String, String> memberAssignments = electNumberToAssignmentString
-					.get(electNumber);
-
-			List<String> list = new ArrayList();
-			for (String memberName : memberAssignments.keySet()) {
-				list.add("    " + memberName + " = "
-						+ memberAssignments.get(memberName));
-			}
-			list.sort((s1, s2) -> {
-				return s1.compareTo(s2);
-			});
-
-			completeString += "Elect" + electNumber + " {\n";
-			completeString += String.join("\n", list);
-			completeString += "\n}\n";
-		}
-
-		Map<String, Map<String, String>> varNameToOtherElectAssignments = new HashMap();
-		for (VoteOrElectTypeAssignment eta : electTypeAssignments) {
-			if (!varNameToOtherElectAssignments.containsKey(eta.getName())) {
-				varNameToOtherElectAssignments.put(eta.getName(),
-						new HashMap<>());
-			}
-			Map<String, String> memberValueMap = varNameToOtherElectAssignments
-					.get(eta.getName());
-			memberValueMap.put(eta.getMember(), eta.getValue());
-		}
-
-		for (String varName : varNameToOtherElectAssignments.keySet()) {
-			List<String> list = new ArrayList<>();
-
-			Map<String, String> memberValueMap = varNameToOtherElectAssignments
-					.get(varName);
-
-			for (String member : memberValueMap.keySet()) {
-				list.add("    " + member + " = " + memberValueMap.get(member));
-			}
-
-			list.sort((s1, s2) -> {
-				return s1.compareTo(s2);
-			});
-
-			completeString += varName + " {\n";
-
-			if (cbmcGeneratedCodeInfo.hasInfo(varName)) {
-				completeString += cbmcGeneratedCodeInfo.getInfo(varName) + "\n";
-			}
-			completeString += String.join("\n", list);
-			completeString += "\n}\n";
-		}
-
-		return completeString;
+	public boolean didCBMCFindExample() {
+		return cbmcFoundExample;
 	}
 
 	private void parseOutputJSONArr(JSONArray outputArr) {
@@ -203,10 +71,6 @@ public class CBMCJsonResultExampleExtractor {
 		}
 	}
 
-	public String getAllAssignmentsText() {
-		return String.join("\n", allAssignments);
-	}
-
 	public void processCBMCJsonOutput(List<String> testRunLogs) {
 		rawOutput.clear();
 		rawOutput.addAll(testRunLogs);
@@ -216,11 +80,12 @@ public class CBMCJsonResultExampleExtractor {
 		parseOutputJSONArr(outputArr);
 
 		if (!cProverStatus.equals("failure")) {
-			foundCounterExample = false;
+			cbmcFoundExample = false;
 			return;
 		}
 
-		foundCounterExample = true;
+		cbmcFoundExample = true;
+		generatedExample = new CBMCCounterExample(cbmcGeneratedCodeInfo);
 
 		for (int i = 0; i < traceArr.length(); ++i) {
 			JSONObject traceJsonObj = traceArr.getJSONObject(i);
@@ -274,37 +139,23 @@ public class CBMCJsonResultExampleExtractor {
 					valueStr = "NOT_A_VOTE";
 				}
 
-				allAssignments
-						.add(structName + "." + memberName + " = " + valueStr);
-
+				CBMCAssignmentType assType = CBMCAssignmentType.UNKNOWN;
 				if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber()
 						.keySet().contains(structName)) {
-					VoteAssignment ass = new VoteAssignment(assignmentLine,
-							assignmentFunc,
-							cbmcGeneratedCodeInfo
-									.getVoteVariableNameToVoteNumber()
-									.get(structName),
-							structName, memberName, valueStr);
-					voteAssignments.add(ass);
+					assType = CBMCAssignmentType.VOTE;
 				} else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames()
 						.contains(structName)) {
-					voteTypeAssignments.add(new VoteOrElectTypeAssignment(
-							structName, memberName, valueStr));
+					assType = CBMCAssignmentType.GENERATED_VOTE;
 				} else if (cbmcGeneratedCodeInfo
 						.getElectVariableNameToElectNumber().keySet()
 						.contains(structName)) {
-					ElectAssignment ass = new ElectAssignment(assignmentLine,
-							assignmentFunc,
-							cbmcGeneratedCodeInfo
-									.getElectVariableNameToElectNumber()
-									.get(structName),
-							structName, memberName, valueStr);
-					electAssignments.add(ass);
+					assType = CBMCAssignmentType.ELECT;
 				} else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames()
 						.contains(structName)) {
-					electTypeAssignments.add(new VoteOrElectTypeAssignment(
-							structName, memberName, valueStr));
+					assType = CBMCAssignmentType.GENERATED_ELECT;
 				}
+
+				generatedExample.add(structName, assType, memberName, valueStr);
 			}
 		}
 	}
@@ -318,9 +169,10 @@ public class CBMCJsonResultExampleExtractor {
 		}
 		return newString;
 	}
-
-	public boolean getFoundCounterExample() {
-		return foundCounterExample;
+	
+	public CBMCCounterExample getGeneratedExample() {
+		return generatedExample;
 	}
+
 
 }

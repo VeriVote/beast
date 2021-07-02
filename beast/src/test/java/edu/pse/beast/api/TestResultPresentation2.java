@@ -2,6 +2,7 @@ package edu.pse.beast.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -40,23 +41,31 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.setAmtMemberVarName("amtVotes");
 		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
 
-		cbmcGeneratedCodeInfo.addElectVariableName(1, PerformVoteHelper.getResultVarName(1));
-		cbmcGeneratedCodeInfo.addElectVariableName(2, PerformVoteHelper.getResultVarName(2));
-		cbmcGeneratedCodeInfo.addElectVariableName(3, PerformVoteHelper.getResultVarName(3));
-		
+		cbmcGeneratedCodeInfo.addElectVariableName(1,
+				PerformVoteHelper.getResultVarName(1));
+		cbmcGeneratedCodeInfo.addElectVariableName(2,
+				PerformVoteHelper.getResultVarName(2));
+		cbmcGeneratedCodeInfo.addElectVariableName(3,
+				PerformVoteHelper.getResultVarName(3));
+
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection0");
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection3");
-		
-		CBMCJsonResultExampleExtractor res = new CBMCJsonResultExampleExtractor(descr, propDescr,
-				cbmcGeneratedCodeInfo, 5, 5, 5, List.of(output.split("\n")));
-		//System.out.println(res.getExampleText());
-		// System.out.println(res.getAllAssignmentsText());
+
+		String arr[] = output.split("\n");
+		List<String> rawOutput = new ArrayList<>();
+		for (int i = 0; i < arr.length; ++i) {
+			rawOutput.add(arr[i]);
+		}
+		CBMCJsonResultExampleExtractor res = new CBMCJsonResultExampleExtractor(
+				descr, propDescr, cbmcGeneratedCodeInfo, 5, 5, 5);
+		res.processCBMCJsonOutput(rawOutput);
+		System.out.println(res.getGeneratedExample().toString());
 	}
-	
+
 	@Test
 	public void testOutputParser2() throws IOException {
-		String output = SavingLoadingInterface.readStringFromFile(
-				new File("./src/test/resources/output2"));
+		String output = SavingLoadingInterface
+				.readStringFromFile(new File("./src/test/resources/output2"));
 
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.APPROVAL, VotingOutputTypes.CANDIDATE_LIST,
@@ -65,9 +74,12 @@ public class TestResultPresentation2 {
 				"test");
 
 		CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
-		cbmcGeneratedCodeInfo.addVotingVariableName(1, InitVoteHelper.getVoteVarName(1));
-		cbmcGeneratedCodeInfo.addVotingVariableName(2, InitVoteHelper.getVoteVarName(2));
-		cbmcGeneratedCodeInfo.addVotingVariableName(3, InitVoteHelper.getVoteVarName(3));
+		cbmcGeneratedCodeInfo.addVotingVariableName(1,
+				InitVoteHelper.getVoteVarName(1));
+		cbmcGeneratedCodeInfo.addVotingVariableName(2,
+				InitVoteHelper.getVoteVarName(2));
+		cbmcGeneratedCodeInfo.addVotingVariableName(3,
+				InitVoteHelper.getVoteVarName(3));
 
 		cbmcGeneratedCodeInfo.addedVotingVar("voteSequence0");
 		cbmcGeneratedCodeInfo.addedVotingVar("votePermutation1");
@@ -75,16 +87,24 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.setAmtMemberVarName("amtVotes");
 		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
 
-		cbmcGeneratedCodeInfo.addElectVariableName(1, PerformVoteHelper.getResultVarName(1));
-		cbmcGeneratedCodeInfo.addElectVariableName(2, PerformVoteHelper.getResultVarName(2));
-		cbmcGeneratedCodeInfo.addElectVariableName(3, PerformVoteHelper.getResultVarName(3));
+		cbmcGeneratedCodeInfo.addElectVariableName(1,
+				PerformVoteHelper.getResultVarName(1));
+		cbmcGeneratedCodeInfo.addElectVariableName(2,
+				PerformVoteHelper.getResultVarName(2));
+		cbmcGeneratedCodeInfo.addElectVariableName(3,
+				PerformVoteHelper.getResultVarName(3));
 
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection0");
 		cbmcGeneratedCodeInfo.addedElectVar("electIntersection3");
+
+		String arr[] = output.split("\n");
+		List<String> rawOutput = new ArrayList<>();
+		for (int i = 0; i < arr.length; ++i) {
+			rawOutput.add(arr[i]);
+		}
+		CBMCJsonResultExampleExtractor res = new CBMCJsonResultExampleExtractor(
+				descr, propDescr, cbmcGeneratedCodeInfo, 5, 5, 5);
+		res.processCBMCJsonOutput(rawOutput);
 		
-		CBMCJsonResultExampleExtractor res = new CBMCJsonResultExampleExtractor(descr, propDescr,
-				cbmcGeneratedCodeInfo, 5, 5, 5, List.of(output.split("\n")));
-		System.out.println(res.getExampleText());
-		//System.out.println(res.getAllAssignmentsText());
 	}
 }

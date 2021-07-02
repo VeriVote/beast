@@ -12,6 +12,7 @@ import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
+import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCCounterExample;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
@@ -20,6 +21,8 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -51,7 +54,6 @@ public class CBMCTestRunGuiController
 	private CodeArea fileContents = new OutputTextElement();
 	private CodeArea logs = new OutputTextElement();
 	private CodeArea messages = new OutputTextElement();
-	private CodeArea examples = new OutputTextElement();
 
 	private CBMCTestRun run;
 
@@ -59,11 +61,19 @@ public class CBMCTestRunGuiController
 
 	private double currentDisplayFontSize = 12;
 
+	private CounterExampleGuiController counterExampleGuiController = new CounterExampleGuiController();
+	private final String counterExampleFXML = "/edu/pse/beast/cbmcCounterExampleGui.fxml";
+	FXMLLoader counterExampleLoader = new FXMLLoader(
+			getClass().getResource(counterExampleFXML));
+
 	public CBMCTestRunGuiController(BeastWorkspace beastWorkspace,
-			TreeView<TestConfigTreeItemSuper> testConfigTreeView) {
+			TreeView<TestConfigTreeItemSuper> testConfigTreeView)
+			throws IOException {
 		this.beastWorkspace = beastWorkspace;
 		beastWorkspace.registerUpdateListener(this);
 		this.testConfigTreeView = testConfigTreeView;
+		counterExampleLoader.setController(counterExampleGuiController);
+		counterExampleLoader.load();
 	}
 
 	public void display(CBMCTestRun run) {
@@ -134,14 +144,14 @@ public class CBMCTestRunGuiController
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid, List<String> cbmcOutput) {
 	}
-	
+
 	@Override
 	public void onNewCBMCMessage(CBMCJsonMessage msg) {
 		Platform.runLater(() -> {
 			messages.appendText(msg.toString() + "\n");
 		});
 	}
-	
+
 	private void display() {
 
 		Platform.runLater(() -> {
@@ -208,18 +218,16 @@ public class CBMCTestRunGuiController
 				stateHBox.getChildren().add(stopCBMCButton);
 				break;
 			case FINISHED: {
-				if (run.getJsonOutputHandler().getFoundCounterExample()) {
+				if (run.getJsonOutputHandler().didCBMCFindExample()) {
 					Button showExampleButton = new Button(
 							"show generated Example");
 					showExampleButton.setOnAction(e -> {
-
+						AnchorPane pane = counterExampleGuiController
+								.display(run.getJsonOutputHandler()
+										.getGeneratedExample());
+						displayNode(pane);
 					});
-					Button showAllAssignments = new Button("show All");
-					showAllAssignments.setOnAction(e -> {
 
-					});
-
-					stateHBox.getChildren().add(showAllAssignments);
 					stateHBox.getChildren().add(showExampleButton);
 				}
 
@@ -252,12 +260,16 @@ public class CBMCTestRunGuiController
 	private void displayCodeArea(CodeArea codeArea) {
 		VirtualizedScrollPane<CodeArea> vsp = new VirtualizedScrollPane<>(
 				codeArea);
+		displayNode(codeArea);
+	}
+
+	private void displayNode(Node n) {
 		outputAnchorPane.getChildren().clear();
-		outputAnchorPane.getChildren().add(vsp);
-		AnchorPane.setTopAnchor(vsp, 0d);
-		AnchorPane.setBottomAnchor(vsp, 0d);
-		AnchorPane.setLeftAnchor(vsp, 0d);
-		AnchorPane.setRightAnchor(vsp, 0d);
+		outputAnchorPane.getChildren().add(n);
+		AnchorPane.setTopAnchor(n, 0d);
+		AnchorPane.setBottomAnchor(n, 0d);
+		AnchorPane.setLeftAnchor(n, 0d);
+		AnchorPane.setRightAnchor(n, 0d);
 	}
 
 	@FXML
@@ -273,7 +285,6 @@ public class CBMCTestRunGuiController
 					+ "px;";
 			logs.setStyle(styleString);
 			messages.setStyle(styleString);
-			examples.setStyle(styleString);
 		});
 	}
 

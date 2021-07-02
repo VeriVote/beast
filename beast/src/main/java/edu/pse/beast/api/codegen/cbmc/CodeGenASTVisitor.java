@@ -176,7 +176,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteIntersectionNode(VoteIntersectionNode node) {
 		String generatedVarName = codeBlock.newVarName("voteIntersection");
-		cbmcGeneratedCode.addedVotingVar(generatedVarName);
+		cbmcGeneratedCode.addedGeneratedVotingVar(generatedVarName);
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
@@ -197,7 +197,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectIntersectionNode(ElectIntersectionNode node) {
 		String generatedVarName = codeBlock.newVarName("electIntersection");
-		cbmcGeneratedCode.addedElectVar(generatedVarName);
+		cbmcGeneratedCode.addedGeneratedElectVar(generatedVarName);
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
@@ -252,7 +252,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVotePermutation(VotePermutationNode node) {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
-		cbmcGeneratedCode.addedVotingVar(generatedVarName);
+		cbmcGeneratedCode.addedGeneratedVotingVar(generatedVarName);
 
 		String varName = InitVoteHelper.getVoteVarName(node.getVoteNumber());
 
@@ -269,7 +269,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectPermutation(ElectPermutationNode node) {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
-		cbmcGeneratedCode.addedElectVar(generatedVarName);
+		cbmcGeneratedCode.addedGeneratedElectVar(generatedVarName);
 
 		String varName = PerformVoteHelper
 				.getResultVarName(node.getElectNumber());
@@ -287,7 +287,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitElectTuple(ElectTupleNode node) {
 		String generatedVarName = codeBlock.newVarName("electSequence");
-		cbmcGeneratedCode.addedElectVar(generatedVarName);
+		cbmcGeneratedCode.addedGeneratedElectVar(generatedVarName);
 
 		List<String> electNames = new ArrayList<>();
 		for (int number : node.getElectNumbers()) {
@@ -308,7 +308,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteTuple(VoteTupleNode node) {
 		String generatedVarName = codeBlock.newVarName("voteSequence");
-		cbmcGeneratedCode.addedVotingVar(generatedVarName);
+		cbmcGeneratedCode.addedGeneratedVotingVar(generatedVarName);
 
 		List<String> voteNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {

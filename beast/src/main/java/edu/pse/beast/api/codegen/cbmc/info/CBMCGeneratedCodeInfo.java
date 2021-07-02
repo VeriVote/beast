@@ -23,11 +23,11 @@ public class CBMCGeneratedCodeInfo {
 	private String amtMemberVarName;
 	private String listMemberVarName;
 
-	public void addedVotingVar(String name) {
+	public void addedGeneratedVotingVar(String name) {
 		generatedVotingVarNames.add(name);
 	}
 
-	public void addedElectVar(String name) {
+	public void addedGeneratedElectVar(String name) {
 		generatedElectVarNames.add(name);
 	}
 

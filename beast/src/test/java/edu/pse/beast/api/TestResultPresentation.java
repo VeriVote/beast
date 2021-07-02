@@ -1,5 +1,6 @@
 package edu.pse.beast.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -2142,10 +2143,13 @@ public class TestResultPresentation {
 				descr, 
 				propDescr, 
 				cbmcGeneratedCodeInfo,
-				5, 5, 5, 
-				List.of(cbmcOutput.split("\n")));
-		System.out.println(res.getExampleText());
-		System.out.println(res.getAllAssignmentsText());
-		
+				5, 5, 5);
+		String arr[] = cbmcOutput.split("\n");
+		List<String> rawOutput = new ArrayList<>();
+		for (int i = 0; i < arr.length; ++i) {
+			rawOutput.add(arr[i]);
+		}
+		res.processCBMCJsonOutput(rawOutput);
+		System.out.println(res.getGeneratedExample().toString());
 	}
 }

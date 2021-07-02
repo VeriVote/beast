@@ -36,7 +36,7 @@ public abstract class InitVoteHelper {
 			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler, 
 			CBMCGeneratedCodeInfo codeInfo) {		
 		String varName = getVoteVarName(voteNumber);
-		codeInfo.addedVotingVar(varName);
+		codeInfo.addVotingVariableName(voteNumber, varName);
 		
 		String currentAmtVoterVarName = getCurrentAmtVoter(voteNumber);
 		String currentAmtCandVarName = getCurrentAmtCand(voteNumber);
