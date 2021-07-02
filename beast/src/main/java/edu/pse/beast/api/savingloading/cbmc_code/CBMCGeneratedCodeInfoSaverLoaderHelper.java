@@ -20,8 +20,11 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 	private static final String GENERATED_VOTE_VAR_NAME_SET_KEY = "generated_vote_var_name";
 	private static final String GENERATED_ELECT_VAR_NAME_SET_KEY = "generated_elect_var_name";
 
-	private static final String AMT_MEMBER_VAR_NAME_KEY = "amt_member_var_name";
-	private static final String LIST_MEMBER_VAR_NAME_KEY = "list_member_var_name";
+	private static final String VOTES_AMT_MEMBER_VAR_NAME_KEY = "votes_amt_member_var_name";
+	private static final String VOTES_LIST_MEMBER_VAR_NAME_KEY = "votes_list_member_var_name";
+
+	private static final String RESULT_AMT_MEMBER_VAR_NAME_KEY = "result_amt_member_var_name";
+	private static final String RESULT_LIST_MEMBER_VAR_NAME_KEY = "result_list_member_var_name";
 
 	private static final String VAR_NAME_TO_INFO_KEY = "var_name_to_info";
 
@@ -44,10 +47,15 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 		json.put(VAR_NAME_TO_INFO_KEY,
 				new JSONObject(generatedCodeInfo.getVarNamesToInfo()));
 
-		json.put(AMT_MEMBER_VAR_NAME_KEY,
-				generatedCodeInfo.getAmtMemberVarName());
-		json.put(LIST_MEMBER_VAR_NAME_KEY,
-				generatedCodeInfo.getListMemberVarName());
+		json.put(VOTES_AMT_MEMBER_VAR_NAME_KEY,
+				generatedCodeInfo.getVotesAmtMemberVarName());
+		json.put(VOTES_LIST_MEMBER_VAR_NAME_KEY,
+				generatedCodeInfo.getVotesListMemberVarName());
+
+		json.put(RESULT_AMT_MEMBER_VAR_NAME_KEY,
+				generatedCodeInfo.getResultAmtMemberVarName());
+		json.put(RESULT_LIST_MEMBER_VAR_NAME_KEY,
+				generatedCodeInfo.getResultListMemberVarName());
 
 		return json;
 	}
@@ -89,10 +97,15 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
 				.setVarNamesToInfo(JSONHelper.jsonObjectToStringStringMap(
 						json.getJSONObject(VAR_NAME_TO_INFO_KEY)));
 
+		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName(
+				json.getString(VOTES_AMT_MEMBER_VAR_NAME_KEY));
+		cbmcGeneratedCodeInfo.setVotesListMemberVarName(
+				json.getString(VOTES_LIST_MEMBER_VAR_NAME_KEY));
+
 		cbmcGeneratedCodeInfo
-				.setAmtMemberVarName(json.getString(AMT_MEMBER_VAR_NAME_KEY));
+				.setResultAmtMemberVarName(RESULT_AMT_MEMBER_VAR_NAME_KEY);
 		cbmcGeneratedCodeInfo
-				.setListMemberVarName(json.getString(LIST_MEMBER_VAR_NAME_KEY));
+				.setResultListMemberVarName(RESULT_LIST_MEMBER_VAR_NAME_KEY);
 
 		return cbmcGeneratedCodeInfo;
 	}

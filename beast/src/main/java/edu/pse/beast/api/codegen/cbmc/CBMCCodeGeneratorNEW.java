@@ -115,8 +115,11 @@ public class CBMCCodeGeneratorNEW {
 				propDescr.getCbmcVariables());
 
 		CBMCGeneratedCodeInfo cbmcGeneratedCode = new CBMCGeneratedCodeInfo();
-		cbmcGeneratedCode.setAmtMemberVarName(voteInputStruct.getAmtName());
-		cbmcGeneratedCode.setListMemberVarName(voteInputStruct.getListName());
+		cbmcGeneratedCode.setVotesAmtMemberVarName(voteInputStruct.getAmtName());
+		cbmcGeneratedCode.setVotesListMemberVarName(voteInputStruct.getListName());
+		
+		cbmcGeneratedCode.setResultAmtMemberVarName(voteResultStruct.getAmtName());
+		cbmcGeneratedCode.setResultListMemberVarName(voteResultStruct.getListName());
 
 		CFunction mainFunction = CBMCMainGenerator.main(preAstData, postAstData,
 				propDescr.getCbmcVariables(), voteInputStruct, voteResultStruct,

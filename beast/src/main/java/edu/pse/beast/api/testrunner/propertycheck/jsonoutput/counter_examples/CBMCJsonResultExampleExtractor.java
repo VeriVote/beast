@@ -155,7 +155,8 @@ public class CBMCJsonResultExampleExtractor {
 					assType = CBMCAssignmentType.GENERATED_ELECT;
 				}
 
-				generatedExample.add(structName, assType, memberName, valueStr);
+				String info = cbmcGeneratedCodeInfo.getInfo(structName);
+				generatedExample.add(structName, assType, memberName, valueStr, info);
 			}
 		}
 	}

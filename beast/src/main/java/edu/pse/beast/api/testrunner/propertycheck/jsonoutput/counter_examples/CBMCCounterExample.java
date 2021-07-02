@@ -12,19 +12,25 @@ public class CBMCCounterExample {
 	private Map<String, CBMCStructAssignment> varNamesToAssignments = new HashMap<>();
 
 	private CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo;
+	private int sortNumber = 0;
 
 	public CBMCCounterExample(CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo) {
 		this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
 	}
 
+	public CBMCGeneratedCodeInfo getCbmcGeneratedCodeInfo() {
+		return cbmcGeneratedCodeInfo;
+	}
+
 	public void add(String structName, CBMCAssignmentType assType,
-			String memberName, String assignment) {
+			String memberName, String assignment, String info) {
 		if (!varNamesToAssignments.containsKey(structName)) {
 			varNamesToAssignments.put(structName,
-					new CBMCStructAssignment(assType, structName));
-		} else {
-			varNamesToAssignments.get(structName).add(memberName, assignment);
+					new CBMCStructAssignment(assType, structName, info));
 		}
+		varNamesToAssignments.get(structName).add(memberName, assignment,
+				sortNumber++);
+
 	}
 
 	public List<CBMCStructAssignment> getAssignments(
@@ -35,6 +41,9 @@ public class CBMCCounterExample {
 				list.add(ass);
 			}
 		}
+		list.sort((lhs, rhs) -> {
+			return Integer.compare(lhs.getSortNumber(), rhs.getSortNumber());
+		});
 		return list;
 	}
 

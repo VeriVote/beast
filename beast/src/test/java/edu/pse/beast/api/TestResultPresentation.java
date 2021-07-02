@@ -2134,8 +2134,8 @@ public class TestResultPresentation {
 		
 		CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
 		cbmcGeneratedCodeInfo.addVotingVariableName(1, "votes1");
-		cbmcGeneratedCodeInfo.setAmtMemberVarName("amt");
-		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
+		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amt");
+		cbmcGeneratedCodeInfo.setVotesListMemberVarName("votes");
 		
 		cbmcGeneratedCodeInfo.addElectVariableName(1, "res");
 

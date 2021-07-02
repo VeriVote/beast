@@ -19,8 +19,8 @@ public class CodeInfoSavingLoadingTest {
 		cbmcGeneratedCodeInfo.addElectVariableName(1, "elect1");
 		cbmcGeneratedCodeInfo.addedVotingVar("intersection1");
 		cbmcGeneratedCodeInfo.addInfo("intersection1", "an intersection");
-		cbmcGeneratedCodeInfo.setAmtMemberVarName("amt");
-		cbmcGeneratedCodeInfo.setListMemberVarName("list");
+		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amt");
+		cbmcGeneratedCodeInfo.setVotesListMemberVarName("list");
 		JSONObject json = CBMCGeneratedCodeInfoSaverLoaderHelper
 				.generatedCodeInfoToJSON(cbmcGeneratedCodeInfo);
 		CBMCGeneratedCodeInfo loaded = CBMCGeneratedCodeInfoSaverLoaderHelper

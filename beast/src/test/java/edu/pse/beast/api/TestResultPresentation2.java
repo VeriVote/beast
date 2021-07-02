@@ -38,8 +38,8 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addedVotingVar("voteSequence0");
 		cbmcGeneratedCodeInfo.addedVotingVar("votePermutation1");
 
-		cbmcGeneratedCodeInfo.setAmtMemberVarName("amtVotes");
-		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
+		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amtVotes");
+		cbmcGeneratedCodeInfo.setVotesListMemberVarName("votes");
 
 		cbmcGeneratedCodeInfo.addElectVariableName(1,
 				PerformVoteHelper.getResultVarName(1));
@@ -84,8 +84,8 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addedVotingVar("voteSequence0");
 		cbmcGeneratedCodeInfo.addedVotingVar("votePermutation1");
 
-		cbmcGeneratedCodeInfo.setAmtMemberVarName("amtVotes");
-		cbmcGeneratedCodeInfo.setListMemberVarName("votes");
+		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amtVotes");
+		cbmcGeneratedCodeInfo.setVotesListMemberVarName("votes");
 
 		cbmcGeneratedCodeInfo.addElectVariableName(1,
 				PerformVoteHelper.getResultVarName(1));
