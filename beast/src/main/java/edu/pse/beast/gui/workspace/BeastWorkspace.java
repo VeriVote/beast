@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -37,6 +38,10 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.toolbox.Tuple;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class BeastWorkspace {
 
@@ -422,8 +427,7 @@ public class BeastWorkspace {
 						pathHandler);
 				loadWorkspace(ws);
 			} catch (Exception e) {
-				errorHandler.logAndDisplayError("save error",
-						e);
+				errorHandler.logAndDisplayError("save error", e);
 
 			}
 		}
@@ -617,6 +621,35 @@ public class BeastWorkspace {
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleTestConfigDeleted(tc);
 		}
+	}
+
+	private boolean askUserIfReallyDelete() {
+		Alert reallyRemove = new Alert(AlertType.CONFIRMATION,
+				"There are testconfigurations which refer to the item to be deleted, which would also be removed. Are you sure?",
+				ButtonType.OK, ButtonType.NO);
+		Optional<ButtonType> res = reallyRemove.showAndWait();
+		if (res.isPresent() || res.get().getButtonData().isCancelButton()) {
+			return false;
+		}
+		return true;
+	}
+
+	public void removeDescr(CElectionDescription descr) {
+		if (testConfigList.getTestConfigsByDescr().containsKey(descr)) {
+			if (!askUserIfReallyDelete()) {
+				return;
+			}
+		}
+		testConfigList.removeAll(descr);
+	}
+
+	public void removePropDescr(PreAndPostConditionsDescription propDescr) {
+		if (testConfigList.getTestConfigsByPropDescr().containsKey(propDescr)) {
+			if (!askUserIfReallyDelete()) {
+				return;
+			}
+		}
+		testConfigList.removeAll(propDescr);
 	}
 
 }

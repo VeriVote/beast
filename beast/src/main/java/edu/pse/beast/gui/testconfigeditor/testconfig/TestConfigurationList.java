@@ -147,5 +147,21 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
 		testConfigsByDescr.get(tc.getDescr()).remove(tc);
 		testConfigsByPropDescr.get(tc.getPropDescr()).remove(tc);
 	}
+	
 
+	public void removeAll(CElectionDescription descr) {
+		for(TestConfiguration tc : testConfigsByDescr.get(descr)) {
+			deleteTestConfiguration(tc);
+		}
+		testConfigsByDescr.remove(descr);
+	}
+
+	public void removeAll(PreAndPostConditionsDescription propDescr) {
+
+		for(TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
+			deleteTestConfiguration(tc);
+		}
+		testConfigsByPropDescr.remove(propDescr);
+	}
+	
 }
