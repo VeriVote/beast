@@ -10,9 +10,11 @@ public class CBMCJsonHelper {
 
 	public static JSONArray rawOutputToJSON(List<String> rawOutput) {
 		// find the beginning of the json array
-		while (!rawOutput.get(0).startsWith("[")) {
+		while (!rawOutput.isEmpty() && !rawOutput.get(0).startsWith("[")) {
 			rawOutput.remove(0);
 		}
+		if (rawOutput.isEmpty())
+			return null;
 		String jsonString = "{ " + OUTPUT_KEY + " : "
 				+ String.join("\n", rawOutput) + "}";
 		JSONObject resultJson = new JSONObject(jsonString);

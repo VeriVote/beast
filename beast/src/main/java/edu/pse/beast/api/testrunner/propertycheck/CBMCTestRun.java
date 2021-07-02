@@ -24,6 +24,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	private PreAndPostConditionsDescription propDescr;
 
 	private CBMCPropertyCheckWorkUnit workUnit;
+	private WorkUnitState prevState;
 
 	private int V;
 	private int S;
@@ -42,7 +43,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 
 	private CBMCTestCallback cb;
 
-	private CBMCJsonResultExampleExtractor jsonOutputHandler;
+	private CBMCJsonResultExampleExtractor cmbcJsonExampleExtractor;
 
 	private CBMCTestConfiguration tc;
 
@@ -64,15 +65,23 @@ public class CBMCTestRun implements CBMCTestCallback {
 		this.tc = tc;
 		cbmcJsonRunningDataExtractor = new CBMCJsonRunningDataExtractor(descr,
 				propDescr, s, c, v, cbmcCodeFile.getCodeInfo());
+		cmbcJsonExampleExtractor = new CBMCJsonResultExampleExtractor(descr,
+				propDescr, cbmcCodeFile.getCodeInfo(), s, c, v);
 	}
 
 	public CBMCJsonResultExampleExtractor getJsonOutputHandler() {
-		return jsonOutputHandler;
+		return cmbcJsonExampleExtractor;
 	}
 
 	public void setJsonOutputHandler(
 			CBMCJsonResultExampleExtractor jsonOutputHandler) {
-		this.jsonOutputHandler = jsonOutputHandler;
+		this.cmbcJsonExampleExtractor = jsonOutputHandler;
+	}
+
+	public void setPrevState(WorkUnitState prevState) {
+		if (prevState == WorkUnitState.FINISHED) {
+			this.prevState = prevState;
+		}
 	}
 
 	@Override
@@ -95,11 +104,7 @@ public class CBMCTestRun implements CBMCTestCallback {
 	public void onPropertyTestFinished(CElectionDescription description,
 			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
 			String uuid) {
-
-		jsonOutputHandler = new CBMCJsonResultExampleExtractor(description,
-				propertyDescr, cbmcCodeFile.getCodeInfo(), s, c, v,
-				testRunLogs);
-
+		cmbcJsonExampleExtractor.processCBMCJsonOutput(testRunLogs);
 		if (cb != null)
 			cb.onPropertyTestFinished(description, propertyDescr, s, c, v,
 					uuid);
@@ -126,8 +131,14 @@ public class CBMCTestRun implements CBMCTestCallback {
 	}
 
 	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
+		if (workUnit.getProcessStarterSource() == null)
+			return;
 		workUnit.initialize(V, S, C, codeGenOptions, loopboundList,
 				cbmcCodeFile, descr, propDescr, this);
+		if (prevState != null) {
+			workUnit.setState(prevState);
+			prevState = null;
+		}
 		this.workUnit = workUnit;
 	}
 
@@ -151,8 +162,14 @@ public class CBMCTestRun implements CBMCTestCallback {
 		}
 	}
 
-	public void setTestRunLogs(String testRunLogs) {
-		this.testRunLogs = Arrays.asList(testRunLogs.split("\n"));
+	public void setTestRunLogs(String logs) {
+		List<String> list = new ArrayList<>();
+		String arr[] = logs.split("\n");
+		for (int i = 0; i < arr.length; ++i) {
+			list.add(arr[i]);
+		}
+		cbmcJsonRunningDataExtractor.initializeWithRawOutput(list);
+		cmbcJsonExampleExtractor.processCBMCJsonOutput(list);
 	}
 
 	public void handleDescrCodeChange() {

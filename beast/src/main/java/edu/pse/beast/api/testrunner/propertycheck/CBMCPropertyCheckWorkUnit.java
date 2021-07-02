@@ -63,6 +63,10 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		this.state = WorkUnitState.INITIALIZED;
 	}
 
+	public void setState(WorkUnitState state) {
+		this.state = state;
+	}
+	
 	public int getC() {
 		return c;
 	}
@@ -81,6 +85,10 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 
 	public boolean hasCallback() {
 		return this.cb != null;
+	}
+	
+	public CBMCProcessHandlerSource getProcessStarterSource() {
+		return processStarterSource;
 	}
 
 	public void updateDataForCheck(CBMCCodeFileData cbmcFile, String loopBounds,

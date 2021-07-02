@@ -42,16 +42,13 @@ public class CBMCJsonResultExampleExtractor {
 
 	public CBMCJsonResultExampleExtractor(CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
-			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo, int s, int c, int v,
-			List<String> rawOutput) {
+			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo, int s, int c, int v) {
 		this.descr = descr;
 		this.propDescr = propDescr;
 		this.s = s;
 		this.c = c;
 		this.v = v;
-		this.rawOutput.addAll(rawOutput);
 		this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
-		processCBMCJsonOutput(cbmcGeneratedCodeInfo);
 	}
 
 	public List<String> getAllAssignments() {
@@ -209,9 +206,12 @@ public class CBMCJsonResultExampleExtractor {
 		return String.join("\n", allAssignments);
 	}
 
-	private void processCBMCJsonOutput(
-			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo) {
+	public void processCBMCJsonOutput(List<String> testRunLogs) {
+		rawOutput.clear();
+		rawOutput.addAll(testRunLogs);
 		JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
+		if (outputArr == null)
+			return;
 		parseOutputJSONArr(outputArr);
 
 		if (!cProverStatus.equals("failure")) {

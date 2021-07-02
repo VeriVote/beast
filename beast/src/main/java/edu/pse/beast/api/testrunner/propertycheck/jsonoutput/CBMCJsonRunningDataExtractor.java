@@ -37,7 +37,7 @@ public class CBMCJsonRunningDataExtractor {
 		this.v = v;
 		this.codeInfo = codeInfo;
 	}
-	
+
 	public List<CBMCJsonMessage> getMessages() {
 		return messages;
 	}
@@ -61,6 +61,8 @@ public class CBMCJsonRunningDataExtractor {
 
 	public void initializeWithRawOutput(List<String> rawOutput) {
 		JSONArray arr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
+		if (arr == null)
+			return;
 		for (int i = 0; i < arr.length(); ++i) {
 			JSONObject json = arr.getJSONObject(i);
 			parseJsonObject(json);

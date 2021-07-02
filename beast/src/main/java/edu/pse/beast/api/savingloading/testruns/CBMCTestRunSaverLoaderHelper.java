@@ -17,6 +17,7 @@ import edu.pse.beast.api.savingloading.loopbound.LoopBoundSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
+import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
@@ -34,6 +35,8 @@ public class CBMCTestRunSaverLoaderHelper {
 	private static final String LOOP_BOUND_LIST_KEY = "loop_bounds";
 
 	private static final String CODE_GEN_OPTIONS_KEY = "code_gen_options";
+
+	private static final String STATE_KEY = "state";
 
 	private static JSONArray loopBoundListToJSONArr(List<LoopBound> list) {
 		JSONArray json = new JSONArray();
@@ -70,6 +73,7 @@ public class CBMCTestRunSaverLoaderHelper {
 				.codeGenOptionsToJSON(run.getCodeGenOptions()));
 
 		json.put(LOOP_BOUND_LIST_KEY, run.getLoopboundList());
+		json.put(STATE_KEY, run.getState().toString());
 
 		return json;
 	}
@@ -83,8 +87,6 @@ public class CBMCTestRunSaverLoaderHelper {
 		int c = json.getInt(AMT_CANDS_KEY);
 		int s = json.getInt(AMT_SEATS_KEY);
 
-		String testRunLogs = json.getString(TEST_RUN_LOGS_KEY);
-
 		CBMCCodeFileData codeFileData = CBMCCodeFileDataSaverLoaderHelper
 				.cbmcCodeFileFromJSON(
 						json.getJSONObject(CBMC_CODE_FILE_DATA_KEY));
@@ -96,6 +98,12 @@ public class CBMCTestRunSaverLoaderHelper {
 
 		CBMCTestRun cbmcTestRun = new CBMCTestRun(v, s, c, codeGenOptions,
 				loopbounds, codeFileData, descr, propDescr, tc);
+
+		String testRunLogs = json.getString(TEST_RUN_LOGS_KEY);
+		cbmcTestRun.setTestRunLogs(testRunLogs);
+
+		WorkUnitState state = WorkUnitState.valueOf(json.getString(STATE_KEY));
+		cbmcTestRun.setPrevState(state);
 
 		return cbmcTestRun;
 	}

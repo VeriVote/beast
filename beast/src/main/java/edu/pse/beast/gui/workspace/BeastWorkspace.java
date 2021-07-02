@@ -286,11 +286,11 @@ public class BeastWorkspace {
 				codeGenOptions);
 
 		for (CBMCTestRun cbmcTr : currentConfig.getRuns()) {
-			cbmcTr.updateDataForCheck(cbmcFileData, cbmcTr.getCodeGenOptions());			
+			cbmcTr.updateDataForCheck(cbmcFileData, cbmcTr.getCodeGenOptions());
 		}
 		for (WorkspaceUpdateListener l : updateListener) {
 			l.handleCBMConfigUpdatedFiles(currentConfig);
-		}		
+		}
 	}
 
 	public void addCBCMVarToPropDescr(
@@ -418,12 +418,13 @@ public class BeastWorkspace {
 				"open the workspace file", pathHandler.getWorkspaceDir(), null);
 		if (f != null) {
 			try {
-				BeastWorkspace ws = SavingLoadingInterface
-						.loadBeastWorkspace(f, pathHandler);
+				BeastWorkspace ws = SavingLoadingInterface.loadBeastWorkspace(f,
+						pathHandler);
 				loadWorkspace(ws);
 			} catch (Exception e) {
 				errorHandler.logAndDisplayError("save error",
-						e.getLocalizedMessage());
+						e);
+
 			}
 		}
 	}
