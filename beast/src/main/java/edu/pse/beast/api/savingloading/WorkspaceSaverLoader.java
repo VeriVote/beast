@@ -13,7 +13,6 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.savingloading.testruns.CBMCTestRunSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
-import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
@@ -58,8 +57,8 @@ public class WorkspaceSaverLoader {
 		return arr;
 	}
 
-	private static JSONObject cbmcTestConfigToJSON(
-			CBMCTestConfiguration config) {
+	private static JSONObject cbmcTestConfigToJSON(CBMCTestConfiguration config,
+			RelativePathConverter pathHandler) {
 		JSONObject json = new JSONObject();
 
 		json.put(DESCR_UUID_KEY, config.getDescr().getUuid());
@@ -78,7 +77,7 @@ public class WorkspaceSaverLoader {
 		json.put(START_RUNS_ON_CREATION_KEY, config.getStartRunsOnCreation());
 
 		json.put(TEST_RUNS_KEY, CBMCTestRunSaverLoaderHelper
-				.cbmcTestRunListToJSON(config.getRuns()));
+				.cbmcTestRunListToJSON(config.getRuns(), pathHandler));
 
 		return json;
 	}
@@ -105,7 +104,8 @@ public class WorkspaceSaverLoader {
 
 	private static CBMCTestConfiguration cbmcPropTestConfigFromJson(
 			JSONObject json, List<CElectionDescription> descrs,
-			List<PreAndPostConditionsDescription> propDescrs) {
+			List<PreAndPostConditionsDescription> propDescrs,
+			RelativePathConverter pathHandler) {
 		CBMCTestConfiguration cbmcPropTestConfig = new CBMCTestConfiguration();
 
 		int minVoters = json.getInt(MIN_VOTERS_KEY);
@@ -153,7 +153,7 @@ public class WorkspaceSaverLoader {
 
 		List<CBMCTestRun> cbmcTestRuns = CBMCTestRunSaverLoaderHelper
 				.cbmcTestRunListFromJsonArr(json.getJSONArray(TEST_RUNS_KEY),
-						descr, propDescr, cbmcPropTestConfig);
+						descr, propDescr, cbmcPropTestConfig, pathHandler);
 
 		cbmcPropTestConfig.addRuns(cbmcTestRuns);
 
@@ -161,11 +161,12 @@ public class WorkspaceSaverLoader {
 	}
 
 	private static JSONArray cbmcTestConfigCollectionToJSON(
-			Collection<CBMCTestConfiguration> collection) {
+			Collection<CBMCTestConfiguration> collection,
+			RelativePathConverter pathHandler) {
 		JSONArray arr = new JSONArray();
 
 		for (CBMCTestConfiguration config : collection) {
-			arr.put(cbmcTestConfigToJSON(config));
+			arr.put(cbmcTestConfigToJSON(config, pathHandler));
 		}
 
 		return arr;
@@ -173,39 +174,42 @@ public class WorkspaceSaverLoader {
 
 	private static List<CBMCTestConfiguration> cbmcPropTestConfigListFromJsonArr(
 			JSONArray arr, List<CElectionDescription> descrs,
-			List<PreAndPostConditionsDescription> propDescrs) {
+			List<PreAndPostConditionsDescription> propDescrs,
+			RelativePathConverter pathHandler) {
 		List<CBMCTestConfiguration> list = new ArrayList<>();
 
 		for (int i = 0; i < arr.length(); ++i) {
 			list.add(cbmcPropTestConfigFromJson(arr.getJSONObject(i), descrs,
-					propDescrs));
+					propDescrs, pathHandler));
 		}
 
 		return list;
 	}
 
-	private static JSONObject testConfigurationToJSON(TestConfiguration tc) {
+	private static JSONObject testConfigurationToJSON(TestConfiguration tc,
+			RelativePathConverter pathHandler) {
 		JSONObject json = new JSONObject();
 
 		json.put(DESCR_UUID_KEY, tc.getDescr().getUuid());
 		json.put(PROP_DESCR_UUID_KEY, tc.getPropDescr().getUuid());
 		json.put(TEST_CONFIG_NAME_KEY, tc.getName());
 		json.put(CBMC_TEST_CONFIG_LIST_KEY, cbmcTestConfigCollectionToJSON(
-				tc.getCbmcTestConfigsByName().values()));
+				tc.getCbmcTestConfigsByName().values(), pathHandler));
 
 		return json;
 	}
 
 	private static TestConfiguration testConfigFromJson(JSONObject json,
 			List<CElectionDescription> descrs,
-			List<PreAndPostConditionsDescription> propDescrs) {
+			List<PreAndPostConditionsDescription> propDescrs,
+			RelativePathConverter pathHandler) {
 
 		String descrUUID = json.getString(DESCR_UUID_KEY);
 		String propDescrUUID = json.getString(PROP_DESCR_UUID_KEY);
 		String name = json.getString(TEST_CONFIG_NAME_KEY);
 		List<CBMCTestConfiguration> cbmcTestConfigs = cbmcPropTestConfigListFromJsonArr(
 				json.getJSONArray(CBMC_TEST_CONFIG_LIST_KEY), descrs,
-				propDescrs);
+				propDescrs, pathHandler);
 
 		CElectionDescription descr = descrByUUID(descrUUID, descrs);
 		if (descr == null) {
@@ -225,13 +229,13 @@ public class WorkspaceSaverLoader {
 	}
 
 	private static JSONArray testConfigurationListToJSON(
-			TestConfigurationList list) {
+			TestConfigurationList list, RelativePathConverter pathHandler) {
 		JSONArray arr = new JSONArray();
 
 		for (List<TestConfiguration> tcl : list.getTestConfigsByDescr()
 				.values()) {
 			for (TestConfiguration tc : tcl) {
-				arr.put(testConfigurationToJSON(tc));
+				arr.put(testConfigurationToJSON(tc, pathHandler));
 			}
 		}
 
@@ -240,12 +244,13 @@ public class WorkspaceSaverLoader {
 
 	static TestConfigurationList testConfigListFromJsonArr(JSONArray arr,
 			List<CElectionDescription> descrs,
-			List<PreAndPostConditionsDescription> propDescrs) {
+			List<PreAndPostConditionsDescription> propDescrs,
+			RelativePathConverter pathHandler) {
 		TestConfigurationList testConfigurationList = new TestConfigurationList();
 
 		for (int i = 0; i < arr.length(); ++i) {
 			testConfigurationList.add(testConfigFromJson(arr.getJSONObject(i),
-					descrs, propDescrs));
+					descrs, propDescrs, pathHandler));
 		}
 
 		return testConfigurationList;
@@ -260,8 +265,8 @@ public class WorkspaceSaverLoader {
 				ws.getFilesPerPropDescr().values(), relativePathConverter));
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(ws.getCodeGenOptions()));
-		json.put(TEST_CONFIG_LIST_KEY,
-				testConfigurationListToJSON(ws.getTestConfigList()));
+		json.put(TEST_CONFIG_LIST_KEY, testConfigurationListToJSON(
+				ws.getTestConfigList(), relativePathConverter));
 
 		return json;
 	}
@@ -296,7 +301,7 @@ public class WorkspaceSaverLoader {
 			String relativePath = propDescrArr.getString(i);
 			File propDescrFile = relativePathConverter
 					.getFileFromRelativePath(relativePath);
-			
+
 			PreAndPostConditionsDescription loadedPropDescr = SavingLoadingInterface
 					.loadPreAndPostConditionDescription(propDescrFile);
 
@@ -310,7 +315,8 @@ public class WorkspaceSaverLoader {
 						json.getJSONObject(CODE_GEN_OPTIONS_KEY));
 
 		TestConfigurationList testConfigList = testConfigListFromJsonArr(
-				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs);
+				json.getJSONArray(TEST_CONFIG_LIST_KEY), descrs, propDescrs,
+				relativePathConverter);
 
 		beastWorkspace.setTestConfigList(testConfigList);
 		beastWorkspace.setCodeGenOptions(codeGenOptions);

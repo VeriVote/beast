@@ -11,6 +11,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.savingloading.CodeGenOptionsSaverLoaderHelper;
+import edu.pse.beast.api.savingloading.RelativePathConverter;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCCodeFileDataSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.loopbound.LoopBoundSaverLoaderHelper;
@@ -19,6 +20,7 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
@@ -58,7 +60,8 @@ public class CBMCTestRunSaverLoaderHelper {
 		return list;
 	}
 
-	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run) {
+	private static JSONObject cbmcTestRunToJSON(CBMCTestRun run,
+			RelativePathConverter pathHandler) {
 		JSONObject json = new JSONObject();
 
 		json.put(AMT_VOTER_KEY, run.getV());
@@ -67,7 +70,7 @@ public class CBMCTestRunSaverLoaderHelper {
 
 		json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
 		json.put(CBMC_CODE_FILE_DATA_KEY, CBMCCodeFileDataSaverLoaderHelper
-				.cbmcCodeFileToJSON(run.getCbmcCodeFile()));
+				.cbmcCodeFileToJSON(run.getCbmcCodeFile(), pathHandler));
 
 		json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsToJSON(run.getCodeGenOptions()));
@@ -80,8 +83,8 @@ public class CBMCTestRunSaverLoaderHelper {
 
 	private static CBMCTestRun cbmcTestRunFromJSON(JSONObject json,
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr,
-			CBMCTestConfiguration tc) {
+			PreAndPostConditionsDescription propDescr, CBMCTestConfiguration tc,
+			RelativePathConverter pathHandler) {
 
 		int v = json.getInt(AMT_VOTER_KEY);
 		int c = json.getInt(AMT_CANDS_KEY);
@@ -89,7 +92,8 @@ public class CBMCTestRunSaverLoaderHelper {
 
 		CBMCCodeFileData codeFileData = CBMCCodeFileDataSaverLoaderHelper
 				.cbmcCodeFileFromJSON(
-						json.getJSONObject(CBMC_CODE_FILE_DATA_KEY));
+						json.getJSONObject(CBMC_CODE_FILE_DATA_KEY),
+						pathHandler);
 
 		CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
 				.codeGenOptionsFromJSON(
@@ -108,11 +112,12 @@ public class CBMCTestRunSaverLoaderHelper {
 		return cbmcTestRun;
 	}
 
-	public static JSONArray cbmcTestRunListToJSON(List<CBMCTestRun> runs) {
+	public static JSONArray cbmcTestRunListToJSON(List<CBMCTestRun> runs,
+			RelativePathConverter pathHandler) {
 		JSONArray arr = new JSONArray();
 
 		for (CBMCTestRun r : runs) {
-			arr.put(cbmcTestRunToJSON(r));
+			arr.put(cbmcTestRunToJSON(r, pathHandler));
 		}
 
 		return arr;
@@ -120,12 +125,12 @@ public class CBMCTestRunSaverLoaderHelper {
 
 	public static List<CBMCTestRun> cbmcTestRunListFromJsonArr(JSONArray arr,
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr,
-			CBMCTestConfiguration tc) {
+			PreAndPostConditionsDescription propDescr, CBMCTestConfiguration tc,
+			RelativePathConverter pathHandler) {
 		List<CBMCTestRun> runs = new ArrayList<>();
 		for (int i = 0; i < arr.length(); ++i) {
 			runs.add(cbmcTestRunFromJSON(arr.getJSONObject(i), descr, propDescr,
-					tc));
+					tc, pathHandler));
 		}
 		return runs;
 	}

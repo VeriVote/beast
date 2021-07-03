@@ -5,6 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.savingloading.RelativePathConverter;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.gui.paths.PathHandler;
 
@@ -14,7 +15,7 @@ public class CBMCCodeFileDataSaverLoaderHelper {
 	private static final String CBMC_TEST_RUN_CBMC_REL_FILE_PATH_KEY = "cbmc_test_run_cbmc_file_path";
 
 	public static JSONObject cbmcCodeFileToJSON(
-			CBMCCodeFileData cbmcCodeFileData, PathHandler pathHandler) {
+			CBMCCodeFileData cbmcCodeFileData, RelativePathConverter pathHandler) {
 		JSONObject json = new JSONObject();
 
 		String relPath = pathHandler
@@ -28,7 +29,7 @@ public class CBMCCodeFileDataSaverLoaderHelper {
 	}
 
 	public static CBMCCodeFileData cbmcCodeFileFromJSON(JSONObject json,
-			PathHandler pathHandler) {
+			RelativePathConverter pathHandler) {
 		CBMCCodeFileData cbmcCodeFileData = new CBMCCodeFileData();
 
 		String relCodeFilePath = json
