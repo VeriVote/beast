@@ -16,6 +16,48 @@ import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class CBMCMainGenerator {
 
+	//TODO make this dependand on the arrays accessed by the symb var
+	private static void initSymbVar(SymbolicCBMCVar var, List<String> code,
+			CodeGenOptions options, int highestVote) {
+		code.add("unsigned int " + var.getName() + " = "
+				+ options.getCbmcNondetUintName() + "();\n");
+
+		String template = "ASSUME(VAR_NAME < BOUND);";
+		for (int i = 0; i < highestVote; ++i) {
+			switch (var.getVarType()) {
+			case VOTER: {
+				String bound = InitVoteHelper.getCurrentAmtVoter(i + 1);
+				String boundCode = template
+						.replaceAll("ASSUME", options.getCbmcAssumeName())
+						.replaceAll("VAR_NAME", var.getName())
+						.replaceAll("BOUND", bound);
+				code.add(boundCode);
+				break;
+			}
+			case CANDIDATE: {
+				String bound = InitVoteHelper.getCurrentAmtCand(i + 1);
+				String boundCode = template
+						.replaceAll("ASSUME", options.getCbmcAssumeName())
+						.replaceAll("VAR_NAME", var.getName())
+						.replaceAll("BOUND", bound);
+				code.add(boundCode);
+				break;
+			}
+			case SEAT: {
+				String bound = InitVoteHelper.getCurrentAmtSeat(i + 1);
+				String boundCode = template
+						.replaceAll("ASSUME", options.getCbmcAssumeName())
+						.replaceAll("VAR_NAME", var.getName())
+						.replaceAll("BOUND", bound);
+				code.add(boundCode);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
+
 	public static CFunction main(BooleanExpASTData preAstData,
 			BooleanExpASTData postAstData, List<SymbolicCBMCVar> symCbmcVars,
 			ElectionTypeCStruct voteArrStruct,
@@ -27,16 +69,14 @@ public class CBMCMainGenerator {
 
 		List<String> code = new ArrayList<>();
 
-		// TODO cleanup
-		// init global symbolic vars
-		for (SymbolicCBMCVar var : symCbmcVars) {
-			code.add("unsigned int " + var.getName() + " = "
-					+ options.getCbmcNondetUintName() + "();\n");
-		}
-
 		// init votes
 		int highestVote = Math.max(preAstData.getHighestVoteOrElect(),
 				postAstData.getHighestVoteOrElect());
+
+		// init global symbolic vars
+		for (SymbolicCBMCVar var : symCbmcVars) {
+			initSymbVar(var, code, options, highestVote);
+		}
 
 		for (int i = 0; i < highestVote; ++i) {
 			code.add(InitVoteHelper.generateCode(i + 1, voteArrStruct,

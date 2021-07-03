@@ -311,7 +311,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 				.substring(ELECT.length());
 		final int number = Integer.valueOf(numberString);
 		setHighestElect(number);
-		
+
 		final int amtAccessingTypes = ctx.passSymbVar().size();
 		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 
@@ -319,7 +319,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
 		}
 
-		// TODO make work with new output types
+		generated.electAccessedBy(accessingVars, number);
 		final ElectExp expNode = new ElectExp(accessingVars, number);
 		expStack.push(expNode);
 	}
@@ -344,10 +344,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		for (int i = 0; i < amtAccessingTypes; ++i) {
 			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
 		}
-
-		Collections.reverse(accessingVars);
-
-		// TODO make work with new input types
+		
+		generated.voteAccessedBy(accessingVars, number);
 		final VoteExp expNode = new VoteExp(accessingVars, number);
 		expStack.push(expNode);
 	}
@@ -358,7 +356,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 	@Override
 	public void exitConstantExp(final ConstantExpContext ctx) {
-		//TODO handle V1, etc
+		// TODO handle V1, etc
 	}
 
 	@Override
