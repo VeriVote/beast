@@ -180,16 +180,14 @@ passSymbVar
     ;    
 
 constantExp
-    :   'V' 
-    |   'C' 
-    |   'S' 
+    :   'V' passPosition
+    |   'C' passPosition
+    |   'S' passPosition
     ;
  
 passPosition
     :   OpenBracket numberExpression ClosedBracket
     ;
-
-
 
 
 

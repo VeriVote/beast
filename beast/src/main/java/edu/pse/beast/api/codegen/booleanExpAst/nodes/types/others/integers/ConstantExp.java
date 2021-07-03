@@ -1,6 +1,7 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 
 /**
  * The Class ConstantExp.
@@ -8,30 +9,26 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
  * @author Holger Klein
  */
 public final class ConstantExp extends IntegerValuedExpression {
-	/** The constant. */
-	private final String constant;
 
-	/**
-	 * Instantiates a new constant exp.
-	 *
-	 * @param constantStr the constant saved in this node
-	 */
-	public ConstantExp(final String constantStr) {
-		this.constant = constantStr;
+	private CBMCVarType varType;
+	private int number;
+
+	public ConstantExp(CBMCVarType varType, int number) {
+		this.varType = varType;
+		this.number = number;
 	}
 
-	/**
-	 * Gets the constant.
-	 *
-	 * @return the constant saved in this node
-	 */
-	public String getConstant() {
-		return constant;
+	public CBMCVarType getVarType() {
+		return varType;
 	}
-
+	
+	public int getNumber() {
+		return number;
+	}
+	
 	@Override
 	public String getTreeString(final int depth) {
-		return "const " + constant;
+		return null;
 	}
 
 	@Override

@@ -428,7 +428,20 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitConstantExp(ConstantExp constantExp) {
-		expVarNameStack.push(constantExp.getConstant());
+		String varName = "";
+		int number = constantExp.getNumber();
+		switch(constantExp.getVarType()) {
+		case VOTER:
+			varName = InitVoteHelper.getCurrentAmtVoter(number);
+			break;
+		case CANDIDATE:
+			varName = InitVoteHelper.getCurrentAmtCand(number);
+			break;
+		case SEAT:
+			varName = InitVoteHelper.getCurrentAmtSeat(number);
+			break;
+		}
+		expVarNameStack.push(varName);
 		expTypes.push(CElectionVotingType.simple());
 	}
 

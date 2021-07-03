@@ -34,6 +34,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersec
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerValuedExpression;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
@@ -236,7 +237,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	@Override
 	public void exitSymbolicVarExp(final SymbolicVarExpContext ctx) {
 	}
-	
+
 	@Override
 	public void exitSymbVarByNameExp(SymbVarByNameExpContext ctx) {
 		final String name = ctx.getText();
@@ -355,7 +356,18 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 	@Override
 	public void exitConstantExp(final ConstantExpContext ctx) {
-		// TODO handle V1, etc
+		int number = Integer.valueOf(((IntegerNode) expStack.pop()).getInteger());
+		String text = ctx.getText();
+		CBMCVarType type = CBMCVarType.VOTER;
+		if (text.startsWith("V")) {
+			type = CBMCVarType.VOTER;
+		} else if (text.startsWith("C")) {
+			type = CBMCVarType.CANDIDATE;
+		} else if (text.startsWith("S")) {
+			type = CBMCVarType.SEAT;
+		}
+
+		expStack.push(new ConstantExp(type, number));
 	}
 
 	@Override
