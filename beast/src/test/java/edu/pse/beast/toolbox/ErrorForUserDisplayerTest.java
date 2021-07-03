@@ -1,5 +1,7 @@
 package edu.pse.beast.toolbox;
 
+import edu.pse.beast.zzz.toolbox.ErrorForUserDisplayer;
+
 /**
  * The tests for ErrorForUserDisplayer.
  *

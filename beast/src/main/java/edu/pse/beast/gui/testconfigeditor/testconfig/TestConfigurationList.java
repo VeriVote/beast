@@ -10,8 +10,8 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 

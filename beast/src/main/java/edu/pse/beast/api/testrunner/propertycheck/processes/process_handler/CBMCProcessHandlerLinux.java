@@ -11,12 +11,12 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.toolbox.CCodeHelper;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.FileLoader;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.zzz.toolbox.CCodeHelper;
+import edu.pse.beast.zzz.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.zzz.toolbox.FileLoader;
+import edu.pse.beast.zzz.toolbox.SuperFolderFinder;
+import edu.pse.beast.zzz.toolbox.UnifiedNameContainer;
 
 public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 	private String RELATIVE_PATH_TO_CBMC_64 = "/linux/cbmcLin/cbmc";

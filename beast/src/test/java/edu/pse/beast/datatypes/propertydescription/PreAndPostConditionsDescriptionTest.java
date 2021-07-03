@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import edu.pse.beast.api.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 

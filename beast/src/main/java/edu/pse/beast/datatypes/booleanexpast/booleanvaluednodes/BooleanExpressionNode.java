@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
-import static edu.pse.beast.toolbox.CCodeHelper.lineBreak;
+import static edu.pse.beast.zzz.toolbox.CCodeHelper.lineBreak;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;

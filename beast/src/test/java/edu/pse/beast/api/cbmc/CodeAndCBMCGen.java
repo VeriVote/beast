@@ -13,9 +13,9 @@ import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCArgumentHelper;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class CodeAndCBMCGen {
 	@Test

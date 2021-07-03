@@ -23,8 +23,8 @@ import edu.pse.beast.api.electiondescription.function.CelectionDescriptionFuncti
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class CBMCCodeGeneratorNEW {
 

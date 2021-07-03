@@ -4,9 +4,8 @@ import java.io.File;
 import java.util.List;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
-import edu.pse.beast.codearea.errorhandling.CodeError;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public interface CBMCTestCallback {
 
@@ -16,13 +15,7 @@ public interface CBMCTestCallback {
 	public default void onError() {
 	}
 
-	public default void onElectionCodeError(CodeError err) {
-	}
-
 	public default void onTestFinished() {
-	}
-
-	public default void onPropertyCodeError(CodeError err, int propertyIdx) {
 	}
 
 	public default void onTestStopped() {

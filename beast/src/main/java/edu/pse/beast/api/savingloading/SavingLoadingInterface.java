@@ -10,7 +10,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class SavingLoadingInterface {

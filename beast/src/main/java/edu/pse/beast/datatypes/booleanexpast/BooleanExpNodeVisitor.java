@@ -18,16 +18,16 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.ConstantExp;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
-import edu.pse.beast.propertychecker.ConcatenationExpNode;
-import edu.pse.beast.propertychecker.IntersectContentNode;
-import edu.pse.beast.propertychecker.IntersectExpNode;
-import edu.pse.beast.propertychecker.NotEmptyContentNode;
-import edu.pse.beast.propertychecker.NotEmptyExpressionNode;
-import edu.pse.beast.propertychecker.PermutationExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.CandidateListChangeExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VoteEquivalentsNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingListChangeExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingTupleChangeExpNode;
+import edu.pse.beast.zzz.propertychecker.ConcatenationExpNode;
+import edu.pse.beast.zzz.propertychecker.IntersectContentNode;
+import edu.pse.beast.zzz.propertychecker.IntersectExpNode;
+import edu.pse.beast.zzz.propertychecker.NotEmptyContentNode;
+import edu.pse.beast.zzz.propertychecker.NotEmptyExpressionNode;
+import edu.pse.beast.zzz.propertychecker.PermutationExpNode;
 
 /**
  * The Interface BooleanExpNodeVisitor.

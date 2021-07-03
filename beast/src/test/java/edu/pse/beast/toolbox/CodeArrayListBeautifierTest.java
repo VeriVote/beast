@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import edu.pse.beast.zzz.toolbox.CodeArrayListBeautifier;
+
 /**
  * The tests for CodeArrayListBeautifier.
  *

@@ -1,7 +1,7 @@
 package edu.pse.beast.gui.testconfigeditor.testconfig;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.api.propertydescription.SymbolicVariable;
 
 /**
  * The Class QuantifierNode.

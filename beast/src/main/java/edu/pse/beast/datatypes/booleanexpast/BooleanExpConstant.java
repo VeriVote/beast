@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.booleanexpast;
 
-import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.zzz.toolbox.UnifiedNameContainer;
 
 /**
  * The Class BooleanExpConstant.

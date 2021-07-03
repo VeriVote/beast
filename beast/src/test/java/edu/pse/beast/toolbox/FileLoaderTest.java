@@ -15,6 +15,9 @@ import javax.imageio.ImageIO;
 
 import org.junit.Test;
 
+import edu.pse.beast.zzz.toolbox.FileLoader;
+import edu.pse.beast.zzz.toolbox.SuperFolderFinder;
+
 /**
  * The tests for FileLoader.
  *

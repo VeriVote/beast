@@ -1,15 +1,15 @@
 package edu.pse.beast.api;
 
-import static edu.pse.beast.toolbox.CCodeHelper.generateSimpleDeclStringForCodeArea;
+import static edu.pse.beast.zzz.toolbox.CCodeHelper.generateSimpleDeclStringForCodeArea;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 

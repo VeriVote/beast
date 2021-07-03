@@ -1,19 +1,19 @@
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
+import edu.pse.beast.zzz.propertychecker.Result;
 
 module edu.pse.beast {
     uses edu.pse.beast.types.InputType;
     uses edu.pse.beast.types.OutputType;
-    uses edu.pse.beast.propertychecker.Result;
+    uses edu.pse.beast.zzz.propertychecker.Result;
 
     
-    exports edu.pse.beast.propertychecker;
+    exports edu.pse.beast.zzz.propertychecker;
     exports edu.pse.beast.types.cbmctypes;
     exports edu.pse.beast.saverloader.adapter;
     exports edu.pse.beast.types.cbmctypes.inputplugins;
     exports edu.pse.beast.codearea.codeinput;
-    exports edu.pse.beast.toolbox;
+    exports edu.pse.beast.zzz.toolbox;
     exports edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
     exports edu.pse.beast.types;
     exports edu.pse.beast.booleanexpeditor.booleanexpcodearea;
@@ -35,10 +35,10 @@ module edu.pse.beast {
     exports edu.pse.beast.codearea.actionlist;
     exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
-    exports edu.pse.beast.datatypes.propertydescription;
+    exports edu.pse.beast.api.propertydescription;
     exports edu.pse.beast.datatypes.booleanexpast;
-    exports edu.pse.beast.codeareajavafx;
-    exports edu.pse.beast.propertychecker.jna;
+    exports edu.pse.beast.zzz.codeareajavafx;
+    exports edu.pse.beast.zzz.propertychecker.jna;
     exports edu.pse.beast.saverloader;
     exports edu.pse.beast.codearea.actionadder;
     exports edu.pse.beast.codearea.errorhandling;
@@ -83,10 +83,10 @@ module edu.pse.beast {
     opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;
     opens edu.pse.beast.gui.runs to javafx.fxml;
     opens edu.pse.beast.datatypes.electiondescription to gson;
-    opens edu.pse.beast.datatypes.propertydescription to gson;
+    opens edu.pse.beast.api.propertydescription to gson;
     opens edu.pse.beast.types to gson;
     opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
-    opens edu.pse.beast.propertychecker to gson;
+    opens edu.pse.beast.zzz.propertychecker to gson;
     opens edu.pse.beast.toolbox.valueContainer to gson;
     
 
@@ -103,5 +103,5 @@ module edu.pse.beast {
             edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
             edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
-    provides Result with edu.pse.beast.propertychecker.CBMCResult; 
+    provides Result with edu.pse.beast.zzz.propertychecker.CBMCResult; 
 }

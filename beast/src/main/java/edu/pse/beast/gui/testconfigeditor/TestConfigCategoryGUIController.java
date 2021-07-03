@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;

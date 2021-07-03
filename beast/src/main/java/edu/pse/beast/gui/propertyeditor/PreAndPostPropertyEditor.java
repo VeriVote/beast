@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;

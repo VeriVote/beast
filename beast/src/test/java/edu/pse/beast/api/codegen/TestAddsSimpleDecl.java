@@ -14,7 +14,7 @@ import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 
 public class TestAddsSimpleDecl {
 	@Test

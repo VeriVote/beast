@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.api.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.saverloader.staticsaverloaders.FormalPropertySaverLoader;
 
 /**

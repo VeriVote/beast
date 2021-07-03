@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class CBMCTestConfiguration {
 	private int minCands;

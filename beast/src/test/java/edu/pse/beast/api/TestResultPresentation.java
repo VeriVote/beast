@@ -9,9 +9,9 @@ import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCJsonResultExampleExtractor;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class TestResultPresentation {
 	private String cbmcOutput = "\r\n"

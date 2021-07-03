@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.api.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.propertydescription.SymbolicVariableList;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 

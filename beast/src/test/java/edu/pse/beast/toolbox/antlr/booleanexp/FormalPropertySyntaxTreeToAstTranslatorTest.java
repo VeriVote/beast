@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.FormalPropertySyntaxTreeToAstTranslator;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.zzz.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
+import edu.pse.beast.zzz.toolbox.antlr.booleanexp.generateast.FormalPropertySyntaxTreeToAstTranslator;
 
 /**
  * The tests for FormalPropertySyntaxTreeToAstTranslator.

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import edu.pse.beast.api.propertydescription.FormalPropertiesDescription;
+
 /**
  * The tests for FormalPropertiesDescription.
  *

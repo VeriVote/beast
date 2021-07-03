@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.api.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.staticsaverloaders.SymbolicVarListSaverLoader;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;

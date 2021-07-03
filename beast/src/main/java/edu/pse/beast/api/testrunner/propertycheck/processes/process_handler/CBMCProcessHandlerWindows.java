@@ -1,7 +1,7 @@
 package edu.pse.beast.api.testrunner.propertycheck.processes.process_handler;
 
-import static edu.pse.beast.electionsimulator.programaccess.WindowsCompilerAndRunner.CMD_EXE;
-import static edu.pse.beast.electionsimulator.programaccess.WindowsCompilerAndRunner.SLASH_C;
+import static edu.pse.beast.zzz.electionsimulator.programaccess.WindowsCompilerAndRunner.CMD_EXE;
+import static edu.pse.beast.zzz.electionsimulator.programaccess.WindowsCompilerAndRunner.SLASH_C;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,13 +19,13 @@ import com.sun.jna.platform.win32.WinNT;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.propertychecker.jna.Win32Process;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.FileLoader;
-import edu.pse.beast.toolbox.FileSaver;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.toolbox.ThreadedBufferedReader;
+import edu.pse.beast.zzz.propertychecker.jna.Win32Process;
+import edu.pse.beast.zzz.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.zzz.toolbox.ErrorLogger;
+import edu.pse.beast.zzz.toolbox.FileLoader;
+import edu.pse.beast.zzz.toolbox.FileSaver;
+import edu.pse.beast.zzz.toolbox.SuperFolderFinder;
+import edu.pse.beast.zzz.toolbox.ThreadedBufferedReader;
 
 public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	private static final String BLANK = " ";

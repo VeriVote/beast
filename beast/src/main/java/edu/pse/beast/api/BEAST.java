@@ -7,11 +7,11 @@ import java.util.List;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class BEAST {
