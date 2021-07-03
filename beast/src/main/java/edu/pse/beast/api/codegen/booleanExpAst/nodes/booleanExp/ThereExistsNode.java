@@ -2,8 +2,6 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.propertydescription.SymbolicVariable;
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
  * The Class ThereExistsNode.
@@ -11,42 +9,23 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  * @author Holger Klein
  */
 public final class ThereExistsNode extends QuantifierNode {
-    /**
-     * Instantiates a new there exists node.
-     *
-     * @param declSymbVar
-     *            the symbolic variable of this quantifier
-     * @param followingNode
-     *            the following node of this quantifier
-     */
+	/**
+	 * Instantiates a new there exists node.
+	 *
+	 * @param declSymbVar   the symbolic variable of this quantifier
+	 * @param followingNode the following node of this quantifier
+	 */
 	private SymbolicCBMCVar var;
-	
-    public ThereExistsNode(final SymbolicVariable declSymbVar,
-                           final BooleanExpressionNode followingNode) {
-        super(declSymbVar, followingNode);
-    }
 
-    public ThereExistsNode(SymbolicVariable symbolicVar, BooleanExpressionNode followingNode, SymbolicCBMCVar var) {
-        super(symbolicVar, followingNode);
-        this.var = var;
+	public ThereExistsNode(final SymbolicCBMCVar declSymbVar,
+			final BooleanExpressionNode followingNode) {
+		super(declSymbVar, followingNode);
 	}
 
-    public SymbolicCBMCVar getVar() {
-		return var;
-	}
-    
 	@Override
-    public void getVisited(final BooleanExpNodeVisitor visitor) {
-        visitor.visitThereExistsNode(this);
-    }
-
-    @Override
-    public String getTreeString(final int depth) {
-        return "ExistsOne: Declared var: " + var.getName()
-                + LINE_BREAK + TABS.substring(0, depth + 1)
-                + "following: "
-                + getFollowingExpNode().getTreeString(depth + 1);
-    }
+	public String getTreeString(final int depth) {
+		return null;
+	}
 
 	@Override
 	public void getVisited(BooleanAstVisitor visitor) {

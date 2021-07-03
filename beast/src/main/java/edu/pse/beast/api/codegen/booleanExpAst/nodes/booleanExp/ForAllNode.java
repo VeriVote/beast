@@ -3,8 +3,6 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
-import edu.pse.beast.api.propertydescription.SymbolicVariable;
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
  * The Class ForAllNode.
@@ -22,16 +20,11 @@ public final class ForAllNode extends QuantifierNode {
      * @param followingNode
      *            the following node of this quantifier
      */
-    public ForAllNode(final SymbolicVariable declSymbVar,
-                      final BooleanExpressionNode followingNode, SymbolicCBMCVar var) {
+    public ForAllNode(final SymbolicCBMCVar declSymbVar,
+                      final BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
-        this.var = var;
     }
 
-    @Override
-    public void getVisited(final BooleanExpNodeVisitor visitor) {
-        visitor.visitForAllNode(this);
-    }
 
     public SymbolicCBMCVar getVar() {
 		return var;
@@ -39,10 +32,7 @@ public final class ForAllNode extends QuantifierNode {
     
     @Override
     public String getTreeString(final int depth) {
-        return "ForAll: Declared var: " + var.getName()
-                + LINE_BREAK + TABS.substring(0, depth + 1)
-                + "following: "
-                + getFollowingExpNode().getTreeString(depth + 1);
+        return null;
     }
 
 	@Override

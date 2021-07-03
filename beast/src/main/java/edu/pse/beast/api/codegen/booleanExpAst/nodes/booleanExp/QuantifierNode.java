@@ -1,6 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 
-import edu.pse.beast.api.propertydescription.SymbolicVariable;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
 /**
  * The Class QuantifierNode.
@@ -8,68 +8,39 @@ import edu.pse.beast.api.propertydescription.SymbolicVariable;
  * @author Holger Klein, Lukas Stapelbroek
  */
 public abstract class QuantifierNode extends BooleanExpressionNode {
-    /** The decl symb var. */
-    private final SymbolicVariable declSymbVar;
+	/** The decl symb var. */
+	private final SymbolicCBMCVar declSymbVar;
 
-    /** The following node. */
-    private final BooleanExpressionNode followingNode;
+	/** The following node. */
+	private final BooleanExpressionNode followingNode;
 
-    /**
-     * Instantiates a new quantifier node.
-     *
-     * @param declSymbVariable
-     *            the symbolic variable of this quantifier
-     * @param followingExprNode
-     *            the following node of this quantifier
-     */
-    public QuantifierNode(final SymbolicVariable declSymbVariable,
-                          final BooleanExpressionNode followingExprNode) {
-        this.declSymbVar = declSymbVariable;
-        this.followingNode = followingExprNode;
-    }
+	/**
+	 * Instantiates a new quantifier node.
+	 *
+	 * @param declSymbVariable  the symbolic variable of this quantifier
+	 * @param followingExprNode the following node of this quantifier
+	 */
+	public QuantifierNode(final SymbolicCBMCVar declSymbVariable,
+			final BooleanExpressionNode followingExprNode) {
+		this.declSymbVar = declSymbVariable;
+		this.followingNode = followingExprNode;
+	}
 
-    @Override
-    public final int hashCode() {
-        int result = 1;
-        result = PRIME * result
-                + ((declSymbVar == null) ? 0 : declSymbVar.hashCode());
-        result = PRIME * result
-                + ((followingNode == null) ? 0 : followingNode.hashCode());
-        return result;
-    }
+	/**
+	 * Gets the declared symbolic var.
+	 *
+	 * @return the symbolic variable of this expression
+	 */
+	public SymbolicCBMCVar getDeclaredSymbolicVar() {
+		return declSymbVar;
+	}
 
-    @Override
-    public final boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final QuantifierNode that = (QuantifierNode) o;
-        if (declSymbVar != null ? !declSymbVar.equals(that.declSymbVar)
-                : that.declSymbVar != null) {
-            return false;
-        }
-        return followingNode != null ? followingNode.equals(that.followingNode)
-                : that.followingNode == null;
-    }
-
-    /**
-     * Gets the declared symbolic var.
-     *
-     * @return the symbolic variable of this expression
-     */
-    public SymbolicVariable getDeclaredSymbolicVar() {
-        return declSymbVar;
-    }
-
-    /**
-     * Gets the following exp node.
-     *
-     * @return the following node
-     */
-    public BooleanExpressionNode getFollowingExpNode() {
-        return followingNode;
-    }
+	/**
+	 * Gets the following exp node.
+	 *
+	 * @return the following node
+	 */
+	public BooleanExpressionNode getFollowingExpNode() {
+		return followingNode;
+	}
 }

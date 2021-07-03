@@ -73,6 +73,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
@@ -134,7 +135,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		AST = new BooleanExpListNode();
 		highestElect = 0;
 	}
-	
+
 	@Override
 	public void exitFalseExp(FalseExpContext ctx) {
 		nodeStack.push(new FalseNode());
@@ -191,18 +192,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 	@Override
 	public void enterQuantifierExp(final QuantifierExpContext ctx) {
 		final String quantifierTypeString = ctx.Quantifier().getText();
-		final InternalTypeContainer varType;
 		SymbolicCBMCVar.CBMCVarType type = null;
 		if (quantifierTypeString.contains(VariableTypeNames.VOTER)) {
-			varType = new InternalTypeContainer(InternalTypeRep.VOTER);
 			type = CBMCVarType.VOTER;
 		} else if (quantifierTypeString.contains(VariableTypeNames.CANDIDATE)) {
-			varType = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
 			type = CBMCVarType.CANDIDATE;
 		} else if (quantifierTypeString.contains(VariableTypeNames.SEAT)) {
-			varType = new InternalTypeContainer(InternalTypeRep.SEAT);
 		} else {
-			varType = null;
+			throw new NotImplementedException();
 		}
 		final String id = ctx.passSymbVar().symbolicVarExp().Identifier()
 				.getText();
@@ -221,17 +218,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		if (quantifierType.contains("VOTER")) {
 			var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.VOTER);
 		} else if (quantifierType.contains("CANDIDATE")) {
-			var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.CANDIDATE);
+			var = new SymbolicCBMCVar(name,
+					SymbolicCBMCVar.CBMCVarType.CANDIDATE);
 		}
 
 		if (quantifierType.contains(Quantifier.FOR_ALL)) {
-			node = new ForAllNode(
-					((SymbolicVarExp) expStack.pop()).getSymbolicVar(),
-					nodeStack.pop(), var);
+			node = new ForAllNode(var, nodeStack.pop());
 		} else if (quantifierType.contains(Quantifier.EXISTS)) {
-			node = new ThereExistsNode(
-					((SymbolicVarExp) expStack.pop()).getSymbolicVar(),
-					nodeStack.pop(), var);
+			node = new ThereExistsNode(var, nodeStack.pop());
 		} else {
 			node = null;
 		}
@@ -248,17 +242,18 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final String name = ctx.getText();
 		CBMCVarType varType = scopeHandlerNew.getType(name);
 		expStack.push(new SymbolicVarExp(new SymbolicCBMCVar(name, varType)));
-		if(name.startsWith("V") || name.startsWith("C") || name.startsWith("S")) {
+		if (name.startsWith("V") || name.startsWith("C")
+				|| name.startsWith("S")) {
 			try {
 				int number = Integer.valueOf(name.substring(1));
-				if(highestElectInThisListNode < number) {
+				if (highestElectInThisListNode < number) {
 					highestElectInThisListNode = number;
 				}
 			} catch (Exception e) {
 			}
 		}
 	}
-	
+
 	@Override
 	public void enterNotExp(final NotExpContext ctx) {
 	}
@@ -275,9 +270,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 	@Override
 	public void exitComparisonExp(final ComparisonExpContext ctx) {
-		final String comparisonSymbolString = ctx.ComparisonSymbol().getText();
-		final ComparisonSymbol comparisonSymbol = new ComparisonSymbol(
-				comparisonSymbolString);
+		final String comparisonSymbol = ctx.ComparisonSymbol().getText();
+	
 
 		TypeExpression rhs = expStack.pop();
 		TypeExpression lhs = expStack.pop();
