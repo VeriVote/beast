@@ -2,6 +2,8 @@ package edu.pse.beast.api.codegen.helperfunctions;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVoteComparison;
@@ -27,21 +29,21 @@ public class IsVoteEmptyHelper {
 		
 		String code = null;		
 		switch(votingInputType) {
-			case APPROVAL : {					
-				break;
+			case APPROVAL : {			
+				throw new NotImplementedException();
 			}
 			case WEIGHTED_APPROVAL : {
-				break;
+				throw new NotImplementedException();
 			}
 			case PREFERENCE : {			
 				code = CodeTemplateVoteEmpty.templatePreference;
 				break;
 			}
 			case SINGLE_CHOICE : {
-				break;
+				throw new NotImplementedException();
 			}
 			case SINGLE_CHOICE_STACK : {
-				break;
+				throw new NotImplementedException();
 			}
 		}
 		

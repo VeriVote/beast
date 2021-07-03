@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVoteComparison;
@@ -38,14 +40,14 @@ public class VotesumHelper {
 		List<LoopBound> loopbounds = List.of();
 		
 		switch(votingInputType) {
-			case APPROVAL : {					
-				break;
+			case APPROVAL : {		
+				throw new NotImplementedException();
 			}
 			case WEIGHTED_APPROVAL : {
-				break;
+				throw new NotImplementedException();
 			}
-			case PREFERENCE : {				
-				break;
+			case PREFERENCE : {		
+				throw new NotImplementedException();
 			}
 			case SINGLE_CHOICE : {
 				code = CodeTemplateVoteSumForCandidate.templateSingleChoice;

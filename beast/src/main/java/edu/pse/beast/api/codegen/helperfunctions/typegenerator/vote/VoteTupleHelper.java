@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVoteTuple;
@@ -51,11 +53,11 @@ public class VoteTupleHelper {
 		List<LoopBound> loopbounds = new ArrayList<>();
 		
 		switch(votingInputType) {
-			case APPROVAL : {					
-				break;
+			case APPROVAL : {				
+				throw new NotImplementedException();
 			}
 			case WEIGHTED_APPROVAL : {
-				break;
+				throw new NotImplementedException();
 			}
 			case PREFERENCE : {		
 				for (String voteVarName : voteNames) {
@@ -66,10 +68,10 @@ public class VoteTupleHelper {
 				break;
 			}
 			case SINGLE_CHOICE : {
-				break;
+				throw new NotImplementedException();
 			}
 			case SINGLE_CHOICE_STACK : {
-				break;
+				throw new NotImplementedException();
 			}			
 		}				
 

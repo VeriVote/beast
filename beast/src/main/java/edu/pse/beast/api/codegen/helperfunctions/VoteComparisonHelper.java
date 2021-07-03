@@ -3,6 +3,8 @@ package edu.pse.beast.api.codegen.helperfunctions;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
@@ -22,7 +24,7 @@ public class VoteComparisonHelper {
 				return CodeTemplateVoteComparison.loopBoundsApproval;
 			}
 			case WEIGHTED_APPROVAL : {
-				break;
+				throw new NotImplementedException();
 			}
 			case PREFERENCE : {
 				return CodeTemplateVoteComparison.loopBoundsPreference;
@@ -31,7 +33,7 @@ public class VoteComparisonHelper {
 				return CodeTemplateVoteComparison.loopBoundsSingleChoice;
 			}
 			case SINGLE_CHOICE_STACK : {
-				break;
+				throw new NotImplementedException();
 			}
 		}
 		return List.of();

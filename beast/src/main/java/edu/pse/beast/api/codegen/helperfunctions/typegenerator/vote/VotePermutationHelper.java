@@ -3,6 +3,8 @@ package edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVotePermutation;
@@ -53,10 +55,10 @@ public class VotePermutationHelper {
 				break;
 			}
 			case SINGLE_CHOICE : {
-				break;
+				throw new NotImplementedException();
 			}
 			case SINGLE_CHOICE_STACK : {
-				break;
+				throw new NotImplementedException();
 			}			
 		}				
 		
