@@ -138,8 +138,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("electCompare");
 		String code = ElectComparisonHelper.generateCode(generatedVarName,
 				lhsVarName, rhsVarName, voteResultStruct, votingOutputType,
-				options, node.getComparisonSymbol(),
-				loopBoundHandler);
+				options, node.getComparisonSymbol(), loopBoundHandler);
 		codeBlock.addSnippet(code);
 		booleanVarNameStack.push(generatedVarName);
 	}
@@ -163,9 +162,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 			String generatedVar = codeBlock.newVarName("comparison");
 			codeBlock.addSnippet(ComparisonHelper.generateCode(generatedVar,
-					node.getComparisonSymbol(), lhsVarName,
-					rhsVarName, rhsType, options, assumeAssert,
-					loopBoundHandler));
+					node.getComparisonSymbol(), lhsVarName, rhsVarName, rhsType,
+					options, assumeAssert, loopBoundHandler));
 
 			booleanVarNameStack.push(generatedVar);
 		}
@@ -395,7 +393,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitVoteSumExp(VoteSumForCandExp node) {
 		String generatedVarName = codeBlock.newVarName("voteSum");
 		int voteNumber = node.getVoteNumber();
-		String symbolicVarCand = node.getCbmcVar().getName();
+		String symbolicVarCand = node.getCandCbmcVar().getName();
 		String code = VotesumHelper.generateCode(generatedVarName, voteNumber,
 				symbolicVarCand, voteArrStruct, votingInputType, options,
 				loopBoundHandler);
@@ -406,7 +404,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitIntegerExp(IntegerNode node) {
-		int heldInteger = node.getHeldInteger();
+		int heldInteger = node.getInteger();
 		expVarNameStack.push(String.valueOf(heldInteger));
 		expTypes.push(CElectionVotingType.simple());
 	}
