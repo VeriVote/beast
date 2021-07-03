@@ -99,11 +99,11 @@ intersectExp
 	;
 	
 intersectVotes
-	: Intersect '(' Vote (','Vote)+ ')'
+	: Intersect '(' Vote ',' Vote ')'
 	;
 
 intersectElect
-	: Intersect '(' Elect (','Elect)+ ')'
+	: Intersect '(' Elect ','Elect ')'
 	;
 	
 permExp

@@ -32,8 +32,8 @@ public class CBMCCodeGenTest2 {
 				codeGenOptions);
 		descr.getVotingFunction().setExtractedLoops(loops);
 
-		String pre = "V(1) + V(2) + 1 == C(1);";
-		String post = "";
+		String pre = "";
+		String post = "ELECT1 == CUT(ELECT2, ELECT3);";
 
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
