@@ -3,8 +3,6 @@ package edu.pse.beast.api.codegen.booleanExpAst;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
-
 public class BooleanExpASTData {
 	private BooleanExpListNode topAstNode;
 	private int highestElect;

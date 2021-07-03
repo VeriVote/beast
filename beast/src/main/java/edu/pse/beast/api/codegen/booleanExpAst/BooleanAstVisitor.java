@@ -1,28 +1,28 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BinaryRelationshipNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.LogicalAndNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BinaryRelationshipNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.SymbolicVarExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.BinaryIntegerValuedNode;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.ConstantExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerNode;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerValuedExpression;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.ElectExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.SymbolicVarExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.VoteExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerValuedExpression;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListElementContext;
 
 public interface BooleanAstVisitor {

@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpListNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
 
 /**
  * Utility methods for the AST tests.

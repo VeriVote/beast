@@ -1,8 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 
 public class FalseNode extends BooleanExpressionNode {
 	@Override
@@ -10,11 +8,6 @@ public class FalseNode extends BooleanExpressionNode {
 		visitor.visitBooleanExpFalseNode(this);
 	}
 
-	@Override
-	public void getVisited(BooleanExpNodeVisitor visitor) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public String getTreeString(int depth) {

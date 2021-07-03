@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
@@ -12,7 +13,6 @@ import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 
 public class CBMCMainGenerator {
 

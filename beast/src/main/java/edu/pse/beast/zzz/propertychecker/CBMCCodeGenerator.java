@@ -49,9 +49,9 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpListNode;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.propertydescription.SymbolicVariable;
-import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;

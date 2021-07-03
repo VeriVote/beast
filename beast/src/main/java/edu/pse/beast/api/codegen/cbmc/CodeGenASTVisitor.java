@@ -6,15 +6,27 @@ import java.util.Map;
 import java.util.Stack;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BinaryRelationshipNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.ElectExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.SymbolicVarExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.VoteExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
@@ -37,18 +49,6 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BinaryRelationshipNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.SymbolicVarExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.BinaryIntegerValuedNode;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.ConstantExp;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerNode;
-import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
 
 public class CodeGenASTVisitor implements BooleanAstVisitor {
 

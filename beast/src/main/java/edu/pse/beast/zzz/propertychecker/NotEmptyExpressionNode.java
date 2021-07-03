@@ -1,7 +1,7 @@
 package edu.pse.beast.zzz.propertychecker;
 
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.NotEmptyExpContext;
 
 /**

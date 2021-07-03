@@ -3,6 +3,7 @@ package edu.pse.beast.api.codegen.helperfunctions;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
@@ -11,7 +12,6 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
 
 public class VoteComparisonHelper {
 	
