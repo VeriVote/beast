@@ -1,5 +1,5 @@
 ---Relative pfade speichern
-ergebnisdarst "besser" 
+---ergebnisdarst "besser" 
 ---und speichern
 ---slider für font vlt
 herausnehmen von descr und probdescr handlen
@@ -7,4 +7,4 @@ exception/error handling bzw nicht impl pfade offensichtlich machen
 
 Dokumentation
 Code cleanup
-- evtl code in extra verzeichnis falls funktionalität
+- evtl code in extra verzeicthnis falls funktionalität

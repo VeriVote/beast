@@ -135,6 +135,7 @@ public class CElectionDescription {
 
 		for (CElectionDescriptionFunction f : functions) {
 			List<ExtractedCLoop> loops = f.getExtractedLoops();
+			boundHandler.addFunction(f.getName());
 			for (ExtractedCLoop l : loops) {
 				boundHandler.addLoopBound(l.generateLoopBound());
 			}

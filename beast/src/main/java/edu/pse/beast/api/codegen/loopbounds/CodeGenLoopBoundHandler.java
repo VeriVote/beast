@@ -24,6 +24,12 @@ public class CodeGenLoopBoundHandler {
 		functionNamesToLoopbounds.get(funcName).add(b);
 	}
 
+	public void addFunction(String name) {
+		if (!functionNamesToLoopbounds.containsKey(name)) {
+			functionNamesToLoopbounds.put(name, new ArrayList<>());
+		}
+	}
+
 	public List<LoopBound> getLoopBoundsAsList() {
 		List<LoopBound> loopbounds = new ArrayList<>();
 		for (List<LoopBound> lbl : functionNamesToLoopbounds.values()) {

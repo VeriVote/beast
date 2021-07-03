@@ -111,17 +111,30 @@ public class CounterExampleGuiController {
 		}
 
 		String assignmentString = "";
-		if (!positionsToStrings.keySet().isEmpty()) {
-			if (amtBrackets == 0) {
-				String value = ass.getAssignmentFor(listVarName);
-				assignmentString = listVarName + " " + value;
-			} else if (amtBrackets == 1) {
-				for (int i = 0; i < 100; ++i) {
-					boolean foundNew = false;
+		if (amtBrackets == 0) {
+			String value = ass.getAssignmentFor(listVarName);
+			assignmentString = listVarName + " " + value + "\n";
+		} else if (amtBrackets == 1) {
+			for (int i = 0; i < 100; ++i) {
+				boolean foundNew = false;
 
+				for (List<Integer> positions : positionsToStrings.keySet()) {
+					if (positions.get(0) == i) {
+						assignmentString += positionsToStrings.get(positions)
+								+ ", ";
+						foundNew = true;
+						continue;
+					}
+				}
+			}
+			assignmentString += "\n";
+		} else if (amtBrackets == 2) {
+			for (int i = 0; i < 100; ++i) {
+				boolean foundNew = false;
+				for (int j = 0; j < 100; ++j) {
 					for (List<Integer> positions : positionsToStrings
 							.keySet()) {
-						if (positions.get(0) == i) {
+						if (positions.get(0) == i && positions.get(1) == j) {
 							assignmentString += positionsToStrings
 									.get(positions) + ", ";
 							foundNew = true;
@@ -129,25 +142,8 @@ public class CounterExampleGuiController {
 						}
 					}
 				}
-				assignmentString += "\n";
-			} else if (amtBrackets == 2) {
-				for (int i = 0; i < 100; ++i) {
-					boolean foundNew = false;
-					for (int j = 0; j < 100; ++j) {
-						for (List<Integer> positions : positionsToStrings
-								.keySet()) {
-							if (positions.get(0) == i
-									&& positions.get(1) == j) {
-								assignmentString += positionsToStrings
-										.get(positions) + ", ";
-								foundNew = true;
-								continue;
-							}
-						}
-					}
-					if (foundNew)
-						assignmentString += "\n";
-				}
+				if (foundNew)
+					assignmentString += "\n";
 			}
 		}
 

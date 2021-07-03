@@ -1,0 +1,1 @@
+{"voting_function_array":[{"voting_func_name":"voting","code":"    result = 5;","extracted_loops":[]}],"descr_uuid":"6d75bf93-a36c-4268-9d5d-b1a9b0564144","votingFunction":"voting","name":"test","outputType":"SINGLE_CANDIDATE","inputType":"PREFERENCE","version":1,"simple_function_array":[]}

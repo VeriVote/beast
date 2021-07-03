@@ -67,6 +67,8 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 		switch (osType) {
 		case LINUX:
 			processHandler = new CBMCProcessHandlerLinux();
+			break;
+
 		case WINDOWS:
 			File vsDevCmd = getVsDevCmdFromUser();
 			if (testIsVsDevCmd(vsDevCmd)) {

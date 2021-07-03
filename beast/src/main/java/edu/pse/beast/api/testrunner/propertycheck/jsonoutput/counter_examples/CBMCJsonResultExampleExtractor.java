@@ -137,7 +137,7 @@ public class CBMCJsonResultExampleExtractor {
 				try {
 					Integer.valueOf(valueStr);
 				} catch (Exception e) {
-					valueStr = "NOT_A_VOTE";
+					valueStr = "NaN";
 				}
 
 				CBMCAssignmentType assType = CBMCAssignmentType.UNKNOWN;

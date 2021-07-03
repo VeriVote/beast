@@ -18,7 +18,7 @@
          </children>
       </VBox>
       <ListView fx:id="overviewListView" layoutX="14.0" layoutY="100.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="100.0" />
-      <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <SplitPane dividerPositions="0.21391752577319587" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <items>
           <AnchorPane fx:id="codeinfoAnchorpane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
           <AnchorPane fx:id="displayAnchorpane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
