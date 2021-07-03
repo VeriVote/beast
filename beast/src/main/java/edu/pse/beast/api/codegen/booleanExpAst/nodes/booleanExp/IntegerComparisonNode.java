@@ -1,6 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.TypeExpression;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
 
 /**
  * The Class IntegerComparisonNode.

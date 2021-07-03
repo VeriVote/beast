@@ -9,20 +9,20 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.LogicalAndNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.ElectExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.SymbolicVarExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.VoteExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerValuedExpression;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListElementContext;
 
 public interface BooleanAstVisitor {

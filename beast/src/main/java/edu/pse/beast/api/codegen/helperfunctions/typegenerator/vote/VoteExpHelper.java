@@ -2,7 +2,7 @@ package edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote;
 
 import java.util.List;
 
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.VoteExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteExp;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;

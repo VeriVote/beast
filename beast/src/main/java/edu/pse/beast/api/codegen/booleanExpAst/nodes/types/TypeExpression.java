@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others;
+package edu.pse.beast.api.codegen.booleanExpAst.nodes.types;
 
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
 

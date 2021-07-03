@@ -1,7 +1,7 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.TypeExpression;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 

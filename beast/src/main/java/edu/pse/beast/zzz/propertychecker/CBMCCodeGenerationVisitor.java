@@ -48,15 +48,15 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.LogicalOrNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.QuantifierNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.AccessValueNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.AtPosExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.ElectExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.SymbolicVarExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.VoteExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.AccessedVoteElectValueNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.AtPosExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
@@ -763,7 +763,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      * @param exp
      *            the exp
      */
-    private void visitAccessingNodesReverseOrder(final AccessValueNode exp) {
+    private void visitAccessingNodesReverseOrder(final AccessedVoteElectValueNode exp) {
         for (int i = exp.getAccessingVars().length - 1; i >= 0; i--) {
             exp.getAccessingVars()[i].getVisited(this);
         }

@@ -14,19 +14,19 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.ElectExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.SymbolicVarExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.VoteExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
@@ -127,7 +127,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("voteCompare");
 		String code = VoteComparisonHelper.generateCode(generatedVarName,
 				lhsVarName, rhsVarName, voteArrStruct, votingInputType, options,
-				node.getComparisonSymbol().getCStringRep(), loopBoundHandler);
+				node.getComparisonSymbol(), loopBoundHandler);
 		codeBlock.addSnippet(code);
 		booleanVarNameStack.push(generatedVarName);
 	}
@@ -138,7 +138,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("electCompare");
 		String code = ElectComparisonHelper.generateCode(generatedVarName,
 				lhsVarName, rhsVarName, voteResultStruct, votingOutputType,
-				options, node.getComparisonSymbol().getCStringRep(),
+				options, node.getComparisonSymbol(),
 				loopBoundHandler);
 		codeBlock.addSnippet(code);
 		booleanVarNameStack.push(generatedVarName);
@@ -163,7 +163,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 			String generatedVar = codeBlock.newVarName("comparison");
 			codeBlock.addSnippet(ComparisonHelper.generateCode(generatedVar,
-					node.getComparisonSymbol().getCStringRep(), lhsVarName,
+					node.getComparisonSymbol(), lhsVarName,
 					rhsVarName, rhsType, options, assumeAssert,
 					loopBoundHandler));
 
@@ -361,9 +361,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitExistsCandidateNode(ThereExistsNode node) {
 
-		String symbolicVarName = node.getVar().getName();
+		String symbolicVarName = node.getDeclaredSymbolicVar().getName();
 		scopeHandler.push();
-		scopeHandler.add(node.getVar());
+		scopeHandler.add(node.getDeclaredSymbolicVar());
 
 		String boolVarName = codeBlock.newVarName("existsCandidate");
 		String code = "for(unsigned int VAR_NAME = 0; VAR_NAME < AMT_CANDIDATES; ++VAR_NAME) {\n";
