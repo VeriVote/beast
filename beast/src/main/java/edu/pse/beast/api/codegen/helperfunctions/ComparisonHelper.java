@@ -46,9 +46,11 @@ public class ComparisonHelper {
 			switch (listSize) {
 				case AMT_CANDIDATES:
 					loopbounds.add(LoopBound.codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_CANDS));
+					amtString = options.getCbmcAmountMaxCandsVarName();
 					break;
 				case AMT_VOTERS:
 					loopbounds.add(LoopBound.codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_VOTERS));
+					amtString = options.getCbmcAmountMaxVotersVarName();
 					break;
 			}			
 			

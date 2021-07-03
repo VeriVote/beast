@@ -312,7 +312,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final int number = Integer.valueOf(numberString);
 		setHighestElect(number);
 		
-		final int amtAccessingTypes = ctx.passType().size();
+		final int amtAccessingTypes = ctx.passSymbVar().size();
 		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 
 		for (int i = 0; i < amtAccessingTypes; ++i) {
@@ -337,7 +337,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final int number = Integer.valueOf(numberString);
 		setHighestVote(number);
 
-		final int amtAccessingTypes = ctx.passType().size();
+		final int amtAccessingTypes = ctx.passSymbVar().size();
 
 		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 

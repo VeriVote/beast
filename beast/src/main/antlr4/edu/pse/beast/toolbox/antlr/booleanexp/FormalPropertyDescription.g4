@@ -51,6 +51,7 @@ comparisonExp
 typeExp
     :   numberExpression
     |   electionTypeExpression
+    |   symbolicVarExp
     ;
 
 numberExpression
@@ -63,6 +64,11 @@ numberExpression
     |   integer
     ;
     
+symbolicVarExp
+    :   Identifier
+    |   typeByPosExp
+    ;
+    
 // any sort of expression which returns a type which is not a number and represents an
 // election object. These differ depending on the input and output type of the election.
 // eg VOTES1 can be and array of uints, or an array of arrays of unints.
@@ -71,18 +77,13 @@ numberExpression
 // can only be compared if they produce lists of same dims with the same underlying
 // value, such as VOTES1 == VOTES2    
 
-// Instead of Not Empty we use Empty and combine it with ! which we already have
-// Instead of an Empty(Votes) expression I want to see if I can use a comparison with
-// a special Empty list
 
 electionTypeExpression
 	: intersectExp
-	| typeByPosExp
     | electExp
     | voteExp
     | tupleExp
     | permExp
-    | symbolicVarExp
     ;
 
 isEmptyExp
@@ -151,48 +152,39 @@ integer
     ;
 
 electExp
-    :   Elect passType*
+    :   Elect passSymbVar*
     ;
 
 voteExp
-    :   Vote passType*
+    :   Vote passSymbVar*
+    ;    
+    
+    
+voteSumExp
+    :   Votesum passSymbVar
     ;
 
-passType
-    :   passSymbVar
-    |   passByPos
+voteSumUniqueExp
+    :   VotesumUnique passSymbVar
     ;
+
+passSymbVar
+    :   OpenBracket symbolicVarExp ClosedBracket
+    ;    
 
 constantExp
     :   'V' 
     |   'C' 
     |   'S' 
     ;
-    
-
-voteSumExp
-    :   Votesum passType
-    ;
-
-voteSumUniqueExp
-    :   VotesumUnique passType
-    ;
-
-passSymbVar
-    :   OpenBracket symbolicVarExp ClosedBracket
-    ;
  
 passPosition
     :   OpenBracket numberExpression ClosedBracket
     ;
 
-passByPos
-    :   OpenBracket typeByPosExp ClosedBracket
-    ;
 
-symbolicVarExp
-    :   Identifier
-    ;
+
+
 
 // Lexer
 

@@ -25,12 +25,12 @@ public class CElectionVotingType {
 	private CElectionSimpleTypes simpleType;
 	private List<CBMCVars> listSizes;
 	private boolean uniqueVotes = false;
-	
+
 	@Override
-	public boolean equals(Object obj) {		
+	public boolean equals(Object obj) {
 		CElectionVotingType other = (CElectionVotingType) obj;
 		if (listDimensions != other.listDimensions)
-			return false;		
+			return false;
 		if (simpleType != other.simpleType)
 			return false;
 		return true;
@@ -47,10 +47,14 @@ public class CElectionVotingType {
 	public CElectionSimpleTypes getSimpleType() {
 		return simpleType;
 	}
-	
+
 	public boolean isUniqueVotes() {
 		return uniqueVotes;
-	}	
+	}
+
+	public boolean canAccess(CBMCVars var) {
+		return !listSizes.isEmpty() && listSizes.get(0) == var;
+	}
 
 	public CElectionVotingType getTypeOneDimLess() {
 		CElectionVotingType created = new CElectionVotingType();
@@ -95,12 +99,14 @@ public class CElectionVotingType {
 		case APPROVAL:
 			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 2;
-			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
+			created.listSizes = List.of(CBMCVars.AMT_VOTERS,
+					CBMCVars.AMT_CANDIDATES);
 			break;
 		case PREFERENCE:
 			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 2;
-			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
+			created.listSizes = List.of(CBMCVars.AMT_VOTERS,
+					CBMCVars.AMT_CANDIDATES);
 			created.uniqueVotes = true;
 			break;
 		case SINGLE_CHOICE:
@@ -116,14 +122,15 @@ public class CElectionVotingType {
 		case WEIGHTED_APPROVAL:
 			created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
 			created.listDimensions = 2;
-			created.listSizes = List.of(CBMCVars.AMT_VOTERS, CBMCVars.AMT_CANDIDATES);
+			created.listSizes = List.of(CBMCVars.AMT_VOTERS,
+					CBMCVars.AMT_CANDIDATES);
 			break;
 		default:
 			break;
 		}
 		return created;
 	}
-	
+
 	public static CElectionVotingType simple() {
 		CElectionVotingType created = new CElectionVotingType();
 		created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
