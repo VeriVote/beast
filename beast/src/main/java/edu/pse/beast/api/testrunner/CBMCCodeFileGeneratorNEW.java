@@ -26,7 +26,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 public class CBMCCodeFileGeneratorNEW {
 
 	/** The Constant PATH_TO_TEMP_FOLDER. */
-	private static final String PATH_TO_TEMP_FOLDER = "/core/generated_c_files/";
+	private static final String PATH_TO_TEMP_FOLDER = "/generated_c_files/";
 
 	private static final String CANNOT_FIND_PARENT = "Cannot find a parent to your file!";
 
