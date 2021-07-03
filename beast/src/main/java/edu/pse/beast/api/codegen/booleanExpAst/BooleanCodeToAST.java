@@ -310,14 +310,13 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final String numberString = ctx.Elect().getText()
 				.substring(ELECT.length());
 		final int number = Integer.valueOf(numberString);
-		if (highestElectInThisListNode < number) {
-			highestElectInThisListNode = number;
-		}
+		setHighestElect(number);
+		
 		final int amtAccessingTypes = ctx.passType().size();
-		final TypeExpression[] accessingVars = new TypeExpression[amtAccessingTypes];
+		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 
 		for (int i = 0; i < amtAccessingTypes; ++i) {
-			accessingVars[amtAccessingTypes - i - 1] = expStack.pop();
+			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
 		}
 
 		// TODO make work with new output types
@@ -349,7 +348,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		Collections.reverse(accessingVars);
 
 		// TODO make work with new input types
-		final VoteExp expNode = new VoteExp(accessingVars, numberString);
+		final VoteExp expNode = new VoteExp(accessingVars, number);
 		expStack.push(expNode);
 	}
 

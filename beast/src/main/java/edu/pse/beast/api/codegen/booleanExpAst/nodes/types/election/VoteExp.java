@@ -12,8 +12,8 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
  */
 public final class VoteExp extends AccessedVoteElectValueNode {
 
-	public VoteExp(List<SymbolicCBMCVar> accessingCBMCVars, String voteNumber) {
-		super(accessingCBMCVars, Integer.valueOf(voteNumber));
+	public VoteExp(List<SymbolicCBMCVar> accessingCBMCVars, int voteNumber) {
+		super(accessingCBMCVars, voteNumber);
 	}
 
 	@Override
