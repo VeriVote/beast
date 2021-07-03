@@ -218,11 +218,11 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitVoteExpNode(VoteExp node) {
 		if (node.getAccessingCBMCVars().size() == 0) {
 			expVarNameStack.push(InitVoteHelper
-					.getVoteVarName(Integer.valueOf(node.getVoteNumber())));
+					.getVoteVarName(Integer.valueOf(node.getNumber())));
 			amtVoteVars++;
 		} else {
 			String voteVarName = InitVoteHelper
-					.getVoteVarName(Integer.valueOf(node.getVoteNumber()));
+					.getVoteVarName(Integer.valueOf(node.getNumber()));
 			String varName = VoteExpHelper.getVarFromVoteAccess(voteVarName,
 					node.getAccessingCBMCVars(), options, voteArrStruct);
 			expVarNameStack.push(varName);
@@ -241,9 +241,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 	@Override
 	public void visitElectExpNode(ElectExp node) {
-		if (node.getAccessingVars().length == 0) {
+		if (node.getAccessingCBMCVars().size() == 0) {
 			expVarNameStack
-					.push(PerformVoteHelper.getResultVarName(node.getCount()));
+					.push(PerformVoteHelper.getResultVarName(node.getNumber()));
 			expTypes.push(voteResultStruct.getVotingType());
 			amtElectVars++;
 		}
