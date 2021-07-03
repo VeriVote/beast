@@ -1,53 +1,16 @@
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.OutputType;
 import edu.pse.beast.zzz.propertychecker.Result;
 
 module edu.pse.beast {
-    uses edu.pse.beast.types.InputType;
-    uses edu.pse.beast.types.OutputType;
     uses edu.pse.beast.zzz.propertychecker.Result;
 
     
     exports edu.pse.beast.zzz.propertychecker;
-    exports edu.pse.beast.types.cbmctypes;
-    exports edu.pse.beast.saverloader.adapter;
-    exports edu.pse.beast.types.cbmctypes.inputplugins;
-    exports edu.pse.beast.codearea.codeinput;
     exports edu.pse.beast.zzz.toolbox;
-    exports edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
-    exports edu.pse.beast.types;
-    exports edu.pse.beast.booleanexpeditor.booleanexpcodearea;
-    exports edu.pse.beast.codearea.useractions;
     exports edu.pse.beast.gui;
-    exports edu.pse.beast.saverloader.staticsaverloaders;
-    exports edu.pse.beast.propertylist.model;
-    exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes;
-    exports edu.pse.beast.types.cbmctypes.outputplugins;
-    exports edu.pse.beast.parametereditor;
-    exports edu.pse.beast.pluginmanager;
-    exports edu.pse.beast.codearea.autocompletion;
     exports edu.pse.beast.toolbox.antlr.booleanexp;
-    exports edu.pse.beast.codearea;
-    exports edu.pse.beast.stringresource;
-    exports edu.pse.beast.toolbox.antlr.booleanexp.generateast;
-    exports edu.pse.beast.toolbox.valueContainer;
-    exports edu.pse.beast.codearea.actionlist.textaction;
-    exports edu.pse.beast.codearea.actionlist;
-    exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
-    exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes;
     exports edu.pse.beast.api.propertydescription;
-    exports edu.pse.beast.datatypes.booleanexpast;
     exports edu.pse.beast.zzz.codeareajavafx;
     exports edu.pse.beast.zzz.propertychecker.jna;
-    exports edu.pse.beast.saverloader;
-    exports edu.pse.beast.codearea.actionadder;
-    exports edu.pse.beast.codearea.errorhandling;
-    exports edu.pse.beast.codearea.syntaxhighlighting;
-    exports edu.pse.beast.types.cbmctypes.cbmcstructs;
-    exports edu.pse.beast.parametereditor.view;
-    exports edu.pse.beast.datatypes.electiondescription;
-    exports edu.pse.beast.booleanexpeditor;
-    exports edu.pse.beast.datatypes.electioncheckparameter;
 
     requires transitive com.google.gson;
     requires com.sun.jna;
@@ -72,8 +35,6 @@ module edu.pse.beast {
 	requires org.json;
 	requires antlr4;
 
-
-    opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.gui.options.process_handler to javafx.fxml;
     opens edu.pse.beast.gui.options.ceditor to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
@@ -82,26 +43,8 @@ module edu.pse.beast {
     opens edu.pse.beast.gui.testconfigeditor.testconfig.cbmc to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;
     opens edu.pse.beast.gui.runs to javafx.fxml;
-    opens edu.pse.beast.datatypes.electiondescription to gson;
     opens edu.pse.beast.api.propertydescription to gson;
-    opens edu.pse.beast.types to gson;
-    opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
     opens edu.pse.beast.zzz.propertychecker to gson;
-    opens edu.pse.beast.toolbox.valueContainer to gson;
-    
-
-    // TODO maybe extract the types into their own modules
-    provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
-            edu.pse.beast.types.cbmctypes.inputplugins.Preference,
-            edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice,
-            edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack,
-            edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
-
-    provides OutputType
-            with edu.pse.beast.types.cbmctypes.outputplugins.CandidateList,
-            edu.pse.beast.types.cbmctypes.outputplugins.Parliament,
-            edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
-            edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
     provides Result with edu.pse.beast.zzz.propertychecker.CBMCResult; 
 }
