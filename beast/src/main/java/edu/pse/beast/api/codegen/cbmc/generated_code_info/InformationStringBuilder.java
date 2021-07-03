@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.cbmc.info;
+package edu.pse.beast.api.codegen.cbmc.generated_code_info;
 
 public class InformationStringBuilder {
 

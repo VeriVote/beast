@@ -8,7 +8,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.JSONHelper;
 
 public class CBMCGeneratedCodeInfoSaverLoaderHelper {

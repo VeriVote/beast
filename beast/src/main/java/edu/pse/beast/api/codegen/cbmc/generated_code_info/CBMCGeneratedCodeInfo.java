@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.cbmc.info;
+package edu.pse.beast.api.codegen.cbmc.generated_code_info;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class CBMCGeneratedCodeInfo {
 
 	private String resultAmtMemberVarName;
 	private String resultListMemberVarName;
-
+	
 	public void addedGeneratedVotingVar(String name) {
 		generatedVotingVarNames.add(name);
 	}

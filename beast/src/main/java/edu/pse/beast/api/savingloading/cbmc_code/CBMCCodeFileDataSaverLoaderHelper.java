@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.json.JSONObject;
 
-import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.RelativePathConverter;
 import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.gui.paths.PathHandler;

@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 
 public class CodeInfoSavingLoadingTest {

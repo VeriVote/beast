@@ -8,7 +8,7 @@ import org.apache.commons.io.FileUtils;
 
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.zzz.toolbox.ErrorLogger;

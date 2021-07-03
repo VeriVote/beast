@@ -7,4 +7,4 @@ exception/error handling bzw nicht impl pfade offensichtlich machen
 
 Dokumentation
 Code cleanup
-- evtl code in extra verzeicthnis falls funktionalität
+---evtl code in extra verzeicthnis falls funktionalität
