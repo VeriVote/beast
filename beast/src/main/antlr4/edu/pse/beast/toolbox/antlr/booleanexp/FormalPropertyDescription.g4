@@ -36,7 +36,7 @@ binaryRelationExp
 
 
 quantifierExp
-    :   Quantifier passSymbVar '.' booleanExp
+    :   Quantifier passSymbVarByName '.' booleanExp
     ;
 
 notExp
@@ -65,10 +65,13 @@ numberExpression
     ;
     
 symbolicVarExp
-    :   Identifier
-    |   typeByPosExp
+    :   symbVarByNameExp
+    |   symbVarByPosExp
     ;
     
+symbVarByNameExp
+	: Identifier
+	;
 // any sort of expression which returns a type which is not a number and represents an
 // election object. These differ depending on the input and output type of the election.
 // eg VOTES1 can be and array of uints, or an array of arrays of unints.
@@ -129,7 +132,7 @@ voteTupleExp
 	: OpenTuple Vote (',' Vote)* CloseTuple
 	;
 
-typeByPosExp
+symbVarByPosExp
     :   voterByPosExp
     |   candByPosExp
     |   seatByPosExp
@@ -167,6 +170,10 @@ voteSumExp
 voteSumUniqueExp
     :   VotesumUnique passSymbVar
     ;
+
+passSymbVarByName
+    :   OpenBracket symbVarByNameExp ClosedBracket
+    ;    
 
 passSymbVar
     :   OpenBracket symbolicVarExp ClosedBracket

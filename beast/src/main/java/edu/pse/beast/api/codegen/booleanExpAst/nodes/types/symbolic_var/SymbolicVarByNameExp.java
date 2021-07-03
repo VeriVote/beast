@@ -9,10 +9,10 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
  *
  * @author Lukas Stapelbroek
  */
-public final class SymbolicVarExp extends TypeExpression {
+public final class SymbolicVarByNameExp extends SymbolicCBMCVarExp {
 	private SymbolicCBMCVar cbmcVar;
 
-	public SymbolicVarExp(SymbolicCBMCVar cbmcVar) {
+	public SymbolicVarByNameExp(SymbolicCBMCVar cbmcVar) {
 		this.cbmcVar = cbmcVar;
 	}
 

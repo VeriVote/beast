@@ -1,7 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -38,7 +37,8 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.Binar
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerValuedExpression;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbVarByPosExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
 import edu.pse.beast.api.codegen.cbmc.ScopeHandler;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
@@ -62,6 +62,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Nu
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermElectExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermVoteExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.QuantifierExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbVarByNameExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbVarByPosExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbolicVarExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteExpContext;
@@ -195,8 +197,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		} else {
 			throw new NotImplementedException();
 		}
-		final String id = ctx.passSymbVar().symbolicVarExp().Identifier()
-				.getText();
+		final String id = ctx.passSymbVarByName().symbVarByNameExp()
+				.Identifier().getText();
 
 		scopeHandlerNew.push();
 		scopeHandlerNew.add(new SymbolicCBMCVar(id, type));
@@ -208,7 +210,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final QuantifierNode node;
 
 		SymbolicCBMCVar var = null;
-		String name = ctx.passSymbVar().symbolicVarExp().getText();
+		String name = ctx.passSymbVarByName().symbVarByNameExp().getText();
 		if (quantifierType.contains("VOTER")) {
 			var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.VOTER);
 		} else if (quantifierType.contains("CANDIDATE")) {
@@ -233,19 +235,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
 	@Override
 	public void exitSymbolicVarExp(final SymbolicVarExpContext ctx) {
+	}
+	
+	@Override
+	public void exitSymbVarByNameExp(SymbVarByNameExpContext ctx) {
 		final String name = ctx.getText();
 		CBMCVarType varType = scopeHandlerNew.getType(name);
-		expStack.push(new SymbolicVarExp(new SymbolicCBMCVar(name, varType)));
-		if (name.startsWith("V") || name.startsWith("C")
-				|| name.startsWith("S")) {
-			try {
-				int number = Integer.valueOf(name.substring(1));
-				if (highestElectInThisListNode < number) {
-					highestElectInThisListNode = number;
-				}
-			} catch (Exception e) {
-			}
-		}
+		expStack.push(
+				new SymbolicVarByNameExp(new SymbolicCBMCVar(name, varType)));
 	}
 
 	@Override
@@ -316,7 +313,8 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 
 		for (int i = 0; i < amtAccessingTypes; ++i) {
-			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
+			accessingVars
+					.add(((SymbolicVarByNameExp) expStack.pop()).getCbmcVar());
 		}
 
 		generated.electAccessedBy(accessingVars, number);
@@ -342,9 +340,10 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
 
 		for (int i = 0; i < amtAccessingTypes; ++i) {
-			accessingVars.add(((SymbolicVarExp) expStack.pop()).getCbmcVar());
+			accessingVars
+					.add(((SymbolicVarByNameExp) expStack.pop()).getCbmcVar());
 		}
-		
+
 		generated.voteAccessedBy(accessingVars, number);
 		final VoteExp expNode = new VoteExp(accessingVars, number);
 		expStack.push(expNode);
@@ -376,7 +375,7 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		final String numberString = tn.getText().substring(exprStr.length());
 		final int number = Integer.valueOf(numberString);
 		setHighestVote(number);
-		SymbolicVarExp access = (SymbolicVarExp) expStack.pop();
+		SymbolicVarByNameExp access = (SymbolicVarByNameExp) expStack.pop();
 		final VoteSumForCandExp expNode = new VoteSumForCandExp(number,
 				access.getCbmcVar(), unique);
 		expStack.push(expNode);
@@ -489,4 +488,18 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 		BooleanExpIsEmptyNode node = new BooleanExpIsEmptyNode(expStack.pop());
 		nodeStack.add(node);
 	}
+
+	@Override
+	public void exitSymbVarByPosExp(SymbVarByPosExpContext ctx) {
+		int number = ((IntegerNode) expStack.pop()).getInteger();
+		String text = ctx.getText();
+		if (text.startsWith("VOTER")) {
+			expStack.add(new SymbVarByPosExp(CBMCVarType.VOTER, number));
+		} else if (text.startsWith("CAND")) {
+			expStack.add(new SymbVarByPosExp(CBMCVarType.CANDIDATE, number));
+		} else if (text.startsWith("SEAT")) {
+			expStack.add(new SymbVarByPosExp(CBMCVarType.SEAT, number));
+		}
+	}
+
 }

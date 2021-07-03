@@ -22,7 +22,8 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.Const
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerValuedExpression;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbVarByPosExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListElementContext;
 
 public interface BooleanAstVisitor {
@@ -56,7 +57,7 @@ public interface BooleanAstVisitor {
 	public void visitElectPermutation(ElectPermutationNode node);
 	public void visitVoteTuple(VoteTupleNode node);
 	public void visitElectTuple(ElectTupleNode node);
-	public void visitSymbolicVarExp(SymbolicVarExp node);
+	public void visitSymbolicVarExp(SymbolicVarByNameExp node);
 	public void visitVoteSumExp(VoteSumForCandExp node);
 	public void visitIntegerExp(IntegerNode node);
 	public void visitBinaryIntegerExpression(
@@ -66,6 +67,7 @@ public interface BooleanAstVisitor {
 	public void visitElectIntersectionNode(
 			ElectIntersectionNode electIntersectionNode);
 	public void visitBooleanExpFalseNode(FalseNode falseNode);
+	public void visitSymbVarByPosExp(SymbVarByPosExp symbVarByPosExp);
 	
 	
 	

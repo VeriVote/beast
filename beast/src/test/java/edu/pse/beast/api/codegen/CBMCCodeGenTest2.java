@@ -32,7 +32,7 @@ public class CBMCCodeGenTest2 {
 				codeGenOptions);
 		descr.getVotingFunction().setExtractedLoops(loops);
 
-		String pre = "VOTES1(v) == VOTES1(v);";
+		String pre = "v == VOTER_AT_POS(0);";
 		String post = "";
 
 		PreAndPostConditionsDescription propDescr = CreationHelper

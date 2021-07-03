@@ -26,7 +26,8 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.Binar
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbVarByPosExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
 import edu.pse.beast.api.codegen.c_code.CCodeBlock;
 import edu.pse.beast.api.codegen.cbmc.info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
@@ -384,7 +385,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	}
 
 	@Override
-	public void visitSymbolicVarExp(SymbolicVarExp node) {
+	public void visitSymbolicVarExp(SymbolicVarByNameExp node) {
 		expVarNameStack.push(node.getCbmcVar().getName());
 		expTypes.push(CElectionVotingType.simple());
 	}
@@ -486,5 +487,12 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	public void visitBooleanExpFalseNode(FalseNode falseNode) {
 		String zeroVarBecauseFalse = "0";
 		booleanVarNameStack.push(zeroVarBecauseFalse);
+	}
+
+	@Override
+	public void visitSymbVarByPosExp(SymbVarByPosExp symbVarByPosExp) {
+		String generatedVarName = String.valueOf(symbVarByPosExp.getAccessingNumber());
+		expTypes.push(CElectionVotingType.simple());
+		expVarNameStack.push(generatedVarName);
 	}
 }

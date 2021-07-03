@@ -56,7 +56,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.Const
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.AtPosExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarExp;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
@@ -721,7 +721,7 @@ public final class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     @Override
-    public void visitSymbVarExp(final SymbolicVarExp exp) {
+    public void visitSymbVarExp(final SymbolicVarByNameExp exp) {
         variableNames.push(exp.getSymbolicVar().getId());
     }
 
