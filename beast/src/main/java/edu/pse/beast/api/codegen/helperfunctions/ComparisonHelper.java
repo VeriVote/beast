@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.codegen.helperfunctions.code_template.templates.CodeTemplateComparison;
+import edu.pse.beast.api.codegen.code_template.templates.CodeTemplateComparison;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;

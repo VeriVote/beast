@@ -23,7 +23,7 @@ public class CBMCGeneratedCodeInfo {
 	private String votesAmtMemberVarName;
 	private String votesListMemberVarName;
 
-	private String resultAmtMemberVarName;
+	private String resultAmtMemberVarName; 
 	private String resultListMemberVarName;
 	
 	public void addedGeneratedVotingVar(String name) {

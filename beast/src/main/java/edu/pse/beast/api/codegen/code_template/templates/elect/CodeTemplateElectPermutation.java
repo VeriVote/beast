@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.helperfunctions.code_template.templates.elect;
+package edu.pse.beast.api.codegen.code_template.templates.elect;
 
 import java.util.Arrays;
 import java.util.List;
