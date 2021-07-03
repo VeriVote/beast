@@ -22,7 +22,7 @@ public class CBMCCodeGenTest2 {
 		String votingCode = "";
 
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
+				VotingInputTypes.SINGLE_CHOICE, VotingOutputTypes.CANDIDATE_LIST,
 				"borda");
 		descr.getVotingFunction().setCode(votingCode);
 
@@ -32,12 +32,14 @@ public class CBMCCodeGenTest2 {
 				codeGenOptions);
 		descr.getVotingFunction().setExtractedLoops(loops);
 
-		String pre = "v == VOTER_AT_POS(0);";
+		String pre = "VOTE_SUM_FOR_CANDIDATE1(c1) == VOTE_SUM_FOR_CANDIDATE2(c2);";
 		String post = "";
 
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
-		propDescr.addCBMCVar(new SymbolicCBMCVar("v", CBMCVarType.VOTER));
+		propDescr.addCBMCVar(new SymbolicCBMCVar("c1", CBMCVarType.CANDIDATE));		
+		propDescr.addCBMCVar(new SymbolicCBMCVar("c2", CBMCVarType.CANDIDATE));
+
 
 		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
