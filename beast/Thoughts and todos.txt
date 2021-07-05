@@ -3,7 +3,7 @@
 ---und speichern
 ---slider für font vlt
 *herausnehmen von descr und probdescr handlen
-exception/error handling bzw nicht impl pfade offensichtlich machen
+---exception/error handling bzw nicht impl pfade offensichtlich machen
 
 Dokumentation
 ---Code cleanup
