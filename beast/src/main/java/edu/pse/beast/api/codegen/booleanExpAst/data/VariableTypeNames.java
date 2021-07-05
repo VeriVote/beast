@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.booleanExpAst;
+package edu.pse.beast.api.codegen.booleanExpAst.data;
 
 public class VariableTypeNames {
 	public static final String VOTER = "VOTER";

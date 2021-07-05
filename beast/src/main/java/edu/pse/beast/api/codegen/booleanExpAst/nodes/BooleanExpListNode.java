@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.booleanExpAst;
+package edu.pse.beast.api.codegen.booleanExpAst.nodes;
 
 import java.util.ArrayList;
 import java.util.List;

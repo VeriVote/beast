@@ -1,4 +1,4 @@
-package edu.pse.beast.api.codegen.booleanExpAst;
+package edu.pse.beast.api.codegen.booleanExpAst.data;
 
 public class Quantifier {
 	public static final String FOR_ALL = "FOR_ALL";
