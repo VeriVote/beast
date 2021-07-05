@@ -9,7 +9,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.zzz.toolbox.Tuple;
+import edu.pse.beast.api.toolbox.Tuple;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;

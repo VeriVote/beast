@@ -17,6 +17,7 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonRunningData
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCCounterExample;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCJsonResultExampleExtractor;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
+import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class CBMCTestRun implements CBMCTestCallback {
@@ -133,11 +134,11 @@ public class CBMCTestRun implements CBMCTestCallback {
 		return cbmcJsonRunningDataExtractor.getMessages();
 	}
 
-	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit) {
+	public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit, PathHandler pathHandler) {
 		if (workUnit.getProcessStarterSource() == null)
 			return;
 		workUnit.initialize(V, S, C, codeGenOptions, loopboundList,
-				cbmcCodeFile, descr, propDescr, this);
+				cbmcCodeFile, descr, propDescr, this, pathHandler);
 		if (prevState != null) {
 			workUnit.setState(prevState);
 			prevState = null;

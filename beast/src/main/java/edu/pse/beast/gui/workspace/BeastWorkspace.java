@@ -30,6 +30,7 @@ import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
+import edu.pse.beast.api.toolbox.Tuple;
 import edu.pse.beast.gui.ErrorHandler;
 import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.paths.PathHandler;
@@ -37,7 +38,6 @@ import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
-import edu.pse.beast.zzz.toolbox.Tuple;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Alert.AlertType;
@@ -122,7 +122,7 @@ public class BeastWorkspace {
 		for (CBMCTestRun run : testConfigList.getCBMCTestRuns()) {
 			CBMCPropertyCheckWorkUnit wu = new CBMCPropertyCheckWorkUnit(
 					cbmcProcessHandlerCreator, UUID.randomUUID().toString());
-			run.setAndInitializeWorkUnit(wu);
+			run.setAndInitializeWorkUnit(wu, pathHandler);
 		}
 		registerUpdateListener(testConfigList);
 	}
@@ -231,7 +231,7 @@ public class BeastWorkspace {
 
 			CBMCCodeFileData cbmcCodeFile = beast
 					.generateCodeFileCBMCPropertyTest(config.getDescr(),
-							config.getPropDescr(), codeGenOptions);
+							config.getPropDescr(), codeGenOptions, pathHandler);
 
 			List<CBMCTestRun> createdTestRuns = beast
 					.generateTestRuns(cbmcCodeFile, config, codeGenOptions);
@@ -240,7 +240,7 @@ public class BeastWorkspace {
 			for (CBMCTestRun run : createdTestRuns) {
 				CBMCPropertyCheckWorkUnit workUnit = new CBMCPropertyCheckWorkUnit(
 						cbmcProcessHandlerCreator, sessionUUID);
-				run.setAndInitializeWorkUnit(workUnit);
+				run.setAndInitializeWorkUnit(workUnit, pathHandler);
 			}
 
 			config.addRuns(createdTestRuns);
@@ -288,7 +288,7 @@ public class BeastWorkspace {
 
 		CBMCCodeFileData cbmcFileData = beast.generateCodeFileCBMCPropertyTest(
 				currentConfig.getDescr(), currentConfig.getPropDescr(),
-				codeGenOptions);
+				codeGenOptions, pathHandler);
 
 		for (CBMCTestRun cbmcTr : currentConfig.getRuns()) {
 			cbmcTr.updateDataForCheck(cbmcFileData, cbmcTr.getCodeGenOptions());

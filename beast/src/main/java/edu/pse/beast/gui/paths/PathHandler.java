@@ -62,5 +62,5 @@ public class PathHandler implements RelativePathConverter {
 	@Override
 	public File getFileFromRelativePath(String relativePath) {
 		return new File(baseDir + relativePath);
-	}	
+	}
 }

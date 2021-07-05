@@ -18,6 +18,7 @@ import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMC
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerSource;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
+import edu.pse.beast.gui.paths.PathHandler;
 
 public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	// fields to start the election check
@@ -38,6 +39,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	private Process process;
 
 	private WorkUnitState state;
+	private PathHandler pathHandler;
 
 	public CBMCPropertyCheckWorkUnit(
 			CBMCProcessHandlerSource processStarterSource, String sessionUUID) {
@@ -50,7 +52,9 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
 			String loopBounds, CBMCCodeFileData cbmcCodeFile,
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CBMCTestCallback cb) {
+			PreAndPostConditionsDescription propDescr, CBMCTestCallback cb,
+			PathHandler pathHandler) {
+		this.pathHandler = pathHandler;
 		this.descr = descr;
 		this.propDescr = propDescr;
 		this.v = v;
@@ -66,7 +70,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public void setState(WorkUnitState state) {
 		this.state = state;
 	}
-	
+
 	public int getC() {
 		return c;
 	}
@@ -86,7 +90,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	public boolean hasCallback() {
 		return this.cb != null;
 	}
-	
+
 	public CBMCProcessHandlerSource getProcessStarterSource() {
 		return processStarterSource;
 	}
@@ -109,7 +113,8 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 		try {
 			process = processStarterSource.getProcessHandler()
 					.startCheckForParam(sessionUUID, v, c, s, sessionUUID, cb,
-							cbmcCodeFile.getFile(), loopBounds, codeGenOptions);
+							cbmcCodeFile.getFile(), loopBounds, codeGenOptions,
+							pathHandler);
 			BufferedReader reader = new BufferedReader(
 					new InputStreamReader(process.getInputStream()));
 			String line;
@@ -130,7 +135,6 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 			cb.onPropertyTestRawOutputComplete(descr, propDescr, s, c, v, uuid,
 					cbmcOutput);
 			state = WorkUnitState.FINISHED;
-			processStarterSource.getProcessHandler().endProcess(process);
 			cb.onPropertyTestFinished(descr, propDescr, s, c, v, uuid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

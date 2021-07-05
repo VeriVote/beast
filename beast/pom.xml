@@ -183,27 +183,7 @@
 				<version>1.6.0</version> <configuration> <mainClass>edu.pse.beast.highlevel.MainApplicationClass</mainClass> 
 				</configuration> <executions> <execution> <id>run</id> <phase>execution</phase> 
 				<goals> <goal>java</goal> </goals> </execution> </executions> </plugin -->
-			<plugin> <!-- Adding services for service loader, TODO: there might be a better solution 
-					using modules-info.java -->
-				<groupId>eu.somatik.serviceloader-maven-plugin</groupId>
-				<artifactId>serviceloader-maven-plugin</artifactId>
-				<version>1.3.0</version>
-				<configuration>
-					<services>
-						<param>edu.pse.beast.types.InputType</param>
-						<param>edu.pse.beast.types.OutputType</param>
-						<param>edu.pse.beast.propertychecker.Result</param>
-						<param>edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType</param>
-					</services>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			
 			<plugin>
 				<groupId>org.openjfx</groupId>
 				<!-- Instead of `exec:java`, use `javafx:run` to run the application -->

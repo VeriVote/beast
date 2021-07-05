@@ -11,9 +11,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.zzz.toolbox.ErrorLogger;
-import edu.pse.beast.zzz.toolbox.FileLoader;
-import edu.pse.beast.zzz.toolbox.SuperFolderFinder;
+import edu.pse.beast.gui.paths.PathHandler;
 
 public class CBMCCodeFileGeneratorNEW {
 
@@ -25,25 +23,19 @@ public class CBMCCodeFileGeneratorNEW {
 	public static CBMCCodeFileData createCodeFileTest(
 			final CElectionDescription descr,
 			final PreAndPostConditionsDescription propDescr,
-			CodeGenOptions options)
+			CodeGenOptions options, PathHandler pathHandler)
 			throws IOException {
 
 		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW
 				.generateCodeForCBMCPropertyTest(descr, propDescr, options);
 
-		final String absolutePath = SuperFolderFinder.getSuperFolder()
+		String absolutePath = pathHandler.getBaseDir().getAbsolutePath()
 				+ PATH_TO_TEMP_FOLDER;
-		final File file = new File(new File(absolutePath),
-				FileLoader.getNewUniqueName(absolutePath)
-						+ FileLoader.C_FILE_ENDING);
+		File file = File.createTempFile("cbmc", ".c", new File(absolutePath));
 
-		if (file.getParentFile() == null) {
-			ErrorLogger.log(CANNOT_FIND_PARENT);
-		} else if (!file.getParentFile().exists()) {
-			file.getParentFile().mkdirs();
-		}
 		FileUtils.writeStringToFile(file, code.getCode(),
-				Charset.defaultCharset());;
+				Charset.defaultCharset());
+		;
 		CBMCCodeFileData codeFile = new CBMCCodeFileData();
 		codeFile.setCodeInfo(code);
 		codeFile.setFile(file);

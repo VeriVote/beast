@@ -1,4 +1,4 @@
-package edu.pse.beast.zzz.toolbox;
+package edu.pse.beast.api.toolbox;
 
 /**
  * A simple generic tuple.
@@ -23,7 +23,7 @@ public class Tuple<F, S> {
      *
      * @param x
      *            the x
-     * @param y
+     * @param yW
      *            the y
      */
     public Tuple(final F x, final S y) {

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.gui.paths.PathHandler;
 
 public interface CBMCProcessHandler {
 
@@ -18,11 +19,14 @@ public interface CBMCProcessHandler {
 	// - loop bound indices
 	// we could update the V, C, S amounts if we wanted.
 	// however, in this case, just create a new Propertycheck imo
-	public Process startCheckForParam(String sessionUUID, int V, int C, int S,
-			String uuid, CBMCTestCallback cb, File cbmcFile,
-			String loopBounds, CodeGenOptions codeGenOptions)
+	Process startCheckForParam(String sessionUUID, int V, int C, int S,
+			String uuid, CBMCTestCallback cb, File cbmcFile, String loopBounds,
+			CodeGenOptions codeGenOptions, PathHandler pathHandler)
 			throws IOException;
 	
 	public void endProcess(Process p);
+
+
+
 
 }

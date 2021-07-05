@@ -12,6 +12,7 @@ import edu.pse.beast.api.testrunner.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
+import edu.pse.beast.gui.paths.PathHandler;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class BEAST {
@@ -47,9 +48,9 @@ public class BEAST {
 	public CBMCCodeFileData generateCodeFileCBMCPropertyTest(
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
-			CodeGenOptions codeGenOptions) throws IOException {
+			CodeGenOptions codeGenOptions, PathHandler pathHandler) throws IOException {
 		return CBMCCodeFileGeneratorNEW.createCodeFileTest(descr, propDescr,
-				codeGenOptions);
+				codeGenOptions, pathHandler);
 	}
 
 	public List<CBMCTestRun> generateTestRuns(CBMCCodeFileData cbmcCodeFile,

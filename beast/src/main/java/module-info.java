@@ -1,16 +1,10 @@
-import edu.pse.beast.zzz.propertychecker.Result;
 
 module edu.pse.beast {
-    uses edu.pse.beast.zzz.propertychecker.Result;
 
     
-    exports edu.pse.beast.zzz.propertychecker;
-    exports edu.pse.beast.zzz.toolbox;
     exports edu.pse.beast.gui;
     exports edu.pse.beast.toolbox.antlr.booleanexp;
     exports edu.pse.beast.api.propertydescription;
-    exports edu.pse.beast.zzz.codeareajavafx;
-    exports edu.pse.beast.zzz.propertychecker.jna;
 
     requires transitive com.google.gson;
     requires com.sun.jna;
@@ -44,7 +38,4 @@ module edu.pse.beast {
     opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;
     opens edu.pse.beast.gui.runs to javafx.fxml;
     opens edu.pse.beast.api.propertydescription to gson;
-    opens edu.pse.beast.zzz.propertychecker to gson;
-
-    provides Result with edu.pse.beast.zzz.propertychecker.CBMCResult; 
 }
