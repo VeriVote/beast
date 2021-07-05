@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner;
+package edu.pse.beast.api.testrunner.code_files;
 
 import java.io.File;
 

@@ -12,13 +12,13 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.api.testrunner.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandler;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerSource;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
-import edu.pse.beast.gui.paths.PathHandler;
 
 public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 	// fields to start the election check

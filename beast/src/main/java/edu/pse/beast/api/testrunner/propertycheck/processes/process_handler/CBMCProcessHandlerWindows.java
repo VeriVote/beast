@@ -7,8 +7,8 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.gui.paths.PathHandler;
 
 public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
 	private static final String BLANK = " ";

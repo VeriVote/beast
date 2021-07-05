@@ -7,7 +7,7 @@ import org.junit.Test;
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
+import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
@@ -60,7 +60,7 @@ public class CBMCCodeGenTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
-		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
 		System.out.println(code);
 	}
@@ -109,7 +109,7 @@ public class CBMCCodeGenTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
-		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
 		//System.out.println(code);
 	}
@@ -158,7 +158,7 @@ public class CBMCCodeGenTest {
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
-		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
 		//System.out.println(code);
 	}

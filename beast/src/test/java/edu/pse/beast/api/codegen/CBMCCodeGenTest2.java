@@ -7,7 +7,7 @@ import org.junit.Test;
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
+import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
@@ -41,7 +41,7 @@ public class CBMCCodeGenTest2 {
 		propDescr.addCBMCVar(new SymbolicCBMCVar("c2", CBMCVarType.CANDIDATE));
 
 
-		String code = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions).getCode();
 		
 		System.out.println(code);

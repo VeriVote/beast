@@ -10,7 +10,7 @@ import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
-import edu.pse.beast.api.testrunner.CBMCCodeFileData;
+import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCTestRun;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCCounterExample;

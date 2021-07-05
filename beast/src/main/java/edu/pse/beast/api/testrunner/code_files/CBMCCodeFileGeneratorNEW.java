@@ -1,4 +1,4 @@
-package edu.pse.beast.api.testrunner;
+package edu.pse.beast.api.testrunner.code_files;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,12 +6,12 @@ import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
 
-import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
+import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.paths.PathHandler;
 
 public class CBMCCodeFileGeneratorNEW {
 
@@ -26,7 +26,7 @@ public class CBMCCodeFileGeneratorNEW {
 			CodeGenOptions options, PathHandler pathHandler)
 			throws IOException {
 
-		CBMCGeneratedCodeInfo code = CBMCCodeGeneratorNEW
+		CBMCGeneratedCodeInfo code = CBMCCodeGenerator
 				.generateCodeForCBMCPropertyTest(descr, propDescr, options);
 
 		String absolutePath = pathHandler.getBaseDir().getAbsolutePath()

@@ -1,4 +1,4 @@
-package edu.pse.beast.gui.paths;
+package edu.pse.beast.api.paths;
 
 import java.io.File;
 

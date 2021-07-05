@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.gui.paths.PathHandler;
+import edu.pse.beast.api.paths.PathHandler;
 
 public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
 	private String RELATIVE_PATH_TO_CBMC_64 = "/linux/cbmcLin/cbmc";

@@ -7,7 +7,7 @@ import org.junit.Test;
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.cbmc.CBMCCodeGeneratorNEW;
+import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
@@ -57,7 +57,7 @@ public class CodeAndCBMCGen {
 		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5,
 				v, c, s);
 
-		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGeneratorNEW.generateCodeForCBMCPropertyTest(
+		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions);		
 		
 		System.out.println(codeInfo.getCode());

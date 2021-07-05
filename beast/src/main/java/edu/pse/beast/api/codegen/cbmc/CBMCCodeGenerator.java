@@ -26,7 +26,7 @@ import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;
 
-public class CBMCCodeGeneratorNEW {
+public class CBMCCodeGenerator {
 
 	private final static String STDLIB = "stdlib.h";
 	private final static String STDINT = "stdint.h";
