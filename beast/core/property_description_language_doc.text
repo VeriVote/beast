@@ -1,0 +1,126 @@
+~The property description language~
+
+To describe the pre- and post properties which the election descriptions given 
+as C code should statisfy, a specific language is introduced.
+
+This languages allows the use of well-known logic primitives to formulate
+properties. 
+
+This language has two types of expressions: those that produce a boolean value,
+and those that produce any other value (such as vote arrays, numbers, or
+symbolic variables).
+
+For example, 
+- the expression VOTES1 produces the array containing the votes 
+for the first time the voting function is called.
+- the expression VOTES1 == VOTES2 produces a boolean value which is true
+iff the first and second times the voting function is called it is called 
+with the exact same votes.
+
+At the top level, an expression, which ends with a ';', must always produce a
+boolean value, i.e. a value which can be true or false.
+
+Thus, VOTES1 == VOTES2; would be a correct expression, while VOTES1; wouldn't be
+
+The language has the following constructs implemented:
+
+=======TYPE EXPRESSIONS=======
+The below expressions all return a type other than a boolean.
+
+__Expressions which produce the election input and result__:
+
+VOTESn, where n is an integer: Represents the votes cast during the nth call 
+to the voting function
+
+ELECTn, where n is an integer: Represents the results of the nth call 
+to the voting function
+
+Given two inputs or outputs a, b, the following functions exist to create
+new arrays of the same types:
+
+CUT(a,b) returns the intersection of a and b.
+PERM(a) returns a permutation of a.
+[[a,b]] returns the tuple containing first the entries of a followed by b.
+
+__Expressions which produce a certain voter, candidate or seat__:
+SEAT_AT_POSn(m), where n and m are integers: returns the seat at position m 
+during the nth call of the voting function.
+
+VOTER_AT_POS, CAND_AT_POS: Similar to SEAT_AT_POS
+
+__Expressions which produce a number__:
+
+any number, or arithmetic combination of numbers, such as
+
+1 + 1
+1 * 2
+4 + (2 - 1) 
+
+V(n), C(n), S(n), where n is an integer: V(n) is the amount of Voters in the nth
+election, C(n) the amount of candidates, S(n) the amount of seats.
+
+Thus for example, the expression:
+
+V(1)* 2 == V2; 
+
+is true iff the second time the voting function is called with twice as
+many voters as the first time
+
+The user can define symbolic variables which represent some voter, candidate or seat
+in the editor. These variables can then be used either by using them to
+access the election input or result, or by using specific functions
+for this purpose:
+
+VOTESn(v): returns the votes cast by voter v during the nth time the voting
+function is called. This only makes sense for certain input types!
+
+VOTE_SUM_FOR_CANDIDATEn(c): return the amount of votes cast for candidate
+c during the nth time the voting function is called.
+
+=======Boolean Expressions=======
+
+Given two expressions e1, e2 which produce two comparable types,
+
+e1 == e2;: true if e1 == e2, false otherwise
+e1 != e2;: false if e1 == e2, true otherwise
+
+Given two boolean expressions b1, b2, they can be combined thusly:
+
+b1 && b2;
+b1 || b2;
+b1 => b2;
+b1 <==> b2;
+
+It is possible to create properties of the form there exists, or for all, using
+the following:
+
+FOR_ALL_VOTERS, FOR_ALL_CANDIDATES, FOR_ALL_SEATS
+EXISTS_ONE_VOTER, EXISTS_ONE_CANDIDATE, EXISTS_ONE_SEAT
+
+These are used as follows:
+
+FOR_ALL_VOTERS(v) . <<boolean expression involving v>>
+
+The above statement is true iff <<boolean expression involving v>> is true for all
+v (ie all voters).
+
+For example, 
+
+FOR_ALL_VOTERS(v) . VOTES1(v) == VOTES2(v);
+
+is true iff all voters vote the same in the first and second election.
+
+EMPTY(arr) return true if the supplied arr is empty. Examples:
+
+EMPTY(VOTES1); 
+
+=======USAGE EXAMPLES=======
+
+VOTES3 == CUT(VOTES1, VOTES2);
+
+This one assumes the existance of a symbolic variable called c of type candidate.
+If c has the most votes in election 1, it follows that c wins the election:
+(FOR_ALL_CANDIDATES(c2) . (c2 != c) => (VOTE_SUM_FOR_CANDIDATE1(c2) < VOTE_SUM_FOR_CANDIDATE1(c))) ==> ELECT1 == c;
+
+
+
