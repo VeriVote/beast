@@ -188,7 +188,7 @@
 				<groupId>org.openjfx</groupId>
 				<!-- Instead of `exec:java`, use `javafx:run` to run the application -->
 				<artifactId>javafx-maven-plugin</artifactId>
-				<version>0.0.5</version>
+				<version>0.0.6</version>
 				<configuration>
 					<vendor>KIT</vendor>
 					<jlinkImageName>beast</jlinkImageName>
@@ -383,7 +383,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-checkstyle-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.1.2</version>
 					<configuration>
 						<includeTestSourceDirectory>true</includeTestSourceDirectory>
 						<includeResources>true</includeResources>
@@ -405,7 +405,7 @@
 				<plugin>
 					<groupId>com.github.spotbugs</groupId>
 					<artifactId>spotbugs-maven-plugin</artifactId>
-					<version>4.1.4</version>
+					<version>4.2.3</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -423,7 +423,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>3.1.1</version>
+				<version>3.1.2</version>
 				<reportSets>
 					<reportSet>
 						<reports><!-- select reports -->
