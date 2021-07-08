@@ -15,23 +15,17 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCArgumentHelper;
-import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 
 public class CodeAndCBMCGen {
 	@Test
 	public void generateCodeAndCBMCCall() {
-		String bordaCode =
-				  "    unsigned int i = 0;\n"
-				+ "    unsigned int j = 0;\n" 
-				+ "\n"
-				+ "    for (i = 0; i < C; i++) {\n" 
-				+ "        result[i] = 0;\n"
-				+ "    }\n" 
-				+ "    for (i = 0; i < V; i++) {\n"
+		String bordaCode = "    unsigned int i = 0;\n"
+				+ "    unsigned int j = 0;\n" + "\n"
+				+ "    for (i = 0; i < C; i++) {\n" + "        result[i] = 0;\n"
+				+ "    }\n" + "    for (i = 0; i < V; i++) {\n"
 				+ "        for (j = 0; j < C; j++) {\n"
 				+ "            result[votes[i][j]] += (C - j) - 1;\n"
-				+ "        }\n" 
-				+ "    }";
+				+ "        }\n" + "    }";
 
 		CElectionDescription descr = new CElectionDescription(
 				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
@@ -39,7 +33,7 @@ public class CodeAndCBMCGen {
 		descr.getVotingFunction().setCode(bordaCode);
 
 		CodeGenOptions codeGenOptions = new CodeGenOptions();
-		
+
 		List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops("voting",
 				bordaCode, codeGenOptions);
 		descr.getVotingFunction().setExtractedLoops(loops);
@@ -52,18 +46,18 @@ public class CodeAndCBMCGen {
 
 		int v = 5;
 		int c = 5;
-		int s = 5;		
-		
-		ElectionCheckParameter params = CreationHelper.createParamsOnlyOneRun(5,
-				v, c, s);
+		int s = 5;
 
-		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
-				descr, propDescr, codeGenOptions);		
-		
+		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGenerator
+				.generateCodeForCBMCPropertyTest(descr, propDescr,
+						codeGenOptions);
+
 		System.out.println(codeInfo.getCode());
-		
-		System.out.println(codeInfo.getLoopBoundHandler().generateCBMCString(v, c, s)); 
-		
-		System.out.println(CBMCArgumentHelper.getConstCommands(codeGenOptions, v, c, s));
+
+		System.out.println(
+				codeInfo.getLoopBoundHandler().generateCBMCString(v, c, s));
+
+		System.out.println(
+				CBMCArgumentHelper.getConstCommands(codeGenOptions, v, c, s));
 	}
 }

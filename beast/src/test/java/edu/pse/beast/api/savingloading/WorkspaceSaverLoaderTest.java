@@ -14,7 +14,7 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
+import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
@@ -82,8 +82,10 @@ public class WorkspaceSaverLoaderTest {
 		codeGenOptions.setCbmcAmountMaxCandidatesVarName("C");
 		codeGenOptions.setCbmcAmountMaxVotersVarName("V");
 		codeGenOptions.setCbmcAmountMaxSeatsVarName("S");
+		
+		CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 
-		BeastWorkspace beastWorkspace = new BeastWorkspace();
+		BeastWorkspace beastWorkspace = BeastWorkspace.getStandardWorkspace(cbmcProcessHandlerCreator);
 
 		beastWorkspace.setCodeGenOptions(codeGenOptions);
 
@@ -103,9 +105,9 @@ public class WorkspaceSaverLoaderTest {
 		f.mkdirs();
 		f = new File("testfiles/test.beastws");
 
-		SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f);
+		SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f, beastWorkspace.getPathHandler());
 		BeastWorkspace loadedBeastWorkspace = SavingLoadingInterface
-				.loadBeastWorkspace(f);
+				.loadBeastWorkspace(f, beastWorkspace.getPathHandler());
 
 		int i = 0;
 	}

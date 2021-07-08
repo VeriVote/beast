@@ -1,6 +1,5 @@
 
 module edu.pse.beast {
-
     
     exports edu.pse.beast.gui;
     exports edu.pse.beast.toolbox.antlr.booleanexp;

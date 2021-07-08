@@ -1,7 +1,5 @@
 package edu.pse.beast.api.savingloading;
 
-import java.io.File;
-
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -21,6 +19,8 @@ public class CodeInfoSavingLoadingTest {
 		cbmcGeneratedCodeInfo.addInfo("intersection1", "an intersection");
 		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amt");
 		cbmcGeneratedCodeInfo.setVotesListMemberVarName("list");
+		cbmcGeneratedCodeInfo.setResultAmtMemberVarName("amt");
+		cbmcGeneratedCodeInfo.setResultListMemberVarName("list");
 		JSONObject json = CBMCGeneratedCodeInfoSaverLoaderHelper
 				.generatedCodeInfoToJSON(cbmcGeneratedCodeInfo);
 		CBMCGeneratedCodeInfo loaded = CBMCGeneratedCodeInfoSaverLoaderHelper

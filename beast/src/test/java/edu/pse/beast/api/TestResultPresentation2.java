@@ -35,8 +35,8 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addVotingVariableName(2, "vote2");
 		cbmcGeneratedCodeInfo.addVotingVariableName(3, "vote3");
 
-		cbmcGeneratedCodeInfo.addedVotingVar("voteSequence0");
-		cbmcGeneratedCodeInfo.addedVotingVar("votePermutation1");
+		cbmcGeneratedCodeInfo.addedGeneratedVotingVar("voteSequence0");
+		cbmcGeneratedCodeInfo.addedGeneratedVotingVar("votePermutation1");
 
 		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amtVotes");
 		cbmcGeneratedCodeInfo.setVotesListMemberVarName("votes");
@@ -48,8 +48,8 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addElectVariableName(3,
 				PerformVoteHelper.getResultVarName(3));
 
-		cbmcGeneratedCodeInfo.addedElectVar("electIntersection0");
-		cbmcGeneratedCodeInfo.addedElectVar("electIntersection3");
+		cbmcGeneratedCodeInfo.addedGeneratedElectVar("electIntersection0");
+		cbmcGeneratedCodeInfo.addedGeneratedElectVar("electIntersection3");
 
 		String arr[] = output.split("\n");
 		List<String> rawOutput = new ArrayList<>();
@@ -81,8 +81,8 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addVotingVariableName(3,
 				InitVoteHelper.getVoteVarName(3));
 
-		cbmcGeneratedCodeInfo.addedVotingVar("voteSequence0");
-		cbmcGeneratedCodeInfo.addedVotingVar("votePermutation1");
+		cbmcGeneratedCodeInfo.addedGeneratedVotingVar("voteSequence0");
+		cbmcGeneratedCodeInfo.addedGeneratedVotingVar("votePermutation1");
 
 		cbmcGeneratedCodeInfo.setVotesAmtMemberVarName("amtVotes");
 		cbmcGeneratedCodeInfo.setVotesListMemberVarName("votes");
@@ -94,8 +94,8 @@ public class TestResultPresentation2 {
 		cbmcGeneratedCodeInfo.addElectVariableName(3,
 				PerformVoteHelper.getResultVarName(3));
 
-		cbmcGeneratedCodeInfo.addedElectVar("electIntersection0");
-		cbmcGeneratedCodeInfo.addedElectVar("electIntersection3");
+		cbmcGeneratedCodeInfo.addedGeneratedElectVar("electIntersection0");
+		cbmcGeneratedCodeInfo.addedGeneratedElectVar("electIntersection3");
 
 		String arr[] = output.split("\n");
 		List<String> rawOutput = new ArrayList<>();
