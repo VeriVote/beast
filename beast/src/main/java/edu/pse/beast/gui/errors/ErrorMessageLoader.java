@@ -12,8 +12,8 @@ import org.apache.commons.lang3.NotImplementedException;
  */
 public class ErrorMessageLoader {
 
-    public Map<Class<? extends Exception>, ErrorMessage> loadMessages() {
-        return Map.of(NotImplementedException.class,
+    public Map<BeastErrorTypes, ErrorMessage> loadMessages() {
+        return Map.of(BeastErrorTypes.NOT_IMPLEMENTED_CODE_PATH,
                 new ErrorMessage("Not implemented",
                         "tried to run code that hasn't been implemented yet"));
     }

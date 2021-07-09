@@ -12,11 +12,11 @@ public class ErrorHandler {
     private List<String> errorLog = new ArrayList<>();
     private LogGuiController listener;
 
-    private Map<Class<? extends Exception>, ErrorMessage> exceptionTypeToMessageType;
-    private List<Exception> exceptions = new ArrayList<>();
-    
+    private Map<BeastErrorTypes, ErrorMessage> errTypeToMessageType;
+    private List<BeastError> exceptions = new ArrayList<>();
+
     public ErrorHandler(ErrorMessageLoader messageLoader) {
-        exceptionTypeToMessageType = messageLoader.loadMessages();
+        errTypeToMessageType = messageLoader.loadMessages();
     }
 
     public void setListener(LogGuiController listener) {
@@ -27,12 +27,13 @@ public class ErrorHandler {
         return errorLog;
     }
 
-    public void logAndDisplayError(Exception e) {
-        exceptions.add(e);
-        
-        //TODO maybe modify the message based on the exception
-        ErrorMessage msg = exceptionTypeToMessageType.get(e.getClass());
+    public void logAndDisplayError(BeastError err) {
+        exceptions.add(err);
+
+        // TODO maybe modify the message based on the exception
+        ErrorMessage msg = errTypeToMessageType
+                .get(err.getException().getClass());
         ErrorDialogHelper.showErrorDialog(msg);
-        
+
     }
 }

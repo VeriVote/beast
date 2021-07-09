@@ -32,6 +32,8 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.api.toolbox.Tuple;
 import edu.pse.beast.gui.FileDialogHelper;
+import edu.pse.beast.gui.errors.BeastError;
+import edu.pse.beast.gui.errors.BeastErrorTypes;
 import edu.pse.beast.gui.errors.ErrorHandler;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
@@ -176,8 +178,8 @@ public class BeastWorkspace {
                 addFileForPropDescr(t.first(), t.second());
             }
         } catch (IOException e) {
-            errorHandler.logAndDisplayError("Loading prop descr",
-                    "There was an error trying to load the prop election descr");
+            errorHandler.logAndDisplayError(new BeastError(
+                    BeastErrorTypes.IO_ERROR, "trying to load prop Descr", e));
         }
     }
 
@@ -218,9 +220,10 @@ public class BeastWorkspace {
 
             for (CElectionDescriptionFunction f : descr.getFunctions()) {
                 if (!f.allLoopsDescribed()) {
-                    errorHandler.logAndDisplayError("missing loop bounds",
-                            "The function " + f.getName()
-                                    + " has loopbounds which are not described.");
+                    String more = "The function " + f.getName()
+                            + " has loopbounds which are not described.";
+                    errorHandler.logAndDisplayError(new BeastError(
+                            BeastErrorTypes.NOT_ALL_LOOPS_DESCRIBED, more));
                     return;
                 }
             }
@@ -278,9 +281,10 @@ public class BeastWorkspace {
         for (CElectionDescriptionFunction f : currentConfig.getDescr()
                 .getFunctions()) {
             if (!f.allLoopsDescribed()) {
-                errorHandler.logAndDisplayError("missing loop bounds",
-                        "The function " + f.getName()
-                                + " has loopbounds which are not described.");
+                String more = "The function " + f.getName()
+                        + " has loopbounds which are not described.";
+                errorHandler.logAndDisplayError(new BeastError(
+                        BeastErrorTypes.NOT_ALL_LOOPS_DESCRIBED, more));
                 return;
             }
         }
@@ -303,8 +307,9 @@ public class BeastWorkspace {
         try {
             currentPropDescr.addCBMCVar(var);
         } catch (Exception e) {
-            errorHandler.logAndDisplayError("invalid name",
-                    "name already exists in Property Description");
+            errorHandler.logAndDisplayError(
+                    new BeastError(BeastErrorTypes.CBMC_VAR_NAME_ALREADY_EXISTS,
+                            var.getName(), e));
             return;
         }
 
@@ -346,8 +351,8 @@ public class BeastWorkspace {
             SavingLoadingInterface.storeCElection(descr, f);
             descrWithUnsavedChanges.remove(descr);
         } catch (IOException e) {
-            errorHandler.logAndDisplayError("save error",
-                    e.getLocalizedMessage());
+            errorHandler.logAndDisplayError(new BeastError(
+                    BeastErrorTypes.IO_ERROR, descr.getName(), e));
             return false;
         }
         return true;
@@ -370,8 +375,8 @@ public class BeastWorkspace {
                     .storePreAndPostConditionDescription(propDescr, f);
             propDescrWithUnsavedChanges.remove(propDescr);
         } catch (IOException e) {
-            errorHandler.logAndDisplayError("save error",
-                    e.getLocalizedMessage());
+            errorHandler.logAndDisplayError(new BeastError(
+                    BeastErrorTypes.IO_ERROR, propDescr.getName(), e));
             return false;
         }
         return true;
@@ -426,7 +431,8 @@ public class BeastWorkspace {
                         pathHandler);
                 loadWorkspace(ws);
             } catch (Exception e) {
-                errorHandler.logAndDisplayError("save error", e);
+                errorHandler.logAndDisplayError(new BeastError(
+                        BeastErrorTypes.IO_ERROR, "workspace", e));
 
             }
         }
@@ -435,8 +441,8 @@ public class BeastWorkspace {
     public void saveWorkspace() {
         boolean allSaved = saveAll();
         if (!allSaved) {
-            errorHandler.logAndDisplayError("Saving Workspace",
-                    "There was an error when trying to save all descr and prop descr, wont save workspace.");
+            errorHandler.logAndDisplayError(
+                    new BeastError(BeastErrorTypes.ERROR_WHEN_SAVING_ALL, ""));
         }
 
         if (workspaceFile == null) {
@@ -451,8 +457,8 @@ public class BeastWorkspace {
             SavingLoadingInterface.storeBeastWorkspace(this, workspaceFile,
                     pathHandler);
         } catch (IOException e) {
-            errorHandler.logAndDisplayError("save error",
-                    e.getLocalizedMessage());
+            errorHandler.logAndDisplayError(
+                    new BeastError(BeastErrorTypes.IO_ERROR, "", e));
         }
     }
 
@@ -501,9 +507,8 @@ public class BeastWorkspace {
     public void addVotingSigFunctionToDescr(CElectionDescription descr,
             String name) {
         if (descr.hasFunctionName(name)) {
-            errorHandler.logAndDisplayError("Duplicate Function name",
-                    "A function with this name already exists. "
-                            + "Can't have 2 functions with the same name in a C program.");
+            errorHandler.logAndDisplayError(new BeastError(
+                    BeastErrorTypes.DUPLICATE_C_FUNC_NAME, name));
         } else {
             VotingSigFunction func = descr
                     .createNewVotingSigFunctionAndAdd(name);
@@ -518,8 +523,9 @@ public class BeastWorkspace {
     public void removeFunctionFromDescr(CElectionDescription descr,
             CElectionDescriptionFunction func) {
         if (func == descr.getVotingFunction()) {
-            errorHandler.logAndDisplayError("Removing Voting Function",
-                    "You tried to remove the voting function, you cant do this my guy");
+            errorHandler.logAndDisplayError(
+                    new BeastError(BeastErrorTypes.CANT_REMOVE_VOTING_FUNCTION,
+                            func.getName()));
         } else {
             descr.removeFunction(func);
             handleDescrChange(descr);
@@ -555,9 +561,9 @@ public class BeastWorkspace {
                 addFileForDescr(t.first(), t.second());
             }
 
-        } catch (IOException exception) {
-            errorHandler.logAndDisplayError("Loading descr",
-                    "There was an error trying to load the election descr");
+        } catch (IOException e) {
+            errorHandler.logAndDisplayError(
+                    new BeastError(BeastErrorTypes.IO_ERROR, "", e));
         }
     }
 
