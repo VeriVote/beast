@@ -16,55 +16,53 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 
 public class AntlrCLoopParser extends CBaseListener {
 
-	private static List<ExtractedCLoop> extractedCLoops = new ArrayList<>();
-	private static Stack<ExtractedCLoop> loopStack = new Stack<>();
-	private static int amtLoops = 0;
+    private static List<ExtractedCLoop> extractedCLoops = new ArrayList<>();
+    private static Stack<ExtractedCLoop> loopStack = new Stack<>();
+    private static int amtLoops = 0;
 
-	public static List<ExtractedCLoop> findLoops(
-			String functionName,
-			String cCode, 
-			CodeGenOptions codeGenOptions) {
+    public static List<ExtractedCLoop> findLoops(String functionName,
+            String cCode, CodeGenOptions codeGenOptions) {
 
-		CLexer l = new CLexer(CharStreams.fromString(cCode));
-		final CommonTokenStream ts = new CommonTokenStream(l);
-		CParser p = new CParser(ts);
-		ParseTreeWalker walker = new ParseTreeWalker();
-		extractedCLoops.clear();
-		loopStack.clear();
+        CLexer l = new CLexer(CharStreams.fromString(cCode));
+        final CommonTokenStream ts = new CommonTokenStream(l);
+        CParser p = new CParser(ts);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        extractedCLoops.clear();
+        loopStack.clear();
 
-		walker.walk(new CBaseListener() {
-			public void enterIterationStatement(IterationStatementContext ctx) {
-				ExtractedCLoop extractedCLoop = new ExtractedCLoop(ctx,
-						extractedCLoops.size(), codeGenOptions, functionName);
-				if (!loopStack.isEmpty()) {
-					extractedCLoop.setParentLoop(loopStack.peek());
-					loopStack.peek().addChild(extractedCLoop);
-				}
-				extractedCLoops.add(extractedCLoop);
-				loopStack.push(extractedCLoop);
-			};
+        walker.walk(new CBaseListener() {
+            public void enterIterationStatement(IterationStatementContext ctx) {
+                ExtractedCLoop extractedCLoop = new ExtractedCLoop(ctx,
+                        extractedCLoops.size(), codeGenOptions, functionName);
+                if (!loopStack.isEmpty()) {
+                    extractedCLoop.setParentLoop(loopStack.peek());
+                    loopStack.peek().addChild(extractedCLoop);
+                }
+                extractedCLoops.add(extractedCLoop);
+                loopStack.push(extractedCLoop);
+            };
 
-			@Override
-			public void exitIterationStatement(IterationStatementContext ctx) {
-				loopStack.pop();
-			}
-		}, p.blockItemList());
-		return extractedCLoops;
-	}
+            @Override
+            public void exitIterationStatement(IterationStatementContext ctx) {
+                loopStack.pop();
+            }
+        }, p.blockItemList());
+        return extractedCLoops;
+    }
 
-	public static int getAmtLoops(String cCode) {
-		CLexer l = new CLexer(CharStreams.fromString(cCode));
-		final CommonTokenStream ts = new CommonTokenStream(l);
-		CParser p = new CParser(ts);
-		ParseTreeWalker walker = new ParseTreeWalker();
-		amtLoops = 0;
-		walker.walk(new CBaseListener() {
-			@Override
-			public void enterIterationStatement(IterationStatementContext ctx) {
-				amtLoops++;
-			}
-		}, p.blockItemList());
-		return amtLoops;
-	}
+    public static int getAmtLoops(String cCode) {
+        CLexer l = new CLexer(CharStreams.fromString(cCode));
+        final CommonTokenStream ts = new CommonTokenStream(l);
+        CParser p = new CParser(ts);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        amtLoops = 0;
+        walker.walk(new CBaseListener() {
+            @Override
+            public void enterIterationStatement(IterationStatementContext ctx) {
+                amtLoops++;
+            }
+        }, p.blockItemList());
+        return amtLoops;
+    }
 
 }

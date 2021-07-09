@@ -10,114 +10,102 @@ import edu.pse.beast.api.codegen.code_template.templates.CodeTemplateVotingFunct
 import edu.pse.beast.api.codegen.code_template.templates.CodeTemplateVotingFunctionVoteArrayInit;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class VotingFunctionHelper {
 
-	public static String generateVoteResultCopy(
-			String votingFunctionName,
-			String resultArrayVarName,
-			String resultStructVarName, 
-			VotingOutputTypes votingOutputType,
-			ElectionTypeCStruct outputStruct,
-			CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler) {
+    public static String generateVoteResultCopy(String votingFunctionName,
+            String resultArrayVarName, String resultStructVarName,
+            VotingOutputTypes votingOutputType,
+            ElectionTypeCStruct outputStruct, CodeGenOptions options,
+            CodeGenLoopBoundHandler loopBoundHandler) {
 
-		Map<String, String> replacementMap = Map.of(
-				"RESULT_TYPE", outputStruct.getStruct().getName(),
-				"RESULT_VAR", resultStructVarName, 
-				"AMT_MEMBER", outputStruct.getAmtName(),
-				"MAX_AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
-				"CURRENT_AMT_CAND", options.getCurrentAmountCandsVarName(),
-				"NONDET_UINT", options.getCbmcNondetUintName(),
-				"ASSUME", options.getCbmcAssumeName(),
-				"LIST_MEMBER", outputStruct.getListName(), 
-				"RESULT_ARR", resultArrayVarName);
+        Map<String, String> replacementMap = Map.of("RESULT_TYPE",
+                outputStruct.getStruct().getName(), "RESULT_VAR",
+                resultStructVarName, "AMT_MEMBER", outputStruct.getAmtName(),
+                "MAX_AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
+                "CURRENT_AMT_CAND", options.getCurrentAmountCandsVarName(),
+                "NONDET_UINT", options.getCbmcNondetUintName(), "ASSUME",
+                options.getCbmcAssumeName(), "LIST_MEMBER",
+                outputStruct.getListName(), "RESULT_ARR", resultArrayVarName);
 
-		String code = null;
-		List<LoopBound> loopbounds = Arrays.asList();
+        String code = null;
+        List<LoopBound> loopbounds = Arrays.asList();
 
-		switch (votingOutputType) {
-			case SINGLE_CANDIDATE : {
-				code = CodeTemplateVotingFunctionResultCopy.templateSingleCandidate;
-				break;
-			}
-			case CANDIDATE_LIST : {
-				code = CodeTemplateVotingFunctionResultCopy.templateCandidateList;
-				loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsCandidateList;
-				break;
-			}
-			case PARLIAMENT : {
-				code = CodeTemplateVotingFunctionResultCopy.templateParliament;
-				loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsParliament;
-				break;
-			}
-		}
-		
-		loopBoundHandler.pushVotingLoopBounds(votingFunctionName, loopbounds);
-		
-		code = CodeGenerationToolbox.replacePlaceholders(
-				code, 
-				replacementMap);
+        switch (votingOutputType) {
+        case SINGLE_CANDIDATE: {
+            code = CodeTemplateVotingFunctionResultCopy.templateSingleCandidate;
+            break;
+        }
+        case CANDIDATE_LIST: {
+            code = CodeTemplateVotingFunctionResultCopy.templateCandidateList;
+            loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsCandidateList;
+            break;
+        }
+        case PARLIAMENT: {
+            code = CodeTemplateVotingFunctionResultCopy.templateParliament;
+            loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsParliament;
+            break;
+        }
+        }
 
-		return code;
-	}	
-	
-	public static String generateVoteArrayCopy(
-			String votingFunctionName,
-			String voteArrayVarName,
-			String votingStructVarName, 
-			VotingInputTypes votingInputType,
-			ElectionTypeCStruct inputStruct, 
-			CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler) {
+        loopBoundHandler.pushVotingLoopBounds(votingFunctionName, loopbounds);
 
-		Map<String, String> replacementMap = Map.of(
-				"VOTE_ARR", voteArrayVarName,
-				"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(), 
-				"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
-				"CURRENT_AMT_VOTER", options.getCurrentAmountVotersVarName(),
-				"CURRENT_AMT_CAND", options.getCurrentAmountCandsVarName(),
-				"VOTE_INPUT_STRUCT_VAR", votingStructVarName,
-				"AMT_MEMBER", inputStruct.getAmtName(), 
-				"LIST_MEMBER", inputStruct.getListName());
+        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 
-		String code = null;		
-		List<LoopBound> loopbounds = Arrays.asList();
+        return code;
+    }
 
-		switch (votingInputType) {
-			case APPROVAL : {
-				code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
-				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsApproval;
-				break;
-			}
-			case WEIGHTED_APPROVAL : {
-				code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
-				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsApproval;
-				break;
-			}
-			case PREFERENCE : {
-				code = CodeTemplateVotingFunctionVoteArrayInit.templatePreference;
-				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsPreference;
-				break;
-			}
-			case SINGLE_CHOICE : {
-				code = CodeTemplateVotingFunctionVoteArrayInit.templateSingleChoice;
-				loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsSingleChoice;
-				break;
-			}
-			case SINGLE_CHOICE_STACK : {
-				break;
-			}
-		}	
-		
-		loopBoundHandler.addVotingInitLoopBounds(votingFunctionName, loopbounds);
-		
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-		
-		return code;
-	}
+    public static String generateVoteArrayCopy(String votingFunctionName,
+            String voteArrayVarName, String votingStructVarName,
+            VotingInputTypes votingInputType, ElectionTypeCStruct inputStruct,
+            CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler) {
+
+        Map<String, String> replacementMap = Map.of("VOTE_ARR",
+                voteArrayVarName, "AMT_VOTERS",
+                options.getCbmcAmountMaxVotersVarName(), "AMT_CANDIDATES",
+                options.getCbmcAmountMaxCandsVarName(), "CURRENT_AMT_VOTER",
+                options.getCurrentAmountVotersVarName(), "CURRENT_AMT_CAND",
+                options.getCurrentAmountCandsVarName(), "VOTE_INPUT_STRUCT_VAR",
+                votingStructVarName, "AMT_MEMBER", inputStruct.getAmtName(),
+                "LIST_MEMBER", inputStruct.getListName());
+
+        String code = null;
+        List<LoopBound> loopbounds = Arrays.asList();
+
+        switch (votingInputType) {
+        case APPROVAL: {
+            code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
+            loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsApproval;
+            break;
+        }
+        case WEIGHTED_APPROVAL: {
+            code = CodeTemplateVotingFunctionVoteArrayInit.templateApproval;
+            loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsApproval;
+            break;
+        }
+        case PREFERENCE: {
+            code = CodeTemplateVotingFunctionVoteArrayInit.templatePreference;
+            loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsPreference;
+            break;
+        }
+        case SINGLE_CHOICE: {
+            code = CodeTemplateVotingFunctionVoteArrayInit.templateSingleChoice;
+            loopbounds = CodeTemplateVotingFunctionVoteArrayInit.loopBoundsSingleChoice;
+            break;
+        }
+        case SINGLE_CHOICE_STACK: {
+            break;
+        }
+        }
+
+        loopBoundHandler.addVotingInitLoopBounds(votingFunctionName,
+                loopbounds);
+
+        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+
+        return code;
+    }
 
 }

@@ -5,10 +5,8 @@ package edu.pse.beast.api.toolbox;
  *
  * @author Holger Klein
  *
- * @param <F>
- *            the generic type
- * @param <S>
- *            the generic type
+ * @param <F> the generic type
+ * @param <S> the generic type
  */
 public class Tuple<F, S> {
 
@@ -21,10 +19,8 @@ public class Tuple<F, S> {
     /**
      * The constructor.
      *
-     * @param x
-     *            the x
-     * @param yW
-     *            the y
+     * @param x  the x
+     * @param yW the y
      */
     public Tuple(final F x, final S y) {
         this.first = x;

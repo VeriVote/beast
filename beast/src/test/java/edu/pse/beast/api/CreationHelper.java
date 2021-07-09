@@ -7,17 +7,18 @@ import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 
 public class CreationHelper {
 
-	public static List<PreAndPostConditionsDescription> createSimpleCondList(String name, String preCode,
-			String postCode) {
-		PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription(name);
+    public static List<PreAndPostConditionsDescription> createSimpleCondList(
+            String name, String preCode, String postCode) {
+        PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription(
+                name);
 
-		conds.getPreConditionsDescription().setCode(preCode);
-		conds.getPostConditionsDescription().setCode(postCode);
+        conds.getPreConditionsDescription().setCode(preCode);
+        conds.getPostConditionsDescription().setCode(postCode);
 
-		List<PreAndPostConditionsDescription> condList = new ArrayList<>();
-		condList.add(conds);
+        List<PreAndPostConditionsDescription> condList = new ArrayList<>();
+        condList.add(conds);
 
-		return condList;
-	}
-	
+        return condList;
+    }
+
 }

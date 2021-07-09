@@ -1,7 +1,6 @@
 package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
 /**
@@ -10,23 +9,23 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
  * @author Lukas Stapelbroek
  */
 public final class SymbolicVarByNameExp extends SymbolicCBMCVarExp {
-	private SymbolicCBMCVar cbmcVar;
+    private SymbolicCBMCVar cbmcVar;
 
-	public SymbolicVarByNameExp(SymbolicCBMCVar cbmcVar) {
-		this.cbmcVar = cbmcVar;
-	}
+    public SymbolicVarByNameExp(SymbolicCBMCVar cbmcVar) {
+        this.cbmcVar = cbmcVar;
+    }
 
-	public SymbolicCBMCVar getCbmcVar() {
-		return cbmcVar;
-	}
+    public SymbolicCBMCVar getCbmcVar() {
+        return cbmcVar;
+    }
 
-	@Override
-	public String getTreeString(final int depth) {
-		return "SymbVar: {id " + cbmcVar.getName() + "}";
-	}
+    @Override
+    public String getTreeString(final int depth) {
+        return "SymbVar: {id " + cbmcVar.getName() + "}";
+    }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitSymbolicVarExp(this);
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitSymbolicVarExp(this);
+    }
 }

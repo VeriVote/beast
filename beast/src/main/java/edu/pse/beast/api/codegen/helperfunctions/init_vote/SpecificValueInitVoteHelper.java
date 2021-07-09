@@ -9,25 +9,25 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public class SpecificValueInitVoteHelper extends InitVoteHelper {
 
-	private VotingParameters votingParameters;
+    private VotingParameters votingParameters;
 
-	public SpecificValueInitVoteHelper(VotingParameters votingParameters) {
-		this.votingParameters = votingParameters;
-	}
+    public SpecificValueInitVoteHelper(VotingParameters votingParameters) {
+        this.votingParameters = votingParameters;
+    }
 
-	@Override
-	public String generateCode(int voteNumber,
-			ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
-			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler,
-			CBMCGeneratedCodeInfo codeInfo) {
-		String voteVarName = getVoteVarName(voteNumber);
-		return votingParameters.generateVoteStructInitCode(voteArrStruct,
-				options, codeInfo, voteVarName);
-	}
+    @Override
+    public String generateCode(int voteNumber,
+            ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
+            CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler,
+            CBMCGeneratedCodeInfo codeInfo) {
+        String voteVarName = getVoteVarName(voteNumber);
+        return votingParameters.generateVoteStructInitCode(voteArrStruct,
+                options, codeInfo, voteVarName);
+    }
 
-	@Override
-	public int getHighestVote() {
-		return votingParameters.getHighestVote();
-	}
+    @Override
+    public int getHighestVote() {
+        return votingParameters.getHighestVote();
+    }
 
 }

@@ -10,43 +10,43 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
  */
 public final class VoteSumForCandExp extends IntegerValuedExpression {
 
-	private SymbolicCBMCVar candCbmcVar;
+    private SymbolicCBMCVar candCbmcVar;
 
-	private final int voteNumber;
+    private final int voteNumber;
 
-	private final boolean unique;
+    private final boolean unique;
 
-	public VoteSumForCandExp(int voteNumber, SymbolicCBMCVar cbmcVar,
-			final boolean uniqueAttr) {
-		this.candCbmcVar = cbmcVar;
-		this.voteNumber = voteNumber;
-		this.unique = uniqueAttr;
-	}
+    public VoteSumForCandExp(int voteNumber, SymbolicCBMCVar cbmcVar,
+            final boolean uniqueAttr) {
+        this.candCbmcVar = cbmcVar;
+        this.voteNumber = voteNumber;
+        this.unique = uniqueAttr;
+    }
 
-	public SymbolicCBMCVar getCandCbmcVar() {
-		return candCbmcVar;
-	}
+    public SymbolicCBMCVar getCandCbmcVar() {
+        return candCbmcVar;
+    }
 
-	@Override
-	public String getTreeString(final int depth) {
-		return null;
-	}
+    @Override
+    public String getTreeString(final int depth) {
+        return null;
+    }
 
-	public int getVoteNumber() {
-		return voteNumber;
-	}
+    public int getVoteNumber() {
+        return voteNumber;
+    }
 
-	/**
-	 * Checks if is unique.
-	 *
-	 * @return whether only unique candidate sums are taken into account
-	 */
-	public boolean isUnique() {
-		return unique;
-	}
+    /**
+     * Checks if is unique.
+     *
+     * @return whether only unique candidate sums are taken into account
+     */
+    public boolean isUnique() {
+        return unique;
+    }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitVoteSumExp(this);
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitVoteSumExp(this);
+    }
 }

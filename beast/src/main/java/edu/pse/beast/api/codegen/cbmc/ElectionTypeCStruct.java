@@ -6,40 +6,43 @@ import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.electiondescription.CElectionVotingType;
 
 public class ElectionTypeCStruct {
-	private CElectionVotingType votingType;
-	private CStruct struct;
-	private String listName; 
-	private String amtName;
-	
-	public ElectionTypeCStruct(CElectionVotingType votingType, CStruct struct, String listName, String amtName) {
-		super();
-		this.votingType = votingType;
-		this.struct = struct;
-		this.listName = listName;
-		this.amtName = amtName;
-	}
+    private CElectionVotingType votingType;
+    private CStruct struct;
+    private String listName;
+    private String amtName;
 
-	public CStruct getStruct() {
-		return struct;
-	}
-	
-	public CElectionVotingType getVotingType() {
-		return votingType;
-	}
+    public ElectionTypeCStruct(CElectionVotingType votingType, CStruct struct,
+            String listName, String amtName) {
+        super();
+        this.votingType = votingType;
+        this.struct = struct;
+        this.listName = listName;
+        this.amtName = amtName;
+    }
 
-	private final String condString = "COUNTER < AMT";
-	
-	public CForLoop loopOverOuterList(CTypeNameBrackets counterVar, String tempInnerVarName) {
-		String cond = condString.replaceAll("COUNTER", counterVar.getName()).replaceAll("AMT", "");
-		CForLoop created = new CForLoop(counterVar, "", "");
-		return created;
-	}
-	
-	public String getListName() {
-		return listName;
-	}
-	
-	public String getAmtName() {
-		return amtName;
-	}
+    public CStruct getStruct() {
+        return struct;
+    }
+
+    public CElectionVotingType getVotingType() {
+        return votingType;
+    }
+
+    private final String condString = "COUNTER < AMT";
+
+    public CForLoop loopOverOuterList(CTypeNameBrackets counterVar,
+            String tempInnerVarName) {
+        String cond = condString.replaceAll("COUNTER", counterVar.getName())
+                .replaceAll("AMT", "");
+        CForLoop created = new CForLoop(counterVar, "", "");
+        return created;
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public String getAmtName() {
+        return amtName;
+    }
 }

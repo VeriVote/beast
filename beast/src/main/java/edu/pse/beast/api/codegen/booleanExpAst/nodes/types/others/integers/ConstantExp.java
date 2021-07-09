@@ -10,29 +10,29 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
  */
 public final class ConstantExp extends IntegerValuedExpression {
 
-	private CBMCVarType varType;
-	private int number;
+    private CBMCVarType varType;
+    private int number;
 
-	public ConstantExp(CBMCVarType varType, int number) {
-		this.varType = varType;
-		this.number = number;
-	}
+    public ConstantExp(CBMCVarType varType, int number) {
+        this.varType = varType;
+        this.number = number;
+    }
 
-	public CBMCVarType getVarType() {
-		return varType;
-	}
-	
-	public int getNumber() {
-		return number;
-	}
-	
-	@Override
-	public String getTreeString(final int depth) {
-		return null;
-	}
+    public CBMCVarType getVarType() {
+        return varType;
+    }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitConstantExp(this);
-	}
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public String getTreeString(final int depth) {
+        return null;
+    }
+
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitConstantExp(this);
+    }
 }

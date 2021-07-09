@@ -11,40 +11,34 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 
 public class IsElectEmptyHelper {
-	public static String generateCode(
-				String generatedVarName,
-				String testedVarName,
-				ElectionTypeCStruct electStruct,
-				VotingOutputTypes votingOutputType,
-				CodeGenOptions options,
-				CodeGenLoopBoundHandler loopBoundHandler			
-			) {
-		
-		Map<String, String> replacementMap = Map.of(
-					"GENERATED_VAR", generatedVarName,
-					"TESTED_VAR", testedVarName,
-					"AMT_MEMBER", electStruct.getAmtName()
-				);
-		
-		String code = null;		
-		switch(votingOutputType) {
-			case CANDIDATE_LIST : {
-				code = CodeTemplateElectEmpty.templateCandidateList;
-				break;
-			}
-			case PARLIAMENT : {
-				code = CodeTemplateElectEmpty.templateParliament;
-				break;
-			}
-			case PARLIAMENT_STACK : {
-				throw new NotImplementedException();
-			}
-			case SINGLE_CANDIDATE : {
-				throw new NotImplementedException();
-			}
-		}
-		
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-		return code;
-	}
+    public static String generateCode(String generatedVarName,
+            String testedVarName, ElectionTypeCStruct electStruct,
+            VotingOutputTypes votingOutputType, CodeGenOptions options,
+            CodeGenLoopBoundHandler loopBoundHandler) {
+
+        Map<String, String> replacementMap = Map.of("GENERATED_VAR",
+                generatedVarName, "TESTED_VAR", testedVarName, "AMT_MEMBER",
+                electStruct.getAmtName());
+
+        String code = null;
+        switch (votingOutputType) {
+        case CANDIDATE_LIST: {
+            code = CodeTemplateElectEmpty.templateCandidateList;
+            break;
+        }
+        case PARLIAMENT: {
+            code = CodeTemplateElectEmpty.templateParliament;
+            break;
+        }
+        case PARLIAMENT_STACK: {
+            throw new NotImplementedException();
+        }
+        case SINGLE_CANDIDATE: {
+            throw new NotImplementedException();
+        }
+        }
+
+        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+        return code;
+    }
 }

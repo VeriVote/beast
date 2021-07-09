@@ -1,8 +1,5 @@
 package edu.pse.beast.api.codegen.code_template.templates;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class CodeTemplateComparison {
 	public final static String template1d = 
 			  " unsigned int GENERATED_VAR = 1;\n"

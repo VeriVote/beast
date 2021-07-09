@@ -14,8 +14,7 @@ public abstract class BooleanExpressionNode {
     /**
      * Gets the tree string.
      *
-     * @param depth
-     *            the depth
+     * @param depth the depth
      * @return the tree string
      */
     public abstract String getTreeString(int depth);

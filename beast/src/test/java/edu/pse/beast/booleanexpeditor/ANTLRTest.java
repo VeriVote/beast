@@ -18,21 +18,25 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
  * @author Nikolai Schnell
  */
 public final class ANTLRTest {
-    private ANTLRTest() { }
+    private ANTLRTest() {
+    }
 
     /**
      * Show gui tree view.
      *
-     * @param code
-     *            the code
+     * @param code the code
      */
     static void showGuiTreeView(final String code) {
-        final org.antlr.v4.runtime.CharStream stream = CharStreams.fromString(code);
-        final FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(stream);
+        final org.antlr.v4.runtime.CharStream stream = CharStreams
+                .fromString(code);
+        final FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(
+                stream);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
-        final FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokens);
+        final FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(
+                tokens);
         final ParseTree tree = parser.booleanExpList();
-        final List<String> ruleNames = Arrays.asList(FormalPropertyDescriptionParser.ruleNames);
+        final List<String> ruleNames = Arrays
+                .asList(FormalPropertyDescriptionParser.ruleNames);
         final TreeViewer view = new TreeViewer(ruleNames, tree);
         view.open();
     }
@@ -40,8 +44,7 @@ public final class ANTLRTest {
     /**
      * The main method.
      *
-     * @param args
-     *            the arguments
+     * @param args the arguments
      */
     public static void main(final String[] args) {
         showGuiTreeView("1 == 4 * 2 / (4 - 1) + 2;");

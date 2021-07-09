@@ -14,13 +14,11 @@ public final class IntegerNode extends IntegerValuedExpression {
     /**
      * Instantiates a new integer node.
      *
-     * @param heldIntValue
-     *            the held int value
+     * @param heldIntValue the held int value
      */
     public IntegerNode(int integer) {
         this.integer = integer;
     }
-
 
     @Override
     public String getTreeString(final int depth) {
@@ -36,9 +34,8 @@ public final class IntegerNode extends IntegerValuedExpression {
         return integer;
     }
 
-  
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitIntegerExp(this);
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitIntegerExp(this);
+    }
 }

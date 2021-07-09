@@ -12,17 +12,17 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
  */
 public final class VoteExp extends AccessedVoteElectValueNode {
 
-	public VoteExp(List<SymbolicCBMCVar> accessingCBMCVars, int voteNumber) {
-		super(accessingCBMCVars, voteNumber);
-	}
+    public VoteExp(List<SymbolicCBMCVar> accessingCBMCVars, int voteNumber) {
+        super(accessingCBMCVars, voteNumber);
+    }
 
-	@Override
-	public String getTreeString(final int depth) {
-		return null;
-	}
+    @Override
+    public String getTreeString(final int depth) {
+        return null;
+    }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitVoteExpNode(this);
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitVoteExpNode(this);
+    }
 }

@@ -8,62 +8,54 @@ import org.apache.commons.lang3.NotImplementedException;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVotePermutation;
-import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVoteTuple;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public class VotePermutationHelper {
-	public static String generateCode(
-			String generatedVarName,
-			String varName,
-			ElectionTypeCStruct voteArrStruct,
-			VotingInputTypes votingInputType,
-			CodeGenOptions options,
-			CodeGenLoopBoundHandler loopBoundHandler) {
-		
-		Map<String, String> replacementMap = Map.of(
-					"VOTE_TYPE", voteArrStruct.getStruct().getName(),
-					"AMT_MEMBER", voteArrStruct.getAmtName(),
-					"LIST_MEMBER", voteArrStruct.getListName(),
-					"GENERATED_VAR_NAME", generatedVarName,
-					"AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
-					"ASSUME", options.getCbmcAssumeName(),
-					"NONDET_UINT", options.getCbmcNondetUintName(),
-					"RHS", varName,
-					"PERM", "permutationIndices",
-					"AMT_VOTERS", options.getCbmcAmountMaxVotersVarName()
-				);
-		
-		List<LoopBound> loopbounds = List.of();
-		String code = null;		
-		
-		switch(votingInputType) {
-			case APPROVAL : {	
-				code = CodeTemplateVotePermutation.templateApproval;
-				loopbounds = CodeTemplateVotePermutation.loopBoundsApproval;				
-				break;
-			}
-			case WEIGHTED_APPROVAL : {
-				break;
-			}
-			case PREFERENCE : {		
-				code = CodeTemplateVotePermutation.templatePreference;
-				loopbounds = CodeTemplateVotePermutation.loopBoundsPreference;
-				break;
-			}
-			case SINGLE_CHOICE : {
-				throw new NotImplementedException();
-			}
-			case SINGLE_CHOICE_STACK : {
-				throw new NotImplementedException();
-			}			
-		}				
-		
-		loopBoundHandler.pushMainLoopBounds(loopbounds);
-		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-		return code;
-	}
+    public static String generateCode(String generatedVarName, String varName,
+            ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
+            CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler) {
+
+        Map<String, String> replacementMap = Map.of("VOTE_TYPE",
+                voteArrStruct.getStruct().getName(), "AMT_MEMBER",
+                voteArrStruct.getAmtName(), "LIST_MEMBER",
+                voteArrStruct.getListName(), "GENERATED_VAR_NAME",
+                generatedVarName, "AMT_CANDIDATES",
+                options.getCbmcAmountMaxCandsVarName(), "ASSUME",
+                options.getCbmcAssumeName(), "NONDET_UINT",
+                options.getCbmcNondetUintName(), "RHS", varName, "PERM",
+                "permutationIndices", "AMT_VOTERS",
+                options.getCbmcAmountMaxVotersVarName());
+
+        List<LoopBound> loopbounds = List.of();
+        String code = null;
+
+        switch (votingInputType) {
+        case APPROVAL: {
+            code = CodeTemplateVotePermutation.templateApproval;
+            loopbounds = CodeTemplateVotePermutation.loopBoundsApproval;
+            break;
+        }
+        case WEIGHTED_APPROVAL: {
+            break;
+        }
+        case PREFERENCE: {
+            code = CodeTemplateVotePermutation.templatePreference;
+            loopbounds = CodeTemplateVotePermutation.loopBoundsPreference;
+            break;
+        }
+        case SINGLE_CHOICE: {
+            throw new NotImplementedException();
+        }
+        case SINGLE_CHOICE_STACK: {
+            throw new NotImplementedException();
+        }
+        }
+
+        loopBoundHandler.pushMainLoopBounds(loopbounds);
+        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+        return code;
+    }
 }

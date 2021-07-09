@@ -6,24 +6,24 @@ import java.util.List;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
 public class ElectTupleNode extends ElectionTypeNode {
-	private List<Integer> electNumbers = new ArrayList<>();
+    private List<Integer> electNumbers = new ArrayList<>();
 
-	@Override
-	public String getTreeString(int depth) {
-		return "Elect Tuple";
-	}
+    @Override
+    public String getTreeString(int depth) {
+        return "Elect Tuple";
+    }
 
-	public void addElectNumber(int number) {
-		electNumbers.add(number);
-	}
-	
-	public List<Integer> getElectNumbers() {
-		return electNumbers;
-	}
+    public void addElectNumber(int number) {
+        electNumbers.add(number);
+    }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitElectTuple(this);
-	}
+    public List<Integer> getElectNumbers() {
+        return electNumbers;
+    }
+
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitElectTuple(this);
+    }
 
 }

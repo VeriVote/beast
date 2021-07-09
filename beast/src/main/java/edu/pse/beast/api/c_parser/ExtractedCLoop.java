@@ -14,214 +14,214 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.RelationalExpressionContext;
 
 public class ExtractedCLoop {
-	private IterationStatementContext ctx;
+    private IterationStatementContext ctx;
 
-	private String uuid = UUID.randomUUID().toString();
-	private CLoopTypes loopType;
+    private String uuid = UUID.randomUUID().toString();
+    private CLoopTypes loopType;
 
-	private int line;
-	private int loopNumberInFunction;
-	private int posInLine;
+    private int line;
+    private int loopNumberInFunction;
+    private int posInLine;
 
-	private String functionName;
-	private CLoopParseResultType loopParseResult;
-	private LoopBoundType parsedLoopBoundType;
-	private Integer manualInteger;
+    private String functionName;
+    private CLoopParseResultType loopParseResult;
+    private LoopBoundType parsedLoopBoundType;
+    private Integer manualInteger;
 
-	private ExtractedCLoop parentLoop;
-	private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
+    private ExtractedCLoop parentLoop;
+    private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
 
-	public ExtractedCLoop(IterationStatementContext ctx,
-			int loopNumberInFunction, CodeGenOptions codeGenOptions,
-			String functionName) {
-		this.ctx = ctx;
-		this.functionName = functionName;
-		this.loopNumberInFunction = loopNumberInFunction;
-		init(codeGenOptions);
-	}
+    public ExtractedCLoop(IterationStatementContext ctx,
+            int loopNumberInFunction, CodeGenOptions codeGenOptions,
+            String functionName) {
+        this.ctx = ctx;
+        this.functionName = functionName;
+        this.loopNumberInFunction = loopNumberInFunction;
+        init(codeGenOptions);
+    }
 
-	public List<ExtractedCLoop> getChildrenLoops() {
-		return childrenLoops;
-	}
+    public List<ExtractedCLoop> getChildrenLoops() {
+        return childrenLoops;
+    }
 
-	public CLoopTypes getLoopType() {
-		return loopType;
-	}
+    public CLoopTypes getLoopType() {
+        return loopType;
+    }
 
-	public String getFunctionName() {
-		return functionName;
-	}
+    public String getFunctionName() {
+        return functionName;
+    }
 
-	public int getLoopNumberInFunction() {
-		return loopNumberInFunction;
-	}
+    public int getLoopNumberInFunction() {
+        return loopNumberInFunction;
+    }
 
-	public int getLine() {
-		return line;
-	}
+    public int getLine() {
+        return line;
+    }
 
-	public int getPosInLine() {
-		return posInLine;
-	}
+    public int getPosInLine() {
+        return posInLine;
+    }
 
-	public CLoopParseResultType getLoopParseResult() {
-		return loopParseResult;
-	}
+    public CLoopParseResultType getLoopParseResult() {
+        return loopParseResult;
+    }
 
-	public LoopBoundType getParsedLoopBoundType() {
-		return parsedLoopBoundType;
-	}
+    public LoopBoundType getParsedLoopBoundType() {
+        return parsedLoopBoundType;
+    }
 
-	public void setParsedLoopBoundType(LoopBoundType parsedLoopBoundType) {
-		this.parsedLoopBoundType = parsedLoopBoundType;
-	}
+    public void setParsedLoopBoundType(LoopBoundType parsedLoopBoundType) {
+        this.parsedLoopBoundType = parsedLoopBoundType;
+    }
 
-	public void setParentLoop(ExtractedCLoop parentLoop) {
-		this.parentLoop = parentLoop;
-	}
+    public void setParentLoop(ExtractedCLoop parentLoop) {
+        this.parentLoop = parentLoop;
+    }
 
-	public ExtractedCLoop getParentLoop() {
-		return parentLoop;
-	}
+    public ExtractedCLoop getParentLoop() {
+        return parentLoop;
+    }
 
-	public Integer getManualInteger() {
-		return manualInteger;
-	}
+    public Integer getManualInteger() {
+        return manualInteger;
+    }
 
-	public void setManualInteger(int manualInteger) {
-		this.manualInteger = manualInteger;
-	}
+    public void setManualInteger(int manualInteger) {
+        this.manualInteger = manualInteger;
+    }
 
-	@Override
-	public String toString() {
-		String template = "LOOP_TYPE LOOP_NUMBER: LOOP_BOUND";
-		template = template.replaceAll("LOOP_TYPE", loopType.toString())
-				.replaceAll("LOOP_NUMBER", String.valueOf(loopNumberInFunction))
-				.replaceAll("LOOP_BOUND", parsedLoopBoundType.toString());
-		if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
-			if (manualInteger == null) {
-				template = "MISSING MANUAL BOUND :: " + template;
-			} else {
-				template += "(" + manualInteger + ")";
-			}
-		}
-		return template;
-	}
+    @Override
+    public String toString() {
+        String template = "LOOP_TYPE LOOP_NUMBER: LOOP_BOUND";
+        template = template.replaceAll("LOOP_TYPE", loopType.toString())
+                .replaceAll("LOOP_NUMBER", String.valueOf(loopNumberInFunction))
+                .replaceAll("LOOP_BOUND", parsedLoopBoundType.toString());
+        if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+            if (manualInteger == null) {
+                template = "MISSING MANUAL BOUND :: " + template;
+            } else {
+                template += "(" + manualInteger + ")";
+            }
+        }
+        return template;
+    }
 
-	private void handleParseFail(CLoopParseResultType res) {
-		loopParseResult = res;
-		parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED_INTEGER;
-	}
+    private void handleParseFail(CLoopParseResultType res) {
+        loopParseResult = res;
+        parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED_INTEGER;
+    }
 
-	private void init(CodeGenOptions codeGenOptions) {
-		line = ctx.start.getLine();
-		posInLine = ctx.start.getCharPositionInLine();
+    private void init(CodeGenOptions codeGenOptions) {
+        line = ctx.start.getLine();
+        posInLine = ctx.start.getCharPositionInLine();
 
-		if (ctx.For() != null) {
-			loopType = CLoopTypes.FOR;
-			List<ExpressionContext> expressions = ctx.expression();
+        if (ctx.For() != null) {
+            loopType = CLoopTypes.FOR;
+            List<ExpressionContext> expressions = ctx.expression();
 
-			ExpressionContext condExp = null;
-			int firstSemiPos = 0;
-			String semi = ctx.Semi(0).getText();
-			for (; firstSemiPos < ctx.getChildCount()
-					&& !ctx.getChild(firstSemiPos).getText()
-							.equals(semi); ++firstSemiPos)
-				;
+            ExpressionContext condExp = null;
+            int firstSemiPos = 0;
+            String semi = ctx.Semi(0).getText();
+            for (; firstSemiPos < ctx.getChildCount()
+                    && !ctx.getChild(firstSemiPos).getText()
+                            .equals(semi); ++firstSemiPos)
+                ;
 
-			if (!ctx.getChild(firstSemiPos + 1).getText().equals(semi)) {
-				condExp = (ExpressionContext) ctx.getChild(firstSemiPos + 1);
-			}
+            if (!ctx.getChild(firstSemiPos + 1).getText().equals(semi)) {
+                condExp = (ExpressionContext) ctx.getChild(firstSemiPos + 1);
+            }
 
-			if (condExp == null) {
-				handleParseFail(CLoopParseResultType.NO_CONDITIONAL_STATEMENT);
-				return;
-			}
+            if (condExp == null) {
+                handleParseFail(CLoopParseResultType.NO_CONDITIONAL_STATEMENT);
+                return;
+            }
 
-			ParserRuleContext parseRule = (ParserRuleContext) condExp;
-			while (parseRule.getChildCount() > 0 && parseRule
-					.getClass() != RelationalExpressionContext.class) {
-				parseRule = (ParserRuleContext) parseRule.getChild(0);
-			}
+            ParserRuleContext parseRule = (ParserRuleContext) condExp;
+            while (parseRule.getChildCount() > 0 && parseRule
+                    .getClass() != RelationalExpressionContext.class) {
+                parseRule = (ParserRuleContext) parseRule.getChild(0);
+            }
 
-			if (parseRule.getClass() != RelationalExpressionContext.class) {
-				handleParseFail(
-						CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
-				return;
-			}
+            if (parseRule.getClass() != RelationalExpressionContext.class) {
+                handleParseFail(
+                        CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
+                return;
+            }
 
-			RelationalExpressionContext relCond = (RelationalExpressionContext) parseRule;
+            RelationalExpressionContext relCond = (RelationalExpressionContext) parseRule;
 
-			if (relCond.Less() == null) {
-				handleParseFail(
-						CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_LESS);
-				return;
-			}
+            if (relCond.Less() == null) {
+                handleParseFail(
+                        CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_LESS);
+                return;
+            }
 
-			if (relCond.shiftExpression() == null) {
-				handleParseFail(
-						CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
-				return;
-			}
+            if (relCond.shiftExpression() == null) {
+                handleParseFail(
+                        CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
+                return;
+            }
 
-			String lessThanText = relCond.shiftExpression().getText();
+            String lessThanText = relCond.shiftExpression().getText();
 
-			if (lessThanText
-					.equals(codeGenOptions.getCurrentAmountVotersVarName())) {
-				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-				parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS;
-			} else if (lessThanText
-					.equals(codeGenOptions.getCurrentAmountCandsVarName())) {
-				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-				parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS;
-			} else if (lessThanText
-					.equals(codeGenOptions.getCurrentAmountSeatsVarName())) {
-				loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-				parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_SEATS;
-			}
-		} else if (ctx.While() != null) {
-			loopType = CLoopTypes.WHILE;
-		}
-	}
+            if (lessThanText
+                    .equals(codeGenOptions.getCurrentAmountVotersVarName())) {
+                loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
+                parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS;
+            } else if (lessThanText
+                    .equals(codeGenOptions.getCurrentAmountCandsVarName())) {
+                loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
+                parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS;
+            } else if (lessThanText
+                    .equals(codeGenOptions.getCurrentAmountSeatsVarName())) {
+                loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
+                parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_SEATS;
+            }
+        } else if (ctx.While() != null) {
+            loopType = CLoopTypes.WHILE;
+        }
+    }
 
-	public LoopBound generateLoopBound() {
-		List<LoopBound> childrenLoopBounds = new ArrayList<>();
-		for (ExtractedCLoop cl : childrenLoops) {
-			childrenLoopBounds.add(cl.generateLoopBound());
-		}
+    public LoopBound generateLoopBound() {
+        List<LoopBound> childrenLoopBounds = new ArrayList<>();
+        for (ExtractedCLoop cl : childrenLoops) {
+            childrenLoopBounds.add(cl.generateLoopBound());
+        }
 
-		LoopBound bound = new LoopBound(childrenLoopBounds, functionName,
-				parsedLoopBoundType, loopNumberInFunction);
+        LoopBound bound = new LoopBound(childrenLoopBounds, functionName,
+                parsedLoopBoundType, loopNumberInFunction);
 
-		return bound;
-	}
+        return bound;
+    }
 
-	public void addChild(ExtractedCLoop l) {
-		childrenLoops.add(l);
-	}
+    public void addChild(ExtractedCLoop l) {
+        childrenLoops.add(l);
+    }
 
-	public String getUuid() {
-		return uuid;
-	}
+    public String getUuid() {
+        return uuid;
+    }
 
-	private ExtractedCLoop() {
-	}
+    private ExtractedCLoop() {
+    }
 
-	public static ExtractedCLoop fromStoredValues(String uuid,
-			CLoopTypes loopType, int line, int posInLine, int numberInFunc,
-			CLoopParseResultType parseResultType, LoopBoundType loopBoundType,
-			String functionName) {
+    public static ExtractedCLoop fromStoredValues(String uuid,
+            CLoopTypes loopType, int line, int posInLine, int numberInFunc,
+            CLoopParseResultType parseResultType, LoopBoundType loopBoundType,
+            String functionName) {
 
-		ExtractedCLoop cLoop = new ExtractedCLoop();
-		cLoop.uuid = uuid;
-		cLoop.loopType = loopType;
-		cLoop.line = line;
-		cLoop.posInLine = posInLine;
-		cLoop.loopNumberInFunction = numberInFunc;
-		cLoop.loopParseResult = parseResultType;
-		cLoop.parsedLoopBoundType = loopBoundType;
-		cLoop.functionName = functionName;
+        ExtractedCLoop cLoop = new ExtractedCLoop();
+        cLoop.uuid = uuid;
+        cLoop.loopType = loopType;
+        cLoop.line = line;
+        cLoop.posInLine = posInLine;
+        cLoop.loopNumberInFunction = numberInFunc;
+        cLoop.loopParseResult = parseResultType;
+        cLoop.parsedLoopBoundType = loopBoundType;
+        cLoop.functionName = functionName;
 
-		return cLoop;
-	}
+        return cLoop;
+    }
 }

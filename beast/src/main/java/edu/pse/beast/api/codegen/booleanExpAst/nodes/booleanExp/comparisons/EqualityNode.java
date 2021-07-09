@@ -5,13 +5,13 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressio
 
 public class EqualityNode extends BooleanExpressionNode {
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {		
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+    }
 
-	@Override
-	public String getTreeString(int depth) {
-		return null;
-	}
+    @Override
+    public String getTreeString(int depth) {
+        return null;
+    }
 
 }

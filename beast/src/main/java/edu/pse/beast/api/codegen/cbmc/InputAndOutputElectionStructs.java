@@ -2,21 +2,22 @@ package edu.pse.beast.api.codegen.cbmc;
 
 public class InputAndOutputElectionStructs {
 
-	ElectionTypeCStruct input;
-	ElectionTypeCStruct output;
+    ElectionTypeCStruct input;
+    ElectionTypeCStruct output;
 
-	public InputAndOutputElectionStructs(ElectionTypeCStruct input, ElectionTypeCStruct output) {
-		super();
-		this.input = input;
-		this.output = output;
-	}
+    public InputAndOutputElectionStructs(ElectionTypeCStruct input,
+            ElectionTypeCStruct output) {
+        super();
+        this.input = input;
+        this.output = output;
+    }
 
-	public ElectionTypeCStruct getInput() {
-		return input;
-	}
+    public ElectionTypeCStruct getInput() {
+        return input;
+    }
 
-	public ElectionTypeCStruct getOutput() {
-		return output;
-	}
+    public ElectionTypeCStruct getOutput() {
+        return output;
+    }
 
 }

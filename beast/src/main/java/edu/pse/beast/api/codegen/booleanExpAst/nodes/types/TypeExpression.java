@@ -8,5 +8,5 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressio
  * @author Holger Klein
  */
 public abstract class TypeExpression extends BooleanExpressionNode {
-    
+
 }

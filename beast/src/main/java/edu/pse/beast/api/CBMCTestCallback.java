@@ -9,71 +9,71 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
 
 public interface CBMCTestCallback {
 
-	public default void onTestStarted() {
-	}
+    public default void onTestStarted() {
+    }
 
-	public default void onError() {
-	}
+    public default void onError() {
+    }
 
-	public default void onTestFinished() {
-	}
+    public default void onTestFinished() {
+    }
 
-	public default void onTestStopped() {
-	}
+    public default void onTestStopped() {
+    }
 
-	public default void onPropertyTestAddedToQueue(
-			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
+    public default void onPropertyTestAddedToQueue(
+            CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+            String uuid) {
 
-	}
+    }
 
-	public default void onPropertyTestStart(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
+    public default void onPropertyTestStart(CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+            String uuid) {
 
-	}
+    }
 
-	public default void onPropertyTestRawOutput(String sessionUUID,
-			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid, String output) {
+    public default void onPropertyTestRawOutput(String sessionUUID,
+            CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+            String uuid, String output) {
 
-	}
+    }
 
-	public default void onTestFileCreated(String sessionUUID,
-			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, File cbmcFile) {
+    public default void onTestFileCreated(String sessionUUID,
+            CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, File cbmcFile) {
 
-	}
+    }
 
-	public default void onCompleteCommand(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
-			String uuid, String completeCommand) {
-	}
+    public default void onCompleteCommand(CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, int v, int c, int s,
+            String uuid, String completeCommand) {
+    }
 
-	public default void onException(Exception ex) throws Exception {
-	}
+    public default void onException(Exception ex) throws Exception {
+    }
 
-	public default void onNewCBMCMessage(CBMCJsonMessage msg) {
-	}
+    public default void onNewCBMCMessage(CBMCJsonMessage msg) {
+    }
 
-	public default void onPropertyTestFinished(CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
+    public default void onPropertyTestFinished(CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+            String uuid) {
 
-	}
+    }
 
-	public default void onPropertyTestRawOutputComplete(
-			CElectionDescription description,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid, List<String> cbmcOutput) {
+    public default void onPropertyTestRawOutputComplete(
+            CElectionDescription description,
+            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+            String uuid, List<String> cbmcOutput) {
 
-	}
+    }
 
-	public default void onPropertyTestStopped(CElectionDescription descr,
-			PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-			String uuid) {
+    public default void onPropertyTestStopped(CElectionDescription descr,
+            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
+            String uuid) {
 
-	}
+    }
 }

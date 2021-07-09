@@ -10,35 +10,33 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
  * @author Holger Klein
  */
 public final class ForAllNode extends QuantifierNode {
-	
-	private SymbolicCBMCVar var;
+
+    private SymbolicCBMCVar var;
+
     /**
      * Instantiates a new for all node.
      *
-     * @param declSymbVar
-     *            the symbolic variable of this quantifier
-     * @param followingNode
-     *            the following node of this quantifier
+     * @param declSymbVar   the symbolic variable of this quantifier
+     * @param followingNode the following node of this quantifier
      */
     public ForAllNode(final SymbolicCBMCVar declSymbVar,
-                      final BooleanExpressionNode followingNode) {
+            final BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
 
-
     public SymbolicCBMCVar getVar() {
-		return var;
-	}
-    
+        return var;
+    }
+
     @Override
     public String getTreeString(final int depth) {
         return null;
     }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		if(var.getVarType() == CBMCVarType.VOTER) {
-			visitor.visitForAllVotersNode(this);
-		}		
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        if (var.getVarType() == CBMCVarType.VOTER) {
+            visitor.visitForAllVotersNode(this);
+        }
+    }
 }

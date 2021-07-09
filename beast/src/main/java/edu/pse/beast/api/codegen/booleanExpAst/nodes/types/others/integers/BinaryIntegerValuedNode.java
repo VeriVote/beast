@@ -8,53 +8,53 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
  * @author Holger Klein
  */
 public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
-	/** The lhs. */
-	private final IntegerValuedExpression lhs;
+    /** The lhs. */
+    private final IntegerValuedExpression lhs;
 
-	/** The rhs. */
-	private final IntegerValuedExpression rhs;
+    /** The rhs. */
+    private final IntegerValuedExpression rhs;
 
-	/** The relation symbol. */
-	private final String relationSymbol;
+    /** The relation symbol. */
+    private final String relationSymbol;
 
-	/**
-	 * Instantiates a new binary integer valued node.
-	 *
-	 * @param lhsExpr      the lhs expr
-	 * @param rhsExpr      the rhs expr
-	 * @param relationSymb the relation symb
-	 */
-	public BinaryIntegerValuedNode(final IntegerValuedExpression lhsExpr,
-			final IntegerValuedExpression rhsExpr, final String relationSymb) {
-		this.lhs = lhsExpr;
-		this.rhs = rhsExpr;
-		this.relationSymbol = relationSymb;
-	}
+    /**
+     * Instantiates a new binary integer valued node.
+     *
+     * @param lhsExpr      the lhs expr
+     * @param rhsExpr      the rhs expr
+     * @param relationSymb the relation symb
+     */
+    public BinaryIntegerValuedNode(final IntegerValuedExpression lhsExpr,
+            final IntegerValuedExpression rhsExpr, final String relationSymb) {
+        this.lhs = lhsExpr;
+        this.rhs = rhsExpr;
+        this.relationSymbol = relationSymb;
+    }
 
-	@Override
-	public String getTreeString(final int depth) {
-		return null;
-	}
+    @Override
+    public String getTreeString(final int depth) {
+        return null;
+    }
 
-	/**
-	 * Gets the relation symbol.
-	 *
-	 * @return the relation symbol
-	 */
-	public String getRelationSymbol() {
-		return relationSymbol;
-	}
+    /**
+     * Gets the relation symbol.
+     *
+     * @return the relation symbol
+     */
+    public String getRelationSymbol() {
+        return relationSymbol;
+    }
 
-	public IntegerValuedExpression getLhs() {
-		return lhs;
-	}
+    public IntegerValuedExpression getLhs() {
+        return lhs;
+    }
 
-	public IntegerValuedExpression getRhs() {
-		return rhs;
-	}
+    public IntegerValuedExpression getRhs() {
+        return rhs;
+    }
 
-	@Override
-	public void getVisited(BooleanAstVisitor visitor) {
-		visitor.visitBinaryIntegerExpression(this);
-	}
+    @Override
+    public void getVisited(BooleanAstVisitor visitor) {
+        visitor.visitBinaryIntegerExpression(this);
+    }
 }

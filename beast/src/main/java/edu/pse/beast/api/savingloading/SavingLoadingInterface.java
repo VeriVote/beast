@@ -15,49 +15,49 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class SavingLoadingInterface {
 
-	public static String readStringFromFile(File f) throws IOException {
-		return Files.readString(f.toPath());
-	}
+    public static String readStringFromFile(File f) throws IOException {
+        return Files.readString(f.toPath());
+    }
 
-	public static void writeStringToFile(File f, String s) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-		writer.write(s);
-		writer.close();
-	}
+    public static void writeStringToFile(File f, String s) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+        writer.write(s);
+        writer.close();
+    }
 
-	public static void storeCElection(CElectionDescription descr, File f)
-			throws IOException {
-		CElectionSaverLoader.storeCElection(descr, f);
-	}
+    public static void storeCElection(CElectionDescription descr, File f)
+            throws IOException {
+        CElectionSaverLoader.storeCElection(descr, f);
+    }
 
-	public static CElectionDescription loadCElection(File f)
-			throws NotImplementedException, IOException {
-		return CElectionSaverLoader.loadCElection(f);
-	}
+    public static CElectionDescription loadCElection(File f)
+            throws NotImplementedException, IOException {
+        return CElectionSaverLoader.loadCElection(f);
+    }
 
-	public static void storePreAndPostConditionDescription(
-			PreAndPostConditionsDescription propDescr, File f)
-			throws IOException {
-		PreAndPostPropertySaverLoader
-				.storePreAndPostConditionDescription(propDescr, f);
-	}
+    public static void storePreAndPostConditionDescription(
+            PreAndPostConditionsDescription propDescr, File f)
+            throws IOException {
+        PreAndPostPropertySaverLoader
+                .storePreAndPostConditionDescription(propDescr, f);
+    }
 
-	public static PreAndPostConditionsDescription loadPreAndPostConditionDescription(
-			File f) throws JSONException, IOException {
-		return PreAndPostPropertySaverLoader
-				.loadPreAndPostConditionDescription(f);
-	}
+    public static PreAndPostConditionsDescription loadPreAndPostConditionDescription(
+            File f) throws JSONException, IOException {
+        return PreAndPostPropertySaverLoader
+                .loadPreAndPostConditionDescription(f);
+    }
 
-	public static void storeBeastWorkspace(BeastWorkspace beastWorkspace,
-			File f, RelativePathConverter relativePathConverter)
-			throws IOException {
-		WorkspaceSaverLoader.storeWorkspace(beastWorkspace, f,
-				relativePathConverter);
-	}
+    public static void storeBeastWorkspace(BeastWorkspace beastWorkspace,
+            File f, RelativePathConverter relativePathConverter)
+            throws IOException {
+        WorkspaceSaverLoader.storeWorkspace(beastWorkspace, f,
+                relativePathConverter);
+    }
 
-	public static BeastWorkspace loadBeastWorkspace(File f,
-			RelativePathConverter relativePathConverter) throws IOException {
-		return WorkspaceSaverLoader.loadBeastWorkspaceFromFile(f,
-				relativePathConverter);
-	}
+    public static BeastWorkspace loadBeastWorkspace(File f,
+            RelativePathConverter relativePathConverter) throws IOException {
+        return WorkspaceSaverLoader.loadBeastWorkspaceFromFile(f,
+                relativePathConverter);
+    }
 }

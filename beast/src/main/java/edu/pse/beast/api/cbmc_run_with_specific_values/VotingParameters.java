@@ -1,22 +1,20 @@
 package edu.pse.beast.api.cbmc_run_with_specific_values;
 
-import java.util.List;
-
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
 public interface VotingParameters {
-	int getV();
+    int getV();
 
-	int getC();
+    int getC();
 
-	int getS();
+    int getS();
 
-	public String generateVoteStructInitCode(
-			ElectionTypeCStruct voteInputStruct, CodeGenOptions options,
-			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
-			String generatedVarName);
+    public String generateVoteStructInitCode(
+            ElectionTypeCStruct voteInputStruct, CodeGenOptions options,
+            CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
+            String generatedVarName);
 
-	int getHighestVote();
+    int getHighestVote();
 }

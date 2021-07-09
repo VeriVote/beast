@@ -11,47 +11,47 @@ import javafx.scene.layout.AnchorPane;
 
 public class TestConfigGuiController {
 
-	@FXML
-	private AnchorPane topLevelAnchorPane;
-	@FXML
-	private TextField nameTextField;
-	@FXML
-	private ChoiceBox<CElectionDescription> descrChoiceBox;
-	@FXML
-	private Button loadDescrButton;
-	@FXML
-	private ChoiceBox<PreAndPostConditionsDescription> propDescrChoiceBox;
-	@FXML
-	private Button loadPropDescrButton;
+    @FXML
+    private AnchorPane topLevelAnchorPane;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private ChoiceBox<CElectionDescription> descrChoiceBox;
+    @FXML
+    private Button loadDescrButton;
+    @FXML
+    private ChoiceBox<PreAndPostConditionsDescription> propDescrChoiceBox;
+    @FXML
+    private Button loadPropDescrButton;
 
-	private BeastWorkspace beastWorkspace;
+    private BeastWorkspace beastWorkspace;
 
-	public TestConfigGuiController(BeastWorkspace beastWorkspace) {
-		this.beastWorkspace = beastWorkspace;
-	}
+    public TestConfigGuiController(BeastWorkspace beastWorkspace) {
+        this.beastWorkspace = beastWorkspace;
+    }
 
-	public AnchorPane getTopLevelAnchorPane() {
-		return topLevelAnchorPane;
-	}
+    public AnchorPane getTopLevelAnchorPane() {
+        return topLevelAnchorPane;
+    }
 
-	public void display(TestConfiguration config) {
-		nameTextField.setText(config.getName());
+    public void display(TestConfiguration config) {
+        nameTextField.setText(config.getName());
 
-		descrChoiceBox.getItems().clear();
-		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
-		descrChoiceBox.getSelectionModel().select(config.getDescr());
+        descrChoiceBox.getItems().clear();
+        descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
+        descrChoiceBox.getSelectionModel().select(config.getDescr());
 
-		propDescrChoiceBox.getItems().clear();
-		propDescrChoiceBox.getItems()
-				.addAll(beastWorkspace.getLoadedPropDescrs());
-		propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());
-	}
+        propDescrChoiceBox.getItems().clear();
+        propDescrChoiceBox.getItems()
+                .addAll(beastWorkspace.getLoadedPropDescrs());
+        propDescrChoiceBox.getSelectionModel().select(config.getPropDescr());
+    }
 
-	@FXML
-	private void initialize() {
-		descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
-		propDescrChoiceBox.getItems()
-				.addAll(beastWorkspace.getLoadedPropDescrs());
-	}
+    @FXML
+    private void initialize() {
+        descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
+        propDescrChoiceBox.getItems()
+                .addAll(beastWorkspace.getLoadedPropDescrs());
+    }
 
 }
