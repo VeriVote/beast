@@ -9,6 +9,8 @@ import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
@@ -17,6 +19,8 @@ import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 
 public class TestAddsSimpleDecl {
+	private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
+
 	@Test
 	public void testSimpleFunctionDeclsAdded() {
 		String bordaCode = "    unsigned int i = 0;\n"
@@ -58,7 +62,7 @@ public class TestAddsSimpleDecl {
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
 		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
-				descr, propDescr, codeGenOptions).getCode();
+				descr, propDescr, codeGenOptions, initVoteHelper).getCode();
 		
 		System.out.println(code);
 	}

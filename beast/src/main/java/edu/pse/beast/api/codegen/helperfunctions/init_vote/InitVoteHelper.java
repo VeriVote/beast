@@ -27,4 +27,6 @@ public abstract class InitVoteHelper {
 			ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
 			CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler, 
 			CBMCGeneratedCodeInfo codeInfo);
+
+	public abstract int getHighestVote();
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
-import edu.pse.beast.api.codegen.c_code.CDefine;
 import edu.pse.beast.api.codegen.c_code.CFile;
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.c_code.CStruct;
@@ -20,12 +19,10 @@ import edu.pse.beast.api.electiondescription.CElectionVotingType;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.electiondescription.function.CelectionDescriptionFunctionType;
 import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.api.specificcbmcrun.SpecificCBMCRunParametersInfo;
 
 public class CBMCCodeGenerator {
 

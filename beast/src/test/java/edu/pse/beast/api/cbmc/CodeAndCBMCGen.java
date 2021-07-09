@@ -10,6 +10,8 @@ import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -47,10 +49,12 @@ public class CodeAndCBMCGen {
 		int v = 5;
 		int c = 5;
 		int s = 5;
+		
+		InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
 
 		CBMCGeneratedCodeInfo codeInfo = CBMCCodeGenerator
 				.generateCodeForCBMCPropertyTest(descr, propDescr,
-						codeGenOptions);
+						codeGenOptions, initVoteHelper);
 
 		System.out.println(codeInfo.getCode());
 

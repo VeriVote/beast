@@ -7,17 +7,16 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
 public interface VotingParameters {
-
-	List<String> generateVoteStructInitCode(ElectionTypeCStruct voteArrStruct,
-			ElectionTypeCStruct voteResultStruct, CodeGenOptions options,
-			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo);
-
-	int getAmtVotes();
-
-	String getVotingVarName(int i);
-	
 	int getV();
+
 	int getC();
+
 	int getS();
 
+	public String generateVoteStructInitCode(
+			ElectionTypeCStruct voteInputStruct, CodeGenOptions options,
+			CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
+			String generatedVarName);
+
+	int getHighestVote();
 }

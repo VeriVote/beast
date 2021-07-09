@@ -74,4 +74,9 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
 		code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
 		return code;
 	}
+
+	@Override
+	public int getHighestVote() {
+		return 0;
+	}
 }

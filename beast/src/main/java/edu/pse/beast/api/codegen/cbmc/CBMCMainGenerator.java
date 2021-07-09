@@ -73,6 +73,7 @@ public class CBMCMainGenerator {
 		// init votes
 		int highestVote = Math.max(preAstData.getHighestVoteOrElect(),
 				postAstData.getHighestVoteOrElect());
+		highestVote = Math.max(highestVote, initVoteHelper.getHighestVote());
 
 		// init global symbolic vars
 		for (SymbolicCBMCVar var : symCbmcVars) {

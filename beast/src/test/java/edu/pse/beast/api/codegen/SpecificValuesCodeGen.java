@@ -12,22 +12,20 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SpecificValueInitVoteHelper;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.specificcbmcrun.PreferenceParameters;
 
-public class CBMCCodeGenTest2 {
-	
-	private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
-
+public class SpecificValuesCodeGen {
 	@Test
 	public void testNumbers() {
 		String votingCode = "";
 
 		CElectionDescription descr = new CElectionDescription(
-				VotingInputTypes.SINGLE_CHOICE, VotingOutputTypes.CANDIDATE_LIST,
+				VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
 				"borda");
 		descr.getVotingFunction().setCode(votingCode);
 
@@ -38,18 +36,22 @@ public class CBMCCodeGenTest2 {
 		descr.getVotingFunction().setExtractedLoops(loops);
 
 		String pre = "";
-		String post = "ELECT1 == CUT(ELECT2, ELECT3);";
+		String post = "FALSE;";
 
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
-		propDescr.addCBMCVar(new SymbolicCBMCVar("c1", CBMCVarType.CANDIDATE));		
-		propDescr.addCBMCVar(new SymbolicCBMCVar("c2", CBMCVarType.CANDIDATE));
-
+		
+		PreferenceParameters votingParameters = new PreferenceParameters(5);
+		votingParameters.addVoter(List.of(0,1,2,3,4));
+		votingParameters.addVoter(List.of(0,1,2,3,4));
+		votingParameters.addVoter(List.of(0,1,2,3,4));
+		votingParameters.addVoter(List.of(0,1,2,3,4));
+		
+		InitVoteHelper initVoteHelper = new SpecificValueInitVoteHelper(votingParameters);
 
 		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
 				descr, propDescr, codeGenOptions, initVoteHelper).getCode();
 		
 		System.out.println(code);
 	}
-
 }

@@ -9,12 +9,16 @@ import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 
 public class CBMCCodeGenTest {
+	private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
+
 	
 	@Test
 	public void testGenerateSimpleCode() {
@@ -59,9 +63,10 @@ public class CBMCCodeGenTest {
 
 		PreAndPostConditionsDescription propDescr = CreationHelper
 				.createSimpleCondList("reinforce", pre, post).get(0);
+		
 
 		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
-				descr, propDescr, codeGenOptions).getCode();
+				descr, propDescr, codeGenOptions, initVoteHelper).getCode();
 		System.out.println(code);
 	}
 	
@@ -110,7 +115,7 @@ public class CBMCCodeGenTest {
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
 		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
-				descr, propDescr, codeGenOptions).getCode();
+				descr, propDescr, codeGenOptions, initVoteHelper).getCode();
 		//System.out.println(code);
 	}
 	
@@ -159,7 +164,7 @@ public class CBMCCodeGenTest {
 				.createSimpleCondList("reinforce", pre, post).get(0);
 
 		String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(
-				descr, propDescr, codeGenOptions).getCode();
+				descr, propDescr, codeGenOptions, initVoteHelper).getCode();
 		//System.out.println(code);
 	}
 }
