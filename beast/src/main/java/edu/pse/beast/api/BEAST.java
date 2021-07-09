@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.api.cbmc_run_with_specific_values.VotingParameters;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SpecificValueInitVoteHelper;
@@ -12,7 +13,6 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.api.specificcbmcrun.VotingParameters;
 import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileGeneratorNEW;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;

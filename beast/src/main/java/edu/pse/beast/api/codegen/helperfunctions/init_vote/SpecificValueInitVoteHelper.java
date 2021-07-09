@@ -1,11 +1,11 @@
 package edu.pse.beast.api.codegen.helperfunctions.init_vote;
 
+import edu.pse.beast.api.cbmc_run_with_specific_values.VotingParameters;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.specificcbmcrun.VotingParameters;
 
 public class SpecificValueInitVoteHelper extends InitVoteHelper {
 

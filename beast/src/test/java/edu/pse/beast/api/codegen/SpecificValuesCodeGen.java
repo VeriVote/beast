@@ -7,6 +7,7 @@ import org.junit.Test;
 import edu.pse.beast.api.CreationHelper;
 import edu.pse.beast.api.c_parser.AntlrCLoopParser;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.cbmc_run_with_specific_values.PreferenceParameters;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
@@ -17,7 +18,6 @@ import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.api.specificcbmcrun.PreferenceParameters;
 
 public class SpecificValuesCodeGen {
 	@Test
