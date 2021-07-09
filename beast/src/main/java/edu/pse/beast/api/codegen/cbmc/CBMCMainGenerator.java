@@ -8,8 +8,9 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressio
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -26,7 +27,7 @@ public class CBMCMainGenerator {
 		for (int i = 0; i < highestVote; ++i) {
 			switch (var.getVarType()) {
 			case VOTER: {
-				String bound = InitVoteHelper.getCurrentAmtVoter(i + 1);
+				String bound = SymbVarInitVoteHelper.getCurrentAmtVoter(i + 1);
 				String boundCode = template
 						.replaceAll("ASSUME", options.getCbmcAssumeName())
 						.replaceAll("VAR_NAME", var.getName())
@@ -35,7 +36,7 @@ public class CBMCMainGenerator {
 				break;
 			}
 			case CANDIDATE: {
-				String bound = InitVoteHelper.getCurrentAmtCand(i + 1);
+				String bound = SymbVarInitVoteHelper.getCurrentAmtCand(i + 1);
 				String boundCode = template
 						.replaceAll("ASSUME", options.getCbmcAssumeName())
 						.replaceAll("VAR_NAME", var.getName())
@@ -44,7 +45,7 @@ public class CBMCMainGenerator {
 				break;
 			}
 			case SEAT: {
-				String bound = InitVoteHelper.getCurrentAmtSeat(i + 1);
+				String bound = SymbVarInitVoteHelper.getCurrentAmtSeat(i + 1);
 				String boundCode = template
 						.replaceAll("ASSUME", options.getCbmcAssumeName())
 						.replaceAll("VAR_NAME", var.getName())
@@ -65,7 +66,7 @@ public class CBMCMainGenerator {
 			VotingInputTypes votingInputType,
 			VotingOutputTypes votingOutputType, CodeGenOptions options,
 			CodeGenLoopBoundHandler loopBoundHandler, String votingFunctionName,
-			CBMCGeneratedCodeInfo cbmcGeneratedCode) {
+			CBMCGeneratedCodeInfo cbmcGeneratedCode, InitVoteHelper initVoteHelper) {
 
 		List<String> code = new ArrayList<>();
 
@@ -79,7 +80,7 @@ public class CBMCMainGenerator {
 		}
 
 		for (int i = 0; i < highestVote; ++i) {
-			code.add(InitVoteHelper.generateCode(i + 1, voteArrStruct,
+			code.add(initVoteHelper.generateCode(i + 1, voteArrStruct,
 					votingInputType, options, loopBoundHandler,
 					cbmcGeneratedCode));
 		}

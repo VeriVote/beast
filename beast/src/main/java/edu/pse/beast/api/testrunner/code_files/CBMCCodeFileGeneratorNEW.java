@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
@@ -23,11 +24,11 @@ public class CBMCCodeFileGeneratorNEW {
 	public static CBMCCodeFileData createCodeFileTest(
 			final CElectionDescription descr,
 			final PreAndPostConditionsDescription propDescr,
-			CodeGenOptions options, PathHandler pathHandler)
-			throws IOException {
+			CodeGenOptions options, PathHandler pathHandler,
+			InitVoteHelper initVoteHelper) throws IOException {
 
 		CBMCGeneratedCodeInfo code = CBMCCodeGenerator
-				.generateCodeForCBMCPropertyTest(descr, propDescr, options);
+				.generateCodeForCBMCPropertyTest(descr, propDescr, options, initVoteHelper);
 
 		String absolutePath = pathHandler.getBaseDir().getAbsolutePath()
 				+ PATH_TO_TEMP_FOLDER;

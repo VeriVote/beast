@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.paths.PathHandler;
@@ -49,8 +51,9 @@ public class BEAST {
 			CElectionDescription descr,
 			PreAndPostConditionsDescription propDescr,
 			CodeGenOptions codeGenOptions, PathHandler pathHandler) throws IOException {
+		InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
 		return CBMCCodeFileGeneratorNEW.createCodeFileTest(descr, propDescr,
-				codeGenOptions, pathHandler);
+				codeGenOptions, pathHandler, initVoteHelper);
 	}
 
 	public List<CBMCTestRun> generateTestRuns(CBMCCodeFileData cbmcCodeFile,

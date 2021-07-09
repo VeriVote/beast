@@ -12,6 +12,7 @@ import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
@@ -63,7 +64,8 @@ public class CBMCCodeGenerator {
 
 	public static CBMCGeneratedCodeInfo generateCodeForCBMCPropertyTest(
 			CElectionDescription descr,
-			PreAndPostConditionsDescription propDescr, CodeGenOptions options) {
+			PreAndPostConditionsDescription propDescr, CodeGenOptions options,
+			InitVoteHelper initVoteHelper) {
 
 		CFile created = new CFile();
 		created.include(STDLIB);
@@ -117,17 +119,21 @@ public class CBMCCodeGenerator {
 				propDescr.getCbmcVariables());
 
 		CBMCGeneratedCodeInfo cbmcGeneratedCode = new CBMCGeneratedCodeInfo();
-		cbmcGeneratedCode.setVotesAmtMemberVarName(voteInputStruct.getAmtName());
-		cbmcGeneratedCode.setVotesListMemberVarName(voteInputStruct.getListName());
-		
-		cbmcGeneratedCode.setResultAmtMemberVarName(voteResultStruct.getAmtName());
-		cbmcGeneratedCode.setResultListMemberVarName(voteResultStruct.getListName());
+		cbmcGeneratedCode
+				.setVotesAmtMemberVarName(voteInputStruct.getAmtName());
+		cbmcGeneratedCode
+				.setVotesListMemberVarName(voteInputStruct.getListName());
+
+		cbmcGeneratedCode
+				.setResultAmtMemberVarName(voteResultStruct.getAmtName());
+		cbmcGeneratedCode
+				.setResultListMemberVarName(voteResultStruct.getListName());
 
 		CFunction mainFunction = CBMCMainGenerator.main(preAstData, postAstData,
 				propDescr.getCbmcVariables(), voteInputStruct, voteResultStruct,
 				descr.getInputType(), descr.getOutputType(), options,
 				loopBoundHandler, descr.getVotingFunction().getName(),
-				cbmcGeneratedCode);
+				cbmcGeneratedCode, initVoteHelper);
 
 		created.addFunction(mainFunction);
 

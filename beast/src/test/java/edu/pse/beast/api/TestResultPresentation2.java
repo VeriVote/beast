@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Test;
 
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.electiondescription.CElectionDescription;
 import edu.pse.beast.api.electiondescription.VotingInputTypes;
 import edu.pse.beast.api.electiondescription.VotingOutputTypes;
@@ -75,11 +75,11 @@ public class TestResultPresentation2 {
 
 		CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
 		cbmcGeneratedCodeInfo.addVotingVariableName(1,
-				InitVoteHelper.getVoteVarName(1));
+				SymbVarInitVoteHelper.getVoteVarName(1));
 		cbmcGeneratedCodeInfo.addVotingVariableName(2,
-				InitVoteHelper.getVoteVarName(2));
+				SymbVarInitVoteHelper.getVoteVarName(2));
 		cbmcGeneratedCodeInfo.addVotingVariableName(3,
-				InitVoteHelper.getVoteVarName(3));
+				SymbVarInitVoteHelper.getVoteVarName(3));
 
 		cbmcGeneratedCodeInfo.addedGeneratedVotingVar("voteSequence0");
 		cbmcGeneratedCodeInfo.addedGeneratedVotingVar("votePermutation1");

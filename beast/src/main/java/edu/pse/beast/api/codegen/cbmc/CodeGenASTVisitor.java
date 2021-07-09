@@ -33,11 +33,11 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
 import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
-import edu.pse.beast.api.codegen.helperfunctions.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsElectEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.IsVoteEmptyHelper;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
+import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectIntersectionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectPermutationHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectTupleHelper;
@@ -179,7 +179,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> varNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			varNames.add(InitVoteHelper.getVoteVarName(number));
+			varNames.add(SymbVarInitVoteHelper.getVoteVarName(number));
 		}
 
 		cbmcGeneratedCode.addInfo(generatedVarName, String.join(" ", varNames));
@@ -216,11 +216,11 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 	@Override
 	public void visitVoteExpNode(VoteExp node) {
 		if (node.getAccessingCBMCVars().size() == 0) {
-			expVarNameStack.push(InitVoteHelper
+			expVarNameStack.push(SymbVarInitVoteHelper
 					.getVoteVarName(Integer.valueOf(node.getNumber())));
 			amtVoteVars++;
 		} else {
-			String voteVarName = InitVoteHelper
+			String voteVarName = SymbVarInitVoteHelper
 					.getVoteVarName(Integer.valueOf(node.getNumber()));
 			String varName = VoteExpHelper.getVarFromVoteAccess(voteVarName,
 					node.getAccessingCBMCVars(), options, voteArrStruct);
@@ -253,7 +253,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		String generatedVarName = codeBlock.newVarName("votePermutation");
 		cbmcGeneratedCode.addedGeneratedVotingVar(generatedVarName);
 
-		String varName = InitVoteHelper.getVoteVarName(node.getVoteNumber());
+		String varName = SymbVarInitVoteHelper.getVoteVarName(node.getVoteNumber());
 
 		cbmcGeneratedCode.addInfo(generatedVarName, String.join(" ", varName));
 
@@ -311,7 +311,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
 		List<String> voteNames = new ArrayList<>();
 		for (int number : node.getNumbers()) {
-			voteNames.add(InitVoteHelper.getVoteVarName(number));
+			voteNames.add(SymbVarInitVoteHelper.getVoteVarName(number));
 		}
 
 		cbmcGeneratedCode.addInfo(generatedVarName,
@@ -432,13 +432,13 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 		int number = constantExp.getNumber();
 		switch(constantExp.getVarType()) {
 		case VOTER:
-			varName = InitVoteHelper.getCurrentAmtVoter(number);
+			varName = SymbVarInitVoteHelper.getCurrentAmtVoter(number);
 			break;
 		case CANDIDATE:
-			varName = InitVoteHelper.getCurrentAmtCand(number);
+			varName = SymbVarInitVoteHelper.getCurrentAmtCand(number);
 			break;
 		case SEAT:
-			varName = InitVoteHelper.getCurrentAmtSeat(number);
+			varName = SymbVarInitVoteHelper.getCurrentAmtSeat(number);
 			break;
 		}
 		expVarNameStack.push(varName);
