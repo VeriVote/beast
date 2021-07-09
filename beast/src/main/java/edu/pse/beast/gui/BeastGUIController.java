@@ -21,7 +21,7 @@ import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.errors.ErrorHandler;
 import edu.pse.beast.gui.errors.ErrorMessageLoader;
-import edu.pse.beast.gui.log.LogGuiController;
+import edu.pse.beast.gui.errors.ErrorGuiController;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsGUIController;
 import edu.pse.beast.gui.options.ceditor.CEditorOptions;
@@ -153,7 +153,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private CElectionEditor cElectionEditor;
     private PreAndPostPropertyEditor preAndPostPropertyEditor;
     private TestConfigTopLevelGUIHandler testConfigurationHandler;
-    private LogGuiController logGuiController;
+    private ErrorGuiController logGuiController;
 
     private BeastWorkspace beastWorkspace;
 
@@ -224,8 +224,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 testConfigDetailsAnchorPane, beastWorkspace);
     }
 
-    private void initLogHandler(ErrorHandler errorHandler) {
-        logGuiController = new LogGuiController(logAnchorPane, errorHandler);
+    private void initLogHandler(ErrorHandler errorHandler) throws IOException {
+        logGuiController = new ErrorGuiController(logAnchorPane, errorHandler);
     }
 
     private void initWorkspace(ErrorHandler errorHandler) {

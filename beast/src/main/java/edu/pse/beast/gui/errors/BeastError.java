@@ -4,7 +4,9 @@ public class BeastError {
     private Exception exception;
     private String other;
     private BeastErrorTypes errorType;
-
+    private ErrorMessage errorMessage;
+    
+    
     public BeastError(BeastErrorTypes errorType, String other) {
         this.other = other;
         this.errorType = errorType;
@@ -38,6 +40,19 @@ public class BeastError {
 
     public void setErrorType(BeastErrorTypes errorType) {
         this.errorType = errorType;
+    }
+    
+    public ErrorMessage getErrorMessage() {
+        return errorMessage;
+    }
+    
+    public void setErrorMessage(ErrorMessage errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+    
+    @Override
+    public String toString() {
+        return errorMessage.getTitle();
     }
 
 }

@@ -30,6 +30,7 @@ module edu.pse.beast {
 
     opens edu.pse.beast.gui.options.process_handler to javafx.fxml;
     opens edu.pse.beast.gui.options.ceditor to javafx.fxml;
+    opens edu.pse.beast.gui.errors to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
     opens edu.pse.beast.gui.options to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor.testconfig to javafx.fxml;

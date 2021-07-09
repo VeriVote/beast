@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.gui.BeastGUIController;
-import edu.pse.beast.gui.log.LogGuiController;
 
 public class ErrorHandler {
 
     private List<String> errorLog = new ArrayList<>();
-    private LogGuiController listener;
+    private ErrorGuiController listener;
 
     private Map<BeastErrorTypes, ErrorMessage> errTypeToMessageType;
     private List<BeastError> exceptions = new ArrayList<>();
@@ -19,7 +18,7 @@ public class ErrorHandler {
         errTypeToMessageType = messageLoader.loadMessages();
     }
 
-    public void setListener(LogGuiController listener) {
+    public void setListener(ErrorGuiController listener) {
         this.listener = listener;
     }
 
@@ -31,9 +30,10 @@ public class ErrorHandler {
         exceptions.add(err);
 
         // TODO maybe modify the message based on the exception
-        ErrorMessage msg = errTypeToMessageType
-                .get(err.getException().getClass());
+        ErrorMessage msg = errTypeToMessageType.get(err.getErrorType());
         ErrorDialogHelper.showErrorDialog(msg);
-
+        
+        err.setErrorMessage(msg);
+        listener.handleAddedError(err);
     }
 }
