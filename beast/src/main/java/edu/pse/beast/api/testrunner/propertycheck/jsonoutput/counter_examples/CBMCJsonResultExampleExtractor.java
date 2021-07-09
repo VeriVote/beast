@@ -25,7 +25,7 @@ public class CBMCJsonResultExampleExtractor {
     private PreAndPostConditionsDescription propDescr;
     private int s, c, v;
     private List<String> rawOutput = new ArrayList<>();
-    private JSONArray resultArr;
+    private JSONArray resultArr = new JSONArray();
     private JSONArray traceArr;
     private String cProverStatus;
 

@@ -431,6 +431,7 @@ public class BeastWorkspace {
                         pathHandler);
                 loadWorkspace(ws);
             } catch (Exception e) {
+                e.printStackTrace();
                 errorHandler.logAndDisplayError(new BeastError(
                         BeastErrorTypes.IO_ERROR, "workspace", e));
 

@@ -73,17 +73,17 @@ public class CBMCMainGenerator {
         // init votes
         int highestVote = Math.max(preAstData.getHighestVoteOrElect(),
                 postAstData.getHighestVoteOrElect());
-        highestVote = Math.max(highestVote, initVoteHelper.getHighestVote());
-
-        // init global symbolic vars
-        for (SymbolicCBMCVar var : symCbmcVars) {
-            initSymbVar(var, code, options, highestVote);
-        }
+        highestVote = Math.max(highestVote, initVoteHelper.getHighestVote());       
 
         for (int i = 0; i < highestVote; ++i) {
             code.add(initVoteHelper.generateCode(i + 1, voteArrStruct,
                     votingInputType, options, loopBoundHandler,
                     cbmcGeneratedCode));
+        }
+        
+        // init global symbolic vars
+        for (SymbolicCBMCVar var : symCbmcVars) {
+            initSymbVar(var, code, options, highestVote);
         }
 
         CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,

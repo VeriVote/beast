@@ -27,8 +27,6 @@ public class CodeTemplateElectIntersection {
 			+ "        GENERATED_VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();\n"
 			+ "        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == INVALID_VOTE);\n"
 			+ "    }\n";		
-			
-
 	
 	public final static List<LoopBound> loopboundsCandidateList = 
 			LoopBound.codeGenLoopboundList(

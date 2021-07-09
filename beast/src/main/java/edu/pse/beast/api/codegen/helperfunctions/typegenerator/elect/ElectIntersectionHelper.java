@@ -22,14 +22,15 @@ public class ElectIntersectionHelper {
             CodeGenLoopBoundHandler loopBoundHandler) {
 
         Map<String, String> replacementMap = StringReplacementMap.genMap(
-                "ELECT_TYPE", electStruct.getStruct().getName(), "AMT_MEMBER",
-                electStruct.getAmtName(), "LIST_MEMBER",
-                electStruct.getListName(), "GENERATED_VAR_NAME",
-                generatedVarName, "LHS", intersectedElectNames.get(0), "RHS",
-                intersectedElectNames.get(1), "MAX_AMT_CANDIDATES",
-                options.getCbmcAmountMaxCandsVarName(), "ASSUME",
-                options.getCbmcAssumeName(), "NONDET_UINT",
-                options.getCbmcNondetUintName());
+                "ELECT_TYPE", electStruct.getStruct().getName(), 
+                "AMT_MEMBER", electStruct.getAmtName(), 
+                "LIST_MEMBER", electStruct.getListName(),
+                "GENERATED_VAR_NAME", generatedVarName,
+                "LHS", intersectedElectNames.get(0),
+                "RHS", intersectedElectNames.get(1),
+                "MAX_AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(), 
+                "ASSUME", options.getCbmcAssumeName(),
+                "NONDET_UINT", options.getCbmcNondetUintName());
 
         List<LoopBound> loopbounds = List.of();
         String code = "";

@@ -15,6 +15,15 @@ import edu.pse.beast.api.electiondescription.VotingInputTypes;
 
 public class VoteIntersectionHelper {
 
+    //TODO: This code was written when the intersection method was still thought
+    //to be a lot simpler. Thus, this code could generate intersection for an 
+    //arbitrary amount of vote structs. This is no longer the case,
+    //and intersection should only generate code for pairwaise intersections.
+    //
+    //This has been fixed for the generation of intersection code of 
+    //election result structs. See the class 
+    //edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectIntersectionHelper
+    
     public static String generateVoteIntersection(String generatedVarName,
             List<String> intersectedVotesVarNames,
             ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,

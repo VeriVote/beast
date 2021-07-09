@@ -72,6 +72,7 @@ symbolicVarExp
 symbVarByNameExp
 	: Identifier
 	;
+	
 // any sort of expression which returns a type which is not a number and represents an
 // election object. These differ depending on the input and output type of the election.
 // eg VOTES1 can be and array of uints, or an array of arrays of unints.
@@ -79,7 +80,6 @@ symbVarByNameExp
 // These types can only be compared, which leads to a boolean exp. Two types
 // can only be compared if they produce lists of same dims with the same underlying
 // value, such as VOTES1 == VOTES2    
-
 
 electionTypeExpression
 	: intersectExp
