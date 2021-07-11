@@ -18,6 +18,14 @@ import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
+/**
+ * This class can run work units and create
+ * cbmc code files or a list of 
+ * CBMC Test Runs given a range of
+ * voter, seat and candidate amounts
+ * @author holge
+ *
+ */
 public class BEAST {
 
     private List<Thread> createdThreads = new ArrayList<>();

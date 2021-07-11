@@ -14,6 +14,13 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.IterationStatementContext;
 
+
+/**
+ * uses antlr C grammar to extract information
+ * about c loops in election descriptions
+ * @author holge
+ *
+ */
 public class AntlrCLoopParser extends CBaseListener {
 
     private static List<ExtractedCLoop> extractedCLoops = new ArrayList<>();

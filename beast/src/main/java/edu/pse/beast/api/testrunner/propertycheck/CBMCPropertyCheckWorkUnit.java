@@ -17,6 +17,14 @@ import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMC
 import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 
+/**
+ * This class can run a cbmc check given a Java THread.
+ * Uses a {@link CBMCProcessHandlerSource} to 
+ * generate a cbmc process and pass it output onto 
+ * a {@link CBMCTestCallback}
+ * @author holge
+ *
+ */
 public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     // fields to start the election check
     CElectionDescription descr;

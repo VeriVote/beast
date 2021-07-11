@@ -77,6 +77,12 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumUniqueExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteTupleExpContext;
 
+/**
+ * Walks the antlr parse tree to generate our custom
+ * AST of boolean Expressions
+ * @author holge
+ *
+ */
 public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
     private static final String VOTE_SUM = "VOTE_SUM_FOR_CANDIDATE";

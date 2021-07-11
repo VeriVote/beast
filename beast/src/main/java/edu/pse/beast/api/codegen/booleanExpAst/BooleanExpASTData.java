@@ -9,6 +9,11 @@ import java.util.Set;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.BooleanExpListNode;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
+/**
+ * AST which represents boolean Expression
+ * @author holge
+ *
+ */
 public class BooleanExpASTData {
     private BooleanExpListNode topAstNode;
     private int highestElect;

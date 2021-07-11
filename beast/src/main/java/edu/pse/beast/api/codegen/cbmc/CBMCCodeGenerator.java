@@ -24,6 +24,15 @@ import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
+/**
+ * Generates the entire C code needed to run a cbmc check
+ * on. This means, it generates the structs passed to the
+ * voting function, Changes the voting funciton to take those
+ * structs, and the main function which calls the voting function
+ * and implements the cbmc checks 
+ * @author holge
+ *
+ */
 public class CBMCCodeGenerator {
 
     private final static String STDLIB = "stdlib.h";

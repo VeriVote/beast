@@ -51,6 +51,12 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
+/**
+ * Visits the Boolean Exp AST to generate the cbmc code 
+ * which checks for the property described by the ast
+ * @author holge
+ *
+ */
 public class CodeGenASTVisitor implements BooleanAstVisitor {
 
     public enum Mode {

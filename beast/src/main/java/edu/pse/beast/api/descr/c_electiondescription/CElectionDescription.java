@@ -12,6 +12,11 @@ import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescripti
 import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
 
+/**
+ * All data which describes an election description in c code
+ * @author holge
+ *
+ */
 public class CElectionDescription {
     private List<CElectionDescriptionFunction> functions = new ArrayList<>();
     private Set<String> functionNames = new HashSet<>();

@@ -14,6 +14,15 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
+
+/**
+ * Uses the {@link CodeGenASTVisitor} to generate the main function:
+ * Initializes voting structs and symbolic variables,
+ * generates preconditions, calls the voting function,
+ * generates postconditions
+ * @author holge
+ *
+ */
 public class CBMCMainGenerator {
 
     // TODO make this dependand on the arrays accessed by the symb var
