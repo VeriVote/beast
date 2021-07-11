@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.toolbox.Tuple;
 import javafx.stage.FileChooser;

@@ -1,4 +1,4 @@
-package edu.pse.beast.api.electiondescription.function;
+package edu.pse.beast.api.descr.c_electiondescription.function;
 
 import java.util.ArrayList;
 import java.util.Arrays;

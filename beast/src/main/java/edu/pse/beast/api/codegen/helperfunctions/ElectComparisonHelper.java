@@ -10,7 +10,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.elect.CodeTemplateElectComparison;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class ElectComparisonHelper {
 

@@ -12,7 +12,7 @@ import edu.pse.beast.api.codegen.code_template.templates.elect.CodeTemplateElect
 import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class ElectTupleHelper {
     public static String generateCode(String generatedVarName,

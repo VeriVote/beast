@@ -3,7 +3,7 @@ package edu.pse.beast.api.codegen.cbmc;
 import edu.pse.beast.api.codegen.c_code.CForLoop;
 import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class ElectionTypeCStruct {
     private CElectionVotingType votingType;

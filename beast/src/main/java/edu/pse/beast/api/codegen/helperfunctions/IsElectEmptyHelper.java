@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.elect.CodeTemplateElectEmpty;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class IsElectEmptyHelper {
     public static String generateCode(String generatedVarName,

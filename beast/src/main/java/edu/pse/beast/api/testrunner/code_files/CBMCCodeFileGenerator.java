@@ -10,11 +10,11 @@ import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 
-public class CBMCCodeFileGeneratorNEW {
+public class CBMCCodeFileGenerator {
 
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/cbmc_generated_files/";

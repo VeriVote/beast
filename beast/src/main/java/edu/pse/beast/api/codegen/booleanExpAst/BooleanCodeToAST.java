@@ -20,7 +20,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListEl
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.EquivalenceNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseTrueNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ImplicationNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.LogicalAndNode;
@@ -70,6 +70,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Qu
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbVarByNameExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbVarByPosExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SymbolicVarExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TrueExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteSumExpContext;
@@ -139,9 +140,14 @@ public class BooleanCodeToAST extends FormalPropertyDescriptionBaseListener {
 
     @Override
     public void exitFalseExp(FalseExpContext ctx) {
-        nodeStack.push(new FalseNode());
+        nodeStack.push(new FalseTrueNode(false));
     }
-
+    
+    @Override
+    public void exitTrueExp(TrueExpContext ctx) {
+        nodeStack.push(new FalseTrueNode(true));
+    }
+    
     @Override
     public void exitBooleanExpList(final BooleanExpListContext ctx) {
         generated.setHighestElect(highestElect);

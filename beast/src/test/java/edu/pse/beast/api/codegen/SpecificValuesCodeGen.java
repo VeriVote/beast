@@ -12,10 +12,10 @@ import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SpecificValueInitVoteHelper;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class SpecificValuesCodeGen {
     @Test
@@ -40,6 +40,7 @@ public class SpecificValuesCodeGen {
                 .createSimpleCondList("reinforce", pre, post).get(0);
 
         PreferenceParameters votingParameters = new PreferenceParameters(5);
+        
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));

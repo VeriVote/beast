@@ -3,7 +3,7 @@ package edu.pse.beast.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CreationHelper {
 

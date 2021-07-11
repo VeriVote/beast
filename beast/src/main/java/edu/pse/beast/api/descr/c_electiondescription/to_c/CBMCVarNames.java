@@ -1,6 +1,6 @@
-package edu.pse.beast.api.electiondescription.to_c;
+package edu.pse.beast.api.descr.c_electiondescription.to_c;
 
-import edu.pse.beast.api.electiondescription.CBMCVars;
+import edu.pse.beast.api.descr.c_electiondescription.CBMCVars;
 
 public class CBMCVarNames {
     public static String name(CBMCVars var) {

@@ -7,8 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonHelper;
 
 public class CBMCJsonResultExampleExtractor {

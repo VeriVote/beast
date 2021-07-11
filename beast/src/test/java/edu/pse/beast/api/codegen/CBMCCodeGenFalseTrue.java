@@ -18,12 +18,10 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
-public class CBMCCodeGenTest2 {
-
-    private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
+public class CBMCCodeGenFalseTrue {
 
     @Test
-    public void testNumbers() {
+    public void testTrue() {
         String votingCode = "";
 
         CElectionDescription descr = new CElectionDescription(
@@ -38,17 +36,19 @@ public class CBMCCodeGenTest2 {
         descr.getVotingFunction().setExtractedLoops(loops);
 
         String pre = "";
-        String post = "ELECT1 == CUT(ELECT2, ELECT3);";
+        String post = "FALSE;";
 
         PreAndPostConditionsDescription propDescr = CreationHelper
                 .createSimpleCondList("reinforce", pre, post).get(0);
         propDescr.addCBMCVar(new SymbolicCBMCVar("c1", CBMCVarType.CANDIDATE));
         propDescr.addCBMCVar(new SymbolicCBMCVar("c2", CBMCVarType.CANDIDATE));
 
+        InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
+
         String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr,
                 propDescr, codeGenOptions, initVoteHelper).getCode();
 
-        System.out.println(code);
+        System.out.println(code);      
+        
     }
-
 }

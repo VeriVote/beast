@@ -10,9 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.testruns.CBMCTestRunSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;

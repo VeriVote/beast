@@ -11,8 +11,8 @@ import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class CBMCMainGenerator {
 

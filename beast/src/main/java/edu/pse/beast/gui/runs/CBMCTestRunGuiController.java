@@ -7,8 +7,8 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.CBMCTestCallback;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;

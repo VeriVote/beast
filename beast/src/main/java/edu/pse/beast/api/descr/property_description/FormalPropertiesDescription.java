@@ -1,4 +1,4 @@
-package edu.pse.beast.api.propertydescription;
+package edu.pse.beast.api.descr.property_description;
 
 import java.util.Arrays;
 import java.util.List;

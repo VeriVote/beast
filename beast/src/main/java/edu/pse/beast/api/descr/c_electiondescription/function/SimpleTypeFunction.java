@@ -1,11 +1,11 @@
-package edu.pse.beast.api.electiondescription.function;
+package edu.pse.beast.api.descr.c_electiondescription.function;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
 
 public class SimpleTypeFunction extends CElectionDescriptionFunction {
     private List<CElectionSimpleTypes> argTypes;

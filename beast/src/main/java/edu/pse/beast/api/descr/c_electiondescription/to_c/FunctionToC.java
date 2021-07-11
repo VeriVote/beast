@@ -1,8 +1,8 @@
-package edu.pse.beast.api.electiondescription.to_c;
+package edu.pse.beast.api.descr.c_electiondescription.to_c;
 
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.TypeManager;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class FunctionToC {
 

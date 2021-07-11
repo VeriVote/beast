@@ -15,12 +15,12 @@ import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
 

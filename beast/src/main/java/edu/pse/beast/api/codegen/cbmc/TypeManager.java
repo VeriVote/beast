@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.c_code.CStruct;
-import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class TypeManager {
 

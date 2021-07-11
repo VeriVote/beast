@@ -10,10 +10,10 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;

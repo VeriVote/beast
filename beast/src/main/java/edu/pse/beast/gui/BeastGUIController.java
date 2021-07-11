@@ -10,12 +10,12 @@ import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.os.OS;
 import edu.pse.beast.api.os.OSHelper;
 import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;

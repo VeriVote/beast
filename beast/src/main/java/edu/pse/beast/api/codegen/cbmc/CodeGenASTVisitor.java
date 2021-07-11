@@ -10,7 +10,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BinaryRelationsh
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseTrueNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
@@ -47,9 +47,9 @@ import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VotePermutat
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VoteTupleHelper;
 import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VotesumHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class CodeGenASTVisitor implements BooleanAstVisitor {
 
@@ -498,16 +498,20 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
     }
 
     @Override
-    public void visitBooleanExpFalseNode(FalseNode falseNode) {
-        String zeroVarBecauseFalse = "0";
-        booleanVarNameStack.push(zeroVarBecauseFalse);
-    }
-
-    @Override
     public void visitSymbVarByPosExp(SymbVarByPosExp symbVarByPosExp) {
         String generatedVarName = String
                 .valueOf(symbVarByPosExp.getAccessingNumber());
         expTypes.push(CElectionVotingType.simple());
         expVarNameStack.push(generatedVarName);
+    }
+
+    @Override
+    public void visitBooleanExpFalseTrueNode(FalseTrueNode falseTrueNode) {
+
+        if (falseTrueNode.getFalseOrTrue() == false) {
+            booleanVarNameStack.push("0");
+        } else {
+            booleanVarNameStack.push("1");
+        }
     }
 }

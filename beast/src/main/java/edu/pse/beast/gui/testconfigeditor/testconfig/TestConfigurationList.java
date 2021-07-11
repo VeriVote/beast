@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;

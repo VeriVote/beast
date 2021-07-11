@@ -9,11 +9,11 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SpecificValueInitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
-import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileGeneratorNEW;
+import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileGenerator;
 import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
@@ -51,7 +51,7 @@ public class BEAST {
             CodeGenOptions codeGenOptions, PathHandler pathHandler)
             throws IOException {
         InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
-        return CBMCCodeFileGeneratorNEW.createCodeFileTest(descr, propDescr,
+        return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
                 codeGenOptions, pathHandler, initVoteHelper);
     }
 
@@ -62,7 +62,7 @@ public class BEAST {
             VotingParameters votingParameters) throws IOException {
         InitVoteHelper initVoteHelper = new SpecificValueInitVoteHelper(
                 votingParameters);
-        return CBMCCodeFileGeneratorNEW.createCodeFileTest(descr, propDescr,
+        return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
                 codeGenOptions, pathHandler, initVoteHelper);
     }
 

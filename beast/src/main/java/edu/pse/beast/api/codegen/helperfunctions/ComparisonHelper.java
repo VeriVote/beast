@@ -9,8 +9,8 @@ import edu.pse.beast.api.codegen.code_template.templates.CodeTemplateComparison;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
-import edu.pse.beast.api.electiondescription.CBMCVars;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
+import edu.pse.beast.api.descr.c_electiondescription.CBMCVars;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class ComparisonHelper {
 

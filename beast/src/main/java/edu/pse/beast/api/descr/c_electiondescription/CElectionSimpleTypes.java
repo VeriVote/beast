@@ -1,4 +1,4 @@
-package edu.pse.beast.api.electiondescription;
+package edu.pse.beast.api.descr.c_electiondescription;
 
 public enum CElectionSimpleTypes {
     INT, UNSIGNED_INT, FLOAT, DOUBLE, VOID, BOOL;

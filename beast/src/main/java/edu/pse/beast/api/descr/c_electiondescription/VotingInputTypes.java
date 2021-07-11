@@ -1,4 +1,4 @@
-package edu.pse.beast.api.electiondescription;
+package edu.pse.beast.api.descr.c_electiondescription;
 
 public enum VotingInputTypes {
 

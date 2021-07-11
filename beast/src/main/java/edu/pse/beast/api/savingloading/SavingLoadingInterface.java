@@ -9,8 +9,8 @@ import java.nio.file.Files;
 import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
 
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class SavingLoadingInterface {

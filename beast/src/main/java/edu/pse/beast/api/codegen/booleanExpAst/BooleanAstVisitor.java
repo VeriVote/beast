@@ -4,7 +4,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BinaryRelationsh
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseNode;
+import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseTrueNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
@@ -81,7 +81,7 @@ public interface BooleanAstVisitor {
     public void visitElectIntersectionNode(
             ElectIntersectionNode electIntersectionNode);
 
-    public void visitBooleanExpFalseNode(FalseNode falseNode);
+    public void visitBooleanExpFalseTrueNode(FalseTrueNode falseTrueNode);
 
     public void visitSymbVarByPosExp(SymbVarByPosExp symbVarByPosExp);
 

@@ -1,4 +1,4 @@
-package edu.pse.beast.api.electiondescription;
+package edu.pse.beast.api.descr.c_electiondescription;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,9 +8,9 @@ import java.util.UUID;
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
+import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
+import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
 
 public class CElectionDescription {
     private List<CElectionDescriptionFunction> functions = new ArrayList<>();

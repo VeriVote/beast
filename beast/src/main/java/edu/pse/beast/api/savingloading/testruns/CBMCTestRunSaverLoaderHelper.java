@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.CodeGenOptionsSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.RelativePathConverter;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCCodeFileDataSaverLoaderHelper;

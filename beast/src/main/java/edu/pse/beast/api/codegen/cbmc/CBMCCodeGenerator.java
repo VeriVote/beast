@@ -13,16 +13,16 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.CElectionSimpleTypes;
-import edu.pse.beast.api.electiondescription.CElectionVotingType;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.api.electiondescription.function.VotingSigFunction;
-import edu.pse.beast.api.electiondescription.to_c.FunctionToC;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
+import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
+import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CBMCCodeGenerator {
 

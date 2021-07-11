@@ -11,10 +11,10 @@ import edu.pse.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
-import edu.pse.beast.api.electiondescription.CElectionDescription;
-import edu.pse.beast.api.electiondescription.VotingInputTypes;
-import edu.pse.beast.api.electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CBMCCodeGenTest {
     private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
