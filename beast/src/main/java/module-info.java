@@ -3,7 +3,7 @@ module edu.pse.beast {
     
     exports edu.pse.beast.gui;
     exports edu.pse.beast.toolbox.antlr.booleanexp;
-    exports edu.pse.beast.api.propertydescription;
+    exports edu.pse.beast.api.descr.c_electiondescription;
 
     requires transitive com.google.gson;
     requires com.sun.jna;
@@ -37,5 +37,5 @@ module edu.pse.beast {
     opens edu.pse.beast.gui.testconfigeditor.testconfig.cbmc to javafx.fxml;
     opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;
     opens edu.pse.beast.gui.runs to javafx.fxml;
-    opens edu.pse.beast.api.propertydescription to gson;
+    opens edu.pse.beast.api.descr.c_electiondescription to gson;
 }
