@@ -2,9 +2,6 @@ package edu.pse.beast.gui.errors;
 
 import java.io.IOException;
 
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;

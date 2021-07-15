@@ -56,6 +56,8 @@ public class OptionsSaverLoader {
             case C_DESCR_EDITOR:
                 addToSaveJSON((CEditorOptionsGUI) option, json);
                 break;
+            default:
+                break;
             }
         }
         SavingLoadingInterface.writeStringToFile(f, json.toString());

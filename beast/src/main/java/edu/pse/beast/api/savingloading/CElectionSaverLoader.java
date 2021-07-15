@@ -142,7 +142,7 @@ public class CElectionSaverLoader {
 
     private static List<VotingSigFunction> toVotingFunctions(JSONArray array,
             VotingInputTypes inputType, VotingOutputTypes outputType) {
-        List<VotingSigFunction> list = new ArrayList();
+        List<VotingSigFunction> list = new ArrayList<VotingSigFunction>();
 
         for (int i = 0; i < array.length(); ++i) {
             list.add(toVotingFunction(array.getJSONObject(i), inputType,
@@ -208,7 +208,7 @@ public class CElectionSaverLoader {
         String votingFunctionName = json.getString(VOTING_FUNC_KEY);
         VotingSigFunction votingFunction = null;
 
-        List<CElectionDescriptionFunction> allFunctions = new ArrayList();
+        List<CElectionDescriptionFunction> allFunctions = new ArrayList<CElectionDescriptionFunction>();
 
         for (VotingSigFunction func : votingFuncs) {
             allFunctions.add(func);

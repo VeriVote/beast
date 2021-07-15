@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
+
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
@@ -14,10 +19,6 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCAssignmentType;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCCounterExample;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCStructAssignment;
-import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
 
 public class CounterExampleGuiController {
     @FXML
@@ -90,6 +91,8 @@ public class CounterExampleGuiController {
         case GENERATED_VOTE:
             amtVarName = codeInfo.getVotesAmtMemberVarName();
             listVarName = codeInfo.getVotesListMemberVarName();
+        default:
+            break;
         }
 
         Map<List<Integer>, String> positionsToStrings = new HashMap<>();

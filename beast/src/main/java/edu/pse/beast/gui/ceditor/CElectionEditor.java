@@ -305,7 +305,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         List<String> argNames = new ArrayList<>();
 
         TextField argsNameTextField = new TextField();
-        ChoiceBox<CElectionSimpleTypes> argsTypeChoiceBox = new ChoiceBox();
+        ChoiceBox<CElectionSimpleTypes> argsTypeChoiceBox = new ChoiceBox<CElectionSimpleTypes>();
         argsTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
         argsTypeChoiceBox.getSelectionModel().selectFirst();
 

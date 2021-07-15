@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.gui.BeastGUIController;
-
 public class ErrorHandler {
 
     private List<String> errorLog = new ArrayList<>();
@@ -32,7 +30,7 @@ public class ErrorHandler {
         // TODO maybe modify the message based on the exception
         ErrorMessage msg = errTypeToMessageType.get(err.getErrorType());
         ErrorDialogHelper.showErrorDialog(msg);
-        
+
         err.setErrorMessage(msg);
         listener.handleAddedError(err);
     }

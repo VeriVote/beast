@@ -14,8 +14,8 @@ public class CBMCGeneratedCodeInfo {
     private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
     private Map<String, String> varNamesToInfo = new HashMap<>();
 
-    private Set<String> generatedVotingVarNames = new HashSet();
-    private Set<String> generatedElectVarNames = new HashSet();
+    private Set<String> generatedVotingVarNames = new HashSet<String>();
+    private Set<String> generatedElectVarNames = new HashSet<String>();
 
     private String votesAmtMemberVarName;
     private String votesListMemberVarName;

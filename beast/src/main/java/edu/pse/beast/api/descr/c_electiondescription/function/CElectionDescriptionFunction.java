@@ -55,8 +55,9 @@ public abstract class CElectionDescriptionFunction {
 
     public boolean allLoopsDescribed() {
         if (extractedLoops.isEmpty()) {
-            if (AntlrCLoopParser.getAmtLoops(getCode()) != 0)
+            if (AntlrCLoopParser.getAmtLoops(getCode()) != 0) {
                 return false;
+            }
         } else {
             for (ExtractedCLoop l : extractedLoops) {
                 if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER

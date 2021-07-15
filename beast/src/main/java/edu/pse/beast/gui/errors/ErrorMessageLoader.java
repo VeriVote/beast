@@ -2,12 +2,10 @@ package edu.pse.beast.gui.errors;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 /**
  * This class can be extended to load error messages from a file
- * 
- * @author holge
+ *
+ * @author Holger Klein
  *
  */
 public class ErrorMessageLoader {

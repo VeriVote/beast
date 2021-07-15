@@ -5,35 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
-
-import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.api.os.OS;
-import edu.pse.beast.api.os.OSHelper;
-import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
-import edu.pse.beast.gui.ceditor.CEditorCodeElement;
-import edu.pse.beast.gui.ceditor.CElectionEditor;
-import edu.pse.beast.gui.errors.ErrorHandler;
-import edu.pse.beast.gui.errors.ErrorMessageLoader;
-import edu.pse.beast.gui.errors.ErrorGuiController;
-import edu.pse.beast.gui.options.OptionsCategoryGUI;
-import edu.pse.beast.gui.options.OptionsGUIController;
-import edu.pse.beast.gui.options.ceditor.CEditorOptions;
-import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
-import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
-import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
-import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
-import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
-import edu.pse.beast.gui.testconfigeditor.TestConfigTopLevelGUIHandler;
-import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
-import edu.pse.beast.gui.workspace.BeastWorkspace;
-import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -49,6 +20,36 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
+
+import edu.pse.beast.api.c_parser.ExtractedCLoop;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.api.os.OS;
+import edu.pse.beast.api.os.OSHelper;
+import edu.pse.beast.api.paths.PathHandler;
+import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
+import edu.pse.beast.gui.ceditor.CEditorCodeElement;
+import edu.pse.beast.gui.ceditor.CElectionEditor;
+import edu.pse.beast.gui.errors.ErrorGuiController;
+import edu.pse.beast.gui.errors.ErrorHandler;
+import edu.pse.beast.gui.errors.ErrorMessageLoader;
+import edu.pse.beast.gui.options.OptionsCategoryGUI;
+import edu.pse.beast.gui.options.OptionsGUIController;
+import edu.pse.beast.gui.options.ceditor.CEditorOptions;
+import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
+import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
+import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
+import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
+import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
+import edu.pse.beast.gui.testconfigeditor.TestConfigTopLevelGUIHandler;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class BeastGUIController implements WorkspaceUpdateListener {
 
@@ -159,7 +160,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     private File optionsSaveFile;
 
-    private CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();;
+    private CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 
     private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
             double bottom, double left, double right) {
@@ -184,8 +185,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
         CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
-        VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp = new VirtualizedScrollPane(
-                cEditorGUIElement);
+        VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
+                new VirtualizedScrollPane<CEditorCodeElement>(cEditorGUIElement);
         addChildToAnchorPane(codePane, cEditorGUIElementVsp, 20, 100, 0, 0);
 
         cElectionEditor = new CElectionEditor(primaryStage,
@@ -307,6 +308,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                     cbmcProcessHandlerCreator = ((ProcessHandlerWindowsOptionsGUI) cat)
                             .getCbmcProcessHandlerCreator();
                     break;
+                default:
+                    break;
                 }
             }
         }
@@ -322,6 +325,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
             switch (cat.getCategory()) {
             case C_DESCR_EDITOR:
                 ((CEditorOptionsGUI) cat).setcElectionEditor(cElectionEditor);
+                break;
+            default:
                 break;
             }
         }

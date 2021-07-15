@@ -53,11 +53,13 @@ public class BeastWorkspace {
 
     private List<CElectionDescription> loadedDescrs = new ArrayList<>();
     private Map<CElectionDescription, File> filesPerDescr = new HashMap<>();
-    private Set<CElectionDescription> descrWithUnsavedChanges = new HashSet();
+    private Set<CElectionDescription> descrWithUnsavedChanges =
+            new HashSet<CElectionDescription>();
 
     private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
     private Map<PreAndPostConditionsDescription, File> filesPerPropDescr = new HashMap<>();
-    private Set<PreAndPostConditionsDescription> propDescrWithUnsavedChanges = new HashSet();
+    private Set<PreAndPostConditionsDescription> propDescrWithUnsavedChanges =
+            new HashSet<PreAndPostConditionsDescription>();
 
     private CodeGenOptions codeGenOptions;
     private TestConfigurationList testConfigList = new TestConfigurationList();

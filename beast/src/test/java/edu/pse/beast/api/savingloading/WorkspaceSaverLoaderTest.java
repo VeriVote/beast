@@ -23,9 +23,8 @@ public class WorkspaceSaverLoaderTest {
 
     @Test
     public void testSavingLoading() throws IOException {
-        BeastWorkspace ws = new BeastWorkspace();
+        new BeastWorkspace();
 
-        String name = "test";
         CElectionDescription descr = new CElectionDescription(
                 VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
                 "test");
@@ -91,7 +90,7 @@ public class WorkspaceSaverLoaderTest {
 
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        File baseDir = new File(s);
+        new File(s);
 
         beastWorkspace.addElectionDescription(descr);
         beastWorkspace.addFileForDescr(descr, descrFile);
@@ -107,9 +106,6 @@ public class WorkspaceSaverLoaderTest {
 
         SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f,
                 beastWorkspace.getPathHandler());
-        BeastWorkspace loadedBeastWorkspace = SavingLoadingInterface
-                .loadBeastWorkspace(f, beastWorkspace.getPathHandler());
-
-        int i = 0;
+        SavingLoadingInterface.loadBeastWorkspace(f, beastWorkspace.getPathHandler());
     }
 }

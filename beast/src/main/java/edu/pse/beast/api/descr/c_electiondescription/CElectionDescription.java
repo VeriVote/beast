@@ -14,7 +14,7 @@ import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
 
 /**
  * All data which describes an election description in c code
- * @author holge
+ * @author Holger Klein
  *
  */
 public class CElectionDescription {

@@ -48,6 +48,8 @@ public class VotingFunctionHelper {
             loopbounds = CodeTemplateVotingFunctionResultCopy.loopBoundsParliament;
             break;
         }
+        default:
+            break;
         }
 
         loopBoundHandler.pushVotingLoopBounds(votingFunctionName, loopbounds);

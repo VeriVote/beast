@@ -45,6 +45,8 @@ public class ComparisonHelper {
                         .codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_VOTERS));
                 amtString = options.getCbmcAmountMaxVotersVarName();
                 break;
+            default:
+                break;
             }
 
             loopBoundHandler.pushMainLoopBounds(loopbounds);
