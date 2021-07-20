@@ -4,9 +4,9 @@ public class CTypeDef {
     private String type;
     private String newTypeName;
 
-    public CTypeDef(String type, String newTypeName) {
-        this.type = type;
-        this.newTypeName = newTypeName;
+    public CTypeDef(final String typeString, final String newTypeNameString) {
+        this.type = typeString;
+        this.newTypeName = newTypeNameString;
     }
 
     public String generateCode() {

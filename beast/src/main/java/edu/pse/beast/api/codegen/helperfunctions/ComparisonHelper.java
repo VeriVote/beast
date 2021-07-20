@@ -14,35 +14,38 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class ComparisonHelper {
 
-    public static String generateCode(String generatedVar, String comparison,
-            String lhsVarName, String rhsVarName, CElectionVotingType type,
-            CodeGenOptions options, String assumeOrAssert,
-            CodeGenLoopBoundHandler loopBoundHandler) {
-
+    public static String generateCode(final String generatedVar,
+                                      final String comparison,
+                                      final String lhsVarName,
+                                      final String rhsVarName,
+                                      final CElectionVotingType type,
+                                      final CodeGenOptions options,
+                                      final String assumeOrAssert,
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         Map<String, String> replacementMap = null;
-
         String code = null;
         if (type.getListDimensions() == 0) {
-            replacementMap = Map.of("ASSUME_OR_ASSERT", assumeOrAssert,
-                    "LHS_VAR_NAME", lhsVarName, "RHS_VAR_NAME", rhsVarName,
-                    "COMP", comparison, "GENERATED_VAR", generatedVar);
-
-            code = CodeTemplateComparison.template0d;
+            replacementMap =
+                    Map.of("ASSUME_OR_ASSERT", assumeOrAssert,
+                           "LHS_VAR_NAME", lhsVarName,
+                           "RHS_VAR_NAME", rhsVarName,
+                           "COMP", comparison,
+                           "GENERATED_VAR", generatedVar);
+            code = CodeTemplateComparison.TEMPLATE_0D;
         } else if (type.getListDimensions() == 1) {
-            CBMCVars listSize = type.getListSizes().get(0);
+            final CBMCVars listSize = type.getListSizes().get(0);
             String amtString = null;
-
-            List<LoopBound> loopbounds = new ArrayList<>();
+            final List<LoopBound> loopbounds = new ArrayList<>();
 
             switch (listSize) {
             case AMT_CANDIDATES:
-                loopbounds.add(LoopBound
-                        .codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_CANDS));
+                loopbounds.add(
+                        LoopBound.codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_CANDS));
                 amtString = options.getCbmcAmountMaxCandsVarName();
                 break;
             case AMT_VOTERS:
-                loopbounds.add(LoopBound
-                        .codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_VOTERS));
+                loopbounds.add(
+                        LoopBound.codeGenLoopbound(LoopBoundType.LOOP_BOUND_AMT_VOTERS));
                 amtString = options.getCbmcAmountMaxVotersVarName();
                 break;
             default:
@@ -50,21 +53,19 @@ public class ComparisonHelper {
             }
 
             loopBoundHandler.pushMainLoopBounds(loopbounds);
-
-            replacementMap = Map.of("AMT", amtString, "ASSUME_OR_ASSERT",
-                    assumeOrAssert, "LHS_VAR_NAME", lhsVarName, "RHS_VAR_NAME",
-                    rhsVarName, "COMP", comparison, "GENERATED_VAR",
-                    generatedVar);
-            if (comparison.equals("!=")) {
-                code = CodeTemplateComparison.template1dUneq;
+            replacementMap =
+                    Map.of("AMT", amtString,
+                           "ASSUME_OR_ASSERT", assumeOrAssert,
+                           "LHS_VAR_NAME", lhsVarName,
+                           "RHS_VAR_NAME", rhsVarName,
+                           "COMP", comparison,
+                           "GENERATED_VAR", generatedVar);
+            if ("!=".equals(comparison)) {
+                code = CodeTemplateComparison.TEMPLATE_1D_UNEQ;
             } else {
-                code = CodeTemplateComparison.template1d;
+                code = CodeTemplateComparison.TEMPLATE_1D;
             }
-
         }
-
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
-
 }

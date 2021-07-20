@@ -23,11 +23,11 @@ public class CBMCGeneratedCodeInfo {
     private String resultAmtMemberVarName;
     private String resultListMemberVarName;
 
-    public void addedGeneratedVotingVar(String name) {
+    public void addedGeneratedVotingVar(final String name) {
         generatedVotingVarNames.add(name);
     }
 
-    public void addedGeneratedElectVar(String name) {
+    public void addedGeneratedElectVar(final String name) {
         generatedElectVarNames.add(name);
     }
 
@@ -35,33 +35,33 @@ public class CBMCGeneratedCodeInfo {
         return varNamesToInfo;
     }
 
-    public void setVarNamesToInfo(Map<String, String> varNamesToInfo) {
-        this.varNamesToInfo = varNamesToInfo;
+    public void setVarNamesToInfo(final Map<String, String> varNamesToInfoMap) {
+        this.varNamesToInfo = varNamesToInfoMap;
     }
 
     public String getCode() {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCode(final String codeString) {
+        this.code = codeString;
     }
 
-    public void addVotingVariableName(int voteNumber, String varName) {
+    public void addVotingVariableName(final int voteNumber, final String varName) {
         voteVariableNameToVoteNumber.put(varName, voteNumber);
         varNamesToInfo.put(varName,
                 InformationStringBuilder.genForVote(voteNumber, varName));
     }
 
-    public void addElectVariableName(int electNumber, String varName) {
+    public void addElectVariableName(final int electNumber, final String varName) {
         electVariableNameToElectNumber.put(varName, electNumber);
         varNamesToInfo.put(varName,
                 InformationStringBuilder.genForResult(electNumber, varName));
     }
 
-    public void setVoteVariableNameToVoteNumber(
-            Map<String, Integer> voteVariableNameToVoteNumber) {
-        this.voteVariableNameToVoteNumber = voteVariableNameToVoteNumber;
+    public void setVoteVariableNameToVoteNumber(final Map<String, Integer>
+                                                    voteVarNameToVoteNumMap) {
+        this.voteVariableNameToVoteNumber = voteVarNameToVoteNumMap;
     }
 
     public Map<String, Integer> getVoteVariableNameToVoteNumber() {
@@ -76,22 +76,21 @@ public class CBMCGeneratedCodeInfo {
         return generatedVotingVarNames;
     }
 
-    public void setGeneratedVotingVarNames(
-            Set<String> generatedVotingVarNames) {
-        this.generatedVotingVarNames = generatedVotingVarNames;
+    public void setGeneratedVotingVarNames(final Set<String> genVotingVarNameSet) {
+        this.generatedVotingVarNames = genVotingVarNameSet;
     }
 
     public Set<String> getGeneratedElectVarNames() {
         return generatedElectVarNames;
     }
 
-    public void setGeneratedElectVarNames(Set<String> generatedElectVarNames) {
-        this.generatedElectVarNames = generatedElectVarNames;
+    public void setGeneratedElectVarNames(final Set<String> genElectVarNameSet) {
+        this.generatedElectVarNames = genElectVarNameSet;
     }
 
-    public void setElectVariableNameToElectNumber(
-            Map<String, Integer> electVariableNameToElectNumber) {
-        this.electVariableNameToElectNumber = electVariableNameToElectNumber;
+    public void setElectVariableNameToElectNumber(final Map<String, Integer>
+                                                    electVarNameToElectNumMap) {
+        this.electVariableNameToElectNumber = electVarNameToElectNumMap;
     }
 
     public String getVotesAmtMemberVarName() {
@@ -106,31 +105,31 @@ public class CBMCGeneratedCodeInfo {
         return loopBoundHandler;
     }
 
-    public void setVotesAmtMemberVarName(String amtMemberVarName) {
+    public void setVotesAmtMemberVarName(final String amtMemberVarName) {
         this.votesAmtMemberVarName = amtMemberVarName;
     }
 
-    public void setVotesListMemberVarName(String listMemberVarName) {
+    public void setVotesListMemberVarName(final String listMemberVarName) {
         this.votesListMemberVarName = listMemberVarName;
     }
 
-    public void setLoopboundHandler(CodeGenLoopBoundHandler loopBoundHandler) {
-        this.loopBoundHandler = loopBoundHandler;
+    public void setLoopboundHandler(final CodeGenLoopBoundHandler generatedLoopBoundHandler) {
+        this.loopBoundHandler = generatedLoopBoundHandler;
     }
 
-    public void addInfo(String varName, String info) {
+    public void addInfo(final String varName, final String info) {
         varNamesToInfo.put(varName, info);
     }
 
-    public String getInfo(String varName) {
+    public String getInfo(final String varName) {
         return varNamesToInfo.get(varName);
     }
 
-    public boolean hasInfo(String varName) {
+    public boolean hasInfo(final String varName) {
         return varNamesToInfo.containsKey(varName);
     }
 
-    public void setResultAmtMemberVarName(String amtName) {
+    public void setResultAmtMemberVarName(final String amtName) {
         resultAmtMemberVarName = amtName;
     }
 
@@ -138,7 +137,7 @@ public class CBMCGeneratedCodeInfo {
         return resultAmtMemberVarName;
     }
 
-    public void setResultListMemberVarName(String listName) {
+    public void setResultListMemberVarName(final String listName) {
         resultListMemberVarName = listName;
     }
 

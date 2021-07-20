@@ -15,44 +15,50 @@ import edu.pse.beast.api.toolbox.Tuple;
 
 public class FileDialogHelper {
 
-    public static Tuple<CElectionDescription, File> letUserLoadElectionDescription(
-            File baseDir, Stage primaryStage) throws IOException {
-        File f = letUserOpenFile("beast election description", "belec",
-                "choose election description", baseDir, primaryStage);
+    public static Tuple<CElectionDescription, File>
+            letUserLoadElectionDescription(final File baseDir,
+                                           final Stage primaryStage) throws IOException {
+        final File f =
+                letUserOpenFile("beast election description", "belec",
+                                "choose election description", baseDir,
+                                primaryStage);
         if (f != null) {
-            CElectionDescription descr = SavingLoadingInterface
-                    .loadCElection(f);
+            final CElectionDescription descr = SavingLoadingInterface.loadCElection(f);
             return new Tuple<CElectionDescription, File>(descr, f);
         }
         return new Tuple<CElectionDescription, File>(null, f);
     }
 
-    public static Tuple<PreAndPostConditionsDescription, File> letUserLoadPropDescr(
-            File propDescrDir, Stage primaryStage) throws IOException {
-        File f = letUserOpenFile("property description", "bprp",
-                "choose property description", propDescrDir, primaryStage);
+    public static Tuple<PreAndPostConditionsDescription, File>
+            letUserLoadPropDescr(final File propDescrDir,
+                                 final Stage primaryStage) throws IOException {
+        final File f = letUserOpenFile("property description", "bprp",
+                                       "choose property description",
+                                       propDescrDir, primaryStage);
         if (f != null) {
-            PreAndPostConditionsDescription propDescr = SavingLoadingInterface
-                    .loadPreAndPostConditionDescription(f);
-            return new Tuple<PreAndPostConditionsDescription, File>(propDescr,
-                    f);
+            final PreAndPostConditionsDescription propDescr =
+                    SavingLoadingInterface.loadPreAndPostConditionDescription(f);
+            return new Tuple<PreAndPostConditionsDescription, File>(propDescr, f);
         }
         return new Tuple<PreAndPostConditionsDescription, File>(null, f);
     }
 
-    public static File letUserOpenFile(String extDescr, String ext,
-            String title, File initDir, Stage stage) {
-        FileChooser fileChooser = new FileChooser();
+    public static File letUserOpenFile(final String extDescr,
+                                       final String ext,
+                                       final String title,
+                                       final File initDir,
+                                       final Stage stage) {
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
         fileChooser.setInitialDirectory(initDir);
-        fileChooser.setSelectedExtensionFilter(
-                new ExtensionFilter(extDescr, List.of(ext)));
+        fileChooser.setSelectedExtensionFilter(new ExtensionFilter(extDescr, List.of(ext)));
         return fileChooser.showOpenDialog(stage);
     }
 
-    public static File letUserSaveFile(File initDir, String title,
-            String name) {
-        FileChooser fileChooser = new FileChooser();
+    public static File letUserSaveFile(final File initDir,
+                                       final String title,
+                                       final String name) {
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
         fileChooser.setInitialDirectory(initDir);
         fileChooser.setInitialFileName(name);

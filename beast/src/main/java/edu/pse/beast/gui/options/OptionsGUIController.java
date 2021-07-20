@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
 
 public class OptionsGUIController {
     @FXML
@@ -25,12 +26,11 @@ public class OptionsGUIController {
 
     private File optionsSaveFile;
 
-    public OptionsGUIController(List<OptionsCategoryGUI> categories,
-            File optionsSaveFile) {
-        this.categories = categories;
-        this.optionsSaveFile = optionsSaveFile;
-
-        for (OptionsCategoryGUI cat : categories) {
+    public OptionsGUIController(final List<OptionsCategoryGUI> categoryList,
+                                final File optSaveFile) {
+        this.categories = categoryList;
+        this.optionsSaveFile = optSaveFile;
+        for (final OptionsCategoryGUI cat : categoryList) {
             cat.setOptionsGUIController(this);
         }
     }
@@ -41,19 +41,18 @@ public class OptionsGUIController {
 
     @FXML
     public void initialize() {
-        for (OptionsCategoryGUI cat : categories) {
+        for (final OptionsCategoryGUI cat : categories) {
             optionsCategoryListview.getItems().add(cat);
         }
         optionsCategoryListview.getSelectionModel().selectedItemProperty()
                 .addListener((e, o, n) -> {
                     displayCategory(n);
                 });
-
         optionStage = new Stage();
         optionStage.setScene(new Scene(topLevelAnchorpane));
     }
 
-    private void displayCategory(OptionsCategoryGUI category) {
+    private void displayCategory(final OptionsCategoryGUI category) {
         currentOptionDisplayAnchorpane.getChildren().clear();
         category.displayOptions(currentOptionDisplayAnchorpane);
     }

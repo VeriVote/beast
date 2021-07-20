@@ -12,29 +12,28 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     private List<String> argNames;
     private CElectionSimpleTypes outputType;
 
-    public SimpleTypeFunction(String name, List<CElectionSimpleTypes> argTypes,
-            List<String> argNames, CElectionSimpleTypes outputType) {
+    public SimpleTypeFunction(final String name,
+                              final List<CElectionSimpleTypes> argTypeList,
+                              final List<String> argNameList,
+                              final CElectionSimpleTypes outType) {
         super(name);
-        this.argTypes = argTypes;
-        this.argNames = argNames;
-        this.outputType = outputType;
+        this.argTypes = argTypeList;
+        this.argNames = argNameList;
+        this.outputType = outType;
     }
 
     private List<String> getArgs() {
-        List<String> args = new ArrayList<>();
-
+        final List<String> args = new ArrayList<>();
         for (int i = 0; i < argTypes.size(); ++i) {
-            CElectionSimpleTypes st = argTypes.get(i);
-            String argVar = argNames.get(i);
+            final CElectionSimpleTypes st = argTypes.get(i);
+            final String argVar = argNames.get(i);
             args.add(st.toString() + " " + argVar);
         }
-
         return args;
     }
 
     private String getArgString() {
-        List<String> argsList = getArgs();
-
+        final List<String> argsList = getArgs();
         String args = "";
         for (int i = 0; i < argsList.size() - 1; ++i) {
             args += argsList.get(i) + ", ";
@@ -46,23 +45,23 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     }
 
     @Override
-    public String getDeclCString(CodeGenOptions codeGenOptions) {
-        String template = "RETURN_TYPE NAME(ARGS)";
-        String args = getArgString();
-        template = template.replaceAll("RETURN_TYPE", outputType.toString())
-                .replaceAll("NAME", getName()).replaceAll("ARGS", args);
-        return template;
+    public String getDeclCString(final CodeGenOptions codeGenOptions) {
+        final String template = "RETURN_TYPE NAME(ARGS)";
+        final String args = getArgString();
+        return template.replaceAll("RETURN_TYPE", outputType.toString())
+                       .replaceAll("NAME", getName())
+                       .replaceAll("ARGS", args);
     }
 
     @Override
-    public String getReturnText(CodeGenOptions codeGenOptions) {
+    public String getReturnText(final CodeGenOptions codeGenOptions) {
         return "}";
     }
 
     public CFunction toCFunc() {
-        List<String> args = getArgs();
-        CFunction created = new CFunction(getName(), args,
-                outputType.toString());
+        final List<String> args = getArgs();
+        final CFunction created =
+                new CFunction(getName(), args, outputType.toString());
         created.setCode(getCodeAsList());
         return created;
     }
@@ -78,5 +77,4 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     public List<CElectionSimpleTypes> getArgTypes() {
         return argTypes;
     }
-
 }

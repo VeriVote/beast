@@ -7,19 +7,19 @@ public class BooleanExpListElementNode extends BooleanExpressionNode {
     private BooleanExpressionNode firstChild;
     private String completeCode;
 
-    public BooleanExpListElementNode(String completeCode,
-            BooleanExpressionNode firstChild) {
-        this.firstChild = firstChild;
-        this.completeCode = completeCode;
+    public BooleanExpListElementNode(final String completeCodeString,
+                                     final BooleanExpressionNode firstChildNode) {
+        this.firstChild = firstChildNode;
+        this.completeCode = completeCodeString;
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitBooleanExpListElementNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return firstChild.getTreeString(depth);
     }
 

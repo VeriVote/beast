@@ -7,8 +7,7 @@ public class CEditorOptions {
         return fontSize;
     }
 
-    public void setFontSize(double fontSize) {
-        this.fontSize = fontSize;
+    public void setFontSize(final double fontSizeNumber) {
+        this.fontSize = fontSizeNumber;
     }
-
 }

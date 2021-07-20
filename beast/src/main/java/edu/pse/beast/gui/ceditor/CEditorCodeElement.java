@@ -5,7 +5,6 @@ import org.fxmisc.richtext.CodeArea;
 import edu.pse.beast.gui.CodeAreaChangeListener;
 
 public class CEditorCodeElement extends CodeArea {
-
     private CodeAreaChangeListener changeListener;
 
     public CEditorCodeElement() {
@@ -14,9 +13,7 @@ public class CEditorCodeElement extends CodeArea {
         });
     }
 
-    public void setChangeListener(CodeAreaChangeListener changeListener) {
-        this.changeListener = changeListener;
-
+    public void setChangeListener(final CodeAreaChangeListener codeAreaChangeListener) {
+        this.changeListener = codeAreaChangeListener;
     }
-
 }

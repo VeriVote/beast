@@ -5,27 +5,27 @@ import edu.pse.beast.api.codegen.cbmc.TypeManager;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class FunctionToC {
-
-    public static CTypeNameBrackets votingTypeToC(CElectionVotingType type,
-            String name, String V, String C, String S) {
+    public static CTypeNameBrackets votingTypeToC(final CElectionVotingType type,
+                                                  final String name, final String v,
+                                                  final String c, final String s) {
         String arrayBracks = "";
         for (int i = 0; i < type.getListDimensions(); ++i) {
             String arraySize = "";
             switch (type.getListSizes().get(i)) {
             case AMT_VOTERS:
-                arraySize = V;
+                arraySize = v;
                 break;
             case AMT_CANDIDATES:
-                arraySize = C;
+                arraySize = c;
                 break;
             case AMT_SEATS:
-                arraySize = S;
+                arraySize = s;
                 break;
+            default:
+                arrayBracks += "[" + arraySize + "]";
             }
-            arrayBracks += "[" + arraySize + "]";
         }
-        return new CTypeNameBrackets(
-                TypeManager.SimpleTypeToCType(type.getSimpleType()), name,
-                arrayBracks);
+        return new CTypeNameBrackets(TypeManager.simpleTypeToCType(type.getSimpleType()),
+                                     name, arrayBracks);
     }
 }

@@ -7,10 +7,9 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 
 public class CodeInfoSavingLoadingTest {
-
     @Test
     public void testSavingLoadingGenCodeInfo() {
-        CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
+        final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
         cbmcGeneratedCodeInfo.setCode("asdasdasdasdasd");
         cbmcGeneratedCodeInfo.addVotingVariableName(1, "vote1");
         cbmcGeneratedCodeInfo.addVotingVariableName(2, "vote2");
@@ -21,9 +20,9 @@ public class CodeInfoSavingLoadingTest {
         cbmcGeneratedCodeInfo.setVotesListMemberVarName("list");
         cbmcGeneratedCodeInfo.setResultAmtMemberVarName("amt");
         cbmcGeneratedCodeInfo.setResultListMemberVarName("list");
-        JSONObject json = CBMCGeneratedCodeInfoSaverLoaderHelper
+        final JSONObject json =
+                CBMCGeneratedCodeInfoSaverLoaderHelper
                 .generatedCodeInfoToJSON(cbmcGeneratedCodeInfo);
-        CBMCGeneratedCodeInfo loaded = CBMCGeneratedCodeInfoSaverLoaderHelper
-                .generatedCodeInfoFromJSON(json);
+        CBMCGeneratedCodeInfoSaverLoaderHelper.generatedCodeInfoFromJSON(json);
     }
 }

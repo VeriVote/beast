@@ -3,56 +3,56 @@ package edu.pse.beast.gui.errors;
 public class BeastError {
     private Exception exception;
     private String other;
-    private BeastErrorTypes errorType;
+    private BeastErrorTypes errorTypes;
     private ErrorMessage errorMessage;
-    
-    
-    public BeastError(BeastErrorTypes errorType, String other) {
-        this.other = other;
-        this.errorType = errorType;
+
+    public BeastError(final BeastErrorTypes errorType, final String otherString) {
+        this.other = otherString;
+        this.errorTypes = errorType;
     }
-    
-    public BeastError(BeastErrorTypes errorType, String other, Exception e) {
-        this.other = other;
-        this.errorType = errorType;
-        exception = e;
+
+    public BeastError(final BeastErrorTypes errorType,
+                      final String otherString,
+                      final Exception exc) {
+        this.other = otherString;
+        this.errorTypes = errorType;
+        exception = exc;
     }
 
     public Exception getException() {
         return exception;
     }
 
-    public void setException(Exception exception) {
-        this.exception = exception;
+    public void setException(final Exception exc) {
+        this.exception = exc;
     }
 
     public String getOther() {
         return other;
     }
 
-    public void setOther(String other) {
-        this.other = other;
+    public void setOther(final String otherString) {
+        this.other = otherString;
     }
 
     public BeastErrorTypes getErrorType() {
-        return errorType;
+        return errorTypes;
     }
 
-    public void setErrorType(BeastErrorTypes errorType) {
-        this.errorType = errorType;
+    public void setErrorType(final BeastErrorTypes errorType) {
+        this.errorTypes = errorType;
     }
-    
+
     public ErrorMessage getErrorMessage() {
         return errorMessage;
     }
-    
-    public void setErrorMessage(ErrorMessage errorMessage) {
-        this.errorMessage = errorMessage;
+
+    public void setErrorMessage(final ErrorMessage errorMsg) {
+        this.errorMessage = errorMsg;
     }
-    
+
     @Override
     public String toString() {
         return errorMessage.getTitle();
     }
-
 }

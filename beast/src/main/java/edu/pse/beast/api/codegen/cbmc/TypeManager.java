@@ -11,30 +11,38 @@ public class TypeManager {
 
     private List<ElectionTypeCStruct> elecTypeCStructs = new ArrayList<>();
 
-    public CStruct getCStructForVotingType(CElectionVotingType votingType) {
+    public CStruct getCStructForVotingType(final CElectionVotingType votingType) {
         return null;
     }
 
-    public void add(ElectionTypeCStruct electionTypeCStruct) {
+    public void add(final ElectionTypeCStruct electionTypeCStruct) {
         this.elecTypeCStructs.add(electionTypeCStruct);
     }
 
-    public static String SimpleTypeToCType(CElectionSimpleTypes simpleType) {
+    public static String simpleTypeToCType(final CElectionSimpleTypes simpleType) {
+        final String type;
         switch (simpleType) {
         case INT:
-            return "int";
+            type = "int";
+            break;
         case DOUBLE:
-            return "double";
+            type = "double";
+            break;
         case FLOAT:
-            return "float";
+            type = "float";
+            break;
         case UNSIGNED_INT:
-            return "unsigned int";
+            type = "unsigned int";
+            break;
         case VOID:
-            return "void";
+            type = "void";
+            break;
         case BOOL:
-            return "bool";
+            type = "bool";
+            break;
         default:
-            return null;
+            type = null;
         }
+        return type;
     }
 }

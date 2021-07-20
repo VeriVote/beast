@@ -4,15 +4,15 @@ import java.util.List;
 
 /*
  * so far:
- * 
+ *
  * input:
  * approval int [V][C]
  * preference int [V][C]
  * single choice int[V]
  * single choice stack int[C]
  * TODO Parameter für range (0-1), (0-100)
- * weighted approval int[V][C]  
- * 
+ * weighted approval int[V][C]
+ *
  * output:
  * candidate list int [C]
  * parliament int [C]
@@ -24,15 +24,16 @@ public class CElectionVotingType {
     private int listDimensions;
     private CElectionSimpleTypes simpleType;
     private List<CBMCVars> listSizes;
-    private boolean uniqueVotes = false;
+    private boolean uniqueVotes;
 
     @Override
-    public boolean equals(Object obj) {
-        CElectionVotingType other = (CElectionVotingType) obj;
-        if (listDimensions != other.listDimensions)
+    public boolean equals(final Object obj) {
+        final CElectionVotingType other = (CElectionVotingType) obj;
+        if (listDimensions != other.listDimensions) {
             return false;
-        if (simpleType != other.simpleType)
+        } else if (simpleType != other.simpleType) {
             return false;
+        }
         return true;
     }
 
@@ -52,20 +53,20 @@ public class CElectionVotingType {
         return uniqueVotes;
     }
 
-    public boolean canAccess(CBMCVars var) {
+    public boolean canAccess(final CBMCVars var) {
         return !listSizes.isEmpty() && listSizes.get(0) == var;
     }
 
     public CElectionVotingType getTypeOneDimLess() {
-        CElectionVotingType created = new CElectionVotingType();
+        final CElectionVotingType created = new CElectionVotingType();
         created.listDimensions = this.listDimensions - 1;
         created.simpleType = this.simpleType;
         created.listSizes = this.listSizes.subList(1, this.listSizes.size());
         return created;
     }
 
-    public static CElectionVotingType of(VotingOutputTypes outType) {
-        CElectionVotingType created = new CElectionVotingType();
+    public static CElectionVotingType of(final VotingOutputTypes outType) {
+        final CElectionVotingType created = new CElectionVotingType();
         switch (outType) {
         case CANDIDATE_LIST:
             created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
@@ -93,8 +94,8 @@ public class CElectionVotingType {
         return created;
     }
 
-    public static CElectionVotingType of(VotingInputTypes inType) {
-        CElectionVotingType created = new CElectionVotingType();
+    public static CElectionVotingType of(final VotingInputTypes inType) {
+        final CElectionVotingType created = new CElectionVotingType();
         switch (inType) {
         case APPROVAL:
             created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
@@ -132,11 +133,10 @@ public class CElectionVotingType {
     }
 
     public static CElectionVotingType simple() {
-        CElectionVotingType created = new CElectionVotingType();
+        final CElectionVotingType created = new CElectionVotingType();
         created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
         created.listDimensions = 0;
         created.listSizes = List.of();
         return created;
     }
-
 }

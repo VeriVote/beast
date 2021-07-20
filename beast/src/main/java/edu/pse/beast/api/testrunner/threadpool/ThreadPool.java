@@ -8,37 +8,38 @@ public class ThreadPool {
     private ArrayList<ThreadPoolRunner> runners = new ArrayList<>();
     private WorkSupplier workSupplier = new WorkSupplier();
 
-    public ThreadPool(int numThreads) {
+    public ThreadPool(final int numThreads) {
         for (int i = 0; i < numThreads; ++i) {
-            ThreadPoolRunner runner = new ThreadPoolRunner("Runner_" + i,
-                    workSupplier);
-            Thread t = new Thread(runner);
+            final ThreadPoolRunner runner =
+                    new ThreadPoolRunner("Runner_" + i, workSupplier);
+            final Thread t = new Thread(runner);
             t.start();
             runners.add(runner);
             threads.add(t);
         }
     }
 
-    public void addWork(List<WorkUnit> wul) {
-        for (WorkUnit wu : wul)
+    public void addWork(final List<WorkUnit> wul) {
+        for (final WorkUnit wu : wul) {
             wu.addedToQueue();
+        }
         workSupplier.addWork(wul);
     }
 
-    public void addWork(WorkUnit wu) {
+    public void addWork(final WorkUnit wu) {
         wu.addedToQueue();
         workSupplier.addWork(wu);
     }
 
     public void waitSync() throws InterruptedException {
-
     }
 
     public void shutdown() throws InterruptedException {
-        for (ThreadPoolRunner runner : runners)
+        for (final ThreadPoolRunner runner : runners) {
             runner.shutdown();
-        for (Thread t : threads)
+        }
+        for (final Thread t : threads) {
             t.join(100);
+        }
     }
-
 }

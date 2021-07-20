@@ -44,7 +44,7 @@ public class CounterExampleGuiController {
     private CBMCCounterExample currentExample;
     private CBMCGeneratedCodeInfo codeInfo;
 
-    public AnchorPane display(CBMCCounterExample example) {
+    public AnchorPane display(final CBMCCounterExample example) {
         currentExample = example;
         codeInfo = example.getCbmcGeneratedCodeInfo();
         display();
@@ -52,7 +52,7 @@ public class CounterExampleGuiController {
     }
 
     private void display() {
-        Set<CBMCAssignmentType> types = new HashSet<>();
+        final Set<CBMCAssignmentType> types = new HashSet<>();
         if (votesCheckbox.isSelected()) {
             types.add(CBMCAssignmentType.VOTE);
         }
@@ -65,19 +65,19 @@ public class CounterExampleGuiController {
         if (generatedResultsCheckbox.isSelected()) {
             types.add(CBMCAssignmentType.GENERATED_ELECT);
         }
-        List<CBMCStructAssignment> asses = currentExample.getAssignments(types);
+        final List<CBMCStructAssignment> asses = currentExample.getAssignments(types);
 
         overviewListView.getItems().clear();
         overviewListView.getItems().addAll(asses);
 
         displayCodearea.clear();
-        for (CBMCStructAssignment ass : asses) {
+        for (final CBMCStructAssignment ass : asses) {
             displayAss(ass);
         }
     }
 
-    private void displayAss(CBMCStructAssignment ass) {
-        String structName = ass.getAssignmentType().toString();
+    private void displayAss(final CBMCStructAssignment ass) {
+        final String structName = ass.getAssignmentType().toString();
 
         String amtVarName = "";
         String listVarName = "";
@@ -91,41 +91,40 @@ public class CounterExampleGuiController {
         case GENERATED_VOTE:
             amtVarName = codeInfo.getVotesAmtMemberVarName();
             listVarName = codeInfo.getVotesListMemberVarName();
+            break;
         default:
             break;
         }
 
-        Map<List<Integer>, String> positionsToStrings = new HashMap<>();
+        final Map<List<Integer>, String> positionsToStrings = new HashMap<>();
         int amtBrackets = 0;
 
-        for (String key : ass.getMemberToAssignment().keySet()) {
-            if (key.equals(amtVarName))
-                continue;
-            if (key.equals(listVarName)) {// no brackets
+        for (final String key : ass.getMemberToAssignment().keySet()) {
+            if (key.equals(amtVarName)) {
                 continue;
             }
-            String brackets = key.substring(listVarName.length());
-            List<Integer> bracketNumbers = numbersFromBrackets(brackets);
+            if (key.equals(listVarName)) { // no brackets
+                continue;
+            }
+            final String brackets = key.substring(listVarName.length());
+            final List<Integer> bracketNumbers = numbersFromBrackets(brackets);
 
             amtBrackets = bracketNumbers.size();
 
             positionsToStrings.put(bracketNumbers,
-                    ass.getMemberToAssignment().get(key));
+                                   ass.getMemberToAssignment().get(key));
         }
 
         String assignmentString = "";
         if (amtBrackets == 0) {
-            String value = ass.getAssignmentFor(listVarName);
+            final String value = ass.getAssignmentFor(listVarName);
             assignmentString = listVarName + " " + value + "\n";
         } else if (amtBrackets == 1) {
             for (int i = 0; i < 100; ++i) {
-                boolean foundNew = false;
-
-                for (List<Integer> positions : positionsToStrings.keySet()) {
+                for (final List<Integer> positions : positionsToStrings.keySet()) {
                     if (positions.get(0) == i) {
-                        assignmentString += positionsToStrings.get(positions)
-                                + ", ";
-                        foundNew = true;
+                        assignmentString +=
+                                positionsToStrings.get(positions) + ", ";
                         continue;
                     }
                 }
@@ -135,18 +134,19 @@ public class CounterExampleGuiController {
             for (int i = 0; i < 100; ++i) {
                 boolean foundNew = false;
                 for (int j = 0; j < 100; ++j) {
-                    for (List<Integer> positions : positionsToStrings
-                            .keySet()) {
+                    for (final List<Integer> positions
+                            : positionsToStrings.keySet()) {
                         if (positions.get(0) == i && positions.get(1) == j) {
-                            assignmentString += positionsToStrings
-                                    .get(positions) + ", ";
+                            assignmentString +=
+                                    positionsToStrings.get(positions) + ", ";
                             foundNew = true;
                             continue;
                         }
                     }
                 }
-                if (foundNew)
+                if (foundNew) {
                     assignmentString += "\n";
+                }
             }
         }
 
@@ -154,16 +154,15 @@ public class CounterExampleGuiController {
         s += amtVarName + " " + ass.getAssignmentFor(amtVarName) + "\n";
         s += assignmentString;
         s += "}\n-----------------------\n";
-
         displayCodearea.appendText(s);
     }
 
-    private List<Integer> numbersFromBrackets(String brackets) {
-        List<Integer> bracketNumbers = new ArrayList<>();
+    private List<Integer> numbersFromBrackets(final String brackets) {
+        final List<Integer> bracketNumbers = new ArrayList<>();
 
         String number = "";
         for (int i = 0; i < brackets.length(); ++i) {
-            char c = brackets.charAt(i);
+            final char c = brackets.charAt(i);
             if (Character.isDigit(c)) {
                 number += c;
             } else if (!number.isBlank()) {
@@ -171,11 +170,10 @@ public class CounterExampleGuiController {
                 number = "";
             }
         }
-
         return bracketNumbers;
     }
 
-    private void displayOnChange(CheckBox cb) {
+    private void displayOnChange(final CheckBox cb) {
         cb.setOnAction(e -> {
             display();
         });
@@ -187,16 +185,16 @@ public class CounterExampleGuiController {
         displayOnChange(generatedVotesCheckbox);
         displayOnChange(resultsCheckbox);
         displayOnChange(generatedResultsCheckbox);
-        VirtualizedScrollPane<CodeArea> vsp1 = new VirtualizedScrollPane<>(
-                codeinfoCodearea);
+        final VirtualizedScrollPane<CodeArea> vsp1 =
+                new VirtualizedScrollPane<>(codeinfoCodearea);
         codeinfoAnchorpane.getChildren().add(vsp1);
         AnchorPane.setTopAnchor(vsp1, 0d);
         AnchorPane.setBottomAnchor(vsp1, 0d);
         AnchorPane.setLeftAnchor(vsp1, 0d);
         AnchorPane.setRightAnchor(vsp1, 0d);
 
-        VirtualizedScrollPane<CodeArea> vsp2 = new VirtualizedScrollPane<>(
-                displayCodearea);
+        final VirtualizedScrollPane<CodeArea> vsp2 =
+                new VirtualizedScrollPane<>(displayCodearea);
         displayAnchorpane.getChildren().add(vsp2);
         AnchorPane.setTopAnchor(vsp2, 0d);
         AnchorPane.setBottomAnchor(vsp2, 0d);
@@ -206,11 +204,12 @@ public class CounterExampleGuiController {
         overviewListView.getSelectionModel().selectedItemProperty()
                 .addListener((ob, o, n) -> {
                     codeinfoCodearea.clear();
-                    if (n == null)
+                    if (n == null) {
                         return;
-                    if (n.getVarInfo() != null)
+                    }
+                    if (n.getVarInfo() != null) {
                         codeinfoCodearea.appendText(n.getVarInfo());
+                    }
                 });
     }
-
 }

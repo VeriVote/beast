@@ -11,33 +11,33 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class TestConfiguration {
-
-    private CElectionDescription descr;
-    private PreAndPostConditionsDescription propDescr;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
     private String name;
 
     private Map<String, CBMCTestConfiguration> cbmcTestConfigsByName = new HashMap<>();
 
-    public TestConfiguration(CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr, String name) {
-        this.descr = descr;
-        this.propDescr = propDescr;
-        this.name = name;
+    public TestConfiguration(final CElectionDescription descr,
+                             final PreAndPostConditionsDescription propDescr,
+                             final String nameString) {
+        this.description = descr;
+        this.propertyDescription = propDescr;
+        this.name = nameString;
     }
 
     public CElectionDescription getDescr() {
-        return descr;
+        return description;
     }
 
     public PreAndPostConditionsDescription getPropDescr() {
-        return propDescr;
+        return propertyDescription;
     }
 
     public String getName() {
         return name;
     }
 
-    public void addCBMCTestConfiguration(CBMCTestConfiguration config) {
+    public void addCBMCTestConfiguration(final CBMCTestConfiguration config) {
         cbmcTestConfigsByName.put(config.getName(), config);
     }
 
@@ -45,36 +45,34 @@ public class TestConfiguration {
         return Collections.unmodifiableMap(cbmcTestConfigsByName);
     }
 
-    public boolean contains(CBMCTestConfiguration config) {
+    public boolean contains(final CBMCTestConfiguration config) {
         return cbmcTestConfigsByName.containsKey(config.getName());
     }
 
-    public void addCBMCTestConfigurations(
-            List<CBMCTestConfiguration> cbmcTestConfigs) {
-        for (CBMCTestConfiguration config : cbmcTestConfigs) {
+    public void addCBMCTestConfigurations(final List<CBMCTestConfiguration> cbmcTestConfigs) {
+        for (final CBMCTestConfiguration config : cbmcTestConfigs) {
             addCBMCTestConfiguration(config);
         }
     }
 
     public void handleDescrChange() {
-        for (CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
+        for (final CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
             cbmctc.handleDescrCodeChange();
         }
     }
 
     public List<CBMCTestConfiguration> getCBMCTestConfigs() {
-        List<CBMCTestConfiguration> list = new ArrayList<>();
+        final List<CBMCTestConfiguration> list = new ArrayList<>();
         list.addAll(cbmcTestConfigsByName.values());
         return list;
     }
 
     @Override
     public String toString() {
-        String template = "CONFIG_NAME: DESCR_NAME + PROP_NAME";
-        template = template.replaceAll("CONFIG_NAME", name)
-                .replaceAll("DESCR_NAME", descr.getName())
-                .replaceAll("PROP_NAME", propDescr.getName());
-        return template;
+        return "CONFIG_NAME: DESCR_NAME + PROP_NAME"
+                .replaceAll("CONFIG_NAME", name)
+                .replaceAll("DESCR_NAME", description.getName())
+                .replaceAll("PROP_NAME", propertyDescription.getName());
     }
 
     public void handlePropDescrChanged() {
@@ -85,9 +83,8 @@ public class TestConfiguration {
         // created. Then, the runs can figure out themselves whether they are
         // out of
         // date
-        for (CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
+        for (final CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
             cbmctc.handlePropDescrChanged();
         }
     }
-
 }

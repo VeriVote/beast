@@ -12,7 +12,6 @@ import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class ExtractedCLoopSaverLoaderHelper {
-
     private static final String UUID_KEY = "uuid";
     private static final String LOOPTYPE_KEY = "looptype";
 
@@ -30,9 +29,8 @@ public class ExtractedCLoopSaverLoaderHelper {
     private static final String PARENT_UUID_KEY = "parent_uuid";
     private static final String CHILDREN_UUIDS_KEY = "children_uuids";
 
-    private static JSONObject fromExtractedLoop(ExtractedCLoop loop) {
-        JSONObject json = new JSONObject();
-
+    private static JSONObject fromExtractedLoop(final ExtractedCLoop loop) {
+        final JSONObject json = new JSONObject();
         json.put(UUID_KEY, loop.getUuid());
         json.put(LOOPTYPE_KEY, loop.getLoopType().toString());
 
@@ -47,72 +45,66 @@ public class ExtractedCLoopSaverLoaderHelper {
         if (loop.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
             json.put(MANUAL_BOUND_KEY, loop.getManualInteger());
         }
-
         json.put(FUNCTION_NAME_KEY, loop.getFunctionName());
-
-        String parentUUID = "";
         if (loop.getParentLoop() != null) {
             json.put(PARENT_UUID_KEY, loop.getParentLoop().getUuid());
         }
-        JSONArray childrenUUIDs = new JSONArray();
-        for (ExtractedCLoop child : loop.getChildrenLoops()) {
+        final JSONArray childrenUUIDs = new JSONArray();
+        for (final ExtractedCLoop child : loop.getChildrenLoops()) {
             childrenUUIDs.put(child.getUuid());
         }
-
         json.put(CHILDREN_UUIDS_KEY, childrenUUIDs);
-
         return json;
     }
 
-    private static ExtractedCLoop toExtractedLoop(JSONObject json) {
-        String uuid = json.getString(UUID_KEY);
-        CLoopTypes loopType = CLoopTypes.valueOf(json.getString(LOOPTYPE_KEY));
+    private static ExtractedCLoop toExtractedLoop(final JSONObject json) {
+        final String uuid = json.getString(UUID_KEY);
+        final CLoopTypes loopType = CLoopTypes.valueOf(json.getString(LOOPTYPE_KEY));
 
-        int line = json.getInt(LINE_KEY);
-        int posInLine = json.getInt(POS_IN_LINE_KEY);
-        int numberInFunc = json.getInt(NUMBER_IN_FUNCTION_KEY);
+        final int line = json.getInt(LINE_KEY);
+        final int posInLine = json.getInt(POS_IN_LINE_KEY);
+        final int numberInFunc = json.getInt(NUMBER_IN_FUNCTION_KEY);
 
-        CLoopParseResultType parseResultType = CLoopParseResultType
-                .valueOf(json.getString(PARSE_RESULT_KEY));
-        LoopBoundType loopBoundType = LoopBoundType
-                .valueOf(json.getString(PARSED_BOUND_TYPE_KEY));
+        final CLoopParseResultType parseResultType =
+                CLoopParseResultType.valueOf(json.getString(PARSE_RESULT_KEY));
+        final LoopBoundType loopBoundType =
+                LoopBoundType.valueOf(json.getString(PARSED_BOUND_TYPE_KEY));
+        final String functionName = json.getString(FUNCTION_NAME_KEY);
 
-        String functionName = json.getString(FUNCTION_NAME_KEY);
-
-        ExtractedCLoop extractedCLoop = ExtractedCLoop.fromStoredValues(uuid,
-                loopType, line, posInLine, numberInFunc, parseResultType,
-                loopBoundType, functionName);
-
+        final ExtractedCLoop extractedCLoop =
+                ExtractedCLoop.fromStoredValues(uuid, loopType, line, posInLine,
+                                                numberInFunc, parseResultType,
+                                                loopBoundType, functionName);
         if (loopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
             extractedCLoop.setManualInteger(json.getInt(MANUAL_BOUND_KEY));
         }
-
         return extractedCLoop;
     }
 
-    public static JSONArray fromExtractedLoops(List<ExtractedCLoop> loops) {
-        JSONArray arr = new JSONArray();
-        for (ExtractedCLoop loop : loops) {
+    public static JSONArray fromExtractedLoops(final List<ExtractedCLoop> loops) {
+        final JSONArray arr = new JSONArray();
+        for (final ExtractedCLoop loop : loops) {
             arr.put(fromExtractedLoop(loop));
         }
         return arr;
     }
 
-    private static void setupParentsAndChildren(ExtractedCLoop loop,
-            JSONObject json, List<ExtractedCLoop> loops) {
+    private static void setupParentsAndChildren(final ExtractedCLoop loop,
+                                                final JSONObject json,
+                                                final List<ExtractedCLoop> loops) {
         if (json.has(PARENT_UUID_KEY)) {
-            String parentUUID = json.getString(PARENT_UUID_KEY);
-            for (ExtractedCLoop possibleParent : loops) {
+            final String parentUUID = json.getString(PARENT_UUID_KEY);
+            for (final ExtractedCLoop possibleParent : loops) {
                 if (possibleParent.getUuid().equals(parentUUID)) {
                     loop.setParentLoop(possibleParent);
                     break;
                 }
             }
         }
-        JSONArray childrenUUIDs = json.getJSONArray(CHILDREN_UUIDS_KEY);
+        final JSONArray childrenUUIDs = json.getJSONArray(CHILDREN_UUIDS_KEY);
         for (int i = 0; i < childrenUUIDs.length(); ++i) {
-            String currentChildUUID = childrenUUIDs.getString(i);
-            for (ExtractedCLoop possibleChild : loops) {
+            final String currentChildUUID = childrenUUIDs.getString(i);
+            for (final ExtractedCLoop possibleChild : loops) {
                 if (possibleChild.getUuid().equals(currentChildUUID)) {
                     loop.addChild(possibleChild);
                 }
@@ -120,16 +112,14 @@ public class ExtractedCLoopSaverLoaderHelper {
         }
     }
 
-    public static List<ExtractedCLoop> toExtractedLoops(JSONArray arr) {
-        List<ExtractedCLoop> loops = new ArrayList<>();
+    public static List<ExtractedCLoop> toExtractedLoops(final JSONArray arr) {
+        final List<ExtractedCLoop> loops = new ArrayList<>();
         for (int i = 0; i < arr.length(); ++i) {
             loops.add(toExtractedLoop(arr.getJSONObject(i)));
         }
-
         for (int i = 0; i < arr.length(); ++i) {
             setupParentsAndChildren(loops.get(i), arr.getJSONObject(i), loops);
         }
-
         return loops;
     }
 

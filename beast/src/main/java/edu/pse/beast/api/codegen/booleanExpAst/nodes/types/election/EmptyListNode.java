@@ -5,12 +5,11 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 public class EmptyListNode extends ElectionTypeNode {
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "EmptyList";
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
     }
-
 }

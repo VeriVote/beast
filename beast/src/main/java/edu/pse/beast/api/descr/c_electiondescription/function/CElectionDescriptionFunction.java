@@ -10,12 +10,14 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public abstract class CElectionDescriptionFunction {
-    protected String name;
-    protected List<String> code = new ArrayList<>();
-    protected List<ExtractedCLoop> extractedLoops = new ArrayList<>();
+    private static final String LINE_BREAK = "\n";
 
-    public CElectionDescriptionFunction(String name) {
-        this.name = name;
+    private String name;
+    private List<String> code = new ArrayList<>();
+    private List<ExtractedCLoop> extractedLoops = new ArrayList<>();
+
+    public CElectionDescriptionFunction(final String nameString) {
+        this.name = nameString;
     }
 
     public String getName() {
@@ -23,15 +25,15 @@ public abstract class CElectionDescriptionFunction {
     }
 
     public String getCode() {
-        return String.join("\n", code);
+        return String.join(LINE_BREAK, code);
     }
 
-    public void setCode(String code) {
-        this.code = Arrays.asList(code.split("\n"));
+    public void setCode(final String codeString) {
+        this.code = Arrays.asList(codeString.split(LINE_BREAK));
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(final String nameString) {
+        this.name = nameString;
     }
 
     public List<String> getCodeAsList() {
@@ -49,26 +51,25 @@ public abstract class CElectionDescriptionFunction {
         return extractedLoops;
     }
 
-    public void setExtractedLoops(List<ExtractedCLoop> extractedLoops) {
-        this.extractedLoops = extractedLoops;
+    public void setExtractedLoops(final List<ExtractedCLoop> extractedLoopList) {
+        this.extractedLoops = extractedLoopList;
     }
 
     public boolean allLoopsDescribed() {
+        boolean res;
         if (extractedLoops.isEmpty()) {
-            if (AntlrCLoopParser.getAmtLoops(getCode()) != 0) {
-                return false;
-            }
+            res = AntlrCLoopParser.getAmtLoops(getCode()) == 0;
         } else {
-            for (ExtractedCLoop l : extractedLoops) {
-                if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER
-                        && l.getManualInteger() == null) {
-                    return false;
-                }
+            res = true;
+        }
+        for (final ExtractedCLoop l : extractedLoops) {
+            if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER
+                    && l.getManualInteger() == null) {
+                res = false;
             }
         }
-        return true;
+        return res;
     }
 
     public abstract String getReturnText(CodeGenOptions codeGenOptions);
-
 }

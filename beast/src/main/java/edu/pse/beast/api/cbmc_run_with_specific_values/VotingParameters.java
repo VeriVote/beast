@@ -5,9 +5,9 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
 /**
- * Generates the C code to initialize a voting 
- * struct of given name and type 
- * @author holge
+ * Generates the C code to initialize a voting
+ * struct of given name and type.
+ * @author Holger Klein
  *
  */
 public interface VotingParameters {
@@ -18,10 +18,10 @@ public interface VotingParameters {
 
     int getS();
 
-    public String generateVoteStructInitCode(
-            ElectionTypeCStruct voteInputStruct, CodeGenOptions options,
-            CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
-            String generatedVarName);
+    String generateVoteStructInitCode(ElectionTypeCStruct voteInputStruct,
+                                      CodeGenOptions options,
+                                      CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
+                                      String generatedVarName);
 
     int getHighestVote();
 }

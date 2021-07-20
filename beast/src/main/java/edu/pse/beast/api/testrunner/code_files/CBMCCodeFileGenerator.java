@@ -19,29 +19,23 @@ public class CBMCCodeFileGenerator {
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/cbmc_generated_files/";
 
-    private static final String CANNOT_FIND_PARENT = "Cannot find a parent to your file!";
-
-    public static CBMCCodeFileData createCodeFileTest(
-            final CElectionDescription descr,
-            final PreAndPostConditionsDescription propDescr,
-            CodeGenOptions options, PathHandler pathHandler,
-            InitVoteHelper initVoteHelper) throws IOException {
-
-        CBMCGeneratedCodeInfo code = CBMCCodeGenerator
-                .generateCodeForCBMCPropertyTest(descr, propDescr, options,
-                        initVoteHelper);
-
-        String absolutePath = pathHandler.getBaseDir().getAbsolutePath()
+    public static CBMCCodeFileData
+                createCodeFileTest(final CElectionDescription descr,
+                                   final PreAndPostConditionsDescription propDescr,
+                                   final CodeGenOptions options,
+                                   final PathHandler pathHandler,
+                                   final InitVoteHelper initVoteHelper) throws IOException {
+        final CBMCGeneratedCodeInfo code =
+                CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, options,
+                                                                  initVoteHelper);
+        final String absolutePath = pathHandler.getBaseDir().getAbsolutePath()
                 + PATH_TO_TEMP_FOLDER;
-        File file = File.createTempFile("cbmc", ".c", new File(absolutePath));
-
+        final File file = File.createTempFile("cbmc", ".c", new File(absolutePath));
         FileUtils.writeStringToFile(file, code.getCode(),
                 Charset.defaultCharset());
-        ;
-        CBMCCodeFileData codeFile = new CBMCCodeFileData();
+        final CBMCCodeFileData codeFile = new CBMCCodeFileData();
         codeFile.setCodeInfo(code);
         codeFile.setFile(file);
         return codeFile;
     }
-
 }

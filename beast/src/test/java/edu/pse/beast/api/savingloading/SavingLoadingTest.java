@@ -23,40 +23,43 @@ import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
-
     @Test
     public void testSavingLoadingOfElectionDescription() throws IOException {
-        String bordaCode = "    unsigned int i = 0;\n"
-                + "    unsigned int j = 0;\n" + "\n"
-                + "    for (i = 0; i < C; i++) {\n" + "        result[i] = 0;\n"
-                + "    }\n" + "    for (i = 0; i < V; i++) {\n"
-                + "        for (j = 0; j < C; j++) {\n"
-                + "            result[votes[i][j]] += (C - j) - 1;\n"
-                + "        }\n" + "    }" + "    unsigned int max = 0;\n"
-                + "    for (i = 0; i < C; i++) {\n"
-                + "        if (max < res[i]) {\n"
-                + "            max = res[i];\n"
-                + "            for (j = 0; j < C; j++) {\n"
-                + "                r.arr[j] = 0;\n" + "            }\n"
-                + "            r.arr[i] = 1;\n"
-                + "        } else if (max == res[i]) {\n"
-                + "            r.arr[i] = 1;\n" + "        }\n" + "    }";
+        final String bordaCode =
+                "    unsigned int i = 0;\n"
+                        + "    unsigned int j = 0;\n" + "\n"
+                        + "    for (i = 0; i < C; i++) {\n" + "        result[i] = 0;\n"
+                        + "    }\n" + "    for (i = 0; i < V; i++) {\n"
+                        + "        for (j = 0; j < C; j++) {\n"
+                        + "            result[votes[i][j]] += (C - j) - 1;\n"
+                        + "        }\n" + "    }" + "    unsigned int max = 0;\n"
+                        + "    for (i = 0; i < C; i++) {\n"
+                        + "        if (max < res[i]) {\n"
+                        + "            max = res[i];\n"
+                        + "            for (j = 0; j < C; j++) {\n"
+                        + "                r.arr[j] = 0;\n" + "            }\n"
+                        + "            r.arr[i] = 1;\n"
+                        + "        } else if (max == res[i]) {\n"
+                        + "            r.arr[i] = 1;\n" + "        }\n" + "    }";
 
-        CElectionDescription descr = new CElectionDescription(
-                VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
-                "borda");
+        final CElectionDescription descr =
+                new CElectionDescription(VotingInputTypes.PREFERENCE,
+                                         VotingOutputTypes.CANDIDATE_LIST,
+                                         "borda");
         descr.getVotingFunction().setCode(bordaCode);
 
-        SimpleTypeFunction simpleFunc = new SimpleTypeFunction("asd",
-                List.of(CElectionSimpleTypes.BOOL, CElectionSimpleTypes.DOUBLE),
-                List.of("i", "j"), CElectionSimpleTypes.FLOAT);
+        final SimpleTypeFunction simpleFunc =
+                new SimpleTypeFunction("asd",
+                                       List.of(CElectionSimpleTypes.BOOL,
+                                               CElectionSimpleTypes.DOUBLE),
+                                       List.of("i", "j"), CElectionSimpleTypes.FLOAT);
         descr.addSimpleFunction(simpleFunc);
 
-        CodeGenOptions options = new CodeGenOptions();
+        final CodeGenOptions options = new CodeGenOptions();
         options.setCurrentAmountCandsVarName("C");
         options.setCurrentAmountVotersVarName("V");
-        List<ExtractedCLoop> extractedCLoops = AntlrCLoopParser
-                .findLoops("voting", bordaCode, options);
+        final List<ExtractedCLoop> extractedCLoops =
+                AntlrCLoopParser.findLoops("voting", bordaCode, options);
 
         descr.getVotingFunction().setExtractedLoops(extractedCLoops);
 
@@ -65,44 +68,42 @@ public class SavingLoadingTest {
         f = new File("testfiles/borda.belec");
         SavingLoadingInterface.storeCElection(descr, f);
 
-        CElectionDescription loadedDescr = SavingLoadingInterface
-                .loadCElection(f);
+        final CElectionDescription loadedDescr =
+                SavingLoadingInterface.loadCElection(f);
 
         assertEquals(descr.getInputType(), loadedDescr.getInputType());
         assertEquals(descr.getOutputType(), loadedDescr.getOutputType());
         assertEquals(descr.getVotingFunction().getName(),
-                loadedDescr.getVotingFunction().getName());
+                     loadedDescr.getVotingFunction().getName());
         assertEquals(descr.getVotingFunction().getCode(),
-                loadedDescr.getVotingFunction().getCode());
+                     loadedDescr.getVotingFunction().getCode());
 
         assertEquals(descr.getVotingFunction().getExtractedLoops().size(),
-                loadedDescr.getVotingFunction().getExtractedLoops().size());
+                     loadedDescr.getVotingFunction().getExtractedLoops().size());
 
-        for (int i = 0; i < descr.getVotingFunction().getExtractedLoops()
-                .size(); ++i) {
-            ExtractedCLoop loop = descr.getVotingFunction().getExtractedLoops()
-                    .get(i);
-            ExtractedCLoop loadedLoop = loadedDescr.getVotingFunction()
-                    .getExtractedLoops().get(i);
+        for (int i = 0; i < descr.getVotingFunction().getExtractedLoops().size(); ++i) {
+            final ExtractedCLoop loop =
+                    descr.getVotingFunction().getExtractedLoops().get(i);
+            final ExtractedCLoop loadedLoop =
+                    loadedDescr.getVotingFunction().getExtractedLoops().get(i);
             assertEquals(loop.getChildrenLoops().size(),
-                    loadedLoop.getChildrenLoops().size());
+                         loadedLoop.getChildrenLoops().size());
             if (loop.getParentLoop() == null) {
                 assertNull(loadedLoop.getParentLoop());
             } else {
                 assertEquals(loop.getParentLoop().getUuid(),
-                        loadedLoop.getParentLoop().getUuid());
+                             loadedLoop.getParentLoop().getUuid());
             }
         }
     }
 
     @Test
-    public void testSavingLoadingOfPreAndPostConditionDescription()
-            throws IOException {
-        String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
-        String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
+    public void testSavingLoadingOfPreAndPostConditionDescription() throws IOException {
+        final String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
+        final String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
 
-        List<PreAndPostConditionsDescription> propDecsr = CreationHelper
-                .createSimpleCondList("reinforce", pre, post);
+        final List<PreAndPostConditionsDescription> propDecsr =
+                CreationHelper.createSimpleCondList("reinforce", pre, post);
 
         propDecsr.get(0).getCbmcVariables()
                 .add(new SymbolicCBMCVar("v1", CBMCVarType.VOTER));
@@ -114,10 +115,9 @@ public class SavingLoadingTest {
         File f = new File("testfiles");
         f.mkdirs();
         f = new File("testfiles/reinforcement.bprp");
-        SavingLoadingInterface
-                .storePreAndPostConditionDescription(propDecsr.get(0), f);
-        PreAndPostConditionsDescription loadedPropDescr = SavingLoadingInterface
-                .loadPreAndPostConditionDescription(f);
+        SavingLoadingInterface.storePreAndPostConditionDescription(propDecsr.get(0), f);
+        final PreAndPostConditionsDescription loadedPropDescr =
+                SavingLoadingInterface.loadPreAndPostConditionDescription(f);
         assertEquals(propDecsr.get(0), loadedPropDescr);
     }
 }

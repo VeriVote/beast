@@ -16,7 +16,7 @@ public final class LogicalOrNode extends BinaryRelationshipNode {
      * @param rhsExpNode the rhs node
      */
     public LogicalOrNode(final BooleanExpressionNode lhsExpNode,
-            final BooleanExpressionNode rhsExpNode) {
+                         final BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 
@@ -26,7 +26,7 @@ public final class LogicalOrNode extends BinaryRelationshipNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitBinaryRelationNode(this, BinaryCombinationSymbols.OR);
     }
 }

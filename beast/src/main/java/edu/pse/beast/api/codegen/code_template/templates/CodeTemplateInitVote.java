@@ -7,7 +7,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateInitVote {
-    public final static String templateSingleChoice =
+    public static final String TEMPLATE_SINGLE_CHOICE =
               "    //initializing Vote VOTE_NUMBER\n"
             + "    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();\n"
             + "    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);\n"
@@ -28,14 +28,14 @@ public class CodeTemplateInitVote {
             + "            ASSUME(VAR_NAME.votes[i] == INVALID_VOTE);\n"
             + "    }\n";
 
-    public final static List<LoopBound> loopBoundsSingleChoice =
+    public static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(
                             LoopBoundType.LOOP_BOUND_AMT_VOTERS,
                             LoopBoundType.LOOP_BOUND_AMT_VOTERS)
                     );
 
-    public final static String templatePreference =
+    public static final String TEMPLATE_PREFERENCE =
               "    //initializing Vote VOTE_NUMBER\n"
             + "    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();\n"
             + "    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);\n"
@@ -73,7 +73,7 @@ public class CodeTemplateInitVote {
             + "        }\n"
             + "    }\n";
 
-    public final static List<LoopBound> loopBoundsPreference =
+    public static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays
                 .asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
@@ -84,7 +84,7 @@ public class CodeTemplateInitVote {
                         LoopBoundType.LOOP_BOUND_AMT_CANDS)
             );
 
-    public final static String templateApproval =
+    public static final String TEMPLATE_APPROVAL =
               "    //initializing Vote VOTE_NUMBER\n"
             + "    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();\n"
             + "    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);\n"
@@ -109,7 +109,7 @@ public class CodeTemplateInitVote {
             + "        }\n"
             + "    }\n";
 
-    public final static List<LoopBound> loopBoundsApproval =
+    public static final List<LoopBound> LOOP_BOUNDS_APPROVAL =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
                 LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,

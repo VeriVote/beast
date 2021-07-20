@@ -17,61 +17,59 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class SymbVarInitVoteHelper extends InitVoteHelper {
 
-    public String generateCode(int voteNumber,
-            ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
-            CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler,
-            CBMCGeneratedCodeInfo codeInfo) {
-        String varName = getVoteVarName(voteNumber);
+    public String generateCode(final int voteNumber,
+                               final ElectionTypeCStruct voteArrStruct,
+                               final VotingInputTypes votingInputType,
+                               final CodeGenOptions options,
+                               final CodeGenLoopBoundHandler loopBoundHandler,
+                               final CBMCGeneratedCodeInfo codeInfo) {
+        final String varName = getVoteVarName(voteNumber);
         codeInfo.addVotingVariableName(voteNumber, varName);
 
-        String currentAmtVoterVarName = getCurrentAmtVoter(voteNumber);
-        String currentAmtCandVarName = getCurrentAmtCand(voteNumber);
-        String currentAmtSeatVarName = getCurrentAmtSeat(voteNumber);
+        final String currentAmtVoterVarName = getCurrentAmtVoter(voteNumber);
+        final String currentAmtCandVarName = getCurrentAmtCand(voteNumber);
+        final String currentAmtSeatVarName = getCurrentAmtSeat(voteNumber);
 
-        Map<String, String> replacementMap = StringReplacementMap.genMap(
-                "MAX_AMT_CAND", options.getCbmcAmountMaxCandsVarName(),
-                "MAX_AMT_VOTER", options.getCbmcAmountMaxVotersVarName(),
-                "MAX_AMT_SEAT", options.getCbmcAmountMaxSeatsVarName(),
-                "CURRENT_AMT_VOTER", currentAmtVoterVarName, "CURRENT_AMT_CAND",
-                currentAmtCandVarName, "CURRENT_AMT_SEAT",
-                currentAmtSeatVarName, "VOTE_TYPE",
-                voteArrStruct.getStruct().getName(), "AMT_MEMBER",
-                voteArrStruct.getAmtName(), "VOTE_NUMBER",
-                String.valueOf(voteNumber), "LIST_MEMBER",
-                voteArrStruct.getListName(), "VAR_NAME", varName, "ASSUME",
-                options.getCbmcAssumeName(), "NONDET_UINT",
-                options.getCbmcNondetUintName());
-
+        final Map<String, String> replacementMap =
+                StringReplacementMap.genMap(
+                        "MAX_AMT_CAND", options.getCbmcAmountMaxCandsVarName(),
+                        "MAX_AMT_VOTER", options.getCbmcAmountMaxVotersVarName(),
+                        "MAX_AMT_SEAT", options.getCbmcAmountMaxSeatsVarName(),
+                        "CURRENT_AMT_VOTER", currentAmtVoterVarName,
+                        "CURRENT_AMT_CAND", currentAmtCandVarName,
+                        "CURRENT_AMT_SEAT", currentAmtSeatVarName,
+                        "VOTE_TYPE", voteArrStruct.getStruct().getName(),
+                        "AMT_MEMBER", voteArrStruct.getAmtName(),
+                        "VOTE_NUMBER", String.valueOf(voteNumber),
+                        "LIST_MEMBER", voteArrStruct.getListName(),
+                        "VAR_NAME", varName,
+                        "ASSUME", options.getCbmcAssumeName(),
+                        "NONDET_UINT", options.getCbmcNondetUintName());
         String code = null;
         List<LoopBound> loopbounds = List.of();
 
         switch (votingInputType) {
-        case APPROVAL: {
-            code = CodeTemplateInitVote.templateApproval;
-            loopbounds = CodeTemplateInitVote.loopBoundsApproval;
+        case APPROVAL:
+            code = CodeTemplateInitVote.TEMPLATE_APPROVAL;
+            loopbounds = CodeTemplateInitVote.LOOP_BOUNDS_APPROVAL;
             break;
-        }
-        case WEIGHTED_APPROVAL: {
+        case WEIGHTED_APPROVAL:
             throw new NotImplementedException();
-        }
-        case PREFERENCE: {
-            code = CodeTemplateInitVote.templatePreference;
-            loopbounds = CodeTemplateInitVote.loopBoundsPreference;
+        case PREFERENCE:
+            code = CodeTemplateInitVote.TEMPLATE_PREFERENCE;
+            loopbounds = CodeTemplateInitVote.LOOP_BOUNDS_PREFERENCE;
             break;
-        }
-        case SINGLE_CHOICE: {
-            code = CodeTemplateInitVote.templateSingleChoice;
-            loopbounds = CodeTemplateInitVote.loopBoundsSingleChoice;
+        case SINGLE_CHOICE:
+            code = CodeTemplateInitVote.TEMPLATE_SINGLE_CHOICE;
+            loopbounds = CodeTemplateInitVote.LOOP_BOUNDS_SINGLE_CHOICE;
             break;
-        }
-        case SINGLE_CHOICE_STACK: {
+        case SINGLE_CHOICE_STACK:
             throw new NotImplementedException();
-        }
+        default:
         }
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 
     @Override

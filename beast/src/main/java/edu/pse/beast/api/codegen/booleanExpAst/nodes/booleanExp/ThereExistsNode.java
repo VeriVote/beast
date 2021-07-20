@@ -15,10 +15,8 @@ public final class ThereExistsNode extends QuantifierNode {
      * @param declSymbVar   the symbolic variable of this quantifier
      * @param followingNode the following node of this quantifier
      */
-    private SymbolicCBMCVar var;
-
     public ThereExistsNode(final SymbolicCBMCVar declSymbVar,
-            final BooleanExpressionNode followingNode) {
+                           final BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
 
@@ -28,7 +26,7 @@ public final class ThereExistsNode extends QuantifierNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitExistsCandidateNode(this);
     }
 }

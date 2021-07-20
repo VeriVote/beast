@@ -1,13 +1,14 @@
 package edu.pse.beast.gui.testconfigeditor.testconfig;
 
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class TestConfigGuiController {
 
@@ -26,21 +27,19 @@ public class TestConfigGuiController {
 
     private BeastWorkspace beastWorkspace;
 
-    public TestConfigGuiController(BeastWorkspace beastWorkspace) {
-        this.beastWorkspace = beastWorkspace;
+    public TestConfigGuiController(final BeastWorkspace workspace) {
+        this.beastWorkspace = workspace;
     }
 
     public AnchorPane getTopLevelAnchorPane() {
         return topLevelAnchorPane;
     }
 
-    public void display(TestConfiguration config) {
+    public void display(final TestConfiguration config) {
         nameTextField.setText(config.getName());
-
         descrChoiceBox.getItems().clear();
         descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
         descrChoiceBox.getSelectionModel().select(config.getDescr());
-
         propDescrChoiceBox.getItems().clear();
         propDescrChoiceBox.getItems()
                 .addAll(beastWorkspace.getLoadedPropDescrs());
@@ -53,5 +52,4 @@ public class TestConfigGuiController {
         propDescrChoiceBox.getItems()
                 .addAll(beastWorkspace.getLoadedPropDescrs());
     }
-
 }

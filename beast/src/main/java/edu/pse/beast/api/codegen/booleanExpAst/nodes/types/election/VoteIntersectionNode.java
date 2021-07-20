@@ -9,21 +9,20 @@ public class VoteIntersectionNode extends ElectionTypeNode {
     private List<Integer> numbers = new ArrayList<>();
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "Intersect Votes";
     }
 
-    public void addVoteNumber(int number) {
+    public void addVoteNumber(final int number) {
         numbers.add(number);
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitVoteIntersectionNode(this);
     }
 
     public List<Integer> getNumbers() {
         return numbers;
     }
-
 }

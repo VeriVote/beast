@@ -12,8 +12,10 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonRunningDataExtractor;
 
 /**
- * This class can be expanded to implemented functionality to generate testruns
- * With specific parameters
+ * This class can be expanded to implemented functionality to generate test runs
+ * with specific parameters.
+ *
+ * @author Holger Klein
  */
 public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
     private CBMCCodeFileData cbmcCodeFile;
@@ -22,50 +24,59 @@ public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
     private CBMCJsonRunningDataExtractor cbmcJsonRunningDataExtractor;
     private CBMCPropertyCheckWorkUnit workUnit;
 
-    private String loopboundList;
-    private CodeGenOptions codeGenOptions;
+    private String loopBounds;
+    private CodeGenOptions codeGenerationOptions;
 
-    private int V;
-    private int S;
-    private int C;
+    private int v;
+    private int s;
+    private int c;
 
-    private CElectionDescription descr;
-    private PreAndPostConditionsDescription propDescr;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
 
-    public CBMCTestRunWithSpecificValues(CBMCCodeFileData cbmcCodeFile,
-            VotingParameters parameters, String loopboundList,
-            CodeGenOptions codeGenOptions, CElectionDescription descr) {
-        this.cbmcCodeFile = cbmcCodeFile;
-        this.parameters = parameters;
-        this.loopboundList = loopboundList;
-        this.codeGenOptions = codeGenOptions;
-        this.descr = descr;
-        V = parameters.getV();
-        C = parameters.getC();
-        S = parameters.getS();
-        propDescr = new PreAndPostConditionsDescription("false");
-        propDescr.getPreConditionsDescription().setCode("");
-        propDescr.getPostConditionsDescription().setCode("FALSE;");
+    public CBMCTestRunWithSpecificValues(final CBMCCodeFileData codeFile,
+                                         final VotingParameters params,
+                                         final String loopBoundList,
+                                         final CodeGenOptions codeGenOptions,
+                                         final CElectionDescription descr) {
+        this.cbmcCodeFile = codeFile;
+        this.parameters = params;
+        this.loopBounds = loopBoundList;
+        this.codeGenerationOptions = codeGenOptions;
+        this.description = descr;
+        v = params.getV();
+        c = params.getC();
+        s = params.getS();
+        propertyDescription = new PreAndPostConditionsDescription("false");
+        propertyDescription.getPreConditionsDescription().setCode("");
+        propertyDescription.getPostConditionsDescription().setCode("FALSE;");
 
-        cbmcJsonRunningDataExtractor = new CBMCJsonRunningDataExtractor(descr,
-                propDescr, S, C, V, cbmcCodeFile.getCodeInfo());
+        cbmcJsonRunningDataExtractor =
+                new CBMCJsonRunningDataExtractor(descr,
+                                                 propertyDescription, s, c, v,
+                                                 codeFile.getCodeInfo());
     }
 
-    public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit,
-            PathHandler pathHandler) {
-        if (workUnit.getProcessStarterSource() == null)
+    public void setAndInitializeWorkUnit(final CBMCPropertyCheckWorkUnit cbmcWorkUnit,
+                                         final PathHandler pathHandler) {
+        if (cbmcWorkUnit.getProcessStarterSource() == null) {
             return;
-        workUnit.initialize(V, S, C, codeGenOptions, loopboundList,
-                cbmcCodeFile, descr, propDescr, this, pathHandler);
-        this.workUnit = workUnit;
+        }
+        cbmcWorkUnit.initialize(v, s, c, codeGenerationOptions, loopBounds,
+                cbmcCodeFile, description, propertyDescription, this, pathHandler);
+        this.workUnit = cbmcWorkUnit;
     }
 
     @Override
-    public void onPropertyTestRawOutput(String sessionUUID,
-            CElectionDescription description,
-            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-            String uuid, String output) {
-        CBMCJsonMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
+    public void onPropertyTestRawOutput(final String sessionUUID,
+                                        final CElectionDescription descr,
+                                        final PreAndPostConditionsDescription propertyDescr,
+                                        final int seatAmount,
+                                        final int candidateAmount,
+                                        final int voteAmount,
+                                        final String uuid,
+                                        final String output) {
+        final CBMCJsonMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
         System.out.println(msg);
     }
 

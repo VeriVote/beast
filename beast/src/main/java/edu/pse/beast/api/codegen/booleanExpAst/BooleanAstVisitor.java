@@ -26,63 +26,61 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.Symbolic
 public interface BooleanAstVisitor {
 
     /*
-     * 
+     *
      * Nodes returning a boolean value
-     * 
+     *
      */
 
-    public void visitBooleanExpListElementNode(BooleanExpListElementNode node);
+    void visitBooleanExpListElementNode(BooleanExpListElementNode node);
 
-    public void visitComparisonNode(ComparisonNode node);
+    void visitComparisonNode(ComparisonNode node);
 
-    public void visitForAllVotersNode(ForAllNode node);
+    void visitForAllVotersNode(ForAllNode node);
 
-    public void visitExistsCandidateNode(ThereExistsNode node);
+    void visitExistsCandidateNode(ThereExistsNode node);
 
-    public void visitNotNode(NotNode node);
+    void visitNotNode(NotNode node);
 
-    public void visitBinaryRelationNode(BinaryRelationshipNode node,
-            String binaryCombinationSymbol);
+    void visitBinaryRelationNode(BinaryRelationshipNode node,
+                                 String binaryCombinationSymbol);
 
     /*
-     * 
+     *
      * Nodes returning some other value to be compared into a boolean value
      * (such as voting types or integers)
-     * 
+     *
      */
 
-    public void visitVoteIntersectionNode(VoteIntersectionNode node);
+    void visitVoteIntersectionNode(VoteIntersectionNode node);
 
-    public void visitVoteExpNode(VoteExp node);
+    void visitVoteExpNode(VoteExp node);
 
-    public void visitElectExpNode(ElectExp node);
+    void visitElectExpNode(ElectExp node);
 
-    public void visitVotePermutation(VotePermutationNode node);
+    void visitVotePermutation(VotePermutationNode node);
 
-    public void visitElectPermutation(ElectPermutationNode node);
+    void visitElectPermutation(ElectPermutationNode node);
 
-    public void visitVoteTuple(VoteTupleNode node);
+    void visitVoteTuple(VoteTupleNode node);
 
-    public void visitElectTuple(ElectTupleNode node);
+    void visitElectTuple(ElectTupleNode node);
 
-    public void visitSymbolicVarExp(SymbolicVarByNameExp node);
+    void visitSymbolicVarExp(SymbolicVarByNameExp node);
 
-    public void visitVoteSumExp(VoteSumForCandExp node);
+    void visitVoteSumExp(VoteSumForCandExp node);
 
-    public void visitIntegerExp(IntegerNode node);
+    void visitIntegerExp(IntegerNode node);
 
-    public void visitBinaryIntegerExpression(
-            BinaryIntegerValuedNode binaryIntegerValuedNode);
+    void visitBinaryIntegerExpression(BinaryIntegerValuedNode binaryIntegerValuedNode);
 
-    public void visitConstantExp(ConstantExp constantExp);
+    void visitConstantExp(ConstantExp constantExp);
 
-    public void visitEmptyNode(BooleanExpIsEmptyNode booleanExpIsEmptyNode);
+    void visitEmptyNode(BooleanExpIsEmptyNode booleanExpIsEmptyNode);
 
-    public void visitElectIntersectionNode(
-            ElectIntersectionNode electIntersectionNode);
+    void visitElectIntersectionNode(ElectIntersectionNode electIntersectionNode);
 
-    public void visitBooleanExpFalseTrueNode(FalseTrueNode falseTrueNode);
+    void visitBooleanExpFalseTrueNode(FalseTrueNode falseTrueNode);
 
-    public void visitSymbVarByPosExp(SymbVarByPosExp symbVarByPosExp);
+    void visitSymbVarByPosExp(SymbVarByPosExp symbVarByPosExp);
 
 }

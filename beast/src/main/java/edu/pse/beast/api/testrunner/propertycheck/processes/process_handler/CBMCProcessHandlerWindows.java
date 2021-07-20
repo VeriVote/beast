@@ -12,52 +12,54 @@ import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 
 public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
     private static final String BLANK = " ";
-    private static final long WAITING_TIME_FOR_TERMINATION = 8000;
-    private static final double A_VERY_LONG_TIME = 1000d;
+    private static final String PATH_SEP = "\"";
+    // private static final long WAITING_TIME_FOR_TERMINATION = 8000;
+    // private static final double A_VERY_LONG_TIME = 1000d;
     /** The Constant CBMC_EXE. */
-    private String CBMC_EXE = "cbmc.exe";
-    /** The Constant CBMC64_EXE. */
-    private String CBMC64_EXE = "cbmc64.exe";
+    private static final String CBMC_EXE = "cbmc.exe";
+    // private String CBMC64_EXE = "cbmc64.exe";
 
-    /** The Constant RELATIVE_PATH_TO_CBMC_64. */
-    private String RELATIVE_PATH_TO_CBMC = "/windows/cbmcWIN/" + CBMC_EXE;
+    /** The Constant RELATIVE_PATH_TO_CBMC. */
+    private static final String RELATIVE_PATH_TO_CBMC = "/windows/cbmcWIN/" + CBMC_EXE;
 
-    // only needed in windows
+    // only needed in Windows
     private String vsCmdPath; // =
     // "\"D:\\Visual studio\\Common7\\Tools\\VsDevCmd.bat\"";
 
-    public CBMCProcessHandlerWindows(String vsCmdPath) {
-        this.vsCmdPath = "\"" + vsCmdPath + "\"";
+    public CBMCProcessHandlerWindows(final String vsCmdPathString) {
+        this.vsCmdPath = PATH_SEP + vsCmdPathString + PATH_SEP;
     }
 
     public String getVsCmdPath() {
         return vsCmdPath;
     }
 
-    public void setVsCmdPath(String vsCmdPath) {
-        this.vsCmdPath = vsCmdPath;
+    public void setVsCmdPath(final String vsCmdPathString) {
+        this.vsCmdPath = vsCmdPathString;
     }
 
     @Override
-    public Process startCheckForParam(String sessionUUID, int V, int C, int S,
-            String uuid, CBMCTestCallback cb, File cbmcFile, String loopBounds,
-            CodeGenOptions codeGenOptions, PathHandler pathHandler)
-            throws IOException {
-        String cbmcPath = new File(pathHandler.getBaseDir().getAbsolutePath()
-                + RELATIVE_PATH_TO_CBMC).getPath();
+    public Process startCheckForParam(final String sessionUUID,
+                                      final int v, final int c, final int s,
+                                      final String uuid, final CBMCTestCallback cb,
+                                      final File cbmcFile, final String loopBounds,
+                                      final CodeGenOptions codeGenOptions,
+                                      final PathHandler pathHandler) throws IOException {
+        final String cbmcPath =
+                new File(pathHandler.getBaseDir().getAbsolutePath()
+                        + RELATIVE_PATH_TO_CBMC).getPath();
 
-        String Space = " ";
-        String completeCommand = vsCmdPath + Space + "&" + Space + "\""
-                + cbmcPath + "\"" + Space + cbmcFile.getAbsolutePath() + Space
-                + CBMCArgumentHelper.getConstCommands(codeGenOptions, V, C, S)
-                + Space + "--json-ui " + loopBounds;
+        final String completeCommand = vsCmdPath + BLANK + "&" + BLANK + PATH_SEP
+                + cbmcPath + PATH_SEP + BLANK + cbmcFile.getAbsolutePath() + BLANK
+                + CBMCArgumentHelper.getConstCommands(codeGenOptions, v, c, s)
+                + BLANK + "--json-ui " + loopBounds;
 
         final File batFile = new File(cbmcFile.getParent() + "\\"
                 + cbmcFile.getName().replace(".c", ".bat"));
 
         SavingLoadingInterface.writeStringToFile(batFile, completeCommand);
-        ProcessBuilder pb = new ProcessBuilder("cmd", "/c",
-                batFile.getAbsolutePath());
+        final ProcessBuilder pb =
+                new ProcessBuilder("cmd", "/c", batFile.getAbsolutePath());
         return pb.start();
     }
 
@@ -67,8 +69,7 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
     }
 
     @Override
-    public void endProcess(Process p) {
+    public void endProcess(final Process p) {
         throw new NotImplementedException();
     }
-
 }

@@ -13,91 +13,95 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VoteComparisonHelper {
+    private static final String GENERATED_VAR_NAME = "GENERATED_VAR";
+    private static final String LHS_VAR_NAME = "LHS_VAR";
+    private static final String RHS_VAR_NAME = "RHS_VAR";
+    private static final String AMOUNT_NAME = "AMT_MEMBER";
+    private static final String AMOUNT_MAX_CAND_VAR_NAME = "AMT_CANDIDATES";
+    private static final String COMPARE_SYMBOL = "COMP";
+    private static final String LIST_NAME = "LIST_MEMBER";
+    private static final String NOT_EQUAL = "!=";
 
-    private static List<LoopBound> getLoopBounds(
-            VotingInputTypes votingInputType) {
+    private static List<LoopBound> getLoopBounds(final VotingInputTypes votingInputType) {
+        final List<LoopBound> bounds;
         switch (votingInputType) {
-        case APPROVAL: {
-            return CodeTemplateVoteComparison.loopBoundsApproval;
-        }
-        case WEIGHTED_APPROVAL: {
+        case APPROVAL:
+            bounds = CodeTemplateVoteComparison.LOOP_BOUNDS_APPROVAL;
+            break;
+        case WEIGHTED_APPROVAL:
+            bounds = List.of();
             throw new NotImplementedException();
-        }
-        case PREFERENCE: {
-            return CodeTemplateVoteComparison.loopBoundsPreference;
-        }
-        case SINGLE_CHOICE: {
-            return CodeTemplateVoteComparison.loopBoundsSingleChoice;
-        }
-        case SINGLE_CHOICE_STACK: {
+        case PREFERENCE:
+            bounds = CodeTemplateVoteComparison.LOOP_BOUNDS_PREFERENCE;
+            break;
+        case SINGLE_CHOICE:
+            bounds = CodeTemplateVoteComparison.LOOP_BOUNDS_SINGLE_CHOICE;
+            break;
+        case SINGLE_CHOICE_STACK:
+            bounds = List.of();
             throw new NotImplementedException();
+        default:
+            bounds = List.of();
         }
-        }
-        return List.of();
+        return bounds;
     }
 
-    public static String generateCode(String generatedVarName,
-            String lhsVarName, String rhsVarName,
-            ElectionTypeCStruct comparedType, VotingInputTypes votingInputType,
-            CodeGenOptions options, String compareSymbol,
-            CodeGenLoopBoundHandler loopBoundHandler) {
-
-        Map<String, String> replacementMap = Map.of("GENERATED_VAR",
-                generatedVarName, "LHS_VAR", lhsVarName, "RHS_VAR", rhsVarName,
-                "AMT_MEMBER", comparedType.getAmtName(), "AMT_CANDIDATES",
-                options.getCbmcAmountMaxCandsVarName(), "COMP", compareSymbol,
-                "LIST_MEMBER", comparedType.getListName());
+    public static String generateCode(final String generatedVarName,
+                                      final String lhsVarName,
+                                      final String rhsVarName,
+                                      final ElectionTypeCStruct comparedType,
+                                      final VotingInputTypes votingInputType,
+                                      final CodeGenOptions options,
+                                      final String compareSymbol,
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
+        final Map<String, String> replacementMap =
+                Map.of(GENERATED_VAR_NAME, generatedVarName,
+                       LHS_VAR_NAME, lhsVarName,
+                       RHS_VAR_NAME, rhsVarName,
+                       AMOUNT_NAME, comparedType.getAmtName(),
+                       AMOUNT_MAX_CAND_VAR_NAME, options.getCbmcAmountMaxCandsVarName(),
+                       COMPARE_SYMBOL, compareSymbol,
+                       LIST_NAME, comparedType.getListName());
 
         String code = null;
-        if (compareSymbol.equals("!=")) {
+        if (NOT_EQUAL.equals(compareSymbol)) {
             switch (votingInputType) {
-            case APPROVAL: {
-                code = CodeTemplateVoteComparison.templateApprovalUneq;
+            case APPROVAL:
+                code = CodeTemplateVoteComparison.getTemplateApprovalUneq();
                 break;
-            }
-            case WEIGHTED_APPROVAL: {
+            case WEIGHTED_APPROVAL:
                 break;
-            }
-            case PREFERENCE: {
-                code = CodeTemplateVoteComparison.templatePreferenceUneq;
+            case PREFERENCE:
+                code = CodeTemplateVoteComparison.getTemplatePreferenceUneq();
                 break;
-            }
-            case SINGLE_CHOICE: {
-                code = CodeTemplateVoteComparison.templateSingleChoiceUnEq;
+            case SINGLE_CHOICE:
+                code = CodeTemplateVoteComparison.getTemplateSingleChoiceUnEq();
                 break;
-            }
-            case SINGLE_CHOICE_STACK: {
+            case SINGLE_CHOICE_STACK:
                 break;
-            }
+            default:
             }
         } else {
             switch (votingInputType) {
-            case APPROVAL: {
-                code = CodeTemplateVoteComparison.templateApproval;
+            case APPROVAL:
+                code = CodeTemplateVoteComparison.getTemplateApproval();
                 break;
-            }
-            case WEIGHTED_APPROVAL: {
+            case WEIGHTED_APPROVAL:
                 break;
-            }
-            case PREFERENCE: {
-                code = CodeTemplateVoteComparison.templatePreference;
+            case PREFERENCE:
+                code = CodeTemplateVoteComparison.getTemplatePreference();
                 break;
-            }
-            case SINGLE_CHOICE: {
-                code = CodeTemplateVoteComparison.templateSingleChoiceEq;
+            case SINGLE_CHOICE:
+                code = CodeTemplateVoteComparison.getTemplateSingleChoiceEq();
                 break;
-            }
-            case SINGLE_CHOICE_STACK: {
+            case SINGLE_CHOICE_STACK:
                 break;
-            }
+            default:
             }
         }
 
-        List<LoopBound> loopbounds = getLoopBounds(votingInputType);
+        final List<LoopBound> loopbounds = getLoopBounds(votingInputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
-
 }

@@ -5,16 +5,17 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 
 public class SymbVarByPosExp extends SymbolicCBMCVarExp {
 
-    private CBMCVarType varType;
+    private CBMCVarType variableType;
     private int accessingNumber;
 
-    public SymbVarByPosExp(CBMCVarType varType, int accessingNumber) {
-        this.varType = varType;
-        this.accessingNumber = accessingNumber;
+    public SymbVarByPosExp(final CBMCVarType varType,
+                           final int accNumber) {
+        this.variableType = varType;
+        this.accessingNumber = accNumber;
     }
 
     public CBMCVarType getVarType() {
-        return varType;
+        return variableType;
     }
 
     public int getAccessingNumber() {
@@ -22,14 +23,13 @@ public class SymbVarByPosExp extends SymbolicCBMCVarExp {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitSymbVarByPosExp(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         // TODO Auto-generated method stub
         return null;
     }
-
 }

@@ -2,9 +2,6 @@ package edu.pse.beast.gui.testconfigeditor.testconfig.cbmc;
 
 import java.io.IOException;
 
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.workspace.BeastWorkspace;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,6 +10,10 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class CBMCTestConfigGuiController {
     @FXML
@@ -51,8 +52,8 @@ public class CBMCTestConfigGuiController {
 
     private CBMCTestConfiguration currentConfig;
 
-    public CBMCTestConfigGuiController(BeastWorkspace beastWorkspace) {
-        this.beastWorkspace = beastWorkspace;
+    public CBMCTestConfigGuiController(final BeastWorkspace workspace) {
+        this.beastWorkspace = workspace;
     }
 
     public AnchorPane getTopLevelAnchorPane() {
@@ -62,21 +63,17 @@ public class CBMCTestConfigGuiController {
     private void updateView() {
         nameTextField.setText(currentConfig.getName());
         descrChoiceBox.getSelectionModel().select(currentConfig.getDescr());
-        propDescrChoiceBox.getSelectionModel()
-                .select(currentConfig.getPropDescr());
-
+        propDescrChoiceBox.getSelectionModel().select(currentConfig.getPropDescr());
         minVoters.getValueFactory().setValue(currentConfig.getMinVoters());
         maxVoters.getValueFactory().setValue(currentConfig.getMaxVoters());
         minCandidates.getValueFactory().setValue(currentConfig.getMinCands());
         maxCandidates.getValueFactory().setValue(currentConfig.getMaxCands());
         minSeats.getValueFactory().setValue(currentConfig.getMinSeats());
         maxSeats.getValueFactory().setValue(currentConfig.getMaxSeats());
-
-        startCreatedTestsCheckbox
-                .setSelected(currentConfig.getStartRunsOnCreation());
+        startCreatedTestsCheckbox.setSelected(currentConfig.getStartRunsOnCreation());
     }
 
-    public void display(CBMCTestConfiguration config) {
+    public void display(final CBMCTestConfiguration config) {
         currentConfig = config;
         updateView();
     }
@@ -142,5 +139,4 @@ public class CBMCTestConfigGuiController {
             }
         });
     }
-
 }

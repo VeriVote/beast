@@ -7,23 +7,26 @@ import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper
 
 public class PerformVoteHelper {
 
-    private static String template = "ELECT_TYPE GENERATED_VAR = VOTE_FUNC_NAME(VOTE_VAR, CURRENT_AMT_VOTER, CURRENT_AMT_CAND, CURRENT_AMT_SEAT);\n";
+    private static final String TEMPLATE =
+            "ELECT_TYPE GENERATED_VAR = "
+                    + "VOTE_FUNC_NAME(VOTE_VAR, CURRENT_AMT_VOTER, "
+                    + "CURRENT_AMT_CAND, CURRENT_AMT_SEAT);\n";
 
-    public static String getResultVarName(int voteNumber) {
-        String resultVarName = "result" + voteNumber;
-        return resultVarName;
+    public static String getResultVarName(final int voteNumber) {
+        return "result" + voteNumber;
     }
 
-    public static String generateCode(int voteNumber,
-            ElectionTypeCStruct voteArrStruct, ElectionTypeCStruct voteStruct,
-            CodeGenOptions options, String votingFunctionName,
-            CBMCGeneratedCodeInfo cbmcGeneratedCode) {
-        String resultVarName = getResultVarName(voteNumber);
+    public static String generateCode(final int voteNumber,
+                                      final ElectionTypeCStruct voteArrStruct,
+                                      final ElectionTypeCStruct voteStruct,
+                                      final CodeGenOptions options,
+                                      final String votingFunctionName,
+                                      final CBMCGeneratedCodeInfo cbmcGeneratedCode) {
+        final String resultVarName = getResultVarName(voteNumber);
         cbmcGeneratedCode.addElectVariableName(voteNumber, resultVarName);
+        final String voteVarName = SymbVarInitVoteHelper.getVoteVarName(voteNumber);
 
-        String voteVarName = SymbVarInitVoteHelper.getVoteVarName(voteNumber);
-
-        String code = template;
+        String code = TEMPLATE;
         code = code.replaceAll("ELECT_TYPE", voteStruct.getStruct().getName());
         code = code.replaceAll("GENERATED_VAR", resultVarName);
         code = code.replaceAll("VOTE_FUNC_NAME", votingFunctionName);
@@ -35,7 +38,6 @@ public class PerformVoteHelper {
                 SymbVarInitVoteHelper.getCurrentAmtCand(voteNumber));
         code = code.replaceAll("CURRENT_AMT_SEAT",
                 SymbVarInitVoteHelper.getCurrentAmtSeat(voteNumber));
-
         return code;
     }
 }

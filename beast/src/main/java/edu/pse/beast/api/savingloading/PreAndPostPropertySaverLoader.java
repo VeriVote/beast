@@ -26,10 +26,10 @@ public class PreAndPostPropertySaverLoader {
     private static final String SYMB_VAR_TYPE_KEY = "symb_var_type";
     private static final String PROP_DESCR_UUID_KEY = "prop_descr_uuid";
 
-    private static JSONArray fromSymbVarList(List<SymbolicCBMCVar> vars) {
-        JSONArray arr = new JSONArray();
-        for (SymbolicCBMCVar var : vars) {
-            JSONObject varObj = new JSONObject();
+    private static JSONArray fromSymbVarList(final List<SymbolicCBMCVar> vars) {
+        final JSONArray arr = new JSONArray();
+        for (final SymbolicCBMCVar var : vars) {
+            final JSONObject varObj = new JSONObject();
             varObj.put(SYMB_VAR_NAME_KEY, var.getName());
             varObj.put(SYMB_VAR_TYPE_KEY, var.getVarType().toString());
             arr.put(varObj);
@@ -37,19 +37,18 @@ public class PreAndPostPropertySaverLoader {
         return arr;
     }
 
-    private static JSONObject fromPropertyDescription(
-            FormalPropertiesDescription propDescr) {
-        JSONObject json = new JSONObject();
+    private static JSONObject fromPropertyDescription(final FormalPropertiesDescription propDescr) {
+        final JSONObject json = new JSONObject();
 
         json.put(CODE_KEY, propDescr.getCode());
 
         return json;
     }
 
-    public static void storePreAndPostConditionDescription(
-            PreAndPostConditionsDescription propDescr, File f)
-            throws IOException {
-        JSONObject json = new JSONObject();
+    public static void
+            storePreAndPostConditionDescription(final PreAndPostConditionsDescription propDescr,
+                                                final File f) throws IOException {
+        final JSONObject json = new JSONObject();
 
         json.put(VERSION_KEY, CURRENT_VERSION);
         json.put(PRE_DESCR_KEY, fromPropertyDescription(
@@ -63,41 +62,36 @@ public class PreAndPostPropertySaverLoader {
         SavingLoadingInterface.writeStringToFile(f, json.toString());
     }
 
-    private static List<SymbolicCBMCVar> symbolicVarListFromJson(
-            JSONArray arr) {
-        List<SymbolicCBMCVar> list = new ArrayList<SymbolicCBMCVar>();
+    private static List<SymbolicCBMCVar> symbolicVarListFromJson(final JSONArray arr) {
+        final List<SymbolicCBMCVar> list = new ArrayList<SymbolicCBMCVar>();
         for (int i = 0; i < arr.length(); ++i) {
-            JSONObject symbVarJson = arr.getJSONObject(i);
-            String name = symbVarJson.getString(SYMB_VAR_NAME_KEY);
-            SymbolicCBMCVar.CBMCVarType type = SymbolicCBMCVar.CBMCVarType
+            final JSONObject symbVarJson = arr.getJSONObject(i);
+            final String name = symbVarJson.getString(SYMB_VAR_NAME_KEY);
+            final SymbolicCBMCVar.CBMCVarType type =
+                    SymbolicCBMCVar.CBMCVarType
                     .valueOf(symbVarJson.getString(SYMB_VAR_TYPE_KEY));
             list.add(new SymbolicCBMCVar(name, type));
         }
         return list;
     }
 
-    private static FormalPropertiesDescription propertyDescriptionFromJson(
-            JSONObject json) {
-        String code = json.getString(CODE_KEY);
-        FormalPropertiesDescription propDescr = new FormalPropertiesDescription(
-                code);
-        return propDescr;
+    private static FormalPropertiesDescription propertyDescriptionFromJson(final JSONObject json) {
+        final String code = json.getString(CODE_KEY);
+        return new FormalPropertiesDescription(code);
     }
 
-    public static PreAndPostConditionsDescription loadPreAndPostConditionDescription(
-            File f) throws JSONException, IOException {
-        JSONObject json = new JSONObject(
-                SavingLoadingInterface.readStringFromFile(f));
-        JSONArray symbVarArr = json.getJSONArray(SYMB_VAR_KEY);
-        List<SymbolicCBMCVar> symbVars = symbolicVarListFromJson(symbVarArr);
-        FormalPropertiesDescription preProp = propertyDescriptionFromJson(
-                json.getJSONObject(PRE_DESCR_KEY));
-        FormalPropertiesDescription postProp = propertyDescriptionFromJson(
-                json.getJSONObject(POST_DESCR_KEY));
-        String name = json.getString(NAME_KEY);
-        String uuid = json.getString(PROP_DESCR_UUID_KEY);
-        return new PreAndPostConditionsDescription(uuid, name, symbVars,
-                preProp, postProp);
+    public static PreAndPostConditionsDescription loadPreAndPostConditionDescription(final File f)
+            throws JSONException, IOException {
+        final JSONObject json = new JSONObject(SavingLoadingInterface.readStringFromFile(f));
+        final JSONArray symbVarArr = json.getJSONArray(SYMB_VAR_KEY);
+        final List<SymbolicCBMCVar> symbVars = symbolicVarListFromJson(symbVarArr);
+        final FormalPropertiesDescription preProp =
+                propertyDescriptionFromJson(json.getJSONObject(PRE_DESCR_KEY));
+        final FormalPropertiesDescription postProp =
+                propertyDescriptionFromJson(json.getJSONObject(POST_DESCR_KEY));
+        final String name = json.getString(NAME_KEY);
+        final String uuid = json.getString(PROP_DESCR_UUID_KEY);
+        return new PreAndPostConditionsDescription(uuid, name, symbVars, preProp, postProp);
     }
 
 }

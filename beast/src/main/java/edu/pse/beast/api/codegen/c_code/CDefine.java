@@ -4,9 +4,10 @@ public class CDefine {
     private String toReplace;
     private String replaceWith;
 
-    public CDefine(String toReplace, String replaceWith) {
-        this.toReplace = toReplace;
-        this.replaceWith = replaceWith;
+    public CDefine(final String toReplaceString,
+                   final String replaceWithString) {
+        this.toReplace = toReplaceString;
+        this.replaceWith = replaceWithString;
     }
 
     public String generateCode() {

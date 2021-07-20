@@ -42,19 +42,16 @@ public final class PreAndPostConditionsDescription {
         this.boundedVarDescription = new FormalPropertiesDescription("");
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public PreAndPostConditionsDescription(String uuid, String name,
-            List<SymbolicCBMCVar> cbmcVariables,
-            FormalPropertiesDescription preConditionsDescription,
-            FormalPropertiesDescription postConditionsDescription) {
-        this.uuid = uuid;
-        this.name = name;
-        this.cbmcVariables = cbmcVariables;
-        this.preConditionsDescription = preConditionsDescription;
-        this.postConditionsDescription = postConditionsDescription;
+    public PreAndPostConditionsDescription(final String uuidString,
+                                           final String nameString,
+                                           final List<SymbolicCBMCVar> cbmcVars,
+                                           final FormalPropertiesDescription preConditionsDescr,
+                                           final FormalPropertiesDescription postConditionsDescr) {
+        this.uuid = uuidString;
+        this.name = nameString;
+        this.cbmcVariables = cbmcVars;
+        this.preConditionsDescription = preConditionsDescr;
+        this.postConditionsDescription = postConditionsDescr;
         this.boundedVarDescription = new FormalPropertiesDescription("");
     }
 
@@ -68,13 +65,17 @@ public final class PreAndPostConditionsDescription {
      * @param symbVarList    the symbolicVariableList
      */
     public PreAndPostConditionsDescription(final String nameString,
-            final FormalPropertiesDescription preDescr,
-            final FormalPropertiesDescription postDescr,
-            final FormalPropertiesDescription boundedVarDesc) {
+                                           final FormalPropertiesDescription preDescr,
+                                           final FormalPropertiesDescription postDescr,
+                                           final FormalPropertiesDescription boundedVarDesc) {
         this.name = nameString;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;
         this.boundedVarDescription = boundedVarDesc;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     @Override
@@ -135,11 +136,9 @@ public final class PreAndPostConditionsDescription {
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
-        }
-        if (obj == null) {
+        } else if (obj == null) {
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        } else if (getClass() != obj.getClass()) {
             return false;
         }
         final PreAndPostConditionsDescription other = (PreAndPostConditionsDescription) obj;
@@ -161,23 +160,20 @@ public final class PreAndPostConditionsDescription {
             if (other.postConditionsDescription != null) {
                 return false;
             }
-        } else if (!postConditionsDescription
-                .equals(other.postConditionsDescription)) {
+        } else if (!postConditionsDescription.equals(other.postConditionsDescription)) {
             return false;
         }
         if (preConditionsDescription == null) {
             if (other.preConditionsDescription != null) {
                 return false;
             }
-        } else if (!preConditionsDescription
-                .equals(other.preConditionsDescription)) {
+        } else if (!preConditionsDescription.equals(other.preConditionsDescription)) {
             return false;
         }
         return true;
     }
 
-    public void addCBMCVar(SymbolicCBMCVar newVar) {
+    public void addCBMCVar(final SymbolicCBMCVar newVar) {
         cbmcVariables.add(newVar);
     }
-
 }

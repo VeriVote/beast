@@ -3,22 +3,39 @@ package edu.pse.beast.api.descr.c_electiondescription;
 public enum CElectionSimpleTypes {
     INT, UNSIGNED_INT, FLOAT, DOUBLE, VOID, BOOL;
 
+    private static final String BLANK = " ";
+    private static final String USGND = "unsigned";
+    private static final String INT_TYPE = "int";
+    private static final String DOUBLE_TYPE = "double";
+    private static final String FLOAT_TYPE = "floatt";
+    private static final String VOID_TYPE = "void";
+    private static final String UINT = USGND + BLANK + INT_TYPE;
+
     @Override
     public String toString() {
+        final String type;
         switch (this) {
         case BOOL:
-            return "unsigned int";
+            type = UINT;
+            break;
         case INT:
-            return "int";
+            type = INT_TYPE;
+            break;
         case DOUBLE:
-            return "double";
+            type = DOUBLE_TYPE;
+            break;
         case FLOAT:
-            return "float";
+            type = FLOAT_TYPE;
+            break;
         case UNSIGNED_INT:
-            return "unsigned int";
+            type = UINT;
+            break;
         case VOID:
-            return "void";
+            type = VOID_TYPE;
+            break;
+        default:
+            type = "";
         }
-        return "";
+        return type;
     }
 }

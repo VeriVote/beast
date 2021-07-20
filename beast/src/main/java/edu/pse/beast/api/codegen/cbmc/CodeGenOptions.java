@@ -2,38 +2,38 @@ package edu.pse.beast.api.codegen.cbmc;
 
 public class CodeGenOptions {
     public static final String MAIN_FUNC_NAME = "main";
-    private String votesLowerBoundVarName;
-    private String votesUpperBoundVarName;
+    private String lowerVoteBoundVarName;
+    private String upperVoteBoundVarName;
 
-    private String cbmcAssumeName;
-    private String cbmcAssertName;
-    private String cbmcNondetUintName;
+    private String assumeName;
+    private String assertName;
+    private String nondeterministicUintName;
 
     private String cbmcAmountMaxVotersVarName = "MAX_AMT_VOTERS";
     private String cbmcAmountMaxCandidatesVarName = "MAX_AMT_CANDIDATES";
     private String cbmcAmountMaxSeatsVarName = "MAX_AMT_SEATS";
 
-    private String currentAmountVotersVarName = "V";
-    private String currentAmountCandsVarName = "C";
-    private String currentAmountSeatsVarName = "S";
+    private String currAmountVotersVarName = "V";
+    private String currAmountCandsVarName = "C";
+    private String currAmountSeatsVarName = "S";
 
     public String getCbmcAmountMaxVotersVarName() {
         return cbmcAmountMaxVotersVarName;
     }
 
     public String getCbmcAssertName() {
-        return cbmcAssertName;
+        return assertName;
     }
 
-    public void setCbmcAssertName(String cbmcAssertName) {
-        this.cbmcAssertName = cbmcAssertName;
+    public void setCbmcAssertName(final String cbmcAssertName) {
+        this.assertName = cbmcAssertName;
     }
 
     public String getCbmcAmountMaxSeatsVarName() {
         return cbmcAmountMaxSeatsVarName;
     }
 
-    public void setCbmcAmountMaxSeatsVarName(String cbmcAmountSeatsVarName) {
+    public void setCbmcAmountMaxSeatsVarName(final String cbmcAmountSeatsVarName) {
         this.cbmcAmountMaxSeatsVarName = cbmcAmountSeatsVarName;
     }
 
@@ -41,70 +41,67 @@ public class CodeGenOptions {
         return cbmcAmountMaxCandidatesVarName;
     }
 
-    public void setCbmcAmountMaxVotersVarName(String cbmcAmountVotesVarName) {
+    public void setCbmcAmountMaxVotersVarName(final String cbmcAmountVotesVarName) {
         this.cbmcAmountMaxVotersVarName = cbmcAmountVotesVarName;
     }
 
-    public void setCbmcAmountMaxCandidatesVarName(
-            String cbmcAmountCandidatesVarName) {
+    public void setCbmcAmountMaxCandidatesVarName(final String cbmcAmountCandidatesVarName) {
         this.cbmcAmountMaxCandidatesVarName = cbmcAmountCandidatesVarName;
     }
 
     public String getVotesLowerBoundVarName() {
-        return votesLowerBoundVarName;
+        return lowerVoteBoundVarName;
     }
 
     public String getVotesUpperBoundVarName() {
-        return votesUpperBoundVarName;
+        return upperVoteBoundVarName;
     }
 
     public String getCbmcAssumeName() {
-        return cbmcAssumeName;
+        return assumeName;
     }
 
     public String getCbmcNondetUintName() {
-        return cbmcNondetUintName;
+        return nondeterministicUintName;
     }
 
-    public void setVotesLowerBoundVarName(String votesLowerBoundVarName) {
-        this.votesLowerBoundVarName = votesLowerBoundVarName;
+    public void setVotesLowerBoundVarName(final String votesLowerBoundVarName) {
+        this.lowerVoteBoundVarName = votesLowerBoundVarName;
     }
 
-    public void setVotesUpperBoundVarName(String votesUpperBoundVarName) {
-        this.votesUpperBoundVarName = votesUpperBoundVarName;
+    public void setVotesUpperBoundVarName(final String votesUpperBoundVarName) {
+        this.upperVoteBoundVarName = votesUpperBoundVarName;
     }
 
-    public void setCbmcAssumeName(String cbmcAssumeName) {
-        this.cbmcAssumeName = cbmcAssumeName;
+    public void setCbmcAssumeName(final String cbmcAssumeName) {
+        this.assumeName = cbmcAssumeName;
     }
 
-    public void setCbmcNondetUintName(String cbmcNondetUintName) {
-        this.cbmcNondetUintName = cbmcNondetUintName;
+    public void setCbmcNondetUintName(final String cbmcNondetUintName) {
+        this.nondeterministicUintName = cbmcNondetUintName;
     }
 
     public String getCurrentAmountVotersVarName() {
-        return currentAmountVotersVarName;
+        return currAmountVotersVarName;
     }
 
     public String getCurrentAmountCandsVarName() {
-        return currentAmountCandsVarName;
+        return currAmountCandsVarName;
     }
 
     public String getCurrentAmountSeatsVarName() {
-        return currentAmountSeatsVarName;
+        return currAmountSeatsVarName;
     }
 
-    public void setCurrentAmountVotersVarName(
-            String currentAmountVotersVarName) {
-        this.currentAmountVotersVarName = currentAmountVotersVarName;
+    public void setCurrentAmountVotersVarName(final String currentAmountVotersVarName) {
+        this.currAmountVotersVarName = currentAmountVotersVarName;
     }
 
-    public void setCurrentAmountCandsVarName(String currentAmountCandsVarName) {
-        this.currentAmountCandsVarName = currentAmountCandsVarName;
+    public void setCurrentAmountCandsVarName(final String currentAmountCandsVarName) {
+        this.currAmountCandsVarName = currentAmountCandsVarName;
     }
 
-    public void setCurrentAmountSeatsVarName(String currentAmountSeatsVarName) {
-        this.currentAmountSeatsVarName = currentAmountSeatsVarName;
+    public void setCurrentAmountSeatsVarName(final String currentAmountSeatsVarName) {
+        this.currAmountSeatsVarName = currentAmountSeatsVarName;
     }
-
 }

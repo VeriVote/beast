@@ -20,7 +20,7 @@ public class Tuple<F, S> {
      * The constructor.
      *
      * @param x  the x
-     * @param yW the y
+     * @param y  the y
      */
     public Tuple(final F x, final S y) {
         this.first = x;

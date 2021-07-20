@@ -34,13 +34,14 @@ public class ComparisonNode extends BooleanExpressionNode {
      *                       example <, >, == )
      */
     public ComparisonNode(final TypeExpression lhsTypeExpr,
-            final TypeExpression rhsTypeExpr, final String comparisonSymb) {
+                          final TypeExpression rhsTypeExpr,
+                          final String comparisonSymb) {
         this.lhsTypeExp = lhsTypeExpr;
         this.rhsTypeExp = rhsTypeExpr;
         this.comparisonSymbol = comparisonSymb;
-        if (comparisonSymb.equals("==")) {
+        if ("==".equals(comparisonSymb)) {
             this.comparisonType = ComparisonType.EQ;
-        } else if (comparisonSymb.equals("!=")) {
+        } else if ("!=".equals(comparisonSymb)) {
             this.comparisonType = ComparisonType.UNEQ;
         }
     }
@@ -48,8 +49,8 @@ public class ComparisonNode extends BooleanExpressionNode {
     private String getTreeStringExtra() {
         final String simpleClassName = this.getClass().getSimpleName();
         final String text = ": Symbol ";
-        return "ComparisonNode".equals(simpleClassName) ? ""
-                : simpleClassName + text;
+        return "ComparisonNode".equals(simpleClassName)
+                ? "" : simpleClassName + text;
     }
 
     public ComparisonType getComparisonType() {
@@ -79,12 +80,12 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitComparisonNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         // TODO Auto-generated method stub
         return null;
     }

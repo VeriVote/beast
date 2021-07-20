@@ -5,10 +5,9 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
 
 public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
-
     private CBMCTestRunWithSymbolicVars run;
 
-    public TestRunCBMCTreeItem(CBMCTestRunWithSymbolicVars tr) {
+    public TestRunCBMCTreeItem(final CBMCTestRunWithSymbolicVars tr) {
         super(TestConfigTreeItemType.CBMC_RUN);
         this.run = tr;
     }
@@ -26,12 +25,11 @@ public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
         if (run.isPropDescrChanged()) {
             template += " | prop descr changed";
         }
-        template = template.replaceAll("AMT_VOTER", String.valueOf(run.getV()))
+        template =
+                template.replaceAll("AMT_VOTER", String.valueOf(run.getV()))
                 .replaceAll("AMT_CAND", String.valueOf(run.getC()))
                 .replaceAll("AMT_SEAT", String.valueOf(run.getS()));
-
         template = template.replaceAll("STATUS", run.getStatusString());
-
         return template;
     }
 }

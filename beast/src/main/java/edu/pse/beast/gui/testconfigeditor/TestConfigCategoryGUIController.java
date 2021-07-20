@@ -3,12 +3,6 @@ package edu.pse.beast.gui.testconfigeditor;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
-import edu.pse.beast.gui.workspace.BeastWorkspace;
-import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -16,6 +10,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+
+import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
+import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
+import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
+import edu.pse.beast.gui.workspace.BeastWorkspace;
+import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class TestConfigCategoryGUIController
         implements WorkspaceUpdateListener {
@@ -40,22 +41,22 @@ public class TestConfigCategoryGUIController
     @FXML
     private Button deleteConfigButton;
 
-    private final String descrSortCrit;
+    private final String descriptionSortCriterion;
 
     private BeastWorkspace beastWorkspace;
 
     private String currentCategory;
 
-    private TreeView<TestConfigTreeItemSuper> tcTreeView;
+    private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
 
-    public TestConfigCategoryGUIController(BeastWorkspace beastWorkspace,
-            String descrSortCrit,
-            TreeView<TestConfigTreeItemSuper> tcTreeView) {
-        this.beastWorkspace = beastWorkspace;
-        this.descrSortCrit = descrSortCrit;
-        beastWorkspace.registerUpdateListener(this);
+    public TestConfigCategoryGUIController(final BeastWorkspace workspace,
+                                           final String descrSortCrit,
+                                           final TreeView<TestConfigTreeItemSuper> treeView) {
+        this.beastWorkspace = workspace;
+        this.descriptionSortCriterion = descrSortCrit;
+        workspace.registerUpdateListener(this);
         currentCategory = descrSortCrit;
-        this.tcTreeView = tcTreeView;
+        this.testConfigTreeView = treeView;
     }
 
     @FXML
@@ -64,10 +65,11 @@ public class TestConfigCategoryGUIController
             createTestConfig();
         });
         gotoConfigButton.setOnAction(e -> {
-            tcTreeView.getSelectionModel().select(TestConfigTreeViewHelper
+            testConfigTreeView.getSelectionModel().select(
+                    TestConfigTreeViewHelper
                     .getItem(testConfigListView.getSelectionModel()
-                            .getSelectedItem().getCBMCTestConfigs().get(0),
-                            tcTreeView.getRoot()));
+                                .getSelectedItem().getCBMCTestConfigs().get(0),
+                            testConfigTreeView.getRoot()));
         });
         deleteConfigButton.setOnAction(e -> {
             beastWorkspace.deleteTestConfig(
@@ -96,13 +98,14 @@ public class TestConfigCategoryGUIController
     }
 
     private void createTestConfig() {
-        String name = nameTextField.getText();
-        CElectionDescription descr = descrChoiceBox.getSelectionModel()
-                .getSelectedItem();
-        PreAndPostConditionsDescription propDescr = propDescrChoiceBox
-                .getSelectionModel().getSelectedItem();
-        if (!name.isEmpty() && descr != null && propDescr != null)
+        final String name = nameTextField.getText();
+        final CElectionDescription descr =
+                descrChoiceBox.getSelectionModel().getSelectedItem();
+        final PreAndPostConditionsDescription propDescr =
+                propDescrChoiceBox.getSelectionModel().getSelectedItem();
+        if (!name.isEmpty() && descr != null && propDescr != null) {
             beastWorkspace.createTestConfig(name, descr, propDescr);
+        }
     }
 
     public AnchorPane getTopLevelAnchorPane() {
@@ -115,8 +118,7 @@ public class TestConfigCategoryGUIController
         descrChoiceBox.getSelectionModel().select(0);
 
         propDescrChoiceBox.getItems().clear();
-        propDescrChoiceBox.getItems()
-                .addAll(beastWorkspace.getLoadedPropDescrs());
+        propDescrChoiceBox.getItems().addAll(beastWorkspace.getLoadedPropDescrs());
         propDescrChoiceBox.getSelectionModel().select(0);
 
         testConfigListView.getItems().clear();
@@ -128,28 +130,27 @@ public class TestConfigCategoryGUIController
         gotoConfigButton.setDisable(false);
         deleteConfigButton.setDisable(false);
 
-        if (currentCategory.equals(descrSortCrit)) {
-            Map<CElectionDescription, List<TestConfiguration>> map = beastWorkspace
-                    .getConfigsByElectionDescription();
-            for (CElectionDescription descr : map.keySet()) {
-                for (TestConfiguration tc : map.get(descr)) {
+        if (currentCategory.equals(descriptionSortCriterion)) {
+            final Map<CElectionDescription, List<TestConfiguration>> map =
+                    beastWorkspace.getConfigsByElectionDescription();
+            for (final CElectionDescription descr : map.keySet()) {
+                for (final TestConfiguration tc : map.get(descr)) {
                     testConfigListView.getItems().add(tc);
                 }
             }
         } else {
-            Map<PreAndPostConditionsDescription, List<TestConfiguration>> map = beastWorkspace
-                    .getConfigsByPropertyDescription();
-            for (PreAndPostConditionsDescription propDescr : map.keySet()) {
-                for (TestConfiguration tc : map.get(propDescr)) {
+            final Map<PreAndPostConditionsDescription, List<TestConfiguration>> map =
+                    beastWorkspace.getConfigsByPropertyDescription();
+            for (final PreAndPostConditionsDescription propDescr : map.keySet()) {
+                for (final TestConfiguration tc : map.get(propDescr)) {
                     testConfigListView.getItems().add(tc);
                 }
             }
         }
-
         testConfigListView.getSelectionModel().selectFirst();
     }
 
-    public void display(String category) {
+    public void display(final String category) {
         currentCategory = category;
         updateView();
     }
@@ -160,14 +161,12 @@ public class TestConfigCategoryGUIController
     }
 
     @Override
-    public void handleAddedTestConfig(TestConfiguration tc) {
+    public void handleAddedTestConfig(final TestConfiguration tc) {
         updateView();
     }
 
     @Override
-    public void handleAddedPropDescr(
-            PreAndPostConditionsDescription propDescr) {
+    public void handleAddedPropDescr(final PreAndPostConditionsDescription propDescr) {
         updateView();
     }
-
 }

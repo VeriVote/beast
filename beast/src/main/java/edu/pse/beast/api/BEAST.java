@@ -20,20 +20,19 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 /**
  * This class can run work units and create
- * cbmc code files or a list of 
+ * cbmc code files or a list of
  * CBMC Test Runs given a range of
  * voter, seat and candidate amounts
- * @author holge
+ * @author Holger Klein
  *
  */
 public class BEAST {
-
     private List<Thread> createdThreads = new ArrayList<>();
     private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<>();
 
-    public void runWorkUnit(CBMCPropertyCheckWorkUnit wu) {
+    public void runWorkUnit(final CBMCPropertyCheckWorkUnit wu) {
         wus.add(wu);
-        Thread t = new Thread(new Runnable() {
+        final Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 wu.doWork();
@@ -43,58 +42,66 @@ public class BEAST {
         createdThreads.add(t);
     }
 
-    public void stopRun(CBMCTestRunWithSymbolicVars run) {
+    public void stopRun(final CBMCTestRunWithSymbolicVars run) {
         run.getWorkUnit().interrupt();
     }
 
     public void shutdown() {
-        for (CBMCPropertyCheckWorkUnit wu : wus) {
+        for (final CBMCPropertyCheckWorkUnit wu : wus) {
             wu.shutdown();
         }
     }
 
-    public CBMCCodeFileData generateCodeFileCBMCPropertyTest(
-            CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr,
-            CodeGenOptions codeGenOptions, PathHandler pathHandler)
-            throws IOException {
-        InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
+    public CBMCCodeFileData
+                generateCodeFileCBMCPropertyTest(final CElectionDescription descr,
+                                                 final PreAndPostConditionsDescription propDescr,
+                                                 final CodeGenOptions codeGenOptions,
+                                                 final PathHandler pathHandler)
+                                                         throws IOException {
+        final InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
         return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
-                codeGenOptions, pathHandler, initVoteHelper);
+                                                        codeGenOptions,
+                                                        pathHandler,
+                                                        initVoteHelper);
     }
 
-    public CBMCCodeFileData generateCodeFileCBMCSpecificInput(
-            CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr,
-            CodeGenOptions codeGenOptions, PathHandler pathHandler,
-            VotingParameters votingParameters) throws IOException {
-        InitVoteHelper initVoteHelper = new SpecificValueInitVoteHelper(
-                votingParameters);
+    public CBMCCodeFileData
+                generateCodeFileCBMCSpecificInput(final CElectionDescription descr,
+                                                  final PreAndPostConditionsDescription
+                                                          propDescr,
+                                                  final CodeGenOptions codeGenOptions,
+                                                  final PathHandler pathHandler,
+                                                  final VotingParameters votingParameters)
+                                                          throws IOException {
+        final InitVoteHelper initVoteHelper =
+                new SpecificValueInitVoteHelper(votingParameters);
         return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
-                codeGenOptions, pathHandler, initVoteHelper);
+                                                        codeGenOptions,
+                                                        pathHandler,
+                                                        initVoteHelper);
     }
 
-    public List<CBMCTestRunWithSymbolicVars> generateTestRuns(
-            CBMCCodeFileData cbmcCodeFile, CBMCTestConfiguration testConfig,
-            CodeGenOptions codeGenOptions) {
-        List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
-        for (int v = testConfig.getMinVoters(); v <= testConfig
-                .getMaxVoters(); ++v) {
-            for (int c = testConfig.getMinCands(); c <= testConfig
-                    .getMaxCands(); ++c) {
-                for (int s = testConfig.getMinSeats(); s <= testConfig
-                        .getMaxSeats(); ++s) {
-                    String loopbounds = cbmcCodeFile.getCodeInfo()
+    public List<CBMCTestRunWithSymbolicVars>
+                generateTestRuns(final CBMCCodeFileData cbmcCodeFile,
+                                 final CBMCTestConfiguration testConfig,
+                                 final CodeGenOptions codeGenOptions) {
+        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
+        for (int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {
+            for (int c = testConfig.getMinCands(); c <= testConfig.getMaxCands(); ++c) {
+                for (int s = testConfig.getMinSeats(); s <= testConfig.getMaxSeats(); ++s) {
+                    final String loopbounds =
+                            cbmcCodeFile.getCodeInfo()
                             .getLoopBoundHandler().generateCBMCString(v, c, s);
-
                     runs.add(new CBMCTestRunWithSymbolicVars(v, s, c,
-                            codeGenOptions, loopbounds, cbmcCodeFile,
-                            testConfig.getDescr(), testConfig.getPropDescr(),
-                            testConfig));
+                                                             codeGenOptions,
+                                                             loopbounds,
+                                                             cbmcCodeFile,
+                                                             testConfig.getDescr(),
+                                                             testConfig.getPropDescr(),
+                                                             testConfig));
                 }
             }
         }
         return runs;
     }
-
 }

@@ -6,13 +6,13 @@ import java.util.List;
 public class WorkSupplier {
     private List<WorkUnit> newWorkUnits = new ArrayList<>();
 
-    public void addWork(WorkUnit wu) {
+    public void addWork(final WorkUnit wu) {
         synchronized (newWorkUnits) {
             newWorkUnits.add(wu);
         }
     }
 
-    public void addWork(List<WorkUnit> wul) {
+    public void addWork(final List<WorkUnit> wul) {
         synchronized (newWorkUnits) {
             newWorkUnits.addAll(wul);
         }
@@ -20,7 +20,7 @@ public class WorkSupplier {
 
     private WorkUnit popBack() {
         synchronized (newWorkUnits) {
-            WorkUnit unit = newWorkUnits.get(newWorkUnits.size() - 1);
+            final WorkUnit unit = newWorkUnits.get(newWorkUnits.size() - 1);
             newWorkUnits.remove(newWorkUnits.size() - 1);
             return unit;
         }

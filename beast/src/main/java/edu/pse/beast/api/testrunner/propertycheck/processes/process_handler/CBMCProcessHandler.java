@@ -8,8 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.paths.PathHandler;
 
 public interface CBMCProcessHandler {
-
-    public CBMCProcessStarterType getType();
+    CBMCProcessStarterType getType();
 
     // at this point, the code file is final. This means the following wont
     // change
@@ -17,12 +16,12 @@ public interface CBMCProcessHandler {
     // - names of the constants for V, C, S
     // - loop bound indices
     // we could update the V, C, S amounts if we wanted.
-    // however, in this case, just create a new Propertycheck imo
-    Process startCheckForParam(String sessionUUID, int V, int C, int S,
-            String uuid, CBMCTestCallback cb, File cbmcFile, String loopBounds,
-            CodeGenOptions codeGenOptions, PathHandler pathHandler)
-            throws IOException;
+    // however, in this case, just create a new property check imo
+    Process startCheckForParam(String sessionUUID, int v, int c, int s,
+                               String uuid, CBMCTestCallback cb,
+                               File cbmcFile, String loopBounds,
+                               CodeGenOptions codeGenOptions,
+                               PathHandler pathHandler) throws IOException;
 
-    public void endProcess(Process p);
-
+    void endProcess(Process p);
 }

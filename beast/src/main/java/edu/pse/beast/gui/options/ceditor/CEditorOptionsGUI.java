@@ -2,14 +2,15 @@ package edu.pse.beast.gui.options.ceditor;
 
 import java.io.IOException;
 
-import edu.pse.beast.gui.ceditor.CElectionEditor;
-import edu.pse.beast.gui.options.OptionsCategoryGUI;
-import edu.pse.beast.gui.options.OptionsCategoryType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
+import edu.pse.beast.gui.ceditor.CElectionEditor;
+import edu.pse.beast.gui.options.OptionsCategoryGUI;
+import edu.pse.beast.gui.options.OptionsCategoryType;
 
 public class CEditorOptionsGUI extends OptionsCategoryGUI {
     @FXML
@@ -27,9 +28,9 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
 
     private CElectionEditor cElectionEditor;
 
-    public CEditorOptionsGUI(CEditorOptions options) throws IOException {
+    public CEditorOptionsGUI(final CEditorOptions opts) throws IOException {
         super(OptionsCategoryType.C_DESCR_EDITOR);
-        this.options = options;
+        this.options = opts;
         fxmlLoader.setController(this);
         fxmlLoader.load();
     }
@@ -38,9 +39,9 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
         return options;
     }
 
-    public void setcElectionEditor(CElectionEditor cElectionEditor) {
-        this.cElectionEditor = cElectionEditor;
-        cElectionEditor.applyOptions(options);
+    public void setcElectionEditor(final CElectionEditor editor) {
+        this.cElectionEditor = editor;
+        editor.applyOptions(options);
     }
 
     @FXML
@@ -51,7 +52,7 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
         fontSizeSlider.setValue(options.getFontSize());
         fontSizeSlider.setShowTickLabels(true);
         fontSizeSlider.valueProperty().addListener((ob, o, n) -> {
-            double newVal = Math.round((double) n * 100) / 100;
+            final double newVal = Math.round((double) n * 100) / 100;
             fontSizeTextField.setText(String.valueOf(newVal));
             fontSizeSlider.setValue(newVal);
             options.setFontSize(newVal);
@@ -60,14 +61,13 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
     }
 
     private void applyOptions() {
-        optionsGUIController.saveOptions();
+        getOptionsGUIController().saveOptions();
         cElectionEditor.applyOptions(options);
     }
 
     @Override
-    public void displayOptions(AnchorPane currentOptionDisplayAnchorpane) {
-        displayOptionsAnchorpane(currentOptionDisplayAnchorpane,
-                topLevelAnchorpane);
+    public void displayOptions(final AnchorPane currentOptionDisplayAnchorpane) {
+        displayOptionsAnchorpane(currentOptionDisplayAnchorpane, topLevelAnchorpane);
     }
 
 }

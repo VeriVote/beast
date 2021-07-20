@@ -10,10 +10,8 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
     /** The lhs. */
     private final IntegerValuedExpression lhs;
-
     /** The rhs. */
     private final IntegerValuedExpression rhs;
-
     /** The relation symbol. */
     private final String relationSymbol;
 
@@ -25,7 +23,8 @@ public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
      * @param relationSymb the relation symb
      */
     public BinaryIntegerValuedNode(final IntegerValuedExpression lhsExpr,
-            final IntegerValuedExpression rhsExpr, final String relationSymb) {
+                                   final IntegerValuedExpression rhsExpr,
+                                   final String relationSymb) {
         this.lhs = lhsExpr;
         this.rhs = rhsExpr;
         this.relationSymbol = relationSymb;
@@ -54,7 +53,7 @@ public final class BinaryIntegerValuedNode extends IntegerValuedExpression {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitBinaryIntegerExpression(this);
     }
 }

@@ -22,14 +22,12 @@ public class ErrorGuiController {
     private FXMLLoader fxmlLoader = new FXMLLoader(
             getClass().getResource(fxml));
 
-    public ErrorGuiController(AnchorPane logAnchorPane,
-            ErrorHandler errorhandler) throws IOException {
-
+    public ErrorGuiController(final AnchorPane logAnchorPane,
+                              final ErrorHandler errorhandler) throws IOException {
         errorhandler.setListener(this);
-
         fxmlLoader.setController(this);
         fxmlLoader.load();
-        
+
         logAnchorPane.getChildren().add(topLevelAnchorPane);
         AnchorPane.setTopAnchor(topLevelAnchorPane, 0.0d);
         AnchorPane.setLeftAnchor(topLevelAnchorPane, 0.0d);
@@ -41,19 +39,17 @@ public class ErrorGuiController {
                     moreTextArea.setText(n.getErrorMessage().getMsg());
                     esceptionTextArea.clear();
                     if (n.getException() != null) {
-                        for (int i = 0; i < n.getException()
-                                .getStackTrace().length; ++i) {
+                        for (int i = 0;
+                                i < n.getException().getStackTrace().length; ++i) {
                             esceptionTextArea.appendText(
-                                    n.getException().getStackTrace()[i]
-                                            .toString());
+                                    n.getException().getStackTrace()[i].toString());
                         }
                     }
                 });
 
     }
 
-    public void handleAddedError(BeastError beastError) {
+    public void handleAddedError(final BeastError beastError) {
         errorListView.getItems().add(beastError);
     }
-
 }

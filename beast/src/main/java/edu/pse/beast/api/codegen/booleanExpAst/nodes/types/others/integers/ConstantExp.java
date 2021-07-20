@@ -9,13 +9,12 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
  * @author Holger Klein
  */
 public final class ConstantExp extends IntegerValuedExpression {
-
     private CBMCVarType varType;
     private int number;
 
-    public ConstantExp(CBMCVarType varType, int number) {
-        this.varType = varType;
-        this.number = number;
+    public ConstantExp(final CBMCVarType variableType, final int num) {
+        this.varType = variableType;
+        this.number = num;
     }
 
     public CBMCVarType getVarType() {
@@ -32,7 +31,7 @@ public final class ConstantExp extends IntegerValuedExpression {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitConstantExp(this);
     }
 }

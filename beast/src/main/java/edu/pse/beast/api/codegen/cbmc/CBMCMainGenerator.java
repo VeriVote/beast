@@ -14,7 +14,6 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
-
 /**
  * Uses the {@link CodeGenASTVisitor} to generate the main function:
  * Initializes voting structs and symbolic variables,
@@ -25,85 +24,86 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
  */
 public class CBMCMainGenerator {
 
-    // TODO make this dependand on the arrays accessed by the symb var
-    private static void initSymbVar(SymbolicCBMCVar var, List<String> code,
-            CodeGenOptions options, int highestVote) {
+    /**
+     * @param var the bound variable
+     * @param options the code generation options for statement name
+     * @param bound the upper bound
+     * @return assumption about upper variable bound
+     */
+    private static String replace(final SymbolicCBMCVar var,
+                                  final CodeGenOptions options,
+                                  final String bound) {
+        return "ASSUME(VAR_NAME < BOUND);"
+                .replaceAll("ASSUME", options.getCbmcAssumeName())
+                .replaceAll("VAR_NAME", var.getName())
+                .replaceAll("BOUND", bound);
+    }
+
+    // TODO make this dependent on the arrays accessed by the symb var
+    private static void initSymbVar(final SymbolicCBMCVar var,
+                                    final List<String> code,
+                                    final CodeGenOptions options,
+                                    final int highestVote) {
         code.add("unsigned int " + var.getName() + " = "
                 + options.getCbmcNondetUintName() + "();\n");
 
-        String template = "ASSUME(VAR_NAME < BOUND);";
         for (int i = 0; i < highestVote; ++i) {
             switch (var.getVarType()) {
-            case VOTER: {
-                String bound = SymbVarInitVoteHelper.getCurrentAmtVoter(i + 1);
-                String boundCode = template
-                        .replaceAll("ASSUME", options.getCbmcAssumeName())
-                        .replaceAll("VAR_NAME", var.getName())
-                        .replaceAll("BOUND", bound);
-                code.add(boundCode);
+            case VOTER:
+                code.add(replace(var, options, SymbVarInitVoteHelper.getCurrentAmtVoter(i + 1)));
                 break;
-            }
-            case CANDIDATE: {
-                String bound = SymbVarInitVoteHelper.getCurrentAmtCand(i + 1);
-                String boundCode = template
-                        .replaceAll("ASSUME", options.getCbmcAssumeName())
-                        .replaceAll("VAR_NAME", var.getName())
-                        .replaceAll("BOUND", bound);
-                code.add(boundCode);
+            case CANDIDATE:
+                code.add(replace(var, options, SymbVarInitVoteHelper.getCurrentAmtCand(i + 1)));
                 break;
-            }
-            case SEAT: {
-                String bound = SymbVarInitVoteHelper.getCurrentAmtSeat(i + 1);
-                String boundCode = template
-                        .replaceAll("ASSUME", options.getCbmcAssumeName())
-                        .replaceAll("VAR_NAME", var.getName())
-                        .replaceAll("BOUND", bound);
-                code.add(boundCode);
+            case SEAT:
+                code.add(replace(var, options, SymbVarInitVoteHelper.getCurrentAmtSeat(i + 1)));
                 break;
-            }
             default:
-                break;
             }
         }
     }
 
-    public static CFunction main(BooleanExpASTData preAstData,
-            BooleanExpASTData postAstData, List<SymbolicCBMCVar> symCbmcVars,
-            ElectionTypeCStruct voteArrStruct,
-            ElectionTypeCStruct voteResultStruct,
-            VotingInputTypes votingInputType,
-            VotingOutputTypes votingOutputType, CodeGenOptions options,
-            CodeGenLoopBoundHandler loopBoundHandler, String votingFunctionName,
-            CBMCGeneratedCodeInfo cbmcGeneratedCode,
-            InitVoteHelper initVoteHelper) {
-
-        List<String> code = new ArrayList<>();
+    public static CFunction main(final BooleanExpASTData preAstData,
+                                 final BooleanExpASTData postAstData,
+                                 final List<SymbolicCBMCVar> symCbmcVars,
+                                 final ElectionTypeCStruct voteArrStruct,
+                                 final ElectionTypeCStruct voteResultStruct,
+                                 final VotingInputTypes votingInputType,
+                                 final VotingOutputTypes votingOutputType,
+                                 final CodeGenOptions options,
+                                 final CodeGenLoopBoundHandler loopBoundHandler,
+                                 final String votingFunctionName,
+                                 final CBMCGeneratedCodeInfo cbmcGeneratedCode,
+                                 final InitVoteHelper initVoteHelper) {
+        final List<String> code = new ArrayList<>();
 
         // init votes
-        int highestVote = Math.max(preAstData.getHighestVoteOrElect(),
-                postAstData.getHighestVoteOrElect());
-        highestVote = Math.max(highestVote, initVoteHelper.getHighestVote());       
+        int highestVote =
+                Math.max(preAstData.getHighestVoteOrElect(),
+                         postAstData.getHighestVoteOrElect());
+        highestVote = Math.max(highestVote, initVoteHelper.getHighestVote());
 
         for (int i = 0; i < highestVote; ++i) {
             code.add(initVoteHelper.generateCode(i + 1, voteArrStruct,
-                    votingInputType, options, loopBoundHandler,
-                    cbmcGeneratedCode));
-        }
-        
-        // init global symbolic vars
-        for (SymbolicCBMCVar var : symCbmcVars) {
-            initSymbVar(var, code, options, highestVote);
+                                                 votingInputType, options,
+                                                 loopBoundHandler,
+                                                 cbmcGeneratedCode));
         }
 
-        CodeGenASTVisitor visitor = new CodeGenASTVisitor(voteArrStruct,
-                votingInputType, voteResultStruct, votingOutputType, options,
-                loopBoundHandler, cbmcGeneratedCode);
+        // init global symbolic vars
+        for (final SymbolicCBMCVar var : symCbmcVars) {
+            initSymbVar(var, code, options, highestVote);
+        }
+        final CodeGenASTVisitor visitor =
+                new CodeGenASTVisitor(voteArrStruct, votingInputType,
+                                      voteResultStruct, votingOutputType, options,
+                                      loopBoundHandler, cbmcGeneratedCode);
 
         // preconditions
         visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);
-        for (BooleanExpressionNode node : preAstData.getTopAstNode()
-                .getBooleanNodes()) {
-            String s = node.getTreeString(0);
+        for (final BooleanExpressionNode node
+                : preAstData.getTopAstNode().getBooleanNodes()) {
+            node.getTreeString(0);
             node.getVisited(visitor);
             code.add(visitor.getCodeBlock().generateCode());
         }
@@ -111,25 +111,26 @@ public class CBMCMainGenerator {
         // vote
         for (int i = 0; i < highestVote; ++i) {
             code.add(PerformVoteHelper.generateCode(i + 1, voteArrStruct,
-                    voteResultStruct, options, votingFunctionName,
-                    cbmcGeneratedCode));
+                                                    voteResultStruct, options,
+                                                    votingFunctionName,
+                                                    cbmcGeneratedCode));
         }
 
         // postconditions
         visitor.setMode(CodeGenASTVisitor.Mode.ASSERT);
-        for (BooleanExpressionNode node : postAstData.getTopAstNode()
-                .getBooleanNodes()) {
-            String s = node.getTreeString(0);
+        for (final BooleanExpressionNode node
+                : postAstData.getTopAstNode().getBooleanNodes()) {
+            node.getTreeString(0);
             node.getVisited(visitor);
             code.add(visitor.getCodeBlock().generateCode());
         }
-
         code.add("return 0;");
 
-        CFunction mainFunction = new CFunction("main",
-                List.of("int argc", "char ** argv"), "int");
+        final CFunction mainFunction =
+                new CFunction("main",
+                              List.of("int argc", "char ** argv"),
+                              "int");
         mainFunction.setCode(code);
         return mainFunction;
     }
-
 }

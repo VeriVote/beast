@@ -14,29 +14,34 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 
 public class CAntlrTreeMainClass {
-    private static String code = "    unsigned int i = 0;\n"
-            + "    unsigned int j = 0;\n" + "    for (i = 0; i < C; i++) {\n"
-            + "        result[i] = 0;\n" + "    }\n"
-            + "    for (i = 0; i < V; i++) {\n"
-            + "        for (j = 0; j < C; j++) {\n"
-            + "            if (votes[i][j] < C) {\n"
-            + "                result[votes[i][j]] += (C - j) - 1;\n"
-            + "            }\n" + "        }\n" + "    }";
+    private static final String ANTLR_AST = "Antlr AST";
 
-    private static String loop = "for (int i = 0; i < C; i++) {\n"
-            + "        result[i] = 0;\n" + "}\n";
+    private static final String CODE =
+            "    unsigned int i = 0;\n"
+                    + "    unsigned int j = 0;\n"
+                    + "    for (i = 0; i < C; i++) {\n"
+                    + "        result[i] = 0;\n" + "    }\n"
+                    + "    for (i = 0; i < V; i++) {\n"
+                    + "        for (j = 0; j < C; j++) {\n"
+                    + "            if (votes[i][j] < C) {\n"
+                    + "                result[votes[i][j]] += (C - j) - 1;\n"
+                    + "            }\n" + "        }\n" + "    }";
 
-    public static void main(String[] args) {
-        CLexer l = new CLexer(CharStreams.fromString(loop));
+    private static final String LOOP =
+            "for (int i = 0; i < C; i++) {\n"
+                    + "        result[i] = 0;\n" + "}\n";
+
+    public static void main(final String[] args) {
+        final CLexer l = new CLexer(CharStreams.fromString(LOOP));
         final CommonTokenStream ts = new CommonTokenStream(l);
-        CParser p = new CParser(ts);
-        ParseTree tree = p.blockItemList();
+        final CParser p = new CParser(ts);
+        final ParseTree tree = p.blockItemList();
 
         // show AST in GUI
-        JFrame frame = new JFrame("Antlr AST");
-        JPanel panel = new JPanel();
-        TreeViewer viewer = new TreeViewer(Arrays.asList(p.getRuleNames()),
-                tree);
+        final JFrame frame = new JFrame(ANTLR_AST);
+        final JPanel panel = new JPanel();
+        final TreeViewer viewer =
+                new TreeViewer(Arrays.asList(p.getRuleNames()), tree);
         viewer.setScale(1.5); // Scale a little
         panel.add(viewer);
         frame.add(panel);

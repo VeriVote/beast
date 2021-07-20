@@ -11,23 +11,25 @@ public class SpecificValueInitVoteHelper extends InitVoteHelper {
 
     private VotingParameters votingParameters;
 
-    public SpecificValueInitVoteHelper(VotingParameters votingParameters) {
-        this.votingParameters = votingParameters;
+    public SpecificValueInitVoteHelper(final VotingParameters votingParams) {
+        this.votingParameters = votingParams;
     }
 
     @Override
-    public String generateCode(int voteNumber,
-            ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
-            CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler,
-            CBMCGeneratedCodeInfo codeInfo) {
-        String voteVarName = getVoteVarName(voteNumber);
+    public String generateCode(final int voteNumber,
+                               final ElectionTypeCStruct voteArrStruct,
+                               final VotingInputTypes votingInputType,
+                               final CodeGenOptions options,
+                               final CodeGenLoopBoundHandler loopBoundHandler,
+                               final CBMCGeneratedCodeInfo codeInfo) {
+        final String voteVarName = getVoteVarName(voteNumber);
         return votingParameters.generateVoteStructInitCode(voteArrStruct,
-                options, codeInfo, voteVarName);
+                                                           options, codeInfo,
+                                                           voteVarName);
     }
 
     @Override
     public int getHighestVote() {
         return votingParameters.getHighestVote();
     }
-
 }

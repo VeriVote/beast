@@ -14,7 +14,7 @@ public class PropertyEditorCodeElement extends CodeArea {
         });
     }
 
-    public void setChangeListener(CodeAreaChangeListener changeListener) {
-        this.changeListener = changeListener;
+    public void setChangeListener(final CodeAreaChangeListener codeAreaChangeListener) {
+        this.changeListener = codeAreaChangeListener;
     }
 }

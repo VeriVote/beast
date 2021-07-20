@@ -13,17 +13,27 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonHelper;
 
 public class CBMCJsonResultExampleExtractor {
 
-    private final String CBMC_JSON_RESULT_KEY = "result";
-    private final String CBMC_JSON_TRACE_KEY = "trace";
-    private final String CBMC_CPROVER_STATUS_KEY = "cProverStatus";
-    private final String STEP_TYPE_KEY = "stepType";
-    private final String STEP_TYPE_VALUE_ASSIGNMENT = "assignment";
-    private final String ASSIGNMENT_VALUE_KEY = "value";
-    private final String ASSIGNMENT_TYPE_KEY = "assignmentType";
+    private static final String CBMC_JSON_RESULT_KEY = "result";
+    private static final String CBMC_JSON_TRACE_KEY = "trace";
+    private static final String CBMC_CPROVER_STATUS_KEY = "cProverStatus";
+    private static final String STEP_TYPE_KEY = "stepType";
+    private static final String STEP_TYPE_VALUE_ASSIGNMENT = "assignment";
+    private static final String ASSIGNMENT_VALUE_KEY = "value";
+    // private final String ASSIGNMENT_TYPE_KEY = "assignmentType";
+    private static final String SOURCE_LOCATION = "sourceLocation";
+    private static final String DATA = "data";
+    private static final String FUNCTION = "function";
+    private static final String FAILURE = "failure";
+    private static final String DOT = ".";
+    private static final String C = "C";
+    private static final String S = "S";
+    private static final String V = "V";
 
-    private CElectionDescription descr;
-    private PreAndPostConditionsDescription propDescr;
-    private int s, c, v;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
+    private int seatAmount;
+    private int candidateAmount;
+    private int voterAmount;
     private List<String> rawOutput = new ArrayList<>();
     private JSONArray resultArr = new JSONArray();
     private JSONArray traceArr;
@@ -35,24 +45,27 @@ public class CBMCJsonResultExampleExtractor {
 
     private boolean cbmcFoundExample;
 
-    public CBMCJsonResultExampleExtractor(CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr,
-            CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo, int s, int c, int v) {
-        this.descr = descr;
-        this.propDescr = propDescr;
-        this.s = s;
-        this.c = c;
-        this.v = v;
-        this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
+    public CBMCJsonResultExampleExtractor(final CElectionDescription descr,
+                                          final PreAndPostConditionsDescription propDescr,
+                                          final CBMCGeneratedCodeInfo generatedCodeInfo,
+                                          final int seats,
+                                          final int candidates,
+                                          final int votes) {
+        this.description = descr;
+        this.propertyDescription = propDescr;
+        this.seatAmount = seats;
+        this.candidateAmount = candidates;
+        this.voterAmount = votes;
+        this.cbmcGeneratedCodeInfo = generatedCodeInfo;
     }
 
     public boolean didCBMCFindExample() {
         return cbmcFoundExample;
     }
 
-    private void parseOutputJSONArr(JSONArray outputArr) {
+    private void parseOutputJSONArr(final JSONArray outputArr) {
         for (int i = 0; i < outputArr.length(); ++i) {
-            JSONObject currentJson = outputArr.getJSONObject(i);
+            final JSONObject currentJson = outputArr.getJSONObject(i);
             if (currentJson.has(CBMC_JSON_RESULT_KEY)) {
                 resultArr = currentJson.getJSONArray(CBMC_JSON_RESULT_KEY);
             } else if (currentJson.has(CBMC_CPROVER_STATUS_KEY)) {
@@ -60,22 +73,23 @@ public class CBMCJsonResultExampleExtractor {
             }
         }
         for (int i = 0; i < resultArr.length(); ++i) {
-            JSONObject currentJson = resultArr.getJSONObject(i);
+            final JSONObject currentJson = resultArr.getJSONObject(i);
             if (currentJson.has(CBMC_JSON_TRACE_KEY)) {
                 traceArr = currentJson.getJSONArray(CBMC_JSON_TRACE_KEY);
             }
         }
     }
 
-    public void processCBMCJsonOutput(List<String> testRunLogs) {
+    public void processCBMCJsonOutput(final List<String> testRunLogs) {
         rawOutput.clear();
         rawOutput.addAll(testRunLogs);
-        JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
-        if (outputArr == null)
+        final JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
+        if (outputArr == null) {
             return;
+        }
         parseOutputJSONArr(outputArr);
 
-        if (!cProverStatus.equals("failure")) {
+        if (!FAILURE.equals(cProverStatus)) {
             cbmcFoundExample = false;
             return;
         }
@@ -84,83 +98,74 @@ public class CBMCJsonResultExampleExtractor {
         generatedExample = new CBMCCounterExample(cbmcGeneratedCodeInfo);
 
         for (int i = 0; i < traceArr.length(); ++i) {
-            JSONObject traceJsonObj = traceArr.getJSONObject(i);
-            if (traceJsonObj.getString(STEP_TYPE_KEY)
-                    .equals(STEP_TYPE_VALUE_ASSIGNMENT)) {
-                JSONObject valueJsonObj = traceJsonObj
-                        .getJSONObject(ASSIGNMENT_VALUE_KEY);
-                if (!traceJsonObj.has("sourceLocation")) {
+            final JSONObject traceJsonObj = traceArr.getJSONObject(i);
+            if (traceJsonObj.getString(STEP_TYPE_KEY).equals(STEP_TYPE_VALUE_ASSIGNMENT)) {
+                final JSONObject valueJsonObj =
+                        traceJsonObj.getJSONObject(ASSIGNMENT_VALUE_KEY);
+                if (!traceJsonObj.has(SOURCE_LOCATION)) {
                     continue;
                 }
-                JSONObject locationJsonObj = traceJsonObj
-                        .getJSONObject("sourceLocation");
-                if (!locationJsonObj.has("function"))
+                final JSONObject locationJsonObj = traceJsonObj.getJSONObject(SOURCE_LOCATION);
+                if (!locationJsonObj.has(FUNCTION)) {
                     continue;
+                }
 
-                String assignmentLine = locationJsonObj.getString("line");
-                String assignmentFunc = locationJsonObj.getString("function");
-                String assignmentType = traceJsonObj
-                        .getString(ASSIGNMENT_TYPE_KEY);
-                String lhs = traceJsonObj.getString("lhs");
+                // String assignmentLine = locationJsonObj.getString("line");
+                // String assignmentFunc = locationJsonObj.getString("function");
+                // String assignmentType = traceJsonObj.getString(ASSIGNMENT_TYPE_KEY);
+                final String lhs = traceJsonObj.getString("lhs");
 
-                if (!lhs.contains(".")) {
-                    if (lhs.startsWith("V") || lhs.startsWith("C")
-                            || lhs.startsWith("S")) {
+                if (!lhs.contains(DOT)) {
+                    if (lhs.startsWith(V) || lhs.startsWith(C) || lhs.startsWith(S)) {
                         try {
                             Integer.valueOf(lhs.substring(1));
-                            System.out.println(
-                                    lhs + " " + valueJsonObj.getString("data"));
-                        } catch (Exception e) {
+                            System.out.println(lhs + " " + valueJsonObj.getString(DATA));
+                        } catch (NumberFormatException e) {
                             // TODO: handle exception
                         }
                     }
                     continue;
                 }
 
-                if (!valueJsonObj.has("data"))
+                if (!valueJsonObj.has(DATA)) {
                     continue;
+                }
 
-                int dotIdx = lhs.indexOf('.');
+                final int dotIdx = lhs.indexOf(DOT);
+                final String structName = lhs.substring(0, dotIdx);
+                final String memberName = lhs.substring(dotIdx + 1);
 
-                String structName = lhs.substring(0, dotIdx);
-
-                String memberName = lhs.substring(dotIdx + 1);
-
-                String valueStr = removeAnythingButDigits(
-                        valueJsonObj.getString("data"));
-                System.out.println(valueJsonObj.getString("data"));
+                String valueStr = removeAnythingButDigits(valueJsonObj.getString(DATA));
+                System.out.println(valueJsonObj.getString(DATA));
                 System.out.println(valueJsonObj);
 
                 try {
                     Integer.valueOf(valueStr);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     valueStr = "NaN";
                 }
 
                 CBMCAssignmentType assType = CBMCAssignmentType.UNKNOWN;
-                if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber()
-                        .keySet().contains(structName)) {
+                if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber().keySet()
+                        .contains(structName)) {
                     assType = CBMCAssignmentType.VOTE;
                 } else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames()
                         .contains(structName)) {
                     assType = CBMCAssignmentType.GENERATED_VOTE;
-                } else if (cbmcGeneratedCodeInfo
-                        .getElectVariableNameToElectNumber().keySet()
+                } else if (cbmcGeneratedCodeInfo.getElectVariableNameToElectNumber().keySet()
                         .contains(structName)) {
                     assType = CBMCAssignmentType.ELECT;
                 } else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames()
                         .contains(structName)) {
                     assType = CBMCAssignmentType.GENERATED_ELECT;
                 }
-
-                String info = cbmcGeneratedCodeInfo.getInfo(structName);
-                generatedExample.add(structName, assType, memberName, valueStr,
-                        info);
+                final String info = cbmcGeneratedCodeInfo.getInfo(structName);
+                generatedExample.add(structName, assType, memberName, valueStr, info);
             }
         }
     }
 
-    String removeAnythingButDigits(String s) {
+    String removeAnythingButDigits(final String s) {
         String newString = "";
         for (int i = 0; i < s.length(); ++i) {
             if (Character.isDigit(s.charAt(i))) {
@@ -173,5 +178,4 @@ public class CBMCJsonResultExampleExtractor {
     public CBMCCounterExample getGeneratedExample() {
         return generatedExample;
     }
-
 }

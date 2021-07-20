@@ -12,15 +12,15 @@ public class CBMCCodeFileData {
         return f;
     }
 
-    public void setFile(File f) {
-        this.f = f;
+    public void setFile(final File file) {
+        this.f = file;
     }
 
     public CBMCGeneratedCodeInfo getCodeInfo() {
         return codeInfo;
     }
 
-    public void setCodeInfo(CBMCGeneratedCodeInfo code) {
+    public void setCodeInfo(final CBMCGeneratedCodeInfo code) {
         this.codeInfo = code;
     }
 }

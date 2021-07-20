@@ -16,47 +16,43 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class ElectIntersectionHelper {
 
-    public static String generateCode(String generatedVarName,
-            List<String> intersectedElectNames, ElectionTypeCStruct electStruct,
-            VotingOutputTypes votingOutputType, CodeGenOptions options,
-            CodeGenLoopBoundHandler loopBoundHandler) {
-
-        Map<String, String> replacementMap = StringReplacementMap.genMap(
-                "ELECT_TYPE", electStruct.getStruct().getName(), 
-                "AMT_MEMBER", electStruct.getAmtName(), 
-                "LIST_MEMBER", electStruct.getListName(),
-                "GENERATED_VAR_NAME", generatedVarName,
-                "LHS", intersectedElectNames.get(0),
-                "RHS", intersectedElectNames.get(1),
-                "MAX_AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(), 
-                "ASSUME", options.getCbmcAssumeName(),
-                "NONDET_UINT", options.getCbmcNondetUintName());
-
+    public static String generateCode(final String generatedVarName,
+                                      final List<String> intersectedElectNames,
+                                      final ElectionTypeCStruct electStruct,
+                                      final VotingOutputTypes votingOutputType,
+                                      final CodeGenOptions options,
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
+        final Map<String, String> replacementMap =
+                StringReplacementMap.genMap("ELECT_TYPE", electStruct.getStruct().getName(),
+                                            "AMT_MEMBER", electStruct.getAmtName(),
+                                            "LIST_MEMBER", electStruct.getListName(),
+                                            "GENERATED_VAR_NAME", generatedVarName,
+                                            "LHS", intersectedElectNames.get(0),
+                                            "RHS", intersectedElectNames.get(1),
+                                            "MAX_AMT_CANDIDATES",
+                                            options.getCbmcAmountMaxCandsVarName(),
+                                            "ASSUME", options.getCbmcAssumeName(),
+                                            "NONDET_UINT", options.getCbmcNondetUintName());
         List<LoopBound> loopbounds = List.of();
         String code = "";
 
         switch (votingOutputType) {
-        case CANDIDATE_LIST: {
-            code = CodeTemplateElectIntersection.templateCandidateList;
-            loopbounds = CodeTemplateElectIntersection.loopboundsCandidateList;
+        case CANDIDATE_LIST:
+            code = CodeTemplateElectIntersection.TEMPLATE_CANDIDATE_LIST;
+            loopbounds = CodeTemplateElectIntersection.LOOP_BOUNDS_CANDIDATE_LIST;
             break;
-        }
-        case PARLIAMENT: {
-            code = CodeTemplateElectIntersection.templateParliament;
-            loopbounds = CodeTemplateElectIntersection.loopboundsParliament;
+        case PARLIAMENT:
+            code = CodeTemplateElectIntersection.TEMPLATE_PARLIAMENT;
+            loopbounds = CodeTemplateElectIntersection.LOOP_BOUNDS_PARLIAMENT;
             break;
-        }
-        case PARLIAMENT_STACK: {
+        case PARLIAMENT_STACK:
             throw new NotImplementedException();
-        }
-        case SINGLE_CANDIDATE: {
+        case SINGLE_CANDIDATE:
             throw new NotImplementedException();
-        }
+        default:
         }
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 }

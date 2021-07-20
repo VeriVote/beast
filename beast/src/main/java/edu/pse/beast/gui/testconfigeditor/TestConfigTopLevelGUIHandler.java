@@ -4,6 +4,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.layout.AnchorPane;
+
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.gui.runs.CBMCTestRunGuiController;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigGuiController;
@@ -17,18 +23,13 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.testconfigeditor.treeview.runs.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.AnchorPane;
 
 public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
-
-    private final String testConfigDetailFXML = "/edu/pse/beast/testConfigDetailGUI.fxml";
-    private final String cbmcTestConfigDetailFXML = "/edu/pse/beast/cbmcTestConfigDetailGUI.fxml";
-    private final String cbmcTestRunDetailFXML = "/edu/pse/beast/cbmcTestRunDetailGUI.fxml";
-    private final String testConfigCategoryFXML = "/edu/pse/beast/categoryDetailGUI.fxml";
+    private static final String DIR = "/edu/pse/beast/";
+    private static final String TEST_CONFIG_DETAIL_FXML = DIR + "testConfigDetailGUI.fxml";
+    private static final String CBMC_TEST_CONFIG_DETAIL_FXML = DIR + "cbmcTestConfigDetailGUI.fxml";
+    private static final String CBMC_TEST_RUN_DETAIL_FXML = DIR + "cbmcTestRunDetailGUI.fxml";
+    private static final String TEST_CONFIG_CATEGORY_FXML = DIR + "categoryDetailGUI.fxml";
 
     private ChoiceBox<String> sortCriteriumChoiceBox;
     private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
@@ -41,48 +42,46 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
     private TestConfigCategoryGUIController categoryGUIController;
 
     private FXMLLoader testConfigCategoryFXMLLoader = new FXMLLoader(
-            getClass().getResource(testConfigCategoryFXML));
+            getClass().getResource(TEST_CONFIG_CATEGORY_FXML));
 
     private TestConfigGuiController testConfigGuiController;
     private FXMLLoader testConfigFXMLLoader = new FXMLLoader(
-            getClass().getResource(testConfigDetailFXML));
+            getClass().getResource(TEST_CONFIG_DETAIL_FXML));
 
     private CBMCTestConfigGuiController cbmcTestConfigController;
     private FXMLLoader cbmcTestConfigFXMLLoader = new FXMLLoader(
-            getClass().getResource(cbmcTestConfigDetailFXML));
+            getClass().getResource(CBMC_TEST_CONFIG_DETAIL_FXML));
 
     private CBMCTestRunGuiController cbmcTestRunGuiController;
     private FXMLLoader cbmcTestRunFXMLLoader = new FXMLLoader(
-            getClass().getResource(cbmcTestRunDetailFXML));
+            getClass().getResource(CBMC_TEST_RUN_DETAIL_FXML));
 
     private final String descrSortCrit = "Election Description";
     private final String propDescrSortCrit = "Property Description";
-    private final String cbmcTestConfigHeading = "cbmc Properties";
+    // private final String cbmcTestConfigHeading = "cbmc Properties";
 
     private String sortCriterium = descrSortCrit;
 
-    public TestConfigTopLevelGUIHandler(
-            ChoiceBox<String> sortCriteriumChoiceBox,
-            TreeView<TestConfigTreeItemSuper> testConfigTreeView,
-            AnchorPane testConfigDetailsAnchorPane,
-            BeastWorkspace beastWorkspace) throws IOException {
-        this.beastWorkspace = beastWorkspace;
-        beastWorkspace.registerUpdateListener(this);
+    public TestConfigTopLevelGUIHandler(final ChoiceBox<String> sortCritChoiceBox,
+                                        final TreeView<TestConfigTreeItemSuper> testConfigList,
+                                        final AnchorPane testConfigDetailsPane,
+                                        final BeastWorkspace workspace) throws IOException {
+        this.beastWorkspace = workspace;
+        workspace.registerUpdateListener(this);
 
-        categoryGUIController = new TestConfigCategoryGUIController(
-                beastWorkspace, descrSortCrit, testConfigTreeView);
-        testConfigGuiController = new TestConfigGuiController(beastWorkspace);
-        cbmcTestConfigController = new CBMCTestConfigGuiController(
-                beastWorkspace);
-        cbmcTestRunGuiController = new CBMCTestRunGuiController(beastWorkspace,
-                testConfigTreeView);
+        categoryGUIController =
+                new TestConfigCategoryGUIController(workspace, descrSortCrit,
+                                                    testConfigList);
+        testConfigGuiController = new TestConfigGuiController(workspace);
+        cbmcTestConfigController = new CBMCTestConfigGuiController(workspace);
+        cbmcTestRunGuiController = new CBMCTestRunGuiController(workspace,
+                                                                testConfigList);
 
-        this.testConfigDetailsAnchorPane = testConfigDetailsAnchorPane;
+        this.testConfigDetailsAnchorPane = testConfigDetailsPane;
+        this.sortCriteriumChoiceBox = sortCritChoiceBox;
+        this.testConfigTreeView = testConfigList;
 
-        this.sortCriteriumChoiceBox = sortCriteriumChoiceBox;
-        this.testConfigTreeView = testConfigTreeView;
-
-        testConfigTreeView.getSelectionModel().selectedItemProperty()
+        testConfigList.getSelectionModel().selectedItemProperty()
                 .addListener((e, oldVal, newVal) -> {
                     if (oldVal == null) {
                         testConfigSelectionChanged(newVal.getValue());
@@ -92,29 +91,23 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
                         testConfigSelectionChanged(newVal.getValue());
                     }
                 });
-
-        testConfigTreeView.setShowRoot(true);
+        testConfigList.setShowRoot(true);
 
         testConfigCategoryFXMLLoader.setController(categoryGUIController);
         testConfigCategoryFXMLLoader.load();
-
         testConfigFXMLLoader.setController(testConfigGuiController);
         testConfigFXMLLoader.load();
-
         cbmcTestConfigFXMLLoader.setController(cbmcTestConfigController);
         cbmcTestConfigFXMLLoader.load();
-
         cbmcTestRunFXMLLoader.setController(cbmcTestRunGuiController);
         cbmcTestRunFXMLLoader.load();
 
         setupSortCriteriumChoiceBox();
-
         handleWorkspaceUpdateGeneric();
-
-        sortCriteriumChoiceBox.getSelectionModel().selectFirst();
+        sortCritChoiceBox.getSelectionModel().selectFirst();
     }
 
-    private void setDetailAnchorPane(AnchorPane pane) {
+    private void setDetailAnchorPane(final AnchorPane pane) {
         testConfigDetailsAnchorPane.getChildren().clear();
         testConfigDetailsAnchorPane.getChildren().add(pane);
         AnchorPane.setLeftAnchor(pane, 0d);
@@ -123,43 +116,41 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
         AnchorPane.setBottomAnchor(pane, 0d);
     }
 
-    private void testConfigSelectionChanged(TestConfigTreeItemSuper selected) {
+    private void testConfigSelectionChanged(final TestConfigTreeItemSuper selected) {
         switch (selected.getType()) {
-        case CATEGORY: {
-            TestConfigCategoryTreeItem casted = (TestConfigCategoryTreeItem) selected;
+        case CATEGORY:
+            final TestConfigCategoryTreeItem casted = (TestConfigCategoryTreeItem) selected;
             categoryGUIController.display(casted.getCategory());
             setDetailAnchorPane(categoryGUIController.getTopLevelAnchorPane());
             break;
-        }
-        case TEST_CONFIG: {
-            TestConfigTreeItem casted = (TestConfigTreeItem) selected;
+        case TEST_CONFIG:
+            final TestConfigTreeItem casted = (TestConfigTreeItem) selected;
             testConfigGuiController.display(casted.getTestConfig());
             setDetailAnchorPane(
                     testConfigGuiController.getTopLevelAnchorPane());
             break;
-        }
-        case CBMC: {
-            TestConfigCBMCTreeItem casted = (TestConfigCBMCTreeItem) selected;
+        case CBMC:
+            final TestConfigCBMCTreeItem casted = (TestConfigCBMCTreeItem) selected;
             cbmcTestConfigController
                     .display(casted.getCbmcPropertyTestConfiguration());
             setDetailAnchorPane(
                     cbmcTestConfigController.getTopLevelAnchorPane());
             break;
-        }
-        case CBMC_RUN: {
-            TestRunCBMCTreeItem casted = (TestRunCBMCTreeItem) selected;
+        case CBMC_RUN:
+            final TestRunCBMCTreeItem casted = (TestRunCBMCTreeItem) selected;
             cbmcTestRunGuiController.display(casted.getRun());
             setDetailAnchorPane(
                     cbmcTestRunGuiController.getTopLevelAnchorPane());
             break;
-        }
+        default:
+            break;
         }
     }
 
-    private void addCBMCRunItems(TreeItem<TestConfigTreeItemSuper> treeItem,
-            CBMCTestConfiguration config) {
+    private void addCBMCRunItems(final TreeItem<TestConfigTreeItemSuper> treeItem,
+                                 final CBMCTestConfiguration config) {
         treeItem.getChildren().clear();
-        for (CBMCTestRunWithSymbolicVars tr : config.getRuns()) {
+        for (final CBMCTestRunWithSymbolicVars tr : config.getRuns()) {
             treeItem.getChildren()
                     .add(new TreeItem<>(new TestRunCBMCTreeItem(tr)));
         }
@@ -169,32 +160,31 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
         root = new TreeItem<>(new TestConfigCategoryTreeItem(sortCriterium));
         testConfigTreeView.setRoot(root);
 
-        Map<String, List<TestConfiguration>> testConfigs;
+        final Map<String, List<TestConfiguration>> testConfigs;
         if (sortCriterium.equals(descrSortCrit)) {
             testConfigs = beastWorkspace.getConfigsByElectionDescriptionName();
-        } else {// if (sortCriterium.equals(propDescrSortCrit)) {
+        } else { // if (sortCriterium.equals(propDescrSortCrit)) {
             testConfigs = beastWorkspace.getConfigsByPropertyDescriptionName();
         }
 
-        for (String name : testConfigs.keySet()) {
-            TreeItem<TestConfigTreeItemSuper> parentItem = new TreeItem<>(
-                    new TestConfigCategoryTreeItem(name));
+        for (final String name : testConfigs.keySet()) {
+            final TreeItem<TestConfigTreeItemSuper> parentItem =
+                    new TreeItem<>(new TestConfigCategoryTreeItem(name));
+            final List<TestConfiguration> testConfigsForParent =
+                    testConfigs.get(name);
 
-            List<TestConfiguration> testConfigsForParent = testConfigs
-                    .get(name);
-
-            for (TestConfiguration testConfig : testConfigsForParent) {
-                TreeItem<TestConfigTreeItemSuper> testConfigItem = new TreeItem<>(
-                        new TestConfigTreeItem(testConfig));
-                Map<String, CBMCTestConfiguration> cbcmConfigs = testConfig
-                        .getCbmcTestConfigsByName();
+            for (final TestConfiguration testConfig : testConfigsForParent) {
+                final TreeItem<TestConfigTreeItemSuper> testConfigItem =
+                        new TreeItem<>(new TestConfigTreeItem(testConfig));
+                final Map<String, CBMCTestConfiguration> cbcmConfigs =
+                        testConfig.getCbmcTestConfigsByName();
                 if (!cbcmConfigs.isEmpty()) {
-                    TreeItem<TestConfigTreeItemSuper> cbmcParentItem = new TreeItem<>(
-                            new TestConfigCategoryTreeItem("cbmc"));
-                    for (CBMCTestConfiguration cbmcConfig : cbcmConfigs
-                            .values()) {
-                        TreeItem<TestConfigTreeItemSuper> cbmcConfigItem = new TreeItem<>(
-                                new TestConfigCBMCTreeItem(cbmcConfig));
+                    final TreeItem<TestConfigTreeItemSuper> cbmcParentItem =
+                            new TreeItem<>(new TestConfigCategoryTreeItem("cbmc"));
+                    for (final CBMCTestConfiguration cbmcConfig
+                            : cbcmConfigs.values()) {
+                        final TreeItem<TestConfigTreeItemSuper> cbmcConfigItem =
+                                new TreeItem<>(new TestConfigCBMCTreeItem(cbmcConfig));
                         addCBMCRunItems(cbmcConfigItem, cbmcConfig);
                         cbmcParentItem.getChildren().add(cbmcConfigItem);
                     }
@@ -210,7 +200,6 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
     private void setupSortCriteriumChoiceBox() {
         sortCriteriumChoiceBox.getItems().add(descrSortCrit);
         sortCriteriumChoiceBox.getItems().add(propDescrSortCrit);
-
         sortCriteriumChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((e, oldVal, newVal) -> {
                     sortCriterium = newVal;
@@ -224,28 +213,29 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
     }
 
     @Override
-    public void handleAddedTestConfig(TestConfiguration tc) {
+    public void handleAddedTestConfig(final TestConfiguration tc) {
         updateTestConfigTreeView();
     }
 
     @Override
-    public void handleWorkspaceUpdateAddedCBMCRuns(CBMCTestConfiguration config,
-            List<CBMCTestRunWithSymbolicVars> createdTestRuns) {
-        TreeItem<TestConfigTreeItemSuper> item = TestConfigTreeViewHelper
-                .getItem(config, root);
-        for (CBMCTestRunWithSymbolicVars r : createdTestRuns) {
+    public void handleWorkspaceUpdateAddedCBMCRuns(final CBMCTestConfiguration config,
+                                                   final List<CBMCTestRunWithSymbolicVars>
+                                                        createdTestRuns) {
+        final TreeItem<TestConfigTreeItemSuper> item =
+                TestConfigTreeViewHelper.getItem(config, root);
+        for (final CBMCTestRunWithSymbolicVars r : createdTestRuns) {
             item.getChildren().add(new TreeItem<TestConfigTreeItemSuper>(
                     new TestRunCBMCTreeItem(r)));
         }
     }
 
     @Override
-    public void handleCBMCRunDeleted(CBMCTestRunWithSymbolicVars run) {
+    public void handleCBMCRunDeleted(final CBMCTestRunWithSymbolicVars run) {
         updateTestConfigTreeView();
     }
 
     @Override
-    public void handleTestConfigDeleted(TestConfiguration tc) {
+    public void handleTestConfigDeleted(final TestConfiguration tc) {
         updateTestConfigTreeView();
     }
 }

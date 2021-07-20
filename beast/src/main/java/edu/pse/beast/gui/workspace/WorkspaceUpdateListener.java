@@ -13,84 +13,66 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public interface WorkspaceUpdateListener {
-    public default void handleWorkspaceUpdateGeneric() {
-
+    default void handleWorkspaceUpdateGeneric() {
     }
 
-    public default void handleWorkspaceUpdateAddedCBMCRuns(
-            CBMCTestConfiguration config,
-            List<CBMCTestRunWithSymbolicVars> createdTestRuns) {
+    default void handleWorkspaceUpdateAddedCBMCRuns(CBMCTestConfiguration config,
+                                                    List<CBMCTestRunWithSymbolicVars>
+                                                        createdTestRuns) {
     }
 
-    public default void handleWorkspaceErrorNoCBMCProcessStarter() {
+    default void handleWorkspaceErrorNoCBMCProcessStarter() {
     }
 
-    public default void handleWorkspaceUpdateAddedVarToPropDescr(
-            PreAndPostConditionsDescription currentPropDescr,
-            SymbolicCBMCVar var) {
-
+    default void handleWorkspaceUpdateAddedVarToPropDescr(PreAndPostConditionsDescription
+                                                                currentPropDescr,
+                                                          SymbolicCBMCVar var) {
     }
 
-    public default void handleDescrChangeAddedVotingSigFunction(
-            CElectionDescription descr, VotingSigFunction func) {
+    default void handleDescrChangeAddedVotingSigFunction(CElectionDescription descr,
+                                                         VotingSigFunction func) {
     }
 
-    public default void handleDescrChangeUpdatedFunctionCode(
-            CElectionDescription descr, CElectionDescriptionFunction function,
-            String code) {
-
+    default void handleDescrChangeUpdatedFunctionCode(CElectionDescription descr,
+                                                      CElectionDescriptionFunction function,
+                                                      String code) {
     }
 
-    public default void handleDescrChangeRemovedFunction(
-            CElectionDescription descr, CElectionDescriptionFunction func) {
-
+    default void handleDescrChangeRemovedFunction(CElectionDescription descr,
+                                                  CElectionDescriptionFunction func) {
     }
 
-    public default void handleExtractedFunctionLoops(CElectionDescription descr,
-            CElectionDescriptionFunction func) {
-
+    default void handleExtractedFunctionLoops(CElectionDescription descr,
+                                              CElectionDescriptionFunction func) {
     }
 
-    public default void handleAddedPropDescr(
-            PreAndPostConditionsDescription propDescr) {
-
+    default void handleAddedPropDescr(PreAndPostConditionsDescription propDescr) {
     }
 
-    public default void handleAddedTestConfig(TestConfiguration tc) {
-
+    default void handleAddedTestConfig(TestConfiguration tc) {
     }
 
-    public default void handlePropDescrChangedCode(
-            PreAndPostConditionsDescription propDescr) {
-
+    default void handlePropDescrChangedCode(PreAndPostConditionsDescription propDescr) {
     }
 
-    public default void handlePropDescrRemovedVar(
-            PreAndPostConditionsDescription propDescr,
-            SymbolicCBMCVar selectedVar) {
-
+    default void handlePropDescrRemovedVar(PreAndPostConditionsDescription propDescr,
+                                           SymbolicCBMCVar selectedVar) {
     }
 
-    public default void handleDescrChangeAddedSimpleFunction(
-            CElectionDescription descr, SimpleTypeFunction f) {
-
+    default void handleDescrChangeAddedSimpleFunction(CElectionDescription descr,
+                                                      SimpleTypeFunction f) {
     }
 
-    public default void handleDescrChangeInOutName(CElectionDescription descr) {
-
+    default void handleDescrChangeInOutName(CElectionDescription descr) {
     }
 
-    public default void handleCBMCRunDeleted(CBMCTestRunWithSymbolicVars run) {
-
+    default void handleCBMCRunDeleted(CBMCTestRunWithSymbolicVars run) {
     }
 
-    public default void handleTestConfigDeleted(TestConfiguration tc) {
-
+    default void handleTestConfigDeleted(TestConfiguration tc) {
     }
 
-    public default void handleCBMConfigUpdatedFiles(
-            CBMCTestConfiguration currentConfig) {
-
+    default void handleCBMConfigUpdatedFiles(CBMCTestConfiguration currentConfig) {
     }
 
 }

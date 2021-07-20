@@ -18,93 +18,100 @@ import edu.pse.beast.api.testrunner.threadpool.WorkUnit;
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 
 /**
- * This class can run a cbmc check given a Java THread.
- * Uses a {@link CBMCProcessHandlerSource} to 
- * generate a cbmc process and pass it output onto 
- * a {@link CBMCTestCallback}
- * @author holge
+ * This class can run a cbmc check given a Java Thread.
+ * Uses a {@link CBMCProcessHandlerSource} to
+ * generate a cbmc process and pass it output onto
+ * a {@link CBMCTestCallback}.
+ *
+ * @author Holger Klein
  *
  */
 public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     // fields to start the election check
-    CElectionDescription descr;
-    PreAndPostConditionsDescription propDescr;
-    int v, c, s;
-    CBMCCodeFileData cbmcCodeFile;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
+    private int voterAmount;
+    private int candidateAmount;
+    private int seatAmount;
+    private CBMCCodeFileData cbmcCodeFile;
     private String loopBounds;
-    private CodeGenOptions codeGenOptions;
+    private CodeGenOptions codeGenerationOptions;
 
     // fields to handle the workunit state
-    CBMCTestCallback cb;
+    private CBMCTestCallback callBack;
 
-    String uuid;
+    private String uuid;
     private String sessionUUID;
 
-    CBMCProcessHandlerSource processStarterSource;
+    private CBMCProcessHandlerSource processStarterSource;
     private Process process;
 
     private WorkUnitState state;
     private PathHandler pathHandler;
 
-    public CBMCPropertyCheckWorkUnit(
-            CBMCProcessHandlerSource processStarterSource, String sessionUUID) {
+    public CBMCPropertyCheckWorkUnit(final CBMCProcessHandlerSource source,
+                                     final String sessionUUIDString) {
         this.uuid = UUID.randomUUID().toString();
-        this.processStarterSource = processStarterSource;
-        this.sessionUUID = sessionUUID;
+        this.processStarterSource = source;
+        this.sessionUUID = sessionUUIDString;
         this.state = WorkUnitState.CREATED;
     }
 
-    public void initialize(int v, int s, int c, CodeGenOptions codeGenOptions,
-            String loopBounds, CBMCCodeFileData cbmcCodeFile,
-            CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr, CBMCTestCallback cb,
-            PathHandler pathHandler) {
-        this.pathHandler = pathHandler;
-        this.descr = descr;
-        this.propDescr = propDescr;
-        this.v = v;
-        this.c = c;
-        this.s = s;
-        this.cbmcCodeFile = cbmcCodeFile;
-        this.loopBounds = loopBounds;
-        this.codeGenOptions = codeGenOptions;
-        this.cb = cb;
+    public void initialize(final int v, final int s, final int c,
+                           final CodeGenOptions codeGenOptions,
+                           final String loopBoundsString,
+                           final CBMCCodeFileData codeFile,
+                           final CElectionDescription descr,
+                           final PreAndPostConditionsDescription propDescr,
+                           final CBMCTestCallback cb,
+                           final PathHandler handler) {
+        this.pathHandler = handler;
+        this.description = descr;
+        this.propertyDescription = propDescr;
+        this.voterAmount = v;
+        this.candidateAmount = c;
+        this.seatAmount = s;
+        this.cbmcCodeFile = codeFile;
+        this.loopBounds = loopBoundsString;
+        this.codeGenerationOptions = codeGenOptions;
+        this.callBack = cb;
         this.state = WorkUnitState.INITIALIZED;
     }
 
-    public void setState(WorkUnitState state) {
-        this.state = state;
+    public void setState(final WorkUnitState workUnitState) {
+        this.state = workUnitState;
     }
 
     public int getC() {
-        return c;
+        return candidateAmount;
     }
 
     public int getS() {
-        return s;
+        return seatAmount;
     }
 
     public int getV() {
-        return v;
+        return voterAmount;
     }
 
-    public void setCallback(CBMCTestCallback cb) {
-        this.cb = cb;
+    public void setCallback(final CBMCTestCallback cb) {
+        this.callBack = cb;
     }
 
     public boolean hasCallback() {
-        return this.cb != null;
+        return this.callBack != null;
     }
 
     public CBMCProcessHandlerSource getProcessStarterSource() {
         return processStarterSource;
     }
 
-    public void updateDataForCheck(CBMCCodeFileData cbmcFile, String loopBounds,
-            CodeGenOptions codeGenOptions) {
+    public void updateDataForCheck(final CBMCCodeFileData cbmcFile,
+                                   final String loopBoundsString,
+                                   final CodeGenOptions codeGenOptions) {
         this.cbmcCodeFile = cbmcFile;
-        this.loopBounds = loopBounds;
-        this.codeGenOptions = codeGenOptions;
+        this.loopBounds = loopBoundsString;
+        this.codeGenerationOptions = codeGenOptions;
         this.state = WorkUnitState.INITIALIZED;
     }
 
@@ -114,20 +121,26 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
             return;
         }
         state = WorkUnitState.WORKED_ON;
-        cb.onPropertyTestStart(descr, propDescr, s, c, v, uuid);
+        callBack.onPropertyTestStart(description, propertyDescription,
+                                     seatAmount, candidateAmount,
+                                     voterAmount, uuid);
         try {
-            process = processStarterSource.getProcessHandler()
-                    .startCheckForParam(sessionUUID, v, c, s, sessionUUID, cb,
-                            cbmcCodeFile.getFile(), loopBounds, codeGenOptions,
-                            pathHandler);
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
+            process =
+                    processStarterSource.getProcessHandler()
+                    .startCheckForParam(sessionUUID, voterAmount, candidateAmount,
+                                        seatAmount, sessionUUID, callBack,
+                                        cbmcCodeFile.getFile(), loopBounds,
+                                        codeGenerationOptions, pathHandler);
+            final BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
-            List<String> cbmcOutput = new ArrayList<>();
+            final List<String> cbmcOutput = new ArrayList<>();
             try {
                 while ((line = reader.readLine()) != null) {
-                    cb.onPropertyTestRawOutput(sessionUUID, descr, propDescr, s,
-                            c, v, uuid, line);
+                    callBack.onPropertyTestRawOutput(sessionUUID, description,
+                                                     propertyDescription,
+                                                     seatAmount, candidateAmount,
+                                                     voterAmount, uuid, line);
                     cbmcOutput.add(line);
                 }
             } catch (IOException e) {
@@ -137,10 +150,13 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
                 processStarterSource.getProcessHandler().endProcess(process);
                 return;
             }
-            cb.onPropertyTestRawOutputComplete(descr, propDescr, s, c, v, uuid,
-                    cbmcOutput);
+            callBack.onPropertyTestRawOutputComplete(description, propertyDescription,
+                                                     seatAmount, candidateAmount,
+                                                     voterAmount, uuid, cbmcOutput);
             state = WorkUnitState.FINISHED;
-            cb.onPropertyTestFinished(descr, propDescr, s, c, v, uuid);
+            callBack.onPropertyTestFinished(description, propertyDescription,
+                                            seatAmount, candidateAmount,
+                                            voterAmount, uuid);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -158,13 +174,17 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     public void interrupt() {
         processStarterSource.getProcessHandler().endProcess(process);
         state = WorkUnitState.STOPPED;
-        cb.onPropertyTestStopped(descr, propDescr, s, c, v, uuid);
+        callBack.onPropertyTestStopped(description, propertyDescription,
+                                       seatAmount, candidateAmount,
+                                       voterAmount, uuid);
     }
 
     @Override
     public void addedToQueue() {
         state = WorkUnitState.ON_QUEUE;
-        cb.onPropertyTestAddedToQueue(descr, propDescr, s, c, v, uuid);
+        callBack.onPropertyTestAddedToQueue(description, propertyDescription,
+                                            seatAmount, candidateAmount,
+                                            voterAmount, uuid);
     }
 
     @Override
@@ -176,7 +196,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
         return cbmcCodeFile;
     }
 
-    public void setCbmcFile(CBMCCodeFileData cbmcFile) {
+    public void setCbmcFile(final CBMCCodeFileData cbmcFile) {
         this.cbmcCodeFile = cbmcFile;
     }
 

@@ -9,13 +9,13 @@ public class CBMCStructAssignment {
     private Map<String, String> memberToAssignment = new HashMap<>();
     private String varInfo;
 
-    private int sortNumber = 0;
+    private int sortNumber;
 
-    public CBMCStructAssignment(CBMCAssignmentType assignmentType,
-            String varName, String varInfo) {
-        this.assignmentType = assignmentType;
+    public CBMCStructAssignment(final CBMCAssignmentType varAssignmentType,
+                                final String varName, final String variableInfo) {
+        this.assignmentType = varAssignmentType;
         this.structName = varName;
-        this.varInfo = varInfo;
+        this.varInfo = variableInfo;
     }
 
     public String getVarName() {
@@ -34,12 +34,12 @@ public class CBMCStructAssignment {
         return varInfo;
     }
 
-    public void add(String memberName, String assignment, int sortNumber) {
+    public void add(final String memberName, final String assignment, final int sortNum) {
         memberToAssignment.put(memberName, assignment);
-        this.sortNumber = sortNumber;
+        this.sortNumber = sortNum;
     }
 
-    public String getAssignmentFor(String memberName) {
+    public String getAssignmentFor(final String memberName) {
         return memberToAssignment.get(memberName);
     }
 

@@ -14,48 +14,45 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VotePermutationHelper {
-    public static String generateCode(String generatedVarName, String varName,
-            ElectionTypeCStruct voteArrStruct, VotingInputTypes votingInputType,
-            CodeGenOptions options, CodeGenLoopBoundHandler loopBoundHandler) {
-
-        Map<String, String> replacementMap = Map.of("VOTE_TYPE",
-                voteArrStruct.getStruct().getName(), "AMT_MEMBER",
-                voteArrStruct.getAmtName(), "LIST_MEMBER",
-                voteArrStruct.getListName(), "GENERATED_VAR_NAME",
-                generatedVarName, "AMT_CANDIDATES",
-                options.getCbmcAmountMaxCandsVarName(), "ASSUME",
-                options.getCbmcAssumeName(), "NONDET_UINT",
-                options.getCbmcNondetUintName(), "RHS", varName, "PERM",
-                "permutationIndices", "AMT_VOTERS",
-                options.getCbmcAmountMaxVotersVarName());
-
+    public static String generateCode(final String generatedVarName,
+                                      final String varName,
+                                      final ElectionTypeCStruct voteArrStruct,
+                                      final VotingInputTypes votingInputType,
+                                      final CodeGenOptions options,
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
+        final Map<String, String> replacementMap =
+                Map.of("VOTE_TYPE", voteArrStruct.getStruct().getName(),
+                       "AMT_MEMBER", voteArrStruct.getAmtName(),
+                       "LIST_MEMBER", voteArrStruct.getListName(),
+                       "GENERATED_VAR_NAME", generatedVarName,
+                       "AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
+                       "ASSUME", options.getCbmcAssumeName(),
+                       "NONDET_UINT", options.getCbmcNondetUintName(),
+                       "RHS", varName,
+                       "PERM", "permutationIndices",
+                       "AMT_VOTERS", options.getCbmcAmountMaxVotersVarName());
         List<LoopBound> loopbounds = List.of();
         String code = null;
 
         switch (votingInputType) {
-        case APPROVAL: {
-            code = CodeTemplateVotePermutation.templateApproval;
-            loopbounds = CodeTemplateVotePermutation.loopBoundsApproval;
+        case APPROVAL:
+            code = CodeTemplateVotePermutation.TEMPLATE_APPROVAL;
+            loopbounds = CodeTemplateVotePermutation.LOOP_BOUNDS_APPROVAL;
             break;
-        }
-        case WEIGHTED_APPROVAL: {
+        case WEIGHTED_APPROVAL:
             break;
-        }
-        case PREFERENCE: {
-            code = CodeTemplateVotePermutation.templatePreference;
-            loopbounds = CodeTemplateVotePermutation.loopBoundsPreference;
+        case PREFERENCE:
+            code = CodeTemplateVotePermutation.TEMPLATE_PREFERENCE;
+            loopbounds = CodeTemplateVotePermutation.LOOP_BOUNDS_PREFERENCE;
             break;
-        }
-        case SINGLE_CHOICE: {
+        case SINGLE_CHOICE:
             throw new NotImplementedException();
-        }
-        case SINGLE_CHOICE_STACK: {
+        case SINGLE_CHOICE_STACK:
             throw new NotImplementedException();
-        }
+        default:
         }
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 }

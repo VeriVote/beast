@@ -152,9 +152,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private Button saveWorkspaceButton;
 
     private CElectionEditor cElectionEditor;
-    private PreAndPostPropertyEditor preAndPostPropertyEditor;
-    private TestConfigTopLevelGUIHandler testConfigurationHandler;
-    private ErrorGuiController logGuiController;
 
     private BeastWorkspace beastWorkspace;
 
@@ -162,8 +159,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     private CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 
-    private void addChildToAnchorPane(AnchorPane pane, Node child, double top,
-            double bottom, double left, double right) {
+    private void addChildToAnchorPane(final AnchorPane pane,
+                                      final Node child,
+                                      final double top,
+                                      final double bottom,
+                                      final double left,
+                                      final double right) {
         codePane.getChildren().add(child);
         AnchorPane.setTopAnchor(child, top);
         AnchorPane.setLeftAnchor(child, left);
@@ -172,64 +173,61 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     }
 
     private void initElectionEditor() {
-        CodeArea funcDeclArea = new CodeArea();
+        final CodeArea funcDeclArea = new CodeArea();
         codePane.getChildren().add(funcDeclArea);
         AnchorPane.setTopAnchor(funcDeclArea, 0d);
         AnchorPane.setLeftAnchor(funcDeclArea, 0d);
         AnchorPane.setRightAnchor(funcDeclArea, 0d);
 
-        CodeArea closingBracketArea = new CodeArea();
+        final CodeArea closingBracketArea = new CodeArea();
         codePane.getChildren().add(closingBracketArea);
         AnchorPane.setBottomAnchor(closingBracketArea, 0d);
         AnchorPane.setLeftAnchor(closingBracketArea, 0d);
         AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
-        CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
-        VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
+        final CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
+        final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
                 new VirtualizedScrollPane<CEditorCodeElement>(cEditorGUIElement);
         addChildToAnchorPane(codePane, cEditorGUIElementVsp, 20, 100, 0, 0);
 
-        cElectionEditor = new CElectionEditor(primaryStage,
-                cEditorGUIElementVsp, addElectionDescriptionButton,
-                deleteDescrButton, loadElectionDescriptionButton,
-                saveElectionDescriptionButton, editDescrButton,
-                addFunctionMenuButton, removeFunctionButton,
-                testLoopBoundButton, editLoopboundButton, cEditorGUIElement,
-                funcDeclArea, closingBracketArea, functionList, loopBoundList,
-                openedElectionDescriptionChoiceBox, beastWorkspace);
+        cElectionEditor =
+                new CElectionEditor(primaryStage,
+                                    cEditorGUIElementVsp, addElectionDescriptionButton,
+                                    deleteDescrButton, loadElectionDescriptionButton,
+                                    saveElectionDescriptionButton, editDescrButton,
+                                    addFunctionMenuButton, removeFunctionButton,
+                                    testLoopBoundButton, editLoopboundButton, cEditorGUIElement,
+                                    funcDeclArea, closingBracketArea, functionList, loopBoundList,
+                                    openedElectionDescriptionChoiceBox, beastWorkspace);
     }
 
     private void initPropertyEditor() {
-        PropertyEditorCodeElement prePropertyEditor = new PropertyEditorCodeElement();
-        PropertyEditorCodeElement postPropertyEditor = new PropertyEditorCodeElement();
+        final PropertyEditorCodeElement prePropertyEditor = new PropertyEditorCodeElement();
+        final PropertyEditorCodeElement postPropertyEditor = new PropertyEditorCodeElement();
 
-        VirtualizedScrollPane<PropertyEditorCodeElement> preVsp = new VirtualizedScrollPane<>(
-                prePropertyEditor);
-        VirtualizedScrollPane<PropertyEditorCodeElement> postVsp = new VirtualizedScrollPane<>(
-                postPropertyEditor);
-
+        final VirtualizedScrollPane<PropertyEditorCodeElement> preVsp =
+                new VirtualizedScrollPane<>(prePropertyEditor);
+        final VirtualizedScrollPane<PropertyEditorCodeElement> postVsp =
+                new VirtualizedScrollPane<>(postPropertyEditor);
         prePropertyPane.setContent(preVsp);
         postPropertyPane.setContent(postVsp);
 
-        preAndPostPropertyEditor = new PreAndPostPropertyEditor(
-                prePropertyEditor, postPropertyEditor, addPropDescrButton,
-                loadPropDescrButton, savePropDescrButton, removeSymbVarButton,
-                symbVarsListView, addSymbVarMenu,
-                openedPropertyDescriptionChoiceBox, beastWorkspace);
+        new PreAndPostPropertyEditor(prePropertyEditor, postPropertyEditor, addPropDescrButton,
+                                     loadPropDescrButton, savePropDescrButton, removeSymbVarButton,
+                                     symbVarsListView, addSymbVarMenu,
+                                     openedPropertyDescriptionChoiceBox, beastWorkspace);
     }
 
     private void initTestConfigHandler() throws IOException {
-
-        this.testConfigurationHandler = new TestConfigTopLevelGUIHandler(
-                sortCriteriumChoiceBox, testConfigTreeView,
-                testConfigDetailsAnchorPane, beastWorkspace);
+        new TestConfigTopLevelGUIHandler(sortCriteriumChoiceBox, testConfigTreeView,
+                                         testConfigDetailsAnchorPane, beastWorkspace);
     }
 
-    private void initLogHandler(ErrorHandler errorHandler) throws IOException {
-        logGuiController = new ErrorGuiController(logAnchorPane, errorHandler);
+    private void initLogHandler(final ErrorHandler errorHandler) throws IOException {
+        new ErrorGuiController(logAnchorPane, errorHandler);
     }
 
-    private void initWorkspace(ErrorHandler errorHandler) {
+    private void initWorkspace(final ErrorHandler errorHandler) {
         beastWorkspace = BeastWorkspace
                 .getStandardWorkspace(cbmcProcessHandlerCreator);
 
@@ -244,65 +242,56 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     }
 
     private void initMenu() {
-        Menu fileMenu = new Menu();
+        final Menu fileMenu = new Menu();
         fileMenu.setText("File");
-
-        MenuItem loadWorkspaceMenuItem = new MenuItem("Load Workspace");
-        MenuItem saveWorkspaceMenuItem = new MenuItem("Save Workspace");
+        final MenuItem loadWorkspaceMenuItem = new MenuItem("Load Workspace");
+        final MenuItem saveWorkspaceMenuItem = new MenuItem("Save Workspace");
 
         loadWorkspaceMenuItem.setOnAction(e -> {
             beastWorkspace.letUserLoadWorkSpace();
         });
-
         saveWorkspaceMenuItem.setOnAction(e -> {
             beastWorkspace.saveWorkspace();
         });
-
         fileMenu.getItems().add(loadWorkspaceMenuItem);
         fileMenu.getItems().add(saveWorkspaceMenuItem);
 
-        Menu prefMenu = new Menu();
+        final Menu prefMenu = new Menu();
         prefMenu.setText("Preferences");
-
-        MenuItem optionsMenuItem = new MenuItem();
+        final MenuItem optionsMenuItem = new MenuItem();
         optionsMenuItem.setText("Options");
         optionsMenuItem.setOnAction(e -> {
             optionsGUIController.display();
         });
         prefMenu.getItems().add(optionsMenuItem);
-
         menuBar.getMenus().add(fileMenu);
         menuBar.getMenus().add(prefMenu);
     }
 
-    private List<OptionsCategoryGUI> createStandardOptionsAndSave(
-            File optionsFile) throws IOException {
-        OS os = OSHelper.getOS();
-        List<OptionsCategoryGUI> options = new ArrayList<>();
+    private List<OptionsCategoryGUI> createStandardOptionsAndSave(final File optionsFile)
+            throws IOException {
+        final OS os = OSHelper.getOS();
+        final List<OptionsCategoryGUI> options = new ArrayList<>();
         if (os == OS.WINDOWS) {
             cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
-            ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions = new ProcessHandlerWindowsOptionsGUI(
-                    cbmcProcessHandlerCreator);
+            final ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions =
+                    new ProcessHandlerWindowsOptionsGUI(cbmcProcessHandlerCreator);
             options.add(processHandlerWindowsOptions);
         }
-
         options.add(new CEditorOptionsGUI(new CEditorOptions()));
-
         OptionsSaverLoader.saveOptions(optionsFile, options);
-
         return options;
     }
 
-    private void initOptionsGUIController(PathHandler pathHandler)
-            throws IOException {
-        List<OptionsCategoryGUI> options = new ArrayList<>();
+    private void initOptionsGUIController(final PathHandler pathHandler) throws IOException {
+        final List<OptionsCategoryGUI> options;
 
         optionsSaveFile = pathHandler.getOptionsFile();
         if (!optionsSaveFile.exists()) {
             options = createStandardOptionsAndSave(optionsSaveFile);
         } else {
             options = OptionsSaverLoader.loadOptions(optionsSaveFile);
-            for (OptionsCategoryGUI cat : options) {
+            for (final OptionsCategoryGUI cat : options) {
                 switch (cat.getCategory()) {
                 case PROCESS_HANDLER_WINDOWS:
                     cbmcProcessHandlerCreator = ((ProcessHandlerWindowsOptionsGUI) cat)
@@ -314,14 +303,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
             }
         }
 
-        optionsGUIController = new OptionsGUIController(options,
-                optionsSaveFile);
+        optionsGUIController =
+                new OptionsGUIController(options, optionsSaveFile);
         optionsFXMLLoader.setController(optionsGUIController);
         optionsFXMLLoader.load();
     }
 
     private void linkOptions() {
-        for (OptionsCategoryGUI cat : optionsGUIController.getCategories()) {
+        for (final OptionsCategoryGUI cat : optionsGUIController.getCategories()) {
             switch (cat.getCategory()) {
             case C_DESCR_EDITOR:
                 ((CEditorOptionsGUI) cat).setcElectionEditor(cElectionEditor);
@@ -336,12 +325,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     @FXML
     public void initialize() throws IOException {
         // option Controller
-        PathHandler pathHandler = new PathHandler();
+        final PathHandler pathHandler = new PathHandler();
         initOptionsGUIController(pathHandler);
 
         // init gui
-        ErrorMessageLoader errorMessageLoader = new ErrorMessageLoader();
-        ErrorHandler errorHandler = new ErrorHandler(errorMessageLoader);
+        final ErrorMessageLoader errorMessageLoader = new ErrorMessageLoader();
+        final ErrorHandler errorHandler = new ErrorHandler(errorMessageLoader);
 
         initWorkspace(errorHandler);
         initElectionEditor();
@@ -354,8 +343,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         initMenu();
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public void setPrimaryStage(final Stage primStage) {
+        this.primaryStage = primStage;
     }
 
     @Override
@@ -366,5 +355,4 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         optionsGUIController.saveOptions();
         beastWorkspace.shutdown();
     }
-
 }

@@ -14,7 +14,7 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.RelationalExpressionContext;
 
 public class ExtractedCLoop {
-    private IterationStatementContext ctx;
+    private IterationStatementContext context;
 
     private String uuid = UUID.randomUUID().toString();
     private CLoopTypes loopType;
@@ -31,13 +31,17 @@ public class ExtractedCLoop {
     private ExtractedCLoop parentLoop;
     private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
 
-    public ExtractedCLoop(IterationStatementContext ctx,
-            int loopNumberInFunction, CodeGenOptions codeGenOptions,
-            String functionName) {
-        this.ctx = ctx;
-        this.functionName = functionName;
-        this.loopNumberInFunction = loopNumberInFunction;
+    public ExtractedCLoop(final IterationStatementContext ctx,
+                          final int loopNumberInFunctionNumber,
+                          final CodeGenOptions codeGenOptions,
+                          final String functionNameString) {
+        this.context = ctx;
+        this.functionName = functionNameString;
+        this.loopNumberInFunction = loopNumberInFunctionNumber;
         init(codeGenOptions);
+    }
+
+    private ExtractedCLoop() {
     }
 
     public List<ExtractedCLoop> getChildrenLoops() {
@@ -72,12 +76,12 @@ public class ExtractedCLoop {
         return parsedLoopBoundType;
     }
 
-    public void setParsedLoopBoundType(LoopBoundType parsedLoopBoundType) {
-        this.parsedLoopBoundType = parsedLoopBoundType;
+    public void setParsedLoopBoundType(final LoopBoundType loopBoundType) {
+        this.parsedLoopBoundType = loopBoundType;
     }
 
-    public void setParentLoop(ExtractedCLoop parentLoop) {
-        this.parentLoop = parentLoop;
+    public void setParentLoop(final ExtractedCLoop parentLoopHandler) {
+        this.parentLoop = parentLoopHandler;
     }
 
     public ExtractedCLoop getParentLoop() {
@@ -88,14 +92,15 @@ public class ExtractedCLoop {
         return manualInteger;
     }
 
-    public void setManualInteger(int manualInteger) {
-        this.manualInteger = manualInteger;
+    public void setManualInteger(final int manualIntegerValue) {
+        this.manualInteger = manualIntegerValue;
     }
 
     @Override
     public String toString() {
         String template = "LOOP_TYPE LOOP_NUMBER: LOOP_BOUND";
-        template = template.replaceAll("LOOP_TYPE", loopType.toString())
+        template =
+                template.replaceAll("LOOP_TYPE", loopType.toString())
                 .replaceAll("LOOP_NUMBER", String.valueOf(loopNumberInFunction))
                 .replaceAll("LOOP_BOUND", parsedLoopBoundType.toString());
         if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
@@ -108,63 +113,58 @@ public class ExtractedCLoop {
         return template;
     }
 
-    private void handleParseFail(CLoopParseResultType res) {
+    private void handleParseFail(final CLoopParseResultType res) {
         loopParseResult = res;
         parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED_INTEGER;
     }
 
-    private void init(CodeGenOptions codeGenOptions) {
-        line = ctx.start.getLine();
-        posInLine = ctx.start.getCharPositionInLine();
+    private void init(final CodeGenOptions codeGenOptions) {
+        line = context.start.getLine();
+        posInLine = context.start.getCharPositionInLine();
 
-        if (ctx.For() != null) {
+        if (context.For() != null) {
             loopType = CLoopTypes.FOR;
-            List<ExpressionContext> expressions = ctx.expression();
+            context.expression();
 
             ExpressionContext condExp = null;
             int firstSemiPos = 0;
-            String semi = ctx.Semi(0).getText();
-            for (; firstSemiPos < ctx.getChildCount()
-                    && !ctx.getChild(firstSemiPos).getText()
-                            .equals(semi); ++firstSemiPos)
-                ;
-
-            if (!ctx.getChild(firstSemiPos + 1).getText().equals(semi)) {
-                condExp = (ExpressionContext) ctx.getChild(firstSemiPos + 1);
+            final String semi = context.Semi(0).getText();
+            while (firstSemiPos < context.getChildCount()
+                    && !context.getChild(firstSemiPos).getText().equals(semi)) {
+                ++firstSemiPos;
             }
 
+            if (!context.getChild(firstSemiPos + 1).getText().equals(semi)) {
+                condExp = (ExpressionContext) context.getChild(firstSemiPos + 1);
+            }
+
+            final CLoopParseResultType parseFail;
             if (condExp == null) {
-                handleParseFail(CLoopParseResultType.NO_CONDITIONAL_STATEMENT);
+                parseFail = CLoopParseResultType.NO_CONDITIONAL_STATEMENT;
+            } else {
+                ParserRuleContext parseRule = (ParserRuleContext) condExp;
+                while (parseRule.getChildCount() > 0
+                        && parseRule.getClass() != RelationalExpressionContext.class) {
+                    parseRule = (ParserRuleContext) parseRule.getChild(0);
+                }
+                if (parseRule.getClass() != RelationalExpressionContext.class) {
+                    parseFail = CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM;
+                } else if (((RelationalExpressionContext) parseRule).Less() == null) {
+                    parseFail = CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_LESS;
+                } else if (((RelationalExpressionContext) parseRule).shiftExpression() == null) {
+                    parseFail = CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM;
+                } else {
+                    parseFail = null;
+                }
+            }
+            if (parseFail != null) {
+                handleParseFail(parseFail);
                 return;
             }
 
-            ParserRuleContext parseRule = (ParserRuleContext) condExp;
-            while (parseRule.getChildCount() > 0 && parseRule
-                    .getClass() != RelationalExpressionContext.class) {
-                parseRule = (ParserRuleContext) parseRule.getChild(0);
-            }
-
-            if (parseRule.getClass() != RelationalExpressionContext.class) {
-                handleParseFail(
-                        CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
-                return;
-            }
-
-            RelationalExpressionContext relCond = (RelationalExpressionContext) parseRule;
-
-            if (relCond.Less() == null) {
-                handleParseFail(
-                        CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_LESS);
-                return;
-            }
-
-            if (relCond.shiftExpression() == null) {
-                handleParseFail(
-                        CLoopParseResultType.CONDITIONAL_STATEMENT_NOT_RIGHT_FORM);
-                return;
-            }
-
-            String lessThanText = relCond.shiftExpression().getText();
+            final String lessThanText =
+                    ((RelationalExpressionContext) ((ParserRuleContext) condExp))
+                    .shiftExpression().getText();
 
             if (lessThanText
                     .equals(codeGenOptions.getCurrentAmountVotersVarName())) {
@@ -179,24 +179,21 @@ public class ExtractedCLoop {
                 loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
                 parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_SEATS;
             }
-        } else if (ctx.While() != null) {
+        } else if (context.While() != null) {
             loopType = CLoopTypes.WHILE;
         }
     }
 
     public LoopBound generateLoopBound() {
-        List<LoopBound> childrenLoopBounds = new ArrayList<>();
-        for (ExtractedCLoop cl : childrenLoops) {
+        final List<LoopBound> childrenLoopBounds = new ArrayList<>();
+        for (final ExtractedCLoop cl : childrenLoops) {
             childrenLoopBounds.add(cl.generateLoopBound());
         }
-
-        LoopBound bound = new LoopBound(childrenLoopBounds, functionName,
-                parsedLoopBoundType, loopNumberInFunction);
-
-        return bound;
+        return new LoopBound(childrenLoopBounds, functionName,
+                             parsedLoopBoundType, loopNumberInFunction);
     }
 
-    public void addChild(ExtractedCLoop l) {
+    public void addChild(final ExtractedCLoop l) {
         childrenLoops.add(l);
     }
 
@@ -204,15 +201,15 @@ public class ExtractedCLoop {
         return uuid;
     }
 
-    private ExtractedCLoop() {
-    }
-
-    public static ExtractedCLoop fromStoredValues(String uuid,
-            CLoopTypes loopType, int line, int posInLine, int numberInFunc,
-            CLoopParseResultType parseResultType, LoopBoundType loopBoundType,
-            String functionName) {
-
-        ExtractedCLoop cLoop = new ExtractedCLoop();
+    public static ExtractedCLoop fromStoredValues(final String uuid,
+                                                  final CLoopTypes loopType,
+                                                  final int line,
+                                                  final int posInLine,
+                                                  final int numberInFunc,
+                                                  final CLoopParseResultType parseResultType,
+                                                  final LoopBoundType loopBoundType,
+                                                  final String functionName) {
+        final ExtractedCLoop cLoop = new ExtractedCLoop();
         cLoop.uuid = uuid;
         cLoop.loopType = loopType;
         cLoop.line = line;
@@ -221,7 +218,6 @@ public class ExtractedCLoop {
         cLoop.loopParseResult = parseResultType;
         cLoop.parsedLoopBoundType = loopBoundType;
         cLoop.functionName = functionName;
-
         return cLoop;
     }
 }

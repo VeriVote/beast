@@ -43,118 +43,111 @@ public class CElectionSaverLoader {
 
     private static final String DESCR_UUID_KEY = "descr_uuid";
 
-    private static boolean isVersionCompatible(int version) {
+    private static boolean isVersionCompatible(final int version) {
         return true;
     }
 
-    private static SimpleTypeFunction fromSimpleFunction(JSONObject json) {
-        String name = json.getString(SIMPLE_FUNC_NAME_KEY);
-        String code = json.getString(SIMPLE_FUNC_CODE_KEY);
-        JSONArray argTypesJsonArr = json
-                .getJSONArray(SIMPLE_FUNC_ARG_TYPES_KEY);
-        List<CElectionSimpleTypes> argTypes = new ArrayList<>();
+    private static SimpleTypeFunction fromSimpleFunction(final JSONObject json) {
+        final String name = json.getString(SIMPLE_FUNC_NAME_KEY);
+        final String code = json.getString(SIMPLE_FUNC_CODE_KEY);
+        final JSONArray argTypesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_TYPES_KEY);
+        final List<CElectionSimpleTypes> argTypes = new ArrayList<>();
         for (int i = 0; i < argTypesJsonArr.length(); ++i) {
-            argTypes.add(
-                    CElectionSimpleTypes.valueOf(argTypesJsonArr.getString(i)));
+            argTypes.add(CElectionSimpleTypes.valueOf(argTypesJsonArr.getString(i)));
         }
-        JSONArray argNamesJsonArr = json
-                .getJSONArray(SIMPLE_FUNC_ARG_NAMES_KEY);
-        List<String> argNames = new ArrayList<>();
+        final JSONArray argNamesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_NAMES_KEY);
+        final List<String> argNames = new ArrayList<>();
         for (int i = 0; i < argNamesJsonArr.length(); ++i) {
             argNames.add(argNamesJsonArr.getString(i));
         }
-        CElectionSimpleTypes returnType = CElectionSimpleTypes
-                .valueOf(json.getString(SIMPLE_FUNC_RETURN_TYPE));
-        SimpleTypeFunction simpleFunction = new SimpleTypeFunction(name,
-                argTypes, argNames, returnType);
+        final CElectionSimpleTypes returnType =
+                CElectionSimpleTypes.valueOf(json.getString(SIMPLE_FUNC_RETURN_TYPE));
+        final SimpleTypeFunction simpleFunction =
+                new SimpleTypeFunction(name, argTypes, argNames, returnType);
         simpleFunction.setCode(code);
         return simpleFunction;
     }
 
-    private static List<SimpleTypeFunction> toSimpleFunctions(JSONArray arr) {
-        List<SimpleTypeFunction> list = new ArrayList<>();
+    private static JSONObject fromSimpleFunction(final SimpleTypeFunction f) {
+        final JSONObject json = new JSONObject();
+        json.put(SIMPLE_FUNC_NAME_KEY, f.getName());
+        json.put(SIMPLE_FUNC_CODE_KEY, f.getCode());
+        json.put(EXTRACTED_LOOPS_KEY,
+                ExtractedCLoopSaverLoaderHelper
+                .fromExtractedLoops(f.getExtractedLoops()));
+        json.put(SIMPLE_FUNC_ARG_TYPES_KEY, new JSONArray(f.getArgTypes()));
+        json.put(SIMPLE_FUNC_ARG_NAMES_KEY, new JSONArray(f.getArgNames()));
+        json.put(SIMPLE_FUNC_RETURN_TYPE, f.getOutputType());
+        return json;
+    }
+
+    private static JSONArray fromSimpleFunctions(final CElectionDescription descr) {
+        final JSONArray array = new JSONArray();
+        for (final CElectionDescriptionFunction f : descr.getFunctions()) {
+            if (f.getClass().equals(SimpleTypeFunction.class)) {
+                array.put(fromSimpleFunction((SimpleTypeFunction) f));
+            }
+        }
+        return array;
+    }
+
+    private static List<SimpleTypeFunction> toSimpleFunctions(final JSONArray arr) {
+        final List<SimpleTypeFunction> list = new ArrayList<>();
         for (int i = 0; i < arr.length(); ++i) {
             list.add(fromSimpleFunction(arr.getJSONObject(i)));
         }
         return list;
     }
 
-    private static JSONObject fromVotingFunction(VotingSigFunction func) {
-        JSONObject json = new JSONObject();
+    private static JSONObject fromVotingFunction(final VotingSigFunction func) {
+        final JSONObject json = new JSONObject();
         json.put(VOTING_FUNC_NAME_KEY, func.getName());
         json.put(VOTING_FUNC_CODE_KEY, func.getCode());
-        json.put(EXTRACTED_LOOPS_KEY, ExtractedCLoopSaverLoaderHelper
-                .fromExtractedLoops(func.getExtractedLoops()));
+        json.put(EXTRACTED_LOOPS_KEY,
+                 ExtractedCLoopSaverLoaderHelper
+                 .fromExtractedLoops(func.getExtractedLoops()));
         return json;
     }
 
-    private static VotingSigFunction toVotingFunction(JSONObject json,
-            VotingInputTypes inputType, VotingOutputTypes outputType) {
-        String name = json.getString(VOTING_FUNC_NAME_KEY);
-        String code = json.getString(VOTING_FUNC_CODE_KEY);
-        VotingSigFunction func = new VotingSigFunction(name, inputType,
-                outputType);
+    private static VotingSigFunction toVotingFunction(final JSONObject json,
+                                                      final VotingInputTypes inputType,
+                                                      final VotingOutputTypes outputType) {
+        final String name = json.getString(VOTING_FUNC_NAME_KEY);
+        final String code = json.getString(VOTING_FUNC_CODE_KEY);
+        final VotingSigFunction func =
+                new VotingSigFunction(name, inputType, outputType);
         func.setCode(code);
-        List<ExtractedCLoop> loops = ExtractedCLoopSaverLoaderHelper
+        final List<ExtractedCLoop> loops =
+                ExtractedCLoopSaverLoaderHelper
                 .toExtractedLoops(json.getJSONArray(EXTRACTED_LOOPS_KEY));
         func.setExtractedLoops(loops);
         return func;
     }
 
-    private static JSONArray fromVotingFunctions(CElectionDescription descr) {
-        JSONArray array = new JSONArray();
-
-        for (CElectionDescriptionFunction f : descr.getFunctions()) {
+    private static JSONArray fromVotingFunctions(final CElectionDescription descr) {
+        final JSONArray array = new JSONArray();
+        for (final CElectionDescriptionFunction f : descr.getFunctions()) {
             if (f.getClass().equals(VotingSigFunction.class)) {
                 array.put(fromVotingFunction((VotingSigFunction) f));
             }
         }
-
         return array;
     }
 
-    private static JSONObject fromSimpleFunction(SimpleTypeFunction f) {
-        JSONObject json = new JSONObject();
-
-        json.put(SIMPLE_FUNC_NAME_KEY, f.getName());
-        json.put(SIMPLE_FUNC_CODE_KEY, f.getCode());
-        json.put(EXTRACTED_LOOPS_KEY, ExtractedCLoopSaverLoaderHelper
-                .fromExtractedLoops(f.getExtractedLoops()));
-
-        json.put(SIMPLE_FUNC_ARG_TYPES_KEY, new JSONArray(f.getArgTypes()));
-        json.put(SIMPLE_FUNC_ARG_NAMES_KEY, new JSONArray(f.getArgNames()));
-        json.put(SIMPLE_FUNC_RETURN_TYPE, f.getOutputType());
-
-        return json;
-    }
-
-    private static JSONArray fromSimpleFunctions(CElectionDescription descr) {
-        JSONArray array = new JSONArray();
-
-        for (CElectionDescriptionFunction f : descr.getFunctions()) {
-            if (f.getClass().equals(SimpleTypeFunction.class)) {
-                array.put(fromSimpleFunction((SimpleTypeFunction) f));
-            }
-        }
-
-        return array;
-    }
-
-    private static List<VotingSigFunction> toVotingFunctions(JSONArray array,
-            VotingInputTypes inputType, VotingOutputTypes outputType) {
-        List<VotingSigFunction> list = new ArrayList<VotingSigFunction>();
-
+    private static List<VotingSigFunction> toVotingFunctions(final JSONArray array,
+                                                             final VotingInputTypes inputType,
+                                                             final VotingOutputTypes outputType) {
+        final List<VotingSigFunction> list = new ArrayList<VotingSigFunction>();
         for (int i = 0; i < array.length(); ++i) {
             list.add(toVotingFunction(array.getJSONObject(i), inputType,
-                    outputType));
+                                      outputType));
         }
-
         return list;
     }
 
-    public static void storeCElection(CElectionDescription descr, File f)
+    public static void storeCElection(final CElectionDescription descr, final File f)
             throws IOException {
-        JSONObject json = new JSONObject();
+        final JSONObject json = new JSONObject();
         json.put(VERSION_KEY, CURRENT_VERSION);
         json.put(INPUT_TYPE_KEY, descr.getInputType().toString());
         json.put(OUTPUT_TYPE_KEY, descr.getOutputType().toString());
@@ -168,61 +161,58 @@ public class CElectionSaverLoader {
 
         json.put(DESCR_UUID_KEY, descr.getUuid());
 
-        String s = json.toString();
+        final String s = json.toString();
         SavingLoadingInterface.writeStringToFile(f, s);
     }
 
-    public static CElectionDescription loadCElection(File f)
+    public static CElectionDescription loadCElection(final File f)
             throws NotImplementedException, IOException {
-        String s = SavingLoadingInterface.readStringFromFile(f);
-        JSONObject json = new JSONObject(s);
-        int version = json.getInt(VERSION_KEY);
+        final String s = SavingLoadingInterface.readStringFromFile(f);
+        final JSONObject json = new JSONObject(s);
+        final int version = json.getInt(VERSION_KEY);
 
         if (!isVersionCompatible(version)) {
             throw new NotImplementedException("Version is not compatible");
         }
 
-        VotingInputTypes inputType = VotingInputTypes
-                .valueOf(json.getString(INPUT_TYPE_KEY));
-        VotingOutputTypes outputType = VotingOutputTypes
-                .valueOf(json.getString(OUTPUT_TYPE_KEY));
+        final VotingInputTypes inputType =
+                VotingInputTypes.valueOf(json.getString(INPUT_TYPE_KEY));
+        final VotingOutputTypes outputType =
+                VotingOutputTypes.valueOf(json.getString(OUTPUT_TYPE_KEY));
 
-        String name = json.getString(NAME_KEY);
-        String uuid = json.getString(DESCR_UUID_KEY);
+        final String name = json.getString(NAME_KEY);
+        final String uuid = json.getString(DESCR_UUID_KEY);
 
-        CElectionDescription descr = new CElectionDescription(uuid, name,
-                inputType, outputType);
+        final CElectionDescription descr =
+                new CElectionDescription(uuid, name, inputType, outputType);
 
-        JSONArray votingFuncArray = json
-                .getJSONArray(VOTING_FUNCTION_ARRAY_KEY);
-        List<VotingSigFunction> votingFuncs = toVotingFunctions(votingFuncArray,
-                inputType, outputType);
+        final JSONArray votingFuncArray = json.getJSONArray(VOTING_FUNCTION_ARRAY_KEY);
+        final List<VotingSigFunction> votingFuncs =
+                toVotingFunctions(votingFuncArray, inputType, outputType);
 
         List<SimpleTypeFunction> simpleFuncs = new ArrayList<>();
         if (json.has(SIMPLE_FUNCTION_ARRAY_KEY)) {
-            JSONArray simpleFunctionArray = json
-                    .getJSONArray(SIMPLE_FUNCTION_ARRAY_KEY);
+            final JSONArray simpleFunctionArray = json.getJSONArray(SIMPLE_FUNCTION_ARRAY_KEY);
             simpleFuncs = toSimpleFunctions(simpleFunctionArray);
         }
 
-        String votingFunctionName = json.getString(VOTING_FUNC_KEY);
+        final String votingFunctionName = json.getString(VOTING_FUNC_KEY);
         VotingSigFunction votingFunction = null;
 
-        List<CElectionDescriptionFunction> allFunctions = new ArrayList<CElectionDescriptionFunction>();
+        final List<CElectionDescriptionFunction> allFunctions =
+                new ArrayList<CElectionDescriptionFunction>();
 
-        for (VotingSigFunction func : votingFuncs) {
+        for (final VotingSigFunction func : votingFuncs) {
             allFunctions.add(func);
             if (func.getName().equals(votingFunctionName)) {
                 votingFunction = func;
             }
         }
-        for (SimpleTypeFunction func : simpleFuncs) {
+        for (final SimpleTypeFunction func : simpleFuncs) {
             allFunctions.add(func);
         }
         descr.setVotingFunction(votingFunction);
         descr.setFunctions(allFunctions);
-
         return descr;
     }
-
 }

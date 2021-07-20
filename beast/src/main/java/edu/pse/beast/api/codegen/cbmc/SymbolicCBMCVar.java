@@ -8,9 +8,9 @@ public class SymbolicCBMCVar {
     private String name;
     private CBMCVarType varType;
 
-    public SymbolicCBMCVar(String name, CBMCVarType varType) {
-        this.name = name;
-        this.varType = varType;
+    public SymbolicCBMCVar(final String nameString, final CBMCVarType variableType) {
+        this.name = nameString;
+        this.varType = variableType;
     }
 
     @Override

@@ -16,10 +16,10 @@ public abstract class AccessedVoteElectValueNode extends ElectionTypeNode {
     /** The count. */
     private final int number;
 
-    public AccessedVoteElectValueNode(List<SymbolicCBMCVar> accessingCBMCVars,
-            int number) {
-        this.accessingCBMCVars = accessingCBMCVars;
-        this.number = number;
+    public AccessedVoteElectValueNode(final List<SymbolicCBMCVar> accessingVariables,
+                                      final int numberCount) {
+        this.accessingCBMCVars = accessingVariables;
+        this.number = numberCount;
     }
 
     public List<SymbolicCBMCVar> getAccessingCBMCVars() {
@@ -29,5 +29,4 @@ public abstract class AccessedVoteElectValueNode extends ElectionTypeNode {
     public int getNumber() {
         return number;
     }
-
 }

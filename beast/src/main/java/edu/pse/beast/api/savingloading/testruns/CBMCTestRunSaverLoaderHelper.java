@@ -20,7 +20,6 @@ import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 public class CBMCTestRunSaverLoaderHelper {
-
     private static final String CBMC_CODE_FILE_DATA_KEY = "cbmc_code_file";
 
     private static final String TEST_RUN_LOGS_KEY = "test_run_logs";
@@ -35,99 +34,84 @@ public class CBMCTestRunSaverLoaderHelper {
 
     private static final String STATE_KEY = "state";
 
-    private static JSONArray loopBoundListToJSONArr(List<LoopBound> list) {
-        JSONArray json = new JSONArray();
-        for (LoopBound lb : list) {
+    private static JSONArray loopBoundListToJSONArr(final List<LoopBound> list) {
+        final JSONArray json = new JSONArray();
+        for (final LoopBound lb : list) {
             json.put(LoopBoundSaverLoaderHelper.loopBoundToJSON(lb));
         }
         return json;
     }
 
-    private static List<LoopBound> loopBoundListFromJSONArr(
-            JSONArray jsonArray) {
-        List<LoopBound> list = new ArrayList<>();
-
+    private static List<LoopBound> loopBoundListFromJSONArr(final JSONArray jsonArray) {
+        final List<LoopBound> list = new ArrayList<>();
         for (int i = 0; i < list.size(); ++i) {
-            list.add(LoopBoundSaverLoaderHelper
-                    .loopBoundFromJSON(jsonArray.getJSONObject(i)));
+            list.add(LoopBoundSaverLoaderHelper.loopBoundFromJSON(jsonArray.getJSONObject(i)));
         }
-
         return list;
     }
 
-    private static JSONObject cbmcTestRunToJSON(CBMCTestRunWithSymbolicVars run,
-            RelativePathConverter pathHandler) {
-        JSONObject json = new JSONObject();
-
+    private static JSONObject cbmcTestRunToJSON(final CBMCTestRunWithSymbolicVars run,
+                                                final RelativePathConverter pathHandler) {
+        final JSONObject json = new JSONObject();
         json.put(AMT_VOTER_KEY, run.getV());
         json.put(AMT_CANDS_KEY, run.getC());
         json.put(AMT_SEATS_KEY, run.getS());
-
         json.put(TEST_RUN_LOGS_KEY, run.getTestOutput());
-        json.put(CBMC_CODE_FILE_DATA_KEY, CBMCCodeFileDataSaverLoaderHelper
-                .cbmcCodeFileToJSON(run.getCbmcCodeFile(), pathHandler));
-
-        json.put(CODE_GEN_OPTIONS_KEY, CodeGenOptionsSaverLoaderHelper
-                .codeGenOptionsToJSON(run.getCodeGenOptions()));
-
+        json.put(CBMC_CODE_FILE_DATA_KEY,
+                 CBMCCodeFileDataSaverLoaderHelper
+                 .cbmcCodeFileToJSON(run.getCbmcCodeFile(), pathHandler));
+        json.put(CODE_GEN_OPTIONS_KEY,
+                 CodeGenOptionsSaverLoaderHelper
+                 .codeGenOptionsToJSON(run.getCodeGenerationOptions()));
         json.put(LOOP_BOUND_LIST_KEY, run.getLoopboundList());
         json.put(STATE_KEY, run.getState().toString());
-
         return json;
     }
 
-    private static CBMCTestRunWithSymbolicVars cbmcTestRunFromJSON(
-            JSONObject json, CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr, CBMCTestConfiguration tc,
-            RelativePathConverter pathHandler) {
+    private static CBMCTestRunWithSymbolicVars
+                cbmcTestRunFromJSON(final JSONObject json, final CElectionDescription descr,
+                                    final PreAndPostConditionsDescription propDescr,
+                                    final CBMCTestConfiguration tc,
+                                    final RelativePathConverter pathHandler) {
+        final int v = json.getInt(AMT_VOTER_KEY);
+        final int c = json.getInt(AMT_CANDS_KEY);
+        final int s = json.getInt(AMT_SEATS_KEY);
 
-        int v = json.getInt(AMT_VOTER_KEY);
-        int c = json.getInt(AMT_CANDS_KEY);
-        int s = json.getInt(AMT_SEATS_KEY);
+        final CBMCCodeFileData codeFileData =
+                CBMCCodeFileDataSaverLoaderHelper
+                .cbmcCodeFileFromJSON(json.getJSONObject(CBMC_CODE_FILE_DATA_KEY), pathHandler);
+        final CodeGenOptions codeGenOptions =
+                CodeGenOptionsSaverLoaderHelper
+                .codeGenOptionsFromJSON(json.getJSONObject(CODE_GEN_OPTIONS_KEY));
+        final String loopbounds = json.getString(LOOP_BOUND_LIST_KEY);
+        final CBMCTestRunWithSymbolicVars cbmcTestRun =
+                new CBMCTestRunWithSymbolicVars(v, s, c, codeGenOptions, loopbounds,
+                                                codeFileData, descr, propDescr, tc);
 
-        CBMCCodeFileData codeFileData = CBMCCodeFileDataSaverLoaderHelper
-                .cbmcCodeFileFromJSON(
-                        json.getJSONObject(CBMC_CODE_FILE_DATA_KEY),
-                        pathHandler);
-
-        CodeGenOptions codeGenOptions = CodeGenOptionsSaverLoaderHelper
-                .codeGenOptionsFromJSON(
-                        json.getJSONObject(CODE_GEN_OPTIONS_KEY));
-        String loopbounds = json.getString(LOOP_BOUND_LIST_KEY);
-
-        CBMCTestRunWithSymbolicVars cbmcTestRun = new CBMCTestRunWithSymbolicVars(
-                v, s, c, codeGenOptions, loopbounds, codeFileData, descr,
-                propDescr, tc);
-
-        String testRunLogs = json.getString(TEST_RUN_LOGS_KEY);
+        final String testRunLogs = json.getString(TEST_RUN_LOGS_KEY);
         cbmcTestRun.setTestRunLogs(testRunLogs);
-
-        WorkUnitState state = WorkUnitState.valueOf(json.getString(STATE_KEY));
+        final WorkUnitState state = WorkUnitState.valueOf(json.getString(STATE_KEY));
         cbmcTestRun.setPrevState(state);
-
         return cbmcTestRun;
     }
 
-    public static JSONArray cbmcTestRunListToJSON(
-            List<CBMCTestRunWithSymbolicVars> runs,
-            RelativePathConverter pathHandler) {
-        JSONArray arr = new JSONArray();
-
-        for (CBMCTestRunWithSymbolicVars r : runs) {
+    public static JSONArray cbmcTestRunListToJSON(final List<CBMCTestRunWithSymbolicVars> runs,
+                                                  final RelativePathConverter pathHandler) {
+        final JSONArray arr = new JSONArray();
+        for (final CBMCTestRunWithSymbolicVars r : runs) {
             arr.put(cbmcTestRunToJSON(r, pathHandler));
         }
-
         return arr;
     }
 
-    public static List<CBMCTestRunWithSymbolicVars> cbmcTestRunListFromJsonArr(
-            JSONArray arr, CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr, CBMCTestConfiguration tc,
-            RelativePathConverter pathHandler) {
-        List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
+    public static List<CBMCTestRunWithSymbolicVars>
+            cbmcTestRunListFromJsonArr(final JSONArray arr, final CElectionDescription descr,
+                                       final PreAndPostConditionsDescription propDescr,
+                                       final CBMCTestConfiguration tc,
+                                       final RelativePathConverter pathHandler) {
+        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
         for (int i = 0; i < arr.length(); ++i) {
-            runs.add(cbmcTestRunFromJSON(arr.getJSONObject(i), descr, propDescr,
-                    tc, pathHandler));
+            runs.add(cbmcTestRunFromJSON(arr.getJSONObject(i), descr, propDescr, tc, pathHandler));
         }
         return runs;
     }

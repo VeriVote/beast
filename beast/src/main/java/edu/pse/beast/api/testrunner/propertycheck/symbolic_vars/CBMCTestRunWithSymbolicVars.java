@@ -17,137 +17,154 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CB
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
-
 /**
  * Contains all data to start a cbmc check for the codefile
- * @author holge
+ * @author Holger Klein
  *
  */
 public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
 
-    private CElectionDescription descr;
-    private PreAndPostConditionsDescription propDescr;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
 
     private CBMCPropertyCheckWorkUnit workUnit;
-    private WorkUnitState prevState;
+    private WorkUnitState previousState;
 
-    private int V;
-    private int S;
-    private int C;
+    private int v;
+    private int s;
+    private int c;
 
-    private CodeGenOptions codeGenOptions;
+    private CodeGenOptions codeGenerationOptions;
 
-    private String loopboundList;
+    private String loopBounds;
 
     private CBMCCodeFileData cbmcCodeFile;
 
     private List<String> testRunLogs = new ArrayList<>();
 
-    private boolean descrChanged = false;
-    private boolean propDescrChanged = false;
+    private boolean descrChanged;
+    private boolean propDescrChanged;
 
-    private CBMCTestCallback cb;
+    private CBMCTestCallback callBack;
 
     private CBMCJsonResultExampleExtractor cmbcJsonExampleExtractor;
 
-    private CBMCTestConfiguration tc;
+    private CBMCTestConfiguration testConfiguration;
 
     private CBMCJsonRunningDataExtractor cbmcJsonRunningDataExtractor;
 
-    public CBMCTestRunWithSymbolicVars(int v, int s, int c,
-            CodeGenOptions codeGenOptions, String loopbounds,
-            CBMCCodeFileData cbmcCodeFile, CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr,
-            CBMCTestConfiguration tc) {
-        V = v;
-        S = s;
-        C = c;
-        this.codeGenOptions = codeGenOptions;
-        this.cbmcCodeFile = cbmcCodeFile;
-        this.descr = descr;
-        this.propDescr = propDescr;
-        this.loopboundList = loopbounds;
-        this.tc = tc;
-        cbmcJsonRunningDataExtractor = new CBMCJsonRunningDataExtractor(descr,
-                propDescr, s, c, v, cbmcCodeFile.getCodeInfo());
-        cmbcJsonExampleExtractor = new CBMCJsonResultExampleExtractor(descr,
-                propDescr, cbmcCodeFile.getCodeInfo(), s, c, v);
+    public CBMCTestRunWithSymbolicVars(final int voteAmount,
+                                       final int seatAmount,
+                                       final int candidateAmount,
+                                       final CodeGenOptions codeGenOptions,
+                                       final String loopbounds,
+                                       final CBMCCodeFileData codeFileData,
+                                       final CElectionDescription descr,
+                                       final PreAndPostConditionsDescription propDescr,
+                                       final CBMCTestConfiguration tc) {
+        v = voteAmount;
+        s = seatAmount;
+        c = candidateAmount;
+        this.codeGenerationOptions = codeGenOptions;
+        this.cbmcCodeFile = codeFileData;
+        this.description = descr;
+        this.propertyDescription = propDescr;
+        this.loopBounds = loopbounds;
+        this.testConfiguration = tc;
+        cbmcJsonRunningDataExtractor =
+                new CBMCJsonRunningDataExtractor(descr, propDescr, seatAmount, candidateAmount,
+                                                 voteAmount, codeFileData.getCodeInfo());
+        cmbcJsonExampleExtractor =
+                new CBMCJsonResultExampleExtractor(descr, propDescr, codeFileData.getCodeInfo(),
+                                                   seatAmount, candidateAmount, voteAmount);
     }
 
     public CBMCJsonResultExampleExtractor getJsonOutputHandler() {
         return cmbcJsonExampleExtractor;
     }
 
-    public void setJsonOutputHandler(
-            CBMCJsonResultExampleExtractor jsonOutputHandler) {
+    public void setJsonOutputHandler(final CBMCJsonResultExampleExtractor jsonOutputHandler) {
         this.cmbcJsonExampleExtractor = jsonOutputHandler;
     }
 
-    public void setPrevState(WorkUnitState prevState) {
+    public void setPrevState(final WorkUnitState prevState) {
         if (prevState == WorkUnitState.FINISHED) {
-            this.prevState = prevState;
+            this.previousState = prevState;
         }
     }
 
     @Override
-    public void onPropertyTestRawOutput(String sessionUUID,
-            CElectionDescription description,
-            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-            String uuid, String output) {
+    public void onPropertyTestRawOutput(final String sessionUUID,
+                                        final CElectionDescription descr,
+                                        final PreAndPostConditionsDescription propertyDescr,
+                                        final int seatAmount,
+                                        final int candidateAmount,
+                                        final int voteAmount,
+                                        final String uuid, final String output) {
         testRunLogs.add(output);
-        CBMCJsonMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
-        if (msg != null) {
-            if (cb != null)
-                cb.onNewCBMCMessage(msg);
+        final CBMCJsonMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
+        if (msg != null && callBack != null) {
+            callBack.onNewCBMCMessage(msg);
         }
-        if (cb != null)
-            cb.onPropertyTestRawOutput(sessionUUID, description, propertyDescr,
-                    s, c, v, uuid, output);
+        if (callBack != null) {
+            callBack.onPropertyTestRawOutput(sessionUUID, descr, propertyDescr,
+                    seatAmount, candidateAmount, voteAmount, uuid, output);
+        }
     }
 
     @Override
-    public void onPropertyTestFinished(CElectionDescription description,
-            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-            String uuid) {
+    public void onPropertyTestFinished(final CElectionDescription descr,
+                                       final PreAndPostConditionsDescription propertyDescr,
+                                       final int seatAmount, final int candidateAmount,
+                                       final int voteAmount, final String uuid) {
         cmbcJsonExampleExtractor.processCBMCJsonOutput(testRunLogs);
-        if (cb != null)
-            cb.onPropertyTestFinished(description, propertyDescr, s, c, v,
-                    uuid);
+        if (callBack != null) {
+            callBack.onPropertyTestFinished(descr, propertyDescr, seatAmount,
+                                      candidateAmount, voteAmount, uuid);
+        }
     }
 
     @Override
-    public void onPropertyTestStart(CElectionDescription description,
-            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-            String uuid) {
+    public void onPropertyTestStart(final CElectionDescription descr,
+                                    final PreAndPostConditionsDescription propertyDescr,
+                                    final int seatAmount, final int candidateAmount,
+                                    final int voteAmount, final String uuid) {
         this.testRunLogs.clear();
 
-        if (cb != null)
-            cb.onPropertyTestStart(description, propertyDescr, s, c, v, uuid);
+        if (callBack != null) {
+            callBack.onPropertyTestStart(descr, propertyDescr, seatAmount,
+                                   candidateAmount, voteAmount, uuid);
+        }
     }
 
     @Override
-    public void onPropertyTestStopped(CElectionDescription descr,
-            PreAndPostConditionsDescription propertyDescr, int s, int c, int v,
-            String uuid) {
-        if (cb != null)
-            cb.onPropertyTestStopped(descr, propertyDescr, s, c, v, uuid);
+    public void onPropertyTestStopped(final CElectionDescription descr,
+                                      final PreAndPostConditionsDescription propertyDescr,
+                                      final int seatAmount, final int candidateAmount,
+                                      final int voteAmount, final String uuid) {
+        if (callBack != null) {
+            callBack.onPropertyTestStopped(descr, propertyDescr, seatAmount,
+                                     candidateAmount, voteAmount, uuid);
+        }
     }
 
     public List<CBMCJsonMessage> getMessagesAsList() {
         return cbmcJsonRunningDataExtractor.getMessages();
     }
 
-    public void setAndInitializeWorkUnit(CBMCPropertyCheckWorkUnit workUnit,
-            PathHandler pathHandler) {
-        if (workUnit.getProcessStarterSource() == null)
+    public void setAndInitializeWorkUnit(final CBMCPropertyCheckWorkUnit cbmcWorkUnit,
+                                         final PathHandler pathHandler) {
+        if (cbmcWorkUnit.getProcessStarterSource() == null) {
             return;
-        workUnit.initialize(V, S, C, codeGenOptions, loopboundList,
-                cbmcCodeFile, descr, propDescr, this, pathHandler);
-        if (prevState != null) {
-            workUnit.setState(prevState);
-            prevState = null;
         }
-        this.workUnit = workUnit;
+        cbmcWorkUnit.initialize(v, s, c, codeGenerationOptions, loopBounds,
+                            cbmcCodeFile, description, propertyDescription, this,
+                            pathHandler);
+        if (previousState != null) {
+            cbmcWorkUnit.setState(previousState);
+            previousState = null;
+        }
+        this.workUnit = cbmcWorkUnit;
     }
 
     public CBMCCodeFileData getCbmcCodeFile() {
@@ -155,8 +172,9 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
     }
 
     public WorkUnitState getState() {
-        if (workUnit == null)
+        if (workUnit == null) {
             return WorkUnitState.NO_WORK_UNIT;
+        }
         return workUnit.getState();
     }
 
@@ -170,9 +188,9 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
         }
     }
 
-    public void setTestRunLogs(String logs) {
-        List<String> list = new ArrayList<>();
-        String arr[] = logs.split("\n");
+    public void setTestRunLogs(final String logs) {
+        final List<String> list = new ArrayList<>();
+        final String[] arr = logs.split("\n");
         for (int i = 0; i < arr.length; ++i) {
             list.add(arr[i]);
         }
@@ -197,70 +215,70 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
         return propDescrChanged;
     }
 
-    public void updateDataForCheck(CBMCCodeFileData cbmcFile,
-            CodeGenOptions codeGenOptions) {
+    public void updateDataForCheck(final CBMCCodeFileData cbmcFile,
+                                   final CodeGenOptions codeGenOptions) {
         this.cbmcCodeFile = cbmcFile;
-        this.loopboundList = cbmcFile.getCodeInfo().getLoopBoundHandler()
-                .generateCBMCString(V, C, S);
-        workUnit.updateDataForCheck(cbmcFile, loopboundList, codeGenOptions);
+        this.loopBounds = cbmcFile.getCodeInfo().getLoopBoundHandler()
+                .generateCBMCString(v, c, s);
+        workUnit.updateDataForCheck(cbmcFile, loopBounds, codeGenOptions);
         descrChanged = false;
         propDescrChanged = false;
     }
 
-    public void setCb(CBMCTestCallback cb) {
-        this.cb = cb;
+    public void setCb(final CBMCTestCallback cb) {
+        this.callBack = cb;
     }
 
     public String getLoopboundList() {
-        return loopboundList;
+        return loopBounds;
     }
 
-    public void setLoopboundList(String loopboundList) {
-        this.loopboundList = loopboundList;
+    public void setLoopboundList(final String loopBoundList) {
+        this.loopBounds = loopBoundList;
     }
 
-    public CodeGenOptions getCodeGenOptions() {
-        return codeGenOptions;
+    public CodeGenOptions getCodeGenerationOptions() {
+        return codeGenerationOptions;
     }
 
-    public void setCodeGenOptions(CodeGenOptions codeGenOptions) {
-        this.codeGenOptions = codeGenOptions;
+    public void setCodeGenOptions(final CodeGenOptions codeGenOptions) {
+        this.codeGenerationOptions = codeGenOptions;
     }
 
     public int getV() {
-        return V;
+        return v;
     }
 
     public int getS() {
-        return S;
+        return s;
     }
 
     public int getC() {
-        return C;
+        return c;
     }
 
-    public void setV(int v) {
-        V = v;
+    public void setV(final int voteAmount) {
+        v = voteAmount;
     }
 
-    public void setS(int s) {
-        S = s;
+    public void setS(final int seatAmount) {
+        s = seatAmount;
     }
 
-    public void setC(int c) {
-        C = c;
+    public void setC(final int candidateAmount) {
+        c = candidateAmount;
     }
 
     public CElectionDescription getDescr() {
-        return descr;
+        return description;
     }
 
     public PreAndPostConditionsDescription getPropDescr() {
-        return propDescr;
+        return propertyDescription;
     }
 
     public CBMCTestConfiguration getTc() {
-        return tc;
+        return testConfiguration;
     }
 
     public String getStatusString() {
@@ -282,5 +300,4 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
     public boolean didFindCounterExample() {
         return cmbcJsonExampleExtractor.didCBMCFindExample();
     }
-
 }

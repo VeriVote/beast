@@ -7,49 +7,51 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateVoteIntersection {
-    public final static String templateSingleChoice =
-              "VOTE_TYPE GENERATED_VAR_NAME;\n"
-            + "{\n"
-            + "    unsigned int count = 0;\n"
-            + "    for (int i = 0; i < AMT_VOTERS; ++i) {\n"
-            + "        unsigned int eq = COMPARE_VARS;\n"
-            + "        if (eq) {\n"
-            + "            GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();\n"
-            + "            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS_VAR_NAME.LIST_MEMBER[i]);\n"
-            + "            count++;\n"
-            + "        }\n"
-            + "    }\n"
-            + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
-            + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);\n"
-            + "}\n";
+    public static final String TEMPLATE_SINGLE_CHOICE =
+            "VOTE_TYPE GENERATED_VAR_NAME;\n"
+                    + "{\n"
+                    + "    unsigned int count = 0;\n"
+                    + "    for (int i = 0; i < AMT_VOTERS; ++i) {\n"
+                    + "        unsigned int eq = COMPARE_VARS;\n"
+                    + "        if (eq) {\n"
+                    + "            GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();\n"
+                    + "            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == "
+                    + "LHS_VAR_NAME.LIST_MEMBER[i]);\n"
+                    + "            count++;\n"
+                    + "        }\n"
+                    + "    }\n"
+                    + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
+                    + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);\n"
+                    + "}\n";
 
-    public final static List<LoopBound> loopBoundsSingleChoice =
+    public static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS)
             );
 
-    public final static String templatePreference =
-              "VOTE_TYPE GENERATED_VAR_NAME;\n"
-            + "{\n"
-            + "    unsigned int count = 0;\n"
-            + "    for (int i = 0; i < LHS_VAR_NAME.AMT_MEMBER; ++i) {\n"
-            + "        unsigned int eq = true;\n"
-            + "        for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
-            + "            eq = eq && COMPARE_VARS;\n"
-            + "        }\n"
-            + "        if (eq) {\n"
-            + "            for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
-            + "                GENERATED_VAR_NAME.LIST_MEMBER[count][j] = NONDET_UINT();\n"
-            + "                ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count][j] == LHS_VAR_NAME.LIST_MEMBER[i][j]);\n"
-            + "            }\n"
-            + "        count++;\n"
-            + "        }\n"
-            + "    }\n"
-            + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
-            + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);"
-            + "}\n";
+    public static final String TEMPLATE_PREFERENCE =
+            "VOTE_TYPE GENERATED_VAR_NAME;\n"
+                    + "{\n"
+                    + "    unsigned int count = 0;\n"
+                    + "    for (int i = 0; i < LHS_VAR_NAME.AMT_MEMBER; ++i) {\n"
+                    + "        unsigned int eq = true;\n"
+                    + "        for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
+                    + "            eq = eq && COMPARE_VARS;\n"
+                    + "        }\n"
+                    + "        if (eq) {\n"
+                    + "            for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
+                    + "                GENERATED_VAR_NAME.LIST_MEMBER[count][j] = NONDET_UINT();\n"
+                    + "                ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count][j] == "
+                    + "LHS_VAR_NAME.LIST_MEMBER[i][j]);\n"
+                    + "            }\n"
+                    + "        count++;\n"
+                    + "        }\n"
+                    + "    }\n"
+                    + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
+                    + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);"
+                    + "}\n";
 
-    public final static List<LoopBound> loopBoundsPreference =
+    public static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
                 LoopBoundType.LOOP_BOUND_AMT_VOTERS,
@@ -57,6 +59,6 @@ public class CodeTemplateVoteIntersection {
                 LoopBoundType.LOOP_BOUND_AMT_VOTERS)
             );
 
-    public final static String templateApproval = templatePreference;
-    public final static List<LoopBound> loopBoundsApproval = loopBoundsPreference;
+    public static final String TEMPLATE_APPROVAL = TEMPLATE_PREFERENCE;
+    public static final List<LoopBound> LOOP_BOUNDS_APPROVAL = LOOP_BOUNDS_PREFERENCE;
 }

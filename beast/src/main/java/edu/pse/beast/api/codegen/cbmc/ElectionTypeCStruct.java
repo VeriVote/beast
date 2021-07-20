@@ -6,18 +6,24 @@ import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class ElectionTypeCStruct {
+    private static final String AMOUNT = "AMT";
+    private static final String COUNTER = "COUNTER";
+    private static final String COND_STRING = COUNTER + " < " + AMOUNT;
+
     private CElectionVotingType votingType;
     private CStruct struct;
     private String listName;
     private String amtName;
 
-    public ElectionTypeCStruct(CElectionVotingType votingType, CStruct struct,
-            String listName, String amtName) {
+    public ElectionTypeCStruct(final CElectionVotingType votType,
+                               final CStruct voteStruct,
+                               final String listNameString,
+                               final String amountNameString) {
         super();
-        this.votingType = votingType;
-        this.struct = struct;
-        this.listName = listName;
-        this.amtName = amtName;
+        this.votingType = votType;
+        this.struct = voteStruct;
+        this.listName = listNameString;
+        this.amtName = amountNameString;
     }
 
     public CStruct getStruct() {
@@ -28,14 +34,10 @@ public class ElectionTypeCStruct {
         return votingType;
     }
 
-    private final String condString = "COUNTER < AMT";
-
-    public CForLoop loopOverOuterList(CTypeNameBrackets counterVar,
-            String tempInnerVarName) {
-        String cond = condString.replaceAll("COUNTER", counterVar.getName())
-                .replaceAll("AMT", "");
-        CForLoop created = new CForLoop(counterVar, "", "");
-        return created;
+    public CForLoop loopOverOuterList(final CTypeNameBrackets counterVar,
+                                      final String tempInnerVarName) {
+        COND_STRING.replaceAll(COUNTER, counterVar.getName()).replaceAll(AMOUNT, "");
+        return new CForLoop(counterVar, "", "");
     }
 
     public String getListName() {

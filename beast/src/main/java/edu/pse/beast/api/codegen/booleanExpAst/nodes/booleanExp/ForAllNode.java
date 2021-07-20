@@ -20,7 +20,7 @@ public final class ForAllNode extends QuantifierNode {
      * @param followingNode the following node of this quantifier
      */
     public ForAllNode(final SymbolicCBMCVar declSymbVar,
-            final BooleanExpressionNode followingNode) {
+                      final BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
 
@@ -34,7 +34,7 @@ public final class ForAllNode extends QuantifierNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         if (var.getVarType() == CBMCVarType.VOTER) {
             visitor.visitForAllVotersNode(this);
         }

@@ -7,21 +7,19 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
 public class VoteExpHelper {
-    public static String getVarFromVoteAccess(String voteVarName,
-            List<SymbolicCBMCVar> list, CodeGenOptions options,
-            ElectionTypeCStruct voteStruct) {
+    public static String getVarFromVoteAccess(final String voteVarName,
+                                              final List<SymbolicCBMCVar> list,
+                                              final CodeGenOptions options,
+                                              final ElectionTypeCStruct voteStruct) {
         String code = "VOTE_VAR.LIST_MEMBER--ACC--";
-
         String accBrackets = "";
         for (SymbolicCBMCVar var : list) {
             accBrackets += "[" + var.getName() + "]";
         }
-
         code = code.replaceAll("--ACC--", accBrackets);
         code = code.replaceAll("VOTE_VAR", voteVarName);
         code = code.replaceAll("VOTE_VAR", voteVarName);
         code = code.replaceAll("LIST_MEMBER", voteStruct.getListName());
-
         return code;
     }
 }

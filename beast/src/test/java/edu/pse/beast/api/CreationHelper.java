@@ -6,19 +6,16 @@ import java.util.List;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CreationHelper {
-
-    public static List<PreAndPostConditionsDescription> createSimpleCondList(
-            String name, String preCode, String postCode) {
-        PreAndPostConditionsDescription conds = new PreAndPostConditionsDescription(
-                name);
-
+    public static List<PreAndPostConditionsDescription>
+            createSimpleCondList(final String name,
+                                 final String preCode,
+                                 final String postCode) {
+        final PreAndPostConditionsDescription conds =
+                new PreAndPostConditionsDescription(name);
         conds.getPreConditionsDescription().setCode(preCode);
         conds.getPostConditionsDescription().setCode(postCode);
-
-        List<PreAndPostConditionsDescription> condList = new ArrayList<>();
+        final List<PreAndPostConditionsDescription> condList = new ArrayList<>();
         condList.add(conds);
-
         return condList;
     }
-
 }

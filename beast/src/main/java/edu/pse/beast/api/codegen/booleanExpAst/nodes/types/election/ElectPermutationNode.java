@@ -3,15 +3,14 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
 public class ElectPermutationNode extends ElectionTypeNode {
-
     private int electNumber;
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "Permutation Elect " + electNumber;
     }
 
-    public void setElectNumber(int electionNumber) {
+    public void setElectNumber(final int electionNumber) {
         this.electNumber = electionNumber;
     }
 
@@ -20,8 +19,7 @@ public class ElectPermutationNode extends ElectionTypeNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitElectPermutation(this);
     }
-
 }

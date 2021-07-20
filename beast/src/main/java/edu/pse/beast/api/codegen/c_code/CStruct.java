@@ -6,21 +6,22 @@ import java.util.List;
 public class CStruct {
     private String name;
     private List<CTypeNameBrackets> members = new ArrayList<>();
+    private final String template =
+            "typedef struct STRUCT_NAME {\nMEMBER_LIST\n} STRUCT_NAME;\n";
 
-    private final String template = "typedef struct STRUCT_NAME {\nMEMBER_LIST\n} STRUCT_NAME;\n";
-
-    public CStruct(String name, List<CTypeNameBrackets> members) {
-        this.name = name;
-        this.members = members;
+    public CStruct(final String nameString, final List<CTypeNameBrackets> memberList) {
+        this.name = nameString;
+        this.members = memberList;
     }
 
     public String generateDefCode() {
-        List<String> memberList = new ArrayList<>();
-        for (CTypeNameBrackets member : members) {
+        final List<String> memberList = new ArrayList<>();
+        for (final CTypeNameBrackets member : members) {
             memberList.add(member.generateCode() + ";");
         }
-        return template.replaceAll("STRUCT_NAME", name).replace("MEMBER_LIST",
-                String.join("\n", memberList));
+        return template
+                .replaceAll("STRUCT_NAME", name)
+                .replace("MEMBER_LIST", String.join("\n", memberList));
     }
 
     public String getName() {
@@ -30,5 +31,4 @@ public class CStruct {
     public List<CTypeNameBrackets> getMembers() {
         return members;
     }
-
 }

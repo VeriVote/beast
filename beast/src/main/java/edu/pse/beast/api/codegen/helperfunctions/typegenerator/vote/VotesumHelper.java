@@ -15,44 +15,41 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VotesumHelper {
 
-    public static String generateCode(String generatedVarName, int voteNumber,
-            String symbolicVarCand, ElectionTypeCStruct voteStruct,
-            VotingInputTypes votingInputType, CodeGenOptions options,
-            CodeGenLoopBoundHandler loopBoundHandler) {
-
-        Map<String, String> replaceMap = Map.of("GENERATED_VAR",
-                generatedVarName, "AMT_MEMBER", voteStruct.getAmtName(),
-                "LIST_MEMBER", voteStruct.getListName(), "CANDIDATE_VAR",
-                symbolicVarCand, "AMT_VOTERS",
-                options.getCbmcAmountMaxVotersVarName(), "VOTE_VAR",
-                "voteNUMBER".replace("NUMBER", String.valueOf(voteNumber)));
-
+    public static String generateCode(final String generatedVarName,
+                                      final int voteNumber,
+                                      final String symbolicVarCand,
+                                      final ElectionTypeCStruct voteStruct,
+                                      final VotingInputTypes votingInputType,
+                                      final CodeGenOptions options,
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
+        final Map<String, String> replaceMap =
+                Map.of("GENERATED_VAR", generatedVarName,
+                       "AMT_MEMBER", voteStruct.getAmtName(),
+                       "LIST_MEMBER", voteStruct.getListName(),
+                       "CANDIDATE_VAR", symbolicVarCand,
+                       "AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(),
+                       "VOTE_VAR", "voteNUMBER".replace("NUMBER", String.valueOf(voteNumber)));
         String code = null;
         List<LoopBound> loopbounds = List.of();
 
         switch (votingInputType) {
-        case APPROVAL: {
+        case APPROVAL:
             throw new NotImplementedException();
-        }
-        case WEIGHTED_APPROVAL: {
+        case WEIGHTED_APPROVAL:
             throw new NotImplementedException();
-        }
-        case PREFERENCE: {
+        case PREFERENCE:
             throw new NotImplementedException();
-        }
-        case SINGLE_CHOICE: {
-            code = CodeTemplateVoteSumForCandidate.templateSingleChoice;
+        case SINGLE_CHOICE:
+            code = CodeTemplateVoteSumForCandidate.getTemplateSingleChoice();
             break;
-        }
-        case SINGLE_CHOICE_STACK: {
-            code = CodeTemplateVoteSumForCandidate.templateSingleChoiceStack;
-            loopbounds = CodeTemplateVoteSumForCandidate.loopBoundsPreference;
+        case SINGLE_CHOICE_STACK:
+            code = CodeTemplateVoteSumForCandidate.getTemplateSingleChoiceStack();
+            loopbounds = CodeTemplateVoteSumForCandidate.LOOP_BOUNDS_PREFERENCE;
             break;
-        }
+        default:
         }
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        code = CodeGenerationToolbox.replacePlaceholders(code, replaceMap);
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replaceMap);
     }
 }

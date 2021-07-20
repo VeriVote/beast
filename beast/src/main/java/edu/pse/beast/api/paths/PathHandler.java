@@ -24,8 +24,7 @@ public class PathHandler implements RelativePathConverter {
     }
 
     public File getWorkspaceDir() {
-        return new File(
-                baseDir + relPathToSaveFiles + relPathToWorkspaceSaveFiles);
+        return new File(baseDir + relPathToSaveFiles + relPathToWorkspaceSaveFiles);
     }
 
     public File getElectionDescrDir() {
@@ -33,8 +32,7 @@ public class PathHandler implements RelativePathConverter {
     }
 
     public File getPropDescrDir() {
-        return new File(
-                baseDir + relPathToSaveFiles + relPathToPropDescrSaveFiles);
+        return new File(baseDir + relPathToSaveFiles + relPathToPropDescrSaveFiles);
     }
 
     public File getOptionsFile() {
@@ -55,12 +53,12 @@ public class PathHandler implements RelativePathConverter {
     }
 
     @Override
-    public String getRelativePathTo(File f) {
+    public String getRelativePathTo(final File f) {
         return new File(baseDir).toURI().relativize(f.toURI()).getPath();
     }
 
     @Override
-    public File getFileFromRelativePath(String relativePath) {
+    public File getFileFromRelativePath(final String relativePath) {
         return new File(baseDir + relativePath);
     }
 }

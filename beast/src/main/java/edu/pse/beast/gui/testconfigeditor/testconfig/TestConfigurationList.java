@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
@@ -15,29 +17,29 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class TestConfigurationList implements WorkspaceUpdateListener {
-    private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr = new HashMap<>();
-    private Map<PreAndPostConditionsDescription, List<TestConfiguration>> testConfigsByPropDescr = new HashMap<>();
+    private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr =
+            new HashMap<>();
+    private Map<PreAndPostConditionsDescription, List<TestConfiguration>>
+                testConfigsByPropDescr = new HashMap<>();
     private Map<String, TestConfiguration> testConfigsByName = new HashMap<>();
 
-    public boolean canAdd(TestConfiguration testConfig) {
+    public boolean canAdd(final TestConfiguration testConfig) {
         return !testConfigsByName.containsKey(testConfig.getName());
     }
 
-    public void add(TestConfiguration testConfig) {
+    public void add(final TestConfiguration testConfig) {
         if (testConfigsByName.containsKey(testConfig.getName())) {
-            // TODO Error
+            throw new NotImplementedException();
         } else {
             testConfigsByName.put(testConfig.getName(), testConfig);
         }
-
         if (!testConfigsByDescr.containsKey(testConfig.getDescr())) {
             testConfigsByDescr.put(testConfig.getDescr(), new ArrayList<>());
         }
         testConfigsByDescr.get(testConfig.getDescr()).add(testConfig);
-
         if (!testConfigsByPropDescr.containsKey(testConfig.getPropDescr())) {
             testConfigsByPropDescr.put(testConfig.getPropDescr(),
-                    new ArrayList<>());
+                                       new ArrayList<>());
         }
         testConfigsByPropDescr.get(testConfig.getPropDescr()).add(testConfig);
     }
@@ -46,71 +48,69 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
         return testConfigsByDescr;
     }
 
-    public Map<PreAndPostConditionsDescription, List<TestConfiguration>> getTestConfigsByPropDescr() {
+    public Map<PreAndPostConditionsDescription, List<TestConfiguration>>
+                getTestConfigsByPropDescr() {
         return testConfigsByPropDescr;
     }
 
-    public List<TestConfiguration> getTestConfigsByPropDescr(
-            PreAndPostConditionsDescription currentPropDescr) {
+    public List<TestConfiguration>
+            getTestConfigsByPropDescr(final PreAndPostConditionsDescription currentPropDescr) {
         if (testConfigsByPropDescr.containsKey(currentPropDescr)) {
             return testConfigsByPropDescr.get(currentPropDescr);
         }
         return List.of();
     }
 
-    public void handleDescrChange(CElectionDescription descr) {
+    public void handleDescrChange(final CElectionDescription descr) {
         if (testConfigsByDescr.containsKey(descr)) {
-            for (TestConfiguration tc : testConfigsByDescr.get(descr)) {
+            for (final TestConfiguration tc : testConfigsByDescr.get(descr)) {
                 tc.handleDescrChange();
             }
         }
     }
 
     public List<CBMCTestRunWithSymbolicVars> getCBMCTestRuns() {
-        List<CBMCTestRunWithSymbolicVars> list = new ArrayList<>();
-
-        for (CElectionDescription descr : testConfigsByDescr.keySet()) {
-            List<TestConfiguration> configs = testConfigsByDescr.get(descr);
-            for (TestConfiguration config : configs) {
-                for (CBMCTestConfiguration cbmcTestConfig : config
-                        .getCBMCTestConfigs()) {
+        final List<CBMCTestRunWithSymbolicVars> list = new ArrayList<>();
+        for (final CElectionDescription descr : testConfigsByDescr.keySet()) {
+            final List<TestConfiguration> configs = testConfigsByDescr.get(descr);
+            for (final TestConfiguration config : configs) {
+                for (final CBMCTestConfiguration cbmcTestConfig
+                        : config.getCBMCTestConfigs()) {
                     list.addAll(cbmcTestConfig.getRuns());
                 }
             }
         }
-
         return list;
     }
 
     @Override
-    public void handleExtractedFunctionLoops(CElectionDescription descr,
-            CElectionDescriptionFunction func) {
+    public void handleExtractedFunctionLoops(final CElectionDescription descr,
+                                             final CElectionDescriptionFunction func) {
         handleDescrChange(descr);
     }
 
     @Override
-    public void handleDescrChangeUpdatedFunctionCode(CElectionDescription descr,
-            CElectionDescriptionFunction function, String code) {
+    public void handleDescrChangeUpdatedFunctionCode(final CElectionDescription descr,
+                                                     final CElectionDescriptionFunction function,
+                                                     final String code) {
         handleDescrChange(descr);
     }
 
     @Override
-    public void handleDescrChangeAddedVotingSigFunction(
-            CElectionDescription descr, VotingSigFunction func) {
+    public void handleDescrChangeAddedVotingSigFunction(final CElectionDescription descr,
+                                                        final VotingSigFunction func) {
         handleDescrChange(descr);
     }
 
     @Override
-    public void handleDescrChangeRemovedFunction(CElectionDescription descr,
-            CElectionDescriptionFunction func) {
+    public void handleDescrChangeRemovedFunction(final CElectionDescription descr,
+                                                 final CElectionDescriptionFunction func) {
         handleDescrChange(descr);
     }
 
-    private void handlePropDescrChanged(
-            PreAndPostConditionsDescription propDescr) {
-
+    private void handlePropDescrChanged(final PreAndPostConditionsDescription propDescr) {
         if (testConfigsByPropDescr.containsKey(propDescr)) {
-            for (TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
+            for (final TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
                 tc.handlePropDescrChanged();
             }
         }
@@ -118,48 +118,44 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
     }
 
     @Override
-    public void handleWorkspaceUpdateAddedVarToPropDescr(
-            PreAndPostConditionsDescription currentPropDescr,
-            SymbolicCBMCVar var) {
+    public void handleWorkspaceUpdateAddedVarToPropDescr(final PreAndPostConditionsDescription
+                                                            currentPropDescr,
+                                                         final SymbolicCBMCVar var) {
         handlePropDescrChanged(currentPropDescr);
     }
 
     @Override
-    public void handlePropDescrChangedCode(
-            PreAndPostConditionsDescription propDescr) {
+    public void handlePropDescrChangedCode(final PreAndPostConditionsDescription propDescr) {
         handlePropDescrChanged(propDescr);
     }
 
     @Override
-    public void handlePropDescrRemovedVar(
-            PreAndPostConditionsDescription propDescr,
-            SymbolicCBMCVar selectedVar) {
+    public void handlePropDescrRemovedVar(final PreAndPostConditionsDescription propDescr,
+                                          final SymbolicCBMCVar selectedVar) {
         handlePropDescrChanged(propDescr);
     }
 
-    public void deleteCBMCRun(CBMCTestRunWithSymbolicVars run) {
+    public void deleteCBMCRun(final CBMCTestRunWithSymbolicVars run) {
         run.getTc().deleteRun(run);
     }
 
-    public void deleteTestConfiguration(TestConfiguration tc) {
+    public void deleteTestConfiguration(final TestConfiguration tc) {
         testConfigsByName.remove(tc.getName());
         testConfigsByDescr.get(tc.getDescr()).remove(tc);
         testConfigsByPropDescr.get(tc.getPropDescr()).remove(tc);
     }
 
-    public void removeAll(CElectionDescription descr) {
-        for (TestConfiguration tc : testConfigsByDescr.get(descr)) {
+    public void removeAll(final CElectionDescription descr) {
+        for (final TestConfiguration tc : testConfigsByDescr.get(descr)) {
             deleteTestConfiguration(tc);
         }
         testConfigsByDescr.remove(descr);
     }
 
-    public void removeAll(PreAndPostConditionsDescription propDescr) {
-
-        for (TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
+    public void removeAll(final PreAndPostConditionsDescription propDescr) {
+        for (final TestConfiguration tc : testConfigsByPropDescr.get(propDescr)) {
             deleteTestConfiguration(tc);
         }
         testConfigsByPropDescr.remove(propDescr);
     }
-
 }

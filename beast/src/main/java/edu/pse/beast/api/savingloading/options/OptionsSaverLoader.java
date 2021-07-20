@@ -16,39 +16,36 @@ import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 
 public class OptionsSaverLoader {
-
-    private final static String PROCESS_HANDLER_WINDOWS_KEY = "process_handler_windows";
+    private static final String PROCESS_HANDLER_WINDOWS_KEY = "process_handler_windows";
     private static final String PATH_TO_VS_DEV_CMD_KEY = "path_to_vs_dev_cmd";
 
-    private final static String C_EDITOR_KEY = "c_editor";
-    private final static String FONT_SIZE_KEY = "font_size";
+    private static final String C_EDITOR_KEY = "c_editor";
+    private static final String FONT_SIZE_KEY = "font_size";
 
-    private static void addToSaveJSON(
-            ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptionsGUI,
-            JSONObject saveJson) {
-        JSONObject json = new JSONObject();
-
-        String vsDevCmdPath = processHandlerWindowsOptionsGUI
-                .getCbmcProcessHandlerCreator().getVsDevCmdPath();
+    private static void
+                addToSaveJSON(final ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptionsGUI,
+                              final JSONObject saveJson) {
+        final JSONObject json = new JSONObject();
+        String vsDevCmdPath =
+                processHandlerWindowsOptionsGUI.getCbmcProcessHandlerCreator().getVsDevCmdPath();
         if (vsDevCmdPath == null) {
             vsDevCmdPath = "";
         }
         json.put(PATH_TO_VS_DEV_CMD_KEY, vsDevCmdPath);
-
         saveJson.put(PROCESS_HANDLER_WINDOWS_KEY, json);
     }
 
-    private static void addToSaveJSON(CEditorOptionsGUI cEditorOptionsGUI,
-            JSONObject saveJson) {
-        JSONObject json = new JSONObject();
+    private static void addToSaveJSON(final CEditorOptionsGUI cEditorOptionsGUI,
+                                      final JSONObject saveJson) {
+        final JSONObject json = new JSONObject();
         json.put(FONT_SIZE_KEY, cEditorOptionsGUI.getOptions().getFontSize());
         saveJson.put(C_EDITOR_KEY, json);
     }
 
-    public static void saveOptions(File f, List<OptionsCategoryGUI> options)
+    public static void saveOptions(final File f, final List<OptionsCategoryGUI> options)
             throws IOException {
-        JSONObject json = new JSONObject();
-        for (OptionsCategoryGUI option : options) {
+        final JSONObject json = new JSONObject();
+        for (final OptionsCategoryGUI option : options) {
             switch (option.getCategory()) {
             case PROCESS_HANDLER_WINDOWS:
                 addToSaveJSON((ProcessHandlerWindowsOptionsGUI) option, json);
@@ -63,26 +60,25 @@ public class OptionsSaverLoader {
         SavingLoadingInterface.writeStringToFile(f, json.toString());
     }
 
-    private static ProcessHandlerWindowsOptionsGUI processHandlerWindowsFromJson(
-            JSONObject json) throws IOException {
-        CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
-        String vsDevCmdPath = json.getString(PATH_TO_VS_DEV_CMD_KEY);
+    private static ProcessHandlerWindowsOptionsGUI
+                processHandlerWindowsFromJson(final JSONObject json) throws IOException {
+        final CBMCProcessHandlerCreator cbmcProcessHandlerCreator =
+                new CBMCProcessHandlerCreator();
+        final String vsDevCmdPath = json.getString(PATH_TO_VS_DEV_CMD_KEY);
         if (!vsDevCmdPath.isBlank()) {
             cbmcProcessHandlerCreator.setVsDevCmdPath(vsDevCmdPath);
         }
-        ProcessHandlerWindowsOptionsGUI gui = new ProcessHandlerWindowsOptionsGUI(
-                cbmcProcessHandlerCreator);
-        return gui;
+        return new ProcessHandlerWindowsOptionsGUI(cbmcProcessHandlerCreator);
     }
 
-    private static CEditorOptionsGUI cEditorFromJson(JSONObject json)
+    private static CEditorOptionsGUI cEditorFromJson(final JSONObject json)
             throws IOException {
-        CEditorOptions options = new CEditorOptions();
+        final CEditorOptions options = new CEditorOptions();
         options.setFontSize(json.getDouble(FONT_SIZE_KEY));
         return new CEditorOptionsGUI(options);
     }
 
-    private static OptionsCategoryGUI fromJson(String key, JSONObject json)
+    private static OptionsCategoryGUI fromJson(final String key, final JSONObject json)
             throws IOException {
         if (key.equals(PROCESS_HANDLER_WINDOWS_KEY)) {
             return processHandlerWindowsFromJson(json);
@@ -92,16 +88,14 @@ public class OptionsSaverLoader {
         throw new NotImplementedException();
     }
 
-    public static List<OptionsCategoryGUI> loadOptions(File f)
+    public static List<OptionsCategoryGUI> loadOptions(final File f)
             throws IOException {
-        List<OptionsCategoryGUI> options = new ArrayList<>();
-        String jsonString = SavingLoadingInterface.readStringFromFile(f);
-        JSONObject json = new JSONObject(jsonString);
-
-        for (String key : json.keySet()) {
+        final List<OptionsCategoryGUI> options = new ArrayList<>();
+        final String jsonString = SavingLoadingInterface.readStringFromFile(f);
+        final JSONObject json = new JSONObject(jsonString);
+        for (final String key : json.keySet()) {
             options.add(fromJson(key, json.getJSONObject(key)));
         }
-
         return options;
     }
 }

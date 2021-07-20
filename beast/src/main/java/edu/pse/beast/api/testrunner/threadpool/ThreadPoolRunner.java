@@ -7,9 +7,9 @@ public class ThreadPoolRunner implements Runnable {
     private WorkUnit work;
     private WorkSupplier workSupplier;
 
-    public ThreadPoolRunner(String id, WorkSupplier workSupplier) {
-        this.id = id;
-        this.workSupplier = workSupplier;
+    public ThreadPoolRunner(final String idString, final WorkSupplier workSupp) {
+        this.id = idString;
+        this.workSupplier = workSupp;
     }
 
     @Override

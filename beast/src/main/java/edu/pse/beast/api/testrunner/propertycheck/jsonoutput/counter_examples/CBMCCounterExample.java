@@ -12,31 +12,33 @@ public class CBMCCounterExample {
     private Map<String, CBMCStructAssignment> varNamesToAssignments = new HashMap<>();
 
     private CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo;
-    private int sortNumber = 0;
+    private int sortNumber;
 
-    public CBMCCounterExample(CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo) {
-        this.cbmcGeneratedCodeInfo = cbmcGeneratedCodeInfo;
+    public CBMCCounterExample(final CBMCGeneratedCodeInfo generatedCodeInfo) {
+        this.cbmcGeneratedCodeInfo = generatedCodeInfo;
     }
 
     public CBMCGeneratedCodeInfo getCbmcGeneratedCodeInfo() {
         return cbmcGeneratedCodeInfo;
     }
 
-    public void add(String structName, CBMCAssignmentType assType,
-            String memberName, String assignment, String info) {
+    public void add(final String structName,
+                    final CBMCAssignmentType assType,
+                    final String memberName,
+                    final String assignment,
+                    final String info) {
         if (!varNamesToAssignments.containsKey(structName)) {
             varNamesToAssignments.put(structName,
-                    new CBMCStructAssignment(assType, structName, info));
+                                      new CBMCStructAssignment(assType, structName, info));
         }
-        varNamesToAssignments.get(structName).add(memberName, assignment,
-                sortNumber++);
+        varNamesToAssignments.get(structName)
+            .add(memberName, assignment, sortNumber++);
 
     }
 
-    public List<CBMCStructAssignment> getAssignments(
-            Set<CBMCAssignmentType> types) {
-        List<CBMCStructAssignment> list = new ArrayList<>();
-        for (CBMCStructAssignment ass : varNamesToAssignments.values()) {
+    public List<CBMCStructAssignment> getAssignments(final Set<CBMCAssignmentType> types) {
+        final List<CBMCStructAssignment> list = new ArrayList<>();
+        for (final CBMCStructAssignment ass : varNamesToAssignments.values()) {
             if (types.contains(ass.getAssignmentType())) {
                 list.add(ass);
             }
@@ -50,7 +52,7 @@ public class CBMCCounterExample {
     @Override
     public String toString() {
         String s = "";
-        for (String varname : varNamesToAssignments.keySet()) {
+        for (final String varname : varNamesToAssignments.keySet()) {
             s += varNamesToAssignments.get(varname).toString();
         }
         return s;

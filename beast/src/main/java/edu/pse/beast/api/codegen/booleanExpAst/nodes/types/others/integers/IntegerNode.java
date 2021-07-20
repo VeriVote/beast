@@ -16,8 +16,8 @@ public final class IntegerNode extends IntegerValuedExpression {
      *
      * @param heldIntValue the held int value
      */
-    public IntegerNode(int integer) {
-        this.integer = integer;
+    public IntegerNode(final int integerValue) {
+        this.integer = integerValue;
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class IntegerNode extends IntegerValuedExpression {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitIntegerExp(this);
     }
 }

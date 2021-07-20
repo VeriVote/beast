@@ -16,19 +16,19 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 public class PropDescrAntlrTreeMainClass {
     private static String code = "ELECT1 == CUT(ELECT2, ELECT3);";
 
-    public static void main(String[] args) {
-        FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(
-                CharStreams.fromString(code));
+    public static void main(final String[] args) {
+        final FormalPropertyDescriptionLexer l =
+                new FormalPropertyDescriptionLexer(CharStreams.fromString(code));
         final CommonTokenStream ts = new CommonTokenStream(l);
-        FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(
-                ts);
-        ParseTree tree = p.booleanExpList();
+        final FormalPropertyDescriptionParser p =
+                new FormalPropertyDescriptionParser(ts);
+        final ParseTree tree = p.booleanExpList();
 
         // show AST in GUI
-        JFrame frame = new JFrame("Antlr AST");
-        JPanel panel = new JPanel();
-        TreeViewer viewer = new TreeViewer(Arrays.asList(p.getRuleNames()),
-                tree);
+        final JFrame frame = new JFrame("Antlr AST");
+        final JPanel panel = new JPanel();
+        final TreeViewer viewer =
+                new TreeViewer(Arrays.asList(p.getRuleNames()), tree);
         viewer.setScale(1.5); // Scale a little
         panel.add(viewer);
         frame.add(panel);

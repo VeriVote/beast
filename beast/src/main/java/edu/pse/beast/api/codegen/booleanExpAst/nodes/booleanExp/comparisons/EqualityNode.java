@@ -6,11 +6,11 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressio
 public class EqualityNode extends BooleanExpressionNode {
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return null;
     }
 

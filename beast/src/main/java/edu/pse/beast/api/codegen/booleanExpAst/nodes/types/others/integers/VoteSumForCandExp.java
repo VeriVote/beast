@@ -9,17 +9,15 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
  * @author Lukas Stapelbroek
  */
 public final class VoteSumForCandExp extends IntegerValuedExpression {
-
     private SymbolicCBMCVar candCbmcVar;
-
     private final int voteNumber;
-
     private final boolean unique;
 
-    public VoteSumForCandExp(int voteNumber, SymbolicCBMCVar cbmcVar,
-            final boolean uniqueAttr) {
+    public VoteSumForCandExp(final int voteNum,
+                             final SymbolicCBMCVar cbmcVar,
+                             final boolean uniqueAttr) {
         this.candCbmcVar = cbmcVar;
-        this.voteNumber = voteNumber;
+        this.voteNumber = voteNum;
         this.unique = uniqueAttr;
     }
 
@@ -46,7 +44,7 @@ public final class VoteSumForCandExp extends IntegerValuedExpression {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitVoteSumExp(this);
     }
 }

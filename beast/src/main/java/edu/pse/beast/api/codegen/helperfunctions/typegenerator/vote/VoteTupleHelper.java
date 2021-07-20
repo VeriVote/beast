@@ -16,58 +16,57 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VoteTupleHelper {
 
-    public static String generateCode(String generatedVarName,
-            List<String> voteNames, ElectionTypeCStruct voteArrStruct,
-            VotingInputTypes votingInputType, CodeGenOptions options,
-            CodeGenLoopBoundHandler loopBoundHandler) {
-
+    public static String generateCode(final String generatedVarName,
+                                      final List<String> voteNames,
+                                      final ElectionTypeCStruct voteArrStruct,
+                                      final VotingInputTypes votingInputType,
+                                      final CodeGenOptions options,
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         String voteAmtSum = "";
         for (int i = 0; i < voteNames.size() - 1; ++i) {
-            voteAmtSum += "CURRENT_VOTE.AMT_MEMBER + "
+            voteAmtSum +=
+                    "CURRENT_VOTE.AMT_MEMBER + "
                     .replaceAll("CURRENT_VOTE", voteNames.get(i))
                     .replace("AMT_MEMBER", voteArrStruct.getAmtName());
         }
-        voteAmtSum += "CURRENT_VOTE.AMT_MEMBER"
+        voteAmtSum +=
+                "CURRENT_VOTE.AMT_MEMBER"
                 .replaceAll("CURRENT_VOTE", voteNames.get(voteNames.size() - 1))
                 .replace("AMT_MEMBER", voteArrStruct.getAmtName());
 
-        Map<String, String> replacementMap = Map.of("VOTE_AMT_SUM", voteAmtSum,
-                "AMT_MEMBER", voteArrStruct.getAmtName(), "LIST_MEMBER",
-                voteArrStruct.getListName(), "NONDET_UINT",
-                options.getCbmcNondetUintName(), "AMT_CANDIDATES",
-                options.getCbmcAmountMaxCandsVarName(), "AMT_VOTERS",
-                options.getCbmcAmountMaxVotersVarName(), "VOTE_TYPE",
-                voteArrStruct.getStruct().getName(), "VAR_NAME",
-                generatedVarName, "ASSUME", options.getCbmcAssumeName());
-
-        String code = CodeTemplateVoteTuple.templateVarSetup;
+        final Map<String, String> replacementMap =
+                Map.of("VOTE_AMT_SUM", voteAmtSum,
+                       "AMT_MEMBER", voteArrStruct.getAmtName(),
+                       "LIST_MEMBER", voteArrStruct.getListName(),
+                       "NONDET_UINT", options.getCbmcNondetUintName(),
+                       "AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
+                       "AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(),
+                       "VOTE_TYPE", voteArrStruct.getStruct().getName(),
+                       "VAR_NAME", generatedVarName,
+                       "ASSUME", options.getCbmcAssumeName());
+        String code = CodeTemplateVoteTuple.TEMPLATE_VAR_SETUP;
         List<LoopBound> loopbounds = new ArrayList<>();
 
         switch (votingInputType) {
-        case APPROVAL: {
+        case APPROVAL:
             throw new NotImplementedException();
-        }
-        case WEIGHTED_APPROVAL: {
+        case WEIGHTED_APPROVAL:
             throw new NotImplementedException();
-        }
-        case PREFERENCE: {
-            for (String voteVarName : voteNames) {
-                code += CodeTemplateVoteTuple.templatePreference
+        case PREFERENCE:
+            for (final String voteVarName : voteNames) {
+                code += CodeTemplateVoteTuple.TEMPLATE_PREFERENCE
                         .replaceAll("CURRENT_VOTE", voteVarName);
-                loopbounds = CodeTemplateVoteTuple.loopBoundsPreference;
+                loopbounds = CodeTemplateVoteTuple.LOOP_BOUNDS_PREFERENCE;
             }
             break;
-        }
-        case SINGLE_CHOICE: {
+        case SINGLE_CHOICE:
             throw new NotImplementedException();
-        }
-        case SINGLE_CHOICE_STACK: {
+        case SINGLE_CHOICE_STACK:
             throw new NotImplementedException();
-        }
+        default:
         }
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
-        return code;
+        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 }

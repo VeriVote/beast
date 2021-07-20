@@ -19,8 +19,8 @@ public class CBMCTestConfiguration {
 
     private String name;
 
-    private CElectionDescription descr;
-    private PreAndPostConditionsDescription propDescr;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
 
     private boolean startRunsOnCreation;
 
@@ -32,8 +32,8 @@ public class CBMCTestConfiguration {
         uuid = UUID.randomUUID().toString();
     }
 
-    public void addRuns(List<CBMCTestRunWithSymbolicVars> runs) {
-        this.runs.addAll(runs);
+    public void addRuns(final List<CBMCTestRunWithSymbolicVars> runList) {
+        this.runs.addAll(runList);
     }
 
     public int getMinCands() {
@@ -65,76 +65,76 @@ public class CBMCTestConfiguration {
     }
 
     public CElectionDescription getDescr() {
-        return descr;
+        return description;
     }
 
     public PreAndPostConditionsDescription getPropDescr() {
-        return propDescr;
+        return propertyDescription;
     }
 
-    public void setMinCands(int minCands) {
-        this.minCands = minCands;
-        if (maxCands < minCands) {
-            maxCands = minCands;
+    public void setMinCands(final int minCandidateAmount) {
+        this.minCands = minCandidateAmount;
+        if (maxCands < minCandidateAmount) {
+            maxCands = minCandidateAmount;
         }
     }
 
-    public void setMaxCands(int maxCands) {
-        this.maxCands = maxCands;
-        if (maxCands < minCands) {
-            minCands = maxCands;
+    public void setMaxCands(final int maxCandidateAmount) {
+        this.maxCands = maxCandidateAmount;
+        if (maxCandidateAmount < minCands) {
+            minCands = maxCandidateAmount;
         }
     }
 
-    public void setMinVoters(int minVoters) {
-        this.minVoters = minVoters;
-        if (maxVoters < minVoters) {
-            maxVoters = minVoters;
+    public void setMinVoters(final int minVoterAmount) {
+        this.minVoters = minVoterAmount;
+        if (maxVoters < minVoterAmount) {
+            maxVoters = minVoterAmount;
         }
     }
 
-    public void setMaxVoters(int maxVoters) {
-        this.maxVoters = maxVoters;
-        if (maxVoters < minVoters) {
-            minVoters = maxVoters;
+    public void setMaxVoters(final int maxVoterAmount) {
+        this.maxVoters = maxVoterAmount;
+        if (maxVoterAmount < minVoters) {
+            minVoters = maxVoterAmount;
         }
     }
 
-    public void setMinSeats(int minSeats) {
-        this.minSeats = minSeats;
-        if (maxSeats < minSeats) {
-            maxSeats = minSeats;
+    public void setMinSeats(final int minSeatAmount) {
+        this.minSeats = minSeatAmount;
+        if (maxSeats < minSeatAmount) {
+            maxSeats = minSeatAmount;
         }
     }
 
-    public void setMaxSeats(int maxSeats) {
-        this.maxSeats = maxSeats;
-        if (maxSeats < minSeats) {
-            minSeats = maxSeats;
+    public void setMaxSeats(final int maxSeatAmount) {
+        this.maxSeats = maxSeatAmount;
+        if (maxSeatAmount < minSeats) {
+            minSeats = maxSeatAmount;
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(final String nameString) {
+        this.name = nameString;
     }
 
-    public void setDescr(CElectionDescription descr) {
-        this.descr = descr;
+    public void setDescr(final CElectionDescription descr) {
+        this.description = descr;
     }
 
-    public void setPropDescr(PreAndPostConditionsDescription propDescr) {
-        this.propDescr = propDescr;
+    public void setPropDescr(final PreAndPostConditionsDescription propDescr) {
+        this.propertyDescription = propDescr;
     }
 
     public boolean getStartRunsOnCreation() {
         return startRunsOnCreation;
     }
 
-    public void setStartRunsOnCreation(boolean startRunsOnCreation) {
-        this.startRunsOnCreation = startRunsOnCreation;
+    public void setStartRunsOnCreation(final boolean startOnCreation) {
+        this.startRunsOnCreation = startOnCreation;
     }
 
-    public void addRun(CBMCTestRunWithSymbolicVars run) {
+    public void addRun(final CBMCTestRunWithSymbolicVars run) {
         runs.add(run);
     }
 
@@ -143,13 +143,13 @@ public class CBMCTestConfiguration {
     }
 
     public void handleDescrCodeChange() {
-        for (CBMCTestRunWithSymbolicVars r : runs) {
+        for (final CBMCTestRunWithSymbolicVars r : runs) {
             r.handleDescrCodeChange();
         }
     }
 
     public void handlePropDescrChanged() {
-        for (CBMCTestRunWithSymbolicVars r : runs) {
+        for (final CBMCTestRunWithSymbolicVars r : runs) {
             r.handlePropDescrChanged();
         }
     }
@@ -158,12 +158,11 @@ public class CBMCTestConfiguration {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setUuid(final String uuidString) {
+        this.uuid = uuidString;
     }
 
-    public void deleteRun(CBMCTestRunWithSymbolicVars run) {
+    public void deleteRun(final CBMCTestRunWithSymbolicVars run) {
         runs.remove(run);
     }
-
 }

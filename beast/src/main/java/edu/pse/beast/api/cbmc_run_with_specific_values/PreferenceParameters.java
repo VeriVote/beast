@@ -8,57 +8,60 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
 public class PreferenceParameters implements VotingParameters {
-    private final String votingDeclTemplate = "VOTE_STRUCT_TYPE VOTE_VAR_NAME;";
-    private final String amtVotesTemplate = "VOTE_VAR_NAME.AMT_MEMBER = AMT_VOTERS;";
-    private final String votesPerVoterTemplate = "VOTE_VAR_NAME.LIST_MEMBER[LIST_INDEX][CAND_INDEX] = VOTE_GIVEN;";
+    private static final String VOTE_VAR_NAME = "VOTE_VAR_NAME";
 
-    private int V = 0;
-    private int C;
-    private int S = 0;
+    private final String votingDeclTemplate = "VOTE_STRUCT_TYPE " + VOTE_VAR_NAME + ";";
+    private final String amtVotesTemplate = VOTE_VAR_NAME + ".AMT_MEMBER = AMT_VOTERS;";
+    private final String votesPerVoterTemplate =
+            VOTE_VAR_NAME + ".LIST_MEMBER[LIST_INDEX][CAND_INDEX] = VOTE_GIVEN;";
+
+    private int v;
+    private int c;
+    private int s;
 
     private List<List<Integer>> votesPerVoter = new ArrayList<>();
 
-    public PreferenceParameters(int c) {
-        this.C = c;
+    public PreferenceParameters(final int candidateAmount) {
+        this.c = candidateAmount;
     }
 
-    public void addVoter(List<Integer> preferenceVotes) {
+    public void addVoter(final List<Integer> preferenceVotes) {
         votesPerVoter.add(preferenceVotes);
-        this.V++;
+        this.v++;
     }
 
     @Override
-    public String generateVoteStructInitCode(
-            ElectionTypeCStruct voteInputStruct, CodeGenOptions options,
-            CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
-            String generatedVarName) {
-        List<String> code = new ArrayList<>();
+    public String generateVoteStructInitCode(final ElectionTypeCStruct voteInputStruct,
+                                             final CodeGenOptions options,
+                                             final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
+                                             final String generatedVarName) {
+        final List<String> code = new ArrayList<>();
 
-        String votingStructName = voteInputStruct.getStruct().getName();
-        String votingStructDeclString = votingDeclTemplate
+        final String votingStructName = voteInputStruct.getStruct().getName();
+        final String votingStructDeclString =
+                votingDeclTemplate
                 .replaceAll("VOTE_STRUCT_TYPE", votingStructName)
-                .replaceAll("VOTE_VAR_NAME", generatedVarName);
-
+                .replaceAll(VOTE_VAR_NAME, generatedVarName);
         code.add(votingStructDeclString);
 
-        String amtDeclString = amtVotesTemplate
-                .replaceAll("VOTE_VAR_NAME", generatedVarName)
+        final String amtDeclString =
+                amtVotesTemplate
+                .replaceAll(VOTE_VAR_NAME, generatedVarName)
                 .replaceAll("AMT_MEMBER", voteInputStruct.getAmtName())
-                .replaceAll("AMT_VOTERS", String.valueOf(V));
-
+                .replaceAll("AMT_VOTERS", String.valueOf(v));
         code.add(amtDeclString);
 
         for (int i = 0; i < votesPerVoter.size(); ++i) {
-            for (int j = 0; j < C; ++j) {
-                String voteString = votesPerVoterTemplate
-                        .replaceAll("VOTE_VAR_NAME", generatedVarName)
+            for (int j = 0; j < c; ++j) {
+                final String voteString =
+                        votesPerVoterTemplate
+                        .replaceAll(VOTE_VAR_NAME, generatedVarName)
                         .replaceAll("LIST_MEMBER",
-                                voteInputStruct.getListName())
+                                    voteInputStruct.getListName())
                         .replaceAll("LIST_INDEX", String.valueOf(i))
                         .replaceAll("CAND_INDEX", String.valueOf(j))
                         .replaceAll("VOTE_GIVEN",
-                                String.valueOf(votesPerVoter.get(i).get(j)));
-
+                                    String.valueOf(votesPerVoter.get(i).get(j)));
                 code.add(voteString);
             }
         }
@@ -68,22 +71,21 @@ public class PreferenceParameters implements VotingParameters {
 
     @Override
     public int getV() {
-        return V;
+        return v;
     }
 
     @Override
     public int getC() {
-        return C;
+        return c;
     }
 
     @Override
     public int getS() {
-        return S;
+        return s;
     }
 
     @Override
     public int getHighestVote() {
         return 1;
     }
-
 }

@@ -11,8 +11,8 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 public final class SymbolicVarByNameExp extends SymbolicCBMCVarExp {
     private SymbolicCBMCVar cbmcVar;
 
-    public SymbolicVarByNameExp(SymbolicCBMCVar cbmcVar) {
-        this.cbmcVar = cbmcVar;
+    public SymbolicVarByNameExp(final SymbolicCBMCVar symbolicVariable) {
+        this.cbmcVar = symbolicVariable;
     }
 
     public SymbolicCBMCVar getCbmcVar() {
@@ -25,7 +25,7 @@ public final class SymbolicVarByNameExp extends SymbolicCBMCVarExp {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitSymbolicVarExp(this);
     }
 }

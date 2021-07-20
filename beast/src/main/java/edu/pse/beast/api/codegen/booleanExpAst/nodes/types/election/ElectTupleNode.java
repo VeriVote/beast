@@ -9,11 +9,11 @@ public class ElectTupleNode extends ElectionTypeNode {
     private List<Integer> electNumbers = new ArrayList<>();
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "Elect Tuple";
     }
 
-    public void addElectNumber(int number) {
+    public void addElectNumber(final int number) {
         electNumbers.add(number);
     }
 
@@ -22,8 +22,7 @@ public class ElectTupleNode extends ElectionTypeNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitElectTuple(this);
     }
-
 }

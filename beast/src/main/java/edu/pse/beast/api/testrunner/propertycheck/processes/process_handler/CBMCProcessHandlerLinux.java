@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.paths.PathHandler;
 
 public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
-    private String RELATIVE_PATH_TO_CBMC_64 = "/linux/cbmcLin/cbmc";
+    private static final String RELATIVE_PATH_TO_CBMC = "/linux/cbmcLin/cbmc";
 
     @Override
     public CBMCProcessStarterType getType() {
@@ -16,23 +16,29 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
     }
 
     @Override
-    public Process startCheckForParam(String sessionUUID, int V, int C, int S,
-            String uuid, CBMCTestCallback cb, File cbmcFile, String loopBounds,
-            CodeGenOptions codeGenOptions, PathHandler pathHandler)
+    public Process startCheckForParam(final String sessionUUID,
+                                      final int v, final int c, final int s,
+                                      final String uuid,
+                                      final CBMCTestCallback cb,
+                                      final File cbmcFile,
+                                      final String loopBounds,
+                                      final CodeGenOptions codeGenOptions,
+                                      final PathHandler pathHandler)
             throws IOException {
-        File cbmcProgFile = new File(pathHandler.getBaseDir().getAbsolutePath()
-                + RELATIVE_PATH_TO_CBMC_64);
-
-        String arguments = CBMCArgumentHelper.getConstCommands(codeGenOptions,
-                V, C, S) + " " + loopBounds;
-
+        final File cbmcProgFile =
+                new File(pathHandler.getBaseDir().getAbsolutePath()
+                        + RELATIVE_PATH_TO_CBMC);
+        final String arguments =
+                CBMCArgumentHelper.getConstCommands(codeGenOptions, v, c, s)
+                + " " + loopBounds;
         return Runtime.getRuntime().exec(arguments, null, cbmcProgFile);
     }
 
     @Override
-    public void endProcess(Process p) {
-        if (!p.isAlive())
+    public void endProcess(final Process p) {
+        if (!p.isAlive()) {
             return;
+        }
         p.destroyForcibly();
     }
 

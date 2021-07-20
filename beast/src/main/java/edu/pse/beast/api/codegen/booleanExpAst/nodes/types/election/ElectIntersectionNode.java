@@ -6,7 +6,6 @@ import java.util.List;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
 public class ElectIntersectionNode extends ElectionTypeNode {
-
     private List<Integer> numbers = new ArrayList<>();
 
     public List<Integer> getNumbers() {
@@ -14,17 +13,16 @@ public class ElectIntersectionNode extends ElectionTypeNode {
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "Intersect Elects";
     }
 
-    public void addElectNumber(int number) {
+    public void addElectNumber(final int number) {
         numbers.add(number);
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitElectIntersectionNode(this);
     }
-
 }

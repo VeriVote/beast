@@ -7,21 +7,20 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class BeastWithGuiApplicationClass extends Application {
-
-    private final static String fxmlResourceName = "/edu/pse/beast/BeastGUI.fxml";
+    private static final String FXML_RESOURCE_NAME = "/edu/pse/beast/BeastGUI.fxml";
     private BeastGUIController controller = new BeastGUIController();
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(
-                getClass().getResource(fxmlResourceName));
+    public void start(final Stage primaryStage) throws Exception {
+        final FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(FXML_RESOURCE_NAME));
         loader.setController(controller);
         controller.setPrimaryStage(primaryStage);
-        Parent root = loader.load();
+        final Parent root = loader.load();
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

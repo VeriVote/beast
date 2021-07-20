@@ -25,15 +25,14 @@ public class WorkspaceSaverLoaderTest {
     public void testSavingLoading() throws IOException {
         new BeastWorkspace();
 
-        CElectionDescription descr = new CElectionDescription(
-                VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
-                "test");
-        descr.getVotingFunction()
-                .setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
-
+        CElectionDescription descr =
+                new CElectionDescription(VotingInputTypes.PREFERENCE,
+                                         VotingOutputTypes.CANDIDATE_LIST,
+                                         "test");
+        descr.getVotingFunction().setCode("for(int i = 0; i < V; ++i) {}\n" + "return 0;\n");
         descr.createNewVotingSigFunctionAndAdd("votehelper");
 
-        File descrFile = new File("testfiles/borda.belec");
+        final File descrFile = new File("testfiles/borda.belec");
         try {
             descr = SavingLoadingInterface.loadCElection(descrFile);
         } catch (NotImplementedException e) {
@@ -44,21 +43,17 @@ public class WorkspaceSaverLoaderTest {
             e.printStackTrace();
         }
 
-        File propDescrFile = new File("testfiles/reinforcement.bprp");
+        final File propDescrFile = new File("testfiles/reinforcement.bprp");
         PreAndPostConditionsDescription propDescr = null;
         try {
-            propDescr = SavingLoadingInterface
-                    .loadPreAndPostConditionDescription(propDescrFile);
-
+            propDescr = SavingLoadingInterface.loadPreAndPostConditionDescription(propDescrFile);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        TestConfiguration testConfig = new TestConfiguration(descr, propDescr,
-                "test");
-        CBMCTestConfiguration cc = new CBMCTestConfiguration();
+        final CBMCTestConfiguration cc = new CBMCTestConfiguration();
 
         cc.setMinVoters(5);
         cc.setMinCands(5);
@@ -72,32 +67,31 @@ public class WorkspaceSaverLoaderTest {
         cc.setPropDescr(propDescr);
 
         cc.setName("test five");
+
+        final TestConfiguration testConfig =
+                new TestConfiguration(descr, propDescr, "test");
         testConfig.addCBMCTestConfiguration(cc);
 
         cc.setStartRunsOnCreation(false);
 
-        CodeGenOptions codeGenOptions = new CodeGenOptions();
+        final CodeGenOptions codeGenOptions = new CodeGenOptions();
         codeGenOptions.setCbmcAmountMaxCandidatesVarName("C");
         codeGenOptions.setCbmcAmountMaxVotersVarName("V");
         codeGenOptions.setCbmcAmountMaxSeatsVarName("S");
 
-        CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
-
-        BeastWorkspace beastWorkspace = BeastWorkspace
-                .getStandardWorkspace(cbmcProcessHandlerCreator);
-
+        final CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
+        final BeastWorkspace beastWorkspace =
+                BeastWorkspace.getStandardWorkspace(cbmcProcessHandlerCreator);
         beastWorkspace.setCodeGenOptions(codeGenOptions);
 
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
+        final Path currentRelativePath = Paths.get("");
+        final String s = currentRelativePath.toAbsolutePath().toString();
         new File(s);
 
         beastWorkspace.addElectionDescription(descr);
         beastWorkspace.addFileForDescr(descr, descrFile);
-
         beastWorkspace.addPropertyDescription(propDescr);
         beastWorkspace.addFileForPropDescr(propDescr, propDescrFile);
-
         beastWorkspace.addTestConfiguration(testConfig);
 
         File f = new File("testfiles");
@@ -105,7 +99,7 @@ public class WorkspaceSaverLoaderTest {
         f = new File("testfiles/test.beastws");
 
         SavingLoadingInterface.storeBeastWorkspace(beastWorkspace, f,
-                beastWorkspace.getPathHandler());
+                                                   beastWorkspace.getPathHandler());
         SavingLoadingInterface.loadBeastWorkspace(f, beastWorkspace.getPathHandler());
     }
 }

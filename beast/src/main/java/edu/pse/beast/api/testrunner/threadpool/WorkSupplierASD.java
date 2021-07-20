@@ -1,13 +1,13 @@
 package edu.pse.beast.api.testrunner.threadpool;
 
 public interface WorkSupplierASD {
-    public WorkUnit getWorkUnit();
+    WorkUnit getWorkUnit();
 
-    public boolean isFinished();
+    boolean isFinished();
 
-    public void waitSync() throws InterruptedException;
+    void waitSync() throws InterruptedException;
 
-    public void interruptAll();
+    void interruptAll();
 
-    public void interruptSpecific(String uuid);
+    void interruptSpecific(String uuid);
 }

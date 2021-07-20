@@ -3,24 +3,27 @@ package edu.pse.beast.gui.options;
 import javafx.scene.layout.AnchorPane;
 
 public abstract class OptionsCategoryGUI {
+    private OptionsGUIController optionsGUIController;
     private OptionsCategoryType category;
-    protected OptionsGUIController optionsGUIController;
 
-    public OptionsCategoryGUI(OptionsCategoryType category) {
-        this.category = category;
+    public OptionsCategoryGUI(final OptionsCategoryType categoryType) {
+        this.category = categoryType;
     }
 
-    public void setOptionsGUIController(
-            OptionsGUIController optionsGUIController) {
-        this.optionsGUIController = optionsGUIController;
+    public OptionsGUIController getOptionsGUIController() {
+        return optionsGUIController;
+    }
+
+    public void setOptionsGUIController(final OptionsGUIController optGUIController) {
+        this.optionsGUIController = optGUIController;
     }
 
     public OptionsCategoryType getCategory() {
         return category;
     }
 
-    protected void displayOptionsAnchorpane(AnchorPane optionsPane,
-            AnchorPane topLevelPane) {
+    protected void displayOptionsAnchorpane(final AnchorPane optionsPane,
+                                            final AnchorPane topLevelPane) {
         optionsPane.getChildren().add(topLevelPane);
         AnchorPane.setTopAnchor(topLevelPane, 0.0d);
         AnchorPane.setLeftAnchor(topLevelPane, 0.0d);
@@ -28,12 +31,10 @@ public abstract class OptionsCategoryGUI {
         AnchorPane.setBottomAnchor(topLevelPane, 0.0d);
     }
 
-    public abstract void displayOptions(
-            AnchorPane currentOptionDisplayAnchorpane);
+    public abstract void displayOptions(AnchorPane currentOptionDisplayAnchorpane);
 
     @Override
     public String toString() {
         return category.toString();
     }
-
 }

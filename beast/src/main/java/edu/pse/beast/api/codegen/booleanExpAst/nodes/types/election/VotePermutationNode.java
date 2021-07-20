@@ -5,16 +5,15 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 //TODO fix code generation bug with comparisons
 
 public class VotePermutationNode extends ElectionTypeNode {
-
     private int voteNumber;
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "Permutation Vote " + voteNumber;
     }
 
-    public void setVoteNumber(int voteNumber) {
-        this.voteNumber = voteNumber;
+    public void setVoteNumber(final int voteNum) {
+        this.voteNumber = voteNum;
     }
 
     public int getVoteNumber() {
@@ -22,8 +21,7 @@ public class VotePermutationNode extends ElectionTypeNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitVotePermutation(this);
     }
-
 }

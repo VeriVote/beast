@@ -12,17 +12,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class DialogHelper {
-    public static Dialog<ButtonType> generateDialog(List<String> inputNames,
-            List<Node> inputs) {
-        Point position = MouseInfo.getPointerInfo().getLocation();
-        Dialog<ButtonType> dialog = new Dialog<>();
+    public static Dialog<ButtonType> generateDialog(final List<String> inputNames,
+                                                    final List<Node> inputs) {
+        final Point position = MouseInfo.getPointerInfo().getLocation();
+        final Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setX(position.getX());
         dialog.setY(position.getY());
-        ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(buttonType,
-                ButtonType.CANCEL);
+        final ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes()
+            .addAll(buttonType, ButtonType.CANCEL);
 
-        GridPane grid = new GridPane();
+        final GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         int i = 0;
@@ -33,7 +33,6 @@ public class DialogHelper {
         for (; i < inputs.size(); ++i) {
             grid.add(inputs.get(i), 0, i);
         }
-
         dialog.getDialogPane().setContent(grid);
         return dialog;
     }

@@ -7,7 +7,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateElectIntersection {
-    public final static String templateCandidateList =
+    public static final String TEMPLATE_CANDIDATE_LIST =
               "    ELECT_TYPE GENERATED_VAR_NAME;\n"
             + "    unsigned int count = 0;\n"
             + "    for (int i = 0; i < LHS.AMT_MEMBER; ++i) {\n"
@@ -28,11 +28,11 @@ public class CodeTemplateElectIntersection {
             + "        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == INVALID_VOTE);\n"
             + "    }\n";
 
-    public final static List<LoopBound> loopboundsCandidateList =
+    public static final List<LoopBound> LOOP_BOUNDS_CANDIDATE_LIST =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS)
             );
 
-    public final static String templateParliament = templateCandidateList;
-    public final static List<LoopBound> loopboundsParliament = loopboundsCandidateList;
+    public static final String TEMPLATE_PARLIAMENT = TEMPLATE_CANDIDATE_LIST;
+    public static final List<LoopBound> LOOP_BOUNDS_PARLIAMENT = LOOP_BOUNDS_CANDIDATE_LIST;
 }

@@ -16,7 +16,7 @@ public final class EquivalenceNode extends BinaryRelationshipNode {
      * @param rhsExpNode the rhs node
      */
     public EquivalenceNode(final BooleanExpressionNode lhsExpNode,
-            final BooleanExpressionNode rhsExpNode) {
+                           final BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 
@@ -26,7 +26,7 @@ public final class EquivalenceNode extends BinaryRelationshipNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitBinaryRelationNode(this, BinaryCombinationSymbols.EQUIV);
     }
 }

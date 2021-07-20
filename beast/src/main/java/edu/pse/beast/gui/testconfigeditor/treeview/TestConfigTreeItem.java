@@ -3,20 +3,19 @@ package edu.pse.beast.gui.testconfigeditor.treeview;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 
 public class TestConfigTreeItem extends TestConfigTreeItemSuper {
-    private TestConfiguration testConfig;
+    private TestConfiguration testConfiguration;
 
-    public TestConfigTreeItem(TestConfiguration testConfig) {
+    public TestConfigTreeItem(final TestConfiguration testConfig) {
         super(TestConfigTreeItemType.TEST_CONFIG);
-        this.testConfig = testConfig;
+        this.testConfiguration = testConfig;
     }
 
     @Override
     public String toString() {
-        return testConfig.getName();
+        return testConfiguration.getName();
     }
 
     public TestConfiguration getTestConfig() {
-        return testConfig;
+        return testConfiguration;
     }
-
 }

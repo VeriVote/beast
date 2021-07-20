@@ -36,7 +36,7 @@ public final class NotNode extends BooleanExpressionNode {
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitNotNode(this);
     }
 }

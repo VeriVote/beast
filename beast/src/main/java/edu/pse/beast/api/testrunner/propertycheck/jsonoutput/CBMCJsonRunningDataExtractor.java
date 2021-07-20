@@ -12,73 +12,79 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CBMCJsonRunningDataExtractor {
+    public static final String MESSAGE_TEXT_KEY = "messageText";
+    public static final String MESSAGE_TYPE_KEY = "messageType";
 
-    private final static String PROGRAM_KEY = "program";
-    public final static String MESSAGE_TEXT_KEY = "messageText";
-    public final static String MESSAGE_TYPE_KEY = "messageType";
+    private static final String PROGRAM_KEY = "program";
 
-    private CElectionDescription descr;
-    private PreAndPostConditionsDescription propDescr;
-    private int s, c, v;
+    private CElectionDescription description;
+    private PreAndPostConditionsDescription propertyDescription;
+    private int seatAmount;
+    private int candidateAmount;
+    private int voterAmount;
     private CBMCGeneratedCodeInfo codeInfo;
 
     private List<CBMCJsonMessage> messages = new ArrayList<>();
 
     private String currentOutput;
 
-    public CBMCJsonRunningDataExtractor(CElectionDescription descr,
-            PreAndPostConditionsDescription propDescr, int s, int c, int v,
-            CBMCGeneratedCodeInfo codeInfo) {
+    public CBMCJsonRunningDataExtractor(final CElectionDescription descr,
+                                        final PreAndPostConditionsDescription propDescr,
+                                        final int seats,
+                                        final int candidates,
+                                        final int voters,
+                                        final CBMCGeneratedCodeInfo generatedCodeInfo) {
         super();
-        this.descr = descr;
-        this.propDescr = propDescr;
-        this.s = s;
-        this.c = c;
-        this.v = v;
-        this.codeInfo = codeInfo;
+        this.description = descr;
+        this.propertyDescription = propDescr;
+        this.seatAmount = seats;
+        this.candidateAmount = candidates;
+        this.voterAmount = voters;
+        this.codeInfo = generatedCodeInfo;
     }
 
     public List<CBMCJsonMessage> getMessages() {
         return messages;
     }
 
-    private CBMCJsonMessage parseJsonObject(JSONObject json) {
+    private CBMCJsonMessage parseJsonObject(final JSONObject json) {
         if (json.has(PROGRAM_KEY)) {
-            CBMCJsonMessage msg = new CBMCJsonMessage(PROGRAM_KEY,
-                    json.getString(PROGRAM_KEY));
+            final CBMCJsonMessage msg =
+                    new CBMCJsonMessage(PROGRAM_KEY, json.getString(PROGRAM_KEY));
             messages.add(msg);
             return msg;
         }
         if (json.has(MESSAGE_TYPE_KEY)) {
-            CBMCJsonMessage msg = new CBMCJsonMessage(
-                    json.getString(MESSAGE_TYPE_KEY),
-                    json.getString(MESSAGE_TEXT_KEY));
+            final CBMCJsonMessage msg =
+                    new CBMCJsonMessage(json.getString(MESSAGE_TYPE_KEY),
+                                        json.getString(MESSAGE_TEXT_KEY));
             messages.add(msg);
             return msg;
         }
         return null;
     }
 
-    public void initializeWithRawOutput(List<String> rawOutput) {
-        JSONArray arr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
-        if (arr == null)
+    public void initializeWithRawOutput(final List<String> rawOutput) {
+        final JSONArray arr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
+        if (arr == null) {
             return;
+        }
         for (int i = 0; i < arr.length(); ++i) {
-            JSONObject json = arr.getJSONObject(i);
+            final JSONObject json = arr.getJSONObject(i);
             parseJsonObject(json);
         }
     }
 
-    public CBMCJsonMessage appendOutput(String rawOutput) {
+    public CBMCJsonMessage appendOutput(final String rawOutput) {
         if (currentOutput == null) {
-            if (rawOutput.trim().startsWith("{")) { // must be valid start of
-                                                    // new json object
+            if (rawOutput.trim().startsWith("{")) {
+                // must be valid start of new JSON object
                 currentOutput = rawOutput;
             }
         } else {
             if (rawOutput.trim().startsWith("}")) {
                 try {
-                    JSONObject json = new JSONObject(currentOutput + "}");
+                    final JSONObject json = new JSONObject(currentOutput + "}");
                     currentOutput = null;
                     return parseJsonObject(json);
                 } catch (JSONException e) {

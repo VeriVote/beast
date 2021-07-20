@@ -1,13 +1,13 @@
 package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
 
 public class CBMCJsonMessage {
-    String type;
-    String msg;
+    private String type;
+    private String msg;
 
-    public CBMCJsonMessage(String type, String msg) {
+    public CBMCJsonMessage(final String typeString, final String messageString) {
         super();
-        this.type = type;
-        this.msg = msg;
+        this.type = typeString;
+        this.msg = messageString;
     }
 
     public String getMsg() {

@@ -3,12 +3,11 @@ package edu.pse.beast.api.codegen.c_code;
 public class CInclude {
     private String filePath;
 
-    public CInclude(String filePath) {
-        this.filePath = filePath;
+    public CInclude(final String filePathString) {
+        this.filePath = filePathString;
     }
 
     public String generateCode() {
         return "#include <" + filePath + ">";
     }
-
 }

@@ -7,7 +7,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
 public class CodeTemplateElectPermutation {
-    public final static String templateCandidateList =
+    public static final String TEMPLATE_CANDIDATE_LIST =
               "    ELECT_TYPE GENERATED_VAR_NAME;\n"
             + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();\n"
             + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == RHS.AMT_MEMBER);\n"
@@ -26,7 +26,7 @@ public class CodeTemplateElectPermutation {
             + "        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == RHS.LIST_MEMBER[PERM[i]]);\n"
             + "    }";
 
-    public final static List<LoopBound> loopBoundsCandidateList =
+    public static final List<LoopBound> LOOP_BOUNDS_CANDIDATE_LIST =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
                 LoopBoundType.LOOP_BOUND_AMT_CANDS,

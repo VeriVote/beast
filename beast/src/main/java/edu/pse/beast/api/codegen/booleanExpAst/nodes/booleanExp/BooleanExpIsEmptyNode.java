@@ -4,21 +4,20 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
 
 public class BooleanExpIsEmptyNode extends BooleanExpressionNode {
+    private TypeExpression innerNode;
 
-    TypeExpression innerNode;
-
-    public BooleanExpIsEmptyNode(TypeExpression innerNode) {
+    public BooleanExpIsEmptyNode(final TypeExpression innerExpressionNode) {
         super();
-        this.innerNode = innerNode;
+        this.innerNode = innerExpressionNode;
     }
 
     @Override
-    public void getVisited(BooleanAstVisitor visitor) {
+    public void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitEmptyNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "EMPTY " + innerNode.getTreeString(depth + 1);
     }
 

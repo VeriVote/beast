@@ -20,38 +20,35 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
 public class SpecificValuesCodeGen {
     @Test
     public void testNumbers() {
-        String votingCode = "";
-
-        CElectionDescription descr = new CElectionDescription(
-                VotingInputTypes.PREFERENCE, VotingOutputTypes.CANDIDATE_LIST,
-                "borda");
+        final String votingCode = "";
+        final CElectionDescription descr =
+                new CElectionDescription(VotingInputTypes.PREFERENCE,
+                                         VotingOutputTypes.CANDIDATE_LIST,
+                                         "borda");
         descr.getVotingFunction().setCode(votingCode);
 
-        CodeGenOptions codeGenOptions = new CodeGenOptions();
-
-        List<ExtractedCLoop> loops = AntlrCLoopParser.findLoops("voting",
-                votingCode, codeGenOptions);
+        final CodeGenOptions codeGenOptions = new CodeGenOptions();
+        final List<ExtractedCLoop> loops =
+                AntlrCLoopParser.findLoops("voting", votingCode, codeGenOptions);
         descr.getVotingFunction().setExtractedLoops(loops);
 
-        String pre = "";
-        String post = "FALSE;";
+        final String pre = "";
+        final String post = "FALSE;";
 
-        PreAndPostConditionsDescription propDescr = CreationHelper
-                .createSimpleCondList("reinforce", pre, post).get(0);
+        final PreAndPostConditionsDescription propDescr =
+                CreationHelper.createSimpleCondList("reinforce", pre, post).get(0);
 
-        PreferenceParameters votingParameters = new PreferenceParameters(5);
-        
+        final PreferenceParameters votingParameters = new PreferenceParameters(5);
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));
         votingParameters.addVoter(List.of(0, 1, 2, 3, 4));
 
-        InitVoteHelper initVoteHelper = new SpecificValueInitVoteHelper(
-                votingParameters);
-
-        String code = CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr,
-                propDescr, codeGenOptions, initVoteHelper).getCode();
-
+        final InitVoteHelper initVoteHelper =
+                new SpecificValueInitVoteHelper(votingParameters);
+        final String code =
+                CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
+                                                                  initVoteHelper).getCode();
         System.out.println(code);
     }
 }

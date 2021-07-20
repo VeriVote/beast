@@ -9,33 +9,30 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 
 public class LoopBoundHandlerSaverLoaderHelper {
-    private final static String LOOP_BOUND_LIST_KEY = "loop_bound_list";
+    private static final String LOOP_BOUND_LIST_KEY = "loop_bound_list";
 
-    public static JSONObject loopboundHandlerToJson(
-            CodeGenLoopBoundHandler loopBoundHandler) {
-        JSONObject json = new JSONObject();
+    public static JSONObject
+            loopboundHandlerToJson(final CodeGenLoopBoundHandler loopBoundHandler) {
+        final JSONObject json = new JSONObject();
 
-        List<LoopBound> loopbounds = loopBoundHandler.getLoopBoundsAsList();
-        JSONArray arr = new JSONArray();
-        for (LoopBound lb : loopbounds) {
+        final List<LoopBound> loopbounds = loopBoundHandler.getLoopBoundsAsList();
+        final JSONArray arr = new JSONArray();
+        for (final LoopBound lb : loopbounds) {
             arr.put(LoopBoundSaverLoaderHelper.loopBoundToJSON(lb));
         }
-
         json.put(LOOP_BOUND_LIST_KEY, arr);
         return json;
     }
 
-    public static CodeGenLoopBoundHandler loopBoundHandlerFromJSON(
-            JSONObject json) {
-        JSONArray loopboundArr = json.getJSONArray(LOOP_BOUND_LIST_KEY);
-        CodeGenLoopBoundHandler loopBoundHandler = new CodeGenLoopBoundHandler();
+    public static CodeGenLoopBoundHandler loopBoundHandlerFromJSON(final JSONObject json) {
+        final JSONArray loopboundArr = json.getJSONArray(LOOP_BOUND_LIST_KEY);
+        final CodeGenLoopBoundHandler loopBoundHandler = new CodeGenLoopBoundHandler();
 
         for (int i = 0; i < loopboundArr.length(); ++i) {
-            JSONObject lbJson = loopboundArr.getJSONObject(i);
-            LoopBound lb = LoopBoundSaverLoaderHelper.loopBoundFromJSON(lbJson);
+            final JSONObject lbJson = loopboundArr.getJSONObject(i);
+            final LoopBound lb = LoopBoundSaverLoaderHelper.loopBoundFromJSON(lbJson);
             loopBoundHandler.addLoopBound(lb);
         }
-
         return loopBoundHandler;
     }
 }

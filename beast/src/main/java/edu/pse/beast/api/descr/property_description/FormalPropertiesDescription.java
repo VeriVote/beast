@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * The Class FormalPropertiesDescription.
+ * The class FormalPropertiesDescription.
+ *
+ * @author Holger Klein
  */
 public final class FormalPropertiesDescription {
     /** The code. */
