@@ -30,11 +30,10 @@ public class CElectionSaverLoader {
 
     private static final String VOTING_FUNCTION_ARRAY_KEY = "voting_function_array";
     private static final String VOTING_FUNC_NAME_KEY = "voting_func_name";
-    private static final String VOTING_FUNC_CODE_KEY = "code";
+    private static final String FUNC_CODE_KEY = "code";
 
     private static final String SIMPLE_FUNCTION_ARRAY_KEY = "simple_function_array";
     private static final String SIMPLE_FUNC_NAME_KEY = "simple_func_name";
-    private static final String SIMPLE_FUNC_CODE_KEY = "code";
     private static final String SIMPLE_FUNC_ARG_TYPES_KEY = "arg_types";
     private static final String SIMPLE_FUNC_ARG_NAMES_KEY = "arg_names";
     private static final String SIMPLE_FUNC_RETURN_TYPE = "return_types";
@@ -49,7 +48,7 @@ public class CElectionSaverLoader {
 
     private static SimpleTypeFunction fromSimpleFunction(final JSONObject json) {
         final String name = json.getString(SIMPLE_FUNC_NAME_KEY);
-        final String code = json.getString(SIMPLE_FUNC_CODE_KEY);
+        final String code = json.getString(FUNC_CODE_KEY);
         final JSONArray argTypesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_TYPES_KEY);
         final List<CElectionSimpleTypes> argTypes = new ArrayList<>();
         for (int i = 0; i < argTypesJsonArr.length(); ++i) {
@@ -71,7 +70,7 @@ public class CElectionSaverLoader {
     private static JSONObject fromSimpleFunction(final SimpleTypeFunction f) {
         final JSONObject json = new JSONObject();
         json.put(SIMPLE_FUNC_NAME_KEY, f.getName());
-        json.put(SIMPLE_FUNC_CODE_KEY, f.getCode());
+        json.put(FUNC_CODE_KEY, f.getCode());
         json.put(EXTRACTED_LOOPS_KEY,
                 ExtractedCLoopSaverLoaderHelper
                 .fromExtractedLoops(f.getExtractedLoops()));
@@ -102,7 +101,7 @@ public class CElectionSaverLoader {
     private static JSONObject fromVotingFunction(final VotingSigFunction func) {
         final JSONObject json = new JSONObject();
         json.put(VOTING_FUNC_NAME_KEY, func.getName());
-        json.put(VOTING_FUNC_CODE_KEY, func.getCode());
+        json.put(FUNC_CODE_KEY, func.getCode());
         json.put(EXTRACTED_LOOPS_KEY,
                  ExtractedCLoopSaverLoaderHelper
                  .fromExtractedLoops(func.getExtractedLoops()));
@@ -113,7 +112,7 @@ public class CElectionSaverLoader {
                                                       final VotingInputTypes inputType,
                                                       final VotingOutputTypes outputType) {
         final String name = json.getString(VOTING_FUNC_NAME_KEY);
-        final String code = json.getString(VOTING_FUNC_CODE_KEY);
+        final String code = json.getString(FUNC_CODE_KEY);
         final VotingSigFunction func =
                 new VotingSigFunction(name, inputType, outputType);
         func.setCode(code);

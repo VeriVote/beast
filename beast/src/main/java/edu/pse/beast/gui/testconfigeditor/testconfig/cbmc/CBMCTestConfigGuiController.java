@@ -56,7 +56,7 @@ public class CBMCTestConfigGuiController {
         this.beastWorkspace = workspace;
     }
 
-    public AnchorPane getTopLevelAnchorPane() {
+    public final AnchorPane getTopLevelAnchorPane() {
         return topLevelAnchorPane;
     }
 
@@ -73,7 +73,7 @@ public class CBMCTestConfigGuiController {
         startCreatedTestsCheckbox.setSelected(currentConfig.getStartRunsOnCreation());
     }
 
-    public void display(final CBMCTestConfiguration config) {
+    public final void display(final CBMCTestConfiguration config) {
         currentConfig = config;
         updateView();
     }

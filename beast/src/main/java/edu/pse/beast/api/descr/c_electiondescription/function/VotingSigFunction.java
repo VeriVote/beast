@@ -23,7 +23,6 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     private static final String SEAT_SYMB = "S";
     private static final String VOTE_SYMB = "V";
 
-    private String name;
     private VotingInputTypes inputType;
     private VotingOutputTypes outputType;
 
@@ -31,7 +30,6 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
                              final VotingInputTypes inType,
                              final VotingOutputTypes outType) {
         super(nameString);
-        this.name = nameString;
         this.inputType = inType;
         this.outputType = outType;
     }
@@ -40,23 +38,19 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
         return "[" + s + "]";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public VotingInputTypes getInputType() {
+    public final VotingInputTypes getInputType() {
         return inputType;
     }
 
-    public VotingOutputTypes getOutputType() {
+    public final VotingOutputTypes getOutputType() {
         return outputType;
     }
 
-    public void setInputType(final VotingInputTypes inType) {
+    public final void setInputType(final VotingInputTypes inType) {
         this.inputType = inType;
     }
 
-    public void setOutputType(final VotingOutputTypes outType) {
+    public final void setOutputType(final VotingOutputTypes outType) {
         this.outputType = outType;
     }
 
@@ -108,7 +102,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     // TODO(Holger) This can be moves somewhere else, just dont know where yet.
     // Probably together with the rest of code generation.
     @Override
-    public String getDeclCString(final CodeGenOptions codeGenOptions) {
+    public final String getDeclCString(final CodeGenOptions codeGenOptions) {
         final String template =
                 RETURN_TYPE + BLANK + NAME + "(" + ARG + ") {\n" + "    " + RESULT_ARR + ";";
 
@@ -139,16 +133,16 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
                        .replaceAll(RESULT_ARR, resultType.generateCode());
     }
 
-    public String getResultArrayName() {
+    public final String getResultArrayName() {
         return RESULT_ARRAY_NAME;
     }
 
-    public String getVotesArrayName() {
+    public final String getVotesArrayName() {
         return VOTES_ARRAY_NAME;
     }
 
     @Override
-    public String getReturnText(final CodeGenOptions codeGenOptions) {
+    public final String getReturnText(final CodeGenOptions codeGenOptions) {
         return "    return " + RETURN_NAME + ";\n}".replaceAll(RETURN_NAME, RESULT_ARRAY_NAME);
     }
 

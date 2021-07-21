@@ -51,12 +51,12 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
         return file;
     }
 
-    public boolean testIsVsDevCmd(final File vsDevCmd) {
+    public final boolean testIsVsDevCmd(final File vsDevCmd) {
         return vsDevCmd != null && vsDevCmd.exists()
                 && VS_DEV_COMMAND_FILE.toLowerCase().equals(vsDevCmd.getName().toLowerCase());
     }
 
-    public void askUserForCBMCProcessHandler() {
+    public final void askUserForCBMCProcessHandler() {
         switch (OSHelper.getOS()) {
         case LINUX:
             processHandler = new CBMCProcessHandlerLinux();
@@ -76,19 +76,19 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
         }
     }
 
-    public CBMCProcessHandler getProcessHandler() {
+    public final CBMCProcessHandler getProcessHandler() {
         return processHandler;
     }
 
-    public boolean hasProcessHandler() {
+    public final boolean hasProcessHandler() {
         return processHandler != null;
     }
 
-    public String getVsDevCmdPath() {
+    public final String getVsDevCmdPath() {
         return vsDevCmdPath;
     }
 
-    public void setVsDevCmdPath(final String vsDevCmdPathString) {
+    public final void setVsDevCmdPath(final String vsDevCmdPathString) {
         if (testIsVsDevCmd(new File(vsDevCmdPathString))) {
             this.vsDevCmdPath = vsDevCmdPathString;
             processHandler = new CBMCProcessHandlerWindows(vsDevCmdPathString);

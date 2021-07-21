@@ -12,12 +12,12 @@ public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
         this.run = tr;
     }
 
-    public CBMCTestRunWithSymbolicVars getRun() {
+    public final CBMCTestRunWithSymbolicVars getRun() {
         return run;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         String template = "V=AMT_VOTER, C=AMT_CAND, S=AMT_SEAT | STATUS";
         if (run.isDescrChanged()) {
             template += " | c descr changed";

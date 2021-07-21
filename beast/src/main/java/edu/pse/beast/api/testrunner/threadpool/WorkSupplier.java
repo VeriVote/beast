@@ -6,13 +6,13 @@ import java.util.List;
 public class WorkSupplier {
     private List<WorkUnit> newWorkUnits = new ArrayList<>();
 
-    public void addWork(final WorkUnit wu) {
+    public final void addWork(final WorkUnit wu) {
         synchronized (newWorkUnits) {
             newWorkUnits.add(wu);
         }
     }
 
-    public void addWork(final List<WorkUnit> wul) {
+    public final void addWork(final List<WorkUnit> wul) {
         synchronized (newWorkUnits) {
             newWorkUnits.addAll(wul);
         }
@@ -26,7 +26,7 @@ public class WorkSupplier {
         }
     }
 
-    public WorkUnit getWorkIfAvailable() {
+    public final WorkUnit getWorkIfAvailable() {
         synchronized (newWorkUnits) {
             if (!newWorkUnits.isEmpty()) {
                 return popBack();

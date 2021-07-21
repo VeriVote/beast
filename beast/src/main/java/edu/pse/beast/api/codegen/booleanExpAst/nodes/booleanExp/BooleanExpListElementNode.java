@@ -14,20 +14,20 @@ public class BooleanExpListElementNode extends BooleanExpressionNode {
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitBooleanExpListElementNode(this);
     }
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         return firstChild.getTreeString(depth);
     }
 
-    public String getCompleteCode() {
+    public final String getCompleteCode() {
         return completeCode;
     }
 
-    public BooleanExpressionNode getFirstChild() {
+    public final BooleanExpressionNode getFirstChild() {
         return firstChild;
     }
 

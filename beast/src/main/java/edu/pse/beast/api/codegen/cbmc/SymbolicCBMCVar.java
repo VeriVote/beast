@@ -14,15 +14,15 @@ public class SymbolicCBMCVar {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return varType.toString() + " " + name;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public CBMCVarType getVarType() {
+    public final CBMCVarType getVarType() {
         return varType;
     }
 }

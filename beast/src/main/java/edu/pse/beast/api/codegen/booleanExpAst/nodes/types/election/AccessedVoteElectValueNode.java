@@ -22,11 +22,11 @@ public abstract class AccessedVoteElectValueNode extends ElectionTypeNode {
         this.number = numberCount;
     }
 
-    public List<SymbolicCBMCVar> getAccessingCBMCVars() {
+    public final List<SymbolicCBMCVar> getAccessingCBMCVars() {
         return accessingCBMCVars;
     }
 
-    public int getNumber() {
+    public final int getNumber() {
         return number;
     }
 }

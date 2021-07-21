@@ -19,22 +19,22 @@ public class ThreadPool {
         }
     }
 
-    public void addWork(final List<WorkUnit> wul) {
+    public final void addWork(final List<WorkUnit> wul) {
         for (final WorkUnit wu : wul) {
             wu.addedToQueue();
         }
         workSupplier.addWork(wul);
     }
 
-    public void addWork(final WorkUnit wu) {
+    public final void addWork(final WorkUnit wu) {
         wu.addedToQueue();
         workSupplier.addWork(wu);
     }
 
-    public void waitSync() throws InterruptedException {
+    public final void waitSync() throws InterruptedException {
     }
 
-    public void shutdown() throws InterruptedException {
+    public final void shutdown() throws InterruptedException {
         for (final ThreadPoolRunner runner : runners) {
             runner.shutdown();
         }

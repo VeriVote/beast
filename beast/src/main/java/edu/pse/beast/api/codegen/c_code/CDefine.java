@@ -10,7 +10,7 @@ public class CDefine {
         this.replaceWith = replaceWithString;
     }
 
-    public String generateCode() {
+    public final String generateCode() {
         return "#define " + toReplace + " " + replaceWith;
     }
 }

@@ -17,91 +17,91 @@ public class CodeGenOptions {
     private String currAmountCandsVarName = "C";
     private String currAmountSeatsVarName = "S";
 
-    public String getCbmcAmountMaxVotersVarName() {
+    public final String getCbmcAmountMaxVotersVarName() {
         return cbmcAmountMaxVotersVarName;
     }
 
-    public String getCbmcAssertName() {
+    public final String getCbmcAssertName() {
         return assertName;
     }
 
-    public void setCbmcAssertName(final String cbmcAssertName) {
+    public final void setCbmcAssertName(final String cbmcAssertName) {
         this.assertName = cbmcAssertName;
     }
 
-    public String getCbmcAmountMaxSeatsVarName() {
+    public final String getCbmcAmountMaxSeatsVarName() {
         return cbmcAmountMaxSeatsVarName;
     }
 
-    public void setCbmcAmountMaxSeatsVarName(final String cbmcAmountSeatsVarName) {
+    public final void setCbmcAmountMaxSeatsVarName(final String cbmcAmountSeatsVarName) {
         this.cbmcAmountMaxSeatsVarName = cbmcAmountSeatsVarName;
     }
 
-    public String getCbmcAmountMaxCandsVarName() {
+    public final String getCbmcAmountMaxCandsVarName() {
         return cbmcAmountMaxCandidatesVarName;
     }
 
-    public void setCbmcAmountMaxVotersVarName(final String cbmcAmountVotesVarName) {
+    public final void setCbmcAmountMaxVotersVarName(final String cbmcAmountVotesVarName) {
         this.cbmcAmountMaxVotersVarName = cbmcAmountVotesVarName;
     }
 
-    public void setCbmcAmountMaxCandidatesVarName(final String cbmcAmountCandidatesVarName) {
+    public final void setCbmcAmountMaxCandidatesVarName(final String cbmcAmountCandidatesVarName) {
         this.cbmcAmountMaxCandidatesVarName = cbmcAmountCandidatesVarName;
     }
 
-    public String getVotesLowerBoundVarName() {
+    public final String getVotesLowerBoundVarName() {
         return lowerVoteBoundVarName;
     }
 
-    public String getVotesUpperBoundVarName() {
+    public final String getVotesUpperBoundVarName() {
         return upperVoteBoundVarName;
     }
 
-    public String getCbmcAssumeName() {
+    public final String getCbmcAssumeName() {
         return assumeName;
     }
 
-    public String getCbmcNondetUintName() {
+    public final String getCbmcNondetUintName() {
         return nondeterministicUintName;
     }
 
-    public void setVotesLowerBoundVarName(final String votesLowerBoundVarName) {
+    public final void setVotesLowerBoundVarName(final String votesLowerBoundVarName) {
         this.lowerVoteBoundVarName = votesLowerBoundVarName;
     }
 
-    public void setVotesUpperBoundVarName(final String votesUpperBoundVarName) {
+    public final void setVotesUpperBoundVarName(final String votesUpperBoundVarName) {
         this.upperVoteBoundVarName = votesUpperBoundVarName;
     }
 
-    public void setCbmcAssumeName(final String cbmcAssumeName) {
+    public final void setCbmcAssumeName(final String cbmcAssumeName) {
         this.assumeName = cbmcAssumeName;
     }
 
-    public void setCbmcNondetUintName(final String cbmcNondetUintName) {
+    public final void setCbmcNondetUintName(final String cbmcNondetUintName) {
         this.nondeterministicUintName = cbmcNondetUintName;
     }
 
-    public String getCurrentAmountVotersVarName() {
+    public final String getCurrentAmountVotersVarName() {
         return currAmountVotersVarName;
     }
 
-    public String getCurrentAmountCandsVarName() {
+    public final String getCurrentAmountCandsVarName() {
         return currAmountCandsVarName;
     }
 
-    public String getCurrentAmountSeatsVarName() {
+    public final String getCurrentAmountSeatsVarName() {
         return currAmountSeatsVarName;
     }
 
-    public void setCurrentAmountVotersVarName(final String currentAmountVotersVarName) {
+    public final void setCurrentAmountVotersVarName(final String currentAmountVotersVarName) {
         this.currAmountVotersVarName = currentAmountVotersVarName;
     }
 
-    public void setCurrentAmountCandsVarName(final String currentAmountCandsVarName) {
+    public final void setCurrentAmountCandsVarName(final String currentAmountCandsVarName) {
         this.currAmountCandsVarName = currentAmountCandsVarName;
     }
 
-    public void setCurrentAmountSeatsVarName(final String currentAmountSeatsVarName) {
+    public final void setCurrentAmountSeatsVarName(final String currentAmountSeatsVarName) {
         this.currAmountSeatsVarName = currentAmountSeatsVarName;
     }
 }

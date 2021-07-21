@@ -10,17 +10,17 @@ public class FalseTrueNode extends BooleanExpressionNode {
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitBooleanExpFalseTrueNode(this);
     }
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         // TODO Auto-generated method stub
         return "False";
     }
 
-    public boolean getFalseOrTrue() {
+    public final boolean getFalseOrTrue() {
         return falseOrTrue;
     }
 }

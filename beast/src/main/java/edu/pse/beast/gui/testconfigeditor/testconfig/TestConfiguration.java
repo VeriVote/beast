@@ -25,57 +25,57 @@ public class TestConfiguration {
         this.name = nameString;
     }
 
-    public CElectionDescription getDescr() {
+    public final CElectionDescription getDescr() {
         return description;
     }
 
-    public PreAndPostConditionsDescription getPropDescr() {
+    public final PreAndPostConditionsDescription getPropDescr() {
         return propertyDescription;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void addCBMCTestConfiguration(final CBMCTestConfiguration config) {
+    public final void addCBMCTestConfiguration(final CBMCTestConfiguration config) {
         cbmcTestConfigsByName.put(config.getName(), config);
     }
 
-    public Map<String, CBMCTestConfiguration> getCbmcTestConfigsByName() {
+    public final Map<String, CBMCTestConfiguration> getCbmcTestConfigsByName() {
         return Collections.unmodifiableMap(cbmcTestConfigsByName);
     }
 
-    public boolean contains(final CBMCTestConfiguration config) {
+    public final boolean contains(final CBMCTestConfiguration config) {
         return cbmcTestConfigsByName.containsKey(config.getName());
     }
 
-    public void addCBMCTestConfigurations(final List<CBMCTestConfiguration> cbmcTestConfigs) {
+    public final void addCBMCTestConfigurations(final List<CBMCTestConfiguration> cbmcTestConfigs) {
         for (final CBMCTestConfiguration config : cbmcTestConfigs) {
             addCBMCTestConfiguration(config);
         }
     }
 
-    public void handleDescrChange() {
+    public final void handleDescrChange() {
         for (final CBMCTestConfiguration cbmctc : cbmcTestConfigsByName.values()) {
             cbmctc.handleDescrCodeChange();
         }
     }
 
-    public List<CBMCTestConfiguration> getCBMCTestConfigs() {
+    public final List<CBMCTestConfiguration> getCBMCTestConfigs() {
         final List<CBMCTestConfiguration> list = new ArrayList<>();
         list.addAll(cbmcTestConfigsByName.values());
         return list;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return "CONFIG_NAME: DESCR_NAME + PROP_NAME"
                 .replaceAll("CONFIG_NAME", name)
                 .replaceAll("DESCR_NAME", description.getName())
                 .replaceAll("PROP_NAME", propertyDescription.getName());
     }
 
-    public void handlePropDescrChanged() {
+    public final void handlePropDescrChanged() {
         // TODO this can be made smarter by giving the run items a reference to
         // the current
         // propdescr and descr as well as a copy of the state they had when the

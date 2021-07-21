@@ -19,35 +19,38 @@ public class CodeTemplateVoteComparison {
                             LoopBoundType.LOOP_BOUND_AMT_SEATS)
                     );
 
+    private static final String LINE_BREAK = "\n";
+
     private static final String TEMPLATE_SINGLE_CHOICE_EQ =
-            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER;\n"
-                    + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
-                    + "    GENERATED_VAR &= LHS_VAR.LIST_MEMBER[i] COMP RHS_VAR.LIST_MEMBER[i];\n"
-                    + "}\n";
+            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER;" + LINE_BREAK
+            + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {" + LINE_BREAK
+            + "    GENERATED_VAR &= LHS_VAR.LIST_MEMBER[i] COMP RHS_VAR.LIST_MEMBER[i];"
+            + LINE_BREAK
+            + "}" + LINE_BREAK;
 
     private static final String TEMPLATE_SINGLE_CHOICE_UNEQ =
-            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER != RHS_VAR.AMT_MEMBER;\n"
-                    + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
-                    + "    GENERATED_VAR |= LHS_VAR.LIST_MEMBER[i] != RHS_VAR.LIST_MEMBER[i];\n"
-                    + "}\n";
+            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER != RHS_VAR.AMT_MEMBER;" + LINE_BREAK
+            + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {" + LINE_BREAK
+            + "    GENERATED_VAR |= LHS_VAR.LIST_MEMBER[i] != RHS_VAR.LIST_MEMBER[i];" + LINE_BREAK
+            + "}" + LINE_BREAK;
 
     private static final String TEMPLATE_PREFERENCE =
-            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER;\n"
-                    + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
-                    + "    for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
-                    + "        GENERATED_VAR &= "
-                    + "LHS_VAR.LIST_MEMBER[i][j] COMP RHS_VAR.LIST_MEMBER[i][j];\n"
-                    + "    }\n"
-                    + "}\n";
+            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER;" + LINE_BREAK
+            + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {" + LINE_BREAK
+            + "    for (int j = 0; j < AMT_CANDIDATES; ++j) {" + LINE_BREAK
+            + "        GENERATED_VAR &= "
+            + "LHS_VAR.LIST_MEMBER[i][j] COMP RHS_VAR.LIST_MEMBER[i][j];" + LINE_BREAK
+            + "    }" + LINE_BREAK
+            + "}" + LINE_BREAK;
 
     private static final String TEMPLATE_PREFERENCE_UNEQ =
-            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER != RHS_VAR.AMT_MEMBER;\n"
-                    + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {\n"
-                    + "    for (int j = 0; j < AMT_CANDIDATES; ++j) {\n"
-                    + "        GENERATED_VAR |= "
-                    + "LHS_VAR.LIST_MEMBER[i][j] != RHS_VAR.LIST_MEMBER[i][j];\n"
-                    + "    }\n"
-                    + "}\n";
+            "unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER != RHS_VAR.AMT_MEMBER;" + LINE_BREAK
+            + "for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {" + LINE_BREAK
+            + "    for (int j = 0; j < AMT_CANDIDATES; ++j) {" + LINE_BREAK
+            + "        GENERATED_VAR |= "
+            + "LHS_VAR.LIST_MEMBER[i][j] != RHS_VAR.LIST_MEMBER[i][j];" + LINE_BREAK
+            + "    }" + LINE_BREAK
+            + "}" + LINE_BREAK;
 
     private static final String TEMPLATE_APPROVAL = getTemplatePreference();
     private static final String TEMPLATE_APPROVAL_UNEQ = getTemplatePreferenceUneq();

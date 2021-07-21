@@ -8,21 +8,21 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 public class ElectIntersectionNode extends ElectionTypeNode {
     private List<Integer> numbers = new ArrayList<>();
 
-    public List<Integer> getNumbers() {
+    public final List<Integer> getNumbers() {
         return numbers;
     }
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         return "Intersect Elects";
     }
 
-    public void addElectNumber(final int number) {
+    public final void addElectNumber(final int number) {
         numbers.add(number);
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitElectIntersectionNode(this);
     }
 }

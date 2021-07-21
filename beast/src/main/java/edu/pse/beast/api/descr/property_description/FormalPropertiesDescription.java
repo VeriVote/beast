@@ -50,11 +50,18 @@ public final class FormalPropertiesDescription {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((code == null) ? 0 : code.hashCode());
+        return result;
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
+        } else if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final FormalPropertiesDescription other = (FormalPropertiesDescription) obj;

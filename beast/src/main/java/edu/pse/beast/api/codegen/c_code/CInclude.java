@@ -7,7 +7,7 @@ public class CInclude {
         this.filePath = filePathString;
     }
 
-    public String generateCode() {
+    public final String generateCode() {
         return "#include <" + filePath + ">";
     }
 }

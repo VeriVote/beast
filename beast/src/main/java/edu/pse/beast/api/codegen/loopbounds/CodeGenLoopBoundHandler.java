@@ -11,7 +11,7 @@ public class CodeGenLoopBoundHandler {
     private Map<String, List<LoopBound>> votingInitLoopbounds = new HashMap<>();
     private Map<String, List<LoopBound>> votingBackLoopbounds = new HashMap<>();
 
-    public void addLoopBound(final LoopBound b) {
+    public final void addLoopBound(final LoopBound b) {
         final String funcName = b.getFunctionName();
         if (!functionNamesToLoopbounds.containsKey(funcName)) {
             functionNamesToLoopbounds.put(funcName, new ArrayList<>());
@@ -19,13 +19,13 @@ public class CodeGenLoopBoundHandler {
         functionNamesToLoopbounds.get(funcName).add(b);
     }
 
-    public void addFunction(final String name) {
+    public final void addFunction(final String name) {
         if (!functionNamesToLoopbounds.containsKey(name)) {
             functionNamesToLoopbounds.put(name, new ArrayList<>());
         }
     }
 
-    public List<LoopBound> getLoopBoundsAsList() {
+    public final List<LoopBound> getLoopBoundsAsList() {
         final List<LoopBound> loopbounds = new ArrayList<>();
         for (final List<LoopBound> lbl : functionNamesToLoopbounds.values()) {
             loopbounds.addAll(lbl);
@@ -33,21 +33,21 @@ public class CodeGenLoopBoundHandler {
         return loopbounds;
     }
 
-    public void pushMainLoopBounds(final List<LoopBound> loopbounds) {
+    public final void pushMainLoopBounds(final List<LoopBound> loopbounds) {
         mainLoopbounds.addAll(loopbounds);
     }
 
-    public void addVotingInitLoopBounds(final String votingFunctionName,
-                                        final List<LoopBound> loopbounds) {
+    public final void addVotingInitLoopBounds(final String votingFunctionName,
+                                              final List<LoopBound> loopbounds) {
         votingInitLoopbounds.put(votingFunctionName, loopbounds);
     }
 
-    public void pushVotingLoopBounds(final String votingFunctionName,
-                                     final List<LoopBound> loopbounds) {
+    public final void pushVotingLoopBounds(final String votingFunctionName,
+                                           final List<LoopBound> loopbounds) {
         votingBackLoopbounds.put(votingFunctionName, loopbounds);
     }
 
-    public void finishAddedLoopbounds() {
+    public final void finishAddedLoopbounds() {
         for (final String k : votingInitLoopbounds.keySet()) {
             final List<LoopBound> initLbs = votingInitLoopbounds.get(k);
             for (int i = 0; i < initLbs.size(); ++i) {
@@ -70,7 +70,7 @@ public class CodeGenLoopBoundHandler {
         }
     }
 
-    public String generateCBMCString(final int v, final int c, final int s) {
+    public final String generateCBMCString(final int v, final int c, final int s) {
         String created = "";
         for (int i = 0; i < mainLoopbounds.size(); ++i) {
             final LoopBound lb = mainLoopbounds.get(i);

@@ -51,23 +51,23 @@ public class CElectionDescription {
         this.uuid = uuidString;
     }
 
-    public void setFunctions(final List<CElectionDescriptionFunction> functionList) {
+    public final void setFunctions(final List<CElectionDescriptionFunction> functionList) {
         this.functions = functionList;
     }
 
-    public void setVotingFunction(final VotingSigFunction votingFunc) {
+    public final void setVotingFunction(final VotingSigFunction votingFunc) {
         this.votingFunction = votingFunc;
     }
 
-    public boolean hasFunctionName(final String nameString) {
+    public final boolean hasFunctionName(final String nameString) {
         return functionNames.contains(nameString);
     }
 
-    public VotingSigFunction getVotingFunction() {
+    public final VotingSigFunction getVotingFunction() {
         return votingFunction;
     }
 
-    public VotingSigFunction createNewVotingSigFunctionAndAdd(final String nameString) {
+    public final VotingSigFunction createNewVotingSigFunctionAndAdd(final String nameString) {
         final VotingSigFunction created =
                 new VotingSigFunction(nameString, inputType, outputType);
         functions.add(created);
@@ -75,17 +75,17 @@ public class CElectionDescription {
         return created;
     }
 
-    public void removeFunction(final CElectionDescriptionFunction func) {
+    public final void removeFunction(final CElectionDescriptionFunction func) {
         functionNames.remove(func.getName());
         functions.remove(func);
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return name;
     }
 
-    public void setInputType(final VotingInputTypes inType) {
+    public final void setInputType(final VotingInputTypes inType) {
         this.inputType = inType;
         for (final CElectionDescriptionFunction f : functions) {
             if (f.getClass().equals(VotingSigFunction.class)) {
@@ -94,7 +94,7 @@ public class CElectionDescription {
         }
     }
 
-    public void setOutputType(final VotingOutputTypes outType) {
+    public final void setOutputType(final VotingOutputTypes outType) {
         this.outputType = outType;
         for (final CElectionDescriptionFunction f : functions) {
             if (f.getClass().equals(VotingSigFunction.class)) {
@@ -103,36 +103,36 @@ public class CElectionDescription {
         }
     }
 
-    public VotingInputTypes getInputType() {
+    public final VotingInputTypes getInputType() {
         return inputType;
     }
 
-    public VotingOutputTypes getOutputType() {
+    public final VotingOutputTypes getOutputType() {
         return outputType;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public List<CElectionDescriptionFunction> getFunctions() {
+    public final List<CElectionDescriptionFunction> getFunctions() {
         return functions;
     }
 
-    public String getUuid() {
+    public final String getUuid() {
         return uuid;
     }
 
-    public void setName(final String nameString) {
+    public final void setName(final String nameString) {
         this.name = nameString;
     }
 
-    public void addSimpleFunction(final SimpleTypeFunction f) {
+    public final void addSimpleFunction(final SimpleTypeFunction f) {
         functions.add(f);
         functionNames.add(f.getName());
     }
 
-    public CodeGenLoopBoundHandler generateLoopBoundHandler() {
+    public final CodeGenLoopBoundHandler generateLoopBoundHandler() {
         final CodeGenLoopBoundHandler boundHandler = new CodeGenLoopBoundHandler();
         for (final CElectionDescriptionFunction f : functions) {
             final List<ExtractedCLoop> loops = f.getExtractedLoops();

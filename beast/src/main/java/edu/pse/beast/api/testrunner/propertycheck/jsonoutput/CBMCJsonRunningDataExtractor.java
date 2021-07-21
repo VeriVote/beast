@@ -43,7 +43,7 @@ public class CBMCJsonRunningDataExtractor {
         this.codeInfo = generatedCodeInfo;
     }
 
-    public List<CBMCJsonMessage> getMessages() {
+    public final List<CBMCJsonMessage> getMessages() {
         return messages;
     }
 
@@ -64,7 +64,7 @@ public class CBMCJsonRunningDataExtractor {
         return null;
     }
 
-    public void initializeWithRawOutput(final List<String> rawOutput) {
+    public final void initializeWithRawOutput(final List<String> rawOutput) {
         final JSONArray arr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
         if (arr == null) {
             return;
@@ -75,7 +75,7 @@ public class CBMCJsonRunningDataExtractor {
         }
     }
 
-    public CBMCJsonMessage appendOutput(final String rawOutput) {
+    public final CBMCJsonMessage appendOutput(final String rawOutput) {
         if (currentOutput == null) {
             if (rawOutput.trim().startsWith("{")) {
                 // must be valid start of new JSON object

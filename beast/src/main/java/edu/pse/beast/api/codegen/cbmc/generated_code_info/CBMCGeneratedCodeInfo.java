@@ -23,125 +23,125 @@ public class CBMCGeneratedCodeInfo {
     private String resultAmtMemberVarName;
     private String resultListMemberVarName;
 
-    public void addedGeneratedVotingVar(final String name) {
+    public final void addedGeneratedVotingVar(final String name) {
         generatedVotingVarNames.add(name);
     }
 
-    public void addedGeneratedElectVar(final String name) {
+    public final void addedGeneratedElectVar(final String name) {
         generatedElectVarNames.add(name);
     }
 
-    public Map<String, String> getVarNamesToInfo() {
+    public final Map<String, String> getVarNamesToInfo() {
         return varNamesToInfo;
     }
 
-    public void setVarNamesToInfo(final Map<String, String> varNamesToInfoMap) {
+    public final void setVarNamesToInfo(final Map<String, String> varNamesToInfoMap) {
         this.varNamesToInfo = varNamesToInfoMap;
     }
 
-    public String getCode() {
+    public final String getCode() {
         return code;
     }
 
-    public void setCode(final String codeString) {
+    public final void setCode(final String codeString) {
         this.code = codeString;
     }
 
-    public void addVotingVariableName(final int voteNumber, final String varName) {
+    public final void addVotingVariableName(final int voteNumber, final String varName) {
         voteVariableNameToVoteNumber.put(varName, voteNumber);
         varNamesToInfo.put(varName,
                 InformationStringBuilder.genForVote(voteNumber, varName));
     }
 
-    public void addElectVariableName(final int electNumber, final String varName) {
+    public final void addElectVariableName(final int electNumber, final String varName) {
         electVariableNameToElectNumber.put(varName, electNumber);
         varNamesToInfo.put(varName,
                 InformationStringBuilder.genForResult(electNumber, varName));
     }
 
-    public void setVoteVariableNameToVoteNumber(final Map<String, Integer>
-                                                    voteVarNameToVoteNumMap) {
+    public final void setVoteVariableNameToVoteNumber(final Map<String, Integer>
+                                                        voteVarNameToVoteNumMap) {
         this.voteVariableNameToVoteNumber = voteVarNameToVoteNumMap;
     }
 
-    public Map<String, Integer> getVoteVariableNameToVoteNumber() {
+    public final Map<String, Integer> getVoteVariableNameToVoteNumber() {
         return voteVariableNameToVoteNumber;
     }
 
-    public Map<String, Integer> getElectVariableNameToElectNumber() {
+    public final Map<String, Integer> getElectVariableNameToElectNumber() {
         return electVariableNameToElectNumber;
     }
 
-    public Set<String> getGeneratedVotingVarNames() {
+    public final Set<String> getGeneratedVotingVarNames() {
         return generatedVotingVarNames;
     }
 
-    public void setGeneratedVotingVarNames(final Set<String> genVotingVarNameSet) {
+    public final void setGeneratedVotingVarNames(final Set<String> genVotingVarNameSet) {
         this.generatedVotingVarNames = genVotingVarNameSet;
     }
 
-    public Set<String> getGeneratedElectVarNames() {
+    public final Set<String> getGeneratedElectVarNames() {
         return generatedElectVarNames;
     }
 
-    public void setGeneratedElectVarNames(final Set<String> genElectVarNameSet) {
+    public final void setGeneratedElectVarNames(final Set<String> genElectVarNameSet) {
         this.generatedElectVarNames = genElectVarNameSet;
     }
 
-    public void setElectVariableNameToElectNumber(final Map<String, Integer>
-                                                    electVarNameToElectNumMap) {
+    public final void setElectVariableNameToElectNumber(final Map<String, Integer>
+                                                            electVarNameToElectNumMap) {
         this.electVariableNameToElectNumber = electVarNameToElectNumMap;
     }
 
-    public String getVotesAmtMemberVarName() {
+    public final String getVotesAmtMemberVarName() {
         return votesAmtMemberVarName;
     }
 
-    public String getVotesListMemberVarName() {
+    public final String getVotesListMemberVarName() {
         return votesListMemberVarName;
     }
 
-    public CodeGenLoopBoundHandler getLoopBoundHandler() {
+    public final CodeGenLoopBoundHandler getLoopBoundHandler() {
         return loopBoundHandler;
     }
 
-    public void setVotesAmtMemberVarName(final String amtMemberVarName) {
+    public final void setVotesAmtMemberVarName(final String amtMemberVarName) {
         this.votesAmtMemberVarName = amtMemberVarName;
     }
 
-    public void setVotesListMemberVarName(final String listMemberVarName) {
+    public final void setVotesListMemberVarName(final String listMemberVarName) {
         this.votesListMemberVarName = listMemberVarName;
     }
 
-    public void setLoopboundHandler(final CodeGenLoopBoundHandler generatedLoopBoundHandler) {
+    public final void setLoopboundHandler(final CodeGenLoopBoundHandler generatedLoopBoundHandler) {
         this.loopBoundHandler = generatedLoopBoundHandler;
     }
 
-    public void addInfo(final String varName, final String info) {
+    public final void addInfo(final String varName, final String info) {
         varNamesToInfo.put(varName, info);
     }
 
-    public String getInfo(final String varName) {
+    public final String getInfo(final String varName) {
         return varNamesToInfo.get(varName);
     }
 
-    public boolean hasInfo(final String varName) {
+    public final boolean hasInfo(final String varName) {
         return varNamesToInfo.containsKey(varName);
     }
 
-    public void setResultAmtMemberVarName(final String amtName) {
+    public final void setResultAmtMemberVarName(final String amtName) {
         resultAmtMemberVarName = amtName;
     }
 
-    public String getResultAmtMemberVarName() {
+    public final String getResultAmtMemberVarName() {
         return resultAmtMemberVarName;
     }
 
-    public void setResultListMemberVarName(final String listName) {
+    public final void setResultListMemberVarName(final String listName) {
         resultListMemberVarName = listName;
     }
 
-    public String getResultListMemberVarName() {
+    public final String getResultListMemberVarName() {
         return resultListMemberVarName;
     }
 }

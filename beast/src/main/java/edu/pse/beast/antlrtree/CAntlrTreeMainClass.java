@@ -14,22 +14,27 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 
 public class CAntlrTreeMainClass {
+    private static final String LINE_BREAK = "\n";
+
     private static final String ANTLR_AST = "Antlr AST";
 
     private static final String CODE =
-            "    unsigned int i = 0;\n"
-                    + "    unsigned int j = 0;\n"
-                    + "    for (i = 0; i < C; i++) {\n"
-                    + "        result[i] = 0;\n" + "    }\n"
-                    + "    for (i = 0; i < V; i++) {\n"
-                    + "        for (j = 0; j < C; j++) {\n"
-                    + "            if (votes[i][j] < C) {\n"
-                    + "                result[votes[i][j]] += (C - j) - 1;\n"
-                    + "            }\n" + "        }\n" + "    }";
+            "    unsigned int i = 0;" + LINE_BREAK
+            + "    unsigned int j = 0;" + LINE_BREAK
+            + "    for (i = 0; i < C; i++) {" + LINE_BREAK
+            + "        result[i] = 0;\n" + "    }" + LINE_BREAK
+            + "    for (i = 0; i < V; i++) {" + LINE_BREAK
+            + "        for (j = 0; j < C; j++) {" + LINE_BREAK
+            + "            if (votes[i][j] < C) {" + LINE_BREAK
+            + "                result[votes[i][j]] += (C - j) - 1;" + LINE_BREAK
+            + "            }" + LINE_BREAK
+            + "        }" + LINE_BREAK
+            + "    }";
 
     private static final String LOOP =
-            "for (int i = 0; i < C; i++) {\n"
-                    + "        result[i] = 0;\n" + "}\n";
+            "for (int i = 0; i < C; i++) {" + LINE_BREAK
+            + "        result[i] = 0;" + LINE_BREAK
+            + "}" + LINE_BREAK;
 
     public static void main(final String[] args) {
         final CLexer l = new CLexer(CharStreams.fromString(LOOP));

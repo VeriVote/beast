@@ -21,6 +21,25 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class WorkspaceSaverLoaderTest {
 
+    private static TestConfiguration createTestConfig(final CElectionDescription descr,
+                                                      final PreAndPostConditionsDescription prop) {
+        final CBMCTestConfiguration cc = new CBMCTestConfiguration();
+        cc.setMinVoters(5);
+        cc.setMinCands(5);
+        cc.setMinSeats(5);
+        cc.setMaxCands(5);
+        cc.setMaxVoters(5);
+        cc.setMaxSeats(5);
+        cc.setDescr(descr);
+        cc.setPropDescr(prop);
+        cc.setName("test five");
+
+        final TestConfiguration testConfig = new TestConfiguration(descr, prop, "test");
+        testConfig.addCBMCTestConfiguration(cc);
+        cc.setStartRunsOnCreation(false);
+        return testConfig;
+    }
+
     @Test
     public void testSavingLoading() throws IOException {
         new BeastWorkspace();
@@ -53,27 +72,7 @@ public class WorkspaceSaverLoaderTest {
             e.printStackTrace();
         }
 
-        final CBMCTestConfiguration cc = new CBMCTestConfiguration();
-
-        cc.setMinVoters(5);
-        cc.setMinCands(5);
-        cc.setMinSeats(5);
-
-        cc.setMaxCands(5);
-        cc.setMaxVoters(5);
-        cc.setMaxSeats(5);
-
-        cc.setDescr(descr);
-        cc.setPropDescr(propDescr);
-
-        cc.setName("test five");
-
-        final TestConfiguration testConfig =
-                new TestConfiguration(descr, propDescr, "test");
-        testConfig.addCBMCTestConfiguration(cc);
-
-        cc.setStartRunsOnCreation(false);
-
+        final TestConfiguration testConfig = createTestConfig(descr, propDescr);
         final CodeGenOptions codeGenOptions = new CodeGenOptions();
         codeGenOptions.setCbmcAmountMaxCandidatesVarName("C");
         codeGenOptions.setCbmcAmountMaxVotersVarName("V");

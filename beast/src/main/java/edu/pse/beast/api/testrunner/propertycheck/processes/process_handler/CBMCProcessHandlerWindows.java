@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
@@ -30,21 +29,19 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
         this.vsCmdPath = PATH_SEP + vsCmdPathString + PATH_SEP;
     }
 
-    public String getVsCmdPath() {
+    public final String getVsCmdPath() {
         return vsCmdPath;
     }
 
-    public void setVsCmdPath(final String vsCmdPathString) {
+    public final void setVsCmdPath(final String vsCmdPathString) {
         this.vsCmdPath = vsCmdPathString;
     }
 
     @Override
-    public Process startCheckForParam(final String sessionUUID,
-                                      final int v, final int c, final int s,
-                                      final String uuid, final CBMCTestCallback cb,
-                                      final File cbmcFile, final String loopBounds,
-                                      final CodeGenOptions codeGenOptions,
-                                      final PathHandler pathHandler) throws IOException {
+    public final Process startCheckForParam(final int v, final int c, final int s,
+                                            final File cbmcFile, final String loopBounds,
+                                            final CodeGenOptions codeGenOptions,
+                                            final PathHandler pathHandler) throws IOException {
         final String cbmcPath =
                 new File(pathHandler.getBaseDir().getAbsolutePath()
                         + RELATIVE_PATH_TO_CBMC).getPath();
@@ -64,12 +61,12 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
     }
 
     @Override
-    public CBMCProcessStarterType getType() {
+    public final CBMCProcessStarterType getType() {
         return CBMCProcessStarterType.WINDOWS;
     }
 
     @Override
-    public void endProcess(final Process p) {
+    public final void endProcess(final Process p) {
         throw new NotImplementedException();
     }
 }

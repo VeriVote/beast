@@ -31,11 +31,11 @@ public class TestConfigGuiController {
         this.beastWorkspace = workspace;
     }
 
-    public AnchorPane getTopLevelAnchorPane() {
+    public final AnchorPane getTopLevelAnchorPane() {
         return topLevelAnchorPane;
     }
 
-    public void display(final TestConfiguration config) {
+    public final void display(final TestConfiguration config) {
         nameTextField.setText(config.getName());
         descrChoiceBox.getItems().clear();
         descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());

@@ -57,25 +57,26 @@ public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
                                                  codeFile.getCodeInfo());
     }
 
-    public void setAndInitializeWorkUnit(final CBMCPropertyCheckWorkUnit cbmcWorkUnit,
-                                         final PathHandler pathHandler) {
+    public final void setAndInitializeWorkUnit(final CBMCPropertyCheckWorkUnit cbmcWorkUnit,
+                                               final PathHandler pathHandler) {
         if (cbmcWorkUnit.getProcessStarterSource() == null) {
             return;
         }
-        cbmcWorkUnit.initialize(v, s, c, codeGenerationOptions, loopBounds,
-                cbmcCodeFile, description, propertyDescription, this, pathHandler);
+        final BoundValues bounds = new BoundValues(c, s, v);
+        final CBMCPropertyCheckWorkUnit.ElectionAndProperty elecAndProp =
+                new CBMCPropertyCheckWorkUnit.ElectionAndProperty(description, propertyDescription);
+        cbmcWorkUnit.initialize(bounds, codeGenerationOptions, loopBounds,
+                                cbmcCodeFile, elecAndProp, this, pathHandler);
         this.workUnit = cbmcWorkUnit;
     }
 
     @Override
-    public void onPropertyTestRawOutput(final String sessionUUID,
-                                        final CElectionDescription descr,
-                                        final PreAndPostConditionsDescription propertyDescr,
-                                        final int seatAmount,
-                                        final int candidateAmount,
-                                        final int voteAmount,
-                                        final String uuid,
-                                        final String output) {
+    public final void onPropertyTestRawOutput(final String sessionUUID,
+                                              final CElectionDescription descr,
+                                              final PreAndPostConditionsDescription propertyDescr,
+                                              final BoundValues bounds,
+                                              final String uuid,
+                                              final String output) {
         final CBMCJsonMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
         System.out.println(msg);
     }

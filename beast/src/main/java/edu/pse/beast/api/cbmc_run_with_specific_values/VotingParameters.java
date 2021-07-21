@@ -18,7 +18,7 @@ public interface VotingParameters {
 
     int getS();
 
-    String generateVoteStructInitCode(ElectionTypeCStruct voteInputStruct,
+    String genVoteStructInitCode(ElectionTypeCStruct voteInputStruct,
                                       CodeGenOptions options,
                                       CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
                                       String generatedVarName);

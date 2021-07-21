@@ -60,7 +60,7 @@ public class TestConfigCategoryGUIController
     }
 
     @FXML
-    public void initialize() {
+    public final void initialize() {
         createTestConfigButton.setOnAction(e -> {
             createTestConfig();
         });
@@ -85,7 +85,7 @@ public class TestConfigCategoryGUIController
                         deleteConfigButton.setDisable(false);
                     }
                     if (n == o) {
-                        System.out.println("anotha oen");
+                        System.out.println("Another one.");
                     }
                 });
         loadDescrButton.setOnAction(e -> {
@@ -108,7 +108,7 @@ public class TestConfigCategoryGUIController
         }
     }
 
-    public AnchorPane getTopLevelAnchorPane() {
+    public final AnchorPane getTopLevelAnchorPane() {
         return topLevelAnchorPane;
     }
 
@@ -150,23 +150,23 @@ public class TestConfigCategoryGUIController
         testConfigListView.getSelectionModel().selectFirst();
     }
 
-    public void display(final String category) {
+    public final void display(final String category) {
         currentCategory = category;
         updateView();
     }
 
     @Override
-    public void handleWorkspaceUpdateGeneric() {
+    public final void handleWorkspaceUpdateGeneric() {
         updateView();
     }
 
     @Override
-    public void handleAddedTestConfig(final TestConfiguration tc) {
+    public final void handleAddedTestConfig(final TestConfiguration tc) {
         updateView();
     }
 
     @Override
-    public void handleAddedPropDescr(final PreAndPostConditionsDescription propDescr) {
+    public final void handleAddedPropDescr(final PreAndPostConditionsDescription propDescr) {
         updateView();
     }
 }

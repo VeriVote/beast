@@ -14,21 +14,21 @@ public class SymbVarByPosExp extends SymbolicCBMCVarExp {
         this.accessingNumber = accNumber;
     }
 
-    public CBMCVarType getVarType() {
+    public final CBMCVarType getVarType() {
         return variableType;
     }
 
-    public int getAccessingNumber() {
+    public final int getAccessingNumber() {
         return accessingNumber;
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitSymbVarByPosExp(this);
     }
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         // TODO Auto-generated method stub
         return null;
     }

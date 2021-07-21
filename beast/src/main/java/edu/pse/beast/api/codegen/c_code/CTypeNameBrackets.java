@@ -13,19 +13,19 @@ public class CTypeNameBrackets {
         this.brackets = bracketsString;
     }
 
-    public String generateCode() {
+    public final String generateCode() {
         return type + " " + name + brackets;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getType() {
+    public final String getType() {
         return type;
     }
 
-    public String getBrackets() {
+    public final String getBrackets() {
         return brackets;
     }
 }

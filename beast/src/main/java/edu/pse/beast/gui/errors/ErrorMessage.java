@@ -9,19 +9,19 @@ public class ErrorMessage {
         this.msg = messageString;
     }
 
-    public String getTitle() {
+    public final String getTitle() {
         return title;
     }
 
-    public void setTitle(final String titleString) {
+    public final void setTitle(final String titleString) {
         this.title = titleString;
     }
 
-    public String getMsg() {
+    public final String getMsg() {
         return msg;
     }
 
-    public void setMsg(final String messageString) {
+    public final void setMsg(final String messageString) {
         this.msg = messageString;
     }
 }

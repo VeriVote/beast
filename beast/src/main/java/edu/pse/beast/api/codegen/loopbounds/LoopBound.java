@@ -37,13 +37,13 @@ public class LoopBound {
         this.manualBoundIfNeeded = manualBoundValue;
     }
 
-    public static LoopBound codeGenLoopbound(final LoopBoundType type) {
+    public static final LoopBound codeGenLoopbound(final LoopBoundType type) {
         final LoopBound bound = new LoopBound();
         bound.loopBoundType = type;
         return bound;
     }
 
-    public static List<LoopBound> codeGenLoopboundList(final List<LoopBoundType> types) {
+    public static final List<LoopBound> codeGenLoopboundList(final List<LoopBoundType> types) {
         final List<LoopBound> created = new ArrayList<>();
         for (final LoopBoundType lbt : types) {
             created.add(codeGenLoopbound(lbt));
@@ -51,7 +51,7 @@ public class LoopBound {
         return created;
     }
 
-    public String getUnwindString(final int v, final int c, final int s) {
+    public final String getUnwindString(final int v, final int c, final int s) {
         final int bound;
         switch (loopBoundType) {
         case NECESSARY_LOOP_BOUND_AMT_VOTERS:
@@ -78,47 +78,47 @@ public class LoopBound {
         return currentUnwindArgument;
     }
 
-    public List<LoopBound> getChildren() {
+    public final List<LoopBound> getChildren() {
         return children;
     }
 
-    public String getFunctionName() {
+    public final String getFunctionName() {
         return functionName;
     }
 
-    public LoopBoundType getLoopBoundType() {
+    public final LoopBoundType getLoopBoundType() {
         return loopBoundType;
     }
 
-    public int getIndex() {
+    public final int getIndex() {
         return index;
     }
 
-    public int getManualBoundIfNeeded() {
+    public final int getManualBoundIfNeeded() {
         return manualBoundIfNeeded;
     }
 
-    public void setChildren(final List<LoopBound> loopBoundChildrenList) {
+    public final void setChildren(final List<LoopBound> loopBoundChildrenList) {
         this.children = loopBoundChildrenList;
     }
 
-    public void setFunctionName(final String funcNameString) {
+    public final void setFunctionName(final String funcNameString) {
         this.functionName = funcNameString;
     }
 
-    public void setLoopBoundType(final LoopBoundType typeOfLoopBound) {
+    public final void setLoopBoundType(final LoopBoundType typeOfLoopBound) {
         this.loopBoundType = typeOfLoopBound;
     }
 
-    public void setIndex(final int indexNumber) {
+    public final void setIndex(final int indexNumber) {
         this.index = indexNumber;
     }
 
-    public void setManualBoundIfNeeded(final int manualBound) {
+    public final void setManualBoundIfNeeded(final int manualBound) {
         this.manualBoundIfNeeded = manualBound;
     }
 
-    public void incrementIndexBy(final int amt) {
+    public final void incrementIndexBy(final int amt) {
         index += amt;
     }
 }

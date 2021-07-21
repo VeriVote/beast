@@ -11,15 +11,15 @@ public class TypeManager {
 
     private List<ElectionTypeCStruct> elecTypeCStructs = new ArrayList<>();
 
-    public CStruct getCStructForVotingType(final CElectionVotingType votingType) {
+    public final CStruct getCStructForVotingType(final CElectionVotingType votingType) {
         return null;
     }
 
-    public void add(final ElectionTypeCStruct electionTypeCStruct) {
+    public final void add(final ElectionTypeCStruct electionTypeCStruct) {
         this.elecTypeCStructs.add(electionTypeCStruct);
     }
 
-    public static String simpleTypeToCType(final CElectionSimpleTypes simpleType) {
+    public static final String simpleTypeToCType(final CElectionSimpleTypes simpleType) {
         final String type;
         switch (simpleType) {
         case INT:

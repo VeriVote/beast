@@ -84,8 +84,10 @@ public class CBMCTestRunSaverLoaderHelper {
                 CodeGenOptionsSaverLoaderHelper
                 .codeGenOptionsFromJSON(json.getJSONObject(CODE_GEN_OPTIONS_KEY));
         final String loopbounds = json.getString(LOOP_BOUND_LIST_KEY);
+        final CBMCTestRunWithSymbolicVars.BoundValues bounds =
+                new CBMCTestRunWithSymbolicVars.BoundValues(c, s, v);
         final CBMCTestRunWithSymbolicVars cbmcTestRun =
-                new CBMCTestRunWithSymbolicVars(v, s, c, codeGenOptions, loopbounds,
+                new CBMCTestRunWithSymbolicVars(bounds, codeGenOptions, loopbounds,
                                                 codeFileData, descr, propDescr, tc);
 
         final String testRunLogs = json.getString(TEST_RUN_LOGS_KEY);

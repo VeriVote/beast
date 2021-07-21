@@ -35,12 +35,12 @@ public class OptionsGUIController {
         }
     }
 
-    public List<OptionsCategoryGUI> getCategories() {
+    public final List<OptionsCategoryGUI> getCategories() {
         return categories;
     }
 
     @FXML
-    public void initialize() {
+    public final void initialize() {
         for (final OptionsCategoryGUI cat : categories) {
             optionsCategoryListview.getItems().add(cat);
         }
@@ -57,11 +57,11 @@ public class OptionsGUIController {
         category.displayOptions(currentOptionDisplayAnchorpane);
     }
 
-    public void display() {
+    public final void display() {
         optionStage.showAndWait();
     }
 
-    public void saveOptions() {
+    public final void saveOptions() {
         try {
             OptionsSaverLoader.saveOptions(optionsSaveFile, categories);
         } catch (IOException e) {

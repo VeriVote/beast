@@ -14,7 +14,7 @@ public class CStruct {
         this.members = memberList;
     }
 
-    public String generateDefCode() {
+    public final String generateDefCode() {
         final List<String> memberList = new ArrayList<>();
         for (final CTypeNameBrackets member : members) {
             memberList.add(member.generateCode() + ";");
@@ -24,11 +24,11 @@ public class CStruct {
                 .replace("MEMBER_LIST", String.join("\n", memberList));
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public List<CTypeNameBrackets> getMembers() {
+    public final List<CTypeNameBrackets> getMembers() {
         return members;
     }
 }

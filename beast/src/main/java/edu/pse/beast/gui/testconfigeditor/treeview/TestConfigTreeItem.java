@@ -11,11 +11,11 @@ public class TestConfigTreeItem extends TestConfigTreeItemSuper {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return testConfiguration.getName();
     }
 
-    public TestConfiguration getTestConfig() {
+    public final TestConfiguration getTestConfig() {
         return testConfiguration;
     }
 }

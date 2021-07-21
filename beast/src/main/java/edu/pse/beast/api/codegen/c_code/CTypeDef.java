@@ -9,7 +9,7 @@ public class CTypeDef {
         this.newTypeName = newTypeNameString;
     }
 
-    public String generateCode() {
+    public final String generateCode() {
         return "typedef " + type + " " + newTypeName + ";";
     }
 }

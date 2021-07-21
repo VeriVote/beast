@@ -19,40 +19,40 @@ public class BeastError {
         exception = exc;
     }
 
-    public Exception getException() {
+    public final Exception getException() {
         return exception;
     }
 
-    public void setException(final Exception exc) {
+    public final void setException(final Exception exc) {
         this.exception = exc;
     }
 
-    public String getOther() {
+    public final String getOther() {
         return other;
     }
 
-    public void setOther(final String otherString) {
+    public final void setOther(final String otherString) {
         this.other = otherString;
     }
 
-    public BeastErrorTypes getErrorType() {
+    public final BeastErrorTypes getErrorType() {
         return errorTypes;
     }
 
-    public void setErrorType(final BeastErrorTypes errorType) {
+    public final void setErrorType(final BeastErrorTypes errorType) {
         this.errorTypes = errorType;
     }
 
-    public ErrorMessage getErrorMessage() {
+    public final ErrorMessage getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(final ErrorMessage errorMsg) {
+    public final void setErrorMessage(final ErrorMessage errorMsg) {
         this.errorMessage = errorMsg;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return errorMessage.getTitle();
     }
 }

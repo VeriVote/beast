@@ -12,16 +12,16 @@ public class BooleanExpIsEmptyNode extends BooleanExpressionNode {
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitEmptyNode(this);
     }
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         return "EMPTY " + innerNode.getTreeString(depth + 1);
     }
 
-    public TypeExpression getInnerNode() {
+    public final TypeExpression getInnerNode() {
         return innerNode;
     }
 }

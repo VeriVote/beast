@@ -10,19 +10,19 @@ public abstract class OptionsCategoryGUI {
         this.category = categoryType;
     }
 
-    public OptionsGUIController getOptionsGUIController() {
+    public final OptionsGUIController getOptionsGUIController() {
         return optionsGUIController;
     }
 
-    public void setOptionsGUIController(final OptionsGUIController optGUIController) {
+    public final void setOptionsGUIController(final OptionsGUIController optGUIController) {
         this.optionsGUIController = optGUIController;
     }
 
-    public OptionsCategoryType getCategory() {
+    public final OptionsCategoryType getCategory() {
         return category;
     }
 
-    protected void displayOptionsAnchorpane(final AnchorPane optionsPane,
+    protected final void displayOptionsAnchorpane(final AnchorPane optionsPane,
                                             final AnchorPane topLevelPane) {
         optionsPane.getChildren().add(topLevelPane);
         AnchorPane.setTopAnchor(topLevelPane, 0.0d);
@@ -34,7 +34,7 @@ public abstract class OptionsCategoryGUI {
     public abstract void displayOptions(AnchorPane currentOptionDisplayAnchorpane);
 
     @Override
-    public String toString() {
+    public final String toString() {
         return category.toString();
     }
 }

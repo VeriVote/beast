@@ -32,137 +32,137 @@ public class CBMCTestConfiguration {
         uuid = UUID.randomUUID().toString();
     }
 
-    public void addRuns(final List<CBMCTestRunWithSymbolicVars> runList) {
+    public final void addRuns(final List<CBMCTestRunWithSymbolicVars> runList) {
         this.runs.addAll(runList);
     }
 
-    public int getMinCands() {
+    public final int getMinCands() {
         return minCands;
     }
 
-    public int getMinVoters() {
+    public final int getMinVoters() {
         return minVoters;
     }
 
-    public int getMinSeats() {
+    public final int getMinSeats() {
         return minSeats;
     }
 
-    public int getMaxCands() {
+    public final int getMaxCands() {
         return maxCands;
     }
 
-    public int getMaxVoters() {
+    public final int getMaxVoters() {
         return maxVoters;
     }
 
-    public int getMaxSeats() {
+    public final int getMaxSeats() {
         return maxSeats;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public CElectionDescription getDescr() {
+    public final CElectionDescription getDescr() {
         return description;
     }
 
-    public PreAndPostConditionsDescription getPropDescr() {
+    public final PreAndPostConditionsDescription getPropDescr() {
         return propertyDescription;
     }
 
-    public void setMinCands(final int minCandidateAmount) {
+    public final void setMinCands(final int minCandidateAmount) {
         this.minCands = minCandidateAmount;
         if (maxCands < minCandidateAmount) {
             maxCands = minCandidateAmount;
         }
     }
 
-    public void setMaxCands(final int maxCandidateAmount) {
+    public final void setMaxCands(final int maxCandidateAmount) {
         this.maxCands = maxCandidateAmount;
         if (maxCandidateAmount < minCands) {
             minCands = maxCandidateAmount;
         }
     }
 
-    public void setMinVoters(final int minVoterAmount) {
+    public final void setMinVoters(final int minVoterAmount) {
         this.minVoters = minVoterAmount;
         if (maxVoters < minVoterAmount) {
             maxVoters = minVoterAmount;
         }
     }
 
-    public void setMaxVoters(final int maxVoterAmount) {
+    public final void setMaxVoters(final int maxVoterAmount) {
         this.maxVoters = maxVoterAmount;
         if (maxVoterAmount < minVoters) {
             minVoters = maxVoterAmount;
         }
     }
 
-    public void setMinSeats(final int minSeatAmount) {
+    public final void setMinSeats(final int minSeatAmount) {
         this.minSeats = minSeatAmount;
         if (maxSeats < minSeatAmount) {
             maxSeats = minSeatAmount;
         }
     }
 
-    public void setMaxSeats(final int maxSeatAmount) {
+    public final void setMaxSeats(final int maxSeatAmount) {
         this.maxSeats = maxSeatAmount;
         if (maxSeatAmount < minSeats) {
             minSeats = maxSeatAmount;
         }
     }
 
-    public void setName(final String nameString) {
+    public final void setName(final String nameString) {
         this.name = nameString;
     }
 
-    public void setDescr(final CElectionDescription descr) {
+    public final void setDescr(final CElectionDescription descr) {
         this.description = descr;
     }
 
-    public void setPropDescr(final PreAndPostConditionsDescription propDescr) {
+    public final void setPropDescr(final PreAndPostConditionsDescription propDescr) {
         this.propertyDescription = propDescr;
     }
 
-    public boolean getStartRunsOnCreation() {
+    public final boolean getStartRunsOnCreation() {
         return startRunsOnCreation;
     }
 
-    public void setStartRunsOnCreation(final boolean startOnCreation) {
+    public final void setStartRunsOnCreation(final boolean startOnCreation) {
         this.startRunsOnCreation = startOnCreation;
     }
 
-    public void addRun(final CBMCTestRunWithSymbolicVars run) {
+    public final void addRun(final CBMCTestRunWithSymbolicVars run) {
         runs.add(run);
     }
 
-    public List<CBMCTestRunWithSymbolicVars> getRuns() {
+    public final List<CBMCTestRunWithSymbolicVars> getRuns() {
         return runs;
     }
 
-    public void handleDescrCodeChange() {
+    public final void handleDescrCodeChange() {
         for (final CBMCTestRunWithSymbolicVars r : runs) {
             r.handleDescrCodeChange();
         }
     }
 
-    public void handlePropDescrChanged() {
+    public final void handlePropDescrChanged() {
         for (final CBMCTestRunWithSymbolicVars r : runs) {
             r.handlePropDescrChanged();
         }
     }
 
-    public String getUuid() {
+    public final String getUuid() {
         return uuid;
     }
 
-    public void setUuid(final String uuidString) {
+    public final void setUuid(final String uuidString) {
         this.uuid = uuidString;
     }
 
-    public void deleteRun(final CBMCTestRunWithSymbolicVars run) {
+    public final void deleteRun(final CBMCTestRunWithSymbolicVars run) {
         runs.remove(run);
     }
 }

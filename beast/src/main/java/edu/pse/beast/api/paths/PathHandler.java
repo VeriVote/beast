@@ -5,38 +5,38 @@ import java.io.File;
 import edu.pse.beast.api.savingloading.RelativePathConverter;
 
 public class PathHandler implements RelativePathConverter {
+    private static final String REL_PATH_TO_SAVE_FILES = "./saveFiles/";
+
+    private static final String REL_PATH_TO_WORKSPACE_SAVE_FILES = "./workspaces/";
+    private static final String REL_PATH_TO_DESCR_SAVE_FILES = "./electionDescriptions/";
+    private static final String REL_PATH_TO_PROP_DESCR_SAVE_FILES = "./propertyDescriptions/";
+
+    private static final String REL_PATH_TO_OPTIONS_FILE = "./.beastoptions";
+
     private String baseDir;
-
-    private String relPathToSaveFiles = "./saveFiles/";
-
-    private String relPathToWorkspaceSaveFiles = "./workspaces/";
-    private String relPathToDescrSaveFiles = "./electionDescriptions/";
-    private String relPathToPropDescrSaveFiles = "./propertyDescriptions/";
-
-    private final String relPathToOptionsFile = "./.beastoptions";
 
     public PathHandler() {
         tryload();
     }
 
-    public File getBaseDir() {
+    public final File getBaseDir() {
         return new File(baseDir);
     }
 
-    public File getWorkspaceDir() {
-        return new File(baseDir + relPathToSaveFiles + relPathToWorkspaceSaveFiles);
+    public final File getWorkspaceDir() {
+        return new File(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_WORKSPACE_SAVE_FILES);
     }
 
-    public File getElectionDescrDir() {
-        return new File(baseDir + relPathToSaveFiles + relPathToDescrSaveFiles);
+    public final File getElectionDescrDir() {
+        return new File(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_DESCR_SAVE_FILES);
     }
 
-    public File getPropDescrDir() {
-        return new File(baseDir + relPathToSaveFiles + relPathToPropDescrSaveFiles);
+    public final File getPropDescrDir() {
+        return new File(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_PROP_DESCR_SAVE_FILES);
     }
 
-    public File getOptionsFile() {
-        return new File(baseDir + relPathToOptionsFile);
+    public final File getOptionsFile() {
+        return new File(baseDir + REL_PATH_TO_OPTIONS_FILE);
     }
 
     private void tryload() {
@@ -53,12 +53,12 @@ public class PathHandler implements RelativePathConverter {
     }
 
     @Override
-    public String getRelativePathTo(final File f) {
+    public final String getRelativePathTo(final File f) {
         return new File(baseDir).toURI().relativize(f.toURI()).getPath();
     }
 
     @Override
-    public File getFileFromRelativePath(final String relativePath) {
+    public final File getFileFromRelativePath(final String relativePath) {
         return new File(baseDir + relativePath);
     }
 }

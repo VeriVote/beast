@@ -23,18 +23,18 @@ public interface CBMCTestCallback {
 
     default void onPropertyTestAddedToQueue(CElectionDescription description,
                                             PreAndPostConditionsDescription propertyDescr,
-                                            int s, int c, int v, String uuid) {
+                                            BoundValues bounds, String uuid) {
     }
 
     default void onPropertyTestStart(CElectionDescription description,
                                      PreAndPostConditionsDescription propertyDescr,
-                                     int s, int c, int v, String uuid) {
+                                     BoundValues bounds, String uuid) {
     }
 
     default void onPropertyTestRawOutput(String sessionUUID,
                                          CElectionDescription description,
                                          PreAndPostConditionsDescription propertyDescr,
-                                         int s, int c, int v, String uuid, String output) {
+                                         BoundValues bounds, String uuid, String output) {
     }
 
     default void onTestFileCreated(String sessionUUID,
@@ -45,7 +45,7 @@ public interface CBMCTestCallback {
 
     default void onCompleteCommand(CElectionDescription description,
                                    PreAndPostConditionsDescription propertyDescr,
-                                   int v, int c, int s, String uuid,
+                                   BoundValues bounds, String uuid,
                                    String completeCommand) {
     }
 
@@ -57,17 +57,31 @@ public interface CBMCTestCallback {
 
     default void onPropertyTestFinished(CElectionDescription description,
                                         PreAndPostConditionsDescription propertyDescr,
-                                        int s, int c, int v, String uuid) {
+                                        BoundValues bounds, String uuid) {
     }
 
     default void onPropertyTestRawOutputComplete(CElectionDescription description,
                                                  PreAndPostConditionsDescription propertyDescr,
-                                                 int s, int c, int v,
+                                                 BoundValues bounds,
                                                  String uuid, List<String> cbmcOutput) {
     }
 
     default void onPropertyTestStopped(CElectionDescription descr,
                                        PreAndPostConditionsDescription propertyDescr,
-                                       int s, int c, int v, String uuid) {
+                                       BoundValues bounds, String uuid) {
+    }
+
+    class BoundValues {
+        public final int candidates;
+        public final int seats;
+        public final int voters;
+
+        public BoundValues(final int candidateAmount,
+                           final int seatAmount,
+                           final int voteAmount) {
+            this.candidates = candidateAmount;
+            this.seats = seatAmount;
+            this.voters = voteAmount;
+        }
     }
 }

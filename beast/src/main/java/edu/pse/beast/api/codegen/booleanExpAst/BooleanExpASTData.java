@@ -11,6 +11,7 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
 /**
  * An AST which represents a boolean expression.
+ *
  * @author Holger Klein
  *
  */
@@ -21,39 +22,39 @@ public class BooleanExpASTData {
     private Map<SymbolicCBMCVar, Set<Integer>> accessingVarsToVotes = new HashMap<>();
     private Map<SymbolicCBMCVar, Set<Integer>> accessingVarsToElects = new HashMap<>();
 
-    public Map<SymbolicCBMCVar, Set<Integer>> getAccessingVarsToElects() {
+    public final Map<SymbolicCBMCVar, Set<Integer>> getAccessingVarsToElects() {
         return accessingVarsToElects;
     }
 
-    public Map<SymbolicCBMCVar, Set<Integer>> getAccessingVarsToVotes() {
+    public final Map<SymbolicCBMCVar, Set<Integer>> getAccessingVarsToVotes() {
         return accessingVarsToVotes;
     }
 
-    public void setHighestElect(final int highestElectNumber) {
+    public final void setHighestElect(final int highestElectNumber) {
         this.highestElect = highestElectNumber;
     }
 
-    public int getHighestElect() {
+    public final int getHighestElect() {
         return highestElect;
     }
 
-    public void setHighestVote(final int highestVoteNumber) {
+    public final void setHighestVote(final int highestVoteNumber) {
         this.highestVote = highestVoteNumber;
     }
 
-    public int getHighestVote() {
+    public final int getHighestVote() {
         return highestVote;
     }
 
-    public void setTopAstNode(final BooleanExpListNode topBoolExpAstNode) {
+    public final void setTopAstNode(final BooleanExpListNode topBoolExpAstNode) {
         this.topAstNode = topBoolExpAstNode;
     }
 
-    public BooleanExpListNode getTopAstNode() {
+    public final BooleanExpListNode getTopAstNode() {
         return topAstNode;
     }
 
-    public int getHighestVoteOrElect() {
+    public final int getHighestVoteOrElect() {
         return Math.max(highestElect, highestVote);
     }
 
@@ -66,15 +67,15 @@ public class BooleanExpASTData {
         map.get(var).add(number);
     }
 
-    public void voteAccessedBy(final List<SymbolicCBMCVar> accessingVars,
-                               final int number) {
+    public final void voteAccessedBy(final List<SymbolicCBMCVar> accessingVars,
+                                     final int number) {
         for (final SymbolicCBMCVar var : accessingVars) {
             addAccessingVar(var, number, accessingVarsToVotes);
         }
     }
 
-    public void electAccessedBy(final List<SymbolicCBMCVar> accessingVars,
-                                final int number) {
+    public final void electAccessedBy(final List<SymbolicCBMCVar> accessingVars,
+                                      final int number) {
         for (final SymbolicCBMCVar var : accessingVars) {
             addAccessingVar(var, number, accessingVarsToElects);
         }

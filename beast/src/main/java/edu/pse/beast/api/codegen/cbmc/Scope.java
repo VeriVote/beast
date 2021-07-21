@@ -8,11 +8,11 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 public class Scope {
     private Map<String, SymbolicCBMCVar.CBMCVarType> containedVars = new HashMap<>();
 
-    public void add(final SymbolicCBMCVar var) {
+    public final void add(final SymbolicCBMCVar var) {
         containedVars.put(var.getName(), var.getVarType());
     }
 
-    public CBMCVarType getType(final String name) {
+    public final CBMCVarType getType(final String name) {
         if (containedVars.containsKey(name)) {
             return containedVars.get(name);
         }

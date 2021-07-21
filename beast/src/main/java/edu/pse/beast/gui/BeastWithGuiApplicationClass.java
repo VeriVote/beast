@@ -15,7 +15,7 @@ public class BeastWithGuiApplicationClass extends Application {
     }
 
     @Override
-    public void start(final Stage primaryStage) throws Exception {
+    public final void start(final Stage primaryStage) throws Exception {
         final FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(FXML_RESOURCE_NAME));
         loader.setController(controller);
@@ -26,7 +26,7 @@ public class BeastWithGuiApplicationClass extends Application {
     }
 
     @Override
-    public void stop() throws Exception {
+    public final void stop() throws Exception {
         controller.shutdown();
     }
 }

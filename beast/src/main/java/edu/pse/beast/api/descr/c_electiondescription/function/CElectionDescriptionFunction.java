@@ -20,42 +20,42 @@ public abstract class CElectionDescriptionFunction {
         this.name = nameString;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public String getCode() {
+    public final String getCode() {
         return String.join(LINE_BREAK, code);
     }
 
-    public void setCode(final String codeString) {
+    public final void setCode(final String codeString) {
         this.code = Arrays.asList(codeString.split(LINE_BREAK));
     }
 
-    public void setName(final String nameString) {
+    public final void setName(final String nameString) {
         this.name = nameString;
     }
 
-    public List<String> getCodeAsList() {
+    public final List<String> getCodeAsList() {
         return code;
     }
 
     public abstract String getDeclCString(CodeGenOptions codeGenOptions);
 
     @Override
-    public String toString() {
+    public final String toString() {
         return name;
     }
 
-    public List<ExtractedCLoop> getExtractedLoops() {
+    public final List<ExtractedCLoop> getExtractedLoops() {
         return extractedLoops;
     }
 
-    public void setExtractedLoops(final List<ExtractedCLoop> extractedLoopList) {
+    public final void setExtractedLoops(final List<ExtractedCLoop> extractedLoopList) {
         this.extractedLoops = extractedLoopList;
     }
 
-    public boolean allLoopsDescribed() {
+    public final boolean allLoopsDescribed() {
         boolean res;
         if (extractedLoops.isEmpty()) {
             res = AntlrCLoopParser.getAmtLoops(getCode()) == 0;

@@ -10,16 +10,16 @@ public class CBMCJsonMessage {
         this.msg = messageString;
     }
 
-    public String getMsg() {
+    public final String getMsg() {
         return msg;
     }
 
-    public String getType() {
+    public final String getType() {
         return type;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return msg;
     }
 }

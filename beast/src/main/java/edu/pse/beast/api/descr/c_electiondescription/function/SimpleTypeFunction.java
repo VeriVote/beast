@@ -45,7 +45,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     }
 
     @Override
-    public String getDeclCString(final CodeGenOptions codeGenOptions) {
+    public final String getDeclCString(final CodeGenOptions codeGenOptions) {
         final String template = "RETURN_TYPE NAME(ARGS)";
         final String args = getArgString();
         return template.replaceAll("RETURN_TYPE", outputType.toString())
@@ -54,11 +54,11 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     }
 
     @Override
-    public String getReturnText(final CodeGenOptions codeGenOptions) {
+    public final String getReturnText(final CodeGenOptions codeGenOptions) {
         return "}";
     }
 
-    public CFunction toCFunc() {
+    public final CFunction toCFunc() {
         final List<String> args = getArgs();
         final CFunction created =
                 new CFunction(getName(), args, outputType.toString());
@@ -66,15 +66,15 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
         return created;
     }
 
-    public CElectionSimpleTypes getOutputType() {
+    public final CElectionSimpleTypes getOutputType() {
         return outputType;
     }
 
-    public List<String> getArgNames() {
+    public final List<String> getArgNames() {
         return argNames;
     }
 
-    public List<CElectionSimpleTypes> getArgTypes() {
+    public final List<CElectionSimpleTypes> getArgTypes() {
         return argTypes;
     }
 }

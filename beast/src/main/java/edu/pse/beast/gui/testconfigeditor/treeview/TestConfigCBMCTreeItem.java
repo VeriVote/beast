@@ -11,11 +11,11 @@ public class TestConfigCBMCTreeItem extends TestConfigTreeItemSuper {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return cbmcPropertyTestConfiguration.getName();
     }
 
-    public CBMCTestConfiguration getCbmcPropertyTestConfiguration() {
+    public final CBMCTestConfiguration getCbmcPropertyTestConfiguration() {
         return cbmcPropertyTestConfiguration;
     }
 }

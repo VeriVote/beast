@@ -8,19 +8,19 @@ public class CBMCCodeFileData {
     private File f;
     private CBMCGeneratedCodeInfo codeInfo;
 
-    public File getFile() {
+    public final File getFile() {
         return f;
     }
 
-    public void setFile(final File file) {
+    public final void setFile(final File file) {
         this.f = file;
     }
 
-    public CBMCGeneratedCodeInfo getCodeInfo() {
+    public final CBMCGeneratedCodeInfo getCodeInfo() {
         return codeInfo;
     }
 
-    public void setCodeInfo(final CBMCGeneratedCodeInfo code) {
+    public final void setCodeInfo(final CBMCGeneratedCodeInfo code) {
         this.codeInfo = code;
     }
 }

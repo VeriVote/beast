@@ -7,7 +7,7 @@ public abstract class TestConfigTreeItemSuper {
         this.type = treeItemType;
     }
 
-    public TestConfigTreeItemType getType() {
+    public final TestConfigTreeItemType getType() {
         return type;
     }
 }

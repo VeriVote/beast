@@ -16,15 +16,15 @@ public class ErrorHandler {
         errTypeToMessageType = messageLoader.loadMessages();
     }
 
-    public void setListener(final ErrorGuiController guiListener) {
+    public final void setListener(final ErrorGuiController guiListener) {
         this.listener = guiListener;
     }
 
-    public List<String> getErrorLog() {
+    public final List<String> getErrorLog() {
         return errorLog;
     }
 
-    public void logAndDisplayError(final BeastError err) {
+    public final void logAndDisplayError(final BeastError err) {
         exceptions.add(err);
         // TODO maybe modify the message based on the exception
         final ErrorMessage msg = errTypeToMessageType.get(err.getErrorType());

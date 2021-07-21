@@ -21,6 +21,10 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CB
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCStructAssignment;
 
 public class CounterExampleGuiController {
+    private static final String BLANK = " ";
+    private static final String LINE_BREAK = "\n";
+    private static final String COMMA = ",";
+
     @FXML
     private AnchorPane topLevelAnchorPane;
     @FXML
@@ -44,7 +48,105 @@ public class CounterExampleGuiController {
     private CBMCCounterExample currentExample;
     private CBMCGeneratedCodeInfo codeInfo;
 
-    public AnchorPane display(final CBMCCounterExample example) {
+    private static List<Integer> numbersFromBrackets(final String brackets) {
+        final List<Integer> bracketNumbers = new ArrayList<>();
+
+        String number = "";
+        for (int i = 0; i < brackets.length(); ++i) {
+            final char c = brackets.charAt(i);
+            if (Character.isDigit(c)) {
+                number += c;
+            } else if (!number.isBlank()) {
+                bracketNumbers.add(Integer.valueOf(number));
+                number = "";
+            }
+        }
+        return bracketNumbers;
+    }
+
+    private static String buildAssignmentString(final CBMCStructAssignment assignment,
+                                                final String amtVarName,
+                                                final String listVarName) {
+        final Map<List<Integer>, String> positionsToStrings = new HashMap<>();
+        int amtBrackets = 0;
+
+        for (final String key : assignment.getMemberToAssignment().keySet()) {
+            if (key.equals(amtVarName) || key.equals(listVarName)) { // no brackets
+                continue;
+            }
+            final String brackets = key.substring(listVarName.length());
+            final List<Integer> bracketNumbers = numbersFromBrackets(brackets);
+            amtBrackets = bracketNumbers.size();
+            positionsToStrings.put(bracketNumbers,
+                                   assignment.getMemberToAssignment().get(key));
+        }
+
+        String assignmentString = "";
+        if (amtBrackets == 0) {
+            final String value = assignment.getAssignmentFor(listVarName);
+            assignmentString = listVarName + BLANK + value + LINE_BREAK;
+        } else if (amtBrackets == 1) {
+            for (int i = 0; i < 100; ++i) {
+                for (final List<Integer> positions : positionsToStrings.keySet()) {
+                    if (positions.get(0) == i) {
+                        assignmentString +=
+                                positionsToStrings.get(positions) + COMMA + BLANK;
+                        continue;
+                    }
+                }
+            }
+            assignmentString += LINE_BREAK;
+        } else if (amtBrackets == 2) {
+            for (int i = 0; i < 100; ++i) {
+                boolean foundNew = false;
+                for (int j = 0; j < 100; ++j) {
+                    for (final List<Integer> positions : positionsToStrings.keySet()) {
+                        if (positions.get(0) == i && positions.get(1) == j) {
+                            assignmentString +=
+                                    positionsToStrings.get(positions) + COMMA + BLANK;
+                            foundNew = true;
+                            continue;
+                        }
+                    }
+                }
+                if (foundNew) {
+                    assignmentString += LINE_BREAK;
+                }
+            }
+        }
+        return assignmentString;
+    }
+
+    private void displayAssignment(final CBMCStructAssignment assignment) {
+        final String structName = assignment.getAssignmentType().toString();
+
+        String amtVarName = "";
+        String listVarName = "";
+        switch (assignment.getAssignmentType()) {
+        case ELECT:
+        case GENERATED_ELECT:
+            amtVarName = codeInfo.getResultAmtMemberVarName();
+            listVarName = codeInfo.getResultListMemberVarName();
+            break;
+        case VOTE:
+        case GENERATED_VOTE:
+            amtVarName = codeInfo.getVotesAmtMemberVarName();
+            listVarName = codeInfo.getVotesListMemberVarName();
+            break;
+        default:
+            break;
+        }
+
+        final String assignmString = buildAssignmentString(assignment, amtVarName, listVarName);
+        final String textString =
+                structName + BLANK + assignment.getVarName() + "{" + LINE_BREAK
+                + amtVarName + BLANK + assignment.getAssignmentFor(amtVarName) + LINE_BREAK
+                + assignmString + "}" + LINE_BREAK
+                + "-----------------------" + LINE_BREAK;
+        displayCodearea.appendText(textString);
+    }
+
+    public final AnchorPane display(final CBMCCounterExample example) {
         currentExample = example;
         codeInfo = example.getCbmcGeneratedCodeInfo();
         display();
@@ -72,105 +174,8 @@ public class CounterExampleGuiController {
 
         displayCodearea.clear();
         for (final CBMCStructAssignment ass : asses) {
-            displayAss(ass);
+            displayAssignment(ass);
         }
-    }
-
-    private void displayAss(final CBMCStructAssignment ass) {
-        final String structName = ass.getAssignmentType().toString();
-
-        String amtVarName = "";
-        String listVarName = "";
-        switch (ass.getAssignmentType()) {
-        case ELECT:
-        case GENERATED_ELECT:
-            amtVarName = codeInfo.getResultAmtMemberVarName();
-            listVarName = codeInfo.getResultListMemberVarName();
-            break;
-        case VOTE:
-        case GENERATED_VOTE:
-            amtVarName = codeInfo.getVotesAmtMemberVarName();
-            listVarName = codeInfo.getVotesListMemberVarName();
-            break;
-        default:
-            break;
-        }
-
-        final Map<List<Integer>, String> positionsToStrings = new HashMap<>();
-        int amtBrackets = 0;
-
-        for (final String key : ass.getMemberToAssignment().keySet()) {
-            if (key.equals(amtVarName)) {
-                continue;
-            }
-            if (key.equals(listVarName)) { // no brackets
-                continue;
-            }
-            final String brackets = key.substring(listVarName.length());
-            final List<Integer> bracketNumbers = numbersFromBrackets(brackets);
-
-            amtBrackets = bracketNumbers.size();
-
-            positionsToStrings.put(bracketNumbers,
-                                   ass.getMemberToAssignment().get(key));
-        }
-
-        String assignmentString = "";
-        if (amtBrackets == 0) {
-            final String value = ass.getAssignmentFor(listVarName);
-            assignmentString = listVarName + " " + value + "\n";
-        } else if (amtBrackets == 1) {
-            for (int i = 0; i < 100; ++i) {
-                for (final List<Integer> positions : positionsToStrings.keySet()) {
-                    if (positions.get(0) == i) {
-                        assignmentString +=
-                                positionsToStrings.get(positions) + ", ";
-                        continue;
-                    }
-                }
-            }
-            assignmentString += "\n";
-        } else if (amtBrackets == 2) {
-            for (int i = 0; i < 100; ++i) {
-                boolean foundNew = false;
-                for (int j = 0; j < 100; ++j) {
-                    for (final List<Integer> positions
-                            : positionsToStrings.keySet()) {
-                        if (positions.get(0) == i && positions.get(1) == j) {
-                            assignmentString +=
-                                    positionsToStrings.get(positions) + ", ";
-                            foundNew = true;
-                            continue;
-                        }
-                    }
-                }
-                if (foundNew) {
-                    assignmentString += "\n";
-                }
-            }
-        }
-
-        String s = structName + " " + ass.getVarName() + "{\n";
-        s += amtVarName + " " + ass.getAssignmentFor(amtVarName) + "\n";
-        s += assignmentString;
-        s += "}\n-----------------------\n";
-        displayCodearea.appendText(s);
-    }
-
-    private List<Integer> numbersFromBrackets(final String brackets) {
-        final List<Integer> bracketNumbers = new ArrayList<>();
-
-        String number = "";
-        for (int i = 0; i < brackets.length(); ++i) {
-            final char c = brackets.charAt(i);
-            if (Character.isDigit(c)) {
-                number += c;
-            } else if (!number.isBlank()) {
-                bracketNumbers.add(Integer.valueOf(number));
-                number = "";
-            }
-        }
-        return bracketNumbers;
     }
 
     private void displayOnChange(final CheckBox cb) {
@@ -180,7 +185,7 @@ public class CounterExampleGuiController {
     }
 
     @FXML
-    public void initialize() {
+    public final void initialize() {
         displayOnChange(votesCheckbox);
         displayOnChange(generatedVotesCheckbox);
         displayOnChange(resultsCheckbox);

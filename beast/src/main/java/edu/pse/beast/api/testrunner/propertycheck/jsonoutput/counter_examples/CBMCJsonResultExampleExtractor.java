@@ -59,7 +59,7 @@ public class CBMCJsonResultExampleExtractor {
         this.cbmcGeneratedCodeInfo = generatedCodeInfo;
     }
 
-    public boolean didCBMCFindExample() {
+    public final boolean didCBMCFindExample() {
         return cbmcFoundExample;
     }
 
@@ -80,32 +80,19 @@ public class CBMCJsonResultExampleExtractor {
         }
     }
 
-    public void processCBMCJsonOutput(final List<String> testRunLogs) {
-        rawOutput.clear();
-        rawOutput.addAll(testRunLogs);
-        final JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
-        if (outputArr == null) {
-            return;
-        }
-        parseOutputJSONArr(outputArr);
-
-        if (!FAILURE.equals(cProverStatus)) {
-            cbmcFoundExample = false;
-            return;
-        }
-
-        cbmcFoundExample = true;
-        generatedExample = new CBMCCounterExample(cbmcGeneratedCodeInfo);
-
-        for (int i = 0; i < traceArr.length(); ++i) {
-            final JSONObject traceJsonObj = traceArr.getJSONObject(i);
+    private static void processCBMCJsonCounterExampleTrace(final JSONArray trace,
+                                                           final CBMCGeneratedCodeInfo codeInfo,
+                                                           final CBMCCounterExample cExample) {
+        for (int i = 0; i < trace.length(); ++i) {
+            final JSONObject traceJsonObj = trace.getJSONObject(i);
             if (traceJsonObj.getString(STEP_TYPE_KEY).equals(STEP_TYPE_VALUE_ASSIGNMENT)) {
                 final JSONObject valueJsonObj =
                         traceJsonObj.getJSONObject(ASSIGNMENT_VALUE_KEY);
                 if (!traceJsonObj.has(SOURCE_LOCATION)) {
                     continue;
                 }
-                final JSONObject locationJsonObj = traceJsonObj.getJSONObject(SOURCE_LOCATION);
+                final JSONObject locationJsonObj =
+                        traceJsonObj.getJSONObject(SOURCE_LOCATION);
                 if (!locationJsonObj.has(FUNCTION)) {
                     continue;
                 }
@@ -146,26 +133,39 @@ public class CBMCJsonResultExampleExtractor {
                 }
 
                 CBMCAssignmentType assType = CBMCAssignmentType.UNKNOWN;
-                if (cbmcGeneratedCodeInfo.getVoteVariableNameToVoteNumber().keySet()
-                        .contains(structName)) {
+                if (codeInfo.getVoteVariableNameToVoteNumber().keySet().contains(structName)) {
                     assType = CBMCAssignmentType.VOTE;
-                } else if (cbmcGeneratedCodeInfo.getGeneratedVotingVarNames()
-                        .contains(structName)) {
+                } else if (codeInfo.getGeneratedVotingVarNames().contains(structName)) {
                     assType = CBMCAssignmentType.GENERATED_VOTE;
-                } else if (cbmcGeneratedCodeInfo.getElectVariableNameToElectNumber().keySet()
-                        .contains(structName)) {
+                } else if (codeInfo.getElectVariableNameToElectNumber().keySet()
+                            .contains(structName)) {
                     assType = CBMCAssignmentType.ELECT;
-                } else if (cbmcGeneratedCodeInfo.getGeneratedElectVarNames()
-                        .contains(structName)) {
+                } else if (codeInfo.getGeneratedElectVarNames().contains(structName)) {
                     assType = CBMCAssignmentType.GENERATED_ELECT;
                 }
-                final String info = cbmcGeneratedCodeInfo.getInfo(structName);
-                generatedExample.add(structName, assType, memberName, valueStr, info);
+                final String info = codeInfo.getInfo(structName);
+                cExample.add(structName, assType, memberName, valueStr, info);
             }
         }
     }
 
-    String removeAnythingButDigits(final String s) {
+    public final void processCBMCJsonOutput(final List<String> testRunLogs) {
+        rawOutput.clear();
+        rawOutput.addAll(testRunLogs);
+        final JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
+        if (outputArr != null) {
+            parseOutputJSONArr(outputArr);
+
+            cbmcFoundExample = FAILURE.equals(cProverStatus);
+            if (cbmcFoundExample) {
+                generatedExample = new CBMCCounterExample(cbmcGeneratedCodeInfo);
+                processCBMCJsonCounterExampleTrace(traceArr, cbmcGeneratedCodeInfo,
+                                                   generatedExample);
+            }
+        }
+    }
+
+    private static String removeAnythingButDigits(final String s) {
         String newString = "";
         for (int i = 0; i < s.length(); ++i) {
             if (Character.isDigit(s.charAt(i))) {
@@ -175,7 +175,7 @@ public class CBMCJsonResultExampleExtractor {
         return newString;
     }
 
-    public CBMCCounterExample getGeneratedExample() {
+    public final CBMCCounterExample getGeneratedExample() {
         return generatedExample;
     }
 }

@@ -11,11 +11,11 @@ public class InputAndOutputElectionStructs {
         this.output = outputStruct;
     }
 
-    public ElectionTypeCStruct getInput() {
+    public final ElectionTypeCStruct getInput() {
         return input;
     }
 
-    public ElectionTypeCStruct getOutput() {
+    public final ElectionTypeCStruct getOutput() {
         return output;
     }
 }

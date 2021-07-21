@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.pse.beast.api.CBMCTestCallback;
+import edu.pse.beast.api.CBMCTestCallback.BoundValues;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
@@ -57,20 +58,19 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
         this.state = WorkUnitState.CREATED;
     }
 
-    public void initialize(final int v, final int s, final int c,
-                           final CodeGenOptions codeGenOptions,
-                           final String loopBoundsString,
-                           final CBMCCodeFileData codeFile,
-                           final CElectionDescription descr,
-                           final PreAndPostConditionsDescription propDescr,
-                           final CBMCTestCallback cb,
-                           final PathHandler handler) {
+    public final void initialize(final CBMCTestCallback.BoundValues bounds,
+                                 final CodeGenOptions codeGenOptions,
+                                 final String loopBoundsString,
+                                 final CBMCCodeFileData codeFile,
+                                 final ElectionAndProperty elecAndProp,
+                                 final CBMCTestCallback cb,
+                                 final PathHandler handler) {
         this.pathHandler = handler;
-        this.description = descr;
-        this.propertyDescription = propDescr;
-        this.voterAmount = v;
-        this.candidateAmount = c;
-        this.seatAmount = s;
+        this.description = elecAndProp.election;
+        this.propertyDescription = elecAndProp.property;
+        this.voterAmount = bounds.voters;
+        this.candidateAmount = bounds.candidates;
+        this.seatAmount = bounds.seats;
         this.cbmcCodeFile = codeFile;
         this.loopBounds = loopBoundsString;
         this.codeGenerationOptions = codeGenOptions;
@@ -78,37 +78,37 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
         this.state = WorkUnitState.INITIALIZED;
     }
 
-    public void setState(final WorkUnitState workUnitState) {
+    public final void setState(final WorkUnitState workUnitState) {
         this.state = workUnitState;
     }
 
-    public int getC() {
+    public final int getC() {
         return candidateAmount;
     }
 
-    public int getS() {
+    public final int getS() {
         return seatAmount;
     }
 
-    public int getV() {
+    public final int getV() {
         return voterAmount;
     }
 
-    public void setCallback(final CBMCTestCallback cb) {
+    public final void setCallback(final CBMCTestCallback cb) {
         this.callBack = cb;
     }
 
-    public boolean hasCallback() {
+    public final boolean hasCallback() {
         return this.callBack != null;
     }
 
-    public CBMCProcessHandlerSource getProcessStarterSource() {
+    public final CBMCProcessHandlerSource getProcessStarterSource() {
         return processStarterSource;
     }
 
-    public void updateDataForCheck(final CBMCCodeFileData cbmcFile,
-                                   final String loopBoundsString,
-                                   final CodeGenOptions codeGenOptions) {
+    public final void updateDataForCheck(final CBMCCodeFileData cbmcFile,
+                                         final String loopBoundsString,
+                                         final CodeGenOptions codeGenOptions) {
         this.cbmcCodeFile = cbmcFile;
         this.loopBounds = loopBoundsString;
         this.codeGenerationOptions = codeGenOptions;
@@ -116,91 +116,96 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     }
 
     @Override
-    public void doWork() {
-        if (!processStarterSource.hasProcessHandler()) {
-            return;
-        }
-        state = WorkUnitState.WORKED_ON;
-        callBack.onPropertyTestStart(description, propertyDescription,
-                                     seatAmount, candidateAmount,
-                                     voterAmount, uuid);
-        try {
-            process =
-                    processStarterSource.getProcessHandler()
-                    .startCheckForParam(sessionUUID, voterAmount, candidateAmount,
-                                        seatAmount, sessionUUID, callBack,
-                                        cbmcCodeFile.getFile(), loopBounds,
-                                        codeGenerationOptions, pathHandler);
-            final BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            final List<String> cbmcOutput = new ArrayList<>();
+    public final void doWork() {
+        if (processStarterSource.hasProcessHandler()) {
+            state = WorkUnitState.WORKED_ON;
+            final BoundValues bounds = new BoundValues(candidateAmount, seatAmount, voterAmount);
+            callBack.onPropertyTestStart(description, propertyDescription,
+                                         bounds, uuid);
             try {
-                while ((line = reader.readLine()) != null) {
-                    callBack.onPropertyTestRawOutput(sessionUUID, description,
-                                                     propertyDescription,
-                                                     seatAmount, candidateAmount,
-                                                     voterAmount, uuid, line);
-                    cbmcOutput.add(line);
+                process = processStarterSource.getProcessHandler()
+                            .startCheckForParam(voterAmount, candidateAmount, seatAmount,
+                                                cbmcCodeFile.getFile(), loopBounds,
+                                                codeGenerationOptions, pathHandler);
+                final BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                final List<String> cbmcOutput = new ArrayList<>();
+                try {
+                    while ((line = reader.readLine()) != null) {
+                        callBack.onPropertyTestRawOutput(sessionUUID, description,
+                                                         propertyDescription,
+                                                         bounds, uuid, line);
+                        cbmcOutput.add(line);
+                    }
+                } catch (IOException e) {
+                    // TODO error handling
+                    e.printStackTrace();
+                    state = WorkUnitState.STOPPED;
+                    processStarterSource.getProcessHandler().endProcess(process);
+                    return;
                 }
+                callBack.onPropertyTestRawOutputComplete(description, propertyDescription,
+                                                         bounds, uuid, cbmcOutput);
+                state = WorkUnitState.FINISHED;
+                callBack.onPropertyTestFinished(description, propertyDescription,
+                                                bounds, uuid);
             } catch (IOException e) {
-                // TODO errorhandling
+                // TODO Auto-generated catch block
                 e.printStackTrace();
                 state = WorkUnitState.STOPPED;
                 processStarterSource.getProcessHandler().endProcess(process);
-                return;
             }
-            callBack.onPropertyTestRawOutputComplete(description, propertyDescription,
-                                                     seatAmount, candidateAmount,
-                                                     voterAmount, uuid, cbmcOutput);
-            state = WorkUnitState.FINISHED;
-            callBack.onPropertyTestFinished(description, propertyDescription,
-                                            seatAmount, candidateAmount,
-                                            voterAmount, uuid);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            state = WorkUnitState.STOPPED;
-            processStarterSource.getProcessHandler().endProcess(process);
         }
     }
 
     @Override
-    public String getUUID() {
+    public final String getUUID() {
         return uuid;
     }
 
     @Override
-    public void interrupt() {
+    public final void interrupt() {
         processStarterSource.getProcessHandler().endProcess(process);
         state = WorkUnitState.STOPPED;
+        final BoundValues bounds = new BoundValues(candidateAmount, seatAmount, voterAmount);
         callBack.onPropertyTestStopped(description, propertyDescription,
-                                       seatAmount, candidateAmount,
-                                       voterAmount, uuid);
+                                       bounds, uuid);
     }
 
     @Override
-    public void addedToQueue() {
+    public final void addedToQueue() {
         state = WorkUnitState.ON_QUEUE;
+        final BoundValues bounds = new BoundValues(candidateAmount, seatAmount, voterAmount);
         callBack.onPropertyTestAddedToQueue(description, propertyDescription,
-                                            seatAmount, candidateAmount,
-                                            voterAmount, uuid);
+                                            bounds, uuid);
     }
 
     @Override
-    public WorkUnitState getState() {
+    public final WorkUnitState getState() {
         return state;
     }
 
-    public CBMCCodeFileData getCbmcFile() {
+    public final CBMCCodeFileData getCbmcFile() {
         return cbmcCodeFile;
     }
 
-    public void setCbmcFile(final CBMCCodeFileData cbmcFile) {
+    public final void setCbmcFile(final CBMCCodeFileData cbmcFile) {
         this.cbmcCodeFile = cbmcFile;
     }
 
-    public void shutdown() {
+    public final void shutdown() {
         process.destroyForcibly();
+    }
+
+    public static final class ElectionAndProperty {
+        final CElectionDescription election;
+        final PreAndPostConditionsDescription property;
+
+        public ElectionAndProperty(final CElectionDescription descr,
+                                   final PreAndPostConditionsDescription propDescr) {
+            this.election = descr;
+            this.property = propDescr;
+        }
     }
 }

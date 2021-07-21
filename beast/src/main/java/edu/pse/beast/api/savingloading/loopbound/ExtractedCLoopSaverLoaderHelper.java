@@ -70,11 +70,12 @@ public class ExtractedCLoopSaverLoaderHelper {
         final LoopBoundType loopBoundType =
                 LoopBoundType.valueOf(json.getString(PARSED_BOUND_TYPE_KEY));
         final String functionName = json.getString(FUNCTION_NAME_KEY);
+        final ExtractedCLoop.Types types =
+                new ExtractedCLoop.Types(loopType, parseResultType, loopBoundType);
 
         final ExtractedCLoop extractedCLoop =
-                ExtractedCLoop.fromStoredValues(uuid, loopType, line, posInLine,
-                                                numberInFunc, parseResultType,
-                                                loopBoundType, functionName);
+                ExtractedCLoop.fromStoredValues(uuid, types, line, posInLine,
+                                                numberInFunc, functionName);
         if (loopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
             extractedCLoop.setManualInteger(json.getInt(MANUAL_BOUND_KEY));
         }

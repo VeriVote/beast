@@ -15,10 +15,52 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VoteIntersectionHelper {
 
+    private static final String DOT = ".";
+    private static final String COMPARE_VARS = "COMPARE_VARS";
+    private static final String VOTE_TYPE = "VOTE_TYPE";
+    private static final String AMOUNT_MEMBER = "AMT_MEMBER";
+    private static final String LIST_MEMBER = "LIST_MEMBER";
+    private static final String GENERATED_VAR_NAME = "GENERATED_VAR_NAME";
+    private static final String LHS_VAR_NAME = "LHS_VAR_NAME";
+    private static final String AMOUNT_VOTERS = "AMT_VOTERS";
+    private static final String AMOUNT_CANDIDATES = "AMT_CANDIDATES";
+    private static final String ASSUME = "ASSUME";
+    private static final String NONDET_UINT = "NONDET_UINT";
+
+    private static String generateComparison(final List<String> intersectedVotesVarNames,
+                                             final ElectionTypeCStruct voteArrStruct) {
+        String comparison = "";
+        if (voteArrStruct.getVotingType().getListDimensions() == 2) {
+            int i = 0;
+            for (i = 0; i < intersectedVotesVarNames.size() - 2; ++i) {
+                comparison += intersectedVotesVarNames.get(i)
+                        + DOT + LIST_MEMBER + "[i][j] == "
+                        + intersectedVotesVarNames.get(i + 1)
+                        + DOT + LIST_MEMBER + "[i][j] && ";
+            }
+            comparison += intersectedVotesVarNames.get(i)
+                    + DOT + LIST_MEMBER + "[i][j] == "
+                    + intersectedVotesVarNames.get(i + 1)
+                    + DOT + LIST_MEMBER + "[i][j]";
+        } else if (voteArrStruct.getVotingType().getListDimensions() == 1) {
+            int i = 0;
+            for (i = 0; i < intersectedVotesVarNames.size() - 2; ++i) {
+                comparison += intersectedVotesVarNames.get(i)
+                        + DOT + LIST_MEMBER + "[i]] == "
+                        + intersectedVotesVarNames.get(i + 1)
+                        + DOT + LIST_MEMBER + "[i] && ";
+            }
+            comparison += intersectedVotesVarNames.get(i)
+                    + DOT + LIST_MEMBER + "[i] == "
+                    + intersectedVotesVarNames.get(i + 1) + DOT + LIST_MEMBER + "[i]";
+        }
+        return comparison;
+    }
+
     //TODO: This code was written when the intersection method was still thought
     //to be a lot simpler. Thus, this code could generate intersection for an
     //arbitrary amount of vote structs. This is no longer the case,
-    //and intersection should only generate code for pairwaise intersections.
+    //and intersection should only generate code for pairwise intersections.
     //
     //This has been fixed for the generation of intersection code of
     //election result structs. See the class
@@ -30,43 +72,18 @@ public class VoteIntersectionHelper {
                                                   final VotingInputTypes votingInputType,
                                                   final CodeGenOptions options,
                                                   final CodeGenLoopBoundHandler loopBoundHandler) {
-        String comparison = "";
-        if (voteArrStruct.getVotingType().getListDimensions() == 2) {
-            int i = 0;
-            for (; i < intersectedVotesVarNames.size() - 2; ++i) {
-                comparison += intersectedVotesVarNames.get(i)
-                        + ".LIST_MEMBER[i][j] == "
-                        + intersectedVotesVarNames.get(i + 1)
-                        + ".LIST_MEMBER[i][j] && ";
-            }
-            comparison += intersectedVotesVarNames.get(i)
-                    + ".LIST_MEMBER[i][j] == "
-                    + intersectedVotesVarNames.get(i + 1)
-                    + ".LIST_MEMBER[i][j]";
-        } else if (voteArrStruct.getVotingType().getListDimensions() == 1) {
-            int i = 0;
-            for (; i < intersectedVotesVarNames.size() - 2; ++i) {
-                comparison += intersectedVotesVarNames.get(i)
-                        + ".LIST_MEMBER[i]] == "
-                        + intersectedVotesVarNames.get(i + 1)
-                        + ".LIST_MEMBER[i] && ";
-            }
-            comparison += intersectedVotesVarNames.get(i)
-                    + ".LIST_MEMBER[i] == "
-                    + intersectedVotesVarNames.get(i + 1) + ".LIST_MEMBER[i]";
-        }
-
+        final String comparison = generateComparison(intersectedVotesVarNames, voteArrStruct);
         final Map<String, String> replacementMap =
-                Map.of("COMPARE_VARS", comparison,
-                       "VOTE_TYPE", voteArrStruct.getStruct().getName(),
-                       "AMT_MEMBER", voteArrStruct.getAmtName(),
-                       "LIST_MEMBER", voteArrStruct.getListName(),
-                       "GENERATED_VAR_NAME", generatedVarName,
-                       "LHS_VAR_NAME", intersectedVotesVarNames.get(0),
-                       "AMT_VOTERS", options.getCbmcAmountMaxVotersVarName(),
-                       "AMT_CANDIDATES", options.getCbmcAmountMaxCandsVarName(),
-                       "ASSUME", options.getCbmcAssumeName(),
-                       "NONDET_UINT", options.getCbmcNondetUintName());
+                Map.of(COMPARE_VARS, comparison,
+                       VOTE_TYPE, voteArrStruct.getStruct().getName(),
+                       AMOUNT_MEMBER, voteArrStruct.getAmtName(),
+                       LIST_MEMBER, voteArrStruct.getListName(),
+                       GENERATED_VAR_NAME, generatedVarName,
+                       LHS_VAR_NAME, intersectedVotesVarNames.get(0),
+                       AMOUNT_VOTERS, options.getCbmcAmountMaxVotersVarName(),
+                       AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),
+                       ASSUME, options.getCbmcAssumeName(),
+                       NONDET_UINT, options.getCbmcNondetUintName());
         String code = null;
         List<LoopBound> loopbounds = List.of();
 

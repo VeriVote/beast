@@ -23,7 +23,7 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class WorkspaceSaverLoader {
     private static final String DESCR_FILES_KEY = "descr_files";
-    private static final String PROP_DESCR_FILES_KEY = "prop_"+ DESCR_FILES_KEY;
+    private static final String PROP_DESCR_FILES_KEY = "prop_" + DESCR_FILES_KEY;
 
     private static final String CODE_GEN_OPTIONS_KEY = "code_gen_options";
 

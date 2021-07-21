@@ -133,12 +133,24 @@ public final class PreAndPostConditionsDescription {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((boundedVarDescription == null) ? 0
+                : boundedVarDescription.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((postConditionsDescription == null) ? 0
+                : postConditionsDescription.hashCode());
+        result = prime * result + ((preConditionsDescription == null) ? 0
+                : preConditionsDescription.hashCode());
+        return result;
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
-        } else if (obj == null) {
-            return false;
-        } else if (getClass() != obj.getClass()) {
+        } else if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final PreAndPostConditionsDescription other = (PreAndPostConditionsDescription) obj;

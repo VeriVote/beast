@@ -26,25 +26,25 @@ public class ElectionTypeCStruct {
         this.amtName = amountNameString;
     }
 
-    public CStruct getStruct() {
+    public final CStruct getStruct() {
         return struct;
     }
 
-    public CElectionVotingType getVotingType() {
+    public final CElectionVotingType getVotingType() {
         return votingType;
     }
 
-    public CForLoop loopOverOuterList(final CTypeNameBrackets counterVar,
-                                      final String tempInnerVarName) {
+    public final CForLoop loopOverOuterList(final CTypeNameBrackets counterVar,
+                                            final String tempInnerVarName) {
         COND_STRING.replaceAll(COUNTER, counterVar.getName()).replaceAll(AMOUNT, "");
         return new CForLoop(counterVar, "", "");
     }
 
-    public String getListName() {
+    public final String getListName() {
         return listName;
     }
 
-    public String getAmtName() {
+    public final String getAmtName() {
         return amtName;
     }
 }

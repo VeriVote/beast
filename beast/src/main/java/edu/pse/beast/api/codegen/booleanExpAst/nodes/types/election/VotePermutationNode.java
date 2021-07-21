@@ -8,20 +8,20 @@ public class VotePermutationNode extends ElectionTypeNode {
     private int voteNumber;
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         return "Permutation Vote " + voteNumber;
     }
 
-    public void setVoteNumber(final int voteNum) {
+    public final void setVoteNumber(final int voteNum) {
         this.voteNumber = voteNum;
     }
 
-    public int getVoteNumber() {
+    public final int getVoteNumber() {
         return voteNumber;
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitVotePermutation(this);
     }
 }

@@ -18,15 +18,15 @@ public class CBMCCounterExample {
         this.cbmcGeneratedCodeInfo = generatedCodeInfo;
     }
 
-    public CBMCGeneratedCodeInfo getCbmcGeneratedCodeInfo() {
+    public final CBMCGeneratedCodeInfo getCbmcGeneratedCodeInfo() {
         return cbmcGeneratedCodeInfo;
     }
 
-    public void add(final String structName,
-                    final CBMCAssignmentType assType,
-                    final String memberName,
-                    final String assignment,
-                    final String info) {
+    public final void add(final String structName,
+                          final CBMCAssignmentType assType,
+                          final String memberName,
+                          final String assignment,
+                          final String info) {
         if (!varNamesToAssignments.containsKey(structName)) {
             varNamesToAssignments.put(structName,
                                       new CBMCStructAssignment(assType, structName, info));
@@ -36,7 +36,7 @@ public class CBMCCounterExample {
 
     }
 
-    public List<CBMCStructAssignment> getAssignments(final Set<CBMCAssignmentType> types) {
+    public final List<CBMCStructAssignment> getAssignments(final Set<CBMCAssignmentType> types) {
         final List<CBMCStructAssignment> list = new ArrayList<>();
         for (final CBMCStructAssignment ass : varNamesToAssignments.values()) {
             if (types.contains(ass.getAssignmentType())) {
@@ -50,7 +50,7 @@ public class CBMCCounterExample {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         String s = "";
         for (final String varname : varNamesToAssignments.keySet()) {
             s += varNamesToAssignments.get(varname).toString();

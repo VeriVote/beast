@@ -12,13 +12,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class DialogHelper {
+    private static final String OK = "OK";
+
     public static Dialog<ButtonType> generateDialog(final List<String> inputNames,
                                                     final List<Node> inputs) {
         final Point position = MouseInfo.getPointerInfo().getLocation();
         final Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setX(position.getX());
         dialog.setY(position.getY());
-        final ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
+        final ButtonType buttonType = new ButtonType(OK, ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes()
             .addAll(buttonType, ButtonType.CANCEL);
 

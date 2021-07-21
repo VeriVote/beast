@@ -25,16 +25,16 @@ public class PreferenceParameters implements VotingParameters {
         this.c = candidateAmount;
     }
 
-    public void addVoter(final List<Integer> preferenceVotes) {
+    public final void addVoter(final List<Integer> preferenceVotes) {
         votesPerVoter.add(preferenceVotes);
         this.v++;
     }
 
     @Override
-    public String generateVoteStructInitCode(final ElectionTypeCStruct voteInputStruct,
-                                             final CodeGenOptions options,
-                                             final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
-                                             final String generatedVarName) {
+    public final String genVoteStructInitCode(final ElectionTypeCStruct voteInputStruct,
+                                              final CodeGenOptions options,
+                                              final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
+                                              final String generatedVarName) {
         final List<String> code = new ArrayList<>();
 
         final String votingStructName = voteInputStruct.getStruct().getName();
@@ -70,22 +70,22 @@ public class PreferenceParameters implements VotingParameters {
     }
 
     @Override
-    public int getV() {
+    public final int getV() {
         return v;
     }
 
     @Override
-    public int getC() {
+    public final int getC() {
         return c;
     }
 
     @Override
-    public int getS() {
+    public final int getS() {
         return s;
     }
 
     @Override
-    public int getHighestVote() {
+    public final int getHighestVote() {
         return 1;
     }
 }

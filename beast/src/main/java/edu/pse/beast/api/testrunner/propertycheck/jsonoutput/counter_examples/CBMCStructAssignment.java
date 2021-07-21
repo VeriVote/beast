@@ -18,37 +18,37 @@ public class CBMCStructAssignment {
         this.varInfo = variableInfo;
     }
 
-    public String getVarName() {
+    public final String getVarName() {
         return structName;
     }
 
-    public int getSortNumber() {
+    public final int getSortNumber() {
         return sortNumber;
     }
 
-    public CBMCAssignmentType getAssignmentType() {
+    public final CBMCAssignmentType getAssignmentType() {
         return assignmentType;
     }
 
-    public String getVarInfo() {
+    public final String getVarInfo() {
         return varInfo;
     }
 
-    public void add(final String memberName, final String assignment, final int sortNum) {
+    public final void add(final String memberName, final String assignment, final int sortNum) {
         memberToAssignment.put(memberName, assignment);
         this.sortNumber = sortNum;
     }
 
-    public String getAssignmentFor(final String memberName) {
+    public final String getAssignmentFor(final String memberName) {
         return memberToAssignment.get(memberName);
     }
 
-    public Map<String, String> getMemberToAssignment() {
+    public final Map<String, String> getMemberToAssignment() {
         return memberToAssignment;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return structName;
     }
 

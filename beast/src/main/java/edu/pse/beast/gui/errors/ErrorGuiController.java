@@ -49,7 +49,7 @@ public class ErrorGuiController {
 
     }
 
-    public void handleAddedError(final BeastError beastError) {
+    public final void handleAddedError(final BeastError beastError) {
         errorListView.getItems().add(beastError);
     }
 }

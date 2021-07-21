@@ -53,11 +53,11 @@ public class ComparisonNode extends BooleanExpressionNode {
                 ? "" : simpleClassName + text;
     }
 
-    public ComparisonType getComparisonType() {
+    public final ComparisonType getComparisonType() {
         return comparisonType;
     }
 
-    public String getComparisonSymbol() {
+    public final String getComparisonSymbol() {
         return comparisonSymbol;
     }
 
@@ -66,7 +66,7 @@ public class ComparisonNode extends BooleanExpressionNode {
      *
      * @return the lhs type exp
      */
-    public TypeExpression getLhsTypeExp() {
+    public final TypeExpression getLhsTypeExp() {
         return lhsTypeExp;
     }
 
@@ -75,17 +75,17 @@ public class ComparisonNode extends BooleanExpressionNode {
      *
      * @return the rhs type exp
      */
-    public TypeExpression getRhsTypeExp() {
+    public final TypeExpression getRhsTypeExp() {
         return rhsTypeExp;
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitComparisonNode(this);
     }
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         // TODO Auto-generated method stub
         return null;
     }

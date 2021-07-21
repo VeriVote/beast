@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
+import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
+import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
+import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+
 public class CFunction {
     private String name;
     private List<CTypeNameBrackets> arguments = new ArrayList<>();
@@ -35,25 +41,86 @@ public class CFunction {
         this.returnType = returnTypeString;
     }
 
-    public void setCode(final List<String> codeStringList) {
+    public final void setCode(final List<String> codeStringList) {
         this.code = codeStringList;
     }
 
     private String signature() {
-        return returnType + " " + name + "(" + String.join(", ", arguments.stream()
+        return returnType + " " + name + "(" + String.join("," + " ", arguments.stream()
                 .map(a -> a.generateCode()).collect(Collectors.toList())) + ")";
     }
 
-    public String generateDefCode() {
+    public final String generateDefCode() {
         final List<String> created = new ArrayList<>();
-        created.add(signature());
-        created.add("{");
+        created.add(signature() + " {");
         created.addAll(code);
         created.add("}");
         return String.join("\n", created);
     }
 
-    public String generateDeclCode() {
+    public final String generateDeclCode() {
         return signature() + ";";
+    }
+
+    public static final class PropertyExpressions {
+        public final BooleanExpASTData preAstData;
+        public final BooleanExpASTData postAstData;
+        public final List<SymbolicCBMCVar> symCbmcVars;
+
+        public PropertyExpressions(final BooleanExpASTData precondition,
+                                   final BooleanExpASTData postcondition,
+                                   final List<SymbolicCBMCVar> symbolicVariables) {
+            this.preAstData = precondition;
+            this.postAstData = postcondition;
+            this.symCbmcVars = symbolicVariables;
+        }
+    }
+
+    public static final class VotingFunction {
+        public final ElectionTypeCStruct votes;
+        public final ElectionTypeCStruct result;
+        public final VotingInputTypes profileType;
+        public final VotingOutputTypes resultType;
+        public final String function;
+
+        public VotingFunction(final ElectionTypeCStruct voteStruct,
+                              final ElectionTypeCStruct resultStruct,
+                              final VotingInputTypes inputType,
+                              final VotingOutputTypes outputType,
+                              final String functionName) {
+            this.votes = voteStruct;
+            this.result = resultStruct;
+            this.profileType = inputType;
+            this.resultType = outputType;
+            this.function = functionName;
+        }
+    }
+
+    public static final class Input {
+        public final VotingInputTypes type;
+        public final ElectionTypeCStruct struct;
+        public final String structVarName;
+
+        public Input(final VotingInputTypes votingInputType,
+                     final ElectionTypeCStruct inputStruct,
+                     final String votingStructVarName) {
+            this.type = votingInputType;
+            this.struct = inputStruct;
+            this.structVarName = votingStructVarName;
+        }
+    }
+
+    public static final class Output {
+        public final VotingOutputTypes type;
+        public final ElectionTypeCStruct struct;
+        public final String structVarName;
+
+        public Output(final VotingOutputTypes votingOutputType,
+                      final ElectionTypeCStruct outputStruct,
+                      final String resultStructVarName) {
+            this.type = votingOutputType;
+            this.struct = outputStruct;
+            this.structVarName = resultStructVarName;
+        }
     }
 }

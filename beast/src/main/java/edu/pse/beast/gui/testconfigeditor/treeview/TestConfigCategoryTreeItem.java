@@ -9,11 +9,11 @@ public class TestConfigCategoryTreeItem extends TestConfigTreeItemSuper {
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         return category;
     }
 
-    public String getCategory() {
+    public final String getCategory() {
         return category;
     }
 }

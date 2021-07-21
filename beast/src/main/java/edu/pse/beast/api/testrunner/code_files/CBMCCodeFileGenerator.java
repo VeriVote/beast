@@ -28,8 +28,8 @@ public class CBMCCodeFileGenerator {
         final CBMCGeneratedCodeInfo code =
                 CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, options,
                                                                   initVoteHelper);
-        final String absolutePath = pathHandler.getBaseDir().getAbsolutePath()
-                + PATH_TO_TEMP_FOLDER;
+        final String absolutePath =
+                pathHandler.getBaseDir().getAbsolutePath() + PATH_TO_TEMP_FOLDER;
         final File file = File.createTempFile("cbmc", ".c", new File(absolutePath));
         FileUtils.writeStringToFile(file, code.getCode(),
                 Charset.defaultCharset());

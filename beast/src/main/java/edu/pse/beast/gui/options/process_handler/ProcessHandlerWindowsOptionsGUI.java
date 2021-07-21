@@ -35,7 +35,7 @@ public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
     }
 
     @FXML
-    public void initialize() {
+    public final void initialize() {
         vsDevCmdPathTextField.setText(cbmcProcessHandlerCreator.getVsDevCmdPath());
         vsDevCmdPathTextField.setEditable(false);
         vsDevCmdButton.setOnAction(e -> askForProcessHandler());
@@ -48,11 +48,11 @@ public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
     }
 
     @Override
-    public void displayOptions(final AnchorPane currentOptionDisplayAnchorpane) {
+    public final void displayOptions(final AnchorPane currentOptionDisplayAnchorpane) {
         displayOptionsAnchorpane(currentOptionDisplayAnchorpane, topLevelAnchorpane);
     }
 
-    public CBMCProcessHandlerCreator getCbmcProcessHandlerCreator() {
+    public final CBMCProcessHandlerCreator getCbmcProcessHandlerCreator() {
         return cbmcProcessHandlerCreator;
     }
 }

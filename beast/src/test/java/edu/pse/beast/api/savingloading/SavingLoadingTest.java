@@ -23,30 +23,38 @@ import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
+    private static final String LINE_BREAK = "\n";
+
+    private static final String BORDA_CODE =
+            "    unsigned int i = 0;" + LINE_BREAK
+            + "    unsigned int j = 0;" + LINE_BREAK
+            + "    for (i = 0; i < C; i++) {" + LINE_BREAK
+            + "        result[i] = 0;" + LINE_BREAK
+            + "    }" + LINE_BREAK
+            + "    for (i = 0; i < V; i++) {" + LINE_BREAK
+            + "        for (j = 0; j < C; j++) {" + LINE_BREAK
+            + "            result[votes[i][j]] += (C - j) - 1;" + LINE_BREAK
+            + "        }" + LINE_BREAK
+            + "    }" + "    unsigned int max = 0;" + LINE_BREAK
+            + "    for (i = 0; i < C; i++) {" + LINE_BREAK
+            + "        if (max < res[i]) {" + LINE_BREAK
+            + "            max = res[i];" + LINE_BREAK
+            + "            for (j = 0; j < C; j++) {" + LINE_BREAK
+            + "                r.arr[j] = 0;" + LINE_BREAK
+            + "            }" + LINE_BREAK
+            + "            r.arr[i] = 1;" + LINE_BREAK
+            + "        } else if (max == res[i]) {" + LINE_BREAK
+            + "            r.arr[i] = 1;" + LINE_BREAK
+            + "        }" + LINE_BREAK
+            + "    }";
+
     @Test
     public void testSavingLoadingOfElectionDescription() throws IOException {
-        final String bordaCode =
-                "    unsigned int i = 0;\n"
-                        + "    unsigned int j = 0;\n" + "\n"
-                        + "    for (i = 0; i < C; i++) {\n" + "        result[i] = 0;\n"
-                        + "    }\n" + "    for (i = 0; i < V; i++) {\n"
-                        + "        for (j = 0; j < C; j++) {\n"
-                        + "            result[votes[i][j]] += (C - j) - 1;\n"
-                        + "        }\n" + "    }" + "    unsigned int max = 0;\n"
-                        + "    for (i = 0; i < C; i++) {\n"
-                        + "        if (max < res[i]) {\n"
-                        + "            max = res[i];\n"
-                        + "            for (j = 0; j < C; j++) {\n"
-                        + "                r.arr[j] = 0;\n" + "            }\n"
-                        + "            r.arr[i] = 1;\n"
-                        + "        } else if (max == res[i]) {\n"
-                        + "            r.arr[i] = 1;\n" + "        }\n" + "    }";
-
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
                                          "borda");
-        descr.getVotingFunction().setCode(bordaCode);
+        descr.getVotingFunction().setCode(BORDA_CODE);
 
         final SimpleTypeFunction simpleFunc =
                 new SimpleTypeFunction("asd",
@@ -59,7 +67,7 @@ public class SavingLoadingTest {
         options.setCurrentAmountCandsVarName("C");
         options.setCurrentAmountVotersVarName("V");
         final List<ExtractedCLoop> extractedCLoops =
-                AntlrCLoopParser.findLoops("voting", bordaCode, options);
+                AntlrCLoopParser.findLoops("voting", BORDA_CODE, options);
 
         descr.getVotingFunction().setExtractedLoops(extractedCLoops);
 
@@ -77,7 +85,6 @@ public class SavingLoadingTest {
                      loadedDescr.getVotingFunction().getName());
         assertEquals(descr.getVotingFunction().getCode(),
                      loadedDescr.getVotingFunction().getCode());
-
         assertEquals(descr.getVotingFunction().getExtractedLoops().size(),
                      loadedDescr.getVotingFunction().getExtractedLoops().size());
 

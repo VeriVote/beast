@@ -32,6 +32,16 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpdateListener {
+    private static final String LINE_BREAK = "\n";
+
+    private static final String RUN_OUT_OF_DATE = "Run out of date, has changes";
+    private static final String SHOW_LOGS = "show logs";
+    private static final String CBMC_MESSAGES = "CBMC messages";
+    private static final String DELETE = "delete";
+    private static final String PUT_RUN_ON_QUEUE = "put run on queue";
+    private static final String STOP = "stop";
+    private static final String SHOW_GENERATED_EXAMPLE = "show generated example";
+
     @FXML
     private AnchorPane topLevelAnchorPane;
     @FXML
@@ -75,7 +85,48 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
         counterExampleLoader.load();
     }
 
-    public void display(final CBMCTestRunWithSymbolicVars cbmcRun) {
+    private WorkUnitState prepareWorkUnitState(final CBMCTestRunWithSymbolicVars testRun,
+                                               final Label workUnitStateLabel,
+                                               final Button openFileButton,
+                                               final HBox hBox,
+                                               final TextField textField,
+                                               final CodeArea contents) {
+        outputAnchorPane.getChildren().clear();
+        testConfigTreeView.refresh();
+
+        // created file controls
+        final CBMCCodeFileData cbmcFile = testRun.getCbmcCodeFile();
+        textField.setText(cbmcFile.getFile().getAbsolutePath());
+        openFileButton.setOnAction(e -> {
+            displayCodeArea(contents);
+        });
+
+        final WorkUnitState state = testRun.getState();
+        hBox.getChildren().clear();
+        workUnitStateLabel.setText("state: " + testRun.getStatusString());
+        hBox.getChildren().add(workUnitStateLabel);
+
+        if (testRun.isDescrChanged() || testRun.isPropDescrChanged()) {
+            final Label descrChangedLabel = new Label(RUN_OUT_OF_DATE);
+            hBox.getChildren().add(descrChangedLabel);
+        }
+        return state;
+    }
+
+    private void displayCounterExample(final CBMCTestRunWithSymbolicVars testRun, final HBox hBox,
+                                       final CounterExampleGuiController controller) {
+        if (testRun.getJsonOutputHandler().didCBMCFindExample()) {
+            final Button showExampleButton = new Button(SHOW_GENERATED_EXAMPLE);
+            showExampleButton.setOnAction(e -> {
+                final AnchorPane pane =
+                        controller.display(testRun.getJsonOutputHandler().getGeneratedExample());
+                displayNode(pane);
+            });
+            hBox.getChildren().add(showExampleButton);
+        }
+    }
+
+    public final void display(final CBMCTestRunWithSymbolicVars cbmcRun) {
         if (this.run != null) {
             this.run.setCb(null);
         }
@@ -95,7 +146,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
 
         messages.clear();
         for (final CBMCJsonMessage m : cbmcRun.getMessagesAsList()) {
-            messages.appendText(m.toString() + "\n");
+            messages.appendText(m.toString() + LINE_BREAK);
         }
 
         logs.clear();
@@ -108,45 +159,28 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
             if (run == null) {
                 return;
             }
-            outputAnchorPane.getChildren().clear();
-            testConfigTreeView.refresh();
+            final WorkUnitState state =
+                    prepareWorkUnitState(run, stateLabel, openCreatedFileButton, stateHBox,
+                                         createdFileTextField, fileContents);
 
-            // created file controls
-            final CBMCCodeFileData cbmcFile = run.getCbmcCodeFile();
-            createdFileTextField.setText(cbmcFile.getFile().getAbsolutePath());
-            openCreatedFileButton.setOnAction(e -> {
-                displayCodeArea(fileContents);
-            });
-
-            final WorkUnitState state = run.getState();
-            stateHBox.getChildren().clear();
-            stateLabel.setText("state: " + run.getStatusString());
-            stateHBox.getChildren().add(stateLabel);
-
-            if (run.isDescrChanged() || run.isPropDescrChanged()) {
-                final Label descrChangedLabel =
-                        new Label("Run out of date, has changes");
-                stateHBox.getChildren().add(descrChangedLabel);
-            }
-
-            final Button showLogsButton = new Button("show logs");
+            final Button showLogsButton = new Button(SHOW_LOGS);
             showLogsButton.setOnAction(e -> {
                 displayCodeArea(logs);
             });
 
-            final Button showMessagesButton = new Button("CBMC Messages");
+            final Button showMessagesButton = new Button(CBMC_MESSAGES);
             showMessagesButton.setOnAction(e -> {
                 displayCodeArea(messages);
             });
 
-            final Button deleteButton = new Button("delete");
+            final Button deleteButton = new Button(DELETE);
             deleteButton.setOnAction(e -> {
                 beastWorkspace.deleteCBMCRun(run);
             });
 
             switch (state) {
             case INITIALIZED:
-                final Button putRunOnQueueButton = new Button("put Run on Queue");
+                final Button putRunOnQueueButton = new Button(PUT_RUN_ON_QUEUE);
                 putRunOnQueueButton.setOnAction(e -> {
                     beastWorkspace.addRunToQueue(run);
                 });
@@ -155,36 +189,24 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
             case ON_QUEUE:
                 break;
             case WORKED_ON:
-                final Button stopCBMCButton = new Button("stop");
+                final Button stopCBMCButton = new Button(STOP);
                 stopCBMCButton.setOnAction(e -> {
                     beastWorkspace.stopRun(run);
                 });
-                stateHBox.getChildren().add(showLogsButton);
-                stateHBox.getChildren().add(showMessagesButton);
-                stateHBox.getChildren().add(stopCBMCButton);
+                stateHBox.getChildren().addAll(
+                        List.of(showLogsButton, showMessagesButton, stopCBMCButton));
                 break;
             case FINISHED:
-                if (run.getJsonOutputHandler().didCBMCFindExample()) {
-                    final Button showExampleButton = new Button("show generated Example");
-                    showExampleButton.setOnAction(e -> {
-                        final AnchorPane pane =
-                                counterExampleGuiController
-                                .display(run.getJsonOutputHandler().getGeneratedExample());
-                        displayNode(pane);
-                    });
-                    stateHBox.getChildren().add(showExampleButton);
-                }
-                stateHBox.getChildren().add(showLogsButton);
-                stateHBox.getChildren().add(showMessagesButton);
-                stateHBox.getChildren().add(deleteButton);
+                displayCounterExample(run, stateHBox, counterExampleGuiController);
+                stateHBox.getChildren().addAll(
+                        List.of(showLogsButton, showMessagesButton, deleteButton));
                 break;
             case STOPPED:
-                final Button putRunOnQueueButton = new Button("put Run on Queue");
-                putRunOnQueueButton.setOnAction(e -> {
+                final Button putRunOnQueueButton2 = new Button(PUT_RUN_ON_QUEUE);
+                putRunOnQueueButton2.setOnAction(e -> {
                     beastWorkspace.addRunToQueue(run);
                 });
-                stateHBox.getChildren().add(putRunOnQueueButton);
-                stateHBox.getChildren().add(deleteButton);
+                stateHBox.getChildren().addAll(List.of(putRunOnQueueButton2, deleteButton));
                 break;
             default:
                 break;
@@ -193,56 +215,57 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
     }
 
     @Override
-    public void onPropertyTestStart(final CElectionDescription description,
-                                    final PreAndPostConditionsDescription propertyDescr,
-                                    final int s, final int c, final int v,
-                                    final String uuid) {
+    public final void onPropertyTestStart(final CElectionDescription description,
+                                          final PreAndPostConditionsDescription propertyDescr,
+                                          final BoundValues bounds,
+                                          final String uuid) {
         display();
     }
 
     @Override
-    public void onPropertyTestFinished(final CElectionDescription description,
-                                       final PreAndPostConditionsDescription propertyDescr,
-                                       final int s, final int c, final int v,
-                                       final String uuid) {
+    public final void onPropertyTestFinished(final CElectionDescription description,
+                                             final PreAndPostConditionsDescription propertyDescr,
+                                             final BoundValues bounds,
+                                             final String uuid) {
         display();
     }
 
     @Override
-    public void onPropertyTestStopped(final CElectionDescription descr,
-                                      final PreAndPostConditionsDescription propertyDescr,
-                                      final int s, final int c, final int v,
-                                      final String uuid) {
+    public final void onPropertyTestStopped(final CElectionDescription descr,
+                                            final PreAndPostConditionsDescription propertyDescr,
+                                            final BoundValues bounds,
+                                            final String uuid) {
         display();
     }
 
     @Override
-    public void onPropertyTestRawOutput(final String sessionUUID,
-                                        final CElectionDescription description,
-                                        final PreAndPostConditionsDescription propertyDescr,
-                                        final int s, final int c, final int v,
-                                        final String uuid, final String output) {
+    public final void onPropertyTestRawOutput(final String sessionUUID,
+                                              final CElectionDescription description,
+                                              final PreAndPostConditionsDescription propertyDescr,
+                                              final BoundValues bounds,
+                                              final String uuid, final String output) {
         Platform.runLater(() -> {
-            logs.appendText(output + "\n");
+            logs.appendText(output + LINE_BREAK);
         });
     }
 
     @Override
-    public void onPropertyTestRawOutputComplete(final CElectionDescription description,
-                                                final PreAndPostConditionsDescription propertyDescr,
-                                                final int s, final int c, final int v,
-                                                final String uuid,
-                                                final List<String> cbmcOutput) {
+    public final void onPropertyTestRawOutputComplete(final CElectionDescription description,
+                                                      final PreAndPostConditionsDescription
+                                                              propertyDescr,
+                                                      final BoundValues bounds,
+                                                      final String uuid,
+                                                      final List<String> cbmcOutput) {
     }
 
     @Override
-    public void onNewCBMCMessage(final CBMCJsonMessage msg) {
+    public final void onNewCBMCMessage(final CBMCJsonMessage msg) {
         Platform.runLater(() -> {
-            messages.appendText(msg.toString() + "\n");
+            messages.appendText(msg.toString() + LINE_BREAK);
         });
     }
 
-    public AnchorPane getTopLevelAnchorPane() {
+    public final AnchorPane getTopLevelAnchorPane() {
         return topLevelAnchorPane;
     }
 
@@ -262,7 +285,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
     }
 
     @FXML
-    public void initialize() {
+    public final void initialize() {
         createdFileTextField.setEditable(false);
         runTextfieldFontSizeSlider.setShowTickMarks(true);
         runTextfieldFontSizeSlider.setMin(4.0);
@@ -278,7 +301,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
     }
 
     @Override
-    public void handleCBMConfigUpdatedFiles(final CBMCTestConfiguration currentConfig) {
+    public final void handleCBMConfigUpdatedFiles(final CBMCTestConfiguration currentConfig) {
         display();
     }
 }

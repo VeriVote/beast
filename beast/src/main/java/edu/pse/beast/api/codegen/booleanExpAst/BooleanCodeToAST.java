@@ -226,7 +226,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
 
         SymbolicCBMCVar var = null;
         final String name = ctx.passSymbVarByName().symbVarByNameExp().getText();
-        if (quantifierType.contains("VOTER")) {
+        if (quantifierType.contains(VOTER)) {
             var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.VOTER);
         } else if (quantifierType.contains("CANDIDATE")) {
             var = new SymbolicCBMCVar(name,
@@ -491,7 +491,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
     public void exitSymbVarByPosExp(final SymbVarByPosExpContext ctx) {
         final int number = ((IntegerNode) expStack.pop()).getInteger();
         final String text = ctx.getText();
-        if (text.startsWith("VOTER")) {
+        if (text.startsWith(VOTER)) {
             expStack.add(new SymbVarByPosExp(CBMCVarType.VOTER, number));
         } else if (text.startsWith("CAND")) {
             expStack.add(new SymbVarByPosExp(CBMCVarType.CANDIDATE, number));

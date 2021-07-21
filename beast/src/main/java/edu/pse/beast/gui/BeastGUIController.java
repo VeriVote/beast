@@ -189,16 +189,25 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
                 new VirtualizedScrollPane<CEditorCodeElement>(cEditorGUIElement);
         addChildToAnchorPane(codePane, cEditorGUIElementVsp, 20, 100, 0, 0);
+        final CElectionEditor.ElectionDescriptionButtons electDescButtons =
+                new CElectionEditor.ElectionDescriptionButtons(addElectionDescriptionButton,
+                                                               deleteDescrButton,
+                                                               loadElectionDescriptionButton,
+                                                               saveElectionDescriptionButton,
+                                                               editDescrButton,
+                                                               openedElectionDescriptionChoiceBox);
+        final CElectionEditor.FunctionEditor functionEditor =
+                new CElectionEditor.FunctionEditor(addFunctionMenuButton, removeFunctionButton,
+                                                   funcDeclArea, functionList);
+        final CElectionEditor.LoopBoundEditor loopBoundEditor =
+                new CElectionEditor.LoopBoundEditor(testLoopBoundButton, editLoopboundButton,
+                                                    loopBoundList);
+        final CElectionEditor.CodeAreas codeAreas =
+                new CElectionEditor.CodeAreas(cEditorGUIElement, closingBracketArea);
 
         cElectionEditor =
-                new CElectionEditor(primaryStage,
-                                    cEditorGUIElementVsp, addElectionDescriptionButton,
-                                    deleteDescrButton, loadElectionDescriptionButton,
-                                    saveElectionDescriptionButton, editDescrButton,
-                                    addFunctionMenuButton, removeFunctionButton,
-                                    testLoopBoundButton, editLoopboundButton, cEditorGUIElement,
-                                    funcDeclArea, closingBracketArea, functionList, loopBoundList,
-                                    openedElectionDescriptionChoiceBox, beastWorkspace);
+                new CElectionEditor(primaryStage, cEditorGUIElementVsp, electDescButtons,
+                                    functionEditor, loopBoundEditor, codeAreas, beastWorkspace);
     }
 
     private void initPropertyEditor() {
@@ -211,9 +220,11 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 new VirtualizedScrollPane<>(postPropertyEditor);
         prePropertyPane.setContent(preVsp);
         postPropertyPane.setContent(postVsp);
+        final PreAndPostPropertyEditor.Buttons buttons =
+                new PreAndPostPropertyEditor.Buttons(addPropDescrButton, loadPropDescrButton,
+                                                     savePropDescrButton, removeSymbVarButton);
 
-        new PreAndPostPropertyEditor(prePropertyEditor, postPropertyEditor, addPropDescrButton,
-                                     loadPropDescrButton, savePropDescrButton, removeSymbVarButton,
+        new PreAndPostPropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
                                      symbVarsListView, addSymbVarMenu,
                                      openedPropertyDescriptionChoiceBox, beastWorkspace);
     }
@@ -323,7 +334,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     }
 
     @FXML
-    public void initialize() throws IOException {
+    public final void initialize() throws IOException {
         // option Controller
         final PathHandler pathHandler = new PathHandler();
         initOptionsGUIController(pathHandler);
@@ -343,15 +354,15 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         initMenu();
     }
 
-    public void setPrimaryStage(final Stage primStage) {
+    public final void setPrimaryStage(final Stage primStage) {
         this.primaryStage = primStage;
     }
 
     @Override
-    public void handleWorkspaceUpdateGeneric() {
+    public final void handleWorkspaceUpdateGeneric() {
     }
 
-    public void shutdown() {
+    public final void shutdown() {
         optionsGUIController.saveOptions();
         beastWorkspace.shutdown();
     }

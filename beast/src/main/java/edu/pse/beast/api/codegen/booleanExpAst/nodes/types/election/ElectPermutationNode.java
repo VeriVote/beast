@@ -6,20 +6,20 @@ public class ElectPermutationNode extends ElectionTypeNode {
     private int electNumber;
 
     @Override
-    public String getTreeString(final int depth) {
+    public final String getTreeString(final int depth) {
         return "Permutation Elect " + electNumber;
     }
 
-    public void setElectNumber(final int electionNumber) {
+    public final void setElectNumber(final int electionNumber) {
         this.electNumber = electionNumber;
     }
 
-    public int getElectNumber() {
+    public final int getElectNumber() {
         return electNumber;
     }
 
     @Override
-    public void getVisited(final BooleanAstVisitor visitor) {
+    public final void getVisited(final BooleanAstVisitor visitor) {
         visitor.visitElectPermutation(this);
     }
 }

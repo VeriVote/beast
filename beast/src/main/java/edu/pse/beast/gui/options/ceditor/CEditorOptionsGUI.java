@@ -35,17 +35,17 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
         fxmlLoader.load();
     }
 
-    public CEditorOptions getOptions() {
+    public final CEditorOptions getOptions() {
         return options;
     }
 
-    public void setcElectionEditor(final CElectionEditor editor) {
+    public final void setcElectionEditor(final CElectionEditor editor) {
         this.cElectionEditor = editor;
         editor.applyOptions(options);
     }
 
     @FXML
-    public void initialize() {
+    public final void initialize() {
         fontSizeTextField.setText(String.valueOf(options.getFontSize()));
         fontSizeSlider.setMin(4.0);
         fontSizeSlider.setMax(50.0);
@@ -66,7 +66,7 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
     }
 
     @Override
-    public void displayOptions(final AnchorPane currentOptionDisplayAnchorpane) {
+    public final void displayOptions(final AnchorPane currentOptionDisplayAnchorpane) {
         displayOptionsAnchorpane(currentOptionDisplayAnchorpane, topLevelAnchorpane);
     }
 

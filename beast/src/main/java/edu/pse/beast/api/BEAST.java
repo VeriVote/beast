@@ -30,7 +30,7 @@ public class BEAST {
     private List<Thread> createdThreads = new ArrayList<>();
     private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<>();
 
-    public void runWorkUnit(final CBMCPropertyCheckWorkUnit wu) {
+    public final void runWorkUnit(final CBMCPropertyCheckWorkUnit wu) {
         wus.add(wu);
         final Thread t = new Thread(new Runnable() {
             @Override
@@ -42,22 +42,23 @@ public class BEAST {
         createdThreads.add(t);
     }
 
-    public void stopRun(final CBMCTestRunWithSymbolicVars run) {
+    public final void stopRun(final CBMCTestRunWithSymbolicVars run) {
         run.getWorkUnit().interrupt();
     }
 
-    public void shutdown() {
+    public final void shutdown() {
         for (final CBMCPropertyCheckWorkUnit wu : wus) {
             wu.shutdown();
         }
     }
 
-    public CBMCCodeFileData
-                generateCodeFileCBMCPropertyTest(final CElectionDescription descr,
-                                                 final PreAndPostConditionsDescription propDescr,
-                                                 final CodeGenOptions codeGenOptions,
-                                                 final PathHandler pathHandler)
-                                                         throws IOException {
+    public final CBMCCodeFileData
+                    generateCodeFileCBMCPropertyTest(final CElectionDescription descr,
+                                                     final PreAndPostConditionsDescription
+                                                             propDescr,
+                                                     final CodeGenOptions codeGenOptions,
+                                                     final PathHandler pathHandler)
+                                                             throws IOException {
         final InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
         return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
                                                         codeGenOptions,
@@ -65,14 +66,14 @@ public class BEAST {
                                                         initVoteHelper);
     }
 
-    public CBMCCodeFileData
-                generateCodeFileCBMCSpecificInput(final CElectionDescription descr,
-                                                  final PreAndPostConditionsDescription
-                                                          propDescr,
-                                                  final CodeGenOptions codeGenOptions,
-                                                  final PathHandler pathHandler,
-                                                  final VotingParameters votingParameters)
-                                                          throws IOException {
+    public final CBMCCodeFileData
+                    generateCodeFileCBMCSpecificInput(final CElectionDescription descr,
+                                                      final PreAndPostConditionsDescription
+                                                              propDescr,
+                                                      final CodeGenOptions codeGenOptions,
+                                                      final PathHandler pathHandler,
+                                                      final VotingParameters votingParameters)
+                                                              throws IOException {
         final InitVoteHelper initVoteHelper =
                 new SpecificValueInitVoteHelper(votingParameters);
         return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
@@ -81,10 +82,10 @@ public class BEAST {
                                                         initVoteHelper);
     }
 
-    public List<CBMCTestRunWithSymbolicVars>
-                generateTestRuns(final CBMCCodeFileData cbmcCodeFile,
-                                 final CBMCTestConfiguration testConfig,
-                                 final CodeGenOptions codeGenOptions) {
+    public final List<CBMCTestRunWithSymbolicVars>
+                    generateTestRuns(final CBMCCodeFileData cbmcCodeFile,
+                                     final CBMCTestConfiguration testConfig,
+                                     final CodeGenOptions codeGenOptions) {
         final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
         for (int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {
             for (int c = testConfig.getMinCands(); c <= testConfig.getMaxCands(); ++c) {
@@ -92,7 +93,9 @@ public class BEAST {
                     final String loopbounds =
                             cbmcCodeFile.getCodeInfo()
                             .getLoopBoundHandler().generateCBMCString(v, c, s);
-                    runs.add(new CBMCTestRunWithSymbolicVars(v, s, c,
+                    final CBMCTestRunWithSymbolicVars.BoundValues bounds =
+                            new CBMCTestRunWithSymbolicVars.BoundValues(c, s, v);
+                    runs.add(new CBMCTestRunWithSymbolicVars(bounds,
                                                              codeGenOptions,
                                                              loopbounds,
                                                              cbmcCodeFile,

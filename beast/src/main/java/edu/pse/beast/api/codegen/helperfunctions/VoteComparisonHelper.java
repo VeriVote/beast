@@ -47,24 +47,22 @@ public class VoteComparisonHelper {
     }
 
     public static String generateCode(final String generatedVarName,
-                                      final String lhsVarName,
-                                      final String rhsVarName,
+                                      final Comparison comparison,
                                       final ElectionTypeCStruct comparedType,
                                       final VotingInputTypes votingInputType,
                                       final CodeGenOptions options,
-                                      final String compareSymbol,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(GENERATED_VAR_NAME, generatedVarName,
-                       LHS_VAR_NAME, lhsVarName,
-                       RHS_VAR_NAME, rhsVarName,
+                       LHS_VAR_NAME, comparison.lhsVarName,
+                       RHS_VAR_NAME, comparison.rhsVarName,
                        AMOUNT_NAME, comparedType.getAmtName(),
                        AMOUNT_MAX_CAND_VAR_NAME, options.getCbmcAmountMaxCandsVarName(),
-                       COMPARE_SYMBOL, compareSymbol,
+                       COMPARE_SYMBOL, comparison.symbol,
                        LIST_NAME, comparedType.getListName());
 
         String code = null;
-        if (NOT_EQUAL.equals(compareSymbol)) {
+        if (NOT_EQUAL.equals(comparison.symbol)) {
             switch (votingInputType) {
             case APPROVAL:
                 code = CodeTemplateVoteComparison.getTemplateApprovalUneq();
@@ -103,5 +101,19 @@ public class VoteComparisonHelper {
         final List<LoopBound> loopbounds = getLoopBounds(votingInputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+    }
+
+    public static class Comparison {
+        public final String symbol;
+        public final String lhsVarName;
+        public final String rhsVarName;
+
+        public Comparison(final String compSymb,
+                          final String lhsVar,
+                          final String rhsVar) {
+            this.symbol = compSymb;
+            this.lhsVarName = lhsVar;
+            this.rhsVarName = rhsVar;
+        }
     }
 }

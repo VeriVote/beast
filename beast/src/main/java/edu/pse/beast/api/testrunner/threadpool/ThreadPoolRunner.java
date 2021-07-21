@@ -13,7 +13,7 @@ public class ThreadPoolRunner implements Runnable {
     }
 
     @Override
-    public void run() {
+    public final void run() {
         while (keepRunning) {
             work = workSupplier.getWorkIfAvailable();
             if (work != null) {
@@ -28,7 +28,7 @@ public class ThreadPoolRunner implements Runnable {
         }
     }
 
-    public void shutdown() {
+    public final void shutdown() {
         work.interrupt();
         keepRunning = false;
     }

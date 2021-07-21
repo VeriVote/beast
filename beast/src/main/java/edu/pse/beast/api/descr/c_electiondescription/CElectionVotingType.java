@@ -27,37 +27,51 @@ public class CElectionVotingType {
     private boolean uniqueVotes;
 
     @Override
-    public boolean equals(final Object obj) {
-        final CElectionVotingType other = (CElectionVotingType) obj;
-        if (listDimensions != other.listDimensions) {
+    public final int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + listDimensions;
+        result = prime * result
+                + ((simpleType == null) ? 0 : simpleType.hashCode());
+        return result;
+    }
+
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null || getClass() != obj.getClass()) {
             return false;
-        } else if (simpleType != other.simpleType) {
+        }
+        final CElectionVotingType other = (CElectionVotingType) obj;
+        if (listDimensions != other.listDimensions
+                || simpleType != other.simpleType) {
             return false;
         }
         return true;
     }
 
-    public int getListDimensions() {
+    public final int getListDimensions() {
         return listDimensions;
     }
 
-    public List<CBMCVars> getListSizes() {
+    public final List<CBMCVars> getListSizes() {
         return listSizes;
     }
 
-    public CElectionSimpleTypes getSimpleType() {
+    public final CElectionSimpleTypes getSimpleType() {
         return simpleType;
     }
 
-    public boolean isUniqueVotes() {
+    public final boolean isUniqueVotes() {
         return uniqueVotes;
     }
 
-    public boolean canAccess(final CBMCVars var) {
+    public final boolean canAccess(final CBMCVars var) {
         return !listSizes.isEmpty() && listSizes.get(0) == var;
     }
 
-    public CElectionVotingType getTypeOneDimLess() {
+    public final CElectionVotingType getTypeOneDimLess() {
         final CElectionVotingType created = new CElectionVotingType();
         created.listDimensions = this.listDimensions - 1;
         created.simpleType = this.simpleType;
@@ -65,7 +79,7 @@ public class CElectionVotingType {
         return created;
     }
 
-    public static CElectionVotingType of(final VotingOutputTypes outType) {
+    public static final CElectionVotingType of(final VotingOutputTypes outType) {
         final CElectionVotingType created = new CElectionVotingType();
         switch (outType) {
         case CANDIDATE_LIST:
@@ -94,7 +108,7 @@ public class CElectionVotingType {
         return created;
     }
 
-    public static CElectionVotingType of(final VotingInputTypes inType) {
+    public static final CElectionVotingType of(final VotingInputTypes inType) {
         final CElectionVotingType created = new CElectionVotingType();
         switch (inType) {
         case APPROVAL:
@@ -132,7 +146,7 @@ public class CElectionVotingType {
         return created;
     }
 
-    public static CElectionVotingType simple() {
+    public static final CElectionVotingType simple() {
         final CElectionVotingType created = new CElectionVotingType();
         created.simpleType = CElectionSimpleTypes.UNSIGNED_INT;
         created.listDimensions = 0;
