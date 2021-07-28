@@ -12,10 +12,9 @@ import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 
 /**
- * Uses the {@link CodeGenASTVisitor} to generate the main function:
- * Initializes voting structs and symbolic variables,
- * generates preconditions, calls the voting function,
- * generates postconditions
+ * This generator uses the {@link CodeGenASTVisitor} to generate the
+ * main function. Therein, we initialize voting structs and symbolic variables,
+ * generate preconditions, call the voting function, and generate postconditions.
  *
  * @author Holger Klein
  *
@@ -27,6 +26,9 @@ public class CBMCMainGenerator {
     private static final String BOUND = "BOUND";
 
     /**
+     * This method returns an assumption for an upper bound
+     * with the given variables, bounds, etc.
+     *
      * @param var the bound variable
      * @param options the code generation options for statement name
      * @param bound the upper bound

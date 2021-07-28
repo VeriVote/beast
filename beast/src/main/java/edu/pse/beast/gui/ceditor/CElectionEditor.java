@@ -39,6 +39,7 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class CElectionEditor implements WorkspaceUpdateListener {
+    private static final double LINE_SCALE = 1.3;
     private static final String LINE_BREAK = "\n";
 
     private static final String ADD_FUNCTION = "add function";
@@ -500,7 +501,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             setLockedColor(functionDeclarationArea);
             final int amtLinesInDecl = declText.split(LINE_BREAK).length;
             AnchorPane.setTopAnchor(cEditorVirtualizedScrollPane,
-                                    currentTextSize * 1.3 * amtLinesInDecl);
+                                    currentTextSize * LINE_SCALE * amtLinesInDecl);
             electionCodeArea.setDisable(false);
             electionCodeArea.insertText(0, func.getCode());
             final String returnText =
@@ -594,7 +595,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 currentDisplayedFunction.getDeclCString(beastWorkspace.getCodeGenOptions());
         final int amtLinesInDecl = declText.split(LINE_BREAK).length;
         AnchorPane.setTopAnchor(cEditorVirtualizedScrollPane,
-                                currentTextSize * 1.3 * amtLinesInDecl);
+                                currentTextSize * LINE_SCALE * amtLinesInDecl);
     }
 
     public final void applyOptions(final CEditorOptions options) {

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThreadPool {
+    private static final String THREAD_NAME_PREFIX = "Runner_";
+    private static final int DEFAULT_TIMEOUT = 100;
+
     private ArrayList<Thread> threads = new ArrayList<>();
     private ArrayList<ThreadPoolRunner> runners = new ArrayList<>();
     private WorkSupplier workSupplier = new WorkSupplier();
@@ -11,7 +14,7 @@ public class ThreadPool {
     public ThreadPool(final int numThreads) {
         for (int i = 0; i < numThreads; ++i) {
             final ThreadPoolRunner runner =
-                    new ThreadPoolRunner("Runner_" + i, workSupplier);
+                    new ThreadPoolRunner(THREAD_NAME_PREFIX + i, workSupplier);
             final Thread t = new Thread(runner);
             t.start();
             runners.add(runner);
@@ -39,7 +42,7 @@ public class ThreadPool {
             runner.shutdown();
         }
         for (final Thread t : threads) {
-            t.join(100);
+            t.join(DEFAULT_TIMEOUT);
         }
     }
 }

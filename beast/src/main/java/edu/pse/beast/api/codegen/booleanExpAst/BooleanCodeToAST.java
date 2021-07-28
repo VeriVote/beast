@@ -78,8 +78,9 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteTupleExpContext;
 
 /**
- * Walks the antlr parse tree to generate our custom
- * AST of boolean Expressions
+ * Walks the antlr parse tree to generate our custom AST
+ * of boolean expressions.
+ *
  * @author Holger Klein
  *
  */

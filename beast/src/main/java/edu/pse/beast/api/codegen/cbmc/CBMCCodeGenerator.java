@@ -102,7 +102,8 @@ public class CBMCCodeGenerator {
                 generateCodeForCBMCPropertyTest(final CElectionDescription descr,
                                                 final PreAndPostConditionsDescription propDescr,
                                                 final CodeGenOptions options,
-                                                final InitVoteHelper initVoteHelper) {
+                                                final InitVoteHelper initVoteHelper,
+                                                final Class<?> c) {
         final CFile created = prepareCodeFile(descr, options);
 
         final CElectionVotingType votesNakedArr =
@@ -129,7 +130,7 @@ public class CBMCCodeGenerator {
 
         created.addFunction(
                 votingSigFuncToPlainCFunc(descr.getVotingFunction(), input,
-                                          output, options, loopBoundHandler));
+                                          output, options, loopBoundHandler, c));
         final BooleanExpASTData preAstData =
                 BooleanCodeToAST.generateAST(propDescr.getPreConditionsDescription().getCode(),
                                              propDescr.getCbmcVariables());
@@ -167,7 +168,8 @@ public class CBMCCodeGenerator {
                                           final CFunction.Input input,
                                           final CFunction.Output output,
                                           final CodeGenOptions options,
-                                          final CodeGenLoopBoundHandler loopBoundHandler) {
+                                          final CodeGenLoopBoundHandler loopBoundHandler,
+                                          final Class<?> c) {
         final String structArg =
                 input.struct.getStruct().getName()
                 + BLANK + input.structVarName;
@@ -188,11 +190,11 @@ public class CBMCCodeGenerator {
                               output.struct.getStruct().getName());
 
         final List<String> code = new ArrayList<>();
-        code.add(VotingFunctionHelper.generateVoteArrayCopy(func.getName(),
-                                                            func.getVotesArrayName(),
-                                                            input.structVarName,
-                                                            input.type, input.struct,
-                                                            options, loopBoundHandler));
+        final VotingFunctionHelper.CNames votingNames =
+                new VotingFunctionHelper.CNames(func.getName(), func.getVotesArrayName(),
+                                                input.structVarName);
+        code.add(VotingFunctionHelper.generateVoteArrayCopy(votingNames, input.type, input.struct,
+                                                            options, loopBoundHandler, c));
         code.add(FunctionToC
                 .votingTypeToC(CElectionVotingType.of(func.getOutputType()),
                                                       func.getResultArrayName(),
@@ -205,11 +207,12 @@ public class CBMCCodeGenerator {
         code.addAll(func.getCodeAsList());
         code.add("// end user generated code");
 
-        code.add(VotingFunctionHelper.generateVoteResultCopy(func.getName(),
-                                                             func.getResultArrayName(),
-                                                             output.structVarName,
+        final VotingFunctionHelper.CNames resultNames =
+                new VotingFunctionHelper.CNames(func.getName(), func.getResultArrayName(),
+                                                output.structVarName);
+        code.add(VotingFunctionHelper.generateVoteResultCopy(resultNames,
                                                              output.type, output.struct,
-                                                             options, loopBoundHandler));
+                                                             options, loopBoundHandler, c));
         code.add("return" + BLANK + output.structVarName + SEMICOLON);
         created.setCode(code);
         return created;

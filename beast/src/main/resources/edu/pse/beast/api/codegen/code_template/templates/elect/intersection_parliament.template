@@ -1,0 +1,19 @@
+    ELECT_TYPE GENERATED_VAR_NAME;
+    unsigned int count = 0;
+    for (int i = 0; i < LHS.AMT_MEMBER; ++i) {
+        unsigned int contains = 0;
+        for (int j = 0; j < RHS.AMT_MEMBER; ++j) {
+            contains |= LHS.LIST_MEMBER[i] == RHS.LIST_MEMBER[j];
+        }
+        if (contains) {
+            GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();
+            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS.LIST_MEMBER[i]);
+            count++;
+        }
+    }
+    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();
+    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);
+    for (int i = count; i < MAX_AMT_CANDIDATES; ++i) {
+        GENERATED_VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();
+        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == INVALID_VOTE);
+    }

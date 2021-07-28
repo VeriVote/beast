@@ -24,10 +24,11 @@ public class CBMCCodeFileGenerator {
                                    final PreAndPostConditionsDescription propDescr,
                                    final CodeGenOptions options,
                                    final PathHandler pathHandler,
-                                   final InitVoteHelper initVoteHelper) throws IOException {
+                                   final InitVoteHelper initVoteHelper,
+                                   final Class<?> c) throws IOException {
         final CBMCGeneratedCodeInfo code =
                 CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, options,
-                                                                  initVoteHelper);
+                                                                  initVoteHelper, c);
         final String absolutePath =
                 pathHandler.getBaseDir().getAbsolutePath() + PATH_TO_TEMP_FOLDER;
         final File file = File.createTempFile("cbmc", ".c", new File(absolutePath));

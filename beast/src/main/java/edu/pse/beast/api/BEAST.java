@@ -19,10 +19,9 @@ import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithS
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
 /**
- * This class can run work units and create
- * cbmc code files or a list of
- * CBMC Test Runs given a range of
- * voter, seat and candidate amounts
+ * This class can run work units and create cbmc code files or a list of
+ * CBMC test runs given a range of voter, seat and candidate amounts.
+ *
  * @author Holger Klein
  *
  */
@@ -63,7 +62,8 @@ public class BEAST {
         return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
                                                         codeGenOptions,
                                                         pathHandler,
-                                                        initVoteHelper);
+                                                        initVoteHelper,
+                                                        this.getClass());
     }
 
     public final CBMCCodeFileData
@@ -79,7 +79,8 @@ public class BEAST {
         return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
                                                         codeGenOptions,
                                                         pathHandler,
-                                                        initVoteHelper);
+                                                        initVoteHelper,
+                                                        this.getClass());
     }
 
     public final List<CBMCTestRunWithSymbolicVars>

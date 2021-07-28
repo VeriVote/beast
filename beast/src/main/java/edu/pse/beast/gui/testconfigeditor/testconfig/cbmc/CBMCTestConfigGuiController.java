@@ -16,6 +16,9 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 public class CBMCTestConfigGuiController {
+    private static final int MIN_SPIN = 0;
+    private static final int MAX_SPIN = 500;
+
     @FXML
     private AnchorPane topLevelAnchorPane;
     @FXML
@@ -80,39 +83,39 @@ public class CBMCTestConfigGuiController {
 
     @FXML
     private void initialize() {
-        minVoters.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+        minVoters.setValueFactory(new IntegerSpinnerValueFactory(MIN_SPIN, MAX_SPIN));
         minVoters.getValueFactory().valueProperty().addListener((e, o, n) -> {
             currentConfig.setMinVoters(minVoters.getValue());
             updateView();
         });
 
-        maxVoters.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+        maxVoters.setValueFactory(new IntegerSpinnerValueFactory(MIN_SPIN, MAX_SPIN));
         maxVoters.getValueFactory().valueProperty().addListener((e, o, n) -> {
             currentConfig.setMaxVoters(maxVoters.getValue());
             updateView();
         });
 
-        minCandidates.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+        minCandidates.setValueFactory(new IntegerSpinnerValueFactory(MIN_SPIN, MAX_SPIN));
         minCandidates.getValueFactory().valueProperty()
                 .addListener((e, o, n) -> {
                     currentConfig.setMinCands(minCandidates.getValue());
                     updateView();
                 });
 
-        maxCandidates.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+        maxCandidates.setValueFactory(new IntegerSpinnerValueFactory(MIN_SPIN, MAX_SPIN));
         maxCandidates.getValueFactory().valueProperty()
                 .addListener((e, o, n) -> {
                     currentConfig.setMaxCands(maxCandidates.getValue());
                     updateView();
                 });
 
-        minSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+        minSeats.setValueFactory(new IntegerSpinnerValueFactory(MIN_SPIN, MAX_SPIN));
         minSeats.getValueFactory().valueProperty().addListener((e, o, n) -> {
             currentConfig.setMinSeats(minSeats.getValue());
             updateView();
         });
 
-        maxSeats.setValueFactory(new IntegerSpinnerValueFactory(0, 500));
+        maxSeats.setValueFactory(new IntegerSpinnerValueFactory(MIN_SPIN, MAX_SPIN));
         maxSeats.getValueFactory().valueProperty().addListener((e, o, n) -> {
             currentConfig.setMaxSeats(maxSeats.getValue());
             updateView();

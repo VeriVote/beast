@@ -1,20 +1,34 @@
 package edu.pse.beast.api.codegen.code_template.templates;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class CodeTemplateInitVote {
-    public static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
+    private static final String RESOURCES = "/edu/pse/beast/api/codegen/code_template/templates/";
+    private static final String FILE_PREFIX = "function_";
+    private static final String FILE_ENDING = ".template";
+
+    private static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(
                             LoopBoundType.LOOP_BOUND_AMT_VOTERS,
                             LoopBoundType.LOOP_BOUND_AMT_VOTERS)
                     );
 
-    public static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
+    private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays
                 .asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
@@ -25,7 +39,7 @@ public class CodeTemplateInitVote {
                         LoopBoundType.LOOP_BOUND_AMT_CANDS)
             );
 
-    public static final List<LoopBound> LOOP_BOUNDS_APPROVAL =
+    private static final List<LoopBound> LOOP_BOUNDS_APPROVAL =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
                 LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
@@ -34,91 +48,43 @@ public class CodeTemplateInitVote {
                 LoopBoundType.LOOP_BOUND_AMT_CANDS)
             );
 
-    private static final String LINE_BREAK = "\n";
+    private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =
+            new LinkedHashMap<VotingInputTypes, List<LoopBound>>(
+            Map.of(VotingInputTypes.SINGLE_CHOICE, LOOP_BOUNDS_SINGLE_CHOICE,
+                    VotingInputTypes.PREFERENCE, LOOP_BOUNDS_PREFERENCE,
+                    VotingInputTypes.APPROVAL, LOOP_BOUNDS_APPROVAL));
 
-    public static final String TEMPLATE_SINGLE_CHOICE =
-            "    //initializing Vote VOTE_NUMBER" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_SEAT = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_SEAT <= MAX_AMT_SEAT);" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_CAND = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_CAND <= MAX_AMT_CAND);" + LINE_BREAK
-            + "    VOTE_TYPE VAR_NAME;" + LINE_BREAK
-            + "    VAR_NAME.AMT_MEMBER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(VAR_NAME.AMT_MEMBER == CURRENT_AMT_VOTER);" + LINE_BREAK
-            + "    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "            VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.votes[i] >= 0);" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.votes[i] < CURRENT_AMT_CAND);" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "            VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.votes[i] == INVALID_VOTE);" + LINE_BREAK
-            + "    }" + LINE_BREAK;
+    private static final Map<VotingInputTypes, String> TEMPLATES =
+            new LinkedHashMap<VotingInputTypes, String>();
 
-    public static final String TEMPLATE_PREFERENCE =
-            "    //initializing Vote VOTE_NUMBER" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_SEAT = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_SEAT <= MAX_AMT_SEAT);" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_CAND = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_CAND <= MAX_AMT_CAND);" + LINE_BREAK
-            + "    VOTE_TYPE VAR_NAME;" + LINE_BREAK
-            + "    VAR_NAME.AMT_MEMBER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(VAR_NAME.AMT_MEMBER == CURRENT_AMT_VOTER);" + LINE_BREAK
-            + "    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "        for (int j = 0; j < CURRENT_AMT_CAND; ++j) {" + LINE_BREAK
-            + "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= 0);" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] <= CURRENT_AMT_CAND);" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (int i = CURRENT_AMT_VOTER; i < MAX_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "        for (int j = 0; j < MAX_AMT_CAND; ++j) {" + LINE_BREAK
-            + "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] == INVALID_VOTE);" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "        unsigned int tmp[MAX_AMT_CAND];" + LINE_BREAK
-            + "        for (int k = 0; k < CURRENT_AMT_CAND; ++k) {" + LINE_BREAK
-            + "            tmp[k] = 0;" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "        for (int j = 0; j < CURRENT_AMT_CAND; ++j) {" + LINE_BREAK
-            + "            for (int k = 0; k < CURRENT_AMT_CAND; ++k) {" + LINE_BREAK
-            + "                if (VAR_NAME.LIST_MEMBER[i][j] == k) {" + LINE_BREAK
-            + "                    ASSUME(tmp[k] == 0);" + LINE_BREAK
-            + "                    tmp[k] = 1;" + LINE_BREAK
-            + "                }" + LINE_BREAK
-            + "            }" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK;
+    public static final List<LoopBound> getLoopBounds(final VotingInputTypes key) {
+        assert key != null;
+        if (LOOP_BOUNDS.isEmpty() || !LOOP_BOUNDS.containsKey(key)) {
+            // throw new NotImplementedException();
+            return Arrays.asList();
+        }
+        return LOOP_BOUNDS.get(key);
+    }
 
-    public static final String TEMPLATE_APPROVAL =
-            "    // initializing Vote VOTE_NUMBER" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_SEAT = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_SEAT <= MAX_AMT_SEAT);" + LINE_BREAK
-            + "    unsigned int CURRENT_AMT_CAND = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(CURRENT_AMT_CAND <= MAX_AMT_CAND);" + LINE_BREAK
-            + "    VOTE_TYPE VAR_NAME;" + LINE_BREAK
-            + "    VAR_NAME.AMT_MEMBER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(VAR_NAME.AMT_MEMBER == CURRENT_AMT_VOTER);" + LINE_BREAK
-            + "    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "        for (int j = 0; j < CURRENT_AMT_CAND; ++j) {" + LINE_BREAK
-            + "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= 0);" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] <= 1);" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (int i = CURRENT_AMT_VOTER; i < MAX_AMT_VOTER; ++i) {" + LINE_BREAK
-            + "        for (int j = 0; j < MAX_AMT_CAND; ++j) {" + LINE_BREAK
-            + "            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(VAR_NAME.LIST_MEMBER[i][j] == INVALID_VOTE);" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK;
-
+    // TODO: SINGLE_CHOICE_STACK etc.
+    public static final String getTemplate(final VotingInputTypes key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES + FILE_PREFIX
+                            + key.name().toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
+    }
 }

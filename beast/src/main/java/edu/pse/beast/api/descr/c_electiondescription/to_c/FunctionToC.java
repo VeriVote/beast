@@ -12,13 +12,13 @@ public class FunctionToC {
         for (int i = 0; i < type.getListDimensions(); ++i) {
             String arraySize = "";
             switch (type.getListSizes().get(i)) {
-            case AMT_VOTERS:
+            case AMOUNT_VOTERS:
                 arraySize = v;
                 break;
-            case AMT_CANDIDATES:
+            case AMOUNT_CANDIDATES:
                 arraySize = c;
                 break;
-            case AMT_SEATS:
+            case AMOUNT_SEATS:
                 arraySize = s;
                 break;
             default:

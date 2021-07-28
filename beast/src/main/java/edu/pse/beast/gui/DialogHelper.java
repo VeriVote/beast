@@ -12,6 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class DialogHelper {
+    private static final int LEFT_COLUMN = 0;
+    private static final int RIGHT_COLUMN = 1;
+    private static final int DEFAULT_DIALOG_SIZE = 10;
     private static final String OK = "OK";
 
     public static Dialog<ButtonType> generateDialog(final List<String> inputNames,
@@ -25,15 +28,15 @@ public class DialogHelper {
             .addAll(buttonType, ButtonType.CANCEL);
 
         final GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
+        grid.setHgap(DEFAULT_DIALOG_SIZE);
+        grid.setVgap(DEFAULT_DIALOG_SIZE);
         int i = 0;
         for (; i < inputNames.size(); ++i) {
-            grid.add(new Label(inputNames.get(i)), 0, i);
-            grid.add(inputs.get(i), 1, i);
+            grid.add(new Label(inputNames.get(i)), LEFT_COLUMN, i);
+            grid.add(inputs.get(i), RIGHT_COLUMN, i);
         }
         for (; i < inputs.size(); ++i) {
-            grid.add(inputs.get(i), 0, i);
+            grid.add(inputs.get(i), LEFT_COLUMN, i);
         }
         dialog.getDialogPane().setContent(grid);
         return dialog;

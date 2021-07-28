@@ -13,6 +13,11 @@ import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsCategoryType;
 
 public class CEditorOptionsGUI extends OptionsCategoryGUI {
+    private static final int ONE_HUNDRED = 100;
+
+    private static final double MIN_SLIDE = 4.0;
+    private static final double MAX_SLIDE = 50.0;
+
     @FXML
     private AnchorPane topLevelAnchorpane;
     @FXML
@@ -47,12 +52,12 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
     @FXML
     public final void initialize() {
         fontSizeTextField.setText(String.valueOf(options.getFontSize()));
-        fontSizeSlider.setMin(4.0);
-        fontSizeSlider.setMax(50.0);
+        fontSizeSlider.setMin(MIN_SLIDE);
+        fontSizeSlider.setMax(MAX_SLIDE);
         fontSizeSlider.setValue(options.getFontSize());
         fontSizeSlider.setShowTickLabels(true);
         fontSizeSlider.valueProperty().addListener((ob, o, n) -> {
-            final double newVal = Math.round((double) n * 100) / 100;
+            final double newVal = Math.round((double) n * ONE_HUNDRED) / ONE_HUNDRED;
             fontSizeTextField.setText(String.valueOf(newVal));
             fontSizeSlider.setValue(newVal);
             options.setFontSize(newVal);

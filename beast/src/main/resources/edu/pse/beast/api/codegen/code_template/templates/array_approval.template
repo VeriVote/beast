@@ -1,0 +1,6 @@
+    unsigned int VOTE_ARR[AMT_VOTERS][AMT_CANDIDATES];
+    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {
+        for (int j = 0; j < CURRENT_AMT_CAND; ++j) {
+            VOTE_ARR[i][j] = VOTE_INPUT_STRUCT_VAR.LIST_MEMBER[i][j];
+        }
+    }

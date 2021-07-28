@@ -1,0 +1,4 @@
+    unsigned int GENERATED_VAR = 0;
+    for (int i = 0; i < AMT; ++i) {
+        GENERATED_VAR |= LHS_VAR_NAME[i] != RHS_VAR_NAME[i];
+    }

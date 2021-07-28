@@ -1,7 +1,12 @@
 package edu.pse.beast.api.codegen;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
@@ -17,41 +22,46 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CBMCCodeGenTest {
-    private static final String LINE_BREAK = "\n";
+    private static final String RESOURCES = "/codegen/";
+    private static final String FILE_ENDING = ".template";
+
+    private static final String EQ = " == ";
+    private static final String SEMI = ";";
+    private static final String ONE = "1";
+    private static final String TWO = "2";
+
+    private static final String PRE = "_pre";
+    private static final String POST = "_post";
     private static final String VOTING = "voting";
     private static final String BORDA = "borda";
     private static final String REINFORCE_NAME = "reinforce";
+    private static final String VOTES_VAR = "VOTES";
+    private static final String ELECT_VAR = "ELECT";
+    private static final String V = "V";
+    private static final String C = "C";
+
     private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
+
+    private static String getTemplate(final String key, final Class<?> c) {
+        final InputStream stream =
+                c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
+        final StringWriter writer = new StringWriter();
+        try {
+            IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+        return writer.toString();
+    }
 
     @Test
     public void testGenerateSimpleCode() {
-        final String bordaCode =
-                "    unsigned int i = 0;" + LINE_BREAK
-                + "    unsigned int j = 0;" + LINE_BREAK + LINE_BREAK
-                + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-                + "        result[i] = 0;" + LINE_BREAK
-                + "    }" + LINE_BREAK
-                + "    for (i = 0; i < V; i++) {" + LINE_BREAK
-                + "        for (j = 0; j < C; j++) {" + LINE_BREAK
-                + "            result[votes[i][j]] += (C - j) - 1;" + LINE_BREAK
-                + "        }" + LINE_BREAK
-                + "    }" + "    unsigned int max = 0;" + LINE_BREAK
-                + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-                + "        if (max < res[i]) {" + LINE_BREAK
-                + "            max = res[i];" + LINE_BREAK
-                + "            for (j = 0; j < C; j++) {" + LINE_BREAK
-                + "                r.arr[j] = 0;" + LINE_BREAK
-                + "            }" + LINE_BREAK
-                + "            r.arr[i] = 1;" + LINE_BREAK
-                + "        } else if (max == res[i]) {" + LINE_BREAK
-                + "            r.arr[i] = 1;" + LINE_BREAK
-                + "        }" + LINE_BREAK
-                + "    }";
-
+        final Class<?> c = this.getClass();
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
                                          BORDA);
+        final String bordaCode = getTemplate(BORDA, c);
         descr.getVotingFunction().setCode(bordaCode);
 
         final CodeGenOptions codeGenOptions = new CodeGenOptions();
@@ -59,46 +69,26 @@ public class CBMCCodeGenTest {
                 AntlrCLoopParser.findLoops(VOTING, bordaCode, codeGenOptions);
         descr.getVotingFunction().setExtractedLoops(loops);
 
-        final String pre = "VOTES2 == VOTES1;";
-        final String post = "ELECT2 == ELECT1;";
+        final String pre = VOTES_VAR + TWO + EQ + ELECT_VAR + ONE + SEMI;
+        final String post = ELECT_VAR + TWO + EQ + ELECT_VAR + ONE + SEMI;
 
         final PreAndPostConditionsDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE_NAME, pre, post).get(0);
         final String code =
                 CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
-                                                                  initVoteHelper).getCode();
+                                                                  initVoteHelper,
+                                                                  this.getClass()).getCode();
         System.out.println(code);
     }
 
     @Test
     public void testGenerateBordaCode() {
-        final String bordaCode =
-                "    unsigned int i = 0;" + LINE_BREAK
-                + "    unsigned int j = 0;" + LINE_BREAK + LINE_BREAK
-                + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-                + "        result[i] = 0;" + LINE_BREAK
-                + "    }" + LINE_BREAK
-                + "    for (i = 0; i < V; i++) {" + LINE_BREAK
-                + "        for (j = 0; j < C; j++) {" + LINE_BREAK
-                + "            result[votes[i][j]] += (C - j) - 1;" + LINE_BREAK
-                + "        }" + LINE_BREAK
-                + "    }" + "    unsigned int max = 0;" + LINE_BREAK
-                + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-                + "        if (max < res[i]) {" + LINE_BREAK
-                + "            max = res[i];" + LINE_BREAK
-                + "            for (j = 0; j < C; j++) {" + LINE_BREAK
-                + "                r.arr[j] = 0;" + LINE_BREAK
-                + "            }" + LINE_BREAK
-                + "            r.arr[i] = 1;" + LINE_BREAK
-                + "        } else if (max == res[i]) {" + LINE_BREAK
-                + "            r.arr[i] = 1;" + LINE_BREAK
-                + "        }" + LINE_BREAK
-                + "    }";
-
+        final Class<?> c = this.getClass();
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
                                          BORDA);
+        final String bordaCode = getTemplate(BORDA, c);
         descr.getVotingFunction().setCode(bordaCode);
 
         final CodeGenOptions codeGenOptions = new CodeGenOptions();
@@ -106,45 +96,25 @@ public class CBMCCodeGenTest {
                 AntlrCLoopParser.findLoops(VOTING, bordaCode, codeGenOptions);
         descr.getVotingFunction().setExtractedLoops(loops);
 
-        final String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
-        final String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
+        final String pre = getTemplate(REINFORCE_NAME + PRE, c);
+        final String post = getTemplate(REINFORCE_NAME + POST, c);
         final PreAndPostConditionsDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE_NAME, pre, post).get(0);
         final String code =
-                CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
-                                                                  initVoteHelper).getCode();
+                CBMCCodeGenerator
+                .generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
+                                                 initVoteHelper, this.getClass()).getCode();
         System.out.println(code);
     }
 
     @Test
     public void testConstants() {
-        final String bordaCode =
-                "    unsigned int i = 0;" + LINE_BREAK
-                + "    unsigned int j = 0;" + LINE_BREAK + LINE_BREAK
-                + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-                + "        result[i] = 0;" + LINE_BREAK
-                + "    }" + LINE_BREAK
-                + "    for (i = 0; i < V; i++) {" + LINE_BREAK
-                + "        for (j = 0; j < C; j++) {" + LINE_BREAK
-                + "            result[votes[i][j]] += (C - j) - 1;" + LINE_BREAK
-                + "        }" + LINE_BREAK
-                + "    }" + "    unsigned int max = 0;" + LINE_BREAK
-                + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-                + "        if (max < result[i]) {" + LINE_BREAK
-                + "            max = result[i];" + LINE_BREAK
-                + "            for (j = 0; j < C; j++) {" + LINE_BREAK
-                + "                result[j] = 0;" + LINE_BREAK
-                + "            }" + LINE_BREAK
-                + "            result[i] = 1;" + LINE_BREAK
-                + "        } else if (max == result[i]) {" + LINE_BREAK
-                + "            result[i] = 1;" + LINE_BREAK
-                + "        }" + LINE_BREAK
-                + "    }" + LINE_BREAK;
-
+        final Class<?> c = this.getClass();
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
                                          BORDA);
+        final String bordaCode = getTemplate(BORDA, c);
         descr.getVotingFunction().setCode(bordaCode);
 
         final CodeGenOptions codeGenOptions = new CodeGenOptions();
@@ -152,14 +122,15 @@ public class CBMCCodeGenTest {
                 AntlrCLoopParser.findLoops(VOTING, bordaCode, codeGenOptions);
         descr.getVotingFunction().setExtractedLoops(loops);
 
-        final String pre = "V1 == V2;";
-        final String post = "C1 == C2;";
+        final String pre = V + ONE + EQ + V + TWO + SEMI;
+        final String post = C + ONE + EQ + C + TWO + SEMI;
 
         final PreAndPostConditionsDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE_NAME, pre, post).get(0);
         final String code =
-                CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
-                                                                  initVoteHelper).getCode();
+                CBMCCodeGenerator
+                .generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
+                                                 initVoteHelper, this.getClass()).getCode();
         System.out.println(code);
     }
 }

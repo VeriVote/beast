@@ -3,8 +3,6 @@ package edu.pse.beast.api.codegen.helperfunctions.init_vote;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.StringReplacementMap;
@@ -58,28 +56,8 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
                         VAR_NAME, varName,
                         ASSUME, options.getCbmcAssumeName(),
                         NONDET_UINT, options.getCbmcNondetUintName());
-        String code = null;
-        List<LoopBound> loopbounds = List.of();
-
-        switch (votingInputType) {
-        case APPROVAL:
-            code = CodeTemplateInitVote.TEMPLATE_APPROVAL;
-            loopbounds = CodeTemplateInitVote.LOOP_BOUNDS_APPROVAL;
-            break;
-        case WEIGHTED_APPROVAL:
-            throw new NotImplementedException();
-        case PREFERENCE:
-            code = CodeTemplateInitVote.TEMPLATE_PREFERENCE;
-            loopbounds = CodeTemplateInitVote.LOOP_BOUNDS_PREFERENCE;
-            break;
-        case SINGLE_CHOICE:
-            code = CodeTemplateInitVote.TEMPLATE_SINGLE_CHOICE;
-            loopbounds = CodeTemplateInitVote.LOOP_BOUNDS_SINGLE_CHOICE;
-            break;
-        case SINGLE_CHOICE_STACK:
-            throw new NotImplementedException();
-        default:
-        }
+        final String code = CodeTemplateInitVote.getTemplate(votingInputType, this.getClass());
+        final List<LoopBound> loopbounds = CodeTemplateInitVote.getLoopBounds(votingInputType);
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);

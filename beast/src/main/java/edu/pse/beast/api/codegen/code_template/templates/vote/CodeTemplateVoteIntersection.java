@@ -1,18 +1,33 @@
 package edu.pse.beast.api.codegen.code_template.templates.vote;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class CodeTemplateVoteIntersection {
-    public static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
+    private static final String RESOURCES =
+            "/edu/pse/beast/api/codegen/code_template/templates/vote/";
+    private static final String FILE_PREFIX = "intersection_";
+    private static final String FILE_ENDING = ".template";
+
+    private static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS)
             );
 
-    public static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
+    private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
                 LoopBoundType.LOOP_BOUND_AMT_VOTERS,
@@ -20,48 +35,43 @@ public class CodeTemplateVoteIntersection {
                 LoopBoundType.LOOP_BOUND_AMT_VOTERS)
             );
 
-    private static final String LINE_BREAK = "\n";
+    private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =
+            new LinkedHashMap<VotingInputTypes, List<LoopBound>>(
+            Map.of(VotingInputTypes.SINGLE_CHOICE, LOOP_BOUNDS_SINGLE_CHOICE,
+                    VotingInputTypes.PREFERENCE, LOOP_BOUNDS_PREFERENCE,
+                    VotingInputTypes.APPROVAL, LOOP_BOUNDS_PREFERENCE));
 
-    public static final String TEMPLATE_SINGLE_CHOICE =
-            "VOTE_TYPE GENERATED_VAR_NAME;" + LINE_BREAK
-            + "{" + LINE_BREAK
-            + "    unsigned int count = 0;" + LINE_BREAK
-            + "    for (int i = 0; i < AMT_VOTERS; ++i) {" + LINE_BREAK
-            + "        unsigned int eq = COMPARE_VARS;" + LINE_BREAK
-            + "        if (eq) {" + LINE_BREAK
-            + "            GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();" + LINE_BREAK
-            + "            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == "
-            + "LHS_VAR_NAME.LIST_MEMBER[i]);" + LINE_BREAK
-            + "            count++;" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);" + LINE_BREAK
-            + "}" + LINE_BREAK;
+    private static final Map<VotingInputTypes, String> TEMPLATES =
+            new LinkedHashMap<VotingInputTypes, String>();
 
-    public static final String TEMPLATE_PREFERENCE =
-            "VOTE_TYPE GENERATED_VAR_NAME;" + LINE_BREAK
-            + "{" + LINE_BREAK
-            + "    unsigned int count = 0;" + LINE_BREAK
-            + "    for (int i = 0; i < LHS_VAR_NAME.AMT_MEMBER; ++i) {" + LINE_BREAK
-            + "        unsigned int eq = true;" + LINE_BREAK
-            + "        for (int j = 0; j < AMT_CANDIDATES; ++j) {" + LINE_BREAK
-            + "            eq = eq && COMPARE_VARS;" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "        if (eq) {" + LINE_BREAK
-            + "            for (int j = 0; j < AMT_CANDIDATES; ++j) {" + LINE_BREAK
-            + "                GENERATED_VAR_NAME.LIST_MEMBER[count][j] = NONDET_UINT();"
-            + LINE_BREAK
-            + "                ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count][j] == "
-            + "LHS_VAR_NAME.LIST_MEMBER[i][j]);" + LINE_BREAK
-            + "            }" + LINE_BREAK
-            + "        count++;" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);"
-            + "}" + LINE_BREAK;
+    public static final List<LoopBound> getLoopBounds(final VotingInputTypes key) {
+        assert key != null;
+        if (LOOP_BOUNDS.isEmpty() || !LOOP_BOUNDS.containsKey(key)) {
+            // throw new NotImplementedException();
+            return Arrays.asList();
+        }
+        return LOOP_BOUNDS.get(key);
+    }
 
-    public static final String TEMPLATE_APPROVAL = TEMPLATE_PREFERENCE;
-    public static final List<LoopBound> LOOP_BOUNDS_APPROVAL = LOOP_BOUNDS_PREFERENCE;
+    // TODO: SINGLE_CHOICE_STACK, WEIGHTED_APPROVAL etc.
+    public static final String getTemplate(final VotingInputTypes key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES
+                            + FILE_PREFIX + key.name().toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
+    }
 }

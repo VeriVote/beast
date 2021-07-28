@@ -33,6 +33,9 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpdateListener {
     private static final String LINE_BREAK = "\n";
+    private static final double MIN_FONT_SIZE = 4.0;
+    private static final double MAX_FONT_SIZE = 30.0;
+    private static final int DEFAULT_FONT_SIZE = 12;
 
     private static final String RUN_OUT_OF_DATE = "Run out of date, has changes";
     private static final String SHOW_LOGS = "show logs";
@@ -67,7 +70,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
 
     private BeastWorkspace beastWorkspace;
 
-    private double currentDisplayFontSize = 12;
+    private double currentDisplayFontSize = DEFAULT_FONT_SIZE;
 
     private CounterExampleGuiController counterExampleGuiController =
             new CounterExampleGuiController();
@@ -288,8 +291,8 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
     public final void initialize() {
         createdFileTextField.setEditable(false);
         runTextfieldFontSizeSlider.setShowTickMarks(true);
-        runTextfieldFontSizeSlider.setMin(4.0);
-        runTextfieldFontSizeSlider.setMax(30.0);
+        runTextfieldFontSizeSlider.setMin(MIN_FONT_SIZE);
+        runTextfieldFontSizeSlider.setMax(MAX_FONT_SIZE);
         runTextfieldFontSizeSlider.setValue(currentDisplayFontSize);
         runTextfieldFontSizeSlider.valueProperty().addListener((ob, o, n) -> {
             final double displayFontSize = Math.round((double) n * 100) / 100;

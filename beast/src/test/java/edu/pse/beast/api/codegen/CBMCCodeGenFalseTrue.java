@@ -43,8 +43,9 @@ public class CBMCCodeGenFalseTrue {
 
         final InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
         final String code =
-                CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
-                                                                  initVoteHelper).getCode();
+                CBMCCodeGenerator
+                .generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
+                                                 initVoteHelper, this.getClass()).getCode();
         System.out.println(code);
     }
 }

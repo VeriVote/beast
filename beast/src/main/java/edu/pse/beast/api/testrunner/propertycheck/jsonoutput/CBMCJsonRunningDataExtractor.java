@@ -12,9 +12,11 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class CBMCJsonRunningDataExtractor {
-    public static final String MESSAGE_TEXT_KEY = "messageText";
-    public static final String MESSAGE_TYPE_KEY = "messageType";
+    private static final String BRACE_OP = "{";
+    private static final String BRACE_CL = "}";
 
+    private static final String MESSAGE_TEXT_KEY = "messageText";
+    private static final String MESSAGE_TYPE_KEY = "messageType";
     private static final String PROGRAM_KEY = "program";
 
     private CElectionDescription description;
@@ -77,14 +79,14 @@ public class CBMCJsonRunningDataExtractor {
 
     public final CBMCJsonMessage appendOutput(final String rawOutput) {
         if (currentOutput == null) {
-            if (rawOutput.trim().startsWith("{")) {
+            if (rawOutput.trim().startsWith(BRACE_OP)) {
                 // must be valid start of new JSON object
                 currentOutput = rawOutput;
             }
         } else {
-            if (rawOutput.trim().startsWith("}")) {
+            if (rawOutput.trim().startsWith(BRACE_CL)) {
                 try {
-                    final JSONObject json = new JSONObject(currentOutput + "}");
+                    final JSONObject json = new JSONObject(currentOutput + BRACE_CL);
                     currentOutput = null;
                     return parseJsonObject(json);
                 } catch (JSONException e) {

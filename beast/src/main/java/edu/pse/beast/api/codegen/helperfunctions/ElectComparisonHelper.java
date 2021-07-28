@@ -3,8 +3,6 @@ package edu.pse.beast.api.codegen.helperfunctions;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.elect.CodeTemplateElectComparison;
@@ -13,6 +11,7 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class ElectComparisonHelper {
+    private static final String NOT_EQUAL = "!=";
     private static final String GENERATED_VAR = "GENERATED_VAR";
     private static final String LHS_VAR = "LHS_VAR";
     private static final String RHS_VAR = "RHS_VAR";
@@ -21,27 +20,13 @@ public class ElectComparisonHelper {
     private static final String COMP = "COMP";
     private static final String LIST_MEMBER = "LIST_MEMBER";
 
-    private static List<LoopBound> getLoopBounds(final VotingOutputTypes votingOutputType) {
-        switch (votingOutputType) {
-        case CANDIDATE_LIST:
-            return CodeTemplateElectComparison.LOOP_BOUNDS_CANDIDATE_LIST;
-        case PARLIAMENT:
-            return CodeTemplateElectComparison.LOOP_BOUNDS_PARLIAMENT;
-        case PARLIAMENT_STACK:
-            throw new NotImplementedException();
-        case SINGLE_CANDIDATE:
-            throw new NotImplementedException();
-        default:
-            return List.of();
-        }
-    }
-
     public static String generateCode(final String generatedVarName,
                                       final Comparison comparison,
                                       final ElectionTypeCStruct comparedType,
                                       final VotingOutputTypes votingOutputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler,
+                                      final Class<?> c) {
         final Map<String, String> replacementMap =
                 Map.of(GENERATED_VAR, generatedVarName,
                        LHS_VAR, comparison.lhsVarName,
@@ -51,40 +36,10 @@ public class ElectComparisonHelper {
                        COMP, comparison.symbol,
                        LIST_MEMBER, comparedType.getListName());
 
-        String code = null;
-        if ("!=".equals(comparison.symbol)) {
-            switch (votingOutputType) {
-            case CANDIDATE_LIST:
-                code = CodeTemplateElectComparison.getTemplateCandidateListUneq();
-                break;
-            case PARLIAMENT:
-                code = CodeTemplateElectComparison.getTemplateParliamentUneq();
-                break;
-            case PARLIAMENT_STACK:
-                break;
-            case SINGLE_CANDIDATE:
-                code = CodeTemplateElectComparison.getTemplateSingleCandidate();
-                break;
-            default:
-            }
-        } else {
-            switch (votingOutputType) {
-            case CANDIDATE_LIST:
-                code = CodeTemplateElectComparison.getTemplateCandidateList();
-                break;
-            case PARLIAMENT:
-                code = CodeTemplateElectComparison.getTemplateParliament();
-                break;
-            case PARLIAMENT_STACK:
-                break;
-            case SINGLE_CANDIDATE:
-                code = CodeTemplateElectComparison.getTemplateSingleCandidate();
-                break;
-            default:
-            }
-        }
-
-        final List<LoopBound> loopbounds = getLoopBounds(votingOutputType);
+        final boolean uneq = NOT_EQUAL.equals(comparison.symbol);
+        final String code = CodeTemplateElectComparison.getTemplate(votingOutputType, uneq, c);
+        final List<LoopBound> loopbounds =
+                CodeTemplateElectComparison.getLoopBounds(votingOutputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }

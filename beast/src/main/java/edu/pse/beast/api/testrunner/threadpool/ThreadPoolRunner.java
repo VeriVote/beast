@@ -1,6 +1,7 @@
 package edu.pse.beast.api.testrunner.threadpool;
 
 public class ThreadPoolRunner implements Runnable {
+    private static final int DEFAULT_WATING_TIME = 200;
 
     private boolean keepRunning = true;
     private String id;
@@ -20,7 +21,7 @@ public class ThreadPoolRunner implements Runnable {
                 work.doWork();
             } else {
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(DEFAULT_WATING_TIME);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

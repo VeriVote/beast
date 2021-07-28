@@ -52,6 +52,10 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class BeastGUIController implements WorkspaceUpdateListener {
+    private static final int TOP_OFFSET = 20;
+    private static final int BOTTOM_OFFSET = 100;
+    private static final int LEFT_OFFSET = 0;
+    private static final int RIGHT_OFFSET = 0;
 
     // =================options start
     private String optionsFXML = "/edu/pse/beast/optionsGUI.fxml";
@@ -159,13 +163,13 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     private CBMCProcessHandlerCreator cbmcProcessHandlerCreator = new CBMCProcessHandlerCreator();
 
-    private void addChildToAnchorPane(final AnchorPane pane,
-                                      final Node child,
-                                      final double top,
-                                      final double bottom,
-                                      final double left,
-                                      final double right) {
-        codePane.getChildren().add(child);
+    private static void addChildToAnchorPane(final AnchorPane pane,
+                                             final Node child,
+                                             final double top,
+                                             final double bottom,
+                                             final double left,
+                                             final double right) {
+        pane.getChildren().add(child);
         AnchorPane.setTopAnchor(child, top);
         AnchorPane.setLeftAnchor(child, left);
         AnchorPane.setRightAnchor(child, right);
@@ -188,7 +192,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         final CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
         final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
                 new VirtualizedScrollPane<CEditorCodeElement>(cEditorGUIElement);
-        addChildToAnchorPane(codePane, cEditorGUIElementVsp, 20, 100, 0, 0);
+        addChildToAnchorPane(codePane, cEditorGUIElementVsp,
+                             TOP_OFFSET, BOTTOM_OFFSET,
+                             LEFT_OFFSET, RIGHT_OFFSET);
         final CElectionEditor.ElectionDescriptionButtons electDescButtons =
                 new CElectionEditor.ElectionDescriptionButtons(addElectionDescriptionButton,
                                                                deleteDescrButton,
@@ -330,7 +336,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 break;
             }
         }
-
     }
 
     @FXML

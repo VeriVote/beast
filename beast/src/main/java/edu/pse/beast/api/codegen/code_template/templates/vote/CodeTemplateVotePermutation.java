@@ -1,13 +1,28 @@
 package edu.pse.beast.api.codegen.code_template.templates.vote;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
+import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class CodeTemplateVotePermutation {
-    public static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
+    private static final String RESOURCES =
+            "/edu/pse/beast/api/codegen/code_template/templates/vote/";
+    private static final String FILE_PREFIX = "permutation_";
+    private static final String FILE_ENDING = ".template";
+
+    private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
                 LoopBoundType.LOOP_BOUND_AMT_VOTERS,
@@ -17,31 +32,42 @@ public class CodeTemplateVotePermutation {
                 LoopBoundType.LOOP_BOUND_AMT_CANDS)
             );
 
-    private static final String LINE_BREAK = "\n";
+    private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =
+            new LinkedHashMap<VotingInputTypes, List<LoopBound>>(
+            Map.of(VotingInputTypes.PREFERENCE, LOOP_BOUNDS_PREFERENCE,
+                    VotingInputTypes.APPROVAL, LOOP_BOUNDS_PREFERENCE));
 
-    public static final String TEMPLATE_PREFERENCE =
-            "    VOTE_TYPE GENERATED_VAR_NAME;" + LINE_BREAK
-            + "    GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();" + LINE_BREAK
-            + "    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == RHS.AMT_MEMBER);" + LINE_BREAK
-            + "    unsigned int PERM[AMT_VOTERS];" + LINE_BREAK
-            + "    for (int i = 0; i < RHS.AMT_MEMBER && i < AMT_VOTERS; ++i) {" + LINE_BREAK
-            + "        PERM[i] = NONDET_UINT();" + LINE_BREAK
-            + "        ASSUME(PERM[i] >= 0);" + LINE_BREAK
-            + "        ASSUME(PERM[i] < RHS.AMT_MEMBER);" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (int i = 0; i < RHS.AMT_MEMBER - 1 && i < AMT_VOTERS; ++i) {" + LINE_BREAK
-            + "        for (int j = i + 1; j < RHS.AMT_MEMBER && j < AMT_VOTERS; ++j) {"
-            + LINE_BREAK
-            + "            ASSUME(PERM[i] != PERM[j]);" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (int i = 0; i < RHS.AMT_MEMBER - 1 && i < AMT_VOTERS; ++i) {" + LINE_BREAK
-            + "        for (int j = 0; j < AMT_CANDIDATES; ++j) {" + LINE_BREAK
-            + "            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i][j] == "
-            + "RHS.LIST_MEMBER[PERM[i]][j]);" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }";
+    private static final Map<VotingInputTypes, String> TEMPLATES =
+            new LinkedHashMap<VotingInputTypes, String>();
 
-    public static final String TEMPLATE_APPROVAL = TEMPLATE_PREFERENCE;
-    public static final List<LoopBound> LOOP_BOUNDS_APPROVAL = LOOP_BOUNDS_PREFERENCE;
+    public static final List<LoopBound> getLoopBounds(final VotingInputTypes key) {
+        assert key != null;
+        if (LOOP_BOUNDS.isEmpty() || !LOOP_BOUNDS.containsKey(key)) {
+            // throw new NotImplementedException();
+            return Arrays.asList();
+        }
+        return LOOP_BOUNDS.get(key);
+    }
+
+    // TODO: SINGLE_CHOICE, SINGLE_CHOICE_STACK, WEIGHTED_APPROVAL etc.
+    public static final String getTemplate(final VotingInputTypes key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES
+                            + FILE_PREFIX + key.name().toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
+    }
 }

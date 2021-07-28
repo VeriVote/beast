@@ -23,7 +23,8 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CB
 public class CounterExampleGuiController {
     private static final String BLANK = " ";
     private static final String LINE_BREAK = "\n";
-    private static final String COMMA = ",";
+    private static final String COMMA = ", ";
+    private static final int LINE_WIDTH = 100;
 
     @FXML
     private AnchorPane topLevelAnchorPane;
@@ -86,24 +87,24 @@ public class CounterExampleGuiController {
             final String value = assignment.getAssignmentFor(listVarName);
             assignmentString = listVarName + BLANK + value + LINE_BREAK;
         } else if (amtBrackets == 1) {
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < LINE_WIDTH; ++i) {
                 for (final List<Integer> positions : positionsToStrings.keySet()) {
                     if (positions.get(0) == i) {
                         assignmentString +=
-                                positionsToStrings.get(positions) + COMMA + BLANK;
+                                positionsToStrings.get(positions) + COMMA;
                         continue;
                     }
                 }
             }
             assignmentString += LINE_BREAK;
         } else if (amtBrackets == 2) {
-            for (int i = 0; i < 100; ++i) {
+            for (int i = 0; i < LINE_WIDTH; ++i) {
                 boolean foundNew = false;
-                for (int j = 0; j < 100; ++j) {
+                for (int j = 0; j < LINE_WIDTH; ++j) {
                     for (final List<Integer> positions : positionsToStrings.keySet()) {
                         if (positions.get(0) == i && positions.get(1) == j) {
                             assignmentString +=
-                                    positionsToStrings.get(positions) + COMMA + BLANK;
+                                    positionsToStrings.get(positions) + COMMA;
                             foundNew = true;
                             continue;
                         }

@@ -11,6 +11,7 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class CFunction {
+    private static final String BLANK = " ";
     private String name;
     private List<CTypeNameBrackets> arguments = new ArrayList<>();
     private String returnType;
@@ -21,12 +22,12 @@ public class CFunction {
                      final String returnTypeString) {
         this.name = nameString;
         for (final String s : argumentList) {
-            final String[] typeAndName = s.split(" ");
+            final String[] typeAndName = s.split(BLANK);
             final String argName = typeAndName[typeAndName.length - 1];
             String argType = "";
             for (int i = 0; i < typeAndName.length - 1; ++i) {
                 argType += typeAndName[i];
-                argType += i < typeAndName.length - 2 ? " " : "";
+                argType += i < typeAndName.length - 2 ? BLANK : "";
             }
             this.arguments.add(new CTypeNameBrackets(argType, argName, ""));
         }
@@ -46,7 +47,7 @@ public class CFunction {
     }
 
     private String signature() {
-        return returnType + " " + name + "(" + String.join("," + " ", arguments.stream()
+        return returnType + BLANK + name + "(" + String.join("," + BLANK, arguments.stream()
                 .map(a -> a.generateCode()).collect(Collectors.toList())) + ")";
     }
 

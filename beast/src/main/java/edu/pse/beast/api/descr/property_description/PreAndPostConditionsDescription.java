@@ -62,7 +62,6 @@ public final class PreAndPostConditionsDescription {
      * @param preDescr       the preConditionDescription
      * @param postDescr      the postConditionDescription
      * @param boundedVarDesc the boundedVarDescription
-     * @param symbVarList    the symbolicVariableList
      */
     public PreAndPostConditionsDescription(final String nameString,
                                            final FormalPropertiesDescription preDescr,

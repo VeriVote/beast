@@ -20,13 +20,14 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CB
 public class TestResultPresentation2 {
     private static final String LINE_BREAK = "\n";
 
-    private static final String ZERO = "0";
-    private static final String ONE = "1";
-    private static final String TWO = "2";
-    private static final String THREE = "3";
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
 
     private static final String RESOURCES_PATH = "./src/test/resources/";
     private static final String TEST = "test";
+    private static final int TEST_BOUND = 5;
     private static final String VOTE = "vote";
     private static final String VOTES = "votes";
     private static final String VOTE_SEQUENCE = "voteSequence";
@@ -48,9 +49,9 @@ public class TestResultPresentation2 {
                 new PreAndPostConditionsDescription(TEST);
 
         final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
-        cbmcGeneratedCodeInfo.addVotingVariableName(1, VOTE + ONE);
-        cbmcGeneratedCodeInfo.addVotingVariableName(2, VOTE + TWO);
-        cbmcGeneratedCodeInfo.addVotingVariableName(3, VOTE + THREE);
+        cbmcGeneratedCodeInfo.addVotingVariableName(ONE, VOTE + ONE);
+        cbmcGeneratedCodeInfo.addVotingVariableName(TWO, VOTE + TWO);
+        cbmcGeneratedCodeInfo.addVotingVariableName(THREE, VOTE + THREE);
 
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(VOTE_SEQUENCE + ZERO);
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(VOTE_PERMUTATION + ONE);
@@ -58,9 +59,12 @@ public class TestResultPresentation2 {
         cbmcGeneratedCodeInfo.setVotesAmtMemberVarName(AMOUNT_VOTES);
         cbmcGeneratedCodeInfo.setVotesListMemberVarName(VOTES);
 
-        cbmcGeneratedCodeInfo.addElectVariableName(1, PerformVoteHelper.getResultVarName(1));
-        cbmcGeneratedCodeInfo.addElectVariableName(2, PerformVoteHelper.getResultVarName(2));
-        cbmcGeneratedCodeInfo.addElectVariableName(3, PerformVoteHelper.getResultVarName(3));
+        cbmcGeneratedCodeInfo
+        .addElectVariableName(ONE, PerformVoteHelper.getResultVarName(ONE));
+        cbmcGeneratedCodeInfo
+        .addElectVariableName(TWO, PerformVoteHelper.getResultVarName(TWO));
+        cbmcGeneratedCodeInfo
+        .addElectVariableName(THREE, PerformVoteHelper.getResultVarName(THREE));
 
         cbmcGeneratedCodeInfo.addedGeneratedElectVar(ELECT_INTERSECTION + ZERO);
         cbmcGeneratedCodeInfo.addedGeneratedElectVar(ELECT_INTERSECTION + THREE);
@@ -73,7 +77,7 @@ public class TestResultPresentation2 {
         final CBMCJsonResultExampleExtractor res =
                 new CBMCJsonResultExampleExtractor(descr, propDescr,
                                                    cbmcGeneratedCodeInfo,
-                                                   5, 5, 5);
+                                                   TEST_BOUND, TEST_BOUND, TEST_BOUND);
         res.processCBMCJsonOutput(rawOutput);
         System.out.println(res.getGeneratedExample().toString());
     }
@@ -91,9 +95,12 @@ public class TestResultPresentation2 {
                 new PreAndPostConditionsDescription(TEST);
 
         final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
-        cbmcGeneratedCodeInfo.addVotingVariableName(1, SymbVarInitVoteHelper.getVoteVarName(1));
-        cbmcGeneratedCodeInfo.addVotingVariableName(2, SymbVarInitVoteHelper.getVoteVarName(2));
-        cbmcGeneratedCodeInfo.addVotingVariableName(3, SymbVarInitVoteHelper.getVoteVarName(3));
+        cbmcGeneratedCodeInfo
+        .addVotingVariableName(ONE, SymbVarInitVoteHelper.getVoteVarName(ONE));
+        cbmcGeneratedCodeInfo
+        .addVotingVariableName(TWO, SymbVarInitVoteHelper.getVoteVarName(TWO));
+        cbmcGeneratedCodeInfo
+        .addVotingVariableName(THREE, SymbVarInitVoteHelper.getVoteVarName(THREE));
 
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(VOTE_SEQUENCE + ZERO);
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(VOTE_PERMUTATION + ONE);
@@ -101,9 +108,12 @@ public class TestResultPresentation2 {
         cbmcGeneratedCodeInfo.setVotesAmtMemberVarName(AMOUNT_VOTES);
         cbmcGeneratedCodeInfo.setVotesListMemberVarName(VOTES);
 
-        cbmcGeneratedCodeInfo.addElectVariableName(1, PerformVoteHelper.getResultVarName(1));
-        cbmcGeneratedCodeInfo.addElectVariableName(2, PerformVoteHelper.getResultVarName(2));
-        cbmcGeneratedCodeInfo.addElectVariableName(3, PerformVoteHelper.getResultVarName(3));
+        cbmcGeneratedCodeInfo
+        .addElectVariableName(ONE, PerformVoteHelper.getResultVarName(ONE));
+        cbmcGeneratedCodeInfo
+        .addElectVariableName(TWO, PerformVoteHelper.getResultVarName(TWO));
+        cbmcGeneratedCodeInfo
+        .addElectVariableName(THREE, PerformVoteHelper.getResultVarName(THREE));
 
         cbmcGeneratedCodeInfo.addedGeneratedElectVar(ELECT_INTERSECTION + ZERO);
         cbmcGeneratedCodeInfo.addedGeneratedElectVar(ELECT_INTERSECTION + THREE);
@@ -116,7 +126,7 @@ public class TestResultPresentation2 {
         final CBMCJsonResultExampleExtractor res =
                 new CBMCJsonResultExampleExtractor(descr, propDescr,
                                                    cbmcGeneratedCodeInfo,
-                                                   5, 5, 5);
+                                                   TEST_BOUND, TEST_BOUND, TEST_BOUND);
         res.processCBMCJsonOutput(rawOutput);
     }
 }

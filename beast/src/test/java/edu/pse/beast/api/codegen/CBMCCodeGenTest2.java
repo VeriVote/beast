@@ -45,8 +45,9 @@ public class CBMCCodeGenTest2 {
         propDescr.addCBMCVar(new SymbolicCBMCVar("c2", CBMCVarType.CANDIDATE));
 
         final String code =
-                CBMCCodeGenerator.generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
-                                                                  initVoteHelper).getCode();
+                CBMCCodeGenerator
+                .generateCodeForCBMCPropertyTest(descr, propDescr, codeGenOptions,
+                                                 initVoteHelper, this.getClass()).getCode();
         System.out.println(code);
     }
 }

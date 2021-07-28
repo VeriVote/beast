@@ -5,8 +5,12 @@ import static org.junit.Assert.assertNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
@@ -23,38 +27,40 @@ import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
-    private static final String LINE_BREAK = "\n";
+    private static final String C = "C";
+    private static final String V = "V";
+    private static final String VOTING_FUNC = "voting";
 
-    private static final String BORDA_CODE =
-            "    unsigned int i = 0;" + LINE_BREAK
-            + "    unsigned int j = 0;" + LINE_BREAK
-            + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-            + "        result[i] = 0;" + LINE_BREAK
-            + "    }" + LINE_BREAK
-            + "    for (i = 0; i < V; i++) {" + LINE_BREAK
-            + "        for (j = 0; j < C; j++) {" + LINE_BREAK
-            + "            result[votes[i][j]] += (C - j) - 1;" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }" + "    unsigned int max = 0;" + LINE_BREAK
-            + "    for (i = 0; i < C; i++) {" + LINE_BREAK
-            + "        if (max < res[i]) {" + LINE_BREAK
-            + "            max = res[i];" + LINE_BREAK
-            + "            for (j = 0; j < C; j++) {" + LINE_BREAK
-            + "                r.arr[j] = 0;" + LINE_BREAK
-            + "            }" + LINE_BREAK
-            + "            r.arr[i] = 1;" + LINE_BREAK
-            + "        } else if (max == res[i]) {" + LINE_BREAK
-            + "            r.arr[i] = 1;" + LINE_BREAK
-            + "        }" + LINE_BREAK
-            + "    }";
+    private static final String TESTFILES = "testfiles";
+    private static final String REINFORCE = "reinforce";
+    private static final String PRE = "_pre";
+    private static final String POST = "_post";
+    private static final String BORDA = "borda";
+    private static final String DESCR = "borda.belec";
+    private static final String PROP = "reinforcement.bprp";
+    private static final String RESOURCES = "/codegen/";
+    private static final String FILE_ENDING = ".template";
+
+    private static String getTemplate(final String key, final Class<?> c) {
+        final InputStream stream =
+                c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
+        final StringWriter writer = new StringWriter();
+        try {
+            IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+        return writer.toString();
+    }
 
     @Test
     public void testSavingLoadingOfElectionDescription() throws IOException {
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
-                                         "borda");
-        descr.getVotingFunction().setCode(BORDA_CODE);
+                                         BORDA);
+        final String bordaCode = getTemplate(BORDA, this.getClass());
+        descr.getVotingFunction().setCode(bordaCode);
 
         final SimpleTypeFunction simpleFunc =
                 new SimpleTypeFunction("asd",
@@ -64,16 +70,16 @@ public class SavingLoadingTest {
         descr.addSimpleFunction(simpleFunc);
 
         final CodeGenOptions options = new CodeGenOptions();
-        options.setCurrentAmountCandsVarName("C");
-        options.setCurrentAmountVotersVarName("V");
+        options.setCurrentAmountCandsVarName(C);
+        options.setCurrentAmountVotersVarName(V);
         final List<ExtractedCLoop> extractedCLoops =
-                AntlrCLoopParser.findLoops("voting", BORDA_CODE, options);
+                AntlrCLoopParser.findLoops(VOTING_FUNC, bordaCode, options);
 
         descr.getVotingFunction().setExtractedLoops(extractedCLoops);
 
-        File f = new File("testfiles");
+        File f = new File(TESTFILES);
         f.mkdirs();
-        f = new File("testfiles/borda.belec");
+        f = new File(TESTFILES + File.separator + DESCR);
         SavingLoadingInterface.storeCElection(descr, f);
 
         final CElectionDescription loadedDescr =
@@ -106,11 +112,12 @@ public class SavingLoadingTest {
 
     @Test
     public void testSavingLoadingOfPreAndPostConditionDescription() throws IOException {
-        final String pre = "[[VOTES2, VOTES3]] == PERM(VOTES1);";
-        final String post = "(!EMPTY(CUT(ELECT2, ELECT3))) ==> (ELECT1 == CUT(ELECT2, ELECT3));";
+        final Class<?> c = this.getClass();
+        final String pre = getTemplate(REINFORCE + PRE, c);
+        final String post = getTemplate(REINFORCE + POST, c);
 
         final List<PreAndPostConditionsDescription> propDecsr =
-                CreationHelper.createSimpleCondList("reinforce", pre, post);
+                CreationHelper.createSimpleCondList(REINFORCE, pre, post);
 
         propDecsr.get(0).getCbmcVariables()
                 .add(new SymbolicCBMCVar("v1", CBMCVarType.VOTER));
@@ -119,9 +126,9 @@ public class SavingLoadingTest {
         propDecsr.get(0).getCbmcVariables()
                 .add(new SymbolicCBMCVar("c", CBMCVarType.CANDIDATE));
 
-        File f = new File("testfiles");
+        File f = new File(TESTFILES);
         f.mkdirs();
-        f = new File("testfiles/reinforcement.bprp");
+        f = new File(TESTFILES + File.separator + PROP);
         SavingLoadingInterface.storePreAndPostConditionDescription(propDecsr.get(0), f);
         final PreAndPostConditionsDescription loadedPropDescr =
                 SavingLoadingInterface.loadPreAndPostConditionDescription(f);

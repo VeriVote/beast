@@ -6,13 +6,13 @@ public class CBMCVarNames {
     public static String name(final CBMCVars var) {
         final String name;
         switch (var) {
-        case AMT_CANDIDATES:
+        case AMOUNT_CANDIDATES:
             name = "C";
             break;
-        case AMT_SEATS:
+        case AMOUNT_SEATS:
             name = "S";
             break;
-        case AMT_VOTERS:
+        case AMOUNT_VOTERS:
             name = "V";
             break;
         default:

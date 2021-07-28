@@ -3,8 +3,6 @@ package edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVoteIntersection;
@@ -14,8 +12,12 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VoteIntersectionHelper {
-
     private static final String DOT = ".";
+    private static final String ARR_CLOSE = "]";
+    private static final String EQ = " == ";
+    private static final String AND = " && ";
+    private static final String IDX_I = "[i]";
+    private static final String IDX_J = "[j]";
     private static final String COMPARE_VARS = "COMPARE_VARS";
     private static final String VOTE_TYPE = "VOTE_TYPE";
     private static final String AMOUNT_MEMBER = "AMT_MEMBER";
@@ -34,25 +36,26 @@ public class VoteIntersectionHelper {
             int i = 0;
             for (i = 0; i < intersectedVotesVarNames.size() - 2; ++i) {
                 comparison += intersectedVotesVarNames.get(i)
-                        + DOT + LIST_MEMBER + "[i][j] == "
+                        + DOT + LIST_MEMBER + IDX_I + IDX_J + EQ
                         + intersectedVotesVarNames.get(i + 1)
-                        + DOT + LIST_MEMBER + "[i][j] && ";
+                        + DOT + LIST_MEMBER + IDX_I + IDX_J + AND;
             }
             comparison += intersectedVotesVarNames.get(i)
-                    + DOT + LIST_MEMBER + "[i][j] == "
+                    + DOT + LIST_MEMBER + IDX_I + IDX_J + EQ
                     + intersectedVotesVarNames.get(i + 1)
-                    + DOT + LIST_MEMBER + "[i][j]";
+                    + DOT + LIST_MEMBER + IDX_I + IDX_J;
         } else if (voteArrStruct.getVotingType().getListDimensions() == 1) {
             int i = 0;
             for (i = 0; i < intersectedVotesVarNames.size() - 2; ++i) {
                 comparison += intersectedVotesVarNames.get(i)
-                        + DOT + LIST_MEMBER + "[i]] == "
+                        + DOT + LIST_MEMBER + IDX_I + ARR_CLOSE + EQ
                         + intersectedVotesVarNames.get(i + 1)
-                        + DOT + LIST_MEMBER + "[i] && ";
+                        + DOT + LIST_MEMBER + IDX_I + AND;
             }
             comparison += intersectedVotesVarNames.get(i)
-                    + DOT + LIST_MEMBER + "[i] == "
-                    + intersectedVotesVarNames.get(i + 1) + DOT + LIST_MEMBER + "[i]";
+                    + DOT + LIST_MEMBER + IDX_I + AND
+                    + intersectedVotesVarNames.get(i + 1)
+                    + DOT + LIST_MEMBER + IDX_I;
         }
         return comparison;
     }
@@ -71,7 +74,8 @@ public class VoteIntersectionHelper {
                                                   final ElectionTypeCStruct voteArrStruct,
                                                   final VotingInputTypes votingInputType,
                                                   final CodeGenOptions options,
-                                                  final CodeGenLoopBoundHandler loopBoundHandler) {
+                                                  final CodeGenLoopBoundHandler loopBoundHandler,
+                                                  final Class<?> c) {
         final String comparison = generateComparison(intersectedVotesVarNames, voteArrStruct);
         final Map<String, String> replacementMap =
                 Map.of(COMPARE_VARS, comparison,
@@ -84,28 +88,9 @@ public class VoteIntersectionHelper {
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),
                        ASSUME, options.getCbmcAssumeName(),
                        NONDET_UINT, options.getCbmcNondetUintName());
-        String code = null;
-        List<LoopBound> loopbounds = List.of();
-
-        switch (votingInputType) {
-        case APPROVAL:
-            code = CodeTemplateVoteIntersection.TEMPLATE_APPROVAL;
-            loopbounds = CodeTemplateVoteIntersection.LOOP_BOUNDS_APPROVAL;
-            break;
-        case WEIGHTED_APPROVAL:
-            throw new NotImplementedException();
-        case PREFERENCE:
-            code = CodeTemplateVoteIntersection.TEMPLATE_PREFERENCE;
-            loopbounds = CodeTemplateVoteIntersection.LOOP_BOUNDS_PREFERENCE;
-            break;
-        case SINGLE_CHOICE:
-            code = CodeTemplateVoteIntersection.TEMPLATE_SINGLE_CHOICE;
-            loopbounds = CodeTemplateVoteIntersection.LOOP_BOUNDS_SINGLE_CHOICE;
-            break;
-        case SINGLE_CHOICE_STACK:
-            throw new NotImplementedException();
-        default:
-        }
+        final String code = CodeTemplateVoteIntersection.getTemplate(votingInputType, c);
+        final List<LoopBound> loopbounds =
+                CodeTemplateVoteIntersection.getLoopBounds(votingInputType);
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
