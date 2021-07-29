@@ -1,6 +1,8 @@
 package edu.pse.beast.api.codegen.cbmc;
 
 public class SymbolicCBMCVar {
+    private static final String BLANK = " ";
+
     public enum CBMCVarType {
         CANDIDATE, VOTER, SEAT
     }
@@ -15,7 +17,7 @@ public class SymbolicCBMCVar {
 
     @Override
     public final String toString() {
-        return varType.toString() + " " + name;
+        return varType.toString() + BLANK + name;
     }
 
     public final String getName() {

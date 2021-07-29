@@ -8,11 +8,16 @@ public class CCodeBlock {
     private static final String LINE_BREAK = "\n";
     private static final String SEMICOLON = ";";
 
+    private static final String BRACE_OP = "{";
+    private static final String BRACE_CL = "}";
+    private static final String LINE_COMMENT = "//";
+    private static final String EQ = "=";
+
     private List<String> code = new ArrayList<>();
     private int number;
 
     public final void addComment(final String comment) {
-        code.add("//" + BLANK + comment);
+        code.add(LINE_COMMENT + BLANK + comment);
     }
 
     public final void addSnippet(final String snippet) {
@@ -24,7 +29,9 @@ public class CCodeBlock {
     }
 
     public final String generateCode() {
-        return "{" + LINE_BREAK + String.join(LINE_BREAK, code) + LINE_BREAK + "}" + LINE_BREAK;
+        return BRACE_OP + LINE_BREAK
+                + String.join(LINE_BREAK, code)
+                + LINE_BREAK + BRACE_CL + LINE_BREAK;
     }
 
     public final String newVarName(final String hint) {
@@ -37,6 +44,6 @@ public class CCodeBlock {
     }
 
     public final void addAssignment(final String lhs, final String rhs) {
-        code.add(lhs + BLANK + "=" + BLANK + rhs + SEMICOLON);
+        code.add(lhs + BLANK + EQ + BLANK + rhs + SEMICOLON);
     }
 }

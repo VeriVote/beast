@@ -1,0 +1,1 @@
+unsigned int GENERATED_VAR = TESTED_VAR.AMT_MEMBER == 0;

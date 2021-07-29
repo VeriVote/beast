@@ -1,6 +1,8 @@
 package edu.pse.beast.api.codegen.c_code;
 
 public class CTypeNameBrackets {
+    private static final String BLANK = " ";
+
     private String type;
     private String name;
     private String brackets;
@@ -14,7 +16,7 @@ public class CTypeNameBrackets {
     }
 
     public final String generateCode() {
-        return type + " " + name + brackets;
+        return type + BLANK + name + brackets;
     }
 
     public final String getName() {

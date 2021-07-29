@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CFile {
     private static final String LINE_BREAK = "\n";
+    private static final String SEMICOLON = ";";
 
     private List<CFunction> funcs = new ArrayList<>();
     private List<CFunction> funcDecls = new ArrayList<>();
@@ -82,6 +83,6 @@ public class CFile {
     }
 
     public final void declare(final String declCString) {
-        declarations.add(declCString + ";" + LINE_BREAK);
+        declarations.add(declCString + SEMICOLON + LINE_BREAK);
     }
 }

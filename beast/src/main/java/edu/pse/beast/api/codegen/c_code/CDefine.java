@@ -1,6 +1,9 @@
 package edu.pse.beast.api.codegen.c_code;
 
 public class CDefine {
+    private static final String BLANK = " ";
+    private static final String DEFINE = "#define";
+
     private String toReplace;
     private String replaceWith;
 
@@ -11,6 +14,6 @@ public class CDefine {
     }
 
     public final String generateCode() {
-        return "#define " + toReplace + " " + replaceWith;
+        return DEFINE + BLANK + toReplace + BLANK + replaceWith;
     }
 }

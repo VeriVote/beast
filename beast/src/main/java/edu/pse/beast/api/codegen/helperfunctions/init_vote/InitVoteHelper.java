@@ -7,20 +7,26 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public abstract class InitVoteHelper {
+    private static final String VOTES = "votes";
+
+    private static final String VOTER_SYMBOL = "V";
+    private static final String CAND_SYMBOL = "C";
+    private static final String SEAT_SYMBOL = "S";
+
     public static String getVoteVarName(final int voteNumber) {
-        return "votes" + voteNumber;
+        return VOTES + voteNumber;
     }
 
     public static String getCurrentAmtVoter(final int voteNumber) {
-        return "V" + voteNumber;
+        return VOTER_SYMBOL + voteNumber;
     }
 
     public static String getCurrentAmtCand(final int voteNumber) {
-        return "C" + voteNumber;
+        return CAND_SYMBOL + voteNumber;
     }
 
     public static String getCurrentAmtSeat(final int voteNumber) {
-        return "S" + voteNumber;
+        return SEAT_SYMBOL + voteNumber;
     }
 
     public abstract String generateCode(int voteNumber,

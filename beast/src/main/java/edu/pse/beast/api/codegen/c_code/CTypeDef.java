@@ -1,6 +1,10 @@
 package edu.pse.beast.api.codegen.c_code;
 
 public class CTypeDef {
+    private static final String BLANK = " ";
+    private static final String SEMICOLON = ";";
+    private static final String TYPEDEF = "typedef";
+
     private String type;
     private String newTypeName;
 
@@ -10,6 +14,6 @@ public class CTypeDef {
     }
 
     public final String generateCode() {
-        return "typedef " + type + " " + newTypeName + ";";
+        return TYPEDEF + BLANK + type + BLANK + newTypeName + SEMICOLON;
     }
 }

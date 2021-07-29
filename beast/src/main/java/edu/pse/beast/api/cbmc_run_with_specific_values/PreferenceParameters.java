@@ -1,19 +1,41 @@
 package edu.pse.beast.api.cbmc_run_with_specific_values;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
 public class PreferenceParameters implements VotingParameters {
-    private static final String VOTE_VAR_NAME = "VOTE_VAR_NAME";
+    private static final String RESOURCES = "/edu/pse/beast/api/cbmc_run_with_specific_values/";
+    private static final String FILE_ENDING = ".template";
 
-    private final String votingDeclTemplate = "VOTE_STRUCT_TYPE " + VOTE_VAR_NAME + ";";
-    private final String amtVotesTemplate = VOTE_VAR_NAME + ".AMT_MEMBER = AMT_VOTERS;";
-    private final String votesPerVoterTemplate =
-            VOTE_VAR_NAME + ".LIST_MEMBER[LIST_INDEX][CAND_INDEX] = VOTE_GIVEN;";
+    private static final String DECL_KEY = "DECLARATION";
+    private static final String INIT_KEY = "INITIALIZATION";
+
+    private static final String LINKE_BREAK = "\n";
+
+    private static final String VOTE_STRUCT_TYPE = "VOTE_STRUCT_TYPE";
+    private static final String VOTE_VAR_NAME = "VOTE_VAR_NAME";
+    private static final String AMOUNT_MEMBER = "AMT_MEMBER";
+    private static final String AMOUNT_VOTERS = "AMT_VOTERS";
+    private static final String LIST_MEMBER = "LIST_MEMBER";
+    private static final String LIST_INDEX = "LIST_INDEX";
+    private static final String CAND_INDEX = "CAND_INDEX";
+    private static final String VOTE_GIVEN = "VOTE_GIVEN";
+
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
 
     private int v;
     private int c;
@@ -23,6 +45,26 @@ public class PreferenceParameters implements VotingParameters {
 
     public PreferenceParameters(final int candidateAmount) {
         this.c = candidateAmount;
+    }
+
+    public static final String getTemplate(final String key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
     }
 
     public final void addVoter(final List<Integer> preferenceVotes) {
@@ -35,38 +77,36 @@ public class PreferenceParameters implements VotingParameters {
                                               final CodeGenOptions options,
                                               final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
                                               final String generatedVarName) {
+        final Class<?> clazz = this.getClass();
         final List<String> code = new ArrayList<>();
 
         final String votingStructName = voteInputStruct.getStruct().getName();
-        final String votingStructDeclString =
-                votingDeclTemplate
-                .replaceAll("VOTE_STRUCT_TYPE", votingStructName)
-                .replaceAll(VOTE_VAR_NAME, generatedVarName);
-        code.add(votingStructDeclString);
-
-        final String amtDeclString =
-                amtVotesTemplate
+        final String declTemplate = getTemplate(DECL_KEY, clazz);
+        final String declString =
+                declTemplate
+                .replaceAll(VOTE_STRUCT_TYPE, votingStructName)
                 .replaceAll(VOTE_VAR_NAME, generatedVarName)
-                .replaceAll("AMT_MEMBER", voteInputStruct.getAmtName())
-                .replaceAll("AMT_VOTERS", String.valueOf(v));
-        code.add(amtDeclString);
+                .replaceAll(VOTE_VAR_NAME, generatedVarName)
+                .replaceAll(AMOUNT_MEMBER, voteInputStruct.getAmtName())
+                .replaceAll(AMOUNT_VOTERS, String.valueOf(v));
+        code.add(declString);
 
+        final String initTemplate = getTemplate(INIT_KEY, clazz);
         for (int i = 0; i < votesPerVoter.size(); ++i) {
             for (int j = 0; j < c; ++j) {
                 final String voteString =
-                        votesPerVoterTemplate
+                        initTemplate
                         .replaceAll(VOTE_VAR_NAME, generatedVarName)
-                        .replaceAll("LIST_MEMBER",
+                        .replaceAll(LIST_MEMBER,
                                     voteInputStruct.getListName())
-                        .replaceAll("LIST_INDEX", String.valueOf(i))
-                        .replaceAll("CAND_INDEX", String.valueOf(j))
-                        .replaceAll("VOTE_GIVEN",
+                        .replaceAll(LIST_INDEX, String.valueOf(i))
+                        .replaceAll(CAND_INDEX, String.valueOf(j))
+                        .replaceAll(VOTE_GIVEN,
                                     String.valueOf(votesPerVoter.get(i).get(j)));
                 code.add(voteString);
             }
         }
-
-        return String.join("\n", code);
+        return String.join(LINKE_BREAK, code);
     }
 
     @Override

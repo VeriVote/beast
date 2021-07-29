@@ -1,0 +1,3 @@
+typedef struct STRUCT_NAME {
+    MEMBER_LIST
+} STRUCT_NAME;

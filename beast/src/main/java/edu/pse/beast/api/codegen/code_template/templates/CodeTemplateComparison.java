@@ -13,6 +13,8 @@ import org.apache.commons.lang3.NotImplementedException;
 public class CodeTemplateComparison {
     private static final String RESOURCES = "/edu/pse/beast/api/codegen/code_template/templates/";
     private static final String FILE_ENDING = ".template";
+    private static final String DIM = "D";
+    private static final String UNEQ = "_UNEQ";
 
     private static final Map<String, String> TEMPLATES =
             new LinkedHashMap<String, String>();
@@ -22,7 +24,7 @@ public class CodeTemplateComparison {
                                            final Class<?> c) {
         assert dimension == 0 || dimension == 1;
         final String key =
-                "" + dimension + "D" + ((dimension > 0 && unequal) ? "_UNEQ" : "");
+                "" + dimension + DIM + ((dimension > 0 && unequal) ? UNEQ : "");
         if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
             final InputStream stream =
                     c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);

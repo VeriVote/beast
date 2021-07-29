@@ -388,9 +388,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
         String code =
                 FOR
-                        + paren(UINT + VAR_NAME + EQ + ZERO + SEMI
-                                + VAR_NAME + LT + AMOUNT_VOTERS + SEMI
-                                + PLUS_PLUS + VAR_NAME)
+                + paren(UINT + VAR_NAME + EQ + ZERO + SEMI
+                        + VAR_NAME + LT + AMOUNT_VOTERS + SEMI
+                        + PLUS_PLUS + VAR_NAME)
                 + BLANK + BRACE_OP + LINE_BREAK;
         code = code.replaceAll(VAR_NAME, symbVarName);
         code = code.replaceAll(AMOUNT_VOTERS,
@@ -424,10 +424,10 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         final String boolVarName = codeBlock.newVarName(EXISTS_CANDIDATE);
         String code =
                 FOR
-                        + paren(UINT + VAR_NAME + EQ + ZERO + SEMI
-                                + VAR_NAME + LT + AMOUNT_CANDIDATES + SEMI
-                                + PLUS_PLUS + VAR_NAME) + BLANK + BRACE_OP
-                      + LINE_BREAK;
+                + paren(UINT + VAR_NAME + EQ + ZERO + SEMI
+                        + VAR_NAME + LT + AMOUNT_CANDIDATES + SEMI
+                        + PLUS_PLUS + VAR_NAME) + BLANK + BRACE_OP
+                + LINE_BREAK;
         code = code.replaceAll(VAR_NAME, symbolicVarName);
         code = code.replaceAll(AMOUNT_CANDIDATES,
                                options.getCbmcAmountMaxCandsVarName());
@@ -516,14 +516,16 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
                     IsElectEmptyHelper.generateCode(generatedVar,
                                                     testedVarName, voteResultStruct,
                                                     votingOutputType, options,
-                                                    loopBoundHandler));
+                                                    loopBoundHandler,
+                                                    this.getClass()));
 
         } else if (amtVoteVars == 1) {
             codeBlock.addSnippet(
                     IsVoteEmptyHelper.generateCode(generatedVar,
                                                    testedVarName, voteArrStruct,
                                                    votingInputType, options,
-                                                   loopBoundHandler));
+                                                   loopBoundHandler,
+                                                   this.getClass()));
         }
 
         booleanVarNameStack.push(generatedVar);
@@ -544,22 +546,20 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
                 Map.of(VAR_NAME, generatedVarName,
                        LHS_VAR, lhsVarName,
                        RHS_VAR, rhsVarName);
-        String code = null;
 
-        if (AND.trim().equals(binaryCombinationSymbol)) {
-            code = UINT + VAR_NAME + EQ + LHS_VAR + AND + RHS_VAR + SEMI.trim() + LINE_BREAK;
-        } else if (OR.trim().equals(binaryCombinationSymbol)) {
-            code = UINT + VAR_NAME + EQ + LHS_VAR + OR + RHS_VAR + SEMI.trim() + LINE_BREAK;
+        String code = UINT + VAR_NAME + EQ;
+        if (AND.trim().equals(binaryCombinationSymbol)
+                || OR.trim().equals(binaryCombinationSymbol)) {
+            code += LHS_VAR + binaryCombinationSymbol + RHS_VAR;
         } else if (IMP.trim().equals(binaryCombinationSymbol)) {
-            code = UINT + VAR_NAME + EQ + NOT + LHS_VAR + OR + RHS_VAR + SEMI.trim() + LINE_BREAK;
+            code += NOT + LHS_VAR + OR + RHS_VAR;
         } else if (EQUIV.trim().equals(binaryCombinationSymbol)) {
-            code = UINT + VAR_NAME + EQ
-                    + paren(LHS_VAR + AND + RHS_VAR)
-                    + OR + paren(NOT + LHS_VAR + AND + NOT + RHS_VAR)
-                    + SEMI.trim() + LINE_BREAK;
+            code += paren(LHS_VAR + AND + RHS_VAR)
+                    + OR + paren(NOT + LHS_VAR + AND + NOT + RHS_VAR);
         }
-        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+        code += SEMI.trim() + LINE_BREAK;
 
+        code = CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
         booleanVarNameStack.push(generatedVarName);
         codeBlock.addSnippet(code);
     }

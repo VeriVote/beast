@@ -12,6 +12,15 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class CFunction {
     private static final String BLANK = " ";
+    private static final String LINE_BREAK = "\n";
+    private static final String COMMA = ",";
+    private static final String SEMICOLON = ";";
+
+    private static final String PAREN_OP = "(";
+    private static final String PAREN_CL = ")";
+    private static final String BRACE_OP = "{";
+    private static final String BRACE_CL = "}";
+
     private String name;
     private List<CTypeNameBrackets> arguments = new ArrayList<>();
     private String returnType;
@@ -47,20 +56,23 @@ public class CFunction {
     }
 
     private String signature() {
-        return returnType + BLANK + name + "(" + String.join("," + BLANK, arguments.stream()
-                .map(a -> a.generateCode()).collect(Collectors.toList())) + ")";
+        return returnType + BLANK + name + PAREN_OP
+                + String.join(COMMA + BLANK,
+                              arguments.stream().map(a -> a.generateCode())
+                              .collect(Collectors.toList()))
+                + PAREN_CL;
     }
 
     public final String generateDefCode() {
         final List<String> created = new ArrayList<>();
-        created.add(signature() + " {");
+        created.add(signature() + BLANK + BRACE_OP);
         created.addAll(code);
-        created.add("}");
-        return String.join("\n", created);
+        created.add(BRACE_CL);
+        return String.join(LINE_BREAK, created);
     }
 
     public final String generateDeclCode() {
-        return signature() + ";";
+        return signature() + SEMICOLON;
     }
 
     public static final class PropertyExpressions {
