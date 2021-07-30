@@ -1,5 +1,15 @@
 package edu.pse.beast.api.descr.c_electiondescription.function;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
+
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
@@ -8,7 +18,18 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
 
 public class VotingSigFunction extends CElectionDescriptionFunction {
+    private static final String RESOURCES =
+            "/edu/pse/beast/api/descr/c_electiondescription/function/";
+    private static final String FILE_PREFIX = "voting_";
+    private static final String FILE_ENDING = ".template";
+
+    private static final String DECLARE_KEY = "DECLARATION";
+    private static final String RETURN_KEY = "RETURN";
+
     private static final String BLANK = " ";
+    private static final String SQUARE_LEFT = "[";
+    private static final String SQUARE_RIGHT = "]";
+
     private static final String NAME = "NAME";
     private static final String ARG = "ARG";
 
@@ -23,6 +44,9 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     private static final String SEAT_SYMB = "S";
     private static final String VOTE_SYMB = "V";
 
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
+
     private VotingInputTypes inputType;
     private VotingOutputTypes outputType;
 
@@ -35,7 +59,28 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     }
 
     private static String arr(final String s) {
-        return "[" + s + "]";
+        return SQUARE_LEFT + s + SQUARE_RIGHT;
+    }
+
+    public static final String getTemplate(final String key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES
+                            + FILE_PREFIX + key.toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
     }
 
     public final VotingInputTypes getInputType() {
@@ -55,82 +100,68 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     }
 
     private String getReturnType() {
-        final String type;
-        switch (outputType) {
-        case CANDIDATE_LIST:
-            type = UINT + BLANK + arr(CAND_SYMB);
-            break;
-        case PARLIAMENT:
-            type = UINT + BLANK + arr(SEAT_SYMB);
-            break;
-        case PARLIAMENT_STACK:
-            type = UINT + BLANK + arr(SEAT_SYMB);
-            break;
-        case SINGLE_CANDIDATE:
-            type = UINT + BLANK;
-            break;
-        default:
-            type = "";
+        assert outputType != null;
+        String type = UINT + BLANK;
+        if (VotingOutputTypes.CANDIDATE_LIST.equals(outputType)) {
+            type += arr(CAND_SYMB);
+        } else if (VotingOutputTypes.PARLIAMENT.equals(outputType)
+                || VotingOutputTypes.PARLIAMENT_STACK.equals(outputType)) {
+            type += arr(SEAT_SYMB);
         }
         return type;
     }
 
     private String getArgType() {
-        final String argType;
+        String argType = UINT;
         switch (inputType) {
         case APPROVAL:
-            argType = UINT + arr(VOTE_SYMB) + arr(CAND_SYMB) + BLANK + VOTES_ARRAY_NAME;
+            argType += arr(VOTE_SYMB) + arr(CAND_SYMB);
             break;
         case WEIGHTED_APPROVAL:
-            argType = UINT + arr(VOTE_SYMB) + arr(CAND_SYMB) + BLANK + VOTES_ARRAY_NAME;
+            argType += arr(VOTE_SYMB) + arr(CAND_SYMB);
             break;
         case PREFERENCE:
-            argType = UINT + arr(VOTE_SYMB) + arr(CAND_SYMB) + BLANK + VOTES_ARRAY_NAME;
+            argType += arr(VOTE_SYMB) + arr(CAND_SYMB);
             break;
         case SINGLE_CHOICE:
-            argType = UINT + arr(VOTE_SYMB) + BLANK + VOTES_ARRAY_NAME;
+            argType += arr(VOTE_SYMB);
             break;
         case SINGLE_CHOICE_STACK:
-            argType = UINT + arr(CAND_SYMB) + BLANK + VOTES_ARRAY_NAME;
+            argType += arr(CAND_SYMB);
             break;
         default:
-            argType = "";
+            break;
         }
-        return argType;
+        return argType + BLANK + VOTES_ARRAY_NAME;
     }
 
-    // TODO(Holger) This can be moves somewhere else, just dont know where yet.
+    // TODO(Holger) This can be moved somewhere else, just do not know where yet.
     // Probably together with the rest of code generation.
     @Override
     public final String getDeclCString(final CodeGenOptions codeGenOptions) {
-        final String template =
-                RETURN_TYPE + BLANK + NAME + "(" + ARG + ") {\n" + "    " + RESULT_ARR + ";";
+        final Class<?> c = this.getClass();
+        final String votersVarName = codeGenOptions.getCurrentAmountVotersVarName();
+        final String candsVarName = codeGenOptions.getCurrentAmountCandsVarName();
+        final String seatsVarName = codeGenOptions.getCurrentAmountSeatsVarName();
 
-        String returnType = getReturnType();
-        returnType = returnType.replaceAll(arr(VOTE_SYMB),
-                codeGenOptions.getCurrentAmountVotersVarName());
-        returnType = returnType.replaceAll(arr(CAND_SYMB),
-                codeGenOptions.getCurrentAmountCandsVarName());
-        returnType = returnType.replaceAll(arr(SEAT_SYMB),
-                codeGenOptions.getCurrentAmountSeatsVarName());
-
-        String arg = getArgType();
-        arg = arg.replaceAll(arr(VOTE_SYMB),
-                codeGenOptions.getCurrentAmountVotersVarName());
-        arg = arg.replaceAll(arr(CAND_SYMB),
-                codeGenOptions.getCurrentAmountCandsVarName());
-        arg = arg.replaceAll(arr(SEAT_SYMB),
-                codeGenOptions.getCurrentAmountSeatsVarName());
-
+        final String returnType =
+                getReturnType()
+                .replaceAll(arr(VOTE_SYMB), votersVarName)
+                .replaceAll(arr(CAND_SYMB), candsVarName)
+                .replaceAll(arr(SEAT_SYMB), seatsVarName);
+        final String arg =
+                getArgType()
+                .replaceAll(arr(VOTE_SYMB), votersVarName)
+                .replaceAll(arr(CAND_SYMB), candsVarName)
+                .replaceAll(arr(SEAT_SYMB), seatsVarName);
         final CTypeNameBrackets resultType =
                 FunctionToC.votingTypeToC(CElectionVotingType.of(outputType), RESULT_ARRAY_NAME,
-                                          codeGenOptions.getCurrentAmountVotersVarName(),
-                                          codeGenOptions.getCurrentAmountCandsVarName(),
-                                          codeGenOptions.getCurrentAmountSeatsVarName());
-
-        return template.replaceAll(RETURN_TYPE, returnType)
-                       .replaceAll(ARG, arg).replaceAll(NAME, getName())
-                       .replaceAll(RESULT_ARR, resultType.generateCode());
+                                          votersVarName, candsVarName, seatsVarName);
+        return getTemplate(DECLARE_KEY, c)
+                .replaceAll(RETURN_TYPE, returnType)
+                .replaceAll(ARG, arg)
+                .replaceAll(NAME, getName())
+                .replaceAll(RESULT_ARR, resultType.generateCode());
     }
 
     public final String getResultArrayName() {
@@ -143,7 +174,8 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 
     @Override
     public final String getReturnText(final CodeGenOptions codeGenOptions) {
-        return "    return " + RETURN_NAME + ";\n}".replaceAll(RETURN_NAME, RESULT_ARRAY_NAME);
+        final Class<?> c = this.getClass();
+        return getTemplate(RETURN_KEY, c)
+                .replaceAll(RETURN_NAME, RESULT_ARRAY_NAME);
     }
-
 }

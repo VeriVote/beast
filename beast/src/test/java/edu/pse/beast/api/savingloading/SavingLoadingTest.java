@@ -27,9 +27,8 @@ import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
 public class SavingLoadingTest {
-    private static final String C = "C";
-    private static final String V = "V";
-    private static final String VOTING_FUNC = "voting";
+    private static final String RESOURCES = "/codegen/";
+    private static final String FILE_ENDING = ".template";
 
     private static final String TESTFILES = "testfiles";
     private static final String REINFORCE = "reinforce";
@@ -38,8 +37,17 @@ public class SavingLoadingTest {
     private static final String BORDA = "borda";
     private static final String DESCR = "borda.belec";
     private static final String PROP = "reinforcement.bprp";
-    private static final String RESOURCES = "/codegen/";
-    private static final String FILE_ENDING = ".template";
+
+    private static final String C = "C";
+    private static final String V = "V";
+    private static final String VOTING_FUNC = "voting";
+
+    private static final String FUNC_NAME = "asd";
+    private static final String I_VAR = "i";
+    private static final String J_VAR = "j";
+    private static final String V1_VAR = "v1";
+    private static final String V2_VAR = "v2";
+    private static final String C_VAR = "c";
 
     private static String getTemplate(final String key, final Class<?> c) {
         final InputStream stream =
@@ -63,10 +71,10 @@ public class SavingLoadingTest {
         descr.getVotingFunction().setCode(bordaCode);
 
         final SimpleTypeFunction simpleFunc =
-                new SimpleTypeFunction("asd",
+                new SimpleTypeFunction(FUNC_NAME,
                                        List.of(CElectionSimpleTypes.BOOL,
                                                CElectionSimpleTypes.DOUBLE),
-                                       List.of("i", "j"), CElectionSimpleTypes.FLOAT);
+                                       List.of(I_VAR, J_VAR), CElectionSimpleTypes.FLOAT);
         descr.addSimpleFunction(simpleFunc);
 
         final CodeGenOptions options = new CodeGenOptions();
@@ -112,19 +120,19 @@ public class SavingLoadingTest {
 
     @Test
     public void testSavingLoadingOfPreAndPostConditionDescription() throws IOException {
-        final Class<?> c = this.getClass();
-        final String pre = getTemplate(REINFORCE + PRE, c);
-        final String post = getTemplate(REINFORCE + POST, c);
+        final Class<?> clazz = this.getClass();
+        final String pre = getTemplate(REINFORCE + PRE, clazz);
+        final String post = getTemplate(REINFORCE + POST, clazz);
 
         final List<PreAndPostConditionsDescription> propDecsr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post);
 
         propDecsr.get(0).getCbmcVariables()
-                .add(new SymbolicCBMCVar("v1", CBMCVarType.VOTER));
+                .add(new SymbolicCBMCVar(V1_VAR, CBMCVarType.VOTER));
         propDecsr.get(0).getCbmcVariables()
-                .add(new SymbolicCBMCVar("v2", CBMCVarType.VOTER));
+                .add(new SymbolicCBMCVar(V2_VAR, CBMCVarType.VOTER));
         propDecsr.get(0).getCbmcVariables()
-                .add(new SymbolicCBMCVar("c", CBMCVarType.CANDIDATE));
+                .add(new SymbolicCBMCVar(C_VAR, CBMCVarType.CANDIDATE));
 
         File f = new File(TESTFILES);
         f.mkdirs();

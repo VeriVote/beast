@@ -1,10 +1,18 @@
 package edu.pse.beast.api.c_parser;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
@@ -14,11 +22,20 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.RelationalExpressionContext;
 
 public class ExtractedCLoop {
+    private static final String RESOURCES = "/edu/pse/beast/api/c_parser/";
+    private static final String FILE_ENDING = ".template";
+    private static final String FILE_KEY = "LOOP";
+
     private static final String BLANK = " ";
+    private static final String PAREN_OPEN = "(";
+    private static final String PAREN_CLOSE = ")";
+
     private static final String LOOP_TYPE = "LOOP_TYPE";
     private static final String LOOP_NUMBER = "LOOP_NUMBER";
     private static final String LOOP_BOUND = "LOOP_BOUND";
     private static final String MISSING_MANUAL_BOUND = "MISSING MANUAL BOUND";
+
+    private static final Map<String, String> TEMPLATES = new LinkedHashMap<String, String>();
 
     private IterationStatementContext context;
 
@@ -48,6 +65,25 @@ public class ExtractedCLoop {
     }
 
     private ExtractedCLoop() {
+    }
+
+    public static final String getTemplate(final Class<?> c) {
+        final String key = FILE_KEY;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
     }
 
     public final List<ExtractedCLoop> getChildrenLoops() {
@@ -104,16 +140,17 @@ public class ExtractedCLoop {
 
     @Override
     public final String toString() {
-        String template = LOOP_TYPE + BLANK + LOOP_NUMBER + ":" + BLANK + LOOP_BOUND;
-        template =
-                template.replaceAll(LOOP_TYPE, loopType.toString())
+        final Class<?> c = this.getClass();
+        String template =
+                getTemplate(c)
+                .replaceAll(LOOP_TYPE, loopType.toString())
                 .replaceAll(LOOP_NUMBER, String.valueOf(loopNumberInFunction))
                 .replaceAll(LOOP_BOUND, parsedLoopBoundType.toString());
         if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
             if (manualInteger == null) {
                 template = MISSING_MANUAL_BOUND + BLANK + "::" + BLANK + template;
             } else {
-                template += "(" + manualInteger + ")";
+                template += PAREN_OPEN + manualInteger + PAREN_CLOSE;
             }
         }
         return template;

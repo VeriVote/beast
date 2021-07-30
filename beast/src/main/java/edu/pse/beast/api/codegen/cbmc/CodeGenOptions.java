@@ -1,7 +1,13 @@
 package edu.pse.beast.api.codegen.cbmc;
 
 public class CodeGenOptions {
-    public static final String MAIN_FUNC_NAME = "main";
+    private static final String MAX_AMOUNT_VOTERS = "MAX_AMT_VOTERS";
+    private static final String MAX_AMOUNT_CANDIDATES = "MAX_AMT_CANDIDATES";
+    private static final String MAX_AMOUNT_SEATS = "MAX_AMT_SEATS";
+    private static final String V = "V";
+    private static final String C = "C";
+    private static final String S = "S";
+
     private String lowerVoteBoundVarName;
     private String upperVoteBoundVarName;
 
@@ -9,13 +15,13 @@ public class CodeGenOptions {
     private String assertName;
     private String nondeterministicUintName;
 
-    private String cbmcAmountMaxVotersVarName = "MAX_AMT_VOTERS";
-    private String cbmcAmountMaxCandidatesVarName = "MAX_AMT_CANDIDATES";
-    private String cbmcAmountMaxSeatsVarName = "MAX_AMT_SEATS";
+    private String cbmcAmountMaxVotersVarName = MAX_AMOUNT_VOTERS;
+    private String cbmcAmountMaxCandidatesVarName = MAX_AMOUNT_CANDIDATES;
+    private String cbmcAmountMaxSeatsVarName = MAX_AMOUNT_SEATS;
 
-    private String currAmountVotersVarName = "V";
-    private String currAmountCandsVarName = "C";
-    private String currAmountSeatsVarName = "S";
+    private String currAmountVotersVarName = V;
+    private String currAmountCandsVarName = C;
+    private String currAmountSeatsVarName = S;
 
     public final String getCbmcAmountMaxVotersVarName() {
         return cbmcAmountMaxVotersVarName;

@@ -80,22 +80,19 @@ public class PreferenceParameters implements VotingParameters {
         final Class<?> clazz = this.getClass();
         final List<String> code = new ArrayList<>();
 
-        final String votingStructName = voteInputStruct.getStruct().getName();
-        final String declTemplate = getTemplate(DECL_KEY, clazz);
         final String declString =
-                declTemplate
-                .replaceAll(VOTE_STRUCT_TYPE, votingStructName)
+                getTemplate(DECL_KEY, clazz)
+                .replaceAll(VOTE_STRUCT_TYPE, voteInputStruct.getStruct().getName())
                 .replaceAll(VOTE_VAR_NAME, generatedVarName)
                 .replaceAll(VOTE_VAR_NAME, generatedVarName)
                 .replaceAll(AMOUNT_MEMBER, voteInputStruct.getAmtName())
                 .replaceAll(AMOUNT_VOTERS, String.valueOf(v));
         code.add(declString);
 
-        final String initTemplate = getTemplate(INIT_KEY, clazz);
         for (int i = 0; i < votesPerVoter.size(); ++i) {
             for (int j = 0; j < c; ++j) {
                 final String voteString =
-                        initTemplate
+                        getTemplate(INIT_KEY, clazz)
                         .replaceAll(VOTE_VAR_NAME, generatedVarName)
                         .replaceAll(LIST_MEMBER,
                                     voteInputStruct.getListName())

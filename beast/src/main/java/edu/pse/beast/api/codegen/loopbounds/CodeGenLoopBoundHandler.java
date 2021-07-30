@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CodeGenLoopBoundHandler {
+    private static final String MAIN = "main";
+    private static final String UNWIND = " --unwind ";
+
     private Map<String, List<LoopBound>> functionNamesToLoopbounds = new HashMap<>();
     private List<LoopBound> mainLoopbounds = new ArrayList<>();
     private Map<String, List<LoopBound>> votingInitLoopbounds = new HashMap<>();
@@ -74,7 +77,7 @@ public class CodeGenLoopBoundHandler {
         String created = "";
         for (int i = 0; i < mainLoopbounds.size(); ++i) {
             final LoopBound lb = mainLoopbounds.get(i);
-            lb.setFunctionName("main");
+            lb.setFunctionName(MAIN);
             lb.setIndex(i);
             created += lb.getUnwindString(v, c, s);
         }
@@ -89,7 +92,7 @@ public class CodeGenLoopBoundHandler {
                 created += lb.getUnwindString(v, c, s);
             }
         }
-        created += " --unwind " + (Math.max(Math.max(v, c), s) + 1);
+        created += UNWIND + (Math.max(Math.max(v, c), s) + 1);
         return created;
     }
 }

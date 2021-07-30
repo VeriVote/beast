@@ -52,16 +52,22 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
 public class BeastGUIController implements WorkspaceUpdateListener {
+    // =================options start
+    private static final String LOAD_WS_TEXT = "Load Workspace";
+    private static final String SAVE_WS_TEXT = "Save Workspace";
+    private static final String FILE_TEXT = "File";
+    private static final String PREFERENCES_TEXT = "Preferences";
+    private static final String OPTIONS_TEXT = "Options";
+
     private static final int TOP_OFFSET = 20;
     private static final int BOTTOM_OFFSET = 100;
     private static final int LEFT_OFFSET = 0;
     private static final int RIGHT_OFFSET = 0;
 
-    // =================options start
-    private String optionsFXML = "/edu/pse/beast/optionsGUI.fxml";
+    private static final String OPTIONS_FXML = "/edu/pse/beast/optionsGUI.fxml";
     private OptionsGUIController optionsGUIController;
-    private FXMLLoader optionsFXMLLoader = new FXMLLoader(
-            getClass().getResource(optionsFXML));
+    private FXMLLoader optionsFXMLLoader =
+            new FXMLLoader(getClass().getResource(OPTIONS_FXML));
     // =================options end
 
     // =================Menu start
@@ -260,9 +266,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     private void initMenu() {
         final Menu fileMenu = new Menu();
-        fileMenu.setText("File");
-        final MenuItem loadWorkspaceMenuItem = new MenuItem("Load Workspace");
-        final MenuItem saveWorkspaceMenuItem = new MenuItem("Save Workspace");
+        fileMenu.setText(FILE_TEXT);
+        final MenuItem loadWorkspaceMenuItem = new MenuItem(LOAD_WS_TEXT);
+        final MenuItem saveWorkspaceMenuItem = new MenuItem(SAVE_WS_TEXT);
 
         loadWorkspaceMenuItem.setOnAction(e -> {
             beastWorkspace.letUserLoadWorkSpace();
@@ -274,9 +280,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         fileMenu.getItems().add(saveWorkspaceMenuItem);
 
         final Menu prefMenu = new Menu();
-        prefMenu.setText("Preferences");
+        prefMenu.setText(PREFERENCES_TEXT);
         final MenuItem optionsMenuItem = new MenuItem();
-        optionsMenuItem.setText("Options");
+        optionsMenuItem.setText(OPTIONS_TEXT);
         optionsMenuItem.setOnAction(e -> {
             optionsGUIController.display();
         });

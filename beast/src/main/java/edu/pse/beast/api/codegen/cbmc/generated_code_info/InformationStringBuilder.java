@@ -8,14 +8,16 @@ public class InformationStringBuilder {
 
     private static final String VOTE_NUMBER = "VOTE_NUMBER";
 
+    private static String infoString(final String type) {
+        return INFO_STRING + type + FOR_STRING + VOTE_NUMBER;
+    }
+
     public static String genForVote(final int voteNumber, final String varName) {
-        final String template = INFO_STRING + ASSIGNMENTS + FOR_STRING + VOTE_NUMBER;
-        return template.replaceAll(VOTE_NUMBER, String.valueOf(voteNumber));
+        return infoString(ASSIGNMENTS).replaceAll(VOTE_NUMBER, String.valueOf(voteNumber));
     }
 
     public static String genForResult(final int electNumber, final String varName) {
-        final String template = INFO_STRING + RESULTS + FOR_STRING + VOTE_NUMBER;
-        return template.replaceAll(VOTE_NUMBER, String.valueOf(electNumber));
+        return infoString(RESULTS).replaceAll(VOTE_NUMBER, String.valueOf(electNumber));
     }
 
 }

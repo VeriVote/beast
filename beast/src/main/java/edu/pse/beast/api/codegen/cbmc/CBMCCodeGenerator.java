@@ -37,10 +37,22 @@ public class CBMCCodeGenerator {
     private static final String SEMICOLON = ";";
     private static final String ASSUME = "assume";
     private static final String ASSERT = "assert";
+    private static final String RETURN = "return";
 
     private static final String STDLIB_H = "stdlib.h";
     private static final String STDINT_H = "stdint.h";
     private static final String ASSERT_H = "assert.h";
+
+    private static final String VOTES = "votes";
+    private static final String RESULT = "result";
+    private static final String VOTE_STRUCT = "VoteStruct";
+    private static final String VOTE_RESULT_STRUCT = "VoteResultStruct";
+    private static final String VOTE_STRUCT_NAME = "voteStruct";
+    private static final String RESULT_STRUCT_NAME = "resultStruct";
+    private static final String AMOUNT_RESULT = "amtResult";
+    private static final String AMOUNT_VOTES = "amtVotes";
+    private static final String BEGIN_USER_CODE = "// user generated code";
+    private static final String END_USER_CODE = "// end user generated code";
 
     private static final String INVALID_VOTE = "INVALID_VOTE";
     private static final String INVALID_RESULT = "INVALID_RESULT";
@@ -112,16 +124,16 @@ public class CBMCCodeGenerator {
                 CElectionVotingType.of(descr.getVotingFunction().getOutputType());
 
         final ElectionTypeCStruct voteInputStruct =
-                votingTypeToCStruct(votesNakedArr, "VoteStruct",
-                                    "votes", "amtVotes", options);
+                votingTypeToCStruct(votesNakedArr, VOTE_STRUCT,
+                                    VOTES, AMOUNT_VOTES, options);
         final ElectionTypeCStruct voteResultStruct =
-                votingTypeToCStruct(resultNakedArr, "VoteResultStruct",
-                                    "result", "amtResult",
+                votingTypeToCStruct(resultNakedArr, VOTE_RESULT_STRUCT,
+                                    RESULT, AMOUNT_RESULT,
                                     options);
         created.addStructDef(voteInputStruct.getStruct());
         created.addStructDef(voteResultStruct.getStruct());
-        final String votingStructVarName = "voteStruct";
-        final String resultStructVarName = "resultStruct";
+        final String votingStructVarName = VOTE_STRUCT_NAME;
+        final String resultStructVarName = RESULT_STRUCT_NAME;
         final CodeGenLoopBoundHandler loopBoundHandler = descr.generateLoopBoundHandler();
         final CFunction.Input input =
                 new CFunction.Input(descr.getInputType(), voteInputStruct, votingStructVarName);
@@ -155,7 +167,7 @@ public class CBMCCodeGenerator {
         final CFunction mainFunction =
                 CBMCMainGenerator.main(expressions, votingFunction,
                                        options, loopBoundHandler,
-                                       cbmcGeneratedCode, initVoteHelper);
+                                       cbmcGeneratedCode, initVoteHelper, c);
         created.addFunction(mainFunction);
         cbmcGeneratedCode.setCode(created.generateCode());
         loopBoundHandler.finishAddedLoopbounds();
@@ -170,18 +182,13 @@ public class CBMCCodeGenerator {
                                           final CodeGenOptions options,
                                           final CodeGenLoopBoundHandler loopBoundHandler,
                                           final Class<?> c) {
+        final String uint =
+                TypeManager.simpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT) + BLANK;
         final String structArg =
-                input.struct.getStruct().getName()
-                + BLANK + input.structVarName;
-        final String currentAmtVoterArg =
-                TypeManager.simpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT)
-                + BLANK + options.getCurrentAmountVotersVarName();
-        final String currentAmtCandArg =
-                TypeManager.simpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT)
-                + BLANK + options.getCurrentAmountCandsVarName();
-        final String currentAmtSeatArg =
-                TypeManager.simpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT)
-                + BLANK + options.getCurrentAmountSeatsVarName();
+                input.struct.getStruct().getName() + BLANK + input.structVarName;
+        final String currentAmtVoterArg = uint + options.getCurrentAmountVotersVarName();
+        final String currentAmtCandArg = uint + options.getCurrentAmountCandsVarName();
+        final String currentAmtSeatArg = uint + options.getCurrentAmountSeatsVarName();
 
         final List<String> votingFuncArguments =
                 List.of(structArg, currentAmtVoterArg, currentAmtCandArg, currentAmtSeatArg);
@@ -203,9 +210,9 @@ public class CBMCCodeGenerator {
                                                       options.getCurrentAmountSeatsVarName())
                                 .generateCode() + SEMICOLON);
 
-        code.add("// user generated code");
+        code.add(BEGIN_USER_CODE);
         code.addAll(func.getCodeAsList());
-        code.add("// end user generated code");
+        code.add(END_USER_CODE);
 
         final VotingFunctionHelper.CNames resultNames =
                 new VotingFunctionHelper.CNames(func.getName(), func.getResultArrayName(),
@@ -213,7 +220,7 @@ public class CBMCCodeGenerator {
         code.add(VotingFunctionHelper.generateVoteResultCopy(resultNames,
                                                              output.type, output.struct,
                                                              options, loopBoundHandler, c));
-        code.add("return" + BLANK + output.structVarName + SEMICOLON);
+        code.add(RETURN + BLANK + output.structVarName + SEMICOLON);
         created.setCode(code);
         return created;
     }
