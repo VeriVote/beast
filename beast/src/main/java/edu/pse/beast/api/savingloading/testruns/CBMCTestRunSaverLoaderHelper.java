@@ -7,12 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.savingloading.CodeGenOptionsSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.RelativePathConverter;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCCodeFileDataSaverLoaderHelper;
+import edu.pse.beast.api.savingloading.loopbound.LoopBoundHandlerSaverLoaderHelper;
 import edu.pse.beast.api.savingloading.loopbound.LoopBoundSaverLoaderHelper;
 import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
@@ -83,7 +85,8 @@ public class CBMCTestRunSaverLoaderHelper {
         final CodeGenOptions codeGenOptions =
                 CodeGenOptionsSaverLoaderHelper
                 .codeGenOptionsFromJSON(json.getJSONObject(CODE_GEN_OPTIONS_KEY));
-        final String loopbounds = json.getString(LOOP_BOUND_LIST_KEY);
+        final CodeGenLoopBoundHandler loopbounds =
+                LoopBoundHandlerSaverLoaderHelper.loopBoundHandlerFromJSON(json);
         final CBMCTestRunWithSymbolicVars.BoundValues bounds =
                 new CBMCTestRunWithSymbolicVars.BoundValues(c, s, v);
         final CBMCTestRunWithSymbolicVars cbmcTestRun =

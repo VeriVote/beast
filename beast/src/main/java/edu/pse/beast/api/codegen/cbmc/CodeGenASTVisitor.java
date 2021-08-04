@@ -1,9 +1,17 @@
 package edu.pse.beast.api.codegen.cbmc;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BinaryRelationshipNode;
@@ -59,25 +67,27 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
  *
  */
 public class CodeGenASTVisitor implements BooleanAstVisitor {
+    private static final String RESOURCES =
+            "/edu/pse/beast/api/codegen/code_template/templates/vote/";
+    private static final String EXISTS_CANDIDATE_KEY = "EXISTS_CANDIDATE";
+    private static final String FORALL_VOTERS_KEY = "FORALL_VOTERS";
+    private static final String FILE_ENDING = ".template";
+
     private static final String NONE = "";
     private static final String BLANK = " ";
     private static final String PAREN_OP = "(";
     private static final String PAREN_CL = ")";
-    private static final String BRACE_OP = "{";
     private static final String BRACE_CL = "}";
     private static final String SEMI = "; ";
     private static final String NOT = "!";
-    private static final String PLUS_PLUS = "++";
     private static final String IMP = " ==> ";
     private static final String EQUIV = " <==> ";
     private static final String AND = " && ";
     private static final String OR = " || ";
     private static final String EQ = " = ";
-    private static final String LT = " < ";
     private static final String AND_EQ = " &= ";
     private static final String OR_EQ = " |= ";
     private static final String UINT = "unsigned int ";
-    private static final String FOR = "for ";
     private static final String ZERO = "0";
     private static final String ONE = "1";
     private static final String LINE_BREAK = "\n";
@@ -103,6 +113,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
     private static final String AMOUNT_VOTERS = "AMT_VOTERS";
     private static final String AMOUNT_CANDIDATES = "AMT_CANDIDATES";
+
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
 
     public enum Mode {
         ASSUME, ASSERT
@@ -149,6 +162,26 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
 
     private static String paren(final String s) {
         return PAREN_OP + s + PAREN_CL;
+    }
+
+    public static final String getTemplate(final String key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
     }
 
     public final CCodeBlock getCodeBlock() {
@@ -355,7 +388,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         codeBlock.addSnippet(
                 ElectTupleHelper.generateCode(generatedVarName, electNames,
                                               voteResultStruct, votingOutputType,
-                                              options, loopBoundHandler));
+                                              options, loopBoundHandler,
+                                              this.getClass()));
         expVarNameStack.push(generatedVarName);
         amtElectVars++;
     }
@@ -375,7 +409,8 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
                 VoteTupleHelper.generateCode(generatedVarName,
                                              voteNames, voteArrStruct,
                                              votingInputType, options,
-                                             loopBoundHandler));
+                                             loopBoundHandler,
+                                             this.getClass()));
         expVarNameStack.push(generatedVarName);
         amtVoteVars++;
     }
@@ -386,12 +421,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         scopeHandler.push();
         scopeHandler.add(node.getVar());
 
-        String code =
-                FOR
-                + paren(UINT + VAR_NAME + EQ + ZERO + SEMI
-                        + VAR_NAME + LT + AMOUNT_VOTERS + SEMI
-                        + PLUS_PLUS + VAR_NAME)
-                + BLANK + BRACE_OP + LINE_BREAK;
+        String code = getTemplate(FORALL_VOTERS_KEY, this.getClass());
         code = code.replaceAll(VAR_NAME, symbVarName);
         code = code.replaceAll(AMOUNT_VOTERS,
                 options.getCbmcAmountMaxVotersVarName());
@@ -422,12 +452,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         scopeHandler.add(node.getDeclaredSymbolicVar());
 
         final String boolVarName = codeBlock.newVarName(EXISTS_CANDIDATE);
-        String code =
-                FOR
-                + paren(UINT + VAR_NAME + EQ + ZERO + SEMI
-                        + VAR_NAME + LT + AMOUNT_CANDIDATES + SEMI
-                        + PLUS_PLUS + VAR_NAME) + BLANK + BRACE_OP
-                + LINE_BREAK;
+        String code = getTemplate(EXISTS_CANDIDATE_KEY, this.getClass());
         code = code.replaceAll(VAR_NAME, symbolicVarName);
         code = code.replaceAll(AMOUNT_CANDIDATES,
                                options.getCbmcAmountMaxCandsVarName());
@@ -453,11 +478,13 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         final String generatedVarName = codeBlock.newVarName(VOTE_SUM);
         final int voteNumber = node.getVoteNumber();
         final String symbolicVarCand = node.getCandCbmcVar().getName();
+        final VotesumHelper.VoteArrayAccess access =
+                new VotesumHelper.VoteArrayAccess(voteArrStruct, voteNumber, symbolicVarCand);
         final String code =
-                VotesumHelper.generateCode(generatedVarName, voteNumber,
-                                           symbolicVarCand, voteArrStruct,
+                VotesumHelper.generateCode(generatedVarName, access,
                                            votingInputType, options,
-                                           loopBoundHandler);
+                                           loopBoundHandler,
+                                           this.getClass());
         codeBlock.addSnippet(code);
         expVarNameStack.add(generatedVarName);
         expTypes.push(CElectionVotingType.simple());

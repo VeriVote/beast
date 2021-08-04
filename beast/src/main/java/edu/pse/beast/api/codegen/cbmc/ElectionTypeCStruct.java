@@ -6,6 +6,7 @@ import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 public class ElectionTypeCStruct {
+    private static final String NONE = "";
     private static final String AMOUNT = "AMT";
     private static final String COUNTER = "COUNTER";
     private static final String COND_STRING = COUNTER + " < " + AMOUNT;
@@ -36,8 +37,8 @@ public class ElectionTypeCStruct {
 
     public final CForLoop loopOverOuterList(final CTypeNameBrackets counterVar,
                                             final String tempInnerVarName) {
-        COND_STRING.replaceAll(COUNTER, counterVar.getName()).replaceAll(AMOUNT, "");
-        return new CForLoop(counterVar, "", "");
+        COND_STRING.replaceAll(COUNTER, counterVar.getName()).replaceAll(AMOUNT, NONE);
+        return new CForLoop(counterVar, NONE, NONE);
     }
 
     public final String getListName() {

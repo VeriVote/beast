@@ -1,0 +1,1 @@
+for (unsigned int VAR_NAME = 0; VAR_NAME < AMT_VOTERS; ++VAR_NAME) {

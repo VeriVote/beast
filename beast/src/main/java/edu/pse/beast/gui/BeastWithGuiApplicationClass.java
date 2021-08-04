@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class BeastWithGuiApplicationClass extends Application {
+    private static final String TITLE = "BEAST";
     private static final String FXML_RESOURCE_NAME = "/edu/pse/beast/BeastGUI.fxml";
     private BeastGUIController controller = new BeastGUIController();
 
@@ -21,6 +22,7 @@ public class BeastWithGuiApplicationClass extends Application {
         loader.setController(controller);
         controller.setPrimaryStage(primaryStage);
         final Parent root = loader.load();
+        primaryStage.setTitle(TITLE);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

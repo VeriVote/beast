@@ -9,6 +9,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SpecificValueInitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
@@ -91,9 +92,8 @@ public class BEAST {
         for (int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {
             for (int c = testConfig.getMinCands(); c <= testConfig.getMaxCands(); ++c) {
                 for (int s = testConfig.getMinSeats(); s <= testConfig.getMaxSeats(); ++s) {
-                    final String loopbounds =
-                            cbmcCodeFile.getCodeInfo()
-                            .getLoopBoundHandler().generateCBMCString(v, c, s);
+                    final CodeGenLoopBoundHandler loopbounds =
+                            cbmcCodeFile.getCodeInfo().getLoopBoundHandler();
                     final CBMCTestRunWithSymbolicVars.BoundValues bounds =
                             new CBMCTestRunWithSymbolicVars.BoundValues(c, s, v);
                     runs.add(new CBMCTestRunWithSymbolicVars(bounds,

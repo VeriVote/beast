@@ -1,10 +1,27 @@
 package edu.pse.beast.api.codegen.loopbounds;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.NotImplementedException;
 
 public class LoopBound {
-    private static final String LOOP_BOUND_TEMPLATE = " --unwindset FUNC_NAME.IDX:BOUND ";
+    private static final String RESOURCES = "/edu/pse/beast/api/codegen/loopbounds/";
+    private static final String FILE_KEY = "UNWIND";
+    private static final String FILE_ENDING = ".template";
+
+    private static final String FUNC_NAME = "FUNC_NAME";
+    private static final String IDX = "IDX";
+    private static final String BOUND = "BOUND";
+
+    private static final Map<String, String> TEMPLATES = new LinkedHashMap<String, String>();
 
     private List<LoopBound> children;
     private String functionName;
@@ -35,6 +52,27 @@ public class LoopBound {
         this.loopBoundType = typeOfLoopBound;
         this.index = indexNumber;
         this.manualBoundIfNeeded = manualBoundValue;
+    }
+
+    public static final String getTemplate(final String key,
+                                           final Class<?> c) {
+        assert key != null;
+        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
+            final InputStream stream =
+                    c.getResourceAsStream(RESOURCES
+                            + key.toLowerCase() + FILE_ENDING);
+            if (stream == null) {
+                throw new NotImplementedException();
+            }
+            final StringWriter writer = new StringWriter();
+            try {
+                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
+            } catch (final IOException e) {
+                e.printStackTrace();
+            }
+            TEMPLATES.put(key, writer.toString());
+        }
+        return TEMPLATES.get(key);
     }
 
     public static final LoopBound codeGenLoopbound(final LoopBoundType type) {
@@ -69,13 +107,12 @@ public class LoopBound {
         default:
             return "";
         }
-
         final String currentUnwindArgument =
-                LOOP_BOUND_TEMPLATE
-                .replaceAll("FUNC_NAME", functionName)
-                .replaceAll("IDX", String.valueOf(index))
-                .replaceAll("BOUND", String.valueOf(bound));
-        return currentUnwindArgument;
+                getTemplate(FILE_KEY, this.getClass())
+                .replaceAll(FUNC_NAME, functionName)
+                .replaceAll(IDX, String.valueOf(index))
+                .replaceAll(BOUND, String.valueOf(bound));
+        return currentUnwindArgument.trim();
     }
 
     public final List<LoopBound> getChildren() {

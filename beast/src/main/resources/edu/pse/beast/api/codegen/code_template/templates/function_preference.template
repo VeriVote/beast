@@ -1,37 +1,37 @@
-    //initializing Vote VOTE_NUMBER
-    unsigned int CURRENT_AMT_VOTER = NONDET_UINT();
-    ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);
-    unsigned int CURRENT_AMT_SEAT = NONDET_UINT();
-    ASSUME(CURRENT_AMT_SEAT <= MAX_AMT_SEAT);
-    unsigned int CURRENT_AMT_CAND = NONDET_UINT();
-    ASSUME(CURRENT_AMT_CAND <= MAX_AMT_CAND);
-    VOTE_TYPE VAR_NAME;
-    VAR_NAME.AMT_MEMBER = NONDET_UINT();
-    ASSUME(VAR_NAME.AMT_MEMBER == CURRENT_AMT_VOTER);
-    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {
-        for (int j = 0; j < CURRENT_AMT_CAND; ++j) {
-            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();
-            ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= 0);
-            ASSUME(VAR_NAME.LIST_MEMBER[i][j] <= CURRENT_AMT_CAND);
-        }
+//initializing Vote VOTE_NUMBER
+unsigned int CURRENT_AMT_VOTER = NONDET_UINT();
+ASSUME(CURRENT_AMT_VOTER <= MAX_AMT_VOTER);
+unsigned int CURRENT_AMT_SEAT = NONDET_UINT();
+ASSUME(CURRENT_AMT_SEAT <= MAX_AMT_SEAT);
+unsigned int CURRENT_AMT_CAND = NONDET_UINT();
+ASSUME(CURRENT_AMT_CAND <= MAX_AMT_CAND);
+VOTE_TYPE VAR_NAME;
+VAR_NAME.AMT_MEMBER = NONDET_UINT();
+ASSUME(VAR_NAME.AMT_MEMBER == CURRENT_AMT_VOTER);
+for (unsigned int i = 0; i < CURRENT_AMT_VOTER; ++i) {
+    for (unsigned int j = 0; j < CURRENT_AMT_CAND; ++j) {
+        VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();
+        ASSUME(VAR_NAME.LIST_MEMBER[i][j] >= 0);
+        ASSUME(VAR_NAME.LIST_MEMBER[i][j] <= CURRENT_AMT_CAND);
     }
-    for (int i = CURRENT_AMT_VOTER; i < MAX_AMT_VOTER; ++i) {
-        for (int j = 0; j < MAX_AMT_CAND; ++j) {
-            VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();
-            ASSUME(VAR_NAME.LIST_MEMBER[i][j] == INVALID_VOTE);
-        }
+}
+for (unsigned int i = CURRENT_AMT_VOTER; i < MAX_AMT_VOTER; ++i) {
+    for (unsigned int j = 0; j < MAX_AMT_CAND; ++j) {
+        VAR_NAME.LIST_MEMBER[i][j] = NONDET_UINT();
+        ASSUME(VAR_NAME.LIST_MEMBER[i][j] == INVALID_VOTE);
     }
-    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {
-        unsigned int tmp[MAX_AMT_CAND];
-        for (int k = 0; k < CURRENT_AMT_CAND; ++k) {
-            tmp[k] = 0;
-        }
-        for (int j = 0; j < CURRENT_AMT_CAND; ++j) {
-            for (int k = 0; k < CURRENT_AMT_CAND; ++k) {
-                if (VAR_NAME.LIST_MEMBER[i][j] == k) {
-                    ASSUME(tmp[k] == 0);
-                    tmp[k] = 1;
-                }
+}
+for (unsigned int i = 0; i < CURRENT_AMT_VOTER; ++i) {
+    unsigned int tmp[MAX_AMT_CAND];
+    for (unsigned int k = 0; k < CURRENT_AMT_CAND; ++k) {
+        tmp[k] = 0;
+    }
+    for (unsigned int j = 0; j < CURRENT_AMT_CAND; ++j) {
+        for (unsigned int k = 0; k < CURRENT_AMT_CAND; ++k) {
+            if (VAR_NAME.LIST_MEMBER[i][j] == k) {
+                ASSUME(tmp[k] == 0);
+                tmp[k] = 1;
             }
         }
     }
+}

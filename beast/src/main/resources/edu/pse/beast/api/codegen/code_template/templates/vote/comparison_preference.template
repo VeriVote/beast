@@ -1,6 +1,6 @@
 unsigned int GENERATED_VAR = LHS_VAR.AMT_MEMBER == RHS_VAR.AMT_MEMBER;
-for (int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {
-    for (int j = 0; j < AMT_CANDIDATES; ++j) {
+for (unsigned int i = 0; i < LHS_VAR.AMT_MEMBER; ++i) {
+    for (unsigned int j = 0; j < AMT_CANDIDATES; ++j) {
         GENERATED_VAR &= LHS_VAR.LIST_MEMBER[i][j] COMP RHS_VAR.LIST_MEMBER[i][j];
     }
 }

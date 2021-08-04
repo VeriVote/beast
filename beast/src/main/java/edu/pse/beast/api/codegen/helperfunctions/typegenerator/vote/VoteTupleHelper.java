@@ -1,10 +1,7 @@
 package edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
@@ -15,7 +12,10 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
 public class VoteTupleHelper {
-    private static final String DOT = ".";
+    public static final String VAR_SETUP_FILE_KEY = "VAR_SETUP";
+    public static final String AMOUNT_FILE_KEY = "AMOUNT";
+
+    private static final String PLUS = " + ";
     private static final String VOTE_AMOUNT_SUM = "VOTE_AMT_SUM";
     private static final String AMOUNT_MEMBER = "AMT_MEMBER";
     private static final String LIST_MEMBER = "LIST_MEMBER";
@@ -32,16 +32,18 @@ public class VoteTupleHelper {
                                       final ElectionTypeCStruct voteArrStruct,
                                       final VotingInputTypes votingInputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler,
+                                      final Class<?> c) {
         String voteAmtSum = "";
         for (int i = 0; i < voteNames.size() - 1; ++i) {
             voteAmtSum +=
-                    CURRENT_VOTE + DOT + AMOUNT_MEMBER + " + "
+                    CodeTemplateVoteTuple.getTemplate(AMOUNT_FILE_KEY, c)
                     .replaceAll(CURRENT_VOTE, voteNames.get(i))
-                    .replace(AMOUNT_MEMBER, voteArrStruct.getAmtName());
+                    .replace(AMOUNT_MEMBER, voteArrStruct.getAmtName())
+                    + PLUS;
         }
         voteAmtSum +=
-                CURRENT_VOTE + DOT + AMOUNT_MEMBER
+                CodeTemplateVoteTuple.getTemplate(AMOUNT_FILE_KEY, c)
                 .replaceAll(CURRENT_VOTE, voteNames.get(voteNames.size() - 1))
                 .replace(AMOUNT_MEMBER, voteArrStruct.getAmtName());
 
@@ -55,27 +57,13 @@ public class VoteTupleHelper {
                        VOTE_TYPE, voteArrStruct.getStruct().getName(),
                        VAR_NAME, generatedVarName,
                        ASSUME, options.getCbmcAssumeName());
-        String code = CodeTemplateVoteTuple.TEMPLATE_VAR_SETUP;
-        List<LoopBound> loopbounds = new ArrayList<>();
+        String code = CodeTemplateVoteTuple.getTemplate(VAR_SETUP_FILE_KEY, c);
 
-        switch (votingInputType) {
-        case APPROVAL:
-            throw new NotImplementedException();
-        case WEIGHTED_APPROVAL:
-            throw new NotImplementedException();
-        case PREFERENCE:
-            for (final String voteVarName : voteNames) {
-                code += CodeTemplateVoteTuple.TEMPLATE_PREFERENCE
-                        .replaceAll(CURRENT_VOTE, voteVarName);
-                loopbounds = CodeTemplateVoteTuple.LOOP_BOUNDS_PREFERENCE;
-            }
-            break;
-        case SINGLE_CHOICE:
-            throw new NotImplementedException();
-        case SINGLE_CHOICE_STACK:
-            throw new NotImplementedException();
-        default:
+        for (final String voteVarName : voteNames) {
+            code += CodeTemplateVoteTuple.getTemplate(votingInputType, c)
+                    .replaceAll(CURRENT_VOTE, voteVarName);
         }
+        final List<LoopBound> loopbounds = CodeTemplateVoteTuple.getLoopBounds(votingInputType);
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);

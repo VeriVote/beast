@@ -1,0 +1,5 @@
+for (unsigned int i = 0; i < CURRENT_ELECT.AMT_MEMBER && i < AMT_CANDIDATES; ++pos) {
+    VAR_NAME.LIST_MEMBER[pos] = NONDET_UINT();
+    ASSUME(VAR_NAME.LIST_MEMBER[pos] == CURRENT_VOTE.LIST_MEMBER[i]);
+    pos++;
+}

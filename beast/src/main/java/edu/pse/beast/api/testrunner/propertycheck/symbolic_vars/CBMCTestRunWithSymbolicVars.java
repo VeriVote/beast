@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
@@ -26,6 +27,9 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
     private static final String LINE_BREAK = "\n";
 
+    private static final String SAT = "Verification failed";
+    private static final String UNSAT = "Verification succeeded";
+
     private CElectionDescription description;
     private PreAndPostConditionsDescription propertyDescription;
 
@@ -38,7 +42,7 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
 
     private CodeGenOptions codeGenerationOptions;
 
-    private String loopBounds;
+    private CodeGenLoopBoundHandler loopBounds;
 
     private CBMCCodeFileData cbmcCodeFile;
 
@@ -57,7 +61,7 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
 
     public CBMCTestRunWithSymbolicVars(final BoundValues bounds,
                                        final CodeGenOptions codeGenOptions,
-                                       final String loopbounds,
+                                       final CodeGenLoopBoundHandler loopbounds,
                                        final CBMCCodeFileData codeFileData,
                                        final CElectionDescription descr,
                                        final PreAndPostConditionsDescription propDescr,
@@ -212,8 +216,7 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
     public final void updateDataForCheck(final CBMCCodeFileData cbmcFile,
                                          final CodeGenOptions codeGenOptions) {
         this.cbmcCodeFile = cbmcFile;
-        this.loopBounds = cbmcFile.getCodeInfo().getLoopBoundHandler()
-                .generateCBMCString(v, c, s);
+        this.loopBounds = cbmcFile.getCodeInfo().getLoopBoundHandler();
         workUnit.updateDataForCheck(cbmcFile, loopBounds, codeGenOptions);
         descrChanged = false;
         propDescrChanged = false;
@@ -223,11 +226,11 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
         this.callBack = cb;
     }
 
-    public final String getLoopboundList() {
+    public final CodeGenLoopBoundHandler getLoopboundList() {
         return loopBounds;
     }
 
-    public final void setLoopboundList(final String loopBoundList) {
+    public final void setLoopboundList(final CodeGenLoopBoundHandler loopBoundList) {
         this.loopBounds = loopBoundList;
     }
 
@@ -279,9 +282,9 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
         String status = getState().toString();
         if (getState() == WorkUnitState.FINISHED) {
             if (getJsonOutputHandler().didCBMCFindExample()) {
-                status = "Verification failed";
+                status = SAT;
             } else {
-                status = "Verification succeded";
+                status = UNSAT;
             }
         }
         return status;

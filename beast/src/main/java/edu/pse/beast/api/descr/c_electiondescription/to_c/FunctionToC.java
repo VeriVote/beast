@@ -22,8 +22,8 @@ public class FunctionToC {
                 arraySize = s;
                 break;
             default:
-                arrayBracks += "[" + arraySize + "]";
             }
+            arrayBracks += "[" + arraySize + "]";
         }
         return new CTypeNameBrackets(TypeManager.simpleTypeToCType(type.getSimpleType()),
                                      name, arrayBracks);

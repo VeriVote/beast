@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class CodeGenLoopBoundHandler {
+    private static final String EMPTY = "";
+    private static final String BLANK = " ";
+
     private static final String MAIN = "main";
-    private static final String UNWIND = " --unwind ";
+    private static final String UNWIND = "--unwind ";
 
     private Map<String, List<LoopBound>> functionNamesToLoopbounds = new HashMap<>();
     private List<LoopBound> mainLoopbounds = new ArrayList<>();
@@ -31,13 +34,17 @@ public class CodeGenLoopBoundHandler {
     public final List<LoopBound> getLoopBoundsAsList() {
         final List<LoopBound> loopbounds = new ArrayList<>();
         for (final List<LoopBound> lbl : functionNamesToLoopbounds.values()) {
-            loopbounds.addAll(lbl);
+            for (final LoopBound lb : lbl) {
+                loopbounds.add(lb);
+            }
         }
         return loopbounds;
     }
 
     public final void pushMainLoopBounds(final List<LoopBound> loopbounds) {
-        mainLoopbounds.addAll(loopbounds);
+        for (final LoopBound bound : loopbounds) {
+            mainLoopbounds.add(bound);
+        }
     }
 
     public final void addVotingInitLoopBounds(final String votingFunctionName,
@@ -73,26 +80,39 @@ public class CodeGenLoopBoundHandler {
         }
     }
 
-    public final String generateCBMCString(final int v, final int c, final int s) {
-        String created = "";
+    public final List<String> generateCBMCStringList(final int v, final int c, final int s) {
+        final List<String> created = new ArrayList<String>();
         for (int i = 0; i < mainLoopbounds.size(); ++i) {
             final LoopBound lb = mainLoopbounds.get(i);
             lb.setFunctionName(MAIN);
             lb.setIndex(i);
-            created += lb.getUnwindString(v, c, s);
+            created.add(lb.getUnwindString(v, c, s));
         }
         for (final String k : functionNamesToLoopbounds.keySet()) {
             for (final LoopBound lb : votingInitLoopbounds.get(k)) {
-                created += lb.getUnwindString(v, c, s);
+                created.add(lb.getUnwindString(v, c, s));
             }
             for (final LoopBound lb : functionNamesToLoopbounds.get(k)) {
-                created += lb.getUnwindString(v, c, s);
+                created.add(lb.getUnwindString(v, c, s));
             }
             for (final LoopBound lb : votingBackLoopbounds.get(k)) {
-                created += lb.getUnwindString(v, c, s);
+                created.add(lb.getUnwindString(v, c, s));
             }
         }
-        created += UNWIND + (Math.max(Math.max(v, c), s) + 1);
+        final String unwind = UNWIND + (Math.max(Math.max(v, c), s) + 1);
+        created.add(unwind);
         return created;
+    }
+
+    public final String generateCBMCString(final int v, final int c, final int s) {
+        final List<String> args = generateCBMCStringList(v, c, s);
+        String commands = EMPTY;
+        int i = 0;
+        final int len = args.size();
+        for (final String arg : args) {
+            final String pre = i++ != len ? BLANK : EMPTY;
+            commands += pre + arg;
+        }
+        return commands;
     }
 }

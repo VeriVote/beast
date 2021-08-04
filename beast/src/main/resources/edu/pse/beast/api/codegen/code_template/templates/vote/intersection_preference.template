@@ -1,13 +1,13 @@
 VOTE_TYPE GENERATED_VAR_NAME;
 {
     unsigned int count = 0;
-    for (int i = 0; i < LHS_VAR_NAME.AMT_MEMBER; ++i) {
+    for (unsigned int i = 0; i < LHS_VAR_NAME.AMT_MEMBER; ++i) {
         unsigned int eq = true;
-        for (int j = 0; j < AMT_CANDIDATES; ++j) {
+        for (unsigned int j = 0; j < AMT_CANDIDATES; ++j) {
             eq = eq && COMPARE_VARS;
         }
         if (eq) {
-            for (int j = 0; j < AMT_CANDIDATES; ++j) {
+            for (unsigned int j = 0; j < AMT_CANDIDATES; ++j) {
                 GENERATED_VAR_NAME.LIST_MEMBER[count][j] = NONDET_UINT();
                 ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count][j] == LHS_VAR_NAME.LIST_MEMBER[i][j]);
             }

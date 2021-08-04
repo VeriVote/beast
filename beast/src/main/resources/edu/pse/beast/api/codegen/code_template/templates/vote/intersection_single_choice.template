@@ -1,7 +1,7 @@
 VOTE_TYPE GENERATED_VAR_NAME;
 {
     unsigned int count = 0;
-    for (int i = 0; i < AMT_VOTERS; ++i) {
+    for (unsigned int i = 0; i < AMT_VOTERS; ++i) {
         unsigned int eq = COMPARE_VARS;
         if (eq) {
             GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();

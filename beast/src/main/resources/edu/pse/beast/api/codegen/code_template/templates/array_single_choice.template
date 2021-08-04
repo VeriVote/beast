@@ -1,4 +1,4 @@
-    unsigned int VOTE_ARR[AMT_VOTERS];
-    for (int i = 0; i < CURRENT_AMT_VOTER; ++i) {
-        VOTE_ARR[i] = VOTE_INPUT_STRUCT_VAR.LIST_MEMBER[i];
-    }
+unsigned int VOTE_ARR[AMT_VOTERS];
+for (unsigned int i = 0; i < CURRENT_AMT_VOTER; ++i) {
+    VOTE_ARR[i] = VOTE_INPUT_STRUCT_VAR.LIST_MEMBER[i];
+}

@@ -5,9 +5,9 @@ import java.util.Map;
 public class CodeGenerationToolbox {
     public static String replacePlaceholders(final String code,
                                              final Map<String, String> replacements) {
-        String replacedCode = "";
+        String replacedCode = code;
         for (final String k : replacements.keySet()) {
-            replacedCode = code.replaceAll(k, replacements.get(k));
+            replacedCode = replacedCode.replaceAll(k, replacements.get(k));
         }
         return replacedCode;
     }

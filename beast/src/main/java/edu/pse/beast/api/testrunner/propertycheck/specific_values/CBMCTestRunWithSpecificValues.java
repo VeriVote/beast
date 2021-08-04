@@ -3,6 +3,7 @@ package edu.pse.beast.api.testrunner.propertycheck.specific_values;
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.cbmc_run_with_specific_values.VotingParameters;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
@@ -24,7 +25,7 @@ public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
     private CBMCJsonRunningDataExtractor cbmcJsonRunningDataExtractor;
     private CBMCPropertyCheckWorkUnit workUnit;
 
-    private String loopBounds;
+    private CodeGenLoopBoundHandler loopBounds;
     private CodeGenOptions codeGenerationOptions;
 
     private int v;
@@ -36,7 +37,7 @@ public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
 
     public CBMCTestRunWithSpecificValues(final CBMCCodeFileData codeFile,
                                          final VotingParameters params,
-                                         final String loopBoundList,
+                                         final CodeGenLoopBoundHandler loopBoundList,
                                          final CodeGenOptions codeGenOptions,
                                          final CElectionDescription descr) {
         this.cbmcCodeFile = codeFile;

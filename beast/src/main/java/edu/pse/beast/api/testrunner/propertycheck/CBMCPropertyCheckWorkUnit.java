@@ -10,6 +10,7 @@ import java.util.UUID;
 import edu.pse.beast.api.CBMCTestCallback;
 import edu.pse.beast.api.CBMCTestCallback.BoundValues;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
@@ -35,7 +36,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     private int candidateAmount;
     private int seatAmount;
     private CBMCCodeFileData cbmcCodeFile;
-    private String loopBounds;
+    private CodeGenLoopBoundHandler loopBounds;
     private CodeGenOptions codeGenerationOptions;
 
     // fields to handle the workunit state
@@ -60,7 +61,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
 
     public final void initialize(final CBMCTestCallback.BoundValues bounds,
                                  final CodeGenOptions codeGenOptions,
-                                 final String loopBoundsString,
+                                 final CodeGenLoopBoundHandler loopBoundsString,
                                  final CBMCCodeFileData codeFile,
                                  final ElectionAndProperty elecAndProp,
                                  final CBMCTestCallback cb,
@@ -107,7 +108,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     }
 
     public final void updateDataForCheck(final CBMCCodeFileData cbmcFile,
-                                         final String loopBoundsString,
+                                         final CodeGenLoopBoundHandler loopBoundsString,
                                          final CodeGenOptions codeGenOptions) {
         this.cbmcCodeFile = cbmcFile;
         this.loopBounds = loopBoundsString;
