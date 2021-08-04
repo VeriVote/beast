@@ -14,6 +14,12 @@ import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithS
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
     private static final String RESOURCES = "/edu/pse/beast/gui/testconfigeditor/treeview/runs/";
     private static final String FILE_ENDING = ".template";

@@ -18,6 +18,7 @@ public class CStruct {
     private static final String FILE_KEY = "TYPEDEF";
 
     private static final String LINE_BREAK = "\n";
+    private static final String INDENT = "    ";
     private static final String SEMI = ";";
 
     private static final String STRUCT_NAME = "STRUCT_NAME";
@@ -61,7 +62,7 @@ public class CStruct {
         final Class<?> c = this.getClass();
         return getTemplate(c)
                 .replaceAll(STRUCT_NAME, name)
-                .replace(MEMBER_LIST, String.join(LINE_BREAK, memberList));
+                .replace(MEMBER_LIST, String.join(LINE_BREAK + INDENT, memberList));
     }
 
     public final String getName() {

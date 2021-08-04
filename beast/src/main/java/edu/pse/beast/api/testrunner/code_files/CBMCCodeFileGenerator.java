@@ -15,6 +15,8 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
 import edu.pse.beast.api.paths.PathHandler;
 
 public class CBMCCodeFileGenerator {
+    private static final String TMP_PREFIX = "gen_";
+    private static final String DOT_C = ".c";
 
     /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/cbmc_generated_files/";
@@ -31,7 +33,7 @@ public class CBMCCodeFileGenerator {
                                                                   initVoteHelper, c);
         final String absolutePath =
                 pathHandler.getBaseDir().getAbsolutePath() + PATH_TO_TEMP_FOLDER;
-        final File file = File.createTempFile("cbmc", ".c", new File(absolutePath));
+        final File file = File.createTempFile(TMP_PREFIX, DOT_C, new File(absolutePath));
         FileUtils.writeStringToFile(file, code.getCode(),
                 Charset.defaultCharset());
         final CBMCCodeFileData codeFile = new CBMCCodeFileData();

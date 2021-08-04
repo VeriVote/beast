@@ -13,6 +13,12 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.toolbox.Tuple;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class FileDialogHelper {
 
     public static Tuple<CElectionDescription, File>

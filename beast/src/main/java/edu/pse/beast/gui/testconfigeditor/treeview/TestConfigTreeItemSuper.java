@@ -1,5 +1,11 @@
 package edu.pse.beast.gui.testconfigeditor.treeview;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public abstract class TestConfigTreeItemSuper {
     private TestConfigTreeItemType type;
 

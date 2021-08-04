@@ -12,6 +12,12 @@ import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsCategoryType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CEditorOptionsGUI extends OptionsCategoryGUI {
     private static final int ONE_HUNDRED = 100;
 

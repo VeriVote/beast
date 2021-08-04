@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -51,10 +52,17 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class BeastGUIController implements WorkspaceUpdateListener {
     // =================options start
     private static final String LOAD_WS_TEXT = "Load Workspace";
     private static final String SAVE_WS_TEXT = "Save Workspace";
+    private static final String EXIT_WS_TEXT = "Exit";
     private static final String FILE_TEXT = "File";
     private static final String PREFERENCES_TEXT = "Preferences";
     private static final String OPTIONS_TEXT = "Options";
@@ -269,6 +277,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         fileMenu.setText(FILE_TEXT);
         final MenuItem loadWorkspaceMenuItem = new MenuItem(LOAD_WS_TEXT);
         final MenuItem saveWorkspaceMenuItem = new MenuItem(SAVE_WS_TEXT);
+        final MenuItem exitWorkspaceMenuItem = new MenuItem(EXIT_WS_TEXT);
 
         loadWorkspaceMenuItem.setOnAction(e -> {
             beastWorkspace.letUserLoadWorkSpace();
@@ -276,8 +285,13 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         saveWorkspaceMenuItem.setOnAction(e -> {
             beastWorkspace.saveWorkspace();
         });
+        exitWorkspaceMenuItem.setOnAction(e -> {
+            beastWorkspace.shutdown();
+            Platform.exit();
+        });
         fileMenu.getItems().add(loadWorkspaceMenuItem);
         fileMenu.getItems().add(saveWorkspaceMenuItem);
+        fileMenu.getItems().add(exitWorkspaceMenuItem);
 
         final Menu prefMenu = new Menu();
         prefMenu.setText(PREFERENCES_TEXT);

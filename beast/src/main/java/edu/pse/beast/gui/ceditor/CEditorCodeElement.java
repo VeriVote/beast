@@ -4,6 +4,12 @@ import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.gui.CodeAreaChangeListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CEditorCodeElement extends CodeArea {
     private CodeAreaChangeListener changeListener;
 

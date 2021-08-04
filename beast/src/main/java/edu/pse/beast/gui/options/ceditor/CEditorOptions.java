@@ -1,5 +1,11 @@
 package edu.pse.beast.gui.options.ceditor;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CEditorOptions {
     private static final int DEFAULT_FONT_SIZE = 12;
 

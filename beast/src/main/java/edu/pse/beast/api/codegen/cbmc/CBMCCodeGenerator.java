@@ -211,7 +211,7 @@ public class CBMCCodeGenerator {
                                 .generateCode() + SEMICOLON);
 
         code.add(BEGIN_USER_CODE);
-        code.addAll(func.getCodeAsList());
+        code.addAll(CFunction.indent(func.getCodeAsList()));
         code.add(END_USER_CODE);
 
         final VotingFunctionHelper.CNames resultNames =

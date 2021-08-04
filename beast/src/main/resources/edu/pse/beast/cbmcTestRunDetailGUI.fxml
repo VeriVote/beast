@@ -11,8 +11,8 @@
    <children>
       <AnchorPane prefHeight="43.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
          <children>
-            <Button fx:id="openCreatedFileButton" mnemonicParsing="false" text="display" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Label text="created File:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <Button fx:id="openCreatedFileButton" mnemonicParsing="false" text="Display" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Label text="Created File:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
             <TextField fx:id="createdFileTextField" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>

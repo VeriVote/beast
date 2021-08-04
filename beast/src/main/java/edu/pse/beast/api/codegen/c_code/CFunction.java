@@ -12,6 +12,7 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
 public class CFunction {
     private static final String BLANK = " ";
+    private static final String INDENT = BLANK + BLANK + BLANK + BLANK;
     private static final String LINE_BREAK = "\n";
     private static final String COMMA = ",";
     private static final String SEMICOLON = ";";
@@ -51,6 +52,25 @@ public class CFunction {
         this.returnType = returnTypeString;
     }
 
+    public static List<String> indent(final List<String> list) {
+        final List<String> indentedList = new ArrayList<String>();
+        if (list != null && !list.isEmpty()) {
+            final String fst = list.get(0);
+            final int strip = fst != null ? fst.length() - fst.stripLeading().length() : 0;
+            if (0 < strip) {
+                // first sanitize (assuming relative indentations are okay) in case
+                // the code has already been indented
+                list.replaceAll(c -> c.substring(strip));
+            }
+            list.forEach(c
+                    -> indentedList.add(
+                            INDENT.concat(c.replaceAll(LINE_BREAK, LINE_BREAK + INDENT))
+                            )
+            );
+        }
+        return indentedList;
+    }
+
     public final void setCode(final List<String> codeStringList) {
         this.code = codeStringList;
     }
@@ -66,7 +86,7 @@ public class CFunction {
     public final String generateDefCode() {
         final List<String> created = new ArrayList<>();
         created.add(signature() + BLANK + BRACE_OP);
-        created.addAll(code);
+        created.addAll(indent(code));
         created.add(BRACE_CL);
         return String.join(LINE_BREAK, created);
     }

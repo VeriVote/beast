@@ -22,7 +22,7 @@
    <children>
       <TabPane fx:id="topLeveLTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
         <tabs>
-          <Tab fx:id="election" text="Election Code">
+          <Tab fx:id="election" text="Election Editor">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -46,8 +46,8 @@
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
                                                 <ListView fx:id="loopBoundList" prefHeight="180.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                                                <Button fx:id="testLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="Test" AnchorPane.bottomAnchor="5.0" />
-                                                <Label text="Loopbounds" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <Button fx:id="testLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="Compute" AnchorPane.bottomAnchor="5.0" />
+                                                <Label text="Loop Bounds" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                 <Button fx:id="editLoopboundButton" layoutX="62.0" layoutY="175.0" mnemonicParsing="false" text="Edit" AnchorPane.bottomAnchor="5.0" />
                                              </children>
                                           </AnchorPane>
@@ -55,7 +55,7 @@
                                              <children>
                                                 <Button fx:id="removeFunctionButton" layoutX="101.0" layoutY="162.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                                 <ListView fx:id="functionList" prefHeight="171.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                                                <Label text="functions" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <Label text="Functions" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                 <MenuButton fx:id="addFunctionMenuButton" layoutY="162.0" mnemonicParsing="false" text="MenuButton" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
                                                   <items>
                                                     <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -96,14 +96,14 @@
                                                          <top>
                                                             <BorderPane BorderPane.alignment="CENTER">
                                                                <left>
-                                                                  <MenuButton fx:id="addSymbVarMenu" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="add" BorderPane.alignment="CENTER" />
+                                                                  <MenuButton fx:id="addSymbVarMenu" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="Add" BorderPane.alignment="CENTER" />
                                                                </left>
                                                             </BorderPane>
                                                          </top>
                                                          <bottom>
                                                             <BorderPane BorderPane.alignment="CENTER">
                                                                <left>
-                                                                  <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="remove" BorderPane.alignment="CENTER" />
+                                                                  <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="Remove" BorderPane.alignment="CENTER" />
                                                                </left>
                                                             </BorderPane>
                                                          </bottom>
@@ -139,7 +139,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tests" text="Property Tests">
+            <Tab fx:id="tests" text="Property Checking">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -149,7 +149,7 @@
                                  <children>
                                     <HBox prefHeight="34.0" prefWidth="234.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                        <children>
-                                          <Label text="sort by">
+                                          <Label text="Group by">
                                              <padding>
                                                 <Insets right="5.0" top="5.0" />
                                              </padding>
@@ -178,15 +178,5 @@
         </tabs>
       </TabPane>
       <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <HBox prefHeight="38.0" prefWidth="692.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
-         <children>
-            <Button fx:id="loadWorkspaceButton" mnemonicParsing="false" text="Load Workspace">
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="saveWorkspaceButton" mnemonicParsing="false" text="Save Workspace" />
-         </children>
-      </HBox>
    </children>
 </AnchorPane>

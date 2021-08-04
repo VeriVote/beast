@@ -12,8 +12,13 @@ import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsCategoryType;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
-
     @FXML
     private AnchorPane topLevelAnchorpane;
     @FXML

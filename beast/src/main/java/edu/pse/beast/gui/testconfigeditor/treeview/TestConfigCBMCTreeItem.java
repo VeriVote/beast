@@ -2,6 +2,12 @@ package edu.pse.beast.gui.testconfigeditor.treeview;
 
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestConfigCBMCTreeItem extends TestConfigTreeItemSuper {
     private CBMCTestConfiguration cbmcPropertyTestConfiguration;
 

@@ -1,5 +1,11 @@
 package edu.pse.beast.gui.testconfigeditor.treeview;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestConfigCategoryTreeItem extends TestConfigTreeItemSuper {
     private String category;
 

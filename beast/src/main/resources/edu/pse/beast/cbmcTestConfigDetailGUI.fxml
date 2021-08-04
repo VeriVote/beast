@@ -32,18 +32,18 @@
                </GridPane.margin>
             </Label>
             <Label text="Property Description" GridPane.rowIndex="2" />
-            <Label text="name" />
+            <Label text="Name" />
             <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <ChoiceBox fx:id="descrChoiceBox" layoutX="14.0" layoutY="2.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="loadDescrButton" layoutX="168.0" layoutY="3.0" mnemonicParsing="false" text="load" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="loadDescrButton" layoutX="168.0" layoutY="3.0" mnemonicParsing="false" text="Load" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <ChoiceBox fx:id="propDescrChoiceBox" layoutX="14.0" layoutY="4.0" prefWidth="150.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="loadPropDescrButton" mnemonicParsing="false" text="load" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="loadPropDescrButton" mnemonicParsing="false" text="Load" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>
@@ -64,8 +64,8 @@
             <Label text="Voters" GridPane.rowIndex="1" />
             <Label text="Candidates" GridPane.rowIndex="2" />
             <Label text="Seats" GridPane.rowIndex="3" />
-            <Label text="min" GridPane.columnIndex="1" />
-            <Label text="max" GridPane.columnIndex="2" />
+            <Label text="Min" GridPane.columnIndex="1" />
+            <Label text="Max" GridPane.columnIndex="2" />
             <Spinner fx:id="minVoters" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="5.0" />
@@ -88,17 +88,17 @@
       </GridPane>
       <HBox layoutX="30.0" layoutY="283.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="280.0">
          <children>
-            <Button fx:id="updateFilesButton" mnemonicParsing="false" text="update Files">
+            <Button fx:id="updateFilesButton" mnemonicParsing="false" text="Update Files">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="createTestRunsButton" mnemonicParsing="false" text="create test runs">
+            <Button fx:id="createTestRunsButton" mnemonicParsing="false" text="Create Checks">
                <HBox.margin>
                   <Insets right="5.0" />
                </HBox.margin>
             </Button>
-            <CheckBox fx:id="startCreatedTestsCheckbox" mnemonicParsing="false" text="start after creation">
+            <CheckBox fx:id="startCreatedTestsCheckbox" mnemonicParsing="false" text="Start After Creation">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin>

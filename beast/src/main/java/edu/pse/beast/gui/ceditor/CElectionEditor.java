@@ -38,6 +38,12 @@ import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CElectionEditor implements WorkspaceUpdateListener {
     private static final double LINE_SCALE = 1.3;
     private static final String LINE_BREAK = "\n";
@@ -602,6 +608,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         setFont(options.getFontSize());
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class ElectionDescriptionButtons {
         final Button add;
         final Button delete;
@@ -625,6 +637,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class FunctionEditor {
         final MenuButton addButton;
         final Button removeButton;
@@ -642,6 +660,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class LoopBoundEditor {
         final Button generateButton;
         final Button editButton;
@@ -656,6 +680,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class CodeAreas {
         final CEditorCodeElement elect;
         final CodeArea closeBrackets;

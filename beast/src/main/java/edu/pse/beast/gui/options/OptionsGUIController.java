@@ -12,6 +12,12 @@ import javafx.stage.Stage;
 
 import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class OptionsGUIController {
     @FXML
     private AnchorPane topLevelAnchorpane;
