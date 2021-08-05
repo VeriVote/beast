@@ -29,7 +29,7 @@ public class IsVoteEmptyHelper {
         final Map<String, String> replacementMap =
                 Map.of(GENERATED_VAR, generatedVarName,
                        TESTED_VAR, testedVarName,
-                       AMOUNT_MEMBER, votingStruct.getAmtName());
+                       AMOUNT_MEMBER, votingStruct.getAmountName());
         final String code = CodeTemplateVoteEmpty.getTemplate(c);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }

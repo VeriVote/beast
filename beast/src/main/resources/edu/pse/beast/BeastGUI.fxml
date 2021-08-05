@@ -140,7 +140,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tests" text="Property Checking">
+            <Tab fx:id="tests" text="Property Checker">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

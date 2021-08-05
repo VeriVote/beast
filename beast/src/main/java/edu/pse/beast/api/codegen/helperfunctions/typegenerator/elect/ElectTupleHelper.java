@@ -50,7 +50,7 @@ public class ElectTupleHelper {
 
         final Map<String, String> replacementMap =
                 Map.of(ELECT_AMT_SUM, electAmtSum,
-                       AMT_MEMBER, electStruct.getAmtName(),
+                       AMT_MEMBER, electStruct.getAmountName(),
                        LIST_MEMBER, electStruct.getListName(),
                        NONDET_UINT, options.getCbmcNondetUintName(),
                        AMT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),

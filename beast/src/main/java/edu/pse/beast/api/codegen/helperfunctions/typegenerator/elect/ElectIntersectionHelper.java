@@ -38,7 +38,7 @@ public class ElectIntersectionHelper {
                                       final Class<?> c) {
         final Map<String, String> replacementMap =
                 StringReplacementMap.genMap(ELECT_TYPE, electStruct.getStruct().getName(),
-                                            AMOUNT_MEMBER, electStruct.getAmtName(),
+                                            AMOUNT_MEMBER, electStruct.getAmountName(),
                                             LIST_MEMBER, electStruct.getListName(),
                                             GENERATED_VAR_NAME, generatedVarName,
                                             LHS, intersectedElectNames.get(0),

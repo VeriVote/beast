@@ -38,7 +38,7 @@ public class ElectPermutationHelper {
                                       final Class<?> c) {
         final Map<String, String> replacementMap =
                 Map.of(ELECT_TYPE, electStruct.getStruct().getName(),
-                       AMOUNT_MEMBER, electStruct.getAmtName(),
+                       AMOUNT_MEMBER, electStruct.getAmountName(),
                        LIST_MEMBER, electStruct.getListName(),
                        GENERATED_VAR_NAME, generatedVarName,
                        ASSUME, options.getCbmcAssumeName(),

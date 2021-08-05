@@ -9,6 +9,11 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
  * @author Lukas Stapelbroek
  */
 public class ComparisonNode extends BooleanExpressionNode {
+    private static final String NONE = "";
+    private static final String NOT_EQUALS = "!=";
+    private static final String EQUALS = "==";
+    private static final String COMPARISON_NODE = "ComparisonNode";
+    private static final String SYMBOL = ": Symbol ";
 
     /**
      * TODO: Write documentation.
@@ -45,18 +50,18 @@ public class ComparisonNode extends BooleanExpressionNode {
         this.lhsTypeExp = lhsTypeExpr;
         this.rhsTypeExp = rhsTypeExpr;
         this.comparisonSymbol = comparisonSymb;
-        if ("==".equals(comparisonSymb)) {
-            this.comparisonType = ComparisonType.EQ;
-        } else if ("!=".equals(comparisonSymb)) {
-            this.comparisonType = ComparisonType.UNEQ;
-        }
+
+        this.comparisonType =
+                EQUALS.equals(comparisonSymb)
+                ? ComparisonType.EQ
+                        : (NOT_EQUALS.equals(comparisonSymb)
+                                ? ComparisonType.UNEQ : this.comparisonType);
     }
 
     private String getTreeStringExtra() {
         final String simpleClassName = this.getClass().getSimpleName();
-        final String text = ": Symbol ";
-        return "ComparisonNode".equals(simpleClassName)
-                ? "" : simpleClassName + text;
+        return COMPARISON_NODE.equals(simpleClassName)
+                ? NONE : simpleClassName + SYMBOL;
     }
 
     public final ComparisonType getComparisonType() {

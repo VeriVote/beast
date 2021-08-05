@@ -37,7 +37,7 @@ public class ElectComparisonHelper {
                 Map.of(GENERATED_VAR, generatedVarName,
                        LHS_VAR, comparison.lhsVarName,
                        RHS_VAR, comparison.rhsVarName,
-                       AMOUNT_MEMBER, comparedType.getAmtName(),
+                       AMOUNT_MEMBER, comparedType.getAmountName(),
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),
                        COMP, comparison.symbol,
                        LIST_MEMBER, comparedType.getListName());

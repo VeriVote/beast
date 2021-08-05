@@ -43,7 +43,7 @@ public class VotingFunctionHelper {
         final Map<String, String> replacementMap =
                 Map.of(RESULT_TYPE, outputStruct.getStruct().getName(),
                        RESULT_VAR, names.structVar,
-                       AMOUNT_MEMBER, outputStruct.getAmtName(),
+                       AMOUNT_MEMBER, outputStruct.getAmountName(),
                        MAX_AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),
                        CURRENT_AMOUNT_CAND, options.getCurrentAmountCandsVarName(),
                        NONDET_UINT, options.getCbmcNondetUintName(),
@@ -71,7 +71,7 @@ public class VotingFunctionHelper {
                        CURRENT_AMOUNT_VOTER, options.getCurrentAmountVotersVarName(),
                        CURRENT_AMOUNT_CAND, options.getCurrentAmountCandsVarName(),
                        VOTE_INPUT_STRUCT_VAR, names.structVar,
-                       AMOUNT_MEMBER, inputStruct.getAmtName(),
+                       AMOUNT_MEMBER, inputStruct.getAmountName(),
                        LIST_MEMBER, inputStruct.getListName());
         final List<LoopBound> loopbounds =
                 CodeTemplateVotingFunctionVoteArrayInit.getLoopBounds(votingInputType);

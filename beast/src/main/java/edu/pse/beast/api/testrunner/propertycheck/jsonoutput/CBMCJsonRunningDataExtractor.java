@@ -56,52 +56,53 @@ public class CBMCJsonRunningDataExtractor {
     }
 
     private CBMCJsonMessage parseJsonObject(final JSONObject json) {
+        final CBMCJsonMessage msg;
         if (json.has(PROGRAM_KEY)) {
-            final CBMCJsonMessage msg =
-                    new CBMCJsonMessage(PROGRAM_KEY, json.getString(PROGRAM_KEY));
-            messages.add(msg);
-            return msg;
+            msg = new CBMCJsonMessage(PROGRAM_KEY, json.getString(PROGRAM_KEY));
+        } else if (json.has(MESSAGE_TYPE_KEY)) {
+            msg = new CBMCJsonMessage(json.getString(MESSAGE_TYPE_KEY),
+                                      json.getString(MESSAGE_TEXT_KEY));
+        } else {
+            msg = null;
         }
-        if (json.has(MESSAGE_TYPE_KEY)) {
-            final CBMCJsonMessage msg =
-                    new CBMCJsonMessage(json.getString(MESSAGE_TYPE_KEY),
-                                        json.getString(MESSAGE_TEXT_KEY));
+        if (msg != null) {
             messages.add(msg);
-            return msg;
         }
-        return null;
+        return msg;
     }
 
     public final void initializeWithRawOutput(final List<String> rawOutput) {
         final JSONArray arr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
-        if (arr == null) {
-            return;
-        }
-        for (int i = 0; i < arr.length(); ++i) {
+        final int arrLen = arr != null ? arr.length() : 0;
+        for (int i = 0; i < arrLen; ++i) {
             final JSONObject json = arr.getJSONObject(i);
             parseJsonObject(json);
         }
     }
 
     public final CBMCJsonMessage appendOutput(final String rawOutput) {
+        final CBMCJsonMessage msg;
         if (currentOutput == null) {
             if (rawOutput.trim().startsWith(BRACE_OP)) {
                 // must be valid start of new JSON object
                 currentOutput = rawOutput;
             }
+            msg = null;
         } else {
             if (rawOutput.trim().startsWith(BRACE_CL)) {
+                JSONObject json = null;
                 try {
-                    final JSONObject json = new JSONObject(currentOutput + BRACE_CL);
+                    json = new JSONObject(currentOutput + BRACE_CL);
                     currentOutput = null;
-                    return parseJsonObject(json);
                 } catch (JSONException e) {
                     currentOutput += rawOutput;
                 }
+                msg = json != null ? parseJsonObject(json) : null;
             } else {
+                msg = null;
                 currentOutput += rawOutput;
             }
         }
-        return null;
+        return msg;
     }
 }

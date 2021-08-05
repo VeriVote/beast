@@ -37,7 +37,7 @@ public class VoteComparisonHelper {
                 Map.of(GENERATED_VAR_NAME, generatedVarName,
                        LHS_VAR_NAME, comparison.lhsVarName,
                        RHS_VAR_NAME, comparison.rhsVarName,
-                       AMOUNT_NAME, comparedType.getAmtName(),
+                       AMOUNT_NAME, comparedType.getAmountName(),
                        AMOUNT_MAX_CAND_VAR_NAME, options.getCbmcAmountMaxCandsVarName(),
                        COMPARE_SYMBOL, comparison.symbol,
                        LIST_NAME, comparedType.getListName());

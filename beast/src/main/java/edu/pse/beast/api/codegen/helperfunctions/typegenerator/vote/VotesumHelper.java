@@ -35,7 +35,7 @@ public class VotesumHelper {
                                       final Class<?> c) {
         final Map<String, String> replaceMap =
                 Map.of(GENERATED_VAR, generatedVarName,
-                       AMOUNT_MEMBER, voteAccess.voteStruct.getAmtName(),
+                       AMOUNT_MEMBER, voteAccess.voteStruct.getAmountName(),
                        LIST_MEMBER, voteAccess.voteStruct.getListName(),
                        CANDIDATE_VAR, voteAccess.voteIndex,
                        AMOUNT_VOTERS, options.getCbmcAmountMaxVotersVarName(),

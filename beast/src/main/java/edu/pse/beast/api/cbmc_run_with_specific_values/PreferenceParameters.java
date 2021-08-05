@@ -91,7 +91,7 @@ public class PreferenceParameters implements VotingParameters {
                 .replaceAll(VOTE_STRUCT_TYPE, voteInputStruct.getStruct().getName())
                 .replaceAll(VOTE_VAR_NAME, generatedVarName)
                 .replaceAll(VOTE_VAR_NAME, generatedVarName)
-                .replaceAll(AMOUNT_MEMBER, voteInputStruct.getAmtName())
+                .replaceAll(AMOUNT_MEMBER, voteInputStruct.getAmountName())
                 .replaceAll(AMOUNT_VOTERS, String.valueOf(v));
         code.add(declString);
 

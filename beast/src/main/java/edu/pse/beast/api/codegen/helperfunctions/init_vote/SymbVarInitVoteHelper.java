@@ -56,7 +56,7 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
                         CURRENT_AMOUNT_CAND, currentAmtCandVarName,
                         CURRENT_AMOUNT_SEAT, currentAmtSeatVarName,
                         VOTE_TYPE, voteArrStruct.getStruct().getName(),
-                        AMOUNT_MEMBER, voteArrStruct.getAmtName(),
+                        AMOUNT_MEMBER, voteArrStruct.getAmountName(),
                         VOTE_NUMBER, String.valueOf(voteNumber),
                         LIST_MEMBER, voteArrStruct.getListName(),
                         VAR_NAME, varName,

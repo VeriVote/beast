@@ -40,7 +40,7 @@ public class VotePermutationHelper {
                                       final Class<?> c) {
         final Map<String, String> replacementMap =
                 Map.of(VOTE_TYPE, voteArrStruct.getStruct().getName(),
-                       AMOUNT_MEMBER, voteArrStruct.getAmtName(),
+                       AMOUNT_MEMBER, voteArrStruct.getAmountName(),
                        LIST_MEMBER, voteArrStruct.getListName(),
                        GENERATED_VAR_NAME, generatedVarName,
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),

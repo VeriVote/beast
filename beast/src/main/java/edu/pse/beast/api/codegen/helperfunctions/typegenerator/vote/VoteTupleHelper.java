@@ -45,17 +45,17 @@ public class VoteTupleHelper {
             voteAmtSum +=
                     CodeTemplateVoteTuple.getTemplate(AMOUNT_FILE_KEY, c)
                     .replaceAll(CURRENT_VOTE, voteNames.get(i))
-                    .replace(AMOUNT_MEMBER, voteArrStruct.getAmtName())
+                    .replace(AMOUNT_MEMBER, voteArrStruct.getAmountName())
                     + PLUS;
         }
         voteAmtSum +=
                 CodeTemplateVoteTuple.getTemplate(AMOUNT_FILE_KEY, c)
                 .replaceAll(CURRENT_VOTE, voteNames.get(voteNames.size() - 1))
-                .replace(AMOUNT_MEMBER, voteArrStruct.getAmtName());
+                .replace(AMOUNT_MEMBER, voteArrStruct.getAmountName());
 
         final Map<String, String> replacementMap =
                 Map.of(VOTE_AMOUNT_SUM, voteAmtSum,
-                       AMOUNT_MEMBER, voteArrStruct.getAmtName(),
+                       AMOUNT_MEMBER, voteArrStruct.getAmountName(),
                        LIST_MEMBER, voteArrStruct.getListName(),
                        NONDET_UINT, options.getCbmcNondetUintName(),
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),

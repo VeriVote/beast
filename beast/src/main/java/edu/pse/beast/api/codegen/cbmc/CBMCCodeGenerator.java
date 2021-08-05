@@ -151,9 +151,9 @@ public class CBMCCodeGenerator {
                                              propDescr.getCbmcVariables());
 
         final CBMCGeneratedCodeInfo cbmcGeneratedCode = new CBMCGeneratedCodeInfo();
-        cbmcGeneratedCode.setVotesAmtMemberVarName(voteInputStruct.getAmtName());
+        cbmcGeneratedCode.setVotesAmtMemberVarName(voteInputStruct.getAmountName());
         cbmcGeneratedCode.setVotesListMemberVarName(voteInputStruct.getListName());
-        cbmcGeneratedCode.setResultAmtMemberVarName(voteResultStruct.getAmtName());
+        cbmcGeneratedCode.setResultAmtMemberVarName(voteResultStruct.getAmountName());
         cbmcGeneratedCode.setResultListMemberVarName(voteResultStruct.getListName());
 
         final CFunction.PropertyExpressions expressions =

@@ -160,7 +160,6 @@ public class CBMCJsonResultExampleExtractor {
         final JSONArray outputArr = CBMCJsonHelper.rawOutputToJSON(rawOutput);
         if (outputArr != null) {
             parseOutputJSONArr(outputArr);
-
             cbmcFoundExample = FAILURE.equals(cProverStatus);
             if (cbmcFoundExample) {
                 generatedExample = new CBMCCounterExample(cbmcGeneratedCodeInfo);

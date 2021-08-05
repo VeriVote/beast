@@ -86,7 +86,7 @@ public class VoteIntersectionHelper {
         final Map<String, String> replacementMap =
                 Map.of(COMPARE_VARS, comparison,
                        VOTE_TYPE, voteArrStruct.getStruct().getName(),
-                       AMOUNT_MEMBER, voteArrStruct.getAmtName(),
+                       AMOUNT_MEMBER, voteArrStruct.getAmountName(),
                        LIST_MEMBER, voteArrStruct.getListName(),
                        GENERATED_VAR_NAME, generatedVarName,
                        LHS_VAR_NAME, intersectedVotesVarNames.get(0),

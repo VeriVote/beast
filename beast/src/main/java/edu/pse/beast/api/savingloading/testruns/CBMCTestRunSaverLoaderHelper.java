@@ -122,7 +122,8 @@ public class CBMCTestRunSaverLoaderHelper {
                                        final RelativePathConverter pathHandler) {
         final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
         for (int i = 0; i < arr.length(); ++i) {
-            runs.add(cbmcTestRunFromJSON(arr.getJSONObject(i), descr, propDescr, tc, pathHandler));
+            final JSONObject jsonObject = arr.getJSONObject(i);
+            runs.add(cbmcTestRunFromJSON(jsonObject, descr, propDescr, tc, pathHandler));
         }
         return runs;
     }
