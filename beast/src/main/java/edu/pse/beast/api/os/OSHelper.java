@@ -1,5 +1,11 @@
 package edu.pse.beast.api.os;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class OSHelper {
     public static OS getOS() {
         final String osName = System.getProperty("os.name");

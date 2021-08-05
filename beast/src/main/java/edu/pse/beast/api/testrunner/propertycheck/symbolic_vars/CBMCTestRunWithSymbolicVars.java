@@ -287,7 +287,7 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
                 status = UNSAT;
             }
         }
-        return status;
+        return status.substring(0, 1) + status.toLowerCase().substring(1);
     }
 
     final CBMCCounterExample getGeneratedExample() {

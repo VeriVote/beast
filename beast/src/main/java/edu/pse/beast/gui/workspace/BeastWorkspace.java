@@ -43,6 +43,12 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfigurationList;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class BeastWorkspace {
     private static final String ASSUME = "assume";
     private static final String ASSERT = "assert";

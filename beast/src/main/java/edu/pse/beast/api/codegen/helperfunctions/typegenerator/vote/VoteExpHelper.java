@@ -6,6 +6,12 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VoteExpHelper {
     private static final String DOT = ".";
     private static final String ACC = "--ACC--";

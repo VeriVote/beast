@@ -14,12 +14,18 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.paths.PathHandler;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCCodeFileGenerator {
     private static final String TMP_PREFIX = "gen_";
     private static final String DOT_C = ".c";
 
     /** The Constant PATH_TO_TEMP_FOLDER. */
-    private static final String PATH_TO_TEMP_FOLDER = "/cbmc_generated_files/";
+    private static final String PATH_TO_TEMP_FOLDER = "/core/generated_c_files/";
 
     public static CBMCCodeFileData
                 createCodeFileTest(final CElectionDescription descr,

@@ -117,6 +117,12 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
     private static final Map<String, String> TEMPLATES =
             new LinkedHashMap<String, String>();
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public enum Mode {
         ASSUME, ASSERT
     }

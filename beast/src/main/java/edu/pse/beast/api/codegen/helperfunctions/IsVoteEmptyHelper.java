@@ -8,6 +8,12 @@ import edu.pse.beast.api.codegen.code_template.templates.vote.CodeTemplateVoteEm
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class IsVoteEmptyHelper {
     private static final String GENERATED_VAR = "GENERATED_VAR";
     private static final String TESTED_VAR = "TESTED_VAR";

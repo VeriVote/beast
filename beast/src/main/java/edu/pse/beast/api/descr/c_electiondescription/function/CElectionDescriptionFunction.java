@@ -9,6 +9,12 @@ import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public abstract class CElectionDescriptionFunction {
     private static final String LINE_BREAK = "\n";
 

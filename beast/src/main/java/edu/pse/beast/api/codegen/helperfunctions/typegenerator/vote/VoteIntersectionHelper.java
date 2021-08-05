@@ -11,6 +11,12 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VoteIntersectionHelper {
     private static final String DOT = ".";
     private static final String ARR_CLOSE = "]";

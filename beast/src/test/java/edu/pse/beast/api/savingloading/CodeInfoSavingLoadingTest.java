@@ -6,6 +6,12 @@ import org.junit.Test;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoaderHelper;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeInfoSavingLoadingTest {
     private static final String VOTE1 = "vote1";
     private static final String VOTE2 = "vote2";

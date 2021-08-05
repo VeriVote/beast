@@ -31,19 +31,29 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpdateListener {
+    private static final String STATE_TEXT = "State: ";
     private static final String LINE_BREAK = "\n";
     private static final double MIN_FONT_SIZE = 4.0;
     private static final double MAX_FONT_SIZE = 30.0;
     private static final int DEFAULT_FONT_SIZE = 12;
 
-    private static final String RUN_OUT_OF_DATE = "Run out of date, has changes";
-    private static final String SHOW_LOGS = "show logs";
-    private static final String CBMC_MESSAGES = "CBMC messages";
-    private static final String DELETE = "delete";
-    private static final String PUT_RUN_ON_QUEUE = "put run on queue";
-    private static final String STOP = "stop";
-    private static final String SHOW_GENERATED_EXAMPLE = "show generated example";
+    private static final String RUN_OUT_OF_DATE = "Has Changes";
+    private static final String SHOW_LOGS = "Show Logs";
+    private static final String CBMC_MESSAGES = "CBMC Messages";
+    private static final String DELETE = "Delete";
+    private static final String PUT_RUN_ON_QUEUE = "Put Run on Queue";
+    private static final String STOP = "Stop";
+    private static final String SHOW_GENERATED_EXAMPLE = "Show Generated Example";
+
+    private static final String COUNTER_EXAMPLE_FXML =
+            "/edu/pse/beast/cbmcCounterExampleGui.fxml";
 
     @FXML
     private AnchorPane topLevelAnchorPane;
@@ -74,9 +84,8 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
 
     private CounterExampleGuiController counterExampleGuiController =
             new CounterExampleGuiController();
-    private final String counterExampleFXML = "/edu/pse/beast/cbmcCounterExampleGui.fxml";
     final FXMLLoader counterExampleLoader =
-            new FXMLLoader(getClass().getResource(counterExampleFXML));
+            new FXMLLoader(getClass().getResource(COUNTER_EXAMPLE_FXML));
 
     public CBMCTestRunGuiController(final BeastWorkspace workspace,
                                     final TreeView<TestConfigTreeItemSuper> configTreeView)
@@ -106,7 +115,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
 
         final WorkUnitState state = testRun.getState();
         hBox.getChildren().clear();
-        workUnitStateLabel.setText("state: " + testRun.getStatusString());
+        workUnitStateLabel.setText(STATE_TEXT + testRun.getStatusString() + " ");
         hBox.getChildren().add(workUnitStateLabel);
 
         if (testRun.isDescrChanged() || testRun.isPropDescrChanged()) {
@@ -191,7 +200,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
                 break;
             case ON_QUEUE:
                 break;
-            case WORKED_ON:
+            case RUNNING:
                 final Button stopCBMCButton = new Button(STOP);
                 stopCBMCButton.setOnAction(e -> {
                     beastWorkspace.stopRun(run);

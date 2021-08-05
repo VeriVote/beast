@@ -2,8 +2,13 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class BooleanExpListElementNode extends BooleanExpressionNode {
-
     private BooleanExpressionNode firstChild;
     private String completeCode;
 

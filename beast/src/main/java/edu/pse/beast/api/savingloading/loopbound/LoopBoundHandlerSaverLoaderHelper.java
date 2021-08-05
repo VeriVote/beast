@@ -8,6 +8,12 @@ import org.json.JSONObject;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class LoopBoundHandlerSaverLoaderHelper {
     private static final String LOOP_BOUND_LIST_KEY = "loop_bound_list";
 

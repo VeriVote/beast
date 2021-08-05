@@ -21,6 +21,12 @@ import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithS
 import edu.pse.beast.api.testrunner.threadpool.WorkUnitState;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCTestRunSaverLoaderHelper {
     private static final String CBMC_CODE_FILE_DATA_KEY = "cbmc_code_file";
 

@@ -3,6 +3,12 @@ package edu.pse.beast.api.codegen.c_code;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CFile {
     private static final String LINE_BREAK = "\n";
     private static final String SEMICOLON = ";";

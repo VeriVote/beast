@@ -5,6 +5,12 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class JSONHelper {
     public static JSONObject stringStringMapToJSON(final Map<String, String> map) {
         return new JSONObject(map);

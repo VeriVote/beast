@@ -23,6 +23,12 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestAddsSimpleDecl {
     private static final String VOTING = "voting";
     private static final String BORDA = "borda";

@@ -1,5 +1,11 @@
 package edu.pse.beast.api.descr.c_electiondescription;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public enum VotingInputTypes {
 
     /*

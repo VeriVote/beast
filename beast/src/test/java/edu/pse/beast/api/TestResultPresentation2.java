@@ -17,6 +17,12 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCJsonResultExampleExtractor;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestResultPresentation2 {
     private static final String LINE_BREAK = "\n";
 

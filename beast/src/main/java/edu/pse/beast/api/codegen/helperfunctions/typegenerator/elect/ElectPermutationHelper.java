@@ -11,6 +11,12 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ElectPermutationHelper {
     private static final String ELECT_TYPE = "ELECT_TYPE";
     private static final String AMOUNT_MEMBER = "AMT_MEMBER";

@@ -7,6 +7,12 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonMessage;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public interface CBMCTestCallback {
 
     default void onTestStarted() {
@@ -71,6 +77,12 @@ public interface CBMCTestCallback {
                                        BoundValues bounds, String uuid) {
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     class BoundValues {
         public final int candidates;
         public final int seats;

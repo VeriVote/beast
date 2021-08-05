@@ -9,6 +9,12 @@ import org.json.JSONObject;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class LoopBoundSaverLoaderHelper {
     private static final String LOOP_BOUND_TYPE_KEY = "loop_bound_type";
     private static final String INDEX_KEY = "index";

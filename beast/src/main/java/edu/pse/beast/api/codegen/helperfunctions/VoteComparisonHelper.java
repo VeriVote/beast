@@ -10,6 +10,12 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VoteComparisonHelper {
     private static final String GENERATED_VAR_NAME = "GENERATED_VAR";
     private static final String LHS_VAR_NAME = "LHS_VAR";
@@ -46,6 +52,12 @@ public class VoteComparisonHelper {
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static class Comparison {
         public final String symbol;
         public final String lhsVarName;

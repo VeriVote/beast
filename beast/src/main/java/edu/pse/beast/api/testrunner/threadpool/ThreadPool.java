@@ -3,6 +3,12 @@ package edu.pse.beast.api.testrunner.threadpool;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ThreadPool {
     private static final String THREAD_NAME_PREFIX = "Runner_";
     private static final int DEFAULT_TIMEOUT = 100;

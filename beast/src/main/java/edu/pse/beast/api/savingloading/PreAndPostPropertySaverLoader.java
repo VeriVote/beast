@@ -13,6 +13,12 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.descr.property_description.FormalPropertiesDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class PreAndPostPropertySaverLoader {
     private static final int CURRENT_VERSION = 1;
 

@@ -4,6 +4,12 @@ import java.io.File;
 
 import edu.pse.beast.api.savingloading.RelativePathConverter;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class PathHandler implements RelativePathConverter {
     private static final String REL_PATH_TO_SAVE_FILES = "./saveFiles/";
 

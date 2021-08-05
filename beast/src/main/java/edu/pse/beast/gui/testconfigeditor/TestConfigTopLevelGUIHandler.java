@@ -24,6 +24,12 @@ import edu.pse.beast.gui.testconfigeditor.treeview.runs.TestRunCBMCTreeItem;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
     private static final String ELECTION_DESCRIPTION = "Election Description";
     private static final String PROPERTY_DESCRIPTION = "Property Description";

@@ -1,5 +1,11 @@
 package edu.pse.beast.api.codegen.c_code;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CInclude {
     private static final String BLANK = " ";
     private static final String ANGLE_LEFT = "<";

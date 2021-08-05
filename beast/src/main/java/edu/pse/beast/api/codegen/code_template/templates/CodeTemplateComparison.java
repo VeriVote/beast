@@ -10,6 +10,12 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.NotImplementedException;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeTemplateComparison {
     private static final String RESOURCES = "/edu/pse/beast/api/codegen/code_template/templates/";
     private static final String FILE_ENDING = ".template";

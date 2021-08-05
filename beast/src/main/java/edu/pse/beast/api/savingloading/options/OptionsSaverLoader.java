@@ -15,6 +15,12 @@ import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
 import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class OptionsSaverLoader {
     private static final String PROCESS_HANDLER_WINDOWS_KEY = "process_handler_windows";
     private static final String PATH_TO_VS_DEV_CMD_KEY = "path_to_vs_dev_cmd";

@@ -3,6 +3,12 @@ package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCStructAssignment {
     private CBMCAssignmentType assignmentType;
     private String structName;

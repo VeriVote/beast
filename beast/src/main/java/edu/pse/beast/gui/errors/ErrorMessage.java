@@ -1,5 +1,11 @@
 package edu.pse.beast.gui.errors;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ErrorMessage {
     private String title;
     private String msg;

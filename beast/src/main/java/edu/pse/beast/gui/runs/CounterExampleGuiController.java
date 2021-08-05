@@ -20,6 +20,12 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CB
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCCounterExample;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples.CBMCStructAssignment;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CounterExampleGuiController {
     private static final String BLANK = " ";
     private static final String LINE_BREAK = "\n";

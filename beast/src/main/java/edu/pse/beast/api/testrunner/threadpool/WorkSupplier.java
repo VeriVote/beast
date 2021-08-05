@@ -3,6 +3,12 @@ package edu.pse.beast.api.testrunner.threadpool;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class WorkSupplier {
     private List<WorkUnit> newWorkUnits = new ArrayList<>();
 

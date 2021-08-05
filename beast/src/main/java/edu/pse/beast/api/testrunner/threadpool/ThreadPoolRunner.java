@@ -1,5 +1,11 @@
 package edu.pse.beast.api.testrunner.threadpool;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ThreadPoolRunner implements Runnable {
     private static final int DEFAULT_WATING_TIME = 200;
 

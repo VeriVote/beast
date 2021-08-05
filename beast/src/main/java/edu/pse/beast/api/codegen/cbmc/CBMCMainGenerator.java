@@ -159,7 +159,7 @@ public class CBMCMainGenerator {
             code.add(PerformVoteHelper.generateCode(i, votingFunction.votes,
                                                     votingFunction.result, options,
                                                     votingFunction.function,
-                                                    cbmcGeneratedCode));
+                                                    cbmcGeneratedCode, c));
         }
 
         // postconditions

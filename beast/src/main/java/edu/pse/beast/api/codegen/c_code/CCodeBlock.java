@@ -3,6 +3,12 @@ package edu.pse.beast.api.codegen.c_code;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CCodeBlock {
     private static final String BLANK = " ";
     private static final String LINE_BREAK = "\n";
@@ -30,7 +36,7 @@ public class CCodeBlock {
 
     public final String generateCode() {
         return BRACE_OP + LINE_BREAK
-                + String.join(LINE_BREAK, code)
+                + String.join(LINE_BREAK, CFunction.indent(code))
                 + LINE_BREAK + BRACE_CL + LINE_BREAK;
     }
 

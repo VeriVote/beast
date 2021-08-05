@@ -16,6 +16,12 @@ import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class SimpleTypeFunction extends CElectionDescriptionFunction {
     private static final String RESOURCES =
             "/edu/pse/beast/api/descr/c_electiondescription/function/";

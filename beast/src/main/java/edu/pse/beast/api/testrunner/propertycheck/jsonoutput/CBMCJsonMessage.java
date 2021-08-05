@@ -1,5 +1,11 @@
 package edu.pse.beast.api.testrunner.propertycheck.jsonoutput;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCJsonMessage {
     private String type;
     private String msg;

@@ -15,6 +15,12 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCTestConfigGuiController {
     private static final int MIN_SPIN = 0;
     private static final int MAX_SPIN = 500;

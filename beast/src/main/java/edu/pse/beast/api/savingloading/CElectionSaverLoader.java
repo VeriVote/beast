@@ -19,6 +19,12 @@ import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction
 import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
 import edu.pse.beast.api.savingloading.loopbound.ExtractedCLoopSaverLoaderHelper;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CElectionSaverLoader {
     private static final int CURRENT_VERSION = 1;
 

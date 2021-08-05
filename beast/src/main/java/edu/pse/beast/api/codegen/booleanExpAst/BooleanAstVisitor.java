@@ -23,8 +23,13 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteS
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbVarByPosExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public interface BooleanAstVisitor {
-
     /*
      *
      * Nodes returning a boolean value

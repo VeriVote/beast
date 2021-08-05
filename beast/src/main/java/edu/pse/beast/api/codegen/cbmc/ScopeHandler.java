@@ -4,6 +4,12 @@ import java.util.Stack;
 
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ScopeHandler {
     private Stack<Scope> scopes = new Stack<>();
 

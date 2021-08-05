@@ -1,5 +1,11 @@
 package edu.pse.beast.gui.errors;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class BeastError {
     private Exception exception;
     private String other;

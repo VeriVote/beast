@@ -12,6 +12,12 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ComparisonHelper {
     private static final String AMOUNT = "AMT";
     private static final String ASSUME_OR_ASSERT = "ASSUME_OR_ASSERT";
@@ -61,6 +67,12 @@ public class ComparisonHelper {
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static class Comparison {
         public final String symbol;
         public final String lhsVarName;

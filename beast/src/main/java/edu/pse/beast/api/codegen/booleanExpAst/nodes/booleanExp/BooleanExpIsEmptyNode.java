@@ -3,6 +3,12 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class BooleanExpIsEmptyNode extends BooleanExpressionNode {
     private TypeExpression innerNode;
 

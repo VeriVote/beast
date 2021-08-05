@@ -10,7 +10,14 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CFunction {
+    private static final String NONE = "";
     private static final String BLANK = " ";
     private static final String INDENT = BLANK + BLANK + BLANK + BLANK;
     private static final String LINE_BREAK = "\n";
@@ -34,12 +41,12 @@ public class CFunction {
         for (final String s : argumentList) {
             final String[] typeAndName = s.split(BLANK);
             final String argName = typeAndName[typeAndName.length - 1];
-            String argType = "";
+            String argType = NONE;
             for (int i = 0; i < typeAndName.length - 1; ++i) {
                 argType += typeAndName[i];
-                argType += i < typeAndName.length - 2 ? BLANK : "";
+                argType += i < typeAndName.length - 2 ? BLANK : NONE;
             }
-            this.arguments.add(new CTypeNameBrackets(argType, argName, ""));
+            this.arguments.add(new CTypeNameBrackets(argType, argName, NONE));
         }
         this.returnType = returnTypeString;
     }
@@ -52,19 +59,28 @@ public class CFunction {
         this.returnType = returnTypeString;
     }
 
-    public static List<String> indent(final List<String> list) {
-        final List<String> indentedList = new ArrayList<String>();
+    public static List<String> sanitize(final List<String> list) {
         if (list != null && !list.isEmpty()) {
             final String fst = list.get(0);
             final int strip = fst != null ? fst.length() - fst.stripLeading().length() : 0;
             if (0 < strip) {
                 // first sanitize (assuming relative indentations are okay) in case
                 // the code has already been indented
-                list.replaceAll(c -> c.substring(strip));
+                list.replaceAll(c -> c.substring(strip < c.length() ? strip : 0));
             }
-            list.forEach(c
+        }
+        return list;
+    }
+
+    public static List<String> indent(final List<String> list) {
+        final List<String> indentedList = new ArrayList<String>();
+        final List<String> sanitizedList = sanitize(list);
+        if (sanitizedList != null && !sanitizedList.isEmpty()) {
+            sanitizedList.forEach(c
                     -> indentedList.add(
-                            INDENT.concat(c.replaceAll(LINE_BREAK, LINE_BREAK + INDENT))
+                            c.replaceAll(LINE_BREAK, NONE).isBlank()
+                            ? (c.contains(LINE_BREAK) ? LINE_BREAK : NONE)
+                                    : INDENT.concat(c.replaceAll(LINE_BREAK, LINE_BREAK + INDENT))
                             )
             );
         }
@@ -95,6 +111,12 @@ public class CFunction {
         return signature() + SEMICOLON;
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class PropertyExpressions {
         public final BooleanExpASTData preAstData;
         public final BooleanExpASTData postAstData;
@@ -109,6 +131,12 @@ public class CFunction {
         }
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class VotingFunction {
         public final ElectionTypeCStruct votes;
         public final ElectionTypeCStruct result;
@@ -129,6 +157,12 @@ public class CFunction {
         }
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class Input {
         public final VotingInputTypes type;
         public final ElectionTypeCStruct struct;
@@ -143,6 +177,12 @@ public class CFunction {
         }
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class Output {
         public final VotingOutputTypes type;
         public final ElectionTypeCStruct struct;

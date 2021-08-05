@@ -17,6 +17,12 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VotingSigFunction extends CElectionDescriptionFunction {
     private static final String RESOURCES =
             "/edu/pse/beast/api/descr/c_electiondescription/function/";

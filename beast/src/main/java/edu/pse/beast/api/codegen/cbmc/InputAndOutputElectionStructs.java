@@ -1,5 +1,11 @@
 package edu.pse.beast.api.codegen.cbmc;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class InputAndOutputElectionStructs {
     private ElectionTypeCStruct input;
     private ElectionTypeCStruct output;

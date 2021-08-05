@@ -23,6 +23,12 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class WorkspaceSaverLoaderTest {
     private static final String BLANK = " ";
 

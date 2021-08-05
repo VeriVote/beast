@@ -21,6 +21,12 @@ import org.apache.commons.lang3.NotImplementedException;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CAntlrTreeMainClass {
     private static final String RESOURCES = "/edu/pse/beast/antlrtree/";
     private static final String FILE_KEY = "LOOP";

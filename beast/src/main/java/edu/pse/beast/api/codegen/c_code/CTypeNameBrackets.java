@@ -1,5 +1,11 @@
 package edu.pse.beast.api.codegen.c_code;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CTypeNameBrackets {
     private static final String BLANK = " ";
 

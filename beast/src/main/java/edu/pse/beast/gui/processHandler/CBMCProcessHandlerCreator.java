@@ -14,6 +14,12 @@ import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMC
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerSource;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCProcessHandlerWindows;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 
     private static final String VS_DEV_COMMAND_FILE = "vsDevCmd.bat";

@@ -8,6 +8,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ErrorGuiController {
     @FXML
     private AnchorPane topLevelAnchorPane;

@@ -8,6 +8,12 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.RelativePathConverter;
 import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCCodeFileDataSaverLoaderHelper {
 
     private static final String CBMC_GENERATED_CODE_INFO_KEY =

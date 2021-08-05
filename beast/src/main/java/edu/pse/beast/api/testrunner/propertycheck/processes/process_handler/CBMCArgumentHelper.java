@@ -5,11 +5,22 @@ import java.util.List;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCArgumentHelper {
     private static final String EMPTY = "";
     private static final String BLANK = " ";
     private static final String PREPROC_FLAG = "-D ";
     private static final String SET = "=";
+    private static final String JSON_UI = "--json-ui ";
+
+    public static String getJsonOutputCommand() {
+        return BLANK + JSON_UI;
+    }
 
     public static List<String> getConstCommandList(final CodeGenOptions codeGenOptions,
                                                    final int v, final int c, final int s) {

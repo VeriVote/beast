@@ -5,6 +5,12 @@ import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ElectionTypeCStruct {
     private static final String NONE = "";
     private static final String AMOUNT = "AMT";

@@ -7,8 +7,13 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class SpecificValueInitVoteHelper extends InitVoteHelper {
-
     private VotingParameters votingParameters;
 
     public SpecificValueInitVoteHelper(final VotingParameters votingParams) {

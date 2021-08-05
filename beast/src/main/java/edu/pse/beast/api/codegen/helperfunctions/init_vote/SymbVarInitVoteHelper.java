@@ -13,6 +13,12 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class SymbVarInitVoteHelper extends InitVoteHelper {
     private static final String MAX_AMOUNT_CAND = "MAX_AMT_CAND";
     private static final String MAX_AMOUNT_VOTER = "MAX_AMT_VOTER";

@@ -10,8 +10,13 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestConfigGuiController {
-
     @FXML
     private AnchorPane topLevelAnchorPane;
     @FXML

@@ -119,7 +119,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
     @Override
     public final void doWork() {
         if (processStarterSource.hasProcessHandler()) {
-            state = WorkUnitState.WORKED_ON;
+            state = WorkUnitState.RUNNING;
             final BoundValues bounds = new BoundValues(candidateAmount, seatAmount, voterAmount);
             callBack.onPropertyTestStart(description, propertyDescription,
                                          bounds, uuid);
@@ -199,6 +199,12 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
         process.destroyForcibly();
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class ElectionAndProperty {
         final CElectionDescription election;
         final PreAndPostConditionsDescription property;

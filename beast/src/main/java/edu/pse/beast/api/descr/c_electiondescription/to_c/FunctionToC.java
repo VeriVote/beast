@@ -4,6 +4,12 @@ import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.TypeManager;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class FunctionToC {
     public static CTypeNameBrackets votingTypeToC(final CElectionVotingType type,
                                                   final String name, final String v,

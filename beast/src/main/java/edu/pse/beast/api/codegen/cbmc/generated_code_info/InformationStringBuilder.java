@@ -1,5 +1,11 @@
 package edu.pse.beast.api.codegen.cbmc.generated_code_info;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class InformationStringBuilder {
     private static final String INFO_STRING = "These are the ";
     private static final String FOR_STRING = " for vote number ";

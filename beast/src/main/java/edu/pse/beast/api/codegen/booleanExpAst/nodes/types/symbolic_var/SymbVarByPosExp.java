@@ -3,8 +3,13 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var;
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class SymbVarByPosExp extends SymbolicCBMCVarExp {
-
     private CBMCVarType variableType;
     private int accessingNumber;
 

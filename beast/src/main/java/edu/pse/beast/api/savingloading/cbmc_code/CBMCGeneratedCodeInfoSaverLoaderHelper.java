@@ -11,6 +11,12 @@ import org.json.JSONObject;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.savingloading.JSONHelper;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCGeneratedCodeInfoSaverLoaderHelper {
     private static final String CODE_KEY = "code";
     private static final String VOTE_VAR_NAME_TO_VOTE_NUMBER_KEY = "vote_number_to_variable_name";

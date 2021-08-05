@@ -11,16 +11,24 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class DialogHelper {
     private static final int LEFT_COLUMN = 0;
     private static final int RIGHT_COLUMN = 1;
     private static final int DEFAULT_DIALOG_SIZE = 10;
     private static final String OK = "OK";
 
-    public static Dialog<ButtonType> generateDialog(final List<String> inputNames,
+    public static Dialog<ButtonType> generateDialog(final String title,
+                                                    final List<String> inputNames,
                                                     final List<Node> inputs) {
         final Point position = MouseInfo.getPointerInfo().getLocation();
         final Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle(title);
         dialog.setX(position.getX());
         dialog.setY(position.getY());
         final ButtonType buttonType = new ButtonType(OK, ButtonData.OK_DONE);

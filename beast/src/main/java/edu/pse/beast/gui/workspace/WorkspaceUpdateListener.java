@@ -12,6 +12,12 @@ import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithS
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public interface WorkspaceUpdateListener {
     default void handleWorkspaceUpdateGeneric() {
     }

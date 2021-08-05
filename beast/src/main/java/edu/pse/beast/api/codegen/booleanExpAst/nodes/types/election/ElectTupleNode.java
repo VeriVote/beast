@@ -5,6 +5,12 @@ import java.util.List;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ElectTupleNode extends ElectionTypeNode {
     private List<Integer> electNumbers = new ArrayList<>();
 

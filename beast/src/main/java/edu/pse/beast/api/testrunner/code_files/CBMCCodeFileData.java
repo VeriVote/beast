@@ -4,6 +4,12 @@ import java.io.File;
 
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCCodeFileData {
     private File f;
     private CBMCGeneratedCodeInfo codeInfo;

@@ -11,8 +11,13 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonHelper;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCJsonResultExampleExtractor {
-
     private static final String CBMC_JSON_RESULT_KEY = "result";
     private static final String CBMC_JSON_TRACE_KEY = "trace";
     private static final String CBMC_CPROVER_STATUS_KEY = "cProverStatus";

@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeGenLoopBoundHandler {
     private static final String EMPTY = "";
     private static final String BLANK = " ";

@@ -16,6 +16,12 @@ import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithS
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestConfigurationList implements WorkspaceUpdateListener {
     private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr =
             new HashMap<>();

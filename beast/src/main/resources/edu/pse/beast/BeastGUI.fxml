@@ -18,15 +18,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane fx:id="topLeveLTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+      <TabPane fx:id="topLeveLTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
         <tabs>
           <Tab fx:id="election" text="Election Editor">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="496.0">
                      <children>
-                        <SplitPane dividerPositions="0.8391304347826087" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.7091304347826087" prefHeight="160.0" prefWidth="460.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0">
                                  <children>
@@ -38,20 +38,21 @@
                                     <Button fx:id="saveElectionDescriptionButton" layoutX="396.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="396.0" AnchorPane.topAnchor="5.0" />
                                     <Button fx:id="editDescrButton" layoutX="445.0" layoutY="5.0" mnemonicParsing="false" text="Edit" AnchorPane.leftAnchor="445.0" AnchorPane.topAnchor="5.0" />
                                     <Button fx:id="deleteDescrButton" layoutX="491.0" layoutY="5.0" mnemonicParsing="false" text="Delete" AnchorPane.leftAnchor="491.0" />
-                                 </children></AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 </children>
+                            </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="200.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                                              <children>
                                                 <ListView fx:id="loopBoundList" prefHeight="180.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
                                                 <Button fx:id="testLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="Compute" AnchorPane.bottomAnchor="5.0" />
                                                 <Label text="Loop Bounds" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                <Button fx:id="editLoopboundButton" layoutX="62.0" layoutY="175.0" mnemonicParsing="false" text="Edit" AnchorPane.bottomAnchor="5.0" />
+                                                <Button fx:id="editLoopboundButton" layoutX="102.0" layoutY="175.0" mnemonicParsing="false" text="Edit" AnchorPane.bottomAnchor="5.0" />
                                              </children>
                                           </AnchorPane>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                                              <children>
                                                 <Button fx:id="removeFunctionButton" layoutX="101.0" layoutY="162.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                                 <ListView fx:id="functionList" prefHeight="171.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
@@ -143,7 +144,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <SplitPane dividerPositions="0.30289855072463767" layoutX="118.0" layoutY="137.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <SplitPane dividerPositions="0.35289855072463767" layoutX="118.0" layoutY="137.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
@@ -154,7 +155,7 @@
                                                 <Insets right="5.0" top="5.0" />
                                              </padding>
                                           </Label>
-                                          <ChoiceBox fx:id="sortCriteriumChoiceBox" prefWidth="150.0">
+                                          <ChoiceBox fx:id="sortCriteriumChoiceBox" prefWidth="170.0">
                                              <HBox.margin>
                                                 <Insets right="5.0" />
                                              </HBox.margin></ChoiceBox>

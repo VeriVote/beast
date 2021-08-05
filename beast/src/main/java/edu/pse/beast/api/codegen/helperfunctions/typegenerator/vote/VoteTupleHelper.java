@@ -11,6 +11,12 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VoteTupleHelper {
     public static final String VAR_SETUP_FILE_KEY = "VAR_SETUP";
     public static final String AMOUNT_FILE_KEY = "AMOUNT";

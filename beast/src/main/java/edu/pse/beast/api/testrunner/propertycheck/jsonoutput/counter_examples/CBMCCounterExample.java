@@ -8,6 +8,12 @@ import java.util.Set;
 
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCCounterExample {
     private Map<String, CBMCStructAssignment> varNamesToAssignments = new HashMap<>();
 

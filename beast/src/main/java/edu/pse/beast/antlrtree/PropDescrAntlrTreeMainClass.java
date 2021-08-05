@@ -13,6 +13,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class PropDescrAntlrTreeMainClass {
     private static final String ANTLR_AST = "Antlr AST";
     private static final double SMALL_SCALE = 1.5;

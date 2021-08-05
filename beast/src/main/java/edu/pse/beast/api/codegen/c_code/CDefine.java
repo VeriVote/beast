@@ -1,5 +1,11 @@
 package edu.pse.beast.api.codegen.c_code;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CDefine {
     private static final String BLANK = " ";
     private static final String DEFINE = "#define";

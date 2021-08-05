@@ -5,6 +5,12 @@ import java.util.List;
 
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CreationHelper {
     public static List<PreAndPostConditionsDescription>
             createSimpleCondList(final String name,

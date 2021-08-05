@@ -9,6 +9,12 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.paths.PathHandler;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
     private static final String RELATIVE_PATH_TO_CBMC = "/linux/cbmcLin/cbmc";
 
@@ -20,6 +26,19 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
             }
         }
         return argList;
+    }
+
+    private static String argumentListToString(final List<String> arguments) {
+        String argument = "";
+        int a = 0;
+        for (final String arg: arguments) {
+            if (!argument.isEmpty() && a != arguments.size()) {
+                argument += " ";
+            }
+            argument += arg;
+            a++;
+        }
+        return argument;
     }
 
     @Override
@@ -45,10 +64,18 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
         args.add(cbmcProgFile);
         args.add(cbmcFile.getAbsolutePath());
         args = addToArguments(args, arguments);
+        args.add(CBMCArgumentHelper.getJsonOutputCommand());
         args = addToArguments(args, bounds);
-        final ProcessBuilder pb =
-                new ProcessBuilder(args.toArray(new String[0]));
-        return pb.start();
+        final String arg = argumentListToString(args);
+        final Process startedProcess =
+                Runtime.getRuntime().exec(arg, null,
+                                          new File(pathHandler.getBaseDir().getAbsolutePath()
+                                                  + RELATIVE_PATH_TO_CBMC)
+                                          .getParentFile());
+        return startedProcess;
+        // final ProcessBuilder pb = // ProcessBuilder produces problems
+        //         new ProcessBuilder(args.toArray(new String[0]));
+        // return pb.start();
     }
 
     @Override

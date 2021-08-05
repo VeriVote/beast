@@ -16,6 +16,12 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class PreferenceParameters implements VotingParameters {
     private static final String RESOURCES = "/edu/pse/beast/api/cbmc_run_with_specific_values/";
     private static final String FILE_ENDING = ".template";

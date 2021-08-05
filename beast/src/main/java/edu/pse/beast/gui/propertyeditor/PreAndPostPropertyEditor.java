@@ -18,8 +18,14 @@ import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
-    private static final String NAME = "name";
+    private static final String NAME = "Name:";
 
     private PropertyEditorCodeElement preConditionEditor;
     private PropertyEditorCodeElement postConditionEditor;
@@ -80,7 +86,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
             final TextField nameField = new TextField();
             final List<Node> nodes = List.of(nameField);
             final Optional<ButtonType> res =
-                    DialogHelper.generateDialog(names, nodes).showAndWait();
+                    DialogHelper.generateDialog("Add Property", names, nodes).showAndWait();
             if (res.isPresent()
                     && !res.get().getButtonData().isCancelButton()) {
                 final String name = nameField.getText();
@@ -108,7 +114,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
                 final TextField nameField = new TextField();
                 final List<Node> inputs = List.of(nameField);
                 final Optional<ButtonType> res =
-                        DialogHelper.generateDialog(names, inputs).showAndWait();
+                        DialogHelper.generateDialog("Init Variable", names, inputs).showAndWait();
                 if (res.isPresent()
                         && !res.get().getButtonData().isCancelButton()) {
                     final String name = nameField.getText();
@@ -224,6 +230,12 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
         beastWorkspace.savePropDescr(currentPropertyDescription);
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class Buttons {
         final Button addPropertyDescription;
         final Button loadPropertyDescription;

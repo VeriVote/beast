@@ -11,6 +11,12 @@ import edu.pse.beast.api.c_parser.CLoopTypes;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ExtractedCLoopSaverLoaderHelper {
     private static final String UUID_KEY = "uuid";
     private static final String LOOPTYPE_KEY = "looptype";

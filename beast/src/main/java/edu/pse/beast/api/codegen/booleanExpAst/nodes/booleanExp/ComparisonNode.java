@@ -10,6 +10,12 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.TypeExpression;
  */
 public class ComparisonNode extends BooleanExpressionNode {
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public enum ComparisonType {
         EQ, UNEQ, L, G, LEQ, GEQ
     }

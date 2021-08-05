@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class BeastWithGuiApplicationClass extends Application {
     private static final String TITLE = "BEAST";
     private static final String FXML_RESOURCE_NAME = "/edu/pse/beast/BeastGUI.fxml";

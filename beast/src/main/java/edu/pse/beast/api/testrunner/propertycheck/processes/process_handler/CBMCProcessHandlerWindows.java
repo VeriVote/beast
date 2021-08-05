@@ -10,8 +10,13 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.savingloading.SavingLoadingInterface;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
-    private static final String JSON_UI = "--json-ui ";
     private static final String BLANK = " ";
     private static final String PATH_SEP = "\"";
     private static final String WIN_SEP = "\\";
@@ -59,7 +64,8 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
         final String completeCommand = vsCmdPath + BLANK + AND + BLANK + PATH_SEP
                 + cbmcPath + PATH_SEP + BLANK + cbmcFile.getAbsolutePath() + BLANK
                 + CBMCArgumentHelper.getConstCommands(codeGenOptions, v, c, s)
-                + BLANK + JSON_UI + loopBounds.generateCBMCString(v, c, s);
+                + CBMCArgumentHelper.getJsonOutputCommand()
+                + loopBounds.generateCBMCString(v, c, s);
 
         final File batFile = new File(cbmcFile.getParent() + WIN_SEP
                 + cbmcFile.getName().replace(DOT_C, DOT_BAT));

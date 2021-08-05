@@ -7,8 +7,13 @@ import edu.pse.beast.api.codegen.c_code.CStruct;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TypeManager {
-
     private List<ElectionTypeCStruct> elecTypeCStructs = new ArrayList<>();
 
     public final CStruct getCStructForVotingType(final CElectionVotingType votingType) {

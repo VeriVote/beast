@@ -12,6 +12,12 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VotingFunctionHelper {
     private static final String RESULT_TYPE = "RESULT_TYPE";
     private static final String RESULT_VAR = "RESULT_VAR";
@@ -75,6 +81,12 @@ public class VotingFunctionHelper {
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class CNames {
         final String votingFunction;
         final String arrayVar;

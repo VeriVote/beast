@@ -21,6 +21,12 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.IterationStatementContext;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser.RelationalExpressionContext;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ExtractedCLoop {
     private static final String RESOURCES = "/edu/pse/beast/api/c_parser/";
     private static final String FILE_ENDING = ".template";
@@ -272,6 +278,12 @@ public class ExtractedCLoop {
         return cLoop;
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static final class Types {
         final CLoopTypes loop;
         final CLoopParseResultType parseResult;

@@ -1,5 +1,11 @@
 package edu.pse.beast.api.codegen.cbmc;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeGenOptions {
     private static final String MAX_AMOUNT_VOTERS = "MAX_AMT_VOTERS";
     private static final String MAX_AMOUNT_CANDIDATES = "MAX_AMT_CANDIDATES";

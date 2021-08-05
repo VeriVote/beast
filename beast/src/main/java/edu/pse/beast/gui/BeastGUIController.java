@@ -164,11 +164,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     @FXML
     private AnchorPane logAnchorPane;
 
-    @FXML
-    private Button loadWorkspaceButton;
-    @FXML
-    private Button saveWorkspaceButton;
-
     private CElectionEditor cElectionEditor;
 
     private BeastWorkspace beastWorkspace;
@@ -261,15 +256,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private void initWorkspace(final ErrorHandler errorHandler) {
         beastWorkspace = BeastWorkspace
                 .getStandardWorkspace(cbmcProcessHandlerCreator);
-
         beastWorkspace.setErrorHandler(errorHandler);
-
-        saveWorkspaceButton.setOnAction(e -> {
-            beastWorkspace.saveWorkspace();
-        });
-        loadWorkspaceButton.setOnAction(e -> {
-            beastWorkspace.letUserLoadWorkSpace();
-        });
     }
 
     private void initMenu() {

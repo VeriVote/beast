@@ -7,6 +7,12 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigCBMCTreeItem;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class TestConfigTreeViewHelper {
     public static TreeItem<TestConfigTreeItemSuper>
             getItem(final CBMCTestConfiguration config,

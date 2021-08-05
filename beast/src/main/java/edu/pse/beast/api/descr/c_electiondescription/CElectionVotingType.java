@@ -20,6 +20,12 @@ import java.util.List;
  * single cand int
  */
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CElectionVotingType {
     private int listDimensions;
     private CElectionSimpleTypes simpleType;

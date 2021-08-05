@@ -4,6 +4,12 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
 //TODO fix code generation bug with comparisons
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VotePermutationNode extends ElectionTypeNode {
     private int voteNumber;
 

@@ -23,6 +23,12 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCArgumentHelper;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeAndCBMCGen {
     private static final String VOTING = "voting";
     private static final String BORDA = "borda";

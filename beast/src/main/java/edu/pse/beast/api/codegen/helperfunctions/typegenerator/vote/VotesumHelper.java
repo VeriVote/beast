@@ -11,6 +11,12 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class VotesumHelper {
     private static final String GENERATED_VAR = "GENERATED_VAR";
     private static final String AMOUNT_MEMBER = "AMT_MEMBER";
@@ -43,6 +49,12 @@ public class VotesumHelper {
         return CodeGenerationToolbox.replacePlaceholders(code, replaceMap);
     }
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public static class VoteArrayAccess {
         public final ElectionTypeCStruct voteStruct;
         public final int voteNumber;

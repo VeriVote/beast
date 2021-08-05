@@ -3,6 +3,12 @@ package edu.pse.beast.api.codegen.c_code;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CForLoop {
     private CTypeNameBrackets counterVariables;
     private String stopCondition;

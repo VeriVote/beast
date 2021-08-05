@@ -12,6 +12,12 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.NotImplementedException;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class LoopBound {
     private static final String RESOURCES = "/edu/pse/beast/api/codegen/loopbounds/";
     private static final String FILE_KEY = "UNWIND";

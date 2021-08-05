@@ -2,6 +2,12 @@ package edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election;
 
 import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class ElectPermutationNode extends ElectionTypeNode {
     private int electNumber;
 

@@ -1,8 +1,20 @@
 package edu.pse.beast.api.codegen.cbmc;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class SymbolicCBMCVar {
     private static final String BLANK = " ";
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
     public enum CBMCVarType {
         CANDIDATE, VOTER, SEAT
     }

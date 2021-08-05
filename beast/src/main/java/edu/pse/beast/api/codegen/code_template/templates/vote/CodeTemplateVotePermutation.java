@@ -16,6 +16,12 @@ import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeTemplateVotePermutation {
     private static final String RESOURCES =
             "/edu/pse/beast/api/codegen/code_template/templates/vote/";

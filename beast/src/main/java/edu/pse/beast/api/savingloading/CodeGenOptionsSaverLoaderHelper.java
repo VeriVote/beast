@@ -4,6 +4,12 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CodeGenOptionsSaverLoaderHelper {
     private static final String AMT_VOTER_VAR_NAME_KEY = "amount_voter_var_name";
     private static final String AMT_CANDS_VAR_NAME_KEY = "amount_cands_var_name";

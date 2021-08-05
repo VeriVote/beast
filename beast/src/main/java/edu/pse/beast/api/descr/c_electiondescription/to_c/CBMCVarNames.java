@@ -2,6 +2,12 @@ package edu.pse.beast.api.descr.c_electiondescription.to_c;
 
 import edu.pse.beast.api.descr.c_electiondescription.CBMCVars;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCVarNames {
     public static String name(final CBMCVars var) {
         final String name;

@@ -48,16 +48,16 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     private static final double LINE_SCALE = 1.3;
     private static final String LINE_BREAK = "\n";
 
-    private static final String ADD_FUNCTION = "add function";
-    private static final String ADD_ARGUMENT = "add argument";
-    private static final String REMOVE_LAST = "remove last argument";
+    private static final String ADD_FUNCTION = "Add Function";
+    private static final String ADD_ARGUMENT = "Add Argument";
+    private static final String REMOVE_LAST = "Remove Last Argument";
 
-    private static final String RETURN_TYPE = "return type";
-    private static final String NAME = "name";
-    private static final String INPUT_TYPE = "input type";
-    private static final String OUTPUT_TYPE = "output type";
-    private static final String LOOPBOUND_TYPE = "loopbound type";
-    private static final String MANUAL_VALUE = "manual value";
+    private static final String RETURN_TYPE = "Return Type:";
+    private static final String NAME = "Name:";
+    private static final String INPUT_TYPE = "Input Type";
+    private static final String OUTPUT_TYPE = "Output Type";
+    private static final String LOOPBOUND_TYPE = "Loop Bound Type";
+    private static final String MANUAL_VALUE = "Manual Value";
 
     private static final String CSS_RESOURCE = "/edu/pse/beast/ceditor.css";
     private static final String CSS_LOCKED_CLASS_NAME = "locked";
@@ -182,7 +182,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         outTypeCB.getSelectionModel().select(currentDescription.getOutputType());
 
         final Optional<ButtonType> res =
-                DialogHelper.generateDialog(List.of(NAME, INPUT_TYPE, OUTPUT_TYPE),
+                DialogHelper.generateDialog("Edit Election",
+                                            List.of(NAME, INPUT_TYPE, OUTPUT_TYPE),
                                             List.of(nameTextField, inputTypeCB, outTypeCB))
                 .showAndWait();
         if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
@@ -218,8 +219,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 });
             loopBoundChoiceBox.getSelectionModel().select(selectedLoop.getParsedLoopBoundType());
             final Optional<ButtonType> res =
-                    DialogHelper.generateDialog(List.of(LOOPBOUND_TYPE, MANUAL_VALUE),
-                            List.of(loopBoundChoiceBox, manualBound))
+                    DialogHelper.generateDialog("Edit Loop Bound",
+                                                List.of(LOOPBOUND_TYPE, MANUAL_VALUE),
+                                                List.of(loopBoundChoiceBox, manualBound))
                     .showAndWait();
 
             if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
@@ -284,7 +286,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final TextField nameField = new TextField();
         final Optional<ButtonType> res =
                 DialogHelper
-                .generateDialog(List.of(NAME), List.of(nameField))
+                .generateDialog("Remove Function", List.of(NAME), List.of(nameField))
                 .showAndWait();
         if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
             final String name = nameField.getText();
@@ -342,7 +344,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         });
 
         final Optional<ButtonType> res =
-                DialogHelper.generateDialog(List.of(NAME, RETURN_TYPE),
+                DialogHelper.generateDialog("Add Simple Function",
+                                            List.of(NAME, RETURN_TYPE),
                                             List.of(nameField, returnTypeChoiceBox,
                                                     argsTypeChoiceBox, argsNameTextField,
                                                     addArgButton, removeArgButton,
@@ -561,7 +564,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final List<Node> nodes =
                 List.of(nameField, inputTypeChoiceBox, outputTypeChoiceBox);
         final Optional<ButtonType> res =
-                DialogHelper.generateDialog(inputNames, nodes).showAndWait();
+                DialogHelper.generateDialog("Create New Election", inputNames, nodes)
+                .showAndWait();
         if (res.isPresent()) {
             if (res.get().getButtonData().isCancelButton()) {
                 return;

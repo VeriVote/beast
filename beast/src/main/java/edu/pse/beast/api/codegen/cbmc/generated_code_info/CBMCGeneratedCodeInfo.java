@@ -7,6 +7,12 @@ import java.util.Set;
 
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class CBMCGeneratedCodeInfo {
     private String code;
     private CodeGenLoopBoundHandler loopBoundHandler;

@@ -11,6 +11,12 @@ import org.junit.Test;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 
+/**
+ * TODO: Write documentation.
+ *
+ * @author Holger Klein
+ *
+ */
 public class AntlrCParserTest {
     private static final String RESOURCES = "/codegen/";
     private static final String FILE_ENDING = ".template";
