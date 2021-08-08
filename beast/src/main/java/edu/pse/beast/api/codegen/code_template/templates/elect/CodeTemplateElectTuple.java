@@ -36,7 +36,7 @@ public class CodeTemplateElectTuple {
 
     private static final List<LoopBound> LOOP_BOUNDS_CANDIDATE_LIST =
             LoopBound.codeGenLoopboundList(
-                    Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_CANDS));
+                    Arrays.asList(LoopBoundType.AMOUNT_CANDIDATES));
 
     private static final Map<VotingOutputTypes, List<LoopBound>> LOOP_BOUNDS =
             new LinkedHashMap<VotingOutputTypes, List<LoopBound>>(

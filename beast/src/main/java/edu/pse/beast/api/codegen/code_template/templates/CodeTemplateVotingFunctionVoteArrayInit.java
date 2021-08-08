@@ -30,14 +30,14 @@ public class CodeTemplateVotingFunctionVoteArrayInit {
     private static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(
-                            LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS)
+                            LoopBoundType.NECESSARY_AMOUNT_VOTERS)
             );
 
     private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(
-                            LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
-                            LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS)
+                            LoopBoundType.NECESSARY_AMOUNT_VOTERS,
+                            LoopBoundType.NECESSARY_AMOUNT_CANDIDATES)
             );
 
     private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =

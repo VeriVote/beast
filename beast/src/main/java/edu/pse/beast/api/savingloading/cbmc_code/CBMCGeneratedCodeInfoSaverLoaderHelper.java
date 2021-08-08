@@ -1,7 +1,7 @@
 package edu.pse.beast.api.savingloading.cbmc_code;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -66,7 +66,7 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
     }
 
     private static Map<String, Integer> toStringIntMap(final JSONObject json) {
-        final Map<String, Integer> map = new HashMap<>();
+        final Map<String, Integer> map = new LinkedHashMap<String, Integer>();
         for (final String key : json.keySet()) {
             map.put(key, json.getInt(key));
         }
@@ -74,7 +74,7 @@ public class CBMCGeneratedCodeInfoSaverLoaderHelper {
     }
 
     private static Set<String> toStringSet(final JSONArray json) {
-        final Set<String> set = new HashSet<>();
+        final Set<String> set = new LinkedHashSet<String>();
         for (int i = 0; i < json.length(); ++i) {
             set.add(json.getString(i));
         }

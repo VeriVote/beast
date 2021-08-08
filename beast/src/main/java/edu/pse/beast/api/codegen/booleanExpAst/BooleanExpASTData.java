@@ -1,7 +1,7 @@
 package edu.pse.beast.api.codegen.booleanExpAst;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,8 +19,10 @@ public class BooleanExpASTData {
     private BooleanExpListNode topAstNode;
     private int highestElect;
     private int highestVote;
-    private Map<SymbolicCBMCVar, Set<Integer>> accessingVarsToVotes = new HashMap<>();
-    private Map<SymbolicCBMCVar, Set<Integer>> accessingVarsToElects = new HashMap<>();
+    private Map<SymbolicCBMCVar, Set<Integer>> accessingVarsToVotes =
+            new LinkedHashMap<SymbolicCBMCVar, Set<Integer>>();
+    private Map<SymbolicCBMCVar, Set<Integer>> accessingVarsToElects =
+            new LinkedHashMap<SymbolicCBMCVar, Set<Integer>>();
 
     public final Map<SymbolicCBMCVar, Set<Integer>> getAccessingVarsToElects() {
         return accessingVarsToElects;
@@ -62,7 +64,7 @@ public class BooleanExpASTData {
                                  final int number,
                                  final Map<SymbolicCBMCVar, Set<Integer>> map) {
         if (!map.containsKey(var)) {
-            map.put(var, new HashSet<>());
+            map.put(var, new LinkedHashSet<Integer>());
         }
         map.get(var).add(number);
     }

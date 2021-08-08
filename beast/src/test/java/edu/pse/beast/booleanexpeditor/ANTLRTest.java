@@ -18,6 +18,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
  * @author Nikolai Schnell
  */
 public final class ANTLRTest {
+    private static final String ANTLR_TEST_STRING = "1 == 4 * 2 / (4 - 1) + 2;";
+
     private ANTLRTest() {
     }
 
@@ -47,6 +49,6 @@ public final class ANTLRTest {
      * @param args the arguments
      */
     public static void main(final String[] args) {
-        showGuiTreeView("1 == 4 * 2 / (4 - 1) + 2;");
+        showGuiTreeView(ANTLR_TEST_STRING);
     }
 }

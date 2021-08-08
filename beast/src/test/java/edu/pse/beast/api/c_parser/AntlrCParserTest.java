@@ -22,6 +22,7 @@ public class AntlrCParserTest {
     private static final String FILE_ENDING = ".template";
 
     private static final String BORDA = "borda";
+    private static final String VOTES = "votes";
     private static final String C = "C";
     private static final String V = "V";
     private static final String VOTING = "voting";
@@ -44,6 +45,7 @@ public class AntlrCParserTest {
         final String bordaCode = getTemplate(BORDA, c);
 
         final CodeGenOptions options = new CodeGenOptions();
+        options.setCurrentVotesVarName(VOTES);
         options.setCurrentAmountCandsVarName(C);
         options.setCurrentAmountVotersVarName(V);
 

@@ -30,6 +30,7 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
  *
  */
 public class WorkspaceSaverLoaderTest {
+    private static final String NONE = "";
     private static final String BLANK = " ";
 
     private static final String C = "C";
@@ -125,7 +126,7 @@ public class WorkspaceSaverLoaderTest {
                 BeastWorkspace.getStandardWorkspace(cbmcProcessHandlerCreator);
         beastWorkspace.setCodeGenOptions(codeGenOptions);
 
-        final Path currentRelativePath = Paths.get("");
+        final Path currentRelativePath = Paths.get(NONE);
         final String s = currentRelativePath.toAbsolutePath().toString();
         new File(s);
 

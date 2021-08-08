@@ -26,6 +26,8 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  */
 public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     private static final String NAME = "Name:";
+    private static final String ADD_PROPERTY = "Add Property";
+    private static final String INIT_VARIABLE = "Init Variable";
 
     private PropertyEditorCodeElement preConditionEditor;
     private PropertyEditorCodeElement postConditionEditor;
@@ -86,7 +88,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
             final TextField nameField = new TextField();
             final List<Node> nodes = List.of(nameField);
             final Optional<ButtonType> res =
-                    DialogHelper.generateDialog("Add Property", names, nodes).showAndWait();
+                    DialogHelper.generateDialog(ADD_PROPERTY, names, nodes).showAndWait();
             if (res.isPresent()
                     && !res.get().getButtonData().isCancelButton()) {
                 final String name = nameField.getText();
@@ -114,7 +116,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
                 final TextField nameField = new TextField();
                 final List<Node> inputs = List.of(nameField);
                 final Optional<ButtonType> res =
-                        DialogHelper.generateDialog("Init Variable", names, inputs).showAndWait();
+                        DialogHelper.generateDialog(INIT_VARIABLE, names, inputs).showAndWait();
                 if (res.isPresent()
                         && !res.get().getButtonData().isCancelButton()) {
                     final String name = nameField.getText();
@@ -227,7 +229,9 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     }
 
     public final void save() {
-        beastWorkspace.savePropDescr(currentPropertyDescription);
+        if (currentPropertyDescription != null) {
+            beastWorkspace.savePropDescr(currentPropertyDescription);
+        }
     }
 
     /**

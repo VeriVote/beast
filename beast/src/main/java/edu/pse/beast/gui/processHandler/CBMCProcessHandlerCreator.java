@@ -21,6 +21,8 @@ import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMC
  *
  */
 public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
+    private static final String DOT = "'.";
+    private static final String NAVIGATE_TO = "Please navigate to the file '";
 
     private static final String VS_DEV_COMMAND_FILE = "vsDevCmd.bat";
 
@@ -46,7 +48,7 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
         final File file;
         if (result.isPresent() && !result.get().getButtonData().isCancelButton()) {
             final FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Please navigate to the file '" + VS_DEV_COMMAND_FILE + "'.");
+            fileChooser.setTitle(NAVIGATE_TO + VS_DEV_COMMAND_FILE + DOT);
             if (vsDevCmdPath != null) {
                 fileChooser.setInitialDirectory(new File(vsDevCmdPath).getParentFile());
             }

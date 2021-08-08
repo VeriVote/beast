@@ -186,7 +186,7 @@ public class WorkspaceSaverLoader {
                                                   final List<PreAndPostConditionsDescription>
                                                         propDescrs,
                                                   final RelativePathConverter pathHandler) {
-        final List<CBMCTestConfiguration> list = new ArrayList<>();
+        final List<CBMCTestConfiguration> list = new ArrayList<CBMCTestConfiguration>();
         for (int i = 0; i < arr.length(); ++i) {
             list.add(cbmcPropTestConfigFromJson(arr.getJSONObject(i), descrs,
                                                 propDescrs, pathHandler));
@@ -284,7 +284,7 @@ public class WorkspaceSaverLoader {
         final JSONObject json = new JSONObject(fileContents);
 
         final JSONArray descrArr = json.getJSONArray(DESCR_FILES_KEY);
-        final List<CElectionDescription> descrs = new ArrayList<>();
+        final List<CElectionDescription> descrs = new ArrayList<CElectionDescription>();
 
         for (int i = 0; i < descrArr.length(); ++i) {
             final String relativePath = descrArr.getString(i);
@@ -298,7 +298,8 @@ public class WorkspaceSaverLoader {
         }
 
         final JSONArray propDescrArr = json.getJSONArray(PROP_DESCR_FILES_KEY);
-        final List<PreAndPostConditionsDescription> propDescrs = new ArrayList<>();
+        final List<PreAndPostConditionsDescription> propDescrs =
+                new ArrayList<PreAndPostConditionsDescription>();
 
         for (int i = 0; i < propDescrArr.length(); ++i) {
             final String relativePath = propDescrArr.getString(i);

@@ -18,7 +18,7 @@ public final class PreAndPostConditionsDescription {
     /** The name. */
     private String name;
 
-    private List<SymbolicCBMCVar> cbmcVariables = new ArrayList<>();
+    private List<SymbolicCBMCVar> cbmcVariables = new ArrayList<SymbolicCBMCVar>();
 
     /** The preconditions description. */
     private final FormalPropertiesDescription preConditionsDescription;
@@ -37,9 +37,9 @@ public final class PreAndPostConditionsDescription {
     public PreAndPostConditionsDescription(final String nameString) {
         this.uuid = UUID.randomUUID().toString();
         this.name = nameString;
-        this.preConditionsDescription = new FormalPropertiesDescription("");
-        this.postConditionsDescription = new FormalPropertiesDescription("");
-        this.boundedVarDescription = new FormalPropertiesDescription("");
+        this.preConditionsDescription = new FormalPropertiesDescription();
+        this.postConditionsDescription = new FormalPropertiesDescription();
+        this.boundedVarDescription = new FormalPropertiesDescription();
     }
 
     public PreAndPostConditionsDescription(final String uuidString,
@@ -52,7 +52,7 @@ public final class PreAndPostConditionsDescription {
         this.cbmcVariables = cbmcVars;
         this.preConditionsDescription = preConditionsDescr;
         this.postConditionsDescription = postConditionsDescr;
-        this.boundedVarDescription = new FormalPropertiesDescription("");
+        this.boundedVarDescription = new FormalPropertiesDescription();
     }
 
     /**

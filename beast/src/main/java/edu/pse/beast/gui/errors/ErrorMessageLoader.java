@@ -9,13 +9,18 @@ import java.util.Map;
  *
  */
 public class ErrorMessageLoader {
+    private static final String NOT_IMPLEMENTED = "Not implemented";
+    private static final String CANNOT_REMOVE_FUNCTION = "Cannot remove the voting function";
+    private static final String TRIED_RUNNING_NOT_IMPLEMENTED =
+            "tried to run code that has not been implemented yet";
+    private static final String TRIED_REMOVING = "Tried removing voting function";
 
-    public final Map<BeastErrorTypes, ErrorMessage> loadMessages() {
-        return Map.of(BeastErrorTypes.NOT_IMPLEMENTED_CODE_PATH,
-                new ErrorMessage("Not implemented",
-                        "tried to run code that has not been implemented yet"),
-                BeastErrorTypes.CANT_REMOVE_VOTING_FUNCTION,
-                new ErrorMessage("Tried removing voting function",
-                        "Cannot remove the voting function"));
+    public final Map<BeastErrorType, ErrorMessage> loadMessages() {
+        return Map.of(BeastErrorType.NOT_IMPLEMENTED_CODE_PATH,
+                new ErrorMessage(NOT_IMPLEMENTED,
+                        TRIED_RUNNING_NOT_IMPLEMENTED),
+                BeastErrorType.CANT_REMOVE_VOTING_FUNCTION,
+                new ErrorMessage(TRIED_REMOVING,
+                        CANNOT_REMOVE_FUNCTION));
     }
 }

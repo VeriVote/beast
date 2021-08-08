@@ -61,7 +61,6 @@ public class CBMCCodeGenerator {
     private static final String CPROVER_ASSUME_X = "__CPROVER_" + ASSUME_X;
 
     private static final String UNSIGNED_INT = "unsigned int";
-    private static final String INT = "int";
     private static final String CBMC_UINT_FUNC_NAME = "nondet_uint";
     private static final String CBMC_INT_FUNC_NAME = "nondet_int";
 
@@ -99,7 +98,7 @@ public class CBMCCodeGenerator {
         created.define(INVALID_RESULT, COLOUR);
 
         created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
-        created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());
+        created.addFunctionDecl(UNSIGNED_INT, CBMC_INT_FUNC_NAME, List.of());
 
         addSimpleFunctionDecls(descr, created, options);
         addSimpleFunctionDefs(descr, created, options);
@@ -145,10 +144,10 @@ public class CBMCCodeGenerator {
                                           output, options, loopBoundHandler, c));
         final BooleanExpASTData preAstData =
                 BooleanCodeToAST.generateAST(propDescr.getPreConditionsDescription().getCode(),
-                                             propDescr.getCbmcVariables());
+                                             propDescr.getCbmcVariables(), options);
         final BooleanExpASTData postAstData =
                 BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-                                             propDescr.getCbmcVariables());
+                                             propDescr.getCbmcVariables(), options);
 
         final CBMCGeneratedCodeInfo cbmcGeneratedCode = new CBMCGeneratedCodeInfo();
         cbmcGeneratedCode.setVotesAmtMemberVarName(voteInputStruct.getAmountName());
@@ -196,7 +195,7 @@ public class CBMCCodeGenerator {
                 new CFunction(func.getName(), votingFuncArguments,
                               output.struct.getStruct().getName());
 
-        final List<String> code = new ArrayList<>();
+        final List<String> code = new ArrayList<String>();
         final VotingFunctionHelper.CNames votingNames =
                 new VotingFunctionHelper.CNames(func.getName(), func.getVotesArrayName(),
                                                 input.structVarName);

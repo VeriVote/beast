@@ -107,7 +107,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 
     private String getReturnType() {
         assert outputType != null;
-        String type = UINT + BLANK;
+        String type = UINT;
         if (VotingOutputTypes.CANDIDATE_LIST.equals(outputType)) {
             type += arr(CAND_SYMB);
         } else if (VotingOutputTypes.PARLIAMENT.equals(outputType)

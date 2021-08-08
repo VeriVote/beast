@@ -31,7 +31,7 @@ public class CodeTemplateVotingFunctionResultCopy {
     private static final List<LoopBound> LOOP_BOUNDS_SINGLE_CANDIDATE = Arrays.asList();
     private static final List<LoopBound> LOOP_BOUNDS_CANDIDATE_LIST =
             LoopBound.codeGenLoopboundList(
-                    Arrays.asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS)
+                    Arrays.asList(LoopBoundType.NECESSARY_AMOUNT_CANDIDATES)
                     );
 
     private static final Map<VotingOutputTypes, List<LoopBound>> LOOP_BOUNDS =

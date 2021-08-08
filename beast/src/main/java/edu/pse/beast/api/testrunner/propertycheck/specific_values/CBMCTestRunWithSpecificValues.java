@@ -19,6 +19,9 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonRunningData
  * @author Holger Klein
  */
 public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
+    private static final String FALSE_NAME = "false";
+    private static final String FALSE_CODE = "FALSE;";
+
     private CBMCCodeFileData cbmcCodeFile;
     private VotingParameters parameters;
 
@@ -48,14 +51,22 @@ public class CBMCTestRunWithSpecificValues implements CBMCTestCallback {
         v = params.getV();
         c = params.getC();
         s = params.getS();
-        propertyDescription = new PreAndPostConditionsDescription("false");
-        propertyDescription.getPreConditionsDescription().setCode("");
-        propertyDescription.getPostConditionsDescription().setCode("FALSE;");
+        propertyDescription = new PreAndPostConditionsDescription(FALSE_NAME);
+        propertyDescription.getPreConditionsDescription().setCode();
+        propertyDescription.getPostConditionsDescription().setCode(FALSE_CODE);
 
         cbmcJsonRunningDataExtractor =
                 new CBMCJsonRunningDataExtractor(descr,
                                                  propertyDescription, s, c, v,
                                                  codeFile.getCodeInfo());
+    }
+
+    public final VotingParameters getParameters() {
+        return this.parameters;
+    }
+
+    public final CBMCPropertyCheckWorkUnit getWorkUnit() {
+        return this.workUnit;
     }
 
     public final void setAndInitializeWorkUnit(final CBMCPropertyCheckWorkUnit cbmcWorkUnit,

@@ -11,7 +11,7 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
  *
  */
 public class ScopeHandler {
-    private Stack<Scope> scopes = new Stack<>();
+    private Stack<Scope> scopes = new Stack<Scope>();
 
     public final void push() {
         scopes.push(new Scope());

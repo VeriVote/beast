@@ -25,30 +25,40 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
  *
  */
 public class CBMCCodeGenTest2 {
+    private static final String NONE = "";
+    private static final String VOTING_FUNCTION = "voting";
+
+    private static final String C1_VARIABLE = "c1";
+    private static final String C2_VARIABLE = "c2";
+
+    private static final String BORDA_STRING = "borda";
+    private static final String REINFORCE_STRING = "reinforce";
+    private static final String TEST_POSTCONDITION = "ELECT1 == CUT(ELECT2, ELECT3);";
+
     private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
 
     @Test
     public void testNumbers() {
-        final String votingCode = "";
+        final String votingCode = NONE;
 
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.SINGLE_CHOICE,
                                          VotingOutputTypes.CANDIDATE_LIST,
-                                         "borda");
+                                         BORDA_STRING);
         descr.getVotingFunction().setCode(votingCode);
 
         final CodeGenOptions codeGenOptions = new CodeGenOptions();
         final List<ExtractedCLoop> loops =
-                AntlrCLoopParser.findLoops("voting", votingCode, codeGenOptions);
+                AntlrCLoopParser.findLoops(VOTING_FUNCTION, votingCode, codeGenOptions);
         descr.getVotingFunction().setExtractedLoops(loops);
 
-        final String pre = "";
-        final String post = "ELECT1 == CUT(ELECT2, ELECT3);";
+        final String pre = NONE;
+        final String post = TEST_POSTCONDITION;
 
         final PreAndPostConditionsDescription propDescr =
-                CreationHelper.createSimpleCondList("reinforce", pre, post).get(0);
-        propDescr.addCBMCVar(new SymbolicCBMCVar("c1", CBMCVarType.CANDIDATE));
-        propDescr.addCBMCVar(new SymbolicCBMCVar("c2", CBMCVarType.CANDIDATE));
+                CreationHelper.createSimpleCondList(REINFORCE_STRING, pre, post).get(0);
+        propDescr.addCBMCVar(new SymbolicCBMCVar(C1_VARIABLE, CBMCVarType.CANDIDATE));
+        propDescr.addCBMCVar(new SymbolicCBMCVar(C2_VARIABLE, CBMCVarType.CANDIDATE));
 
         final String code =
                 CBMCCodeGenerator

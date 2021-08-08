@@ -31,10 +31,10 @@ public class CodeTemplateElectPermutation {
     private static final List<LoopBound> LOOP_BOUNDS_CANDIDATE_LIST =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
-                LoopBoundType.LOOP_BOUND_AMT_CANDS,
-                LoopBoundType.LOOP_BOUND_AMT_CANDS,
-                LoopBoundType.LOOP_BOUND_AMT_CANDS,
-                LoopBoundType.LOOP_BOUND_AMT_CANDS)
+                LoopBoundType.AMOUNT_CANDIDATES,
+                LoopBoundType.AMOUNT_CANDIDATES,
+                LoopBoundType.AMOUNT_CANDIDATES,
+                LoopBoundType.AMOUNT_CANDIDATES)
             );
 
     private static final Map<VotingOutputTypes, List<LoopBound>> LOOP_BOUNDS =

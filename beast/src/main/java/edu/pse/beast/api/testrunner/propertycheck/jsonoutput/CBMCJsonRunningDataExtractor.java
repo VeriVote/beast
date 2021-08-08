@@ -32,7 +32,7 @@ public class CBMCJsonRunningDataExtractor {
     private int voterAmount;
     private CBMCGeneratedCodeInfo codeInfo;
 
-    private List<CBMCJsonMessage> messages = new ArrayList<>();
+    private List<CBMCJsonMessage> messages = new ArrayList<CBMCJsonMessage>();
 
     private String currentOutput;
 

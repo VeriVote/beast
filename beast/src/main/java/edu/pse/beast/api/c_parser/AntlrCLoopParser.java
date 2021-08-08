@@ -22,8 +22,8 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
  */
 public class AntlrCLoopParser extends CBaseListener {
 
-    private static List<ExtractedCLoop> extractedCLoops = new ArrayList<>();
-    private static Stack<ExtractedCLoop> loopStack = new Stack<>();
+    private static List<ExtractedCLoop> extractedCLoops = new ArrayList<ExtractedCLoop>();
+    private static Stack<ExtractedCLoop> loopStack = new Stack<ExtractedCLoop>();
     private static int amtLoops;
 
     public static List<ExtractedCLoop> findLoops(final String functionName,

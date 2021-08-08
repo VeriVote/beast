@@ -47,7 +47,7 @@ public class PreferenceParameters implements VotingParameters {
     private int c;
     private int s;
 
-    private List<List<Integer>> votesPerVoter = new ArrayList<>();
+    private List<List<Integer>> votesPerVoter = new ArrayList<List<Integer>>();
 
     public PreferenceParameters(final int candidateAmount) {
         this.c = candidateAmount;
@@ -84,7 +84,7 @@ public class PreferenceParameters implements VotingParameters {
                                               final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
                                               final String generatedVarName) {
         final Class<?> clazz = this.getClass();
-        final List<String> code = new ArrayList<>();
+        final List<String> code = new ArrayList<String>();
 
         final String declString =
                 getTemplate(DECL_KEY, clazz)

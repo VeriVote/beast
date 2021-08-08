@@ -9,15 +9,15 @@ package edu.pse.beast.gui.errors;
 public class BeastError {
     private Exception exception;
     private String other;
-    private BeastErrorTypes errorTypes;
+    private BeastErrorType errorTypes;
     private ErrorMessage errorMessage;
 
-    public BeastError(final BeastErrorTypes errorType, final String otherString) {
+    public BeastError(final BeastErrorType errorType, final String otherString) {
         this.other = otherString;
         this.errorTypes = errorType;
     }
 
-    public BeastError(final BeastErrorTypes errorType,
+    public BeastError(final BeastErrorType errorType,
                       final String otherString,
                       final Exception exc) {
         this.other = otherString;
@@ -41,11 +41,11 @@ public class BeastError {
         this.other = otherString;
     }
 
-    public final BeastErrorTypes getErrorType() {
+    public final BeastErrorType getErrorType() {
         return errorTypes;
     }
 
-    public final void setErrorType(final BeastErrorTypes errorType) {
+    public final void setErrorType(final BeastErrorType errorType) {
         this.errorTypes = errorType;
     }
 

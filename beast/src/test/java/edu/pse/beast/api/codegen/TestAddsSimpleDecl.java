@@ -37,6 +37,9 @@ public class TestAddsSimpleDecl {
     private static final String POST = "_post";
     private static final String RESOURCES = "/codegen/";
     private static final String FILE_ENDING = ".template";
+    private static final String I_STRING = "i";
+    private static final String J_STRING = "j";
+    private static final String TEST_FUNCTION_NAME = "asd";
 
     private InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
 
@@ -63,9 +66,9 @@ public class TestAddsSimpleDecl {
         descr.getVotingFunction().setCode(bordaCode);
 
         final SimpleTypeFunction simpleFunc =
-                new SimpleTypeFunction("asd", List.of(CElectionSimpleTypes.BOOL,
+                new SimpleTypeFunction(TEST_FUNCTION_NAME, List.of(CElectionSimpleTypes.BOOL,
                                                       CElectionSimpleTypes.DOUBLE),
-                                       List.of("i", "j"), CElectionSimpleTypes.FLOAT);
+                                       List.of(I_STRING, J_STRING), CElectionSimpleTypes.FLOAT);
         descr.addSimpleFunction(simpleFunc);
 
         final CodeGenOptions codeGenOptions = new CodeGenOptions();

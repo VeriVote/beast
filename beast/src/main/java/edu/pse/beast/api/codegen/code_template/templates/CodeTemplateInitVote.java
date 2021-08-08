@@ -30,28 +30,28 @@ public class CodeTemplateInitVote {
     private static final List<LoopBound> LOOP_BOUNDS_SINGLE_CHOICE =
             LoopBound.codeGenLoopboundList(
                     Arrays.asList(
-                            LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                            LoopBoundType.LOOP_BOUND_AMT_VOTERS)
+                            LoopBoundType.AMOUNT_VOTERS,
+                            LoopBoundType.AMOUNT_VOTERS)
                     );
 
     private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays
-                .asList(LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
-                        LoopBoundType.LOOP_BOUND_AMT_CANDS,
-                        LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                        LoopBoundType.LOOP_BOUND_AMT_CANDS,
-                        LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS,
-                        LoopBoundType.LOOP_BOUND_AMT_CANDS)
+                .asList(LoopBoundType.NECESSARY_AMOUNT_VOTERS,
+                        LoopBoundType.AMOUNT_CANDIDATES,
+                        LoopBoundType.AMOUNT_VOTERS,
+                        LoopBoundType.AMOUNT_CANDIDATES,
+                        LoopBoundType.NECESSARY_AMOUNT_CANDIDATES,
+                        LoopBoundType.AMOUNT_CANDIDATES)
             );
 
     private static final List<LoopBound> LOOP_BOUNDS_APPROVAL =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
-                LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS,
-                LoopBoundType.LOOP_BOUND_AMT_CANDS,
-                LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                LoopBoundType.LOOP_BOUND_AMT_CANDS)
+                LoopBoundType.NECESSARY_AMOUNT_VOTERS,
+                LoopBoundType.AMOUNT_CANDIDATES,
+                LoopBoundType.AMOUNT_VOTERS,
+                LoopBoundType.AMOUNT_CANDIDATES)
             );
 
     private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =

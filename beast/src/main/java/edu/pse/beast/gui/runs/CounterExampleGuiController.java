@@ -1,8 +1,8 @@
 package edu.pse.beast.gui.runs;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -56,7 +56,7 @@ public class CounterExampleGuiController {
     private CBMCGeneratedCodeInfo codeInfo;
 
     private static List<Integer> numbersFromBrackets(final String brackets) {
-        final List<Integer> bracketNumbers = new ArrayList<>();
+        final List<Integer> bracketNumbers = new ArrayList<Integer>();
 
         String number = "";
         for (int i = 0; i < brackets.length(); ++i) {
@@ -74,7 +74,8 @@ public class CounterExampleGuiController {
     private static String buildAssignmentString(final CBMCStructAssignment assignment,
                                                 final String amtVarName,
                                                 final String listVarName) {
-        final Map<List<Integer>, String> positionsToStrings = new HashMap<>();
+        final Map<List<Integer>, String> positionsToStrings =
+                new LinkedHashMap<List<Integer>, String>();
         int amtBrackets = 0;
 
         for (final String key : assignment.getMemberToAssignment().keySet()) {
@@ -161,7 +162,7 @@ public class CounterExampleGuiController {
     }
 
     private void display() {
-        final Set<CBMCAssignmentType> types = new HashSet<>();
+        final Set<CBMCAssignmentType> types = new LinkedHashSet<CBMCAssignmentType>();
         if (votesCheckbox.isSelected()) {
             types.add(CBMCAssignmentType.VOTE);
         }
@@ -198,7 +199,7 @@ public class CounterExampleGuiController {
         displayOnChange(resultsCheckbox);
         displayOnChange(generatedResultsCheckbox);
         final VirtualizedScrollPane<CodeArea> vsp1 =
-                new VirtualizedScrollPane<>(codeinfoCodearea);
+                new VirtualizedScrollPane<CodeArea>(codeinfoCodearea);
         codeinfoAnchorpane.getChildren().add(vsp1);
         AnchorPane.setTopAnchor(vsp1, 0d);
         AnchorPane.setBottomAnchor(vsp1, 0d);
@@ -206,7 +207,7 @@ public class CounterExampleGuiController {
         AnchorPane.setRightAnchor(vsp1, 0d);
 
         final VirtualizedScrollPane<CodeArea> vsp2 =
-                new VirtualizedScrollPane<>(displayCodearea);
+                new VirtualizedScrollPane<CodeArea>(displayCodearea);
         displayAnchorpane.getChildren().add(vsp2);
         AnchorPane.setTopAnchor(vsp2, 0d);
         AnchorPane.setBottomAnchor(vsp2, 0d);

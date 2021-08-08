@@ -1,6 +1,6 @@
 package edu.pse.beast.api.savingloading;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -21,7 +21,7 @@ public class JSONHelper {
     }
 
     public static Map<String, String> jsonObjectToStringStringMap(final JSONObject json) {
-        final Map<String, String> map = new HashMap<>();
+        final Map<String, String> map = new LinkedHashMap<String, String>();
         for (final String key : json.keySet()) {
             map.put(key, json.getString(key));
         }
@@ -29,7 +29,7 @@ public class JSONHelper {
     }
 
     public static Map<Integer, String> jsonObjectToIntStringMap(final JSONObject json) {
-        final Map<Integer, String> map = new HashMap<>();
+        final Map<Integer, String> map = new LinkedHashMap<Integer, String>();
         for (final String key : json.keySet()) {
             map.put(Integer.valueOf(key), json.getString(key));
         }

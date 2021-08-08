@@ -64,16 +64,16 @@ public class PerformVoteHelper {
         return RESULT + voteNumber;
     }
 
-    public static String generateCode(final int voteNumber,
+    public static String generateCode(final int votingCallNumber,
                                       final ElectionTypeCStruct voteArrStruct,
                                       final ElectionTypeCStruct voteStruct,
                                       final CodeGenOptions options,
                                       final String votingFunctionName,
                                       final CBMCGeneratedCodeInfo cbmcGeneratedCode,
                                       final Class<?> c) {
-        final String resultVarName = getResultVarName(voteNumber);
-        cbmcGeneratedCode.addElectVariableName(voteNumber, resultVarName);
-        final String voteVarName = SymbVarInitVoteHelper.getVoteVarName(voteNumber);
+        final String resultVarName = getResultVarName(votingCallNumber);
+        cbmcGeneratedCode.addElectVariableName(votingCallNumber, resultVarName);
+        final String voteVarName = SymbVarInitVoteHelper.getVoteVarName(options, votingCallNumber);
 
         String code = getTemplate(FILE_KEY, c);
         code = code.replaceAll(ELECT_TYPE, voteStruct.getStruct().getName());
@@ -82,11 +82,11 @@ public class PerformVoteHelper {
         code = code.replaceAll(VOTE_TYPE, voteStruct.getStruct().getName());
         code = code.replaceAll(VOTE_VAR, voteVarName);
         code = code.replaceAll(CURRENT_AMOUNT_VOTER,
-                SymbVarInitVoteHelper.getCurrentAmtVoter(voteNumber));
+                SymbVarInitVoteHelper.getCurrentAmtVoter(options, votingCallNumber));
         code = code.replaceAll(CURRENT_AMOUNT_CAND,
-                SymbVarInitVoteHelper.getCurrentAmtCand(voteNumber));
+                SymbVarInitVoteHelper.getCurrentAmtCand(options, votingCallNumber));
         code = code.replaceAll(CURRENT_AMOUNT_SEAT,
-                SymbVarInitVoteHelper.getCurrentAmtSeat(voteNumber));
+                SymbVarInitVoteHelper.getCurrentAmtSeat(options, votingCallNumber));
         return code;
     }
 }

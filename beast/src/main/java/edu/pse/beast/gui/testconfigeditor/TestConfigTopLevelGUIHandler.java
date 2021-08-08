@@ -158,12 +158,12 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
         treeItem.getChildren().clear();
         for (final CBMCTestRunWithSymbolicVars tr : config.getRuns()) {
             treeItem.getChildren()
-                    .add(new TreeItem<>(new TestRunCBMCTreeItem(tr)));
+                    .add(new TreeItem<TestConfigTreeItemSuper>(new TestRunCBMCTreeItem(tr)));
         }
     }
 
     private void updateTestConfigTreeView() {
-        root = new TreeItem<>(new TestConfigCategoryTreeItem(sortCriterium));
+        root = new TreeItem<TestConfigTreeItemSuper>(new TestConfigCategoryTreeItem(sortCriterium));
         testConfigTreeView.setRoot(root);
 
         final Map<String, List<TestConfiguration>> testConfigs;
@@ -175,22 +175,24 @@ public class TestConfigTopLevelGUIHandler implements WorkspaceUpdateListener {
 
         for (final String name : testConfigs.keySet()) {
             final TreeItem<TestConfigTreeItemSuper> parentItem =
-                    new TreeItem<>(new TestConfigCategoryTreeItem(name));
+                    new TreeItem<TestConfigTreeItemSuper>(new TestConfigCategoryTreeItem(name));
             final List<TestConfiguration> testConfigsForParent =
                     testConfigs.get(name);
 
             for (final TestConfiguration testConfig : testConfigsForParent) {
                 final TreeItem<TestConfigTreeItemSuper> testConfigItem =
-                        new TreeItem<>(new TestConfigTreeItem(testConfig));
+                        new TreeItem<TestConfigTreeItemSuper>(new TestConfigTreeItem(testConfig));
                 final Map<String, CBMCTestConfiguration> cbcmConfigs =
                         testConfig.getCbmcTestConfigsByName();
                 if (!cbcmConfigs.isEmpty()) {
                     final TreeItem<TestConfigTreeItemSuper> cbmcParentItem =
-                            new TreeItem<>(new TestConfigCategoryTreeItem(CBMC));
+                            new TreeItem<TestConfigTreeItemSuper>(
+                                    new TestConfigCategoryTreeItem(CBMC));
                     for (final CBMCTestConfiguration cbmcConfig
                             : cbcmConfigs.values()) {
                         final TreeItem<TestConfigTreeItemSuper> cbmcConfigItem =
-                                new TreeItem<>(new TestConfigCBMCTreeItem(cbmcConfig));
+                                new TreeItem<TestConfigTreeItemSuper>(
+                                        new TestConfigCBMCTreeItem(cbmcConfig));
                         addCBMCRunItems(cbmcConfigItem, cbmcConfig);
                         cbmcParentItem.getChildren().add(cbmcConfigItem);
                     }

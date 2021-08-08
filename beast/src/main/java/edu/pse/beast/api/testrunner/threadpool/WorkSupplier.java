@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 public class WorkSupplier {
-    private List<WorkUnit> newWorkUnits = new ArrayList<>();
+    private List<WorkUnit> newWorkUnits = new ArrayList<WorkUnit>();
 
     public final void addWork(final WorkUnit wu) {
         synchronized (newWorkUnits) {

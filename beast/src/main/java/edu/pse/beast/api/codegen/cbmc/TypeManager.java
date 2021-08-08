@@ -17,7 +17,7 @@ public class TypeManager {
     private static final String BLANK = " ";
     private static final String UNDERSCORE = "_";
 
-    private List<ElectionTypeCStruct> elecTypeCStructs = new ArrayList<>();
+    private List<ElectionTypeCStruct> elecTypeCStructs = new ArrayList<ElectionTypeCStruct>();
 
     public final CStruct getCStructForVotingType(final CElectionVotingType votingType) {
         return null;

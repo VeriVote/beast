@@ -27,8 +27,8 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
  *
  */
 public class BEAST {
-    private List<Thread> createdThreads = new ArrayList<>();
-    private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<>();
+    private List<Thread> createdThreads = new ArrayList<Thread>();
+    private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<CBMCPropertyCheckWorkUnit>();
 
     public final void runWorkUnit(final CBMCPropertyCheckWorkUnit wu) {
         wus.add(wu);
@@ -88,7 +88,7 @@ public class BEAST {
                     generateTestRuns(final CBMCCodeFileData cbmcCodeFile,
                                      final CBMCTestConfiguration testConfig,
                                      final CodeGenOptions codeGenOptions) {
-        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
+        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<CBMCTestRunWithSymbolicVars>();
         for (int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {
             for (int c = testConfig.getMinCands(); c <= testConfig.getMaxCands(); ++c) {
                 for (int s = testConfig.getMinSeats(); s <= testConfig.getMaxSeats(); ++s) {

@@ -44,6 +44,7 @@ public class SavingLoadingTest {
     private static final String DESCR = "borda.belec";
     private static final String PROP = "reinforcement.bprp";
 
+    private static final String VOTES = "votes";
     private static final String C = "C";
     private static final String V = "V";
     private static final String VOTING_FUNC = "voting";
@@ -84,6 +85,7 @@ public class SavingLoadingTest {
         descr.addSimpleFunction(simpleFunc);
 
         final CodeGenOptions options = new CodeGenOptions();
+        options.setCurrentVotesVarName(VOTES);
         options.setCurrentAmountCandsVarName(C);
         options.setCurrentAmountVotersVarName(V);
         final List<ExtractedCLoop> extractedCLoops =

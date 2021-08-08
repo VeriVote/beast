@@ -30,7 +30,7 @@ public class CBMCTestConfiguration {
 
     private boolean startRunsOnCreation;
 
-    private List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
+    private List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<CBMCTestRunWithSymbolicVars>();
 
     private String uuid;
 

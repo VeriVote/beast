@@ -13,8 +13,8 @@ public class ThreadPool {
     private static final String THREAD_NAME_PREFIX = "Runner_";
     private static final int DEFAULT_TIMEOUT = 100;
 
-    private ArrayList<Thread> threads = new ArrayList<>();
-    private ArrayList<ThreadPoolRunner> runners = new ArrayList<>();
+    private ArrayList<Thread> threads = new ArrayList<Thread>();
+    private ArrayList<ThreadPoolRunner> runners = new ArrayList<ThreadPoolRunner>();
     private WorkSupplier workSupplier = new WorkSupplier();
 
     public ThreadPool(final int numThreads) {

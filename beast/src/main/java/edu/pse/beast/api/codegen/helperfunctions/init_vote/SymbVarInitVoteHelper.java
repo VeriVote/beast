@@ -40,12 +40,12 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
                                      final CodeGenOptions options,
                                      final CodeGenLoopBoundHandler loopBoundHandler,
                                      final CBMCGeneratedCodeInfo codeInfo) {
-        final String varName = getVoteVarName(voteNumber);
+        final String varName = getVoteVarName(options, voteNumber);
         codeInfo.addVotingVariableName(voteNumber, varName);
 
-        final String currentAmtVoterVarName = getCurrentAmtVoter(voteNumber);
-        final String currentAmtCandVarName = getCurrentAmtCand(voteNumber);
-        final String currentAmtSeatVarName = getCurrentAmtSeat(voteNumber);
+        final String currentAmtVoterVarName = getCurrentAmtVoter(options, voteNumber);
+        final String currentAmtCandVarName = getCurrentAmtCand(options, voteNumber);
+        final String currentAmtSeatVarName = getCurrentAmtSeat(options, voteNumber);
 
         final Map<String, String> replacementMap =
                 StringReplacementMap.genMap(

@@ -46,7 +46,7 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
 
     private CBMCCodeFileData cbmcCodeFile;
 
-    private List<String> testRunLogs = new ArrayList<>();
+    private List<String> testRunLogs = new ArrayList<String>();
 
     private boolean descrChanged;
     private boolean propDescrChanged;
@@ -187,7 +187,7 @@ public class CBMCTestRunWithSymbolicVars implements CBMCTestCallback {
     }
 
     public final void setTestRunLogs(final String logs) {
-        final List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<String>();
         final String[] arr = logs.split(LINE_BREAK);
         for (int i = 0; i < arr.length; ++i) {
             list.add(arr[i]);

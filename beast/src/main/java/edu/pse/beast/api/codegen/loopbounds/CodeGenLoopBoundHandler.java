@@ -1,7 +1,7 @@
 package edu.pse.beast.api.codegen.loopbounds;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,27 +18,30 @@ public class CodeGenLoopBoundHandler {
     private static final String MAIN = "main";
     private static final String UNWIND = "--unwind ";
 
-    private Map<String, List<LoopBound>> functionNamesToLoopbounds = new HashMap<>();
-    private List<LoopBound> mainLoopbounds = new ArrayList<>();
-    private Map<String, List<LoopBound>> votingInitLoopbounds = new HashMap<>();
-    private Map<String, List<LoopBound>> votingBackLoopbounds = new HashMap<>();
+    private Map<String, List<LoopBound>> functionNamesToLoopbounds =
+            new LinkedHashMap<String, List<LoopBound>>();
+    private List<LoopBound> mainLoopbounds = new ArrayList<LoopBound>();
+    private Map<String, List<LoopBound>> votingInitLoopbounds =
+            new LinkedHashMap<String, List<LoopBound>>();
+    private Map<String, List<LoopBound>> votingBackLoopbounds =
+            new LinkedHashMap<String, List<LoopBound>>();
 
     public final void addLoopBound(final LoopBound b) {
         final String funcName = b.getFunctionName();
         if (!functionNamesToLoopbounds.containsKey(funcName)) {
-            functionNamesToLoopbounds.put(funcName, new ArrayList<>());
+            functionNamesToLoopbounds.put(funcName, new ArrayList<LoopBound>());
         }
         functionNamesToLoopbounds.get(funcName).add(b);
     }
 
     public final void addFunction(final String name) {
         if (!functionNamesToLoopbounds.containsKey(name)) {
-            functionNamesToLoopbounds.put(name, new ArrayList<>());
+            functionNamesToLoopbounds.put(name, new ArrayList<LoopBound>());
         }
     }
 
     public final List<LoopBound> getLoopBoundsAsList() {
-        final List<LoopBound> loopbounds = new ArrayList<>();
+        final List<LoopBound> loopbounds = new ArrayList<LoopBound>();
         for (final List<LoopBound> lbl : functionNamesToLoopbounds.values()) {
             for (final LoopBound lb : lbl) {
                 loopbounds.add(lb);

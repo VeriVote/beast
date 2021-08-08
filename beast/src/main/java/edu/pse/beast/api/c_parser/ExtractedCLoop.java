@@ -35,6 +35,7 @@ public class ExtractedCLoop {
     private static final String BLANK = " ";
     private static final String PAREN_OPEN = "(";
     private static final String PAREN_CLOSE = ")";
+    private static final String LOOP_SEP = "::";
 
     private static final String LOOP_TYPE = "LOOP_TYPE";
     private static final String LOOP_NUMBER = "LOOP_NUMBER";
@@ -58,7 +59,7 @@ public class ExtractedCLoop {
     private Integer manualInteger;
 
     private ExtractedCLoop parentLoop;
-    private List<ExtractedCLoop> childrenLoops = new ArrayList<>();
+    private List<ExtractedCLoop> childrenLoops = new ArrayList<ExtractedCLoop>();
 
     public ExtractedCLoop(final IterationStatementContext ctx,
                           final int loopNumberInFunctionNumber,
@@ -152,9 +153,9 @@ public class ExtractedCLoop {
                 .replaceAll(LOOP_TYPE, loopType.toString())
                 .replaceAll(LOOP_NUMBER, String.valueOf(loopNumberInFunction))
                 .replaceAll(LOOP_BOUND, parsedLoopBoundType.toString());
-        if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+        if (parsedLoopBoundType == LoopBoundType.MANUALLY_ENTERED) {
             if (manualInteger == null) {
-                template = MISSING_MANUAL_BOUND + BLANK + "::" + BLANK + template;
+                template = MISSING_MANUAL_BOUND + BLANK + LOOP_SEP + BLANK + template;
             } else {
                 template += PAREN_OPEN + manualInteger + PAREN_CLOSE;
             }
@@ -164,7 +165,7 @@ public class ExtractedCLoop {
 
     private void handleParseFail(final CLoopParseResultType res) {
         loopParseResult = res;
-        parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED_INTEGER;
+        parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED;
     }
 
     private static ExpressionContext initForLoopExpression(final IterationStatementContext ctx) {
@@ -197,13 +198,13 @@ public class ExtractedCLoop {
 
         if (lessThanText.equals(votersVarName)) {
             loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-            parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_VOTERS;
+            parsedLoopBoundType = LoopBoundType.NECESSARY_AMOUNT_VOTERS;
         } else if (lessThanText.equals(candsVarName)) {
             loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-            parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_CANDS;
+            parsedLoopBoundType = LoopBoundType.NECESSARY_AMOUNT_CANDIDATES;
         } else if (lessThanText.equals(seatsVarName)) {
             loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
-            parsedLoopBoundType = LoopBoundType.NECESSARY_LOOP_BOUND_AMT_SEATS;
+            parsedLoopBoundType = LoopBoundType.NECESSARY_AMOUNT_SEATS;
         }
     }
 
@@ -244,7 +245,7 @@ public class ExtractedCLoop {
     }
 
     public final LoopBound generateLoopBound() {
-        final List<LoopBound> childrenLoopBounds = new ArrayList<>();
+        final List<LoopBound> childrenLoopBounds = new ArrayList<LoopBound>();
         for (final ExtractedCLoop cl : childrenLoops) {
             childrenLoopBounds.add(cl.generateLoopBound());
         }

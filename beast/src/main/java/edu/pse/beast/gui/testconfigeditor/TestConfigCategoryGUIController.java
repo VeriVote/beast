@@ -26,6 +26,8 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  */
 public class TestConfigCategoryGUIController
         implements WorkspaceUpdateListener {
+    private static final String SAME_TEST_CONFIGURATION = "Another one.";
+
     @FXML
     private AnchorPane topLevelAnchorPane;
     @FXML
@@ -83,15 +85,10 @@ public class TestConfigCategoryGUIController
         });
         testConfigListView.getSelectionModel().selectedItemProperty()
                 .addListener((ob, o, n) -> {
-                    if (n == null) {
-                        gotoConfigButton.setDisable(true);
-                        deleteConfigButton.setDisable(true);
-                    } else {
-                        gotoConfigButton.setDisable(false);
-                        deleteConfigButton.setDisable(false);
-                    }
+                    gotoConfigButton.setDisable(n == null);
+                    deleteConfigButton.setDisable(n == null);
                     if (n == o) {
-                        System.out.println("Another one.");
+                        System.out.println(SAME_TEST_CONFIGURATION);
                     }
                 });
         loadDescrButton.setOnAction(e -> {

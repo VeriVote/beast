@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
@@ -76,7 +77,7 @@ public class TestResultPresentation2 {
         cbmcGeneratedCodeInfo.addedGeneratedElectVar(ELECT_INTERSECTION + THREE);
 
         final String[] arr = output.split(LINE_BREAK);
-        final List<String> rawOutput = new ArrayList<>();
+        final List<String> rawOutput = new ArrayList<String>();
         for (int i = 0; i < arr.length; ++i) {
             rawOutput.add(arr[i]);
         }
@@ -101,12 +102,13 @@ public class TestResultPresentation2 {
                 new PreAndPostConditionsDescription(TEST);
 
         final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
+        final CodeGenOptions opts = new CodeGenOptions();
         cbmcGeneratedCodeInfo
-        .addVotingVariableName(ONE, SymbVarInitVoteHelper.getVoteVarName(ONE));
+        .addVotingVariableName(ONE, SymbVarInitVoteHelper.getVoteVarName(opts, ONE));
         cbmcGeneratedCodeInfo
-        .addVotingVariableName(TWO, SymbVarInitVoteHelper.getVoteVarName(TWO));
+        .addVotingVariableName(TWO, SymbVarInitVoteHelper.getVoteVarName(opts, TWO));
         cbmcGeneratedCodeInfo
-        .addVotingVariableName(THREE, SymbVarInitVoteHelper.getVoteVarName(THREE));
+        .addVotingVariableName(THREE, SymbVarInitVoteHelper.getVoteVarName(opts, THREE));
 
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(VOTE_SEQUENCE + ZERO);
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(VOTE_PERMUTATION + ONE);
@@ -125,7 +127,7 @@ public class TestResultPresentation2 {
         cbmcGeneratedCodeInfo.addedGeneratedElectVar(ELECT_INTERSECTION + THREE);
 
         final String[] arr = output.split(LINE_BREAK);
-        final List<String> rawOutput = new ArrayList<>();
+        final List<String> rawOutput = new ArrayList<String>();
         for (int i = 0; i < arr.length; ++i) {
             rawOutput.add(arr[i]);
         }

@@ -51,7 +51,7 @@ public class CBMCTestRunSaverLoaderHelper {
     }
 
     private static List<LoopBound> loopBoundListFromJSONArr(final JSONArray jsonArray) {
-        final List<LoopBound> list = new ArrayList<>();
+        final List<LoopBound> list = new ArrayList<LoopBound>();
         for (int i = 0; i < list.size(); ++i) {
             list.add(LoopBoundSaverLoaderHelper.loopBoundFromJSON(jsonArray.getJSONObject(i)));
         }
@@ -120,7 +120,7 @@ public class CBMCTestRunSaverLoaderHelper {
                                        final PreAndPostConditionsDescription propDescr,
                                        final CBMCTestConfiguration tc,
                                        final RelativePathConverter pathHandler) {
-        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<>();
+        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<CBMCTestRunWithSymbolicVars>();
         for (int i = 0; i < arr.length(); ++i) {
             final JSONObject jsonObject = arr.getJSONObject(i);
             runs.add(cbmcTestRunFromJSON(jsonObject, descr, propDescr, tc, pathHandler));

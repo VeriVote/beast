@@ -18,28 +18,33 @@ import edu.pse.beast.api.testrunner.propertycheck.jsonoutput.CBMCJsonHelper;
  *
  */
 public class CBMCJsonResultExampleExtractor {
+    private static final String NONE = "";
+    private static final String BLANK = " ";
+    private static final String NOT_A_NUMBER = "NaN";
+
     private static final String CBMC_JSON_RESULT_KEY = "result";
     private static final String CBMC_JSON_TRACE_KEY = "trace";
     private static final String CBMC_CPROVER_STATUS_KEY = "cProverStatus";
     private static final String STEP_TYPE_KEY = "stepType";
     private static final String STEP_TYPE_VALUE_ASSIGNMENT = "assignment";
     private static final String ASSIGNMENT_VALUE_KEY = "value";
+    private static final String LHS = "lhs";
     // private final String ASSIGNMENT_TYPE_KEY = "assignmentType";
     private static final String SOURCE_LOCATION = "sourceLocation";
     private static final String DATA = "data";
     private static final String FUNCTION = "function";
     private static final String FAILURE = "failure";
     private static final String DOT = ".";
-    private static final String C = "C";
-    private static final String S = "S";
-    private static final String V = "V";
+    private static final String C = "C"; // TODO: If ever used, change to non-hard-coded version
+    private static final String S = "S"; // TODO: If ever used, change to non-hard-coded version
+    private static final String V = "V"; // TODO: If ever used, change to non-hard-coded version
 
     private CElectionDescription description;
     private PreAndPostConditionsDescription propertyDescription;
     private int seatAmount;
     private int candidateAmount;
     private int voterAmount;
-    private List<String> rawOutput = new ArrayList<>();
+    private List<String> rawOutput = new ArrayList<String>();
     private JSONArray resultArr = new JSONArray();
     private JSONArray traceArr;
     private String cProverStatus;
@@ -105,13 +110,13 @@ public class CBMCJsonResultExampleExtractor {
                 // String assignmentLine = locationJsonObj.getString("line");
                 // String assignmentFunc = locationJsonObj.getString("function");
                 // String assignmentType = traceJsonObj.getString(ASSIGNMENT_TYPE_KEY);
-                final String lhs = traceJsonObj.getString("lhs");
+                final String lhs = traceJsonObj.getString(LHS);
 
                 if (!lhs.contains(DOT)) {
                     if (lhs.startsWith(V) || lhs.startsWith(C) || lhs.startsWith(S)) {
                         try {
                             Integer.valueOf(lhs.substring(1));
-                            System.out.println(lhs + " " + valueJsonObj.getString(DATA));
+                            System.out.println(lhs + BLANK + valueJsonObj.getString(DATA));
                         } catch (NumberFormatException e) {
                             // TODO: handle exception
                         }
@@ -134,7 +139,7 @@ public class CBMCJsonResultExampleExtractor {
                 try {
                     Integer.valueOf(valueStr);
                 } catch (NumberFormatException e) {
-                    valueStr = "NaN";
+                    valueStr = NOT_A_NUMBER;
                 }
 
                 CBMCAssignmentType assType = CBMCAssignmentType.UNKNOWN;
@@ -170,7 +175,7 @@ public class CBMCJsonResultExampleExtractor {
     }
 
     private static String removeAnythingButDigits(final String s) {
-        String newString = "";
+        String newString = NONE;
         for (int i = 0; i < s.length(); ++i) {
             if (Character.isDigit(s.charAt(i))) {
                 newString += s.charAt(i);

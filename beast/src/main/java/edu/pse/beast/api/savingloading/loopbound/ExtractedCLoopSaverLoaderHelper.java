@@ -38,17 +38,17 @@ public class ExtractedCLoopSaverLoaderHelper {
     private static JSONObject fromExtractedLoop(final ExtractedCLoop loop) {
         final JSONObject json = new JSONObject();
         json.put(UUID_KEY, loop.getUuid());
-        json.put(LOOPTYPE_KEY, loop.getLoopType().toString());
+        json.put(LOOPTYPE_KEY, loop.getLoopType().name());
 
         json.put(LINE_KEY, loop.getLine());
         json.put(POS_IN_LINE_KEY, loop.getPosInLine());
         json.put(NUMBER_IN_FUNCTION_KEY, loop.getLoopNumberInFunction());
 
-        json.put(PARSE_RESULT_KEY, loop.getLoopParseResult().toString());
+        json.put(PARSE_RESULT_KEY, loop.getLoopParseResult().name());
         json.put(PARSED_BOUND_TYPE_KEY,
-                loop.getParsedLoopBoundType().toString());
+                loop.getParsedLoopBoundType().name());
 
-        if (loop.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+        if (loop.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED) {
             json.put(MANUAL_BOUND_KEY, loop.getManualInteger());
         }
         json.put(FUNCTION_NAME_KEY, loop.getFunctionName());
@@ -82,7 +82,7 @@ public class ExtractedCLoopSaverLoaderHelper {
         final ExtractedCLoop extractedCLoop =
                 ExtractedCLoop.fromStoredValues(uuid, types, line, posInLine,
                                                 numberInFunc, functionName);
-        if (loopBoundType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+        if (loopBoundType == LoopBoundType.MANUALLY_ENTERED) {
             extractedCLoop.setManualInteger(json.getInt(MANUAL_BOUND_KEY));
         }
         return extractedCLoop;
@@ -120,7 +120,7 @@ public class ExtractedCLoopSaverLoaderHelper {
     }
 
     public static List<ExtractedCLoop> toExtractedLoops(final JSONArray arr) {
-        final List<ExtractedCLoop> loops = new ArrayList<>();
+        final List<ExtractedCLoop> loops = new ArrayList<ExtractedCLoop>();
         for (int i = 0; i < arr.length(); ++i) {
             loops.add(toExtractedLoop(arr.getJSONObject(i)));
         }
@@ -129,5 +129,4 @@ public class ExtractedCLoopSaverLoaderHelper {
         }
         return loops;
     }
-
 }

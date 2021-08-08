@@ -19,7 +19,7 @@ public class CCodeBlock {
     private static final String LINE_COMMENT = "//";
     private static final String EQ = "=";
 
-    private List<String> code = new ArrayList<>();
+    private List<String> code = new ArrayList<String>();
     private int number;
 
     public final void addComment(final String comment) {

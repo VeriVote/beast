@@ -27,7 +27,7 @@ public class SpecificValueInitVoteHelper extends InitVoteHelper {
                                      final CodeGenOptions options,
                                      final CodeGenLoopBoundHandler loopBoundHandler,
                                      final CBMCGeneratedCodeInfo codeInfo) {
-        final String voteVarName = getVoteVarName(voteNumber);
+        final String voteVarName = getVoteVarName(options, voteNumber);
         return votingParameters.genVoteStructInitCode(voteArrStruct,
                                                            options, codeInfo,
                                                            voteVarName);

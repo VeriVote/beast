@@ -27,7 +27,7 @@ public class DialogHelper {
                                                     final List<String> inputNames,
                                                     final List<Node> inputs) {
         final Point position = MouseInfo.getPointerInfo().getLocation();
-        final Dialog<ButtonType> dialog = new Dialog<>();
+        final Dialog<ButtonType> dialog = new Dialog<ButtonType>();
         dialog.setTitle(title);
         dialog.setX(position.getX());
         dialog.setY(position.getY());

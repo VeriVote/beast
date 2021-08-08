@@ -1,7 +1,7 @@
 package edu.pse.beast.api.codegen.cbmc.generated_code_info;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,12 +16,14 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 public class CBMCGeneratedCodeInfo {
     private String code;
     private CodeGenLoopBoundHandler loopBoundHandler;
-    private Map<String, Integer> voteVariableNameToVoteNumber = new HashMap<>();
-    private Map<String, Integer> electVariableNameToElectNumber = new HashMap<>();
-    private Map<String, String> varNamesToInfo = new HashMap<>();
+    private Map<String, Integer> voteVariableNameToVoteNumber =
+            new LinkedHashMap<String, Integer>();
+    private Map<String, Integer> electVariableNameToElectNumber =
+            new LinkedHashMap<String, Integer>();
+    private Map<String, String> varNamesToInfo = new LinkedHashMap<String, String>();
 
-    private Set<String> generatedVotingVarNames = new HashSet<String>();
-    private Set<String> generatedElectVarNames = new HashSet<String>();
+    private Set<String> generatedVotingVarNames = new LinkedHashSet<String>();
+    private Set<String> generatedElectVarNames = new LinkedHashSet<String>();
 
     private String votesAmtMemberVarName;
     private String votesListMemberVarName;

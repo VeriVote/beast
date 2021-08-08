@@ -1,7 +1,7 @@
 package edu.pse.beast.gui.testconfigeditor.testconfig;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +24,11 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  */
 public class TestConfigurationList implements WorkspaceUpdateListener {
     private Map<CElectionDescription, List<TestConfiguration>> testConfigsByDescr =
-            new HashMap<>();
-    private Map<PreAndPostConditionsDescription, List<TestConfiguration>>
-                testConfigsByPropDescr = new HashMap<>();
-    private Map<String, TestConfiguration> testConfigsByName = new HashMap<>();
+            new LinkedHashMap<CElectionDescription, List<TestConfiguration>>();
+    private Map<PreAndPostConditionsDescription, List<TestConfiguration>> testConfigsByPropDescr =
+                new LinkedHashMap<PreAndPostConditionsDescription, List<TestConfiguration>>();
+    private Map<String, TestConfiguration> testConfigsByName =
+            new LinkedHashMap<String, TestConfiguration>();
 
     public final boolean canAdd(final TestConfiguration testConfig) {
         return !testConfigsByName.containsKey(testConfig.getName());
@@ -40,12 +41,12 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
             testConfigsByName.put(testConfig.getName(), testConfig);
         }
         if (!testConfigsByDescr.containsKey(testConfig.getDescr())) {
-            testConfigsByDescr.put(testConfig.getDescr(), new ArrayList<>());
+            testConfigsByDescr.put(testConfig.getDescr(), new ArrayList<TestConfiguration>());
         }
         testConfigsByDescr.get(testConfig.getDescr()).add(testConfig);
         if (!testConfigsByPropDescr.containsKey(testConfig.getPropDescr())) {
             testConfigsByPropDescr.put(testConfig.getPropDescr(),
-                                       new ArrayList<>());
+                                       new ArrayList<TestConfiguration>());
         }
         testConfigsByPropDescr.get(testConfig.getPropDescr()).add(testConfig);
     }
@@ -76,7 +77,7 @@ public class TestConfigurationList implements WorkspaceUpdateListener {
     }
 
     public final List<CBMCTestRunWithSymbolicVars> getCBMCTestRuns() {
-        final List<CBMCTestRunWithSymbolicVars> list = new ArrayList<>();
+        final List<CBMCTestRunWithSymbolicVars> list = new ArrayList<CBMCTestRunWithSymbolicVars>();
         for (final CElectionDescription descr : testConfigsByDescr.keySet()) {
             final List<TestConfiguration> configs = testConfigsByDescr.get(descr);
             for (final TestConfiguration config : configs) {

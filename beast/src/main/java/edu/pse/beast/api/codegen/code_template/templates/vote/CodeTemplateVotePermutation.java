@@ -31,11 +31,11 @@ public class CodeTemplateVotePermutation {
     private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
                 Arrays.asList(
-                LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                LoopBoundType.LOOP_BOUND_AMT_VOTERS,
-                LoopBoundType.LOOP_BOUND_AMT_CANDS)
+                LoopBoundType.AMOUNT_VOTERS,
+                LoopBoundType.AMOUNT_VOTERS,
+                LoopBoundType.AMOUNT_VOTERS,
+                LoopBoundType.AMOUNT_VOTERS,
+                LoopBoundType.AMOUNT_CANDIDATES)
             );
 
     private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =

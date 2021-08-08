@@ -96,7 +96,7 @@ public class OptionsSaverLoader {
 
     public static List<OptionsCategoryGUI> loadOptions(final File f)
             throws IOException {
-        final List<OptionsCategoryGUI> options = new ArrayList<>();
+        final List<OptionsCategoryGUI> options = new ArrayList<OptionsCategoryGUI>();
         final String jsonString = SavingLoadingInterface.readStringFromFile(f);
         final JSONObject json = new JSONObject(jsonString);
         for (final String key : json.keySet()) {

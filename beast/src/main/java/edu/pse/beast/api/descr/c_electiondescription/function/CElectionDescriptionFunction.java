@@ -19,8 +19,8 @@ public abstract class CElectionDescriptionFunction {
     private static final String LINE_BREAK = "\n";
 
     private String name;
-    private List<String> code = new ArrayList<>();
-    private List<ExtractedCLoop> extractedLoops = new ArrayList<>();
+    private List<String> code = new ArrayList<String>();
+    private List<ExtractedCLoop> extractedLoops = new ArrayList<ExtractedCLoop>();
 
     public CElectionDescriptionFunction(final String nameString) {
         this.name = nameString;
@@ -69,7 +69,7 @@ public abstract class CElectionDescriptionFunction {
             res = true;
         }
         for (final ExtractedCLoop l : extractedLoops) {
-            if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER
+            if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED
                     && l.getManualInteger() == null) {
                 res = false;
             }

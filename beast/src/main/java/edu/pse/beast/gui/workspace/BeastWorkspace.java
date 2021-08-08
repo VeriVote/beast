@@ -3,8 +3,8 @@ package edu.pse.beast.gui.workspace;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,7 +36,7 @@ import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithS
 import edu.pse.beast.api.toolbox.Tuple;
 import edu.pse.beast.gui.FileDialogHelper;
 import edu.pse.beast.gui.errors.BeastError;
-import edu.pse.beast.gui.errors.BeastErrorTypes;
+import edu.pse.beast.gui.errors.BeastErrorType;
 import edu.pse.beast.gui.errors.ErrorHandler;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
@@ -50,13 +50,28 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
  *
  */
 public class BeastWorkspace {
+    private static final String NONE = "";
     private static final String ASSUME = "assume";
     private static final String ASSERT = "assert";
+
+    private static final String SAVE_PROPERTY_DIALOG_TITLE = "Choose Save File";
+    private static final String OPEN_WS_DIALOG_TITLE = "Open the Workspace File";
+    private static final String WORKSPACE_STRING = "Workspace";
+    private static final String SAVE_WORKSPACE_TITLE = "File for Workspace";
+
+    private static final String DEFAULT_WORKSPACE_NAME = "new_workspace";
+
+    private static final String LOAD_PROPERTY_ERROR_MESSAGE =
+            "Trying to Load Property Description";
+    private static final String CONFIRMATION_MESSAGE_STRING =
+            "There are test configurations which refer to the item to be deleted, "
+                    + "which would also be removed. Are you sure?";
 
     private static final String BEASTWS_FILE_ENDING = ".beastws";
     private static final String BELEC_FILE_ENDING = ".belec";
     private static final String BPRP_FILE_ENDING = ".bprp";
 
+    private static final String VOTES_VAR_NAME = "votes";
     private static final String CANDIDATE_AMOUNT_VAR = "C";
     private static final String VOTER_AMOUNT_VAR = "V";
     private static final String SEAT_AMOUNT_VAR = "S";
@@ -68,28 +83,30 @@ public class BeastWorkspace {
     private static final String THE_FUNCTION = "The function ";
     private static final String LOOPBOUNDS_NOT_DESCRIBED =
             " has loopbounds which are not described.";
-    private static final String CHOOSE_SAVE_FILE = "choose save file";
 
     private CBMCProcessHandlerCreator cbmcProcessHandlerCreator;
 
     private BEAST beast = new BEAST();
-    private List<WorkspaceUpdateListener> updateListener = new ArrayList<>();
+    private List<WorkspaceUpdateListener> updateListener = new ArrayList<WorkspaceUpdateListener>();
     private ErrorHandler errorHandler;
 
-    private List<CElectionDescription> loadedDescrs = new ArrayList<>();
-    private Map<CElectionDescription, File> filesPerDescr = new HashMap<>();
+    private List<CElectionDescription> loadedDescrs = new ArrayList<CElectionDescription>();
+    private Map<CElectionDescription, File> filesPerDescr =
+            new LinkedHashMap<CElectionDescription, File>();
     private Set<CElectionDescription> descrWithUnsavedChanges =
-            new HashSet<CElectionDescription>();
+            new LinkedHashSet<CElectionDescription>();
 
-    private List<PreAndPostConditionsDescription> loadedPropDescrs = new ArrayList<>();
-    private Map<PreAndPostConditionsDescription, File> filesPerPropDescr = new HashMap<>();
+    private List<PreAndPostConditionsDescription> loadedPropDescrs =
+            new ArrayList<PreAndPostConditionsDescription>();
+    private Map<PreAndPostConditionsDescription, File> filesPerPropDescr =
+            new LinkedHashMap<PreAndPostConditionsDescription, File>();
     private Set<PreAndPostConditionsDescription> propDescrWithUnsavedChanges =
-            new HashSet<PreAndPostConditionsDescription>();
+            new LinkedHashSet<PreAndPostConditionsDescription>();
 
     private CodeGenOptions codeGenerationOptions;
     private TestConfigurationList testConfigList = new TestConfigurationList();
 
-    private String name = "test";
+    private String name = DEFAULT_WORKSPACE_NAME;
     private File workspaceFile;
 
     private PathHandler pathHandler;
@@ -103,6 +120,7 @@ public class BeastWorkspace {
         codeGenOptions.setCbmcAmountMaxCandidatesVarName(MAX_CANDIDATES);
         codeGenOptions.setCbmcAmountMaxVotersVarName(MAX_VOTERS);
         codeGenOptions.setCbmcAmountMaxSeatsVarName(MAX_SEATS);
+        codeGenOptions.setCurrentVotesVarName(VOTES_VAR_NAME);
         codeGenOptions.setCurrentAmountCandsVarName(CANDIDATE_AMOUNT_VAR);
         codeGenOptions.setCurrentAmountVotersVarName(VOTER_AMOUNT_VAR);
         codeGenOptions.setCurrentAmountSeatsVarName(SEAT_AMOUNT_VAR);
@@ -204,8 +222,8 @@ public class BeastWorkspace {
             }
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.IO_ERROR,
-                                   "trying to load property description",
+                    new BeastError(BeastErrorType.IO_ERROR,
+                                   LOAD_PROPERTY_ERROR_MESSAGE,
                                    e));
         }
     }
@@ -251,7 +269,7 @@ public class BeastWorkspace {
                     final String more =
                             THE_FUNCTION + f.getName() + LOOPBOUNDS_NOT_DESCRIBED;
                     errorHandler.logAndDisplayError(
-                            new BeastError(BeastErrorTypes.NOT_ALL_LOOPS_DESCRIBED, more));
+                            new BeastError(BeastErrorType.NOT_ALL_LOOPS_DESCRIBED, more));
                     return;
                 }
             }
@@ -304,7 +322,7 @@ public class BeastWorkspace {
                 final String more =
                         THE_FUNCTION + f.getName() + LOOPBOUNDS_NOT_DESCRIBED;
                 errorHandler.logAndDisplayError(
-                        new BeastError(BeastErrorTypes.NOT_ALL_LOOPS_DESCRIBED, more));
+                        new BeastError(BeastErrorType.NOT_ALL_LOOPS_DESCRIBED, more));
                 return;
             }
         }
@@ -328,7 +346,7 @@ public class BeastWorkspace {
             currentPropDescr.addCBMCVar(var);
         } catch (IllegalArgumentException e) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.CBMC_VAR_NAME_ALREADY_EXISTS,
+                    new BeastError(BeastErrorType.CBMC_VAR_NAME_ALREADY_EXISTS,
                                    var.getName(), e));
             return;
         }
@@ -359,7 +377,7 @@ public class BeastWorkspace {
         } else {
             f = FileDialogHelper
                     .letUserSaveFile(pathHandler.getElectionDescrDir(),
-                                     CHOOSE_SAVE_FILE,
+                                     SAVE_PROPERTY_DIALOG_TITLE,
                                      descr.getName() + BELEC_FILE_ENDING);
             if (f == null) {
                 return false;
@@ -371,7 +389,7 @@ public class BeastWorkspace {
             descrWithUnsavedChanges.remove(descr);
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.IO_ERROR, descr.getName(), e));
+                    new BeastError(BeastErrorType.IO_ERROR, descr.getName(), e));
             return false;
         }
         return true;
@@ -384,7 +402,7 @@ public class BeastWorkspace {
         } else {
             f = FileDialogHelper
                     .letUserSaveFile(pathHandler.getPropDescrDir(),
-                                     "choose save File",
+                                     SAVE_PROPERTY_DIALOG_TITLE,
                                      propDescr.getName() + BPRP_FILE_ENDING);
             if (f == null) {
                 return false;
@@ -397,7 +415,7 @@ public class BeastWorkspace {
             propDescrWithUnsavedChanges.remove(propDescr);
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.IO_ERROR, propDescr.getName(), e));
+                    new BeastError(BeastErrorType.IO_ERROR, propDescr.getName(), e));
             return false;
         }
         return true;
@@ -405,14 +423,14 @@ public class BeastWorkspace {
 
     private boolean saveAll() {
         final List<CElectionDescription> descrListCopy =
-                new ArrayList<>(descrWithUnsavedChanges);
+                new ArrayList<CElectionDescription>(descrWithUnsavedChanges);
         for (final CElectionDescription descr : descrListCopy) {
-            if (!saveDescr(descr)) {
+            if (descr == null || !saveDescr(descr)) {
                 return false;
             }
         }
         final List<PreAndPostConditionsDescription> propDescrListCopy =
-                new ArrayList<>(propDescrWithUnsavedChanges);
+                new ArrayList<PreAndPostConditionsDescription>(propDescrWithUnsavedChanges);
         for (final PreAndPostConditionsDescription propDescr : propDescrListCopy) {
             if (!savePropDescr(propDescr)) {
                 return false;
@@ -443,8 +461,8 @@ public class BeastWorkspace {
     public final void letUserLoadWorkSpace() {
         final File f =
                 FileDialogHelper
-                .letUserOpenFile("Workspace", BEASTWS_FILE_ENDING,
-                                 "open the workspace file",
+                .letUserOpenFile(WORKSPACE_STRING, BEASTWS_FILE_ENDING,
+                                 OPEN_WS_DIALOG_TITLE,
                                  pathHandler.getWorkspaceDir(),
                                  null);
         if (f != null) {
@@ -455,7 +473,7 @@ public class BeastWorkspace {
             } catch (IOException e) {
                 e.printStackTrace();
                 errorHandler.logAndDisplayError(
-                        new BeastError(BeastErrorTypes.IO_ERROR, "workspace", e));
+                        new BeastError(BeastErrorType.IO_ERROR, WORKSPACE_STRING, e));
 
             }
         }
@@ -465,13 +483,13 @@ public class BeastWorkspace {
         final boolean allSaved = saveAll();
         if (!allSaved) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.ERROR_WHEN_SAVING_ALL, ""));
+                    new BeastError(BeastErrorType.ERROR_WHEN_SAVING_ALL, NONE));
         }
 
         if (workspaceFile == null) {
             workspaceFile =
                     FileDialogHelper.letUserSaveFile(
-                            pathHandler.getWorkspaceDir(), "file for workspace",
+                            pathHandler.getWorkspaceDir(), SAVE_WORKSPACE_TITLE,
                             name + BEASTWS_FILE_ENDING);
         }
         if (workspaceFile == null) {
@@ -483,12 +501,13 @@ public class BeastWorkspace {
                     pathHandler);
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.IO_ERROR, "", e));
+                    new BeastError(BeastErrorType.IO_ERROR, NONE, e));
         }
     }
 
     public final Map<String, List<TestConfiguration>> getConfigsByElectionDescriptionName() {
-        final Map<String, List<TestConfiguration>> map = new HashMap<>();
+        final Map<String, List<TestConfiguration>> map =
+                new LinkedHashMap<String, List<TestConfiguration>>();
         for (final CElectionDescription descr
                 : getConfigsByElectionDescription().keySet()) {
             map.put(descr.getName(),
@@ -498,7 +517,8 @@ public class BeastWorkspace {
     }
 
     public final Map<String, List<TestConfiguration>> getConfigsByPropertyDescriptionName() {
-        final Map<String, List<TestConfiguration>> map = new HashMap<>();
+        final Map<String, List<TestConfiguration>> map =
+                new LinkedHashMap<String, List<TestConfiguration>>();
         for (final PreAndPostConditionsDescription propDescr
                 : getConfigsByPropertyDescription().keySet()) {
             map.put(propDescr.getName(),
@@ -534,7 +554,7 @@ public class BeastWorkspace {
                                                   final String nameString) {
         if (descr.hasFunctionName(nameString)) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.DUPLICATE_C_FUNC_NAME, nameString));
+                    new BeastError(BeastErrorType.DUPLICATE_C_FUNC_NAME, nameString));
         } else {
             final VotingSigFunction func =
                     descr.createNewVotingSigFunctionAndAdd(nameString);
@@ -549,7 +569,7 @@ public class BeastWorkspace {
                                               final CElectionDescriptionFunction func) {
         if (func == descr.getVotingFunction()) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.CANT_REMOVE_VOTING_FUNCTION,
+                    new BeastError(BeastErrorType.CANT_REMOVE_VOTING_FUNCTION,
                                    func.getName()));
         } else {
             descr.removeFunction(func);
@@ -588,7 +608,7 @@ public class BeastWorkspace {
 
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorTypes.IO_ERROR, "", e));
+                    new BeastError(BeastErrorType.IO_ERROR, NONE, e));
         }
     }
 
@@ -659,8 +679,7 @@ public class BeastWorkspace {
     private boolean askUserIfReallyDelete() {
         final Alert reallyRemove =
                 new Alert(AlertType.CONFIRMATION,
-                          "There are test configurations which refer to the item to be deleted, "
-                                  + "which would also be removed. Are you sure?",
+                          CONFIRMATION_MESSAGE_STRING,
                           ButtonType.OK, ButtonType.NO);
         final Optional<ButtonType> res = reallyRemove.showAndWait();
         if (res.isPresent() || res.get().getButtonData().isCancelButton()) {

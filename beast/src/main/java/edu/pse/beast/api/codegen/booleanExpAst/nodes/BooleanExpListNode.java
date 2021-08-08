@@ -12,7 +12,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressio
  */
 public final class BooleanExpListNode {
 
-    private List<BooleanExpressionNode> booleanNodes = new ArrayList<>();
+    private List<BooleanExpressionNode> booleanNodes = new ArrayList<BooleanExpressionNode>();
 
     /**
      * Gets the boolean expressions.

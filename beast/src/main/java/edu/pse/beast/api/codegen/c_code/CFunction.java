@@ -30,7 +30,7 @@ public class CFunction {
     private static final String BRACE_CL = "}";
 
     private String name;
-    private List<CTypeNameBrackets> arguments = new ArrayList<>();
+    private List<CTypeNameBrackets> arguments = new ArrayList<CTypeNameBrackets>();
     private String returnType;
     private List<String> code;
 
@@ -100,7 +100,7 @@ public class CFunction {
     }
 
     public final String generateDefCode() {
-        final List<String> created = new ArrayList<>();
+        final List<String> created = new ArrayList<String>();
         created.add(signature() + BLANK + BRACE_OP);
         created.addAll(indent(code));
         created.add(BRACE_CL);

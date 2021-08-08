@@ -20,13 +20,19 @@ import edu.pse.beast.api.toolbox.Tuple;
  *
  */
 public class FileDialogHelper {
+    private static final String ELECTION_DESCRIPTION_STRING = "Beast Election Description";
+    private static final String PROPERTY_DESCRIPTION_STRING = "Property Description";
+    private static final String ELECTION_FILE_ENDING = "belec";
+    private static final String PROPERTY_FILE_ENDING = "bprp";
+    private static final String CHOOSE_ELECTION_DIALOG_TITLE = "Choose Election Description";
+    private static final String CHOOSE_PROPERTY_DIALOG_TITLE = "Choose Property Description";
 
     public static Tuple<CElectionDescription, File>
             letUserLoadElectionDescription(final File baseDir,
                                            final Stage primaryStage) throws IOException {
         final File f =
-                letUserOpenFile("beast election description", "belec",
-                                "choose election description", baseDir,
+                letUserOpenFile(ELECTION_DESCRIPTION_STRING, ELECTION_FILE_ENDING,
+                                CHOOSE_ELECTION_DIALOG_TITLE, baseDir,
                                 primaryStage);
         if (f != null) {
             final CElectionDescription descr = SavingLoadingInterface.loadCElection(f);
@@ -38,8 +44,8 @@ public class FileDialogHelper {
     public static Tuple<PreAndPostConditionsDescription, File>
             letUserLoadPropDescr(final File propDescrDir,
                                  final Stage primaryStage) throws IOException {
-        final File f = letUserOpenFile("property description", "bprp",
-                                       "choose property description",
+        final File f = letUserOpenFile(PROPERTY_DESCRIPTION_STRING, PROPERTY_FILE_ENDING,
+                                       CHOOSE_PROPERTY_DIALOG_TITLE,
                                        propDescrDir, primaryStage);
         if (f != null) {
             final PreAndPostConditionsDescription propDescr =
@@ -70,5 +76,4 @@ public class FileDialogHelper {
         fileChooser.setInitialFileName(name);
         return fileChooser.showSaveDialog(null);
     }
-
 }

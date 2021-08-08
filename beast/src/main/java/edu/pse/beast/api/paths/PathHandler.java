@@ -11,6 +11,9 @@ import edu.pse.beast.api.savingloading.RelativePathConverter;
  *
  */
 public class PathHandler implements RelativePathConverter {
+    private static final String SLASH = "/";
+    private static final String USER_DIR = "user.dir";
+
     private static final String REL_PATH_TO_SAVE_FILES = "./saveFiles/";
 
     private static final String REL_PATH_TO_WORKSPACE_SAVE_FILES = "./workspaces/";
@@ -46,7 +49,7 @@ public class PathHandler implements RelativePathConverter {
     }
 
     private void tryload() {
-        baseDir = System.getProperty("user.dir") + "/";
+        baseDir = System.getProperty(USER_DIR) + SLASH;
         if (!getWorkspaceDir().exists()) {
             getWorkspaceDir().mkdirs();
         }

@@ -27,6 +27,7 @@ import edu.pse.beast.api.savingloading.loopbound.ExtractedCLoopSaverLoaderHelper
  */
 public class CElectionSaverLoader {
     private static final int CURRENT_VERSION = 1;
+    private static final String NOT_COMPATIBLE = "Version is not compatible";
 
     private static final String VERSION_KEY = "version";
     private static final String NAME_KEY = "name";
@@ -56,12 +57,12 @@ public class CElectionSaverLoader {
         final String name = json.getString(SIMPLE_FUNC_NAME_KEY);
         final String code = json.getString(FUNC_CODE_KEY);
         final JSONArray argTypesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_TYPES_KEY);
-        final List<CElectionSimpleTypes> argTypes = new ArrayList<>();
+        final List<CElectionSimpleTypes> argTypes = new ArrayList<CElectionSimpleTypes>();
         for (int i = 0; i < argTypesJsonArr.length(); ++i) {
             argTypes.add(CElectionSimpleTypes.valueOf(argTypesJsonArr.getString(i)));
         }
         final JSONArray argNamesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_NAMES_KEY);
-        final List<String> argNames = new ArrayList<>();
+        final List<String> argNames = new ArrayList<String>();
         for (int i = 0; i < argNamesJsonArr.length(); ++i) {
             argNames.add(argNamesJsonArr.getString(i));
         }
@@ -97,7 +98,7 @@ public class CElectionSaverLoader {
     }
 
     private static List<SimpleTypeFunction> toSimpleFunctions(final JSONArray arr) {
-        final List<SimpleTypeFunction> list = new ArrayList<>();
+        final List<SimpleTypeFunction> list = new ArrayList<SimpleTypeFunction>();
         for (int i = 0; i < arr.length(); ++i) {
             list.add(fromSimpleFunction(arr.getJSONObject(i)));
         }
@@ -154,8 +155,8 @@ public class CElectionSaverLoader {
             throws IOException {
         final JSONObject json = new JSONObject();
         json.put(VERSION_KEY, CURRENT_VERSION);
-        json.put(INPUT_TYPE_KEY, descr.getInputType().toString());
-        json.put(OUTPUT_TYPE_KEY, descr.getOutputType().toString());
+        json.put(INPUT_TYPE_KEY, descr.getInputType().name());
+        json.put(OUTPUT_TYPE_KEY, descr.getOutputType().name());
 
         json.put(VOTING_FUNC_KEY, descr.getVotingFunction().getName());
 
@@ -177,7 +178,7 @@ public class CElectionSaverLoader {
         final int version = json.getInt(VERSION_KEY);
 
         if (!isVersionCompatible(version)) {
-            throw new NotImplementedException("Version is not compatible");
+            throw new NotImplementedException(NOT_COMPATIBLE);
         }
 
         final VotingInputTypes inputType =
@@ -195,7 +196,7 @@ public class CElectionSaverLoader {
         final List<VotingSigFunction> votingFuncs =
                 toVotingFunctions(votingFuncArray, inputType, outputType);
 
-        List<SimpleTypeFunction> simpleFuncs = new ArrayList<>();
+        List<SimpleTypeFunction> simpleFuncs = new ArrayList<SimpleTypeFunction>();
         if (json.has(SIMPLE_FUNCTION_ARRAY_KEY)) {
             final JSONArray simpleFunctionArray = json.getJSONArray(SIMPLE_FUNCTION_ARRAY_KEY);
             simpleFuncs = toSimpleFunctions(simpleFunctionArray);

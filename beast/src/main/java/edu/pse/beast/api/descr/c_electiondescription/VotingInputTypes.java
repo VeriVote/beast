@@ -44,5 +44,15 @@ public enum VotingInputTypes {
      * means candidate 0 got 5 votes, candidate 1 got 3, candidate 2 and
      * candidate 3 got 1 each
      */
-    SINGLE_CHOICE_STACK,
+    SINGLE_CHOICE_STACK;
+
+    private static final String BLANK = " ";
+    private static final String UNDERSCORE = "_";
+
+    @Override
+    public String toString() {
+        return this.name()
+                .toLowerCase()
+                .replaceAll(UNDERSCORE, BLANK);
+    }
 }

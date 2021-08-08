@@ -2,7 +2,7 @@ package edu.pse.beast.gui.testconfigeditor.testconfig;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +17,17 @@ import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
  *
  */
 public class TestConfiguration {
+    private static final String TEMPLATE = "CONFIG_NAME: DESCR_NAME + PROP_NAME";
+    private static final String CONFIG_NAME = "CONFIG_NAME";
+    private static final String DESCR_NAME = "DESCR_NAME";
+    private static final String PROP_NAME = "PROP_NAME";
+
     private CElectionDescription description;
     private PreAndPostConditionsDescription propertyDescription;
     private String name;
 
-    private Map<String, CBMCTestConfiguration> cbmcTestConfigsByName = new HashMap<>();
+    private Map<String, CBMCTestConfiguration> cbmcTestConfigsByName =
+            new LinkedHashMap<String, CBMCTestConfiguration>();
 
     public TestConfiguration(final CElectionDescription descr,
                              final PreAndPostConditionsDescription propDescr,
@@ -68,17 +74,17 @@ public class TestConfiguration {
     }
 
     public final List<CBMCTestConfiguration> getCBMCTestConfigs() {
-        final List<CBMCTestConfiguration> list = new ArrayList<>();
+        final List<CBMCTestConfiguration> list = new ArrayList<CBMCTestConfiguration>();
         list.addAll(cbmcTestConfigsByName.values());
         return list;
     }
 
     @Override
     public final String toString() {
-        return "CONFIG_NAME: DESCR_NAME + PROP_NAME"
-                .replaceAll("CONFIG_NAME", name)
-                .replaceAll("DESCR_NAME", description.getName())
-                .replaceAll("PROP_NAME", propertyDescription.getName());
+        return TEMPLATE
+                .replaceAll(CONFIG_NAME, name)
+                .replaceAll(DESCR_NAME, description.getName())
+                .replaceAll(PROP_NAME, propertyDescription.getName());
     }
 
     public final void handlePropDescrChanged() {

@@ -1,7 +1,7 @@
 package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +15,8 @@ import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
  *
  */
 public class CBMCCounterExample {
-    private Map<String, CBMCStructAssignment> varNamesToAssignments = new HashMap<>();
+    private Map<String, CBMCStructAssignment> varNamesToAssignments =
+            new LinkedHashMap<String, CBMCStructAssignment>();
 
     private CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo;
     private int sortNumber;
@@ -43,7 +44,7 @@ public class CBMCCounterExample {
     }
 
     public final List<CBMCStructAssignment> getAssignments(final Set<CBMCAssignmentType> types) {
-        final List<CBMCStructAssignment> list = new ArrayList<>();
+        final List<CBMCStructAssignment> list = new ArrayList<CBMCStructAssignment>();
         for (final CBMCStructAssignment ass : varNamesToAssignments.values()) {
             if (types.contains(ass.getAssignmentType())) {
                 list.add(ass);

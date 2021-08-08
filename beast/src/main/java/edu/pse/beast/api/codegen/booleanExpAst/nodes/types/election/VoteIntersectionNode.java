@@ -12,7 +12,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
  *
  */
 public class VoteIntersectionNode extends ElectionTypeNode {
-    private List<Integer> numbers = new ArrayList<>();
+    private List<Integer> numbers = new ArrayList<Integer>();
 
     @Override
     public final String getTreeString(final int depth) {

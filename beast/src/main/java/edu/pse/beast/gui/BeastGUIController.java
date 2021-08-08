@@ -59,10 +59,10 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  *
  */
 public class BeastGUIController implements WorkspaceUpdateListener {
-    // =================options start
+    // =================Options Start
     private static final String LOAD_WS_TEXT = "Load Workspace";
     private static final String SAVE_WS_TEXT = "Save Workspace";
-    private static final String EXIT_WS_TEXT = "Exit";
+    private static final String QUIT_WS_TEXT = "Quit";
     private static final String FILE_TEXT = "File";
     private static final String PREFERENCES_TEXT = "Preferences";
     private static final String OPTIONS_TEXT = "Options";
@@ -76,12 +76,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private OptionsGUIController optionsGUIController;
     private FXMLLoader optionsFXMLLoader =
             new FXMLLoader(getClass().getResource(OPTIONS_FXML));
-    // =================options end
+    // =================Options End
 
-    // =================Menu start
+    // =================Menu Start
     @FXML
     private MenuBar menuBar;
-    // =================Menu end
+    // =================Menu End
 
     @FXML
     private Button testLoopBoundButton;
@@ -152,14 +152,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     @FXML
     private Button savePropDescrButton;
 
-    // TestConfigHandler
+    // TestConfigHandler Start
     @FXML
     private ChoiceBox<String> sortCriteriumChoiceBox;
     @FXML
     private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
     @FXML
     private AnchorPane testConfigDetailsAnchorPane;
-    // TestConfigHandler end
+    // TestConfigHandler End
 
     @FXML
     private AnchorPane logAnchorPane;
@@ -219,7 +219,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                                                     loopBoundList);
         final CElectionEditor.CodeAreas codeAreas =
                 new CElectionEditor.CodeAreas(cEditorGUIElement, closingBracketArea);
-
         cElectionEditor =
                 new CElectionEditor(primaryStage, cEditorGUIElementVsp, electDescButtons,
                                     functionEditor, loopBoundEditor, codeAreas, beastWorkspace);
@@ -230,15 +229,15 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         final PropertyEditorCodeElement postPropertyEditor = new PropertyEditorCodeElement();
 
         final VirtualizedScrollPane<PropertyEditorCodeElement> preVsp =
-                new VirtualizedScrollPane<>(prePropertyEditor);
+                new VirtualizedScrollPane<PropertyEditorCodeElement>(prePropertyEditor);
         final VirtualizedScrollPane<PropertyEditorCodeElement> postVsp =
-                new VirtualizedScrollPane<>(postPropertyEditor);
+                new VirtualizedScrollPane<PropertyEditorCodeElement>(postPropertyEditor);
         prePropertyPane.setContent(preVsp);
         postPropertyPane.setContent(postVsp);
         final PreAndPostPropertyEditor.Buttons buttons =
                 new PreAndPostPropertyEditor.Buttons(addPropDescrButton, loadPropDescrButton,
                                                      savePropDescrButton, removeSymbVarButton);
-
+        // FIXME: Not sure what to do here
         new PreAndPostPropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
                                      symbVarsListView, addSymbVarMenu,
                                      openedPropertyDescriptionChoiceBox, beastWorkspace);
@@ -264,7 +263,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         fileMenu.setText(FILE_TEXT);
         final MenuItem loadWorkspaceMenuItem = new MenuItem(LOAD_WS_TEXT);
         final MenuItem saveWorkspaceMenuItem = new MenuItem(SAVE_WS_TEXT);
-        final MenuItem exitWorkspaceMenuItem = new MenuItem(EXIT_WS_TEXT);
+        final MenuItem exitWorkspaceMenuItem = new MenuItem(QUIT_WS_TEXT);
 
         loadWorkspaceMenuItem.setOnAction(e -> {
             beastWorkspace.letUserLoadWorkSpace();
@@ -295,7 +294,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private List<OptionsCategoryGUI> createStandardOptionsAndSave(final File optionsFile)
             throws IOException {
         final OS os = OSHelper.getOS();
-        final List<OptionsCategoryGUI> options = new ArrayList<>();
+        final List<OptionsCategoryGUI> options = new ArrayList<OptionsCategoryGUI>();
         if (os == OS.WINDOWS) {
             cbmcProcessHandlerCreator.askUserForCBMCProcessHandler();
             final ProcessHandlerWindowsOptionsGUI processHandlerWindowsOptions =
@@ -326,7 +325,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 }
             }
         }
-
         optionsGUIController =
                 new OptionsGUIController(options, optionsSaveFile);
         optionsFXMLLoader.setController(optionsGUIController);

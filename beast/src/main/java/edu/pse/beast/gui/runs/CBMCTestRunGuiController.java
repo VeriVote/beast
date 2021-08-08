@@ -283,7 +283,7 @@ public class CBMCTestRunGuiController implements CBMCTestCallback, WorkspaceUpda
 
     private void displayCodeArea(final CodeArea codeArea) {
         final VirtualizedScrollPane<CodeArea> vsp =
-                new VirtualizedScrollPane<>(codeArea);
+                new VirtualizedScrollPane<CodeArea>(codeArea);
         displayNode(vsp);
     }
 

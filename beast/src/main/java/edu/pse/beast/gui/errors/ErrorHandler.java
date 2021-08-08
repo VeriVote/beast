@@ -12,11 +12,11 @@ import java.util.Map;
  */
 public class ErrorHandler {
 
-    private List<String> errorLog = new ArrayList<>();
+    private List<String> errorLog = new ArrayList<String>();
     private ErrorGuiController listener;
 
-    private Map<BeastErrorTypes, ErrorMessage> errTypeToMessageType;
-    private List<BeastError> exceptions = new ArrayList<>();
+    private Map<BeastErrorType, ErrorMessage> errTypeToMessageType;
+    private List<BeastError> exceptions = new ArrayList<BeastError>();
 
     public ErrorHandler(final ErrorMessageLoader messageLoader) {
         errTypeToMessageType = messageLoader.loadMessages();
@@ -32,8 +32,14 @@ public class ErrorHandler {
 
     public final void logAndDisplayError(final BeastError err) {
         exceptions.add(err);
+        final BeastErrorType type = err.getErrorType();
         // TODO maybe modify the message based on the exception
-        final ErrorMessage msg = errTypeToMessageType.get(err.getErrorType());
+        final ErrorMessage msg;
+        if (errTypeToMessageType.get(type) != null) {
+            msg = errTypeToMessageType.get(type);
+        } else {
+            msg = new ErrorMessage();
+        }
         ErrorDialogHelper.showErrorDialog(msg);
         err.setErrorMessage(msg);
         listener.handleAddedError(err);

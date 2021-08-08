@@ -68,6 +68,7 @@ public class VotingFunctionHelper {
                 Map.of(VOTE_ARR, names.arrayVar,
                        AMOUNT_VOTERS, options.getCbmcAmountMaxVotersVarName(),
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),
+                       // FIXME: Add votes array name
                        CURRENT_AMOUNT_VOTER, options.getCurrentAmountVotersVarName(),
                        CURRENT_AMOUNT_CAND, options.getCurrentAmountCandsVarName(),
                        VOTE_INPUT_STRUCT_VAR, names.structVar,

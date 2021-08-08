@@ -34,7 +34,7 @@ public class LoopBoundSaverLoaderHelper {
         }
         json.put(CHILDREN_KEY, childrenJSON);
 
-        if (loopBound.getLoopBoundType() == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+        if (loopBound.getLoopBoundType() == LoopBoundType.MANUALLY_ENTERED) {
             json.put(MANUAL_BOUND_INTEGER_KEY,
                     loopBound.getManualBoundIfNeeded());
         }
@@ -47,14 +47,14 @@ public class LoopBoundSaverLoaderHelper {
         final String typeString = json.getString(LOOP_BOUND_TYPE_KEY);
         final LoopBoundType type = LoopBoundType.valueOf(typeString);
         final JSONArray childrenJSON = json.getJSONArray(CHILDREN_KEY);
-        final List<LoopBound> children = new ArrayList<>();
+        final List<LoopBound> children = new ArrayList<LoopBound>();
 
         for (int i = 0; i < childrenJSON.length(); ++i) {
             final JSONObject childJSON = childrenJSON.getJSONObject(i);
             children.add(loopBoundFromJSON(childJSON));
         }
 
-        if (type == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+        if (type == LoopBoundType.MANUALLY_ENTERED) {
             final int manualBound = json.getInt(MANUAL_BOUND_INTEGER_KEY);
             return new LoopBound(children, funcname, type, index, manualBound);
         } else {

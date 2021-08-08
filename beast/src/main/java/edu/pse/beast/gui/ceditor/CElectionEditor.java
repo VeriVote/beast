@@ -176,10 +176,10 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
         final TextField nameTextField = new TextField();
         nameTextField.setText(currentDescription.getName());
-        final ChoiceBox<VotingInputTypes> inputTypeCB = new ChoiceBox<>();
+        final ChoiceBox<VotingInputTypes> inputTypeCB = new ChoiceBox<VotingInputTypes>();
         inputTypeCB.getItems().addAll(VotingInputTypes.values());
         inputTypeCB.getSelectionModel().select(currentDescription.getInputType());
-        final ChoiceBox<VotingOutputTypes> outTypeCB = new ChoiceBox<>();
+        final ChoiceBox<VotingOutputTypes> outTypeCB = new ChoiceBox<VotingOutputTypes>();
         outTypeCB.getItems().addAll(VotingOutputTypes.values());
         outTypeCB.getSelectionModel().select(currentDescription.getOutputType());
 
@@ -204,12 +204,12 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         if (selectedLoop != null) {
             final TextField manualBound = new TextField();
             manualBound.setVisible(false);
-            final ChoiceBox<LoopBoundType> loopBoundChoiceBox = new ChoiceBox<>();
+            final ChoiceBox<LoopBoundType> loopBoundChoiceBox = new ChoiceBox<LoopBoundType>();
             loopBoundChoiceBox.getItems().addAll(LoopBoundType.values());
 
             loopBoundChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((ob, o, n) -> {
-                    final LoopBoundType type = LoopBoundType.MANUALLY_ENTERED_INTEGER;
+                    final LoopBoundType type = LoopBoundType.MANUALLY_ENTERED;
                     manualBound.setVisible(n == type);
                     if (n == type && selectedLoop.getParsedLoopBoundType() == type) {
                         manualBound.setText(String.valueOf(selectedLoop.getManualInteger()));
@@ -225,7 +225,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
                 final LoopBoundType selectedType =
                         loopBoundChoiceBox.getSelectionModel().getSelectedItem();
-                if (selectedType == LoopBoundType.MANUALLY_ENTERED_INTEGER) {
+                if (selectedType == LoopBoundType.MANUALLY_ENTERED) {
                     try {
                         final int bound = Integer.valueOf(manualBound.getText());
                         selectedLoop.setParsedLoopBoundType(selectedType);
@@ -292,13 +292,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     // TODO(Holger) make this nicer, add error checking for wrong var names etc
     private void addSimpleFunction() {
         final TextField nameField = new TextField();
-        final ChoiceBox<CElectionSimpleTypes> returnTypeChoiceBox = new ChoiceBox<>();
+        final ChoiceBox<CElectionSimpleTypes> returnTypeChoiceBox =
+                new ChoiceBox<CElectionSimpleTypes>();
         returnTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
         returnTypeChoiceBox.getSelectionModel().selectFirst();
         final Label argumentsLabel = new Label();
 
-        final List<CElectionSimpleTypes> argTypes = new ArrayList<>();
-        final List<String> argNames = new ArrayList<>();
+        final List<CElectionSimpleTypes> argTypes = new ArrayList<CElectionSimpleTypes>();
+        final List<String> argNames = new ArrayList<String>();
         final TextField argsNameTextField = new TextField();
         final ChoiceBox<CElectionSimpleTypes> argsTypeChoiceBox =
                 new ChoiceBox<CElectionSimpleTypes>();
@@ -521,13 +522,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final List<String> inputNames = List.of(NAME, INPUT_TYPE, OUTPUT_TYPE);
         final TextField nameField = new TextField();
 
-        final ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<>();
+        final ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<String>();
         for (final VotingInputTypes it : VotingInputTypes.values()) {
             inputTypeChoiceBox.getItems().add(it.toString());
         }
         inputTypeChoiceBox.getSelectionModel().selectFirst();
 
-        final ChoiceBox<String> outputTypeChoiceBox = new ChoiceBox<>();
+        final ChoiceBox<String> outputTypeChoiceBox = new ChoiceBox<String>();
         for (final VotingOutputTypes ot : VotingOutputTypes.values()) {
             outputTypeChoiceBox.getItems().add(ot.toString());
         }
@@ -559,7 +560,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     }
 
     public final void save() {
-        beastWorkspace.saveDescr(currentDescription);
+        if (currentDescription != null) {
+            beastWorkspace.saveDescr(currentDescription);
+        }
     }
 
     private void setFont(final double font) {

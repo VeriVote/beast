@@ -44,18 +44,18 @@ public class ComparisonHelper {
             final LoopBoundType loopBoundType;
             switch (type.getListSizes().get(0)) {
             case AMOUNT_CANDIDATES:
-                loopBoundType = LoopBoundType.LOOP_BOUND_AMT_CANDS;
+                loopBoundType = LoopBoundType.AMOUNT_CANDIDATES;
                 replacementMap.put(AMOUNT, options.getCbmcAmountMaxCandsVarName());
                 break;
             case AMOUNT_VOTERS:
-                loopBoundType = LoopBoundType.LOOP_BOUND_AMT_VOTERS;
+                loopBoundType = LoopBoundType.AMOUNT_VOTERS;
                 replacementMap.put(AMOUNT, options.getCbmcAmountMaxVotersVarName());
                 break;
             case AMOUNT_SEATS:
             default:
                 loopBoundType = null;
             }
-            final List<LoopBound> loopbounds = new ArrayList<>();
+            final List<LoopBound> loopbounds = new ArrayList<LoopBound>();
             loopbounds.add(LoopBound.codeGenLoopbound(loopBoundType));
             loopBoundHandler.pushMainLoopBounds(loopbounds);
         }

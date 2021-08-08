@@ -44,6 +44,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.Integ
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbVarByPosExp;
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
+import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ScopeHandler;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
@@ -90,6 +91,14 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
 
     private static final String ELECT = "ELECT";
     private static final String VOTER = "VOTER";
+    private static final String CANDIDATE = "CANDIDATE";
+
+    private static final String CAND = "CAND";
+    private static final String SEAT = "SEAT";
+
+    private String candidateAmountSymbol;
+    private String voterAmountSymbol;
+    private String seatAmountSymbol;
 
     private ScopeHandler scopeHandlerNew;
 
@@ -103,7 +112,11 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
     private int highestVote;
     private int highestElectInThisListNode;
 
-    private BooleanCodeToAST(final List<SymbolicCBMCVar> declaredVariables) {
+    private BooleanCodeToAST(final List<SymbolicCBMCVar> declaredVariables,
+                             final CodeGenOptions options) {
+        candidateAmountSymbol = options.getCurrentAmountCandsVarName();
+        voterAmountSymbol = options.getCurrentAmountVotersVarName();
+        seatAmountSymbol = options.getCurrentAmountSeatsVarName();
         scopeHandlerNew = new ScopeHandler();
         scopeHandlerNew.push();
         for (final SymbolicCBMCVar var : declaredVariables) {
@@ -112,7 +125,8 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
     }
 
     public static BooleanExpASTData generateAST(final String boolExpCode,
-                                                final List<SymbolicCBMCVar> declaredVariables) {
+                                                final List<SymbolicCBMCVar> declaredVariables,
+                                                final CodeGenOptions options) {
         final FormalPropertyDescriptionLexer l =
                 new FormalPropertyDescriptionLexer(CharStreams.fromString(boolExpCode));
         final CommonTokenStream ts = new CommonTokenStream(l);
@@ -120,7 +134,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
                 new FormalPropertyDescriptionParser(ts);
 
         final ParseTreeWalker walker = new ParseTreeWalker();
-        final BooleanCodeToAST listener = new BooleanCodeToAST(declaredVariables);
+        final BooleanCodeToAST listener = new BooleanCodeToAST(declaredVariables, options);
         walker.walk(listener, p.booleanExpList());
         return listener.generated;
     }
@@ -229,7 +243,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
         final String name = ctx.passSymbVarByName().symbVarByNameExp().getText();
         if (quantifierType.contains(VOTER)) {
             var = new SymbolicCBMCVar(name, SymbolicCBMCVar.CBMCVarType.VOTER);
-        } else if (quantifierType.contains("CANDIDATE")) {
+        } else if (quantifierType.contains(CANDIDATE)) {
             var = new SymbolicCBMCVar(name,
                     SymbolicCBMCVar.CBMCVarType.CANDIDATE);
         }
@@ -320,7 +334,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
         setHighestElect(number);
 
         final int amtAccessingTypes = ctx.passSymbVar().size();
-        final List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
+        final List<SymbolicCBMCVar> accessingVars = new ArrayList<SymbolicCBMCVar>();
 
         for (int i = 0; i < amtAccessingTypes; ++i) {
             accessingVars
@@ -341,7 +355,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
         final int number = Integer.valueOf(numberString);
         setHighestVote(number);
         final int amtAccessingTypes = ctx.passSymbVar().size();
-        final List<SymbolicCBMCVar> accessingVars = new ArrayList<>();
+        final List<SymbolicCBMCVar> accessingVars = new ArrayList<SymbolicCBMCVar>();
         for (int i = 0; i < amtAccessingTypes; ++i) {
             accessingVars
                     .add(((SymbolicVarByNameExp) expStack.pop()).getCbmcVar());
@@ -360,11 +374,11 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
                 Integer.valueOf(((IntegerNode) expStack.pop()).getInteger());
         final String text = ctx.getText();
         CBMCVarType type = CBMCVarType.VOTER;
-        if (text.startsWith("V")) {
+        if (text.startsWith(voterAmountSymbol)) {
             type = CBMCVarType.VOTER;
-        } else if (text.startsWith("C")) {
+        } else if (text.startsWith(candidateAmountSymbol)) {
             type = CBMCVarType.CANDIDATE;
-        } else if (text.startsWith("S")) {
+        } else if (text.startsWith(seatAmountSymbol)) {
             type = CBMCVarType.SEAT;
         }
 
@@ -494,9 +508,9 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
         final String text = ctx.getText();
         if (text.startsWith(VOTER)) {
             expStack.add(new SymbVarByPosExp(CBMCVarType.VOTER, number));
-        } else if (text.startsWith("CAND")) {
+        } else if (text.startsWith(CAND)) {
             expStack.add(new SymbVarByPosExp(CBMCVarType.CANDIDATE, number));
-        } else if (text.startsWith("SEAT")) {
+        } else if (text.startsWith(SEAT)) {
             expStack.add(new SymbVarByPosExp(CBMCVarType.SEAT, number));
         }
     }

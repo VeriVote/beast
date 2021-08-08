@@ -7,11 +7,15 @@ package edu.pse.beast.api.os;
  *
  */
 public class OSHelper {
+    private static final String OS_NAME = "os.name";
+    private static final String WINDOWS = "win";
+    private static final String LINUX = "nux";
+
     public static OS getOS() {
-        final String osName = System.getProperty("os.name");
-        if (osName.toLowerCase().contains("win")) {
+        final String osName = System.getProperty(OS_NAME);
+        if (osName.toLowerCase().contains(WINDOWS)) {
             return OS.WINDOWS;
-        } else if (osName.toLowerCase().contains("nux")) {
+        } else if (osName.toLowerCase().contains(LINUX)) {
             return OS.LINUX;
         } else {
             return OS.UNKNOWN;

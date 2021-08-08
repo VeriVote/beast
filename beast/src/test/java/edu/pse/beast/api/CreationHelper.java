@@ -20,7 +20,8 @@ public class CreationHelper {
                 new PreAndPostConditionsDescription(name);
         conds.getPreConditionsDescription().setCode(preCode);
         conds.getPostConditionsDescription().setCode(postCode);
-        final List<PreAndPostConditionsDescription> condList = new ArrayList<>();
+        final List<PreAndPostConditionsDescription> condList =
+                new ArrayList<PreAndPostConditionsDescription>();
         condList.add(conds);
         return condList;
     }

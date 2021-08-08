@@ -12,7 +12,7 @@ import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
  *
  */
 public class ElectTupleNode extends ElectionTypeNode {
-    private List<Integer> electNumbers = new ArrayList<>();
+    private List<Integer> electNumbers = new ArrayList<Integer>();
 
     @Override
     public final String getTreeString(final int depth) {

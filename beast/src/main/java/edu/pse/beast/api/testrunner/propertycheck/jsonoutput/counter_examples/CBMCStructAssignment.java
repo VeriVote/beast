@@ -1,6 +1,6 @@
 package edu.pse.beast.api.testrunner.propertycheck.jsonoutput.counter_examples;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Map;
 public class CBMCStructAssignment {
     private CBMCAssignmentType assignmentType;
     private String structName;
-    private Map<String, String> memberToAssignment = new HashMap<>();
+    private Map<String, String> memberToAssignment = new LinkedHashMap<String, String>();
     private String varInfo;
 
     private int sortNumber;

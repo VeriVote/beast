@@ -19,6 +19,10 @@ public class ThreadPoolRunner implements Runnable {
         this.workSupplier = workSupp;
     }
 
+    public final String getId() {
+        return this.id;
+    }
+
     @Override
     public final void run() {
         while (keepRunning) {

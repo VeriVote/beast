@@ -131,7 +131,7 @@ public class CBMCPropertyCheckWorkUnit implements WorkUnit {
                 final BufferedReader reader =
                         new BufferedReader(new InputStreamReader(process.getInputStream()));
                 String line;
-                final List<String> cbmcOutput = new ArrayList<>();
+                final List<String> cbmcOutput = new ArrayList<String>();
                 try {
                     while ((line = reader.readLine()) != null) {
                         callBack.onPropertyTestRawOutput(sessionUUID, description,

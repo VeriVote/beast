@@ -9,6 +9,8 @@ import java.util.List;
  * @author Holger Klein
  */
 public final class FormalPropertiesDescription {
+    private static final String LINE_BREAK = "\n";
+
     /** The code. */
     private String code;
 
@@ -19,6 +21,13 @@ public final class FormalPropertiesDescription {
      */
     public FormalPropertiesDescription(final String codeString) {
         this.code = codeString;
+    }
+
+    /**
+     * Instantiates a new formal properties description with empty code string.
+     */
+    public FormalPropertiesDescription() {
+        this.code = "";
     }
 
     /**
@@ -40,12 +49,19 @@ public final class FormalPropertiesDescription {
     }
 
     /**
+     * Sets the code of this property to the empty string.
+     */
+    public void setCode() {
+        this.code = "";
+    }
+
+    /**
      * Gets the code as list.
      *
      * @return the code as list
      */
     public List<String> getCodeAsList() {
-        final String[] split = code.split("\n");
+        final String[] split = code.split(LINE_BREAK);
         return Arrays.asList(split);
     }
 

@@ -13,13 +13,13 @@ public class CFile {
     private static final String LINE_BREAK = "\n";
     private static final String SEMICOLON = ";";
 
-    private List<CFunction> funcs = new ArrayList<>();
-    private List<CFunction> funcDecls = new ArrayList<>();
-    private List<CInclude> includes = new ArrayList<>();
-    private List<CDefine> defines = new ArrayList<>();
-    private List<CStruct> structs = new ArrayList<>();
-    private List<CTypeDef> typedefs = new ArrayList<>();
-    private List<String> declarations = new ArrayList<>();
+    private List<CFunction> funcs = new ArrayList<CFunction>();
+    private List<CFunction> funcDecls = new ArrayList<CFunction>();
+    private List<CInclude> includes = new ArrayList<CInclude>();
+    private List<CDefine> defines = new ArrayList<CDefine>();
+    private List<CStruct> structs = new ArrayList<CStruct>();
+    private List<CTypeDef> typedefs = new ArrayList<CTypeDef>();
+    private List<String> declarations = new ArrayList<String>();
 
     public final void addTypeDef(final CTypeDef typeDef) {
         this.typedefs.add(typeDef);
@@ -55,7 +55,7 @@ public class CFile {
     }
 
     public final String generateCode() {
-        final List<String> created = new ArrayList<>();
+        final List<String> created = new ArrayList<String>();
         for (final CInclude inc : includes) {
             created.add(inc.generateCode());
         }

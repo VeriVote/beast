@@ -1,7 +1,7 @@
 package edu.pse.beast.api.descr.c_electiondescription;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +21,9 @@ import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
 public class CElectionDescription {
     private static final String VOTING = "voting";
 
-    private List<CElectionDescriptionFunction> functions = new ArrayList<>();
-    private Set<String> functionNames = new HashSet<>();
+    private List<CElectionDescriptionFunction> functions =
+            new ArrayList<CElectionDescriptionFunction>();
+    private Set<String> functionNames = new LinkedHashSet<String>();
     private VotingSigFunction votingFunction;
 
     private String name;

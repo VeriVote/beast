@@ -34,7 +34,7 @@ public class CStruct {
             new LinkedHashMap<String, String>();
 
     private String name;
-    private List<CTypeNameBrackets> members = new ArrayList<>();
+    private List<CTypeNameBrackets> members = new ArrayList<CTypeNameBrackets>();
 
     public CStruct(final String nameString, final List<CTypeNameBrackets> memberList) {
         this.name = nameString;
@@ -61,7 +61,7 @@ public class CStruct {
     }
 
     public final String generateDefCode() {
-        final List<String> memberList = new ArrayList<>();
+        final List<String> memberList = new ArrayList<String>();
         for (final CTypeNameBrackets member : members) {
             memberList.add(member.generateCode() + SEMI);
         }

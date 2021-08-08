@@ -36,7 +36,6 @@ public class CBMCMainGenerator {
 
     private static final String LINE_BREAK = "\n";
     private static final String EQUALS = " = ";
-    private static final String INT = "int";
     private static final String UINT = "unsigned int ";
     private static final String NO_ARGS = "();";
     private static final String MAIN = "main";
@@ -79,13 +78,13 @@ public class CBMCMainGenerator {
             final String amount;
             switch (var.getVarType()) {
             case VOTER:
-                amount = SymbVarInitVoteHelper.getCurrentAmtVoter(i);
+                amount = SymbVarInitVoteHelper.getCurrentAmtVoter(options, i);
                 break;
             case CANDIDATE:
-                amount = SymbVarInitVoteHelper.getCurrentAmtCand(i);
+                amount = SymbVarInitVoteHelper.getCurrentAmtCand(options, i);
                 break;
             case SEAT:
-                amount = SymbVarInitVoteHelper.getCurrentAmtSeat(i);
+                amount = SymbVarInitVoteHelper.getCurrentAmtSeat(options, i);
                 break;
             default:
                 amount = "";
@@ -121,7 +120,7 @@ public class CBMCMainGenerator {
                                  final CBMCGeneratedCodeInfo cbmcGeneratedCode,
                                  final InitVoteHelper initVoteHelper,
                                  final Class<?> c) {
-        final List<String> code = new ArrayList<>();
+        final List<String> code = new ArrayList<String>();
 
         // init votes
         int highestVote =
@@ -172,7 +171,7 @@ public class CBMCMainGenerator {
         }
         code.add(MAIN_RETURN);
 
-        final CFunction mainFunction = new CFunction(MAIN, List.of(), INT);
+        final CFunction mainFunction = new CFunction(MAIN, List.of(), UINT.trim());
         mainFunction.setCode(code);
         return mainFunction;
     }

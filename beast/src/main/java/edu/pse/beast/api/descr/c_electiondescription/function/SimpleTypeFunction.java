@@ -55,7 +55,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     }
 
     private List<String> getArgs() {
-        final List<String> args = new ArrayList<>();
+        final List<String> args = new ArrayList<String>();
         for (int i = 0; i < argTypes.size(); ++i) {
             final CElectionSimpleTypes st = argTypes.get(i);
             final String argVar = argNames.get(i);

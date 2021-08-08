@@ -13,22 +13,25 @@ import edu.pse.beast.api.savingloading.cbmc_code.CBMCGeneratedCodeInfoSaverLoade
  *
  */
 public class CodeInfoSavingLoadingTest {
+    private static final String TEST_CODE_STRING = "asdasdasdasdasd";
     private static final String VOTE1 = "vote1";
     private static final String VOTE2 = "vote2";
     private static final String ELECT1 = "elect1";
     private static final String INTERSECTION1 = "intersection1";
+    private static final String INTERSECTION_INFO = "An Intersection";
+
     private static final String AMOUNT_VAR = "amt";
     private static final String LIST = "list";
 
     @Test
     public void testSavingLoadingGenCodeInfo() {
         final CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo = new CBMCGeneratedCodeInfo();
-        cbmcGeneratedCodeInfo.setCode("asdasdasdasdasd");
+        cbmcGeneratedCodeInfo.setCode(TEST_CODE_STRING);
         cbmcGeneratedCodeInfo.addVotingVariableName(1, VOTE1);
         cbmcGeneratedCodeInfo.addVotingVariableName(2, VOTE2);
         cbmcGeneratedCodeInfo.addElectVariableName(1, ELECT1);
         cbmcGeneratedCodeInfo.addedGeneratedVotingVar(INTERSECTION1);
-        cbmcGeneratedCodeInfo.addInfo(INTERSECTION1, "an intersection");
+        cbmcGeneratedCodeInfo.addInfo(INTERSECTION1, INTERSECTION_INFO);
         cbmcGeneratedCodeInfo.setVotesAmtMemberVarName(AMOUNT_VAR);
         cbmcGeneratedCodeInfo.setVotesListMemberVarName(LIST);
         cbmcGeneratedCodeInfo.setResultAmtMemberVarName(AMOUNT_VAR);

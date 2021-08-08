@@ -88,7 +88,7 @@ public class LoopBound {
     }
 
     public static final List<LoopBound> codeGenLoopboundList(final List<LoopBoundType> types) {
-        final List<LoopBound> created = new ArrayList<>();
+        final List<LoopBound> created = new ArrayList<LoopBound>();
         for (final LoopBoundType lbt : types) {
             created.add(codeGenLoopbound(lbt));
         }
@@ -98,16 +98,16 @@ public class LoopBound {
     public final String getUnwindString(final int v, final int c, final int s) {
         final int bound;
         switch (loopBoundType) {
-        case NECESSARY_LOOP_BOUND_AMT_VOTERS:
+        case NECESSARY_AMOUNT_VOTERS:
             bound = v + 1;
             break;
-        case NECESSARY_LOOP_BOUND_AMT_CANDS:
+        case NECESSARY_AMOUNT_CANDIDATES:
             bound = c + 1;
             break;
-        case NECESSARY_LOOP_BOUND_AMT_SEATS:
+        case NECESSARY_AMOUNT_SEATS:
             bound = s + 1;
             break;
-        case MANUALLY_ENTERED_INTEGER:
+        case MANUALLY_ENTERED:
             bound = manualBoundIfNeeded;
             break;
         default:

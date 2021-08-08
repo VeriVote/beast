@@ -30,7 +30,7 @@ public class CodeTemplateVoteSumForCandidate {
 
     private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
-                    Arrays.asList(LoopBoundType.LOOP_BOUND_AMT_VOTERS)
+                    Arrays.asList(LoopBoundType.AMOUNT_VOTERS)
                     );
 
     private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =
