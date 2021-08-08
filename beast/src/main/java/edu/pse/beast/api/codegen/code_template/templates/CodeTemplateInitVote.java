@@ -63,9 +63,6 @@ public class CodeTemplateInitVote {
     private static final Map<VotingInputTypes, String> TEMPLATES =
             new LinkedHashMap<VotingInputTypes, String>();
 
-    private static final Map<String, String> INIT_BOUNDS_TEMPLATE =
-            new LinkedHashMap<String, String>();
-
     public static final List<LoopBound> getLoopBounds(final VotingInputTypes key) {
         assert key != null;
         if (LOOP_BOUNDS.isEmpty() || !LOOP_BOUNDS.containsKey(key)) {
@@ -95,25 +92,5 @@ public class CodeTemplateInitVote {
             TEMPLATES.put(key, writer.toString());
         }
         return TEMPLATES.get(key);
-    }
-
-    public static final String getTemplate(final String key,
-                                           final Class<?> c) {
-        assert key != null;
-        if (INIT_BOUNDS_TEMPLATE.isEmpty() || !INIT_BOUNDS_TEMPLATE.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            INIT_BOUNDS_TEMPLATE.put(key, writer.toString());
-        }
-        return INIT_BOUNDS_TEMPLATE.get(key);
     }
 }

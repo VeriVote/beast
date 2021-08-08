@@ -20,15 +20,15 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
  *
  */
 public class SymbVarInitVoteHelper extends InitVoteHelper {
-    private static final String EMPTY = "";
-    private static final String INIT_BOUNDS_KEY = "INIT_BOUNDS";
-
     private static final String MAX_AMOUNT_CAND = "MAX_AMT_CAND";
     private static final String MAX_AMOUNT_VOTER = "MAX_AMT_VOTER";
     private static final String MAX_AMOUNT_SEAT = "MAX_AMT_SEAT";
     private static final String CURRENT_AMOUNT_VOTER = "CURRENT_AMT_VOTER";
     private static final String CURRENT_AMOUNT_CAND = "CURRENT_AMT_CAND";
     private static final String CURRENT_AMOUNT_SEAT = "CURRENT_AMT_SEAT";
+    private static final String COMPARISON = "LESS_OR_EQ";
+    private static final String COMPARISON_STRICT = "==";
+    private static final String COMPARISON_LEQ = "<=";
     private static final String VOTE_TYPE = "VOTE_TYPE";
     private static final String AMOUNT_MEMBER = "AMT_MEMBER";
     private static final String VOTE_NUMBER = "VOTE_NUMBER";
@@ -50,6 +50,15 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
         final String currentAmtCandVarName = getCurrentAmtCand(options, voteNumber);
         final String currentAmtSeatVarName = getCurrentAmtSeat(options, voteNumber);
 
+        final String code = CodeTemplateInitVote.getTemplate(votingInputType, this.getClass());
+
+        final String initComparison;
+        if (voteNumber == getFirstElectionNumber()) {
+            initComparison = COMPARISON_STRICT;
+        } else {
+            initComparison = COMPARISON_LEQ;
+        }
+
         final Map<String, String> replacementMap =
                 StringReplacementMap.genMap(
                         MAX_AMOUNT_CAND, options.getCbmcAmountMaxCandsVarName(),
@@ -64,15 +73,8 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
                         LIST_MEMBER, voteArrStruct.getListName(),
                         VAR_NAME, varName,
                         ASSUME, options.getCbmcAssumeName(),
-                        NONDET_UINT, options.getCbmcNondetUintName());
-        final String initBounds;
-        if (voteNumber == getFirstElectionNumber()) {
-            initBounds = CodeTemplateInitVote.getTemplate(INIT_BOUNDS_KEY, this.getClass());
-        } else {
-            initBounds = EMPTY;
-        }
-        final String code =
-                initBounds + CodeTemplateInitVote.getTemplate(votingInputType, this.getClass());
+                        NONDET_UINT, options.getCbmcNondetUintName(),
+                        COMPARISON, initComparison);
 
         final List<LoopBound> loopbounds = CodeTemplateInitVote.getLoopBounds(votingInputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);
