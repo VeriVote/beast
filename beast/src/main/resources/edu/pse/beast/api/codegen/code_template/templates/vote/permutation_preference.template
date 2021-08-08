@@ -1,21 +1,21 @@
 VOTE_TYPE GENERATED_VAR_NAME;
 {
     GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();
-    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == RHS.AMT_MEMBER);
+    ASSUME (GENERATED_VAR_NAME.AMT_MEMBER == RHS.AMT_MEMBER);
     unsigned int PERM[AMT_VOTERS];
     for (unsigned int i = 0; i < RHS.AMT_MEMBER && i < AMT_VOTERS; ++i) {
         PERM[i] = NONDET_UINT();
-        ASSUME(PERM[i] >= 0);
-        ASSUME(PERM[i] < RHS.AMT_MEMBER);
+        ASSUME (PERM[i] >= 0);
+        ASSUME (PERM[i] < RHS.AMT_MEMBER);
     }
     for (unsigned int i = 0; i < RHS.AMT_MEMBER - 1 && i < AMT_VOTERS; ++i) {
         for (unsigned int j = i + 1; j < RHS.AMT_MEMBER && j < AMT_VOTERS; ++j) {
-            ASSUME(PERM[i] != PERM[j]);
+            ASSUME (PERM[i] != PERM[j]);
         }
     }
     for (unsigned int i = 0; i < RHS.AMT_MEMBER - 1 && i < AMT_VOTERS; ++i) {
         for (unsigned int j = 0; j < AMT_CANDIDATES; ++j) {
-            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i][j] == RHS.LIST_MEMBER[PERM[i]][j]);
+            ASSUME (GENERATED_VAR_NAME.LIST_MEMBER[i][j] == RHS.LIST_MEMBER[PERM[i]][j]);
         }
     }
 }

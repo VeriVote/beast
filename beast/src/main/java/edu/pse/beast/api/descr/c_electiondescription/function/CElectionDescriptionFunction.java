@@ -62,17 +62,10 @@ public abstract class CElectionDescriptionFunction {
     }
 
     public final boolean allLoopsDescribed() {
-        boolean res;
-        if (extractedLoops.isEmpty()) {
-            res = AntlrCLoopParser.getAmtLoops(getCode()) == 0;
-        } else {
-            res = true;
-        }
+        boolean res = !extractedLoops.isEmpty() || AntlrCLoopParser.getAmtLoops(getCode()) == 0;
         for (final ExtractedCLoop l : extractedLoops) {
-            if (l.getParsedLoopBoundType() == LoopBoundType.MANUALLY_ENTERED
-                    && l.getManualInteger() == null) {
-                res = false;
-            }
+            res &= l.getParsedLoopBoundType() != LoopBoundType.MANUALLY_ENTERED
+                    || l.getManualInteger() != null;
         }
         return res;
     }

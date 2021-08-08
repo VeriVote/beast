@@ -20,6 +20,9 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
  *
  */
 public class SymbVarInitVoteHelper extends InitVoteHelper {
+    private static final String EMPTY = "";
+    private static final String INIT_BOUNDS_KEY = "INIT_BOUNDS";
+
     private static final String MAX_AMOUNT_CAND = "MAX_AMT_CAND";
     private static final String MAX_AMOUNT_VOTER = "MAX_AMT_VOTER";
     private static final String MAX_AMOUNT_SEAT = "MAX_AMT_SEAT";
@@ -62,15 +65,22 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
                         VAR_NAME, varName,
                         ASSUME, options.getCbmcAssumeName(),
                         NONDET_UINT, options.getCbmcNondetUintName());
-        final String code = CodeTemplateInitVote.getTemplate(votingInputType, this.getClass());
-        final List<LoopBound> loopbounds = CodeTemplateInitVote.getLoopBounds(votingInputType);
+        final String initBounds;
+        if (voteNumber == getFirstElectionNumber()) {
+            initBounds = CodeTemplateInitVote.getTemplate(INIT_BOUNDS_KEY, this.getClass());
+        } else {
+            initBounds = EMPTY;
+        }
+        final String code =
+                initBounds + CodeTemplateInitVote.getTemplate(votingInputType, this.getClass());
 
+        final List<LoopBound> loopbounds = CodeTemplateInitVote.getLoopBounds(votingInputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 
     @Override
-    public final int getHighestVote() {
+    public final int getLastElectionNumber() {
         return 0;
     }
 }

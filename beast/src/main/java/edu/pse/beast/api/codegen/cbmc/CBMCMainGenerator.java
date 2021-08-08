@@ -126,7 +126,7 @@ public class CBMCMainGenerator {
         int highestVote =
                 Math.max(expressions.preAstData.getHighestVoteOrElect(),
                          expressions.postAstData.getHighestVoteOrElect());
-        highestVote = Math.max(highestVote, initVoteHelper.getHighestVote());
+        highestVote = Math.max(highestVote, initVoteHelper.getLastElectionNumber());
 
         for (int i = 1; i <= highestVote; ++i) {
             code.add(initVoteHelper.generateCode(i, votingFunction.votes,

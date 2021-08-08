@@ -125,13 +125,10 @@ public class TestConfigCategoryGUIController
         propDescrChoiceBox.getSelectionModel().select(0);
 
         testConfigListView.getItems().clear();
-        if (beastWorkspace.getConfigsByElectionDescription().isEmpty()) {
-            gotoConfigButton.setDisable(true);
-            deleteConfigButton.setDisable(true);
-            return;
-        }
-        gotoConfigButton.setDisable(false);
-        deleteConfigButton.setDisable(false);
+        final boolean emptyConfigurationList =
+                beastWorkspace.getConfigsByElectionDescription().isEmpty();
+        gotoConfigButton.setDisable(emptyConfigurationList);
+        deleteConfigButton.setDisable(emptyConfigurationList);
 
         if (currentCategory.equals(descriptionSortCriterion)) {
             final Map<CElectionDescription, List<TestConfiguration>> map =

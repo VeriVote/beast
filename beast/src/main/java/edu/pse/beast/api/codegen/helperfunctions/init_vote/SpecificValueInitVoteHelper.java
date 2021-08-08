@@ -34,7 +34,7 @@ public class SpecificValueInitVoteHelper extends InitVoteHelper {
     }
 
     @Override
-    public final int getHighestVote() {
-        return votingParameters.getHighestVote();
+    public final int getLastElectionNumber() {
+        return votingParameters.getLastElectionNumber();
     }
 }

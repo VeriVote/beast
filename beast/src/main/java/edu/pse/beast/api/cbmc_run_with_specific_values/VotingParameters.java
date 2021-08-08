@@ -23,5 +23,5 @@ public interface VotingParameters {
                                       CBMCGeneratedCodeInfo cbmcGeneratedCodeInfo,
                                       String generatedVarName);
 
-    int getHighestVote();
+    int getLastElectionNumber();
 }

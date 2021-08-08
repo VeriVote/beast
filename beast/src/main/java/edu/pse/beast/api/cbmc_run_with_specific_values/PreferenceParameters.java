@@ -128,7 +128,7 @@ public class PreferenceParameters implements VotingParameters {
     }
 
     @Override
-    public final int getHighestVote() {
+    public final int getLastElectionNumber() {
         return 1;
     }
 }

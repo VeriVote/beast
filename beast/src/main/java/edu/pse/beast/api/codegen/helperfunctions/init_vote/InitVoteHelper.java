@@ -13,6 +13,7 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
  *
  */
 public abstract class InitVoteHelper {
+    private static final int INDEX_OF_FIRST_ELECTION = 1;
 
     public static String getVoteVarName(final CodeGenOptions options, final int voteNumber) {
         return options.getCurrentVotesVarName() + voteNumber;
@@ -37,5 +38,9 @@ public abstract class InitVoteHelper {
                                         CodeGenLoopBoundHandler loopBoundHandler,
                                         CBMCGeneratedCodeInfo codeInfo);
 
-    public abstract int getHighestVote();
+    public static int getFirstElectionNumber() {
+        return INDEX_OF_FIRST_ELECTION;
+    }
+
+    public abstract int getLastElectionNumber();
 }

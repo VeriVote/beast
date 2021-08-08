@@ -160,14 +160,18 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
         highestElect = 0;
     }
 
+    private void exitExp(final boolean value) {
+        nodeStack.push(new FalseTrueNode(value));
+    }
+
     @Override
     public void exitFalseExp(final FalseExpContext ctx) {
-        nodeStack.push(new FalseTrueNode(false));
+        exitExp(false);
     }
 
     @Override
     public void exitTrueExp(final TrueExpContext ctx) {
-        nodeStack.push(new FalseTrueNode(true));
+        exitExp(true);
     }
 
     @Override

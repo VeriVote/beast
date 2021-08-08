@@ -8,14 +8,14 @@ ELECT_TYPE GENERATED_VAR_NAME;
         }
         if (contains) {
             GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();
-            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS.LIST_MEMBER[i]);
-            count++;
+            ASSUME (GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS.LIST_MEMBER[i]);
+            ++count;
         }
     }
     GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();
-    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);
+    ASSUME (GENERATED_VAR_NAME.AMT_MEMBER == count);
     for (unsigned int i = count; i < MAX_AMT_CANDIDATES; ++i) {
         GENERATED_VAR_NAME.LIST_MEMBER[i] = NONDET_UINT();
-        ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[i] == INVALID_VOTE);
+        ASSUME (GENERATED_VAR_NAME.LIST_MEMBER[i] == INVALID_VOTE);
     }
 }

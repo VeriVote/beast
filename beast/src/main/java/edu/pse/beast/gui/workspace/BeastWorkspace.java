@@ -424,19 +424,16 @@ public class BeastWorkspace {
     private boolean saveAll() {
         final List<CElectionDescription> descrListCopy =
                 new ArrayList<CElectionDescription>(descrWithUnsavedChanges);
+        boolean res = true;
         for (final CElectionDescription descr : descrListCopy) {
-            if (descr == null || !saveDescr(descr)) {
-                return false;
-            }
+            res &= descr != null && saveDescr(descr);
         }
         final List<PreAndPostConditionsDescription> propDescrListCopy =
                 new ArrayList<PreAndPostConditionsDescription>(propDescrWithUnsavedChanges);
         for (final PreAndPostConditionsDescription propDescr : propDescrListCopy) {
-            if (!savePropDescr(propDescr)) {
-                return false;
-            }
+            res &= savePropDescr(propDescr);
         }
-        return true;
+        return res;
     }
 
     public final void setWorkspaceFile(final File file) {

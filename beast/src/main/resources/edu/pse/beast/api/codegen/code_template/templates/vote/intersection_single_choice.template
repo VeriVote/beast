@@ -5,10 +5,10 @@ VOTE_TYPE GENERATED_VAR_NAME;
         unsigned int eq = COMPARE_VARS;
         if (eq) {
             GENERATED_VAR_NAME.LIST_MEMBER[count] = NONDET_UINT();
-            ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS_VAR_NAME.LIST_MEMBER[i]);
-            count++;
+            ASSUME (GENERATED_VAR_NAME.LIST_MEMBER[count] == LHS_VAR_NAME.LIST_MEMBER[i]);
+            ++count;
         }
     }
     GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();
-    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);
+    ASSUME (GENERATED_VAR_NAME.AMT_MEMBER == count);
 }

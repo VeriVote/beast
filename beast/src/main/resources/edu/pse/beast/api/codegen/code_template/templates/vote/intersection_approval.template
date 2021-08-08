@@ -9,11 +9,11 @@ VOTE_TYPE GENERATED_VAR_NAME;
         if (eq) {
             for (unsigned int j = 0; j < AMT_CANDIDATES; ++j) {
                 GENERATED_VAR_NAME.LIST_MEMBER[count][j] = NONDET_UINT();
-                ASSUME(GENERATED_VAR_NAME.LIST_MEMBER[count][j] == LHS_VAR_NAME.LIST_MEMBER[i][j]);
+                ASSUME (GENERATED_VAR_NAME.LIST_MEMBER[count][j] == LHS_VAR_NAME.LIST_MEMBER[i][j]);
             }
-            count++;
+            ++count;
         }
     }
     GENERATED_VAR_NAME.AMT_MEMBER = NONDET_UINT();
-    ASSUME(GENERATED_VAR_NAME.AMT_MEMBER == count);
+    ASSUME (GENERATED_VAR_NAME.AMT_MEMBER == count);
 }

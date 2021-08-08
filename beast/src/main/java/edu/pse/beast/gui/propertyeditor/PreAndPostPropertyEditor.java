@@ -1,5 +1,6 @@
 package edu.pse.beast.gui.propertyeditor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -173,37 +174,27 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     }
 
     private void populateVariableList(final List<SymbolicCBMCVar> vars) {
-        if (vars == null) {
-            symbolicVariablesListView.getItems().clear();
-            addSymbolicVariableMenu.setDisable(true);
-            removeSymbolicVariableButton.setDisable(true);
-        } else {
-            symbolicVariablesListView.getItems().clear();
-            addSymbolicVariableMenu.setDisable(false);
-            removeSymbolicVariableButton.setDisable(false);
-            for (SymbolicCBMCVar v : vars) {
-                symbolicVariablesListView.getItems().add(v);
-            }
+        symbolicVariablesListView.getItems().clear();
+        addSymbolicVariableMenu.setDisable(vars == null);
+        removeSymbolicVariableButton.setDisable(vars == null);
+        for (SymbolicCBMCVar v : vars != null ? vars : new ArrayList<SymbolicCBMCVar>()) {
+            symbolicVariablesListView.getItems().add(v);
         }
     }
 
     public final void loadProperty(final PreAndPostConditionsDescription propDescr) {
         this.currentPropertyDescription = propDescr;
-        if (propDescr == null) {
-            preConditionEditor.setDisable(true);
-            postConditionEditor.setDisable(true);
-            populateVariableList(null);
-        } else {
-            preConditionEditor.setDisable(false);
+        preConditionEditor.setDisable(propDescr == null);
+        postConditionEditor.setDisable(propDescr == null);
+        if (propDescr != null) {
             preConditionEditor.clear();
             preConditionEditor.insertText(0,
                     propDescr.getPreConditionsDescription().getCode());
-            postConditionEditor.setDisable(false);
             postConditionEditor.clear();
             postConditionEditor.insertText(0,
                     propDescr.getPostConditionsDescription().getCode());
-            populateVariableList(propDescr.getCbmcVariables());
         }
+        populateVariableList(propDescr != null ? propDescr.getCbmcVariables() : null);
     }
 
     @Override
