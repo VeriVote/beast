@@ -81,7 +81,6 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
     private static final String UINT = "unsigned int ";
     private static final String ZERO = "0";
     private static final String ONE = "1";
-    private static final String LINE_BREAK = "\n";
 
     private static final String VOTE_COMPARE = "voteCompare";
     private static final String ELECT_COMPARE = "electCompare";

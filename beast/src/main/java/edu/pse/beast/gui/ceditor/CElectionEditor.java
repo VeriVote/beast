@@ -46,6 +46,9 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  */
 public class CElectionEditor implements WorkspaceUpdateListener {
     private static final double LINE_SCALE = 1.3;
+    private static final String EMPTY = "";
+    private static final String BLANK = " ";
+    private static final String COMMA = ", ";
     private static final String LINE_BREAK = "\n";
 
     private static final String ADD_FUNCTION = "Add Function";
@@ -314,9 +317,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             if (argNames.isEmpty()) {
                 return;
             }
-            String text = "";
+            String text = EMPTY;
             for (int i = 0; i < argNames.size(); ++i) {
-                text += argTypes.get(i) + " " + argNames.get(i) + ", ";
+                text += argTypes.get(i) + BLANK + argNames.get(i) + COMMA;
             }
             l.setText(text);
         };
