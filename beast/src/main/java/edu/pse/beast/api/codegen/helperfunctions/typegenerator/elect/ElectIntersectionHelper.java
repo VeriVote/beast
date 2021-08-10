@@ -34,8 +34,7 @@ public class ElectIntersectionHelper {
                                       final ElectionTypeCStruct electStruct,
                                       final VotingOutputTypes votingOutputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 StringReplacementMap.genMap(ELECT_TYPE, electStruct.getStruct().getName(),
                                             AMOUNT_MEMBER, electStruct.getAmountName(),
@@ -49,7 +48,8 @@ public class ElectIntersectionHelper {
                                             NONDET_UINT, options.getCbmcNondetUintName());
         final List<LoopBound> loopbounds =
                 CodeTemplateElectIntersection.getLoopBounds(votingOutputType);
-        final String code = CodeTemplateElectIntersection.getTemplate(votingOutputType, c);
+        final CodeTemplateElectIntersection electIntersection = new CodeTemplateElectIntersection();
+        final String code = electIntersection.getTemplate(votingOutputType);
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);

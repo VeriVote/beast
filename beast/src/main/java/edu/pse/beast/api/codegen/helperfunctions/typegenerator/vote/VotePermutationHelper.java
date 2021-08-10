@@ -36,8 +36,7 @@ public class VotePermutationHelper {
                                       final ElectionTypeCStruct voteArrStruct,
                                       final VotingInputTypes votingInputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(VOTE_TYPE, voteArrStruct.getStruct().getName(),
                        AMOUNT_MEMBER, voteArrStruct.getAmountName(),
@@ -52,7 +51,8 @@ public class VotePermutationHelper {
 
         final List<LoopBound> loopbounds =
                 CodeTemplateVoteComparison.getLoopBounds(votingInputType);
-        final String code = CodeTemplateVotePermutation.getTemplate(votingInputType, c);
+        final CodeTemplateVotePermutation votePermutation = new CodeTemplateVotePermutation();
+        final String code = votePermutation.getTemplate(votingInputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }

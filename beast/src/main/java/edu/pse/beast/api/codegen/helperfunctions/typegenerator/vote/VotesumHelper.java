@@ -31,8 +31,7 @@ public class VotesumHelper {
                                       final VoteArrayAccess voteAccess,
                                       final VotingInputTypes votingInputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replaceMap =
                 Map.of(GENERATED_VAR, generatedVarName,
                        AMOUNT_MEMBER, voteAccess.voteStruct.getAmountName(),
@@ -41,7 +40,8 @@ public class VotesumHelper {
                        AMOUNT_VOTERS, options.getCbmcAmountMaxVotersVarName(),
                        VOTE_VAR, VOTE_NUMBER.replace(NUMBER,
                                                      String.valueOf(voteAccess.voteNumber)));
-        final String code = CodeTemplateVoteSumForCandidate.getTemplate(votingInputType, c);
+        final CodeTemplateVoteSumForCandidate sumForCand = new CodeTemplateVoteSumForCandidate();
+        final String code = sumForCand.getTemplate(votingInputType);
         final List<LoopBound> loopbounds =
                 CodeTemplateVoteSumForCandidate.getLoopBounds(votingInputType);
 

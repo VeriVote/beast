@@ -2,13 +2,11 @@ package edu.pse.beast.api.savingloading;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
 import org.junit.Test;
@@ -18,6 +16,7 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
 import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
@@ -47,19 +46,13 @@ public class WorkspaceSaverLoaderTest {
     private static final String DESCR = "borda.belec";
     private static final String PROP = "reinforcement.bprp";
     private static final String WS = "test.beastws";
-    private static final String RESOURCES = "/savingloading/";
-    private static final String FILE_ENDING = ".template";
 
-    private static String getTemplate(final String key, final Class<?> c) {
-        final InputStream stream =
-                c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-        final StringWriter writer = new StringWriter();
-        try {
-            IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        return writer.toString();
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
+
+    private String getTemplate(final String key) {
+        assert key != null;
+        return PathHandler.getTemplate(key, TEMPLATES, NONE, this.getClass());
     }
 
     private static TestConfiguration createTestConfig(final CElectionDescription descr,
@@ -83,14 +76,13 @@ public class WorkspaceSaverLoaderTest {
 
     @Test
     public void testSavingLoading() throws IOException {
-        final Class<?> c = this.getClass();
         new BeastWorkspace();
 
         CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
                                          TEST);
-        final String code = getTemplate(CODE, c);
+        final String code = getTemplate(CODE);
         descr.getVotingFunction().setCode(code);
         descr.createNewVotingSigFunctionAndAdd(HELPER_FUNCTION);
 

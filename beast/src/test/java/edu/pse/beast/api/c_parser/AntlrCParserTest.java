@@ -1,15 +1,13 @@
 package edu.pse.beast.api.c_parser;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -18,8 +16,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
  *
  */
 public class AntlrCParserTest {
-    private static final String RESOURCES = "/codegen/";
-    private static final String FILE_ENDING = ".template";
+    private static final String EMPTY = "";
 
     private static final String BORDA = "borda";
     private static final String VOTES = "votes";
@@ -27,22 +24,17 @@ public class AntlrCParserTest {
     private static final String V = "V";
     private static final String VOTING = "voting";
 
-    private static String getTemplate(final String key, final Class<?> c) {
-        final InputStream stream =
-                c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-        final StringWriter writer = new StringWriter();
-        try {
-            IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        return writer.toString();
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
+
+    private String getTemplate(final String key) {
+        assert key != null;
+        return PathHandler.getTemplate(key, TEMPLATES, EMPTY, this.getClass());
     }
 
     @Test
     public void testAntlrCParser() {
-        final Class<?> c = this.getClass();
-        final String bordaCode = getTemplate(BORDA, c);
+        final String bordaCode = getTemplate(BORDA);
 
         final CodeGenOptions options = new CodeGenOptions();
         options.setCurrentVotesVarName(VOTES);

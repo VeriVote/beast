@@ -104,6 +104,7 @@ public class CFunction {
         created.add(signature() + BLANK + BRACE_OP);
         created.addAll(indent(code));
         created.add(BRACE_CL);
+        created.add(NONE);
         return String.join(LINE_BREAK, created);
     }
 
@@ -128,6 +129,30 @@ public class CFunction {
             this.preAstData = precondition;
             this.postAstData = postcondition;
             this.symCbmcVars = symbolicVariables;
+        }
+    }
+
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Holger Klein
+     *
+     */
+    public static final class Parameter {
+        private static final String DEFAULT_PARAM_NAME = "x";
+
+        public final String type;
+        public final String name;
+
+        public Parameter(final String parameterType,
+                         final String parameterName) {
+            this.type = parameterType;
+            this.name = parameterName;
+        }
+
+        public Parameter(final String parameterType) {
+            this.type = parameterType;
+            this.name = DEFAULT_PARAM_NAME;
         }
     }
 

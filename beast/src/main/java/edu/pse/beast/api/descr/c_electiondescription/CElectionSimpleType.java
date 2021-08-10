@@ -6,7 +6,7 @@ package edu.pse.beast.api.descr.c_electiondescription;
  * @author Holger Klein
  *
  */
-public enum CElectionSimpleTypes {
+public enum CElectionSimpleType {
     INT, UNSIGNED_INT, FLOAT, DOUBLE, VOID, BOOL;
 
     private static final String BLANK = " ";

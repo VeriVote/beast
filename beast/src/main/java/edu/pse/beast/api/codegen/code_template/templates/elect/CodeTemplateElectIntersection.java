@@ -1,20 +1,14 @@
 package edu.pse.beast.api.codegen.code_template.templates.elect;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
-
 import edu.pse.beast.api.codegen.loopbounds.LoopBound;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -23,10 +17,7 @@ import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
  *
  */
 public class CodeTemplateElectIntersection {
-    private static final String RESOURCES =
-            "/edu/pse/beast/api/codegen/code_template/templates/elect/";
     private static final String FILE_PREFIX = "intersection_";
-    private static final String FILE_ENDING = ".template";
 
     private static final List<LoopBound> LOOP_BOUNDS_CANDIDATE_LIST =
             LoopBound.codeGenLoopboundList(
@@ -43,32 +34,12 @@ public class CodeTemplateElectIntersection {
 
     public static final List<LoopBound> getLoopBounds(final VotingOutputTypes key) {
         assert key != null;
-        if (LOOP_BOUNDS.isEmpty() || !LOOP_BOUNDS.containsKey(key)) {
-            // throw new NotImplementedException();
-            return Arrays.asList();
-        }
-        return LOOP_BOUNDS.get(key);
+        return PathHandler.getLoopBounds(key, LOOP_BOUNDS);
     }
 
     // TODO: PARLIAMENT_STACK, SINGLE_CANDIDATE etc.
-    public static final String getTemplate(final VotingOutputTypes key,
-                                           final Class<?> c) {
+    public final String getTemplate(final VotingOutputTypes key) {
         assert key != null;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES
-                            + FILE_PREFIX + key.name().toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+        return PathHandler.getTemplate(key, TEMPLATES, FILE_PREFIX, this.getClass());
     }
 }

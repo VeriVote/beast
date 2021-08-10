@@ -1,19 +1,13 @@
 package edu.pse.beast.api.codegen.helperfunctions;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -22,10 +16,8 @@ import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper
  *
  */
 public class PerformVoteHelper {
-    private static final String RESOURCES =
-            "/edu/pse/beast/api/codegen/helperfunctions/";
     private static final String FILE_KEY = "PERFORM_VOTE";
-    private static final String FILE_ENDING = ".template";
+    private static final String EMPTY = "";
 
     private static final String RESULT = "result";
     private static final String ELECT_TYPE = "ELECT_TYPE";
@@ -40,24 +32,9 @@ public class PerformVoteHelper {
     private static final Map<String, String> TEMPLATES =
             new LinkedHashMap<String, String>();
 
-    public static final String getTemplate(final String key,
-                                           final Class<?> c) {
+    public final String getTemplate(final String key) {
         assert key != null;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+        return PathHandler.getTemplate(key, TEMPLATES, EMPTY, this.getClass());
     }
 
     public static String getResultVarName(final int voteNumber) {
@@ -69,13 +46,13 @@ public class PerformVoteHelper {
                                       final ElectionTypeCStruct voteStruct,
                                       final CodeGenOptions options,
                                       final String votingFunctionName,
-                                      final CBMCGeneratedCodeInfo cbmcGeneratedCode,
-                                      final Class<?> c) {
+                                      final CBMCGeneratedCodeInfo cbmcGeneratedCode) {
         final String resultVarName = getResultVarName(votingCallNumber);
         cbmcGeneratedCode.addElectVariableName(votingCallNumber, resultVarName);
         final String voteVarName = SymbVarInitVoteHelper.getVoteVarName(options, votingCallNumber);
 
-        String code = getTemplate(FILE_KEY, c);
+        final PerformVoteHelper performVote = new PerformVoteHelper();
+        String code = performVote.getTemplate(FILE_KEY);
         code = code.replaceAll(ELECT_TYPE, voteStruct.getStruct().getName());
         code = code.replaceAll(GENERATED_VAR, resultVarName);
         code = code.replaceAll(VOTE_FUNC_NAME, votingFunctionName);

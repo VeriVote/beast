@@ -24,13 +24,13 @@ public class IsElectEmptyHelper {
                                       final ElectionTypeCStruct electStruct,
                                       final VotingOutputTypes votingOutputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(GENERATED_VAR, generatedVarName,
                        TESTED_VAR, testedVarName,
                        AMOUNT_MEMBER, electStruct.getAmountName());
-        final String code = CodeTemplateElectEmpty.getTemplate(c);
+        final CodeTemplateElectEmpty electEmpty = new CodeTemplateElectEmpty();
+        final String code = electEmpty.getTemplate();
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }
 }

@@ -32,13 +32,11 @@ public class ComparisonHelper {
                                       final CElectionVotingType type,
                                       final CodeGenOptions options,
                                       final String assumeOrAssert,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final int dimension = type.getListDimensions();
-        final String code =
-                CodeTemplateComparison.getTemplate(dimension,
-                                                   UN_EQ.equals(comparison.symbol),
-                                                   c);
+        final CodeTemplateComparison comparator = new CodeTemplateComparison();
+        final String code = comparator.getTemplate(dimension,
+                                                   UN_EQ.equals(comparison.symbol));
         final Map<String, String> replacementMap = new LinkedHashMap<String, String>();
         if (dimension == 1) {
             final LoopBoundType loopBoundType;

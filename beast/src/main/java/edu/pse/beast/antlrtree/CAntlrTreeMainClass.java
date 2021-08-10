@@ -1,9 +1,5 @@
 package edu.pse.beast.antlrtree;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,9 +11,8 @@ import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
 
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 
@@ -28,9 +23,8 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
  *
  */
 public class CAntlrTreeMainClass {
-    private static final String RESOURCES = "/edu/pse/beast/antlrtree/";
+    private static final String EMPTY = "";
     private static final String FILE_KEY = "LOOP";
-    private static final String FILE_ENDING = ".template";
 
     private static final Map<String, String> TEMPLATES =
             new LinkedHashMap<String, String>();
@@ -51,28 +45,14 @@ public class CAntlrTreeMainClass {
     //         + "        }" + LINE_BREAK
     //         + "    }";
 
-    public static final String getTemplate(final String key,
-                                           final Class<?> c) {
+    public final String getTemplate(final String key) {
         assert key != null;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+        return PathHandler.getTemplate(key, TEMPLATES, EMPTY, this.getClass());
     }
 
     public static void main(final String[] args) {
-        final String loop = getTemplate(FILE_KEY, args.getClass());
+        final CAntlrTreeMainClass antlrTree = new CAntlrTreeMainClass();
+        final String loop = antlrTree.getTemplate(FILE_KEY);
         final CLexer l = new CLexer(CharStreams.fromString(loop));
         final CommonTokenStream ts = new CommonTokenStream(l);
         final CParser p = new CParser(ts);

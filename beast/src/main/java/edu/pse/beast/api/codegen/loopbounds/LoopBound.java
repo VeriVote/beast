@@ -1,16 +1,11 @@
 package edu.pse.beast.api.codegen.loopbounds;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -19,9 +14,8 @@ import org.apache.commons.lang3.NotImplementedException;
  *
  */
 public class LoopBound {
-    private static final String RESOURCES = "/edu/pse/beast/api/codegen/loopbounds/";
     private static final String FILE_KEY = "UNWIND";
-    private static final String FILE_ENDING = ".template";
+    private static final String EMPTY = "";
 
     private static final String FUNC_NAME = "FUNC_NAME";
     private static final String IDX = "IDX";
@@ -60,25 +54,10 @@ public class LoopBound {
         this.manualBoundIfNeeded = manualBoundValue;
     }
 
-    public static final String getTemplate(final String key,
+    public final String getTemplate(final String key,
                                            final Class<?> c) {
         assert key != null;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES
-                            + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+        return PathHandler.getTemplate(key, TEMPLATES, EMPTY, this.getClass());
     }
 
     public static final LoopBound codeGenLoopbound(final LoopBoundType type) {

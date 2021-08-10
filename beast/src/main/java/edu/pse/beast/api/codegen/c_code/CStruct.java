@@ -1,16 +1,11 @@
 package edu.pse.beast.api.codegen.c_code;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -19,10 +14,9 @@ import org.apache.commons.lang3.NotImplementedException;
  *
  */
 public class CStruct {
-    private static final String RESOURCES = "/edu/pse/beast/api/codegen/c_code/";
-    private static final String FILE_ENDING = ".template";
     private static final String FILE_KEY = "TYPEDEF";
 
+    private static final String EMPTY = "";
     private static final String LINE_BREAK = "\n";
     private static final String INDENT = "    ";
     private static final String SEMI = ";";
@@ -41,23 +35,8 @@ public class CStruct {
         this.members = memberList;
     }
 
-    public static final String getTemplate(final Class<?> c) {
-        final String key = FILE_KEY;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+    public final String getTemplate() {
+        return PathHandler.getTemplate(FILE_KEY, TEMPLATES, EMPTY, this.getClass());
     }
 
     public final String generateDefCode() {
@@ -65,8 +44,7 @@ public class CStruct {
         for (final CTypeNameBrackets member : members) {
             memberList.add(member.generateCode() + SEMI);
         }
-        final Class<?> c = this.getClass();
-        return getTemplate(c)
+        return getTemplate()
                 .replaceAll(STRUCT_NAME, name)
                 .replace(MEMBER_LIST, String.join(LINE_BREAK + INDENT, memberList));
     }

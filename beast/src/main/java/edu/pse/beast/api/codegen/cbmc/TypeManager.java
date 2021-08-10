@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.api.codegen.c_code.CStruct;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 
 /**
@@ -27,7 +27,7 @@ public class TypeManager {
         this.elecTypeCStructs.add(electionTypeCStruct);
     }
 
-    public static final String simpleTypeToCType(final CElectionSimpleTypes simpleType) {
+    public static final String simpleTypeToCType(final CElectionSimpleType simpleType) {
         return simpleType != null
                 ? simpleType.name().replaceAll(UNDERSCORE, BLANK).toLowerCase()
                         : null;

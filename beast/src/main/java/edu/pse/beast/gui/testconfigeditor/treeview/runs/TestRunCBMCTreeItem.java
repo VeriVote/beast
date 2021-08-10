@@ -1,15 +1,9 @@
 package edu.pse.beast.gui.testconfigeditor.treeview.runs;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
-
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
@@ -21,8 +15,7 @@ import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemType;
  *
  */
 public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
-    private static final String RESOURCES = "/edu/pse/beast/gui/testconfigeditor/treeview/runs/";
-    private static final String FILE_ENDING = ".template";
+    private static final String EMPTY = "";
     private static final String FILE_KEY = "PARAMETERS";
 
     private static final String AMOUNT_VOTER = "AMT_VOTER";
@@ -44,23 +37,8 @@ public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
         this.run = tr;
     }
 
-    public static final String getTemplate(final Class<?> c) {
-        final String key = FILE_KEY;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+    public final String getTemplate() {
+        return PathHandler.getTemplate(FILE_KEY, TEMPLATES, EMPTY, this.getClass());
     }
 
     public final CBMCTestRunWithSymbolicVars getRun() {
@@ -69,8 +47,7 @@ public class TestRunCBMCTreeItem extends TestConfigTreeItemSuper {
 
     @Override
     public final String toString() {
-        final Class<?> c = this.getClass();
-        String template = getTemplate(c);
+        String template = getTemplate();
         if (run.isDescrChanged()) {
             template += DELIMIT + ELECTION_FUNCTION + HAS_CHANGED;
         }

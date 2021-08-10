@@ -50,7 +50,8 @@ public class SymbVarInitVoteHelper extends InitVoteHelper {
         final String currentAmtCandVarName = getCurrentAmtCand(options, voteNumber);
         final String currentAmtSeatVarName = getCurrentAmtSeat(options, voteNumber);
 
-        final String code = CodeTemplateInitVote.getTemplate(votingInputType, this.getClass());
+        final CodeTemplateInitVote initVotes = new CodeTemplateInitVote();
+        final String code = initVotes.getTemplate(votingInputType);
 
         final String initComparison;
         if (voteNumber == getFirstElectionNumber()) {

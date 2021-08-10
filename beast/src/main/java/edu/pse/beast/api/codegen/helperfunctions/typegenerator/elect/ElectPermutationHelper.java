@@ -34,8 +34,7 @@ public class ElectPermutationHelper {
                                       final ElectionTypeCStruct electStruct,
                                       final VotingOutputTypes votingOutputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(ELECT_TYPE, electStruct.getStruct().getName(),
                        AMOUNT_MEMBER, electStruct.getAmountName(),
@@ -46,7 +45,8 @@ public class ElectPermutationHelper {
                        RHS, varName,
                        PERM, PERMUTATION_INDICES,
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName());
-        final String code = CodeTemplateElectPermutation.getTemplate(votingOutputType, c);
+        final CodeTemplateElectPermutation electPermutation = new CodeTemplateElectPermutation();
+        final String code = electPermutation.getTemplate(votingOutputType);
         final List<LoopBound> loopbounds =
                 CodeTemplateElectPermutation.getLoopBounds(votingOutputType);
 

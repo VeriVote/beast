@@ -26,7 +26,7 @@ import org.fxmisc.richtext.CodeArea;
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
@@ -292,18 +292,18 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     // TODO(Holger) make this nicer, add error checking for wrong var names etc
     private void addSimpleFunction() {
         final TextField nameField = new TextField();
-        final ChoiceBox<CElectionSimpleTypes> returnTypeChoiceBox =
-                new ChoiceBox<CElectionSimpleTypes>();
-        returnTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
+        final ChoiceBox<CElectionSimpleType> returnTypeChoiceBox =
+                new ChoiceBox<CElectionSimpleType>();
+        returnTypeChoiceBox.getItems().addAll(CElectionSimpleType.values());
         returnTypeChoiceBox.getSelectionModel().selectFirst();
         final Label argumentsLabel = new Label();
 
-        final List<CElectionSimpleTypes> argTypes = new ArrayList<CElectionSimpleTypes>();
+        final List<CElectionSimpleType> argTypes = new ArrayList<CElectionSimpleType>();
         final List<String> argNames = new ArrayList<String>();
         final TextField argsNameTextField = new TextField();
-        final ChoiceBox<CElectionSimpleTypes> argsTypeChoiceBox =
-                new ChoiceBox<CElectionSimpleTypes>();
-        argsTypeChoiceBox.getItems().addAll(CElectionSimpleTypes.values());
+        final ChoiceBox<CElectionSimpleType> argsTypeChoiceBox =
+                new ChoiceBox<CElectionSimpleType>();
+        argsTypeChoiceBox.getItems().addAll(CElectionSimpleType.values());
         argsTypeChoiceBox.getSelectionModel().selectFirst();
 
         final Button addArgButton = new Button(ADD_ARGUMENT);
@@ -345,7 +345,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
             // TODO add error checking here to make sure the function data is
             // valid
-            final CElectionSimpleTypes returnType =
+            final CElectionSimpleType returnType =
                     returnTypeChoiceBox.getSelectionModel().getSelectedItem();
             final String name = nameField.getText();
             final SimpleTypeFunction function =

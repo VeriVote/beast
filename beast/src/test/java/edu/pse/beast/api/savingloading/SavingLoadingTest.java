@@ -5,12 +5,10 @@ import static org.junit.Assert.assertNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
@@ -20,11 +18,12 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
 import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -33,8 +32,7 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
  *
  */
 public class SavingLoadingTest {
-    private static final String RESOURCES = "/codegen/";
-    private static final String FILE_ENDING = ".template";
+    private static final String EMPTY = "";
 
     private static final String TESTFILES = "testfiles";
     private static final String REINFORCE = "reinforce";
@@ -56,16 +54,12 @@ public class SavingLoadingTest {
     private static final String V2_VAR = "v2";
     private static final String C_VAR = "c";
 
-    private static String getTemplate(final String key, final Class<?> c) {
-        final InputStream stream =
-                c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-        final StringWriter writer = new StringWriter();
-        try {
-            IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        return writer.toString();
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
+
+    private String getTemplate(final String key) {
+        assert key != null;
+        return PathHandler.getTemplate(key, TEMPLATES, EMPTY, this.getClass());
     }
 
     @Test
@@ -74,14 +68,14 @@ public class SavingLoadingTest {
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
                                          VotingOutputTypes.CANDIDATE_LIST,
                                          BORDA);
-        final String bordaCode = getTemplate(BORDA, this.getClass());
+        final String bordaCode = getTemplate(BORDA);
         descr.getVotingFunction().setCode(bordaCode);
 
         final SimpleTypeFunction simpleFunc =
                 new SimpleTypeFunction(FUNC_NAME,
-                                       List.of(CElectionSimpleTypes.BOOL,
-                                               CElectionSimpleTypes.DOUBLE),
-                                       List.of(I_VAR, J_VAR), CElectionSimpleTypes.FLOAT);
+                                       List.of(CElectionSimpleType.BOOL,
+                                               CElectionSimpleType.DOUBLE),
+                                       List.of(I_VAR, J_VAR), CElectionSimpleType.FLOAT);
         descr.addSimpleFunction(simpleFunc);
 
         final CodeGenOptions options = new CodeGenOptions();
@@ -128,9 +122,8 @@ public class SavingLoadingTest {
 
     @Test
     public void testSavingLoadingOfPreAndPostConditionDescription() throws IOException {
-        final Class<?> clazz = this.getClass();
-        final String pre = getTemplate(REINFORCE + PRE, clazz);
-        final String post = getTemplate(REINFORCE + POST, clazz);
+        final String pre = getTemplate(REINFORCE + PRE);
+        final String post = getTemplate(REINFORCE + POST);
 
         final List<PreAndPostConditionsDescription> propDecsr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post);

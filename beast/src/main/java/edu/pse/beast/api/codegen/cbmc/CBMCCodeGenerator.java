@@ -14,7 +14,7 @@ import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
@@ -33,8 +33,15 @@ import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescript
  *
  */
 public class CBMCCodeGenerator {
+    private static final String NONE = "";
     private static final String BLANK = " ";
+    private static final String COMMA = ",";
     private static final String SEMICOLON = ";";
+    private static final String PAREN_OPEN = "(";
+    private static final String PAREN_CLOSE = ")";
+
+    private static final String TWO = "2";
+    private static final String CPROVER_PREFIX = "__CPROVER_";
     private static final String ASSUME = "assume";
     private static final String ASSERT = "assert";
     private static final String RETURN = "return";
@@ -51,20 +58,36 @@ public class CBMCCodeGenerator {
     private static final String RESULT_STRUCT_NAME = "resultStruct";
     private static final String AMOUNT_RESULT = "amtResult";
     private static final String AMOUNT_VOTES = "amtVotes";
-    private static final String BEGIN_USER_CODE = "// user generated code";
-    private static final String END_USER_CODE = "// end user generated code";
+    private static final String BEGIN_USER_CODE = "\n// user generated code";
+    private static final String END_USER_CODE = "// end user generated code\n";
 
     private static final String INVALID_VOTE = "INVALID_VOTE";
     private static final String INVALID_RESULT = "INVALID_RESULT";
 
-    private static final String ASSUME_X = ASSUME + "(x)";
-    private static final String CPROVER_ASSUME_X = "__CPROVER_" + ASSUME_X;
+    private static final String X = "x";
+    private static final String Y = "y";
+    private static final String ARRAY = "[]";
 
-    private static final String UNSIGNED_INT = "unsigned int";
+    private static final String ASSUME_X = ASSUME + paren(X);
+    private static final String ASSERT_X_Y = ASSERT + paren(X + COMMA + BLANK + Y);
+    private static final String ASSERT2_X_Y = ASSERT + TWO + paren(X + COMMA + BLANK + Y);
+    private static final String CPROVER_ASSUME = CPROVER_PREFIX + ASSUME;
+    private static final String CPROVER_ASSERT = CPROVER_PREFIX + ASSERT;
+    private static final String CPROVER_ASSUME_X = CPROVER_PREFIX + ASSUME_X;
+    private static final String CPROVER_ASSERT_X_Y = CPROVER_PREFIX + ASSERT_X_Y;
+
+    private static final String VOID = "void";
+    private static final String CHAR = "char";
+    private static final String INT = "int";
+    private static final String UNSIGNED_INT = "unsigned" + BLANK + INT;
     private static final String CBMC_UINT_FUNC_NAME = "nondet_uint";
     private static final String CBMC_INT_FUNC_NAME = "nondet_int";
 
     private static final String COLOUR = "0xFFFFFFFE";
+
+    private static String paren(final String arg) {
+        return PAREN_OPEN + arg + PAREN_CLOSE;
+    }
 
     private static void addSimpleFunctionDecls(final CElectionDescription descr,
                                                final CFile cfile,
@@ -93,12 +116,18 @@ public class CBMCCodeGenerator {
         created.include(STDINT_H);
         created.include(ASSERT_H);
 
+        created.addFunctionDecl(VOID, CPROVER_ASSUME, new CFunction.Parameter(INT));
+        created.addFunctionDecl(VOID, CPROVER_ASSERT,
+                                List.of(new CFunction.Parameter(INT),
+                                        new CFunction.Parameter(CHAR, Y + ARRAY)));
+
+        created.define(ASSERT2_X_Y, CPROVER_ASSERT_X_Y);
         created.define(ASSUME_X, CPROVER_ASSUME_X);
         created.define(INVALID_VOTE, COLOUR);
         created.define(INVALID_RESULT, COLOUR);
 
         created.addFunctionDecl(UNSIGNED_INT, CBMC_UINT_FUNC_NAME, List.of());
-        created.addFunctionDecl(UNSIGNED_INT, CBMC_INT_FUNC_NAME, List.of());
+        created.addFunctionDecl(INT, CBMC_INT_FUNC_NAME, List.of());
 
         addSimpleFunctionDecls(descr, created, options);
         addSimpleFunctionDefs(descr, created, options);
@@ -182,7 +211,7 @@ public class CBMCCodeGenerator {
                                           final CodeGenLoopBoundHandler loopBoundHandler,
                                           final Class<?> c) {
         final String uint =
-                TypeManager.simpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT) + BLANK;
+                TypeManager.simpleTypeToCType(CElectionSimpleType.UNSIGNED_INT) + BLANK;
         final String structArg =
                 input.struct.getStruct().getName() + BLANK + input.structVarName;
         final String currentAmtVoterArg = uint + options.getCurrentAmountVotersVarName();
@@ -200,7 +229,7 @@ public class CBMCCodeGenerator {
                 new VotingFunctionHelper.CNames(func.getName(), func.getVotesArrayName(),
                                                 input.structVarName);
         code.add(VotingFunctionHelper.generateVoteArrayCopy(votingNames, input.type, input.struct,
-                                                            options, loopBoundHandler, c));
+                                                            options, loopBoundHandler));
         code.add(FunctionToC
                 .votingTypeToC(CElectionVotingType.of(func.getOutputType()),
                                                       func.getResultArrayName(),
@@ -218,7 +247,7 @@ public class CBMCCodeGenerator {
                                                 output.structVarName);
         code.add(VotingFunctionHelper.generateVoteResultCopy(resultNames,
                                                              output.type, output.struct,
-                                                             options, loopBoundHandler, c));
+                                                             options, loopBoundHandler));
         code.add(RETURN + BLANK + output.structVarName + SEMICOLON);
         created.setCode(code);
         return created;
@@ -236,8 +265,8 @@ public class CBMCCodeGenerator {
                                           codeGenOptions.getCbmcAmountMaxCandsVarName(),
                                           codeGenOptions.getCbmcAmountMaxSeatsVarName());
         final String counterType =
-                TypeManager.simpleTypeToCType(CElectionSimpleTypes.UNSIGNED_INT);
-        final CTypeNameBrackets counterMember = new CTypeNameBrackets(counterType, amtName, "");
+                TypeManager.simpleTypeToCType(CElectionSimpleType.UNSIGNED_INT);
+        final CTypeNameBrackets counterMember = new CTypeNameBrackets(counterType, amtName, NONE);
         final List<CTypeNameBrackets> members = List.of(listMember, counterMember);
         final CStruct cstruct = new CStruct(structName, members);
         return new ElectionTypeCStruct(resultNakedArr, cstruct, listName, amtName);

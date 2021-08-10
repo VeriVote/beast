@@ -1,16 +1,9 @@
 package edu.pse.beast.api.codegen.cbmc;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
 import edu.pse.beast.api.codegen.c_code.CFunction;
@@ -19,6 +12,7 @@ import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
 import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
 import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * This generator uses the {@link CodeGenASTVisitor} to generate the
@@ -29,11 +23,10 @@ import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
  *
  */
 public class CBMCMainGenerator {
-    private static final String RESOURCES = "/edu/pse/beast/api/codegen/cbmc/";
-    private static final String FILE_ENDING = ".template";
     private static final String BOUND = "BOUND";
     private static final String FILE_KEY = BOUND;
 
+    private static final String EMPTY = "";
     private static final String LINE_BREAK = "\n";
     private static final String EQUALS = " = ";
     private static final String UINT = "unsigned int ";
@@ -52,14 +45,13 @@ public class CBMCMainGenerator {
      * @param var the bound variable
      * @param options the code generation options for statement name
      * @param bound the upper bound
-     * @param c the current class for reading from the template file
      * @return assumption about upper variable bound
      */
     private static String replace(final SymbolicCBMCVar var,
                                   final CodeGenOptions options,
-                                  final String bound,
-                                  final Class<?> c) {
-        return getTemplate(c)
+                                  final String bound) {
+        final CBMCMainGenerator generator = new CBMCMainGenerator();
+        return generator.getTemplate()
                 .replaceAll(ASSUME, options.getCbmcAssumeName())
                 .replaceAll(VAR_NAME, var.getName())
                 .replaceAll(BOUND, bound);
@@ -89,28 +81,8 @@ public class CBMCMainGenerator {
             default:
                 amount = "";
             }
-            code.add(replace(var, options, amount, c));
+            code.add(replace(var, options, amount));
         }
-    }
-
-    public static final String getTemplate(final Class<?> c) {
-        final String key = FILE_KEY;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES
-                            + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
     }
 
     public static CFunction main(final CFunction.PropertyExpressions expressions,
@@ -158,7 +130,7 @@ public class CBMCMainGenerator {
             code.add(PerformVoteHelper.generateCode(i, votingFunction.votes,
                                                     votingFunction.result, options,
                                                     votingFunction.function,
-                                                    cbmcGeneratedCode, c));
+                                                    cbmcGeneratedCode));
         }
 
         // postconditions
@@ -174,5 +146,9 @@ public class CBMCMainGenerator {
         final CFunction mainFunction = new CFunction(MAIN, List.of(), UINT.trim());
         mainFunction.setCode(code);
         return mainFunction;
+    }
+
+    public final String getTemplate() {
+        return PathHandler.getTemplate(FILE_KEY, TEMPLATES, EMPTY, this.getClass());
     }
 }

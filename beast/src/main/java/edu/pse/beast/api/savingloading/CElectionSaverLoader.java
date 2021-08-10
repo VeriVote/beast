@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.c_parser.ExtractedCLoop;
 import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
@@ -57,17 +57,17 @@ public class CElectionSaverLoader {
         final String name = json.getString(SIMPLE_FUNC_NAME_KEY);
         final String code = json.getString(FUNC_CODE_KEY);
         final JSONArray argTypesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_TYPES_KEY);
-        final List<CElectionSimpleTypes> argTypes = new ArrayList<CElectionSimpleTypes>();
+        final List<CElectionSimpleType> argTypes = new ArrayList<CElectionSimpleType>();
         for (int i = 0; i < argTypesJsonArr.length(); ++i) {
-            argTypes.add(CElectionSimpleTypes.valueOf(argTypesJsonArr.getString(i)));
+            argTypes.add(CElectionSimpleType.valueOf(argTypesJsonArr.getString(i)));
         }
         final JSONArray argNamesJsonArr = json.getJSONArray(SIMPLE_FUNC_ARG_NAMES_KEY);
         final List<String> argNames = new ArrayList<String>();
         for (int i = 0; i < argNamesJsonArr.length(); ++i) {
             argNames.add(argNamesJsonArr.getString(i));
         }
-        final CElectionSimpleTypes returnType =
-                CElectionSimpleTypes.valueOf(json.getString(SIMPLE_FUNC_RETURN_TYPE));
+        final CElectionSimpleType returnType =
+                CElectionSimpleType.valueOf(json.getString(SIMPLE_FUNC_RETURN_TYPE));
         final SimpleTypeFunction simpleFunction =
                 new SimpleTypeFunction(name, argTypes, argNames, returnType);
         simpleFunction.setCode(code);

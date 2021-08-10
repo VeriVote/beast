@@ -31,8 +31,7 @@ public class VoteComparisonHelper {
                                       final ElectionTypeCStruct comparedType,
                                       final VotingInputTypes votingInputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(GENERATED_VAR_NAME, generatedVarName,
                        LHS_VAR_NAME, comparison.lhsVarName,
@@ -41,11 +40,9 @@ public class VoteComparisonHelper {
                        AMOUNT_MAX_CAND_VAR_NAME, options.getCbmcAmountMaxCandsVarName(),
                        COMPARE_SYMBOL, comparison.symbol,
                        LIST_NAME, comparedType.getListName());
-
+        final CodeTemplateVoteComparison voteComparison = new CodeTemplateVoteComparison();
         final String code =
-                CodeTemplateVoteComparison.getTemplate(votingInputType,
-                                                       NOT_EQUAL.equals(comparison.symbol),
-                                                       c);
+                voteComparison.getTemplate(votingInputType, NOT_EQUAL.equals(comparison.symbol));
         final List<LoopBound> loopbounds =
                 CodeTemplateVoteComparison.getLoopBounds(votingInputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);

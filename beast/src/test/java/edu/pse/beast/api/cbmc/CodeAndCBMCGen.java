@@ -1,12 +1,9 @@
 package edu.pse.beast.api.cbmc;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import edu.pse.beast.api.CreationHelper;
@@ -21,6 +18,7 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.api.paths.PathHandler;
 import edu.pse.beast.api.testrunner.propertycheck.processes.process_handler.CBMCArgumentHelper;
 
 /**
@@ -35,25 +33,19 @@ public class CodeAndCBMCGen {
     private static final String REINFORCE = "reinforce";
     private static final String PRE = "_pre";
     private static final String POST = "_post";
-    private static final String RESOURCES = "/codegen/";
-    private static final String FILE_ENDING = ".template";
+    private static final String EMPTY = "";
 
-    private static String getTemplate(final String key, final Class<?> c) {
-        final InputStream stream =
-                c.getResourceAsStream(RESOURCES + key.toLowerCase() + FILE_ENDING);
-        final StringWriter writer = new StringWriter();
-        try {
-            IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        return writer.toString();
+    private static final Map<String, String> TEMPLATES =
+            new LinkedHashMap<String, String>();
+
+    private String getTemplate(final String key) {
+        assert key != null;
+        return PathHandler.getTemplate(key, TEMPLATES, EMPTY, this.getClass());
     }
 
     @Test
     public void generateCodeAndCBMCCall() {
-        final Class<?> clazz = this.getClass();
-        final String bordaCode = getTemplate(BORDA, clazz);
+        final String bordaCode = getTemplate(BORDA);
 
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputTypes.PREFERENCE,
@@ -66,8 +58,8 @@ public class CodeAndCBMCGen {
                 AntlrCLoopParser.findLoops(VOTING, bordaCode, codeGenOptions);
         descr.getVotingFunction().setExtractedLoops(loops);
 
-        final String pre = getTemplate(REINFORCE + PRE, clazz);
-        final String post = getTemplate(REINFORCE + POST, clazz);
+        final String pre = getTemplate(REINFORCE + PRE);
+        final String post = getTemplate(REINFORCE + POST);
         final PreAndPostConditionsDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post).get(0);
 

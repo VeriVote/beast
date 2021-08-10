@@ -1,20 +1,14 @@
 package edu.pse.beast.api.descr.c_electiondescription.function;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
-
 import edu.pse.beast.api.codegen.c_code.CFunction;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
+import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -23,10 +17,7 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleTypes;
  *
  */
 public class SimpleTypeFunction extends CElectionDescriptionFunction {
-    private static final String RESOURCES =
-            "/edu/pse/beast/api/descr/c_electiondescription/function/";
     private static final String FILE_PREFIX = "simple_";
-    private static final String FILE_ENDING = ".template";
 
     private static final String BLANK = " ";
     private static final String COMMA = ",";
@@ -40,14 +31,14 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     private static final Map<String, String> TEMPLATES =
             new LinkedHashMap<String, String>();
 
-    private List<CElectionSimpleTypes> argTypes;
+    private List<CElectionSimpleType> argTypes;
     private List<String> argNames;
-    private CElectionSimpleTypes outputType;
+    private CElectionSimpleType outputType;
 
     public SimpleTypeFunction(final String name,
-                              final List<CElectionSimpleTypes> argTypeList,
+                              final List<CElectionSimpleType> argTypeList,
                               final List<String> argNameList,
-                              final CElectionSimpleTypes outType) {
+                              final CElectionSimpleType outType) {
         super(name);
         this.argTypes = argTypeList;
         this.argNames = argNameList;
@@ -57,7 +48,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
     private List<String> getArgs() {
         final List<String> args = new ArrayList<String>();
         for (int i = 0; i < argTypes.size(); ++i) {
-            final CElectionSimpleTypes st = argTypes.get(i);
+            final CElectionSimpleType st = argTypes.get(i);
             final String argVar = argNames.get(i);
             args.add(st.toString() + BLANK + argVar);
         }
@@ -76,31 +67,14 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
         return args;
     }
 
-    public static final String getTemplate(final String key,
-                                           final Class<?> c) {
+    public final String getTemplate(final String key) {
         assert key != null;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES
-                            + FILE_PREFIX + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+        return PathHandler.getTemplate(key, TEMPLATES, FILE_PREFIX, this.getClass());
     }
 
     @Override
     public final String getDeclCString(final CodeGenOptions codeGenOptions) {
-        final Class<?> c = this.getClass();
-        return getTemplate(DECLARE_KEY, c)
+        return getTemplate(DECLARE_KEY)
                 .replaceAll(RETURN_TYPE, outputType.toString())
                 .replaceAll(NAME, getName())
                 .replaceAll(ARGS, getArgString());
@@ -108,8 +82,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 
     @Override
     public final String getReturnText(final CodeGenOptions codeGenOptions) {
-        final Class<?> c = this.getClass();
-        return getTemplate(RETURN_KEY, c);
+        return getTemplate(RETURN_KEY);
     }
 
     public final CFunction toCFunc() {
@@ -120,7 +93,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
         return created;
     }
 
-    public final CElectionSimpleTypes getOutputType() {
+    public final CElectionSimpleType getOutputType() {
         return outputType;
     }
 
@@ -128,7 +101,7 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
         return argNames;
     }
 
-    public final List<CElectionSimpleTypes> getArgTypes() {
+    public final List<CElectionSimpleType> getArgTypes() {
         return argTypes;
     }
 }

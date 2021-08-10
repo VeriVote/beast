@@ -80,8 +80,7 @@ public class VoteIntersectionHelper {
                                                   final ElectionTypeCStruct voteArrStruct,
                                                   final VotingInputTypes votingInputType,
                                                   final CodeGenOptions options,
-                                                  final CodeGenLoopBoundHandler loopBoundHandler,
-                                                  final Class<?> c) {
+                                                  final CodeGenLoopBoundHandler loopBoundHandler) {
         final String comparison = generateComparison(intersectedVotesVarNames, voteArrStruct);
         final Map<String, String> replacementMap =
                 Map.of(COMPARE_VARS, comparison,
@@ -94,7 +93,8 @@ public class VoteIntersectionHelper {
                        AMOUNT_CANDIDATES, options.getCbmcAmountMaxCandsVarName(),
                        ASSUME, options.getCbmcAssumeName(),
                        NONDET_UINT, options.getCbmcNondetUintName());
-        final String code = CodeTemplateVoteIntersection.getTemplate(votingInputType, c);
+        final CodeTemplateVoteIntersection voteIntersection = new CodeTemplateVoteIntersection();
+        final String code = voteIntersection.getTemplate(votingInputType);
         final List<LoopBound> loopbounds =
                 CodeTemplateVoteIntersection.getLoopBounds(votingInputType);
 

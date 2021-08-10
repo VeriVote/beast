@@ -31,8 +31,7 @@ public class ElectComparisonHelper {
                                       final ElectionTypeCStruct comparedType,
                                       final VotingOutputTypes votingOutputType,
                                       final CodeGenOptions options,
-                                      final CodeGenLoopBoundHandler loopBoundHandler,
-                                      final Class<?> c) {
+                                      final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(GENERATED_VAR, generatedVarName,
                        LHS_VAR, comparison.lhsVarName,
@@ -43,7 +42,8 @@ public class ElectComparisonHelper {
                        LIST_MEMBER, comparedType.getListName());
 
         final boolean uneq = NOT_EQUAL.equals(comparison.symbol);
-        final String code = CodeTemplateElectComparison.getTemplate(votingOutputType, uneq, c);
+        final CodeTemplateElectComparison electComparison = new CodeTemplateElectComparison();
+        final String code = electComparison.getTemplate(votingOutputType, uneq);
         final List<LoopBound> loopbounds =
                 CodeTemplateElectComparison.getLoopBounds(votingOutputType);
         loopBoundHandler.pushMainLoopBounds(loopbounds);

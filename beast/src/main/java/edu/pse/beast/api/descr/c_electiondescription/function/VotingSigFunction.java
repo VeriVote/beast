@@ -1,14 +1,7 @@
 package edu.pse.beast.api.descr.c_electiondescription.function;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.NotImplementedException;
 
 import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
@@ -16,6 +9,7 @@ import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
 import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
 import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
+import edu.pse.beast.api.paths.PathHandler;
 
 /**
  * TODO: Write documentation.
@@ -24,10 +18,7 @@ import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
  *
  */
 public class VotingSigFunction extends CElectionDescriptionFunction {
-    private static final String RESOURCES =
-            "/edu/pse/beast/api/descr/c_electiondescription/function/";
     private static final String FILE_PREFIX = "voting_";
-    private static final String FILE_ENDING = ".template";
 
     private static final String DECLARE_KEY = "DECLARATION";
     private static final String RETURN_KEY = "RETURN";
@@ -68,25 +59,9 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
         return SQUARE_LEFT + s + SQUARE_RIGHT;
     }
 
-    public static final String getTemplate(final String key,
-                                           final Class<?> c) {
+    public final String getTemplate(final String key) {
         assert key != null;
-        if (TEMPLATES.isEmpty() || !TEMPLATES.containsKey(key)) {
-            final InputStream stream =
-                    c.getResourceAsStream(RESOURCES
-                            + FILE_PREFIX + key.toLowerCase() + FILE_ENDING);
-            if (stream == null) {
-                throw new NotImplementedException();
-            }
-            final StringWriter writer = new StringWriter();
-            try {
-                IOUtils.copy(stream, writer, StandardCharsets.UTF_8);
-            } catch (final IOException e) {
-                e.printStackTrace();
-            }
-            TEMPLATES.put(key, writer.toString());
-        }
-        return TEMPLATES.get(key);
+        return PathHandler.getTemplate(key, TEMPLATES, FILE_PREFIX, this.getClass());
     }
 
     public final VotingInputTypes getInputType() {
@@ -145,7 +120,6 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     // Probably together with the rest of code generation.
     @Override
     public final String getDeclCString(final CodeGenOptions codeGenOptions) {
-        final Class<?> c = this.getClass();
         final String votersVarName = codeGenOptions.getCurrentAmountVotersVarName();
         final String candsVarName = codeGenOptions.getCurrentAmountCandsVarName();
         final String seatsVarName = codeGenOptions.getCurrentAmountSeatsVarName();
@@ -163,7 +137,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
         final CTypeNameBrackets resultType =
                 FunctionToC.votingTypeToC(CElectionVotingType.of(outputType), RESULT_ARRAY_NAME,
                                           votersVarName, candsVarName, seatsVarName);
-        return getTemplate(DECLARE_KEY, c)
+        return getTemplate(DECLARE_KEY)
                 .replaceAll(RETURN_TYPE, returnType)
                 .replaceAll(ARG, arg)
                 .replaceAll(NAME, getName())
@@ -180,8 +154,7 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
 
     @Override
     public final String getReturnText(final CodeGenOptions codeGenOptions) {
-        final Class<?> c = this.getClass();
-        return getTemplate(RETURN_KEY, c)
+        return getTemplate(RETURN_KEY)
                 .replaceAll(RETURN_NAME, RESULT_ARRAY_NAME);
     }
 }

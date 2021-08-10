@@ -38,8 +38,7 @@ public class VotingFunctionHelper {
                                                 final VotingOutputTypes votingOutputType,
                                                 final ElectionTypeCStruct outputStruct,
                                                 final CodeGenOptions options,
-                                                final CodeGenLoopBoundHandler loopBoundHandler,
-                                                final Class<?> c) {
+                                                final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(RESULT_TYPE, outputStruct.getStruct().getName(),
                        RESULT_VAR, names.structVar,
@@ -50,7 +49,9 @@ public class VotingFunctionHelper {
                        ASSUME, options.getCbmcAssumeName(),
                        LIST_MEMBER, outputStruct.getListName(),
                        RESULT_ARR, names.arrayVar);
-        final String code = CodeTemplateVotingFunctionResultCopy.getTemplate(votingOutputType, c);
+        final CodeTemplateVotingFunctionResultCopy resultCopy =
+                new CodeTemplateVotingFunctionResultCopy();
+        final String code = resultCopy.getTemplate(votingOutputType);
         final List<LoopBound> loopbounds =
                 CodeTemplateVotingFunctionResultCopy.getLoopBounds(votingOutputType);
 
@@ -62,8 +63,7 @@ public class VotingFunctionHelper {
                                                final VotingInputTypes votingInputType,
                                                final ElectionTypeCStruct inputStruct,
                                                final CodeGenOptions options,
-                                               final CodeGenLoopBoundHandler loopBoundHandler,
-                                               final Class<?> c) {
+                                               final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =
                 Map.of(VOTE_ARR, names.arrayVar,
                        AMOUNT_VOTERS, options.getCbmcAmountMaxVotersVarName(),
@@ -76,8 +76,9 @@ public class VotingFunctionHelper {
                        LIST_MEMBER, inputStruct.getListName());
         final List<LoopBound> loopbounds =
                 CodeTemplateVotingFunctionVoteArrayInit.getLoopBounds(votingInputType);
-        final String code =
-                CodeTemplateVotingFunctionVoteArrayInit.getTemplate(votingInputType, c);
+        final CodeTemplateVotingFunctionVoteArrayInit voteArrayInit =
+                new CodeTemplateVotingFunctionVoteArrayInit();
+        final String code = voteArrayInit.getTemplate(votingInputType);
         loopBoundHandler.addVotingInitLoopBounds(names.votingFunction, loopbounds);
         return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
     }

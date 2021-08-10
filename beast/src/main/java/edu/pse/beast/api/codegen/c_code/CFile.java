@@ -1,6 +1,7 @@
 package edu.pse.beast.api.codegen.c_code;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -10,6 +11,8 @@ import java.util.List;
  *
  */
 public class CFile {
+    private static final String EMPTY = "";
+    private static final String BLANK = " ";
     private static final String LINE_BREAK = "\n";
     private static final String SEMICOLON = ";";
 
@@ -18,16 +21,14 @@ public class CFile {
     private List<CInclude> includes = new ArrayList<CInclude>();
     private List<CDefine> defines = new ArrayList<CDefine>();
     private List<CStruct> structs = new ArrayList<CStruct>();
-    private List<CTypeDef> typedefs = new ArrayList<CTypeDef>();
     private List<String> declarations = new ArrayList<String>();
 
-    public final void addTypeDef(final CTypeDef typeDef) {
-        this.typedefs.add(typeDef);
-    }
-
-    public final void addTypeDef(final List<CTypeDef> typeDefs) {
-        for (final CTypeDef td : typeDefs) {
-            addTypeDef(td);
+    private static <T> void endList(final List<String> list) {
+        if (list != null
+                && !list.isEmpty()
+                && !list.get(list.size() - 1).isBlank()
+                && !list.get(list.size() - 1).endsWith(LINE_BREAK)) {
+            list.add(EMPTY);
         }
     }
 
@@ -35,10 +36,28 @@ public class CFile {
         this.funcs.add(func);
     }
 
+    private void addFunctionDecl(final String returnType,
+                                 final List<String> args,
+                                 final String name) {
+        funcDecls.add(new CFunction(name, args, returnType));
+    }
+
     public final void addFunctionDecl(final String returnType,
                                       final String name,
-                                      final List<String> args) {
-        funcDecls.add(new CFunction(name, args, returnType));
+                                      final List<CFunction.Parameter> params) {
+        final List<String> args = new LinkedList<String>();
+        for (final CFunction.Parameter param
+                : params != null
+                ? params : new LinkedList<CFunction.Parameter>()) {
+            args.add(param.type + BLANK + param.name);
+        }
+        addFunctionDecl(returnType, args, name);
+    }
+
+    public final void addFunctionDecl(final String returnType,
+                                      final String name,
+                                      final CFunction.Parameter param) {
+        this.addFunctionDecl(returnType, name, List.of(param));
     }
 
     public final void include(final String filePath) {
@@ -54,41 +73,35 @@ public class CFile {
         structs.add(struct);
     }
 
+    public final void declare(final String declCString) {
+        declarations.add(declCString + SEMICOLON);
+    }
+
     public final String generateCode() {
         final List<String> created = new ArrayList<String>();
         for (final CInclude inc : includes) {
             created.add(inc.generateCode());
         }
-        created.add(LINE_BREAK);
-        for (final CDefine def : defines) {
-            created.add(def.generateCode());
-        }
-        created.add(LINE_BREAK);
-        for (final CTypeDef tdef : typedefs) {
-            created.add(tdef.generateCode());
-        }
-        created.add(LINE_BREAK);
-        for (final String decl : declarations) {
-            created.add(decl);
-        }
-        created.add(LINE_BREAK);
+        endList(created);
         for (final CStruct s : structs) {
             created.add(s.generateDefCode());
         }
-        created.add(LINE_BREAK);
+        endList(created);
+        for (final String decl : declarations) {
+            created.add(decl);
+        }
+        endList(created);
         for (final CFunction func : funcDecls) {
             created.add(func.generateDeclCode());
         }
-        created.add(LINE_BREAK);
+        endList(created);
+        for (final CDefine def : defines) {
+            created.add(def.generateCode());
+        }
+        endList(created);
         for (final CFunction func : funcs) {
             created.add(func.generateDefCode());
-            created.add(LINE_BREAK);
         }
-        created.add(LINE_BREAK);
         return String.join(LINE_BREAK, created);
-    }
-
-    public final void declare(final String declCString) {
-        declarations.add(declCString + SEMICOLON + LINE_BREAK);
     }
 }
