@@ -27,11 +27,11 @@ public class PathHandler implements RelativePathConverter {
 
     private static final String USER_DIR = "user.dir";
     private static final String TEMPLATE_ENDING = ".template";
-    private static final String REL_PATH_TO_SAVE_FILES = "./saveFiles/";
+    private static final String REL_PATH_TO_SAVE_FILES = "./save/";
 
     private static final String REL_PATH_TO_WORKSPACE_SAVE_FILES = "./workspaces/";
-    private static final String REL_PATH_TO_DESCR_SAVE_FILES = "./electionDescriptions/";
-    private static final String REL_PATH_TO_PROP_DESCR_SAVE_FILES = "./propertyDescriptions/";
+    private static final String REL_PATH_TO_DESCR_SAVE_FILES = "./methods/";
+    private static final String REL_PATH_TO_PROP_DESCR_SAVE_FILES = "./properties/";
     private static final String REL_PATH_TO_OPTIONS_FILE = "./.beastoptions";
 
     private String baseDir;

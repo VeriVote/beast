@@ -1,0 +1,1 @@
+{"config_list":[],"descr_files":["save/methods/borda.belec"],"code_gen_options":{"amount_voter_var_name":"MAX_VOTERS","amount_cands_var_name":"MAX_CANDIDATES","amount_seats_var_name":"MAX_SEATS"},"prop_descr_files":["save/properties/reinforcement.bprp"]}
