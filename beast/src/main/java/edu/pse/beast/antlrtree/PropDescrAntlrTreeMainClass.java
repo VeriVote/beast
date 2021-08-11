@@ -10,8 +10,8 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.api.property.antlr.FormalPropertyDescriptionLexer;
+import edu.pse.beast.api.property.antlr.FormalPropertyDescriptionParser;
 
 /**
  * TODO: Write documentation.

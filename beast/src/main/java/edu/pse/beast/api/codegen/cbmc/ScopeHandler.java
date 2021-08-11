@@ -2,7 +2,7 @@ package edu.pse.beast.api.codegen.cbmc;
 
 import java.util.Stack;
 
-import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar.CBMCVarType;
+import edu.pse.beast.api.codegen.cbmc.SymbolicVariable.VariableType;
 
 /**
  * TODO: Write documentation.
@@ -21,12 +21,12 @@ public class ScopeHandler {
         scopes.pop();
     }
 
-    public final void add(final SymbolicCBMCVar var) {
+    public final void add(final SymbolicVariable var) {
         scopes.peek().add(var);
     }
 
-    public final CBMCVarType getType(final String name) {
-        CBMCVarType type = null;
+    public final VariableType getType(final String name) {
+        VariableType type = null;
         for (int i = 0; i < scopes.size() && type == null; ++i) {
             type = scopes.get(scopes.size() - 1 - i).getType(name);
         }

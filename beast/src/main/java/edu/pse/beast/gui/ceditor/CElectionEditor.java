@@ -23,16 +23,16 @@ import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
-import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.loopbounds.LoopBoundType;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
-import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
-import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.descr.c_electiondescription.function.CelectionDescriptionFunctionType;
-import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
+import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
+import edu.pse.beast.api.cparser.ExtractedCLoop;
+import edu.pse.beast.api.method.CElectionDescription;
+import edu.pse.beast.api.method.CElectionSimpleType;
+import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.method.function.CelectionDescriptionFunctionType;
+import edu.pse.beast.api.method.function.SimpleTypeFunction;
+import edu.pse.beast.api.method.function.VotingSigFunction;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
@@ -94,7 +94,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     private MenuButton addFunctionMenuButton;
     private Button removeFunctionButton;
 
-    private Button testLoopBoundsButton;
+    private Button computeLoopBoundsButton;
 
     private VirtualizedScrollPane<CEditorCodeElement> cEditorVirtualizedScrollPane;
 
@@ -120,10 +120,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         });
         setupNewElectionButtons();
 
-        this.testLoopBoundsButton = loopBoundEditor.generateButton;
+        this.computeLoopBoundsButton = loopBoundEditor.generateButton;
         loopBoundEditor.generateButton.setOnAction(e -> {
-            workspace.findLoopBounds(currentDescription,
-                    currentDisplayedFunction);
+            workspace.findLoopBounds(currentDescription, currentDisplayedFunction);
         });
         loopBoundEditor.editButton.setDisable(true);
         loopBoundEditor.editButton.setOnAction(e -> {
@@ -509,7 +508,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
     private void displayLoopBounds(final List<ExtractedCLoop> loops) {
         loopBounds.getItems().clear();
-        testLoopBoundsButton.setDisable(loops == null);
+        computeLoopBoundsButton.setDisable(loops == null);
         if (loops != null) {
             loopBounds.getItems().addAll(loops);
         }

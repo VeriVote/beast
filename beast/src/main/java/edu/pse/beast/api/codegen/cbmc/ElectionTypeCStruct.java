@@ -1,7 +1,7 @@
 package edu.pse.beast.api.codegen.cbmc;
 
-import edu.pse.beast.api.codegen.c_code.CStruct;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
+import edu.pse.beast.api.codegen.ccode.CStruct;
+import edu.pse.beast.api.method.CElectionVotingType;
 
 /**
  * TODO: Write documentation.

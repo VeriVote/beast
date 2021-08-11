@@ -4,33 +4,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.cbmc_run_with_specific_values.VotingParameters;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.SpecificValueInitVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileData;
-import edu.pse.beast.api.testrunner.code_files.CBMCCodeFileGenerator;
-import edu.pse.beast.api.testrunner.propertycheck.CBMCPropertyCheckWorkUnit;
-import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
+import edu.pse.beast.api.codegen.init.InitVoteHelper;
+import edu.pse.beast.api.codegen.init.SymbVarInitVoteHelper;
+import edu.pse.beast.api.codegen.init.TestInitVoteHelper;
+import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.io.PathHandler;
+import edu.pse.beast.api.method.CElectionDescription;
+import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.runner.codefile.CodeFileData;
+import edu.pse.beast.api.runner.codefile.CodeFileGenerator;
+import edu.pse.beast.api.runner.propertycheck.PropertyCheckWorkUnit;
+import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
+import edu.pse.beast.api.test.VotingParameters;
+import edu.pse.beast.gui.configurationeditor.configuration.cbmc.Configuration;
 
 /**
  * This class can run work units and create cbmc code files or a list of
- * CBMC test runs given a range of voter, seat and candidate amounts.
+ * CBMC runs given a range of voter, seat and candidate amounts.
  *
  * @author Holger Klein
  *
  */
 public class BEAST {
     private List<Thread> createdThreads = new ArrayList<Thread>();
-    private List<CBMCPropertyCheckWorkUnit> wus = new ArrayList<CBMCPropertyCheckWorkUnit>();
+    private List<PropertyCheckWorkUnit> wus = new ArrayList<PropertyCheckWorkUnit>();
 
-    public final void runWorkUnit(final CBMCPropertyCheckWorkUnit wu) {
+    public final void runWorkUnit(final PropertyCheckWorkUnit wu) {
         wus.add(wu);
         final Thread t = new Thread(new Runnable() {
             @Override
@@ -42,67 +42,51 @@ public class BEAST {
         createdThreads.add(t);
     }
 
-    public final void stopRun(final CBMCTestRunWithSymbolicVars run) {
+    public final void stopRun(final PropertyCheckRun run) {
         run.getWorkUnit().interrupt();
     }
 
     public final void shutdown() {
-        for (final CBMCPropertyCheckWorkUnit wu : wus) {
+        for (final PropertyCheckWorkUnit wu : wus) {
             wu.shutdown();
         }
     }
 
-    public final CBMCCodeFileData
-                    generateCodeFileCBMCPropertyTest(final CElectionDescription descr,
-                                                     final PreAndPostConditionsDescription
-                                                             propDescr,
-                                                     final CodeGenOptions codeGenOptions,
-                                                     final PathHandler pathHandler)
-                                                             throws IOException {
+    public final CodeFileData generateCodeFilePropertyCheck(final CElectionDescription descr,
+                                                            final PreAndPostConditions propDescr,
+                                                            final CodeGenOptions codeGenOpts,
+                                                            final PathHandler handler)
+                                                                    throws IOException {
         final InitVoteHelper initVoteHelper = new SymbVarInitVoteHelper();
-        return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
-                                                        codeGenOptions,
-                                                        pathHandler,
-                                                        initVoteHelper,
-                                                        this.getClass());
+        return CodeFileGenerator.createCodeFileCheck(descr, propDescr, codeGenOpts,
+                                                     handler, initVoteHelper);
     }
 
-    public final CBMCCodeFileData
-                    generateCodeFileCBMCSpecificInput(final CElectionDescription descr,
-                                                      final PreAndPostConditionsDescription
-                                                              propDescr,
-                                                      final CodeGenOptions codeGenOptions,
-                                                      final PathHandler pathHandler,
-                                                      final VotingParameters votingParameters)
-                                                              throws IOException {
-        final InitVoteHelper initVoteHelper =
-                new SpecificValueInitVoteHelper(votingParameters);
-        return CBMCCodeFileGenerator.createCodeFileTest(descr, propDescr,
-                                                        codeGenOptions,
-                                                        pathHandler,
-                                                        initVoteHelper,
-                                                        this.getClass());
+    public final CodeFileData generateCodeFileCheck(final CElectionDescription descr,
+                                                    final PreAndPostConditions propDescr,
+                                                    final CodeGenOptions codeGenOptions,
+                                                    final PathHandler pathHandler,
+                                                    final VotingParameters args)
+                                                            throws IOException {
+        final InitVoteHelper initVoteHelper = new TestInitVoteHelper(args);
+        return CodeFileGenerator.createCodeFileCheck(descr, propDescr, codeGenOptions,
+                                                     pathHandler, initVoteHelper);
     }
 
-    public final List<CBMCTestRunWithSymbolicVars>
-                    generateTestRuns(final CBMCCodeFileData cbmcCodeFile,
-                                     final CBMCTestConfiguration testConfig,
-                                     final CodeGenOptions codeGenOptions) {
-        final List<CBMCTestRunWithSymbolicVars> runs = new ArrayList<CBMCTestRunWithSymbolicVars>();
-        for (int v = testConfig.getMinVoters(); v <= testConfig.getMaxVoters(); ++v) {
-            for (int c = testConfig.getMinCands(); c <= testConfig.getMaxCands(); ++c) {
-                for (int s = testConfig.getMinSeats(); s <= testConfig.getMaxSeats(); ++s) {
+    public final List<PropertyCheckRun> generateCheckRuns(final CodeFileData codeFile,
+                                                          final Configuration config,
+                                                          final CodeGenOptions codeGenOpts) {
+        final List<PropertyCheckRun> runs = new ArrayList<PropertyCheckRun>();
+        for (int v = config.getMinVoters(); v <= config.getMaxVoters(); ++v) {
+            for (int c = config.getMinCands(); c <= config.getMaxCands(); ++c) {
+                for (int s = config.getMinSeats(); s <= config.getMaxSeats(); ++s) {
                     final CodeGenLoopBoundHandler loopbounds =
-                            cbmcCodeFile.getCodeInfo().getLoopBoundHandler();
-                    final CBMCTestRunWithSymbolicVars.BoundValues bounds =
-                            new CBMCTestRunWithSymbolicVars.BoundValues(c, s, v);
-                    runs.add(new CBMCTestRunWithSymbolicVars(bounds,
-                                                             codeGenOptions,
-                                                             loopbounds,
-                                                             cbmcCodeFile,
-                                                             testConfig.getDescr(),
-                                                             testConfig.getPropDescr(),
-                                                             testConfig));
+                            codeFile.getCodeInfo().getLoopBoundHandler();
+                    final PropertyCheckRun.BoundValues bounds =
+                            new PropertyCheckRun.BoundValues(c, s, v);
+                    runs.add(new PropertyCheckRun(bounds, codeGenOpts, loopbounds,
+                                                  codeFile, config.getDescr(),
+                                                  config.getPropDescr(), config));
                 }
             }
         }

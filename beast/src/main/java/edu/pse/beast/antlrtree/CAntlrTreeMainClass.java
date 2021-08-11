@@ -12,9 +12,9 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
-import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
+import edu.pse.beast.api.io.PathHandler;
+import edu.pse.beast.api.method.antlr.CLexer;
+import edu.pse.beast.api.method.antlr.CParser;
 
 /**
  * TODO: Write documentation.

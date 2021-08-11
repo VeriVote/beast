@@ -3,24 +3,24 @@ package edu.pse.beast.api.codegen.cbmc;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.codegen.booleanExpAst.BooleanCodeToAST;
-import edu.pse.beast.api.codegen.booleanExpAst.BooleanExpASTData;
-import edu.pse.beast.api.codegen.c_code.CFile;
-import edu.pse.beast.api.codegen.c_code.CFunction;
-import edu.pse.beast.api.codegen.c_code.CStruct;
-import edu.pse.beast.api.codegen.c_code.CTypeNameBrackets;
-import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.helperfunctions.VotingFunctionHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionSimpleType;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
-import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
-import edu.pse.beast.api.descr.c_electiondescription.to_c.FunctionToC;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.api.codegen.VotingFunctionHelper;
+import edu.pse.beast.api.codegen.ast.BooleanCodeToAST;
+import edu.pse.beast.api.codegen.ast.BooleanExpASTData;
+import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
+import edu.pse.beast.api.codegen.ccode.CFile;
+import edu.pse.beast.api.codegen.ccode.CFunction;
+import edu.pse.beast.api.codegen.ccode.CStruct;
+import edu.pse.beast.api.codegen.ccode.CTypeNameBrackets;
+import edu.pse.beast.api.codegen.init.InitVoteHelper;
+import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.method.CElectionDescription;
+import edu.pse.beast.api.method.CElectionSimpleType;
+import edu.pse.beast.api.method.CElectionVotingType;
+import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.method.function.FunctionToC;
+import edu.pse.beast.api.method.function.SimpleTypeFunction;
+import edu.pse.beast.api.method.function.VotingSigFunction;
+import edu.pse.beast.api.property.PreAndPostConditions;
 
 /**
  * Generates the entire C code needed to run a cbmc check
@@ -138,14 +138,11 @@ public class CBMCCodeGenerator {
         return created;
     }
 
-    public static CBMCGeneratedCodeInfo
-                generateCodeForCBMCPropertyTest(final CElectionDescription descr,
-                                                final PreAndPostConditionsDescription propDescr,
-                                                final CodeGenOptions options,
-                                                final InitVoteHelper initVoteHelper,
-                                                final Class<?> c) {
+    public static GeneratedCodeInfo generateCodeForPropertyCheck(final CElectionDescription descr,
+                                                                 final PreAndPostConditions pDescr,
+                                                                 final CodeGenOptions options,
+                                                                 final InitVoteHelper initHelper) {
         final CFile created = prepareCodeFile(descr, options);
-
         final CElectionVotingType votesNakedArr =
                 CElectionVotingType.of(descr.getVotingFunction().getInputType());
         final CElectionVotingType resultNakedArr =
@@ -170,37 +167,36 @@ public class CBMCCodeGenerator {
 
         created.addFunction(
                 votingSigFuncToPlainCFunc(descr.getVotingFunction(), input,
-                                          output, options, loopBoundHandler, c));
+                                          output, options, loopBoundHandler));
         final BooleanExpASTData preAstData =
-                BooleanCodeToAST.generateAST(propDescr.getPreConditionsDescription().getCode(),
-                                             propDescr.getCbmcVariables(), options);
+                BooleanCodeToAST.generateAST(pDescr.getPreConditionsDescription().getCode(),
+                                             pDescr.getVariables(), options);
         final BooleanExpASTData postAstData =
-                BooleanCodeToAST.generateAST(propDescr.getPostConditionsDescription().getCode(),
-                                             propDescr.getCbmcVariables(), options);
+                BooleanCodeToAST.generateAST(pDescr.getPostConditionsDescription().getCode(),
+                                             pDescr.getVariables(), options);
 
-        final CBMCGeneratedCodeInfo cbmcGeneratedCode = new CBMCGeneratedCodeInfo();
-        cbmcGeneratedCode.setVotesAmtMemberVarName(voteInputStruct.getAmountName());
-        cbmcGeneratedCode.setVotesListMemberVarName(voteInputStruct.getListName());
-        cbmcGeneratedCode.setResultAmtMemberVarName(voteResultStruct.getAmountName());
-        cbmcGeneratedCode.setResultListMemberVarName(voteResultStruct.getListName());
+        final GeneratedCodeInfo codeInfo = new GeneratedCodeInfo();
+        codeInfo.setVotesAmtMemberVarName(voteInputStruct.getAmountName());
+        codeInfo.setVotesListMemberVarName(voteInputStruct.getListName());
+        codeInfo.setResultAmtMemberVarName(voteResultStruct.getAmountName());
+        codeInfo.setResultListMemberVarName(voteResultStruct.getListName());
 
         final CFunction.PropertyExpressions expressions =
                 new CFunction.PropertyExpressions(preAstData, postAstData,
-                                                  propDescr.getCbmcVariables());
+                                                  pDescr.getVariables());
         final CFunction.VotingFunction votingFunction =
                 new CFunction.VotingFunction(voteInputStruct, voteResultStruct,
                                              descr.getInputType(), descr.getOutputType(),
                                              descr.getVotingFunction().getName());
-
         final CFunction mainFunction =
                 CBMCMainGenerator.main(expressions, votingFunction,
                                        options, loopBoundHandler,
-                                       cbmcGeneratedCode, initVoteHelper, c);
+                                       codeInfo, initHelper);
         created.addFunction(mainFunction);
-        cbmcGeneratedCode.setCode(created.generateCode());
+        codeInfo.setCode(created.generateCode());
         loopBoundHandler.finishAddedLoopbounds();
-        cbmcGeneratedCode.setLoopboundHandler(loopBoundHandler);
-        return cbmcGeneratedCode;
+        codeInfo.setLoopboundHandler(loopBoundHandler);
+        return codeInfo;
     }
 
     private static CFunction
@@ -208,8 +204,7 @@ public class CBMCCodeGenerator {
                                           final CFunction.Input input,
                                           final CFunction.Output output,
                                           final CodeGenOptions options,
-                                          final CodeGenLoopBoundHandler loopBoundHandler,
-                                          final Class<?> c) {
+                                          final CodeGenLoopBoundHandler loopBoundHandler) {
         final String uint =
                 TypeManager.simpleTypeToCType(CElectionSimpleType.UNSIGNED_INT) + BLANK;
         final String structArg =

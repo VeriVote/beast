@@ -8,9 +8,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.api.savingloading.SavingLoadingInterface;
+import edu.pse.beast.api.io.InputOutputInterface;
+import edu.pse.beast.api.method.CElectionDescription;
+import edu.pse.beast.api.property.PreAndPostConditions;
 import edu.pse.beast.api.toolbox.Tuple;
 
 /**
@@ -35,24 +35,24 @@ public class FileDialogHelper {
                                 CHOOSE_ELECTION_DIALOG_TITLE, baseDir,
                                 primaryStage);
         if (f != null) {
-            final CElectionDescription descr = SavingLoadingInterface.loadCElection(f);
+            final CElectionDescription descr = InputOutputInterface.loadCElection(f);
             return new Tuple<CElectionDescription, File>(descr, f);
         }
         return new Tuple<CElectionDescription, File>(null, f);
     }
 
-    public static Tuple<PreAndPostConditionsDescription, File>
+    public static Tuple<PreAndPostConditions, File>
             letUserLoadPropDescr(final File propDescrDir,
                                  final Stage primaryStage) throws IOException {
         final File f = letUserOpenFile(PROPERTY_DESCRIPTION_STRING, PROPERTY_FILE_ENDING,
                                        CHOOSE_PROPERTY_DIALOG_TITLE,
                                        propDescrDir, primaryStage);
         if (f != null) {
-            final PreAndPostConditionsDescription propDescr =
-                    SavingLoadingInterface.loadPreAndPostConditionDescription(f);
-            return new Tuple<PreAndPostConditionsDescription, File>(propDescr, f);
+            final PreAndPostConditions propDescr =
+                    InputOutputInterface.loadPreAndPostConditionDescription(f);
+            return new Tuple<PreAndPostConditions, File>(propDescr, f);
         }
-        return new Tuple<PreAndPostConditionsDescription, File>(null, f);
+        return new Tuple<PreAndPostConditions, File>(null, f);
     }
 
     public static File letUserOpenFile(final String extDescr,

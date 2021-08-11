@@ -5,14 +5,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpressionNode;
-import edu.pse.beast.api.codegen.c_code.CFunction;
-import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.InitVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.paths.PathHandler;
+import edu.pse.beast.api.codegen.PerformVoteHelper;
+import edu.pse.beast.api.codegen.ast.expression.bool.BooleanExpressionNode;
+import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
+import edu.pse.beast.api.codegen.ccode.CFunction;
+import edu.pse.beast.api.codegen.init.InitVoteHelper;
+import edu.pse.beast.api.codegen.init.SymbVarInitVoteHelper;
+import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.io.PathHandler;
 
 /**
  * This generator uses the {@link CodeGenASTVisitor} to generate the
@@ -47,7 +47,7 @@ public class CBMCMainGenerator {
      * @param bound the upper bound
      * @return assumption about upper variable bound
      */
-    private static String replace(final SymbolicCBMCVar var,
+    private static String replace(final SymbolicVariable var,
                                   final CodeGenOptions options,
                                   final String bound) {
         final CBMCMainGenerator generator = new CBMCMainGenerator();
@@ -58,15 +58,14 @@ public class CBMCMainGenerator {
     }
 
     // TODO make this dependent on the arrays accessed by the symb var
-    private static void initSymbVar(final SymbolicCBMCVar var,
+    private static void initSymbVar(final SymbolicVariable var,
                                     final List<String> code,
                                     final CodeGenOptions options,
-                                    final int highestVote,
-                                    final Class<?> c) {
+                                    final int lastElectionNumber) {
         code.add(UINT + var.getName() + EQUALS + options.getCbmcNondetUintName()
                     + NO_ARGS + LINE_BREAK);
 
-        for (int i = 1; i <= highestVote; ++i) {
+        for (int i = 1; i <= lastElectionNumber; ++i) {
             final String amount;
             switch (var.getVarType()) {
             case VOTER:
@@ -79,7 +78,7 @@ public class CBMCMainGenerator {
                 amount = SymbVarInitVoteHelper.getCurrentAmtSeat(options, i);
                 break;
             default:
-                amount = "";
+                amount = EMPTY;
             }
             code.add(replace(var, options, amount));
         }
@@ -89,32 +88,30 @@ public class CBMCMainGenerator {
                                  final CFunction.VotingFunction votingFunction,
                                  final CodeGenOptions options,
                                  final CodeGenLoopBoundHandler loopBoundHandler,
-                                 final CBMCGeneratedCodeInfo cbmcGeneratedCode,
-                                 final InitVoteHelper initVoteHelper,
-                                 final Class<?> c) {
+                                 final GeneratedCodeInfo codeInfo,
+                                 final InitVoteHelper initHelper) {
         final List<String> code = new ArrayList<String>();
 
         // init votes
-        int highestVote =
-                Math.max(expressions.preAstData.getHighestVoteOrElect(),
-                         expressions.postAstData.getHighestVoteOrElect());
-        highestVote = Math.max(highestVote, initVoteHelper.getLastElectionNumber());
+        int numberOfLastElectionCall =
+                Math.max(expressions.preAstData.getLastVoteOrElect(),
+                         expressions.postAstData.getLastVoteOrElect());
+        numberOfLastElectionCall =
+                Math.max(numberOfLastElectionCall, initHelper.getLastElectionNumber());
 
-        for (int i = 1; i <= highestVote; ++i) {
-            code.add(initVoteHelper.generateCode(i, votingFunction.votes,
-                                                 votingFunction.profileType, options,
-                                                 loopBoundHandler,
-                                                 cbmcGeneratedCode));
+        for (int i = 1; i <= numberOfLastElectionCall; ++i) {
+            code.add(initHelper.generateCode(i, votingFunction.votes, votingFunction.profileType,
+                                             options, loopBoundHandler, codeInfo));
         }
 
         // init global symbolic vars
-        for (final SymbolicCBMCVar var : expressions.symCbmcVars) {
-            initSymbVar(var, code, options, highestVote, c);
+        for (final SymbolicVariable var : expressions.symCbmcVars) {
+            initSymbVar(var, code, options, numberOfLastElectionCall);
         }
         final CodeGenASTVisitor visitor =
                 new CodeGenASTVisitor(votingFunction.votes, votingFunction.profileType,
                                       votingFunction.result, votingFunction.resultType, options,
-                                      loopBoundHandler, cbmcGeneratedCode);
+                                      loopBoundHandler, codeInfo);
 
         // preconditions
         visitor.setMode(CodeGenASTVisitor.Mode.ASSUME);
@@ -126,11 +123,11 @@ public class CBMCMainGenerator {
         }
 
         // vote
-        for (int i = 1; i <= highestVote; ++i) {
+        for (int i = 1; i <= numberOfLastElectionCall; ++i) {
             code.add(PerformVoteHelper.generateCode(i, votingFunction.votes,
                                                     votingFunction.result, options,
                                                     votingFunction.function,
-                                                    cbmcGeneratedCode));
+                                                    codeInfo));
         }
 
         // postconditions

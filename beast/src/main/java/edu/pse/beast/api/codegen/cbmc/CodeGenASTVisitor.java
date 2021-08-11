@@ -6,52 +6,52 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import edu.pse.beast.api.codegen.booleanExpAst.BooleanAstVisitor;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BinaryRelationshipNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpIsEmptyNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.BooleanExpListElementNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ComparisonNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.FalseTrueNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ForAllNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.NotNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp.ThereExistsNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectIntersectionNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectPermutationNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.ElectTupleNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteIntersectionNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VotePermutationNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election.VoteTupleNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.BinaryIntegerValuedNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.ConstantExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.IntegerNode;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers.VoteSumForCandExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbVarByPosExp;
-import edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var.SymbolicVarByNameExp;
-import edu.pse.beast.api.codegen.c_code.CCodeBlock;
-import edu.pse.beast.api.codegen.cbmc.generated_code_info.CBMCGeneratedCodeInfo;
-import edu.pse.beast.api.codegen.helperfunctions.CodeGenerationToolbox;
-import edu.pse.beast.api.codegen.helperfunctions.ComparisonHelper;
-import edu.pse.beast.api.codegen.helperfunctions.ElectComparisonHelper;
-import edu.pse.beast.api.codegen.helperfunctions.IsElectEmptyHelper;
-import edu.pse.beast.api.codegen.helperfunctions.IsVoteEmptyHelper;
-import edu.pse.beast.api.codegen.helperfunctions.PerformVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.VoteComparisonHelper;
-import edu.pse.beast.api.codegen.helperfunctions.init_vote.SymbVarInitVoteHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectIntersectionHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectPermutationHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.elect.ElectTupleHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VoteExpHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VoteIntersectionHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VotePermutationHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VoteTupleHelper;
-import edu.pse.beast.api.codegen.helperfunctions.typegenerator.vote.VotesumHelper;
-import edu.pse.beast.api.codegen.loopbounds.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionVotingType;
-import edu.pse.beast.api.descr.c_electiondescription.VotingInputTypes;
-import edu.pse.beast.api.descr.c_electiondescription.VotingOutputTypes;
-import edu.pse.beast.api.paths.PathHandler;
+import edu.pse.beast.api.codegen.CodeGenerationToolbox;
+import edu.pse.beast.api.codegen.ComparisonHelper;
+import edu.pse.beast.api.codegen.ElectComparisonHelper;
+import edu.pse.beast.api.codegen.IsElectEmptyHelper;
+import edu.pse.beast.api.codegen.IsVoteEmptyHelper;
+import edu.pse.beast.api.codegen.PerformVoteHelper;
+import edu.pse.beast.api.codegen.VoteComparisonHelper;
+import edu.pse.beast.api.codegen.ast.BooleanAstVisitor;
+import edu.pse.beast.api.codegen.ast.expression.bool.BinaryRelationshipNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.BooleanExpIsEmptyNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.BooleanExpListElementNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.ComparisonNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.FalseTrueNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.ForAllNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.NotNode;
+import edu.pse.beast.api.codegen.ast.expression.bool.ThereExistsNode;
+import edu.pse.beast.api.codegen.ast.expression.type.election.ElectExp;
+import edu.pse.beast.api.codegen.ast.expression.type.election.ElectIntersectionNode;
+import edu.pse.beast.api.codegen.ast.expression.type.election.ElectPermutationNode;
+import edu.pse.beast.api.codegen.ast.expression.type.election.ElectTupleNode;
+import edu.pse.beast.api.codegen.ast.expression.type.election.VoteExp;
+import edu.pse.beast.api.codegen.ast.expression.type.election.VoteIntersectionNode;
+import edu.pse.beast.api.codegen.ast.expression.type.election.VotePermutationNode;
+import edu.pse.beast.api.codegen.ast.expression.type.election.VoteTupleNode;
+import edu.pse.beast.api.codegen.ast.expression.type.integer.BinaryIntegerValuedNode;
+import edu.pse.beast.api.codegen.ast.expression.type.integer.ConstantExp;
+import edu.pse.beast.api.codegen.ast.expression.type.integer.IntegerNode;
+import edu.pse.beast.api.codegen.ast.expression.type.integer.VoteSumForCandExp;
+import edu.pse.beast.api.codegen.ast.expression.type.symbolic.SymbVarByPosExp;
+import edu.pse.beast.api.codegen.ast.expression.type.symbolic.SymbolicVarByNameExp;
+import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
+import edu.pse.beast.api.codegen.ccode.CCodeBlock;
+import edu.pse.beast.api.codegen.init.SymbVarInitVoteHelper;
+import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
+import edu.pse.beast.api.codegen.typegenerator.elect.ElectIntersectionHelper;
+import edu.pse.beast.api.codegen.typegenerator.elect.ElectPermutationHelper;
+import edu.pse.beast.api.codegen.typegenerator.elect.ElectTupleHelper;
+import edu.pse.beast.api.codegen.typegenerator.vote.VoteExpHelper;
+import edu.pse.beast.api.codegen.typegenerator.vote.VoteIntersectionHelper;
+import edu.pse.beast.api.codegen.typegenerator.vote.VotePermutationHelper;
+import edu.pse.beast.api.codegen.typegenerator.vote.VoteSumHelper;
+import edu.pse.beast.api.codegen.typegenerator.vote.VoteTupleHelper;
+import edu.pse.beast.api.io.PathHandler;
+import edu.pse.beast.api.method.CElectionVotingType;
+import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingOutputTypes;
 
 /**
  * Visits the Boolean Exp AST to generate the cbmc code
@@ -138,7 +138,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
     private Mode assumeAssertMode;
     private String assumeAssert;
 
-    private CBMCGeneratedCodeInfo cbmcGeneratedCode;
+    private GeneratedCodeInfo cbmcGeneratedCode;
 
     public CodeGenASTVisitor(final ElectionTypeCStruct voteArrayStruct,
                              final VotingInputTypes inputType,
@@ -146,7 +146,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
                              final VotingOutputTypes outputType,
                              final CodeGenOptions codeGenerationOptions,
                              final CodeGenLoopBoundHandler codeGenLoopBoundHandler,
-                             final CBMCGeneratedCodeInfo generatedCodeInfo) {
+                             final GeneratedCodeInfo generatedCodeInfo) {
         this.voteArrStruct = voteArrayStruct;
         this.votingInputType = inputType;
         this.voteResultStruct = resultStruct;
@@ -160,10 +160,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         return PAREN_OP + s + PAREN_CL;
     }
 
-    public static final String getTemplate(final String key,
-                                           final Class<?> c) {
+    public final String getTemplate(final String key) {
         assert key != null;
-        return PathHandler.getTemplate(key, TEMPLATES, NONE, c);
+        return PathHandler.getTemplate(key, TEMPLATES, NONE, this.getClass());
     }
 
     public final CCodeBlock getCodeBlock() {
@@ -400,7 +399,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         scopeHandler.push();
         scopeHandler.add(node.getVar());
 
-        String code = getTemplate(FORALL_VOTERS_KEY, this.getClass());
+        String code = getTemplate(FORALL_VOTERS_KEY);
         code = code.replaceAll(VAR_NAME, symbVarName);
         code = code.replaceAll(AMOUNT_VOTERS,
                 options.getCbmcAmountMaxVotersVarName());
@@ -431,7 +430,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         scopeHandler.add(node.getDeclaredSymbolicVar());
 
         final String boolVarName = codeBlock.newVarName(EXISTS_CANDIDATE);
-        String code = getTemplate(EXISTS_CANDIDATE_KEY, this.getClass());
+        String code = getTemplate(EXISTS_CANDIDATE_KEY);
         code = code.replaceAll(VAR_NAME, symbolicVarName);
         code = code.replaceAll(AMOUNT_CANDIDATES,
                                options.getCbmcAmountMaxCandsVarName());
@@ -457,10 +456,10 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         final String generatedVarName = codeBlock.newVarName(VOTE_SUM);
         final int voteNumber = node.getVoteNumber();
         final String symbolicVarCand = node.getCandCbmcVar().getName();
-        final VotesumHelper.VoteArrayAccess access =
-                new VotesumHelper.VoteArrayAccess(voteArrStruct, voteNumber, symbolicVarCand);
+        final VoteSumHelper.VoteArrayAccess access =
+                new VoteSumHelper.VoteArrayAccess(voteArrStruct, voteNumber, symbolicVarCand);
         final String code =
-                VotesumHelper.generateCode(generatedVarName, access,
+                VoteSumHelper.generateCode(generatedVarName, access,
                                            votingInputType, options,
                                            loopBoundHandler);
         codeBlock.addSnippet(code);

@@ -25,30 +25,30 @@ import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
-import edu.pse.beast.api.c_parser.ExtractedCLoop;
-import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
+import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
+import edu.pse.beast.api.cparser.ExtractedCLoop;
+import edu.pse.beast.api.io.PathHandler;
+import edu.pse.beast.api.io.options.OptionsInputOutput;
+import edu.pse.beast.api.method.CElectionDescription;
+import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.os.OS;
 import edu.pse.beast.api.os.OSHelper;
-import edu.pse.beast.api.paths.PathHandler;
-import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
+import edu.pse.beast.api.property.PreAndPostConditions;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
-import edu.pse.beast.gui.errors.ErrorGuiController;
-import edu.pse.beast.gui.errors.ErrorHandler;
-import edu.pse.beast.gui.errors.ErrorMessageLoader;
+import edu.pse.beast.gui.configurationeditor.ConfigurationTopLevelGUIHandler;
+import edu.pse.beast.gui.configurationeditor.treeview.ConfigurationItem;
+import edu.pse.beast.gui.error.ErrorGUIController;
+import edu.pse.beast.gui.error.ErrorHandler;
+import edu.pse.beast.gui.error.ErrorMessageLoader;
 import edu.pse.beast.gui.options.OptionsCategoryGUI;
 import edu.pse.beast.gui.options.OptionsGUIController;
 import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
-import edu.pse.beast.gui.options.process_handler.ProcessHandlerWindowsOptionsGUI;
-import edu.pse.beast.gui.processHandler.CBMCProcessHandlerCreator;
+import edu.pse.beast.gui.options.processhandler.ProcessHandlerWindowsOptionsGUI;
+import edu.pse.beast.gui.processhandler.CBMCProcessHandlerCreator;
 import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
-import edu.pse.beast.gui.testconfigeditor.TestConfigTopLevelGUIHandler;
-import edu.pse.beast.gui.testconfigeditor.treeview.TestConfigTreeItemSuper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 
@@ -84,7 +84,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     // =================Menu End
 
     @FXML
-    private Button testLoopBoundButton;
+    private Button computeLoopBoundButton;
     @FXML
     private TabPane topLeveLTabPane;
 
@@ -118,7 +118,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private TitledPane postPropertyPane;
 
     @FXML
-    private ListView<SymbolicCBMCVar> symbVarsListView;
+    private ListView<SymbolicVariable> symbVarsListView;
 
     @FXML
     private MenuButton addSymbVarMenu;
@@ -127,10 +127,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private Button removeSymbVarButton;
 
     @FXML
-    private TabPane propertyTestRunPane;
-
-    @FXML
-    private Button editLoopboundButton;
+    private Button editLoopBoundButton;
 
     @FXML
     private Button deleteDescrButton;
@@ -144,7 +141,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private Button saveElectionDescriptionButton;
 
     @FXML
-    private ChoiceBox<PreAndPostConditionsDescription> openedPropertyDescriptionChoiceBox;
+    private ChoiceBox<PreAndPostConditions> openedPropertyDescriptionChoiceBox;
     @FXML
     private Button addPropDescrButton;
     @FXML
@@ -152,14 +149,14 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     @FXML
     private Button savePropDescrButton;
 
-    // TestConfigHandler Start
+    // ConfigurationHandler Start
     @FXML
     private ChoiceBox<String> sortCriteriumChoiceBox;
     @FXML
-    private TreeView<TestConfigTreeItemSuper> testConfigTreeView;
+    private TreeView<ConfigurationItem> configurationTreeView;
     @FXML
-    private AnchorPane testConfigDetailsAnchorPane;
-    // TestConfigHandler End
+    private AnchorPane configDetailsAnchorPane;
+    // ConfigurationHandler End
 
     @FXML
     private AnchorPane logAnchorPane;
@@ -215,7 +212,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 new CElectionEditor.FunctionEditor(addFunctionMenuButton, removeFunctionButton,
                                                    funcDeclArea, functionList);
         final CElectionEditor.LoopBoundEditor loopBoundEditor =
-                new CElectionEditor.LoopBoundEditor(testLoopBoundButton, editLoopboundButton,
+                new CElectionEditor.LoopBoundEditor(computeLoopBoundButton, editLoopBoundButton,
                                                     loopBoundList);
         final CElectionEditor.CodeAreas codeAreas =
                 new CElectionEditor.CodeAreas(cEditorGUIElement, closingBracketArea);
@@ -243,13 +240,13 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                                      openedPropertyDescriptionChoiceBox, beastWorkspace);
     }
 
-    private void initTestConfigHandler() throws IOException {
-        new TestConfigTopLevelGUIHandler(sortCriteriumChoiceBox, testConfigTreeView,
-                                         testConfigDetailsAnchorPane, beastWorkspace);
+    private void initConfigurationHandler() throws IOException {
+        new ConfigurationTopLevelGUIHandler(sortCriteriumChoiceBox, configurationTreeView,
+                                         configDetailsAnchorPane, beastWorkspace);
     }
 
     private void initLogHandler(final ErrorHandler errorHandler) throws IOException {
-        new ErrorGuiController(logAnchorPane, errorHandler);
+        new ErrorGUIController(logAnchorPane, errorHandler);
     }
 
     private void initWorkspace(final ErrorHandler errorHandler) {
@@ -302,7 +299,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
             options.add(processHandlerWindowsOptions);
         }
         options.add(new CEditorOptionsGUI(new CEditorOptions()));
-        OptionsSaverLoader.saveOptions(optionsFile, options);
+        OptionsInputOutput.saveOptions(optionsFile, options);
         return options;
     }
 
@@ -313,7 +310,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         if (!optionsSaveFile.exists()) {
             options = createStandardOptionsAndSave(optionsSaveFile);
         } else {
-            options = OptionsSaverLoader.loadOptions(optionsSaveFile);
+            options = OptionsInputOutput.loadOptions(optionsSaveFile);
             for (final OptionsCategoryGUI cat : options) {
                 switch (cat.getCategory()) {
                 case PROCESS_HANDLER_WINDOWS:
@@ -356,7 +353,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         initWorkspace(errorHandler);
         initElectionEditor();
         initPropertyEditor();
-        initTestConfigHandler();
+        initConfigurationHandler();
         initLogHandler(errorHandler);
 
         linkOptions();

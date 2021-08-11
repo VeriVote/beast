@@ -1,26 +1,26 @@
 
 module edu.pse.beast {
     
-    exports edu.pse.beast.api.c_parser;
-    exports edu.pse.beast.api.codegen.booleanExpAst;
-    exports edu.pse.beast.api.codegen.booleanExpAst.nodes;
-    exports edu.pse.beast.api.codegen.booleanExpAst.nodes.booleanExp;
-    exports edu.pse.beast.api.codegen.booleanExpAst.nodes.types;
-    exports edu.pse.beast.api.codegen.booleanExpAst.nodes.types.election;
-    exports edu.pse.beast.api.codegen.booleanExpAst.nodes.types.others.integers;
-    exports edu.pse.beast.api.codegen.c_code;
+    exports edu.pse.beast.api.cparser;
+    exports edu.pse.beast.api.codegen.ast;
+    exports edu.pse.beast.api.codegen.ast.expression;
+    exports edu.pse.beast.api.codegen.ast.expression.bool;
+    exports edu.pse.beast.api.codegen.ast.expression.type;
+    exports edu.pse.beast.api.codegen.ast.expression.type.election;
+    exports edu.pse.beast.api.codegen.ast.expression.type.integer;
+    exports edu.pse.beast.api.codegen.ccode;
     exports edu.pse.beast.api.codegen.cbmc;
-    exports edu.pse.beast.api.codegen.cbmc.generated_code_info;
-    exports edu.pse.beast.api.codegen.loopbounds;
-    exports edu.pse.beast.api.descr.c_electiondescription;
-    exports edu.pse.beast.api.descr.c_electiondescription.function;
-    exports edu.pse.beast.api.codegen.helperfunctions.init_vote;
-    exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr;
+    exports edu.pse.beast.api.codegen.cbmc.info;
+    exports edu.pse.beast.api.codegen.loopbound;
+    exports edu.pse.beast.api.method;
+    exports edu.pse.beast.api.method.function;
+    exports edu.pse.beast.api.codegen.init;
+    exports edu.pse.beast.api.method.antlr;
     exports edu.pse.beast.gui;
-    exports edu.pse.beast.toolbox.antlr.booleanexp;
-    exports edu.pse.beast.api.cbmc_run_with_specific_values;
-    exports edu.pse.beast.api.codegen.booleanExpAst.nodes.types.symbolic_var;
-    exports edu.pse.beast.api.descr.property_description;
+    exports edu.pse.beast.api.property.antlr;
+    exports edu.pse.beast.api.test;
+    exports edu.pse.beast.api.codegen.ast.expression.type.symbolic;
+    exports edu.pse.beast.api.property;
 
     requires transitive com.google.gson;
     requires com.sun.jna;
@@ -45,14 +45,14 @@ module edu.pse.beast {
     requires org.json;
     requires antlr4;
 
-    opens edu.pse.beast.gui.options.process_handler to javafx.fxml;
+    opens edu.pse.beast.gui.options.processhandler to javafx.fxml;
     opens edu.pse.beast.gui.options.ceditor to javafx.fxml;
-    opens edu.pse.beast.gui.errors to javafx.fxml;
+    opens edu.pse.beast.gui.error to javafx.fxml;
     opens edu.pse.beast.gui to javafx.fxml;
     opens edu.pse.beast.gui.options to javafx.fxml;
-    opens edu.pse.beast.gui.testconfigeditor.testconfig to javafx.fxml;
-    opens edu.pse.beast.gui.testconfigeditor.testconfig.cbmc to javafx.fxml;
-    opens edu.pse.beast.gui.testconfigeditor to javafx.fxml;
-    opens edu.pse.beast.gui.runs to javafx.fxml;
-    opens edu.pse.beast.api.descr.c_electiondescription to gson;
+    opens edu.pse.beast.gui.configurationeditor.configuration to javafx.fxml;
+    opens edu.pse.beast.gui.configurationeditor.configuration.cbmc to javafx.fxml;
+    opens edu.pse.beast.gui.configurationeditor to javafx.fxml;
+    opens edu.pse.beast.gui.run to javafx.fxml;
+    opens edu.pse.beast.api.method to gson;
 }

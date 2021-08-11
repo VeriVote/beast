@@ -10,7 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import edu.pse.beast.api.savingloading.options.OptionsSaverLoader;
+import edu.pse.beast.api.io.options.OptionsInputOutput;
 
 /**
  * TODO: Write documentation.
@@ -69,7 +69,7 @@ public class OptionsGUIController {
 
     public final void saveOptions() {
         try {
-            OptionsSaverLoader.saveOptions(optionsSaveFile, categories);
+            OptionsInputOutput.saveOptions(optionsSaveFile, categories);
         } catch (IOException e) {
             e.printStackTrace();
         }

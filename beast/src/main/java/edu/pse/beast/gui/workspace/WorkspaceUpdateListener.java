@@ -2,15 +2,15 @@ package edu.pse.beast.gui.workspace;
 
 import java.util.List;
 
-import edu.pse.beast.api.codegen.cbmc.SymbolicCBMCVar;
-import edu.pse.beast.api.descr.c_electiondescription.CElectionDescription;
-import edu.pse.beast.api.descr.c_electiondescription.function.CElectionDescriptionFunction;
-import edu.pse.beast.api.descr.c_electiondescription.function.SimpleTypeFunction;
-import edu.pse.beast.api.descr.c_electiondescription.function.VotingSigFunction;
-import edu.pse.beast.api.descr.property_description.PreAndPostConditionsDescription;
-import edu.pse.beast.api.testrunner.propertycheck.symbolic_vars.CBMCTestRunWithSymbolicVars;
-import edu.pse.beast.gui.testconfigeditor.testconfig.TestConfiguration;
-import edu.pse.beast.gui.testconfigeditor.testconfig.cbmc.CBMCTestConfiguration;
+import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
+import edu.pse.beast.api.method.CElectionDescription;
+import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
+import edu.pse.beast.api.method.function.SimpleTypeFunction;
+import edu.pse.beast.api.method.function.VotingSigFunction;
+import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
+import edu.pse.beast.gui.configurationeditor.configuration.ConfigurationBatch;
+import edu.pse.beast.gui.configurationeditor.configuration.cbmc.Configuration;
 
 /**
  * TODO: Write documentation.
@@ -22,17 +22,15 @@ public interface WorkspaceUpdateListener {
     default void handleWorkspaceUpdateGeneric() {
     }
 
-    default void handleWorkspaceUpdateAddedCBMCRuns(CBMCTestConfiguration config,
-                                                    List<CBMCTestRunWithSymbolicVars>
-                                                        createdTestRuns) {
+    default void handleWorkspaceUpdateAddedRuns(Configuration config,
+                                                List<PropertyCheckRun> createdRuns) {
     }
 
-    default void handleWorkspaceErrorNoCBMCProcessStarter() {
+    default void handleWorkspaceErrorNoProcessStarter() {
     }
 
-    default void handleWorkspaceUpdateAddedVarToPropDescr(PreAndPostConditionsDescription
-                                                                currentPropDescr,
-                                                          SymbolicCBMCVar var) {
+    default void handleWorkspaceUpdateAddedVarToPropDescr(PreAndPostConditions currentPropDescr,
+                                                          SymbolicVariable var) {
     }
 
     default void handleDescrChangeAddedVotingSigFunction(CElectionDescription descr,
@@ -52,17 +50,17 @@ public interface WorkspaceUpdateListener {
                                               CElectionDescriptionFunction func) {
     }
 
-    default void handleAddedPropDescr(PreAndPostConditionsDescription propDescr) {
+    default void handleAddedPropDescr(PreAndPostConditions propDescr) {
     }
 
-    default void handleAddedTestConfig(TestConfiguration tc) {
+    default void handleAddedConfiguration(ConfigurationBatch tc) {
     }
 
-    default void handlePropDescrChangedCode(PreAndPostConditionsDescription propDescr) {
+    default void handlePropDescrChangedCode(PreAndPostConditions propDescr) {
     }
 
-    default void handlePropDescrRemovedVar(PreAndPostConditionsDescription propDescr,
-                                           SymbolicCBMCVar selectedVar) {
+    default void handlePropDescrRemovedVar(PreAndPostConditions propDescr,
+                                           SymbolicVariable selectedVar) {
     }
 
     default void handleDescrChangeAddedSimpleFunction(CElectionDescription descr,
@@ -72,12 +70,12 @@ public interface WorkspaceUpdateListener {
     default void handleDescrChangeInOutName(CElectionDescription descr) {
     }
 
-    default void handleCBMCRunDeleted(CBMCTestRunWithSymbolicVars run) {
+    default void handleRunDeleted(PropertyCheckRun run) {
     }
 
-    default void handleTestConfigDeleted(TestConfiguration tc) {
+    default void handleConfigurationDeleted(ConfigurationBatch tc) {
     }
 
-    default void handleCBMConfigUpdatedFiles(CBMCTestConfiguration currentConfig) {
+    default void handleConfigurationUpdatedFiles(Configuration currentConfig) {
     }
 }
