@@ -24,7 +24,7 @@ import edu.pse.beast.api.trace.JSONResultExtractor;
  * @author Holger Klein
  *
  */
-public class ResultPresentation2 {
+public class ResultPresentation2Test {
     private static final String LINE_BREAK = "\n";
     private static final String DOT = ".";
 
@@ -47,8 +47,8 @@ public class ResultPresentation2 {
     private static final String ELECT_INTERSECTION = "electIntersection";
 
     private static File getResources(final String fileName) {
-        final ResultPresentation2 resultPresentation = new ResultPresentation2();
-        final Class<? extends ResultPresentation2> c = resultPresentation.getClass();
+        final ResultPresentation2Test resultPresentation = new ResultPresentation2Test();
+        final Class<? extends ResultPresentation2Test> c = resultPresentation.getClass();
         final String dir = File.separator + c.getCanonicalName().replace(DOT, File.separator);
         final String resource = dir.substring(0, dir.lastIndexOf(c.getSimpleName()));
         return new File(RESOURCES_PATH + resource + fileName);

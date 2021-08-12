@@ -25,7 +25,7 @@ import edu.pse.beast.api.runner.propertycheck.process.cbmc.CBMCArgumentHelper;
  * @author Holger Klein
  *
  */
-public class CodeAndCBMCGeneration {
+public class CodeAndCBMCGenerationTest {
     private static final String VOTING = "voting";
     private static final String BORDA = "borda";
     private static final String REINFORCE = "reinforce";

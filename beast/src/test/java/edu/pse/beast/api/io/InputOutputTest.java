@@ -30,7 +30,7 @@ import edu.pse.beast.api.property.PropertyDescription;
  * @author Holger Klein
  *
  */
-public class InputOutput {
+public class InputOutputTest {
     private static final String EMPTY = "";
 
     private static final String TESTFILES = "testfiles";

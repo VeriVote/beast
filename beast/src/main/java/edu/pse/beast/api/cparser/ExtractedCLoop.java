@@ -12,7 +12,9 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.io.PathHandler;
-import edu.pse.beast.api.method.antlr.CParser.ExpressionContext;
+import edu.pse.beast.api.method.antlr.CParser.AssignmentExpressionContext;
+import edu.pse.beast.api.method.antlr.CParser.ForConditionContext;
+import edu.pse.beast.api.method.antlr.CParser.ForExpressionContext;
 import edu.pse.beast.api.method.antlr.CParser.IterationStatementContext;
 import edu.pse.beast.api.method.antlr.CParser.RelationalExpressionContext;
 
@@ -146,18 +148,17 @@ public class ExtractedCLoop {
         parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED;
     }
 
-    private static ExpressionContext initForLoopExpression(final IterationStatementContext ctx) {
-        int firstSemiPos = 0;
-        final String semi = ctx.Semi().getText();
-        while (firstSemiPos < ctx.getChildCount()
-                && !ctx.getChild(firstSemiPos).getText().equals(semi)) {
-            ++firstSemiPos;
-        }
-        final ExpressionContext expCtx = (ExpressionContext) ctx.getChild(firstSemiPos + 1);
-        return expCtx.getText().equals(semi) ? null : expCtx;
+    private static AssignmentExpressionContext
+                initForLoopExpression(final IterationStatementContext ctx) {
+        final ForConditionContext forCond = ctx.forCondition();
+        ForExpressionContext forExpCtx = forCond != null ? forCond.forExpression(0) : null;
+        final AssignmentExpressionContext expCtx =
+                forExpCtx.assignmentExpression().isEmpty() ?
+                        null : forExpCtx.assignmentExpression(0);
+        return expCtx;
     }
 
-    private static ParserRuleContext initParseRule(final ExpressionContext condExp) {
+    private static ParserRuleContext initParseRule(final AssignmentExpressionContext condExp) {
         ParserRuleContext parseRule = (ParserRuleContext) condExp;
         while (parseRule.getChildCount() > 0
                 && parseRule.getClass() != RelationalExpressionContext.class) {
@@ -172,7 +173,9 @@ public class ExtractedCLoop {
         final String candsVarName = codeGenOptions.getCurrentAmountCandsVarName();
         final String seatsVarName = codeGenOptions.getCurrentAmountSeatsVarName();
 
-        final String lessThanText = relCond.shiftExpression().toString();
+        final String lessThanText =
+                relCond.shiftExpression().size() >= 2 && relCond.Less().size() != 0 ?
+                        relCond.shiftExpression(1).getText() : relCond.getText();
 
         if (lessThanText.equals(votersVarName)) {
             loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
@@ -192,7 +195,7 @@ public class ExtractedCLoop {
 
         if (context.For() != null) {
             loopType = CLoopType.FOR;
-            final ExpressionContext condExp = initForLoopExpression(context);
+            final AssignmentExpressionContext condExp = initForLoopExpression(context);
 
             final CLoopParseResultType parseFail;
             if (condExp == null) {

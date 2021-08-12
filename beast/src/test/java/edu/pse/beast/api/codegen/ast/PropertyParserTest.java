@@ -17,10 +17,10 @@ import edu.pse.beast.api.property.antlr.FormalPropertyDescriptionParser;
  *
  * @author Nikolai Schnell
  */
-public final class PropertyParsing {
+public final class PropertyParserTest {
     private static final String ANTLR_TEST_STRING = "1 == 4 * 2 / (4 - 1) + 2;";
 
-    private PropertyParsing() {
+    private PropertyParserTest() {
     }
 
     /**

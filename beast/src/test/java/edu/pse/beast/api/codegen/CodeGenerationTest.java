@@ -25,7 +25,7 @@ import edu.pse.beast.api.property.PropertyDescription;
  * @author Holger Klein
  *
  */
-public class CodeGeneration {
+public class CodeGenerationTest {
     private static final String EMPTY = "";
 
     private static final String EQ = " == ";

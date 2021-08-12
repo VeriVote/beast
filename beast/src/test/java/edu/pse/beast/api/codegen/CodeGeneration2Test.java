@@ -24,7 +24,7 @@ import edu.pse.beast.api.property.PropertyDescription;
  * @author Holger Klein
  *
  */
-public class CodeGeneration2 {
+public class CodeGeneration2Test {
     private static final String NONE = "";
     private static final String VOTING_FUNCTION = "voting";
 

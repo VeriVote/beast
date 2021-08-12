@@ -12,7 +12,7 @@ import edu.pse.beast.api.io.code.GeneratedCodeInfoInputOutputHelper;
  * @author Holger Klein
  *
  */
-public class CodeInfoInputOutput {
+public class CodeInfoInputOutputTest {
     private static final String TEST_CODE_STRING = "asdasdasdasdasd";
     private static final String VOTE1 = "vote1";
     private static final String VOTE2 = "vote2";

@@ -27,7 +27,7 @@ import edu.pse.beast.gui.workspace.BeastWorkspace;
  * @author Holger Klein
  *
  */
-public class WorkspaceInputOutputCreation {
+public class WorkspaceInputOutputCreationTest {
     private static final String NONE = "";
     private static final String BLANK = " ";
 

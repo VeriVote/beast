@@ -23,7 +23,7 @@ import edu.pse.beast.api.test.PreferenceParameters;
  * @author Holger Klein
  *
  */
-public class NonSymbolicTestRunCodeGeneration {
+public class NonSymbolicTestRunCodeGenerationTest {
     private static final String NONE = "";
     private static final String BORDA = "borda";
     private static final String REINFORCE = "reinforce";

@@ -27,7 +27,7 @@ import edu.pse.beast.api.property.PropertyDescription;
  * @author Holger Klein
  *
  */
-public class AddSimpleDeclaration {
+public class AddSimpleDeclarationTest {
     private static final String EMPTY = "";
     private static final String VOTING = "voting";
     private static final String BORDA = "borda";

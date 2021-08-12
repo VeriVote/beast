@@ -15,7 +15,7 @@ import edu.pse.beast.api.io.PathHandler;
  * @author Holger Klein
  *
  */
-public class PropertyCheckParsing {
+public class PropertyCheckParserTest {
     private static final String EMPTY = "";
 
     private static final String BORDA = "borda";
