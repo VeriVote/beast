@@ -497,11 +497,6 @@ public class BeastWorkspace {
     }
 
     public final void saveWorkspace() {
-        final boolean allSaved = saveAll(descrWithUnsavedChanges, propDescrWithUnsavedChanges);
-        if (!allSaved) {
-            errorHandler.logAndDisplayError(
-                    new BeastError(BeastErrorType.ERROR_WHEN_SAVING_ALL, NONE));
-        }
         File f = workspaceFile;
         final String fileName = f != null ? f.getName() : name + BEASTWS_FILE_ENDING;
         f = FileDialogHelper.letUserSaveFile(pathHandler.getWorkspaceDir(),
@@ -512,6 +507,12 @@ public class BeastWorkspace {
         } else if (f.getParentFile().equals(pathHandler.getWorkspaceDir())
                 && f.getName().equals(fileName)) {
             f = workspaceFile;
+        }
+        // Now save voting method and property
+        final boolean allSaved = saveAll(descrWithUnsavedChanges, propDescrWithUnsavedChanges);
+        if (!allSaved) {
+            errorHandler.logAndDisplayError(
+                    new BeastError(BeastErrorType.ERROR_WHEN_SAVING_ALL, NONE));
         }
         try {
             InputOutputInterface.storeBeastWorkspace(this, f, pathHandler);
