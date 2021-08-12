@@ -46,7 +46,9 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
         final Optional<ButtonType> result = needVsDevCmdAlert.showAndWait();
 
         final File file;
-        if (result.isPresent() && !result.get().getButtonData().isCancelButton()) {
+        if (result.isPresent()
+                && !result.get().getButtonData().isCancelButton()
+                && vsDevCmdPath != null) {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(NAVIGATE_TO + VS_DEV_COMMAND_FILE + DOT);
             if (vsDevCmdPath != null) {

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.output.JSONHelper;
 
 /**
@@ -40,7 +40,7 @@ public class JSONResultExtractor {
     private static final String V = "V"; // TODO: If ever used, change to non-hard-coded version
 
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
     private int seatAmount;
     private int candidateAmount;
     private int voterAmount;
@@ -56,7 +56,7 @@ public class JSONResultExtractor {
     private boolean foundCounterExample;
 
     public JSONResultExtractor(final CElectionDescription descr,
-                               final PreAndPostConditions propDescr,
+                               final PropertyDescription propDescr,
                                final GeneratedCodeInfo codeInfo,
                                final int seats,
                                final int candidates,

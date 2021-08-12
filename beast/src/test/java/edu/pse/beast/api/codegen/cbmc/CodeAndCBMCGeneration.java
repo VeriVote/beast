@@ -14,9 +14,9 @@ import edu.pse.beast.api.cparser.AntlrCLoopParser;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.process.cbmc.CBMCArgumentHelper;
 
 /**
@@ -46,8 +46,8 @@ public class CodeAndCBMCGeneration {
         final String bordaCode = getTemplate(BORDA);
 
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         descr.getVotingFunction().setCode(bordaCode);
 
@@ -58,7 +58,7 @@ public class CodeAndCBMCGeneration {
 
         final String pre = getTemplate(REINFORCE + PRE);
         final String post = getTemplate(REINFORCE + POST);
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post).get(0);
 
         final int v = 5;

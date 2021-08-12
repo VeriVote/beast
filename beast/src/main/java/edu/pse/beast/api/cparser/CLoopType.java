@@ -6,6 +6,6 @@ package edu.pse.beast.api.cparser;
  * @author Holger Klein
  *
  */
-public enum CLoopTypes {
+public enum CLoopType {
     FOR, WHILE;
 }

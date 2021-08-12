@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 /**
@@ -26,7 +26,7 @@ public class ConfigurationGUIController {
     @FXML
     private Button loadDescrButton;
     @FXML
-    private ChoiceBox<PreAndPostConditions> propDescrChoiceBox;
+    private ChoiceBox<PropertyDescription> propDescrChoiceBox;
     @FXML
     private Button loadPropDescrButton;
 

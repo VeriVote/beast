@@ -11,7 +11,7 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
 import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.method.function.VotingSigFunction;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
 import edu.pse.beast.gui.configurationeditor.configuration.cbmc.Configuration;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
@@ -25,8 +25,8 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 public class ConfigurationList implements WorkspaceUpdateListener {
     private Map<CElectionDescription, List<ConfigurationBatch>> configsByDescr =
             new LinkedHashMap<CElectionDescription, List<ConfigurationBatch>>();
-    private Map<PreAndPostConditions, List<ConfigurationBatch>> configsByPropDescr =
-                new LinkedHashMap<PreAndPostConditions, List<ConfigurationBatch>>();
+    private Map<PropertyDescription, List<ConfigurationBatch>> configsByPropDescr =
+                new LinkedHashMap<PropertyDescription, List<ConfigurationBatch>>();
     private Map<String, ConfigurationBatch> configsByName =
             new LinkedHashMap<String, ConfigurationBatch>();
 
@@ -55,12 +55,12 @@ public class ConfigurationList implements WorkspaceUpdateListener {
         return configsByDescr;
     }
 
-    public final Map<PreAndPostConditions, List<ConfigurationBatch>> getConfigsByPropDescr() {
+    public final Map<PropertyDescription, List<ConfigurationBatch>> getConfigsByPropDescr() {
         return configsByPropDescr;
     }
 
     public final List<ConfigurationBatch>
-                getConfigsByPropDescr(final PreAndPostConditions currentPropDescr) {
+                getConfigsByPropDescr(final PropertyDescription currentPropDescr) {
         if (configsByPropDescr.containsKey(currentPropDescr)) {
             return configsByPropDescr.get(currentPropDescr);
         }
@@ -114,7 +114,7 @@ public class ConfigurationList implements WorkspaceUpdateListener {
         handleDescrChange(descr);
     }
 
-    private void handlePropDescrChanged(final PreAndPostConditions propDescr) {
+    private void handlePropDescrChanged(final PropertyDescription propDescr) {
         if (configsByPropDescr.containsKey(propDescr)) {
             for (final ConfigurationBatch tc : configsByPropDescr.get(propDescr)) {
                 tc.handlePropDescrChanged();
@@ -124,19 +124,19 @@ public class ConfigurationList implements WorkspaceUpdateListener {
     }
 
     @Override
-    public final void handleWorkspaceUpdateAddedVarToPropDescr(final PreAndPostConditions
+    public final void handleWorkspaceUpdateAddedVarToPropDescr(final PropertyDescription
                                                                         currentPropDescr,
                                                                final SymbolicVariable var) {
         handlePropDescrChanged(currentPropDescr);
     }
 
     @Override
-    public final void handlePropDescrChangedCode(final PreAndPostConditions propDescr) {
+    public final void handlePropDescrChangedCode(final PropertyDescription propDescr) {
         handlePropDescrChanged(propDescr);
     }
 
     @Override
-    public final void handlePropDescrRemovedVar(final PreAndPostConditions propDescr,
+    public final void handlePropDescrRemovedVar(final PropertyDescription propDescr,
                                                 final SymbolicVariable selectedVar) {
         handlePropDescrChanged(propDescr);
     }
@@ -158,7 +158,7 @@ public class ConfigurationList implements WorkspaceUpdateListener {
         configsByDescr.remove(descr);
     }
 
-    public final void removeAll(final PreAndPostConditions propDescr) {
+    public final void removeAll(final PropertyDescription propDescr) {
         for (final ConfigurationBatch tc : configsByPropDescr.get(propDescr)) {
             deleteConfiguration(tc);
         }

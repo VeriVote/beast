@@ -8,7 +8,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.io.PathHandler;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -32,22 +32,22 @@ public class CodeTemplateVoteIntersection {
                 LoopBoundType.AMOUNT_VOTERS)
             );
 
-    private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =
-            new LinkedHashMap<VotingInputTypes, List<LoopBound>>(
-            Map.of(VotingInputTypes.SINGLE_CHOICE, LOOP_BOUNDS_SINGLE_CHOICE,
-                    VotingInputTypes.PREFERENCE, LOOP_BOUNDS_PREFERENCE,
-                    VotingInputTypes.APPROVAL, LOOP_BOUNDS_PREFERENCE));
+    private static final Map<VotingInputType, List<LoopBound>> LOOP_BOUNDS =
+            new LinkedHashMap<VotingInputType, List<LoopBound>>(
+            Map.of(VotingInputType.SINGLE_CHOICE, LOOP_BOUNDS_SINGLE_CHOICE,
+                    VotingInputType.PREFERENCE, LOOP_BOUNDS_PREFERENCE,
+                    VotingInputType.APPROVAL, LOOP_BOUNDS_PREFERENCE));
 
-    private static final Map<VotingInputTypes, String> TEMPLATES =
-            new LinkedHashMap<VotingInputTypes, String>();
+    private static final Map<VotingInputType, String> TEMPLATES =
+            new LinkedHashMap<VotingInputType, String>();
 
-    public static final List<LoopBound> getLoopBounds(final VotingInputTypes key) {
+    public static final List<LoopBound> getLoopBounds(final VotingInputType key) {
         assert key != null;
         return PathHandler.getLoopBounds(key, LOOP_BOUNDS);
     }
 
     // TODO: SINGLE_CHOICE_STACK, WEIGHTED_APPROVAL etc.
-    public final String getTemplate(final VotingInputTypes key) {
+    public final String getTemplate(final VotingInputType key) {
         assert key != null;
         return PathHandler.getTemplate(key, TEMPLATES, FILE_PREFIX, this.getClass());
     }

@@ -13,9 +13,9 @@ import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.pse.beast.api.codegen.init.SymbVarInitVoteHelper;
 import edu.pse.beast.api.io.InputOutputInterface;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.trace.JSONResultExtractor;
 
 /**
@@ -69,11 +69,10 @@ public class ResultPresentation2 {
                 InputOutputInterface.readStringFromFile(getResources(TEST_FILE_1));
 
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.APPROVAL,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.APPROVAL,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          TEST);
-        final PreAndPostConditions propDescr =
-                new PreAndPostConditions(TEST);
+        final PropertyDescription propDescr = new PropertyDescription(TEST);
 
         final GeneratedCodeInfo cbmcGeneratedCodeInfo = new GeneratedCodeInfo();
         cbmcGeneratedCodeInfo.addVotingVariableName(ONE, VOTE + ONE);
@@ -98,9 +97,8 @@ public class ResultPresentation2 {
 
         final List<String> rawOutput = getLines(output);
         final JSONResultExtractor res =
-                new JSONResultExtractor(descr, propDescr,
-                                                   cbmcGeneratedCodeInfo,
-                                                   TEST_BOUND, TEST_BOUND, TEST_BOUND);
+                new JSONResultExtractor(descr, propDescr, cbmcGeneratedCodeInfo,
+                                        TEST_BOUND, TEST_BOUND, TEST_BOUND);
         res.processJSONOutput(rawOutput);
         System.out.println(res.getGeneratedExample().toString());
     }
@@ -111,11 +109,10 @@ public class ResultPresentation2 {
                 InputOutputInterface.readStringFromFile(getResources(TEST_FILE_2));
 
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.APPROVAL,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.APPROVAL,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          TEST);
-        final PreAndPostConditions propDescr =
-                new PreAndPostConditions(TEST);
+        final PropertyDescription propDescr = new PropertyDescription(TEST);
 
         final GeneratedCodeInfo cbmcGeneratedCodeInfo = new GeneratedCodeInfo();
         final CodeGenOptions opts = new CodeGenOptions();
@@ -144,9 +141,8 @@ public class ResultPresentation2 {
 
         final List<String> rawOutput = getLines(output);
         final JSONResultExtractor res =
-                new JSONResultExtractor(descr, propDescr,
-                                                   cbmcGeneratedCodeInfo,
-                                                   TEST_BOUND, TEST_BOUND, TEST_BOUND);
+                new JSONResultExtractor(descr, propDescr, cbmcGeneratedCodeInfo,
+                                        TEST_BOUND, TEST_BOUND, TEST_BOUND);
         res.processJSONOutput(rawOutput);
     }
 }

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
 
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 
 /**
@@ -41,15 +41,14 @@ public class InputOutputInterface {
         return CElectionInputOutput.loadCElection(f);
     }
 
-    public static void
-            storePreAndPostConditionDescription(final PreAndPostConditions propDescr,
-                                                final File f) throws IOException {
-        PreAndPostPropertyInputOutput.storePreAndPostConditionDescription(propDescr, f);
+    public static void storePropertyDescription(final PropertyDescription propDescr, final File f)
+                    throws IOException {
+        PropertyInputOutput.storePropertyDescription(propDescr, f);
     }
 
-    public static PreAndPostConditions loadPreAndPostConditionDescription(final File f)
+    public static PropertyDescription loadPropertyDescription(final File f)
             throws JSONException, IOException {
-        return PreAndPostPropertyInputOutput.loadPreAndPostConditionDescription(f);
+        return PropertyInputOutput.loadPropertyDescription(f);
     }
 
     public static void storeBeastWorkspace(final BeastWorkspace beastWorkspace,

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import edu.pse.beast.api.io.InputOutputInterface;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.toolbox.Tuple;
 
 /**
@@ -41,18 +41,18 @@ public class FileDialogHelper {
         return new Tuple<CElectionDescription, File>(null, f);
     }
 
-    public static Tuple<PreAndPostConditions, File>
+    public static Tuple<PropertyDescription, File>
             letUserLoadPropDescr(final File propDescrDir,
                                  final Stage primaryStage) throws IOException {
         final File f = letUserOpenFile(PROPERTY_DESCRIPTION_STRING, PROPERTY_FILE_ENDING,
                                        CHOOSE_PROPERTY_DIALOG_TITLE,
                                        propDescrDir, primaryStage);
         if (f != null) {
-            final PreAndPostConditions propDescr =
-                    InputOutputInterface.loadPreAndPostConditionDescription(f);
-            return new Tuple<PreAndPostConditions, File>(propDescr, f);
+            final PropertyDescription propDescr =
+                    InputOutputInterface.loadPropertyDescription(f);
+            return new Tuple<PropertyDescription, File>(propDescr, f);
         }
-        return new Tuple<PreAndPostConditions, File>(null, f);
+        return new Tuple<PropertyDescription, File>(null, f);
     }
 
     public static File letUserOpenFile(final String extDescr,

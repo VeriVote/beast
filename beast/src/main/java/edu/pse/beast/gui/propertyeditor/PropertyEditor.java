@@ -14,7 +14,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 
 import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.DialogHelper;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
@@ -25,7 +25,7 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  * @author Holger Klein
  *
  */
-public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
+public class PropertyEditor implements WorkspaceUpdateListener {
     private static final String NAME = "Name:";
     private static final String ADD_PROPERTY = "Add Property";
     private static final String INIT_VARIABLE = "Init Variable";
@@ -33,23 +33,22 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     private PropertyEditorCodeElement preConditionEditor;
     private PropertyEditorCodeElement postConditionEditor;
     private ListView<SymbolicVariable> symbolicVariablesListView;
-    private PreAndPostConditions currentPropertyDescription;
+    private PropertyDescription currentPropertyDescription;
     private MenuButton addSymbolicVariableMenu;
     private Button removeSymbolicVariableButton;
-    private ChoiceBox<PreAndPostConditions> openedPropertyDescriptionChoiceBox;
+    private ChoiceBox<PropertyDescription> openedPropertyDescriptionChoiceBox;
     private BeastWorkspace beastWorkspace;
     private Button addPropertyDescriptionButton;
     private Button loadPropertyDescriptionButton;
     private Button savePropertyDescriptionButton;
 
-    public PreAndPostPropertyEditor(final PropertyEditorCodeElement preEditor,
-                                    final PropertyEditorCodeElement postEditor,
-                                    final Buttons buttons,
-                                    final ListView<SymbolicVariable> symbVarsListView,
-                                    final MenuButton addSymbVarMenu,
-                                    final ChoiceBox<PreAndPostConditions>
-                                        openedPropDescrChoiceBox,
-                                    final BeastWorkspace workspace) {
+    public PropertyEditor(final PropertyEditorCodeElement preEditor,
+                          final PropertyEditorCodeElement postEditor,
+                          final Buttons buttons,
+                          final ListView<SymbolicVariable> symbVarsListView,
+                          final MenuButton addSymbVarMenu,
+                          final ChoiceBox<PropertyDescription> openedPropDescrChoiceBox,
+                          final BeastWorkspace workspace) {
         this.preConditionEditor = preEditor;
         this.postConditionEditor = postEditor;
         this.symbolicVariablesListView = symbVarsListView;
@@ -91,10 +90,11 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
             final Optional<ButtonType> res =
                     DialogHelper.generateDialog(ADD_PROPERTY, names, nodes).showAndWait();
             if (res.isPresent()
-                    && !res.get().getButtonData().isCancelButton()) {
+                    && !res.get().getButtonData().isCancelButton()
+                    && !nameField.getText().isBlank()) {
                 final String name = nameField.getText();
-                final PreAndPostConditions propDescr =
-                        new PreAndPostConditions(name);
+                final PropertyDescription propDescr =
+                        new PropertyDescription(name);
                 beastWorkspace.addPropertyDescription(propDescr);
             }
         });
@@ -119,7 +119,8 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
                 final Optional<ButtonType> res =
                         DialogHelper.generateDialog(INIT_VARIABLE, names, inputs).showAndWait();
                 if (res.isPresent()
-                        && !res.get().getButtonData().isCancelButton()) {
+                        && !res.get().getButtonData().isCancelButton()
+                        && !nameField.getText().isBlank()) {
                     final String name = nameField.getText();
                     // TODO name parsing
                     final SymbolicVariable var =
@@ -141,7 +142,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
         beastWorkspace.removeSymbolicVar(currentPropertyDescription, selectedVar);
     }
 
-    private void selectedPropDescrChanged(final PreAndPostConditions propDescr) {
+    private void selectedPropDescrChanged(final PropertyDescription propDescr) {
         loadProperty(propDescr);
     }
 
@@ -159,7 +160,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
 
     private void updatePropDescrChoiceBox() {
         openedPropertyDescriptionChoiceBox.getItems().clear();
-        for (PreAndPostConditions propDescr : beastWorkspace
+        for (PropertyDescription propDescr : beastWorkspace
                 .getLoadedPropDescrs()) {
             openedPropertyDescriptionChoiceBox.getItems().add(propDescr);
         }
@@ -183,7 +184,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
         }
     }
 
-    public final void loadProperty(final PreAndPostConditions propDescr) {
+    public final void loadProperty(final PropertyDescription propDescr) {
         this.currentPropertyDescription = propDescr;
         preConditionEditor.setDisable(propDescr == null);
         postConditionEditor.setDisable(propDescr == null);
@@ -199,7 +200,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     }
 
     @Override
-    public final void handleWorkspaceUpdateAddedVarToPropDescr(final PreAndPostConditions
+    public final void handleWorkspaceUpdateAddedVarToPropDescr(final PropertyDescription
                                                                         propDescr,
                                                                final SymbolicVariable var) {
         if (propDescr == currentPropertyDescription) {
@@ -208,7 +209,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     }
 
     @Override
-    public final void handlePropDescrRemovedVar(final PreAndPostConditions propDescr,
+    public final void handlePropDescrRemovedVar(final PropertyDescription propDescr,
                                                 final SymbolicVariable selectedVar) {
         if (propDescr == currentPropertyDescription) {
             populateVariableList(currentPropertyDescription.getVariables());
@@ -216,7 +217,7 @@ public class PreAndPostPropertyEditor implements WorkspaceUpdateListener {
     }
 
     @Override
-    public final void handleAddedPropDescr(final PreAndPostConditions propDescr) {
+    public final void handleAddedPropDescr(final PropertyDescription propDescr) {
         updatePropDescrChoiceBox();
     }
 

@@ -13,9 +13,9 @@ import org.junit.Test;
 
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.configurationeditor.configuration.ConfigurationBatch;
 import edu.pse.beast.gui.configurationeditor.configuration.cbmc.Configuration;
 import edu.pse.beast.gui.processhandler.CBMCProcessHandlerCreator;
@@ -55,7 +55,7 @@ public class WorkspaceInputOutputCreation {
     }
 
     private static ConfigurationBatch createConfig(final CElectionDescription descr,
-                                                   final PreAndPostConditions prop) {
+                                                   final PropertyDescription prop) {
         final Configuration cc = new Configuration();
         cc.setMinVoters(TEST_AMOUNT);
         cc.setMinCands(TEST_AMOUNT);
@@ -78,8 +78,8 @@ public class WorkspaceInputOutputCreation {
         new BeastWorkspace();
 
         CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          TEST);
         final String code = getTemplate(CODE);
         descr.getVotingFunction().setCode(code);
@@ -103,9 +103,9 @@ public class WorkspaceInputOutputCreation {
                 new File(this.getClass()
                         .getResource(TESTFILES + File.separator + PROP)
                         .getFile());
-        PreAndPostConditions propDescr = null;
+        PropertyDescription propDescr = null;
         try {
-            propDescr = InputOutputInterface.loadPreAndPostConditionDescription(propDescrFile);
+            propDescr = InputOutputInterface.loadPropertyDescription(propDescrFile);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (IOException e) {

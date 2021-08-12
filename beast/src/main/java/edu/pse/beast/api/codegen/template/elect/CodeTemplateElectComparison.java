@@ -8,7 +8,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.io.PathHandler;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -24,20 +24,20 @@ public class CodeTemplateElectComparison {
                     Arrays.asList(LoopBoundType.NECESSARY_AMOUNT_CANDIDATES)
                     );
 
-    private static final Map<VotingOutputTypes, List<LoopBound>> LOOP_BOUNDS =
-            new LinkedHashMap<VotingOutputTypes, List<LoopBound>>(
-            Map.of(VotingOutputTypes.CANDIDATE_LIST, LOOP_BOUNDS_CANDIDATE_LIST,
-                    VotingOutputTypes.PARLIAMENT, LOOP_BOUNDS_CANDIDATE_LIST));
+    private static final Map<VotingOutputType, List<LoopBound>> LOOP_BOUNDS =
+            new LinkedHashMap<VotingOutputType, List<LoopBound>>(
+            Map.of(VotingOutputType.CANDIDATE_LIST, LOOP_BOUNDS_CANDIDATE_LIST,
+                    VotingOutputType.PARLIAMENT, LOOP_BOUNDS_CANDIDATE_LIST));
 
     private static final Map<String, String> TEMPLATES = new LinkedHashMap<String, String>();
 
-    public static final List<LoopBound> getLoopBounds(final VotingOutputTypes key) {
+    public static final List<LoopBound> getLoopBounds(final VotingOutputType key) {
         assert key != null;
         return PathHandler.getLoopBounds(key, LOOP_BOUNDS);
     }
 
     // TODO: PARLIAMENT_STACK, SINGLE_CANDIDATE etc.
-    public final String getTemplate(final VotingOutputTypes key,
+    public final String getTemplate(final VotingOutputType key,
                                            final boolean unequal) {
         assert key != null;
         final String realKey = key.name().toLowerCase() + (unequal ? "_uneq" : "");

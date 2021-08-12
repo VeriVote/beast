@@ -31,7 +31,7 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
     @FXML
     private Slider fontSizeSlider;
 
-    private String fxml = "/edu/pse/beast/cEditorOptions.fxml";
+    private String fxml = "/edu/pse/beast/gui/options/ceditor/options.fxml";
     private FXMLLoader fxmlLoader = new FXMLLoader(
             getClass().getResource(fxml));
 

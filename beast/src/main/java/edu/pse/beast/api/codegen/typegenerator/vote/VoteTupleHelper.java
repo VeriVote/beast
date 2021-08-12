@@ -9,7 +9,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.vote.CodeTemplateVoteTuple;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -38,7 +38,7 @@ public class VoteTupleHelper {
     public static String generateCode(final String generatedVarName,
                                       final List<String> voteNames,
                                       final ElectionTypeCStruct voteArrStruct,
-                                      final VotingInputTypes votingInputType,
+                                      final VotingInputType votingInputType,
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final CodeTemplateVoteTuple voteTuple = new CodeTemplateVoteTuple();

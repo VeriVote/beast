@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.output.JSONMessage;
 
 /**
@@ -28,29 +28,29 @@ public interface PropertyCheckCallback {
     }
 
     default void onPropertyCheckAddedToQueue(CElectionDescription description,
-                                             PreAndPostConditions propertyDescr,
+                                             PropertyDescription propertyDescr,
                                              BoundValues bounds, String uuid) {
     }
 
     default void onPropertyCheckStart(CElectionDescription description,
-                                      PreAndPostConditions propertyDescr,
+                                      PropertyDescription propertyDescr,
                                       BoundValues bounds, String uuid) {
     }
 
     default void onPropertyCheckRawOutput(String sessionUUID,
                                           CElectionDescription description,
-                                          PreAndPostConditions propertyDescr,
+                                          PropertyDescription propertyDescr,
                                           BoundValues bounds, String uuid, String output) {
     }
 
     default void onCheckFileCreated(String sessionUUID,
                                     CElectionDescription description,
-                                    PreAndPostConditions propertyDescr,
+                                    PropertyDescription propertyDescr,
                                     File cbmcFile) {
     }
 
     default void onCompleteCommand(CElectionDescription description,
-                                   PreAndPostConditions propertyDescr,
+                                   PropertyDescription propertyDescr,
                                    BoundValues bounds, String uuid,
                                    String completeCommand) {
     }
@@ -62,18 +62,18 @@ public interface PropertyCheckCallback {
     }
 
     default void onPropertyCheckFinished(CElectionDescription description,
-                                         PreAndPostConditions propertyDescr,
+                                         PropertyDescription propertyDescr,
                                          BoundValues bounds, String uuid) {
     }
 
     default void onPropertyCheckRawOutputComplete(CElectionDescription description,
-                                                  PreAndPostConditions propertyDescr,
+                                                  PropertyDescription propertyDescr,
                                                   BoundValues bounds,
                                                   String uuid, List<String> cbmcOutput) {
     }
 
     default void onPropertyCheckStopped(CElectionDescription descr,
-                                        PreAndPostConditions propertyDescr,
+                                        PropertyDescription propertyDescr,
                                         BoundValues bounds, String uuid) {
     }
 

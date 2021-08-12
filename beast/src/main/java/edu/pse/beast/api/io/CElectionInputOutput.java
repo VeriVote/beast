@@ -13,8 +13,8 @@ import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.io.loopbound.ExtractedCLoopInputOutputHelper;
 import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.CElectionSimpleType;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
 import edu.pse.beast.api.method.function.VotingSigFunction;
@@ -116,8 +116,8 @@ public class CElectionInputOutput {
     }
 
     private static VotingSigFunction toVotingFunction(final JSONObject json,
-                                                      final VotingInputTypes inputType,
-                                                      final VotingOutputTypes outputType) {
+                                                      final VotingInputType inputType,
+                                                      final VotingOutputType outputType) {
         final String name = json.getString(VOTING_FUNC_NAME_KEY);
         final String code = json.getString(FUNC_CODE_KEY);
         final VotingSigFunction func =
@@ -141,8 +141,8 @@ public class CElectionInputOutput {
     }
 
     private static List<VotingSigFunction> toVotingFunctions(final JSONArray array,
-                                                             final VotingInputTypes inputType,
-                                                             final VotingOutputTypes outputType) {
+                                                             final VotingInputType inputType,
+                                                             final VotingOutputType outputType) {
         final List<VotingSigFunction> list = new ArrayList<VotingSigFunction>();
         for (int i = 0; i < array.length(); ++i) {
             list.add(toVotingFunction(array.getJSONObject(i), inputType,
@@ -181,10 +181,10 @@ public class CElectionInputOutput {
             throw new NotImplementedException(NOT_COMPATIBLE);
         }
 
-        final VotingInputTypes inputType =
-                VotingInputTypes.valueOf(json.getString(INPUT_TYPE_KEY));
-        final VotingOutputTypes outputType =
-                VotingOutputTypes.valueOf(json.getString(OUTPUT_TYPE_KEY));
+        final VotingInputType inputType =
+                VotingInputType.valueOf(json.getString(INPUT_TYPE_KEY));
+        final VotingOutputType outputType =
+                VotingOutputType.valueOf(json.getString(OUTPUT_TYPE_KEY));
 
         final String name = json.getString(NAME_KEY);
         final String uuid = json.getString(DESCR_UUID_KEY);

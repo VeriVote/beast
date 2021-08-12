@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.propertycheck.PropertyCheckWorkUnit;
 import edu.pse.beast.api.runner.propertycheck.output.JSONMessage;
@@ -31,7 +31,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
     private static final String UNSAT = "Verification succeeded";
 
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
 
     private PropertyCheckWorkUnit workUnit;
     private WorkUnitState previousState;
@@ -64,7 +64,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
                         final CodeGenLoopBoundHandler loopbounds,
                         final CodeFileData codeFileData,
                         final CElectionDescription descr,
-                        final PreAndPostConditions propDescr,
+                        final PropertyDescription propDescr,
                         final Configuration tc) {
         v = bounds.voters;
         s = bounds.seats;
@@ -100,7 +100,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
     @Override
     public final void onPropertyCheckRawOutput(final String sessionUUID,
                                                final CElectionDescription descr,
-                                               final PreAndPostConditions propertyDescr,
+                                               final PropertyDescription propertyDescr,
                                                final BoundValues bounds,
                                                final String uuid, final String output) {
         runLogs.add(output);
@@ -116,7 +116,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
 
     @Override
     public final void onPropertyCheckFinished(final CElectionDescription descr,
-                                              final PreAndPostConditions propertyDescr,
+                                              final PropertyDescription propertyDescr,
                                               final BoundValues bounds, final String uuid) {
         jsonExampleExtractor.processJSONOutput(runLogs);
         if (callBack != null) {
@@ -126,7 +126,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
 
     @Override
     public final void onPropertyCheckStart(final CElectionDescription descr,
-                                           final PreAndPostConditions propertyDescr,
+                                           final PropertyDescription propertyDescr,
                                            final BoundValues bounds, final String uuid) {
         this.runLogs.clear();
         if (callBack != null) {
@@ -136,7 +136,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
 
     @Override
     public final void onPropertyCheckStopped(final CElectionDescription descr,
-                                            final PreAndPostConditions propertyDescr,
+                                            final PropertyDescription propertyDescr,
                                             final BoundValues bounds, final String uuid) {
         if (callBack != null) {
             callBack.onPropertyCheckStopped(descr, propertyDescr, bounds, uuid);
@@ -269,7 +269,7 @@ public class PropertyCheckRun implements PropertyCheckCallback {
         return description;
     }
 
-    public final PreAndPostConditions getPropDescr() {
+    public final PropertyDescription getPropDescr() {
         return propertyDescription;
     }
 

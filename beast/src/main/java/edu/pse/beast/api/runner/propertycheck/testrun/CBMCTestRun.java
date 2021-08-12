@@ -5,7 +5,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.propertycheck.PropertyCheckWorkUnit;
 import edu.pse.beast.api.runner.propertycheck.output.JSONMessage;
@@ -36,7 +36,7 @@ public class CBMCTestRun implements PropertyCheckCallback {
     private int c;
 
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
 
     public CBMCTestRun(final CodeFileData codeFile,
                                          final VotingParameters params,
@@ -51,7 +51,7 @@ public class CBMCTestRun implements PropertyCheckCallback {
         v = params.getV();
         c = params.getC();
         s = params.getS();
-        propertyDescription = new PreAndPostConditions(FALSE_NAME);
+        propertyDescription = new PropertyDescription(FALSE_NAME);
         propertyDescription.getPreConditionsDescription().setCode();
         propertyDescription.getPostConditionsDescription().setCode(FALSE_CODE);
 
@@ -85,7 +85,7 @@ public class CBMCTestRun implements PropertyCheckCallback {
     @Override
     public final void onPropertyCheckRawOutput(final String sessionUUID,
                                               final CElectionDescription descr,
-                                              final PreAndPostConditions propertyDescr,
+                                              final PropertyDescription propertyDescr,
                                               final BoundValues bounds,
                                               final String uuid,
                                               final String output) {

@@ -9,7 +9,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.vote.CodeTemplateVoteIntersection;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -78,7 +78,7 @@ public class VoteIntersectionHelper {
     public static String generateVoteIntersection(final String generatedVarName,
                                                   final List<String> intersectedVotesVarNames,
                                                   final ElectionTypeCStruct voteArrStruct,
-                                                  final VotingInputTypes votingInputType,
+                                                  final VotingInputType votingInputType,
                                                   final CodeGenOptions options,
                                                   final CodeGenLoopBoundHandler loopBoundHandler) {
         final String comparison = generateComparison(intersectedVotesVarNames, voteArrStruct);

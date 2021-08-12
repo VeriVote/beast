@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class BeastWithGuiApplicationClass extends Application {
     private static final String TITLE = "BEAST";
-    private static final String FXML_RESOURCE_NAME = "/edu/pse/beast/BeastGUI.fxml";
+    private static final String FXML_RESOURCE_NAME = "/edu/pse/beast/gui/beast.fxml";
     private BeastGUIController controller = new BeastGUIController();
 
     public static void main(final String[] args) {

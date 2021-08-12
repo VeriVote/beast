@@ -20,7 +20,7 @@ import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.method.function.FunctionToC;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
 import edu.pse.beast.api.method.function.VotingSigFunction;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * Generates the entire C code needed to run a cbmc check
@@ -139,7 +139,7 @@ public class CBMCCodeGenerator {
     }
 
     public static GeneratedCodeInfo generateCodeForPropertyCheck(final CElectionDescription descr,
-                                                                 final PreAndPostConditions pDescr,
+                                                                 final PropertyDescription pDescr,
                                                                  final CodeGenOptions options,
                                                                  final InitVoteHelper initHelper) {
         final CFile created = prepareCodeFile(descr, options);

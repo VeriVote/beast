@@ -12,9 +12,9 @@ import edu.pse.beast.api.codegen.init.TestInitVoteHelper;
 import edu.pse.beast.api.cparser.AntlrCLoopParser;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.test.PreferenceParameters;
 
 /**
@@ -35,8 +35,8 @@ public class NonSymbolicTestRunCodeGeneration {
     public void testNumbers() {
         final String votingCode = NONE + "\n";
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         descr.getVotingFunction().setCode(votingCode);
 
@@ -48,7 +48,7 @@ public class NonSymbolicTestRunCodeGeneration {
         final String pre = NONE;
         final String post = FALSE_PROPERTY;
 
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post).get(0);
 
         final PreferenceParameters parameters = new PreferenceParameters(5);

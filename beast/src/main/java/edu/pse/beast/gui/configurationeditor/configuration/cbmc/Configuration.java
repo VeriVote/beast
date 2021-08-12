@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
 
 /**
@@ -26,7 +26,7 @@ public class Configuration {
     private String name;
 
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
 
     private boolean startRunsOnCreation;
 
@@ -74,7 +74,7 @@ public class Configuration {
         return description;
     }
 
-    public final PreAndPostConditions getPropDescr() {
+    public final PropertyDescription getPropDescr() {
         return propertyDescription;
     }
 
@@ -128,7 +128,7 @@ public class Configuration {
         this.description = descr;
     }
 
-    public final void setPropDescr(final PreAndPostConditions propDescr) {
+    public final void setPropDescr(final PropertyDescription propDescr) {
         this.propertyDescription = propDescr;
     }
 

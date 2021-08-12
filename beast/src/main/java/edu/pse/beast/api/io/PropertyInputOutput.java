@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
 import edu.pse.beast.api.property.FormalPropertyDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -19,7 +19,7 @@ import edu.pse.beast.api.property.PreAndPostConditions;
  * @author Holger Klein
  *
  */
-public class PreAndPostPropertyInputOutput {
+public class PropertyInputOutput {
     private static final int CURRENT_VERSION = 1;
 
     private static final String VERSION_KEY = "version";
@@ -52,15 +52,13 @@ public class PreAndPostPropertyInputOutput {
     }
 
     public static void
-            storePreAndPostConditionDescription(final PreAndPostConditions propDescr,
-                                                final File f) throws IOException {
+            storePropertyDescription(final PropertyDescription propDescr,
+                                     final File f) throws IOException {
         final JSONObject json = new JSONObject();
 
         json.put(VERSION_KEY, CURRENT_VERSION);
-        json.put(PRE_DESCR_KEY, fromPropertyDescription(
-                propDescr.getPreConditionsDescription()));
-        json.put(POST_DESCR_KEY, fromPropertyDescription(
-                propDescr.getPostConditionsDescription()));
+        json.put(PRE_DESCR_KEY, fromPropertyDescription(propDescr.getPreConditionsDescription()));
+        json.put(POST_DESCR_KEY, fromPropertyDescription(propDescr.getPostConditionsDescription()));
         json.put(NAME_KEY, propDescr.getName());
         json.put(SYMB_VAR_KEY, fromSymbVarList(propDescr.getVariables()));
         json.put(PROP_DESCR_UUID_KEY, propDescr.getUuid());
@@ -86,7 +84,7 @@ public class PreAndPostPropertyInputOutput {
         return new FormalPropertyDescription(code);
     }
 
-    public static PreAndPostConditions loadPreAndPostConditionDescription(final File f)
+    public static PropertyDescription loadPropertyDescription(final File f)
             throws JSONException, IOException {
         final JSONObject json = new JSONObject(InputOutputInterface.readStringFromFile(f));
         final JSONArray symbVarArr = json.getJSONArray(SYMB_VAR_KEY);
@@ -97,7 +95,7 @@ public class PreAndPostPropertyInputOutput {
                 propertyDescriptionFromJson(json.getJSONObject(POST_DESCR_KEY));
         final String name = json.getString(NAME_KEY);
         final String uuid = json.getString(PROP_DESCR_UUID_KEY);
-        return new PreAndPostConditions(uuid, name, symbVars, preProp, postProp);
+        return new PropertyDescription(uuid, name, symbVars, preProp, postProp);
     }
 
 }

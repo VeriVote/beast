@@ -10,7 +10,7 @@ import edu.pse.beast.api.codegen.cbmc.StringReplacementMap;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.elect.CodeTemplateElectIntersection;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -32,7 +32,7 @@ public class ElectIntersectionHelper {
     public static String generateCode(final String generatedVarName,
                                       final List<String> intersectedElectNames,
                                       final ElectionTypeCStruct electStruct,
-                                      final VotingOutputTypes votingOutputType,
+                                      final VotingOutputType votingOutputType,
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =

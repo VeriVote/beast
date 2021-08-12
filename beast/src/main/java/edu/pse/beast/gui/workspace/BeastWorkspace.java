@@ -23,13 +23,13 @@ import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.io.InputOutputInterface;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
 import edu.pse.beast.api.method.function.VotingSigFunction;
 import edu.pse.beast.api.property.FormalPropertyDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.propertycheck.PropertyCheckWorkUnit;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
@@ -96,12 +96,11 @@ public class BeastWorkspace {
     private Set<CElectionDescription> descrWithUnsavedChanges =
             new LinkedHashSet<CElectionDescription>();
 
-    private List<PreAndPostConditions> loadedPropDescrs =
-            new ArrayList<PreAndPostConditions>();
-    private Map<PreAndPostConditions, File> filesPerPropDescr =
-            new LinkedHashMap<PreAndPostConditions, File>();
-    private Set<PreAndPostConditions> propDescrWithUnsavedChanges =
-            new LinkedHashSet<PreAndPostConditions>();
+    private List<PropertyDescription> loadedPropDescrs = new ArrayList<PropertyDescription>();
+    private Map<PropertyDescription, File> filesPerPropDescr =
+            new LinkedHashMap<PropertyDescription, File>();
+    private Set<PropertyDescription> propDescrWithUnsavedChanges =
+            new LinkedHashSet<PropertyDescription>();
 
     private CodeGenOptions codeGenerationOptions;
     private ConfigurationList configurationList = new ConfigurationList();
@@ -136,11 +135,7 @@ public class BeastWorkspace {
                           CONFIRMATION_MESSAGE_STRING,
                           ButtonType.OK, ButtonType.NO);
         final Optional<ButtonType> res = reallyRemove.showAndWait();
-        if (res.isPresent() || res.get().getButtonData().isCancelButton()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !res.isPresent() && !res.get().getButtonData().isCancelButton();
     }
 
     private void messageUpdateListener() {
@@ -150,16 +145,16 @@ public class BeastWorkspace {
     }
 
     private boolean saveAll(final Set<CElectionDescription> unchangedMethods,
-                            final Set<PreAndPostConditions> unchangedProperties) {
+                            final Set<PropertyDescription> unchangedProperties) {
         final List<CElectionDescription> descrListCopy =
                 new ArrayList<CElectionDescription>(unchangedMethods);
         boolean res = true;
         for (final CElectionDescription descr : descrListCopy) {
             res &= descr != null && saveDescr(descr);
         }
-        final List<PreAndPostConditions> propDescrListCopy =
-                new ArrayList<PreAndPostConditions>(unchangedProperties);
-        for (final PreAndPostConditions propDescr : propDescrListCopy) {
+        final List<PropertyDescription> propDescrListCopy =
+                new ArrayList<PropertyDescription>(unchangedProperties);
+        for (final PropertyDescription propDescr : propDescrListCopy) {
             res &= savePropDescr(propDescr);
         }
         return res;
@@ -218,7 +213,7 @@ public class BeastWorkspace {
         return loadedDescrs;
     }
 
-    public final List<PreAndPostConditions> getLoadedPropDescrs() {
+    public final List<PropertyDescription> getLoadedPropDescrs() {
         return loadedPropDescrs;
     }
 
@@ -230,8 +225,7 @@ public class BeastWorkspace {
         // remove the old list so it does not receive updates
         updateListener.remove(this.configurationList);
         this.configurationList = configList;
-        for (final PropertyCheckRun run
-                : configList.getRuns()) {
+        for (final PropertyCheckRun run : configList.getRuns()) {
             final PropertyCheckWorkUnit wu =
                     new PropertyCheckWorkUnit(cbmcProcessHandlerCreator,
                                               UUID.randomUUID().toString());
@@ -248,7 +242,7 @@ public class BeastWorkspace {
         return filesPerDescr;
     }
 
-    public final Map<PreAndPostConditions, File> getFilesPerPropDescr() {
+    public final Map<PropertyDescription, File> getFilesPerPropDescr() {
         return filesPerPropDescr;
     }
 
@@ -261,8 +255,8 @@ public class BeastWorkspace {
         return null;
     }
 
-    public final PreAndPostConditions getPropDescrByUUID(final String uuid) {
-        for (final PreAndPostConditions propDescr : loadedPropDescrs) {
+    public final PropertyDescription getPropDescrByUUID(final String uuid) {
+        for (final PropertyDescription propDescr : loadedPropDescrs) {
             if (propDescr.getUuid().equals(uuid)) {
                 return propDescr;
             }
@@ -281,7 +275,7 @@ public class BeastWorkspace {
 
     public final void letUserLoadPropDescr() {
         try {
-            final Tuple<PreAndPostConditions, File> t =
+            final Tuple<PropertyDescription, File> t =
                     FileDialogHelper.letUserLoadPropDescr(pathHandler.getPropDescrDir(), null);
             if (t.first() != null) {
                 addPropertyDescription(t.first());
@@ -295,7 +289,7 @@ public class BeastWorkspace {
         }
     }
 
-    public final void addPropertyDescription(final PreAndPostConditions propDescr) {
+    public final void addPropertyDescription(final PropertyDescription propDescr) {
         loadedPropDescrs.add(propDescr);
         for (final WorkspaceUpdateListener l : updateListener) {
             l.handleAddedPropDescr(propDescr);
@@ -323,7 +317,7 @@ public class BeastWorkspace {
         return configurationList.getConfigsByDescr();
     }
 
-    public final Map<PreAndPostConditions, List<ConfigurationBatch>>
+    public final Map<PropertyDescription, List<ConfigurationBatch>>
                     getConfigsByPropertyDescription() {
         return configurationList.getConfigsByPropDescr();
     }
@@ -333,8 +327,7 @@ public class BeastWorkspace {
             final CElectionDescription descr = config.getDescr();
             for (final CElectionDescriptionFunction f : descr.getFunctions()) {
                 if (!f.allLoopsDescribed()) {
-                    final String more =
-                            THE_FUNCTION + f.getName() + LOOPBOUNDS_NOT_DESCRIBED;
+                    final String more = THE_FUNCTION + f.getName() + LOOPBOUNDS_NOT_DESCRIBED;
                     errorHandler.logAndDisplayError(
                             new BeastError(BeastErrorType.NOT_ALL_LOOPS_DESCRIBED, more));
                     return;
@@ -375,7 +368,7 @@ public class BeastWorkspace {
         filesPerDescr.put(loadedDescr, descrFile);
     }
 
-    public final void addFileForPropDescr(final PreAndPostConditions loadedPropDescr,
+    public final void addFileForPropDescr(final PropertyDescription loadedPropDescr,
                                           final File propDescrFile) {
         filesPerPropDescr.put(loadedPropDescr, propDescrFile);
     }
@@ -396,7 +389,6 @@ public class BeastWorkspace {
                 beast.generateCodeFilePropertyCheck(currentConfig.getDescr(),
                                                     currentConfig.getPropDescr(),
                                                     codeGenerationOptions, pathHandler);
-
         for (final PropertyCheckRun checkRun : currentConfig.getRuns()) {
             checkRun.updateDataForCheck(codeFileData, checkRun.getCodeGenerationOptions());
         }
@@ -405,7 +397,7 @@ public class BeastWorkspace {
         }
     }
 
-    public final void addVariableToPropertyDescription(final PreAndPostConditions currentPropDescr,
+    public final void addVariableToPropertyDescription(final PropertyDescription currentPropDescr,
                                                        final SymbolicVariable var) {
         try {
             currentPropDescr.addVariable(var);
@@ -423,7 +415,7 @@ public class BeastWorkspace {
 
     public final void updateCodeForPropDescr(final String code,
                                              final FormalPropertyDescription conditionDescription,
-                                             final PreAndPostConditions propDescr) {
+                                             final PropertyDescription propDescr) {
         conditionDescription.setCode(code);
         propDescrWithUnsavedChanges.add(propDescr);
         for (final WorkspaceUpdateListener l : updateListener) {
@@ -436,9 +428,9 @@ public class BeastWorkspace {
     }
 
     public final boolean saveDescr(final CElectionDescription descr) {
-        File f = getFile(descr, descr.getName(), filesPerDescr,
-                         pathHandler.getElectionDescrDir(),
-                         BELEC_FILE_ENDING, SAVE_PROPERTY_DIALOG_TITLE);
+        final File f = getFile(descr, descr.getName(), filesPerDescr,
+                               pathHandler.getElectionDescrDir(), BELEC_FILE_ENDING,
+                               SAVE_PROPERTY_DIALOG_TITLE);
         if (f == null) {
             return false;
         }
@@ -453,15 +445,15 @@ public class BeastWorkspace {
         return true;
     }
 
-    public final boolean savePropDescr(final PreAndPostConditions propDescr) {
-        File f = getFile(propDescr, propDescr.getName(), filesPerPropDescr,
-                         pathHandler.getPropDescrDir(),
-                         BPRP_FILE_ENDING, SAVE_PROPERTY_DIALOG_TITLE);
+    public final boolean savePropDescr(final PropertyDescription propDescr) {
+        final File f = getFile(propDescr, propDescr.getName(), filesPerPropDescr,
+                               pathHandler.getPropDescrDir(), BPRP_FILE_ENDING,
+                               SAVE_PROPERTY_DIALOG_TITLE);
         if (f == null) {
             return false;
         }
         try {
-            InputOutputInterface.storePreAndPostConditionDescription(propDescr, f);
+            InputOutputInterface.storePropertyDescription(propDescr, f);
             propDescrWithUnsavedChanges.remove(propDescr);
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
@@ -536,7 +528,7 @@ public class BeastWorkspace {
     public final Map<String, List<ConfigurationBatch>> getConfigsByPropertyDescriptionName() {
         final Map<String, List<ConfigurationBatch>> map =
                 new LinkedHashMap<String, List<ConfigurationBatch>>();
-        for (final PreAndPostConditions propDescr
+        for (final PropertyDescription propDescr
                 : getConfigsByPropertyDescription().keySet()) {
             map.put(propDescr.getName(),
                     getConfigsByPropertyDescription().get(propDescr));
@@ -628,7 +620,7 @@ public class BeastWorkspace {
 
     public final void createConfiguration(final String nameString,
                                           final CElectionDescription descr,
-                                          final PreAndPostConditions propDescr) {
+                                          final PropertyDescription propDescr) {
         final ConfigurationBatch tc = new ConfigurationBatch(descr, propDescr, nameString);
         final Configuration configuration = new Configuration();
         configuration.setDescr(descr);
@@ -645,7 +637,7 @@ public class BeastWorkspace {
         beast.stopRun(run);
     }
 
-    public final void removeSymbolicVar(final PreAndPostConditions propDescr,
+    public final void removeSymbolicVar(final PropertyDescription propDescr,
                                         final SymbolicVariable selectedVar) {
         propDescr.getVariables().remove(selectedVar);
         propDescrWithUnsavedChanges.add(propDescr);
@@ -665,8 +657,8 @@ public class BeastWorkspace {
 
     public final void editDescr(final CElectionDescription descr,
                                 final String nameString,
-                                final VotingInputTypes inType,
-                                final VotingOutputTypes outType) {
+                                final VotingInputType inType,
+                                final VotingOutputType outType) {
         descr.setName(nameString);
         descr.setInputType(inType);
         descr.setOutputType(outType);
@@ -699,7 +691,7 @@ public class BeastWorkspace {
         configurationList.removeAll(descr);
     }
 
-    public final void removePropDescr(final PreAndPostConditions propDescr) {
+    public final void removePropDescr(final PropertyDescription propDescr) {
         if (configurationList.getConfigsByPropDescr().containsKey(propDescr)) {
             if (!askUserIfReallyDelete()) {
                 return;

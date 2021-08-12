@@ -34,10 +34,10 @@ public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener 
     private static final String ELECTION_DESCRIPTION = "Election Description";
     private static final String PROPERTY_DESCRIPTION = "Property Description";
     private static final String CBMC = "cbmc";
-    private static final String CONFIG_FXML = "configurationDetail.fxml";
-    private static final String CBMC_CONFIG_FXML = "cbmcConfigurationDetail.fxml";
-    private static final String CBMC_RUN_FXML = "cbmcRunDetail.fxml";
-    private static final String CONFIG_CATEGORY_FXML = "configurationCategoryDetail.fxml";
+    private static final String CONFIG_FXML = "configuration.fxml";
+    private static final String CBMC_CONFIG_FXML = "check.fxml";
+    private static final String CBMC_RUN_FXML = "run.fxml";
+    private static final String CONFIG_CATEGORY_FXML = "category.fxml";
 
     private ChoiceBox<String> sortCriteriumChoiceBox;
     private TreeView<ConfigurationItem> configurationTreeView;

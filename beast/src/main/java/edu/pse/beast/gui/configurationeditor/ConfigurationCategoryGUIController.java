@@ -12,7 +12,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.configurationeditor.configuration.ConfigurationBatch;
 import edu.pse.beast.gui.configurationeditor.treeview.ConfigurationItem;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
@@ -36,7 +36,7 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
     @FXML
     private Button loadDescrButton;
     @FXML
-    private ChoiceBox<PreAndPostConditions> propDescrChoiceBox;
+    private ChoiceBox<PropertyDescription> propDescrChoiceBox;
     @FXML
     private Button loadPropDescrButton;
     @FXML
@@ -103,7 +103,7 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
         final String name = nameTextField.getText();
         final CElectionDescription descr =
                 descrChoiceBox.getSelectionModel().getSelectedItem();
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 propDescrChoiceBox.getSelectionModel().getSelectedItem();
         if (!name.isEmpty() && descr != null && propDescr != null) {
             beastWorkspace.createConfiguration(name, descr, propDescr);
@@ -138,9 +138,9 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
                 }
             }
         } else {
-            final Map<PreAndPostConditions, List<ConfigurationBatch>> map =
+            final Map<PropertyDescription, List<ConfigurationBatch>> map =
                     beastWorkspace.getConfigsByPropertyDescription();
-            for (final PreAndPostConditions propDescr : map.keySet()) {
+            for (final PropertyDescription propDescr : map.keySet()) {
                 for (final ConfigurationBatch tc : map.get(propDescr)) {
                     configurationListView.getItems().add(tc);
                 }
@@ -165,7 +165,7 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
     }
 
     @Override
-    public final void handleAddedPropDescr(final PreAndPostConditions propDescr) {
+    public final void handleAddedPropDescr(final PropertyDescription propDescr) {
         updateView();
     }
 }

@@ -41,7 +41,7 @@ public class ExtractedCLoop {
     private IterationStatementContext context;
 
     private String uuid = UUID.randomUUID().toString();
-    private CLoopTypes loopType;
+    private CLoopType loopType;
 
     private int line;
     private int loopNumberInFunction;
@@ -76,7 +76,7 @@ public class ExtractedCLoop {
         return childrenLoops;
     }
 
-    public final CLoopTypes getLoopType() {
+    public final CLoopType getLoopType() {
         return loopType;
     }
 
@@ -191,7 +191,7 @@ public class ExtractedCLoop {
         posInLine = context.start.getCharPositionInLine();
 
         if (context.For() != null) {
-            loopType = CLoopTypes.FOR;
+            loopType = CLoopType.FOR;
             final ExpressionContext condExp = initForLoopExpression(context);
 
             final CLoopParseResultType parseFail;
@@ -218,7 +218,7 @@ public class ExtractedCLoop {
                 }
             }
         } else if (context.While() != null) {
-            loopType = CLoopTypes.WHILE;
+            loopType = CLoopType.WHILE;
         }
     }
 
@@ -264,11 +264,11 @@ public class ExtractedCLoop {
      *
      */
     public static final class Types {
-        final CLoopTypes loop;
+        final CLoopType loop;
         final CLoopParseResultType parseResult;
         final LoopBoundType loopBound;
 
-        public Types(final CLoopTypes loopType,
+        public Types(final CLoopType loopType,
                      final CLoopParseResultType parseResultType,
                      final LoopBoundType loopBoundType) {
             this.loop = loopType;

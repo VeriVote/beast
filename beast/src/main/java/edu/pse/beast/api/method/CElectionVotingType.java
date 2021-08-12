@@ -82,7 +82,7 @@ public class CElectionVotingType {
         return created;
     }
 
-    public static final CElectionVotingType of(final VotingOutputTypes outType) {
+    public static final CElectionVotingType of(final VotingOutputType outType) {
         final CElectionVotingType created = new CElectionVotingType();
         switch (outType) {
         case CANDIDATE_LIST:
@@ -111,7 +111,7 @@ public class CElectionVotingType {
         return created;
     }
 
-    public static final CElectionVotingType of(final VotingInputTypes inType) {
+    public static final CElectionVotingType of(final VotingInputType inType) {
         final CElectionVotingType created = new CElectionVotingType();
         switch (inType) {
         case APPROVAL:

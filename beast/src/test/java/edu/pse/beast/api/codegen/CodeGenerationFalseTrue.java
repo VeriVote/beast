@@ -14,9 +14,9 @@ import edu.pse.beast.api.codegen.init.SymbVarInitVoteHelper;
 import edu.pse.beast.api.cparser.AntlrCLoopParser;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -36,8 +36,8 @@ public class CodeGenerationFalseTrue {
     public void testTrue() {
         final String votingCode = NONE;
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.SINGLE_CHOICE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.SINGLE_CHOICE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         descr.getVotingFunction().setCode(votingCode);
 
@@ -49,7 +49,7 @@ public class CodeGenerationFalseTrue {
         final String pre = NONE;
         final String post = "FALSE;";
 
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post).get(0);
         propDescr.addVariable(new SymbolicVariable(SYMB_VAR_1, VariableType.CANDIDATE));
         propDescr.addVariable(new SymbolicVariable(SYMB_VAR_2, VariableType.CANDIDATE));

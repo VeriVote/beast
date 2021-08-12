@@ -29,11 +29,11 @@ public class CElectionDescription {
     private String name;
     private String uuid;
 
-    private VotingInputTypes inputType;
-    private VotingOutputTypes outputType;
+    private VotingInputType inputType;
+    private VotingOutputType outputType;
 
-    public CElectionDescription(final VotingInputTypes inType,
-                                final VotingOutputTypes outType,
+    public CElectionDescription(final VotingInputType inType,
+                                final VotingOutputType outType,
                                 final String nameString) {
         this.inputType = inType;
         this.outputType = outType;
@@ -43,8 +43,8 @@ public class CElectionDescription {
     }
 
     public CElectionDescription(final String uuidString, final String nameString,
-                                final VotingInputTypes inType,
-                                final VotingOutputTypes outType) {
+                                final VotingInputType inType,
+                                final VotingOutputType outType) {
         this.inputType = inType;
         this.outputType = outType;
         this.name = nameString;
@@ -86,7 +86,7 @@ public class CElectionDescription {
         return name;
     }
 
-    public final void setInputType(final VotingInputTypes inType) {
+    public final void setInputType(final VotingInputType inType) {
         this.inputType = inType;
         for (final CElectionDescriptionFunction f : functions) {
             if (f.getClass().equals(VotingSigFunction.class)) {
@@ -95,7 +95,7 @@ public class CElectionDescription {
         }
     }
 
-    public final void setOutputType(final VotingOutputTypes outType) {
+    public final void setOutputType(final VotingOutputType outType) {
         this.outputType = outType;
         for (final CElectionDescriptionFunction f : functions) {
             if (f.getClass().equals(VotingSigFunction.class)) {
@@ -104,11 +104,11 @@ public class CElectionDescription {
         }
     }
 
-    public final VotingInputTypes getInputType() {
+    public final VotingInputType getInputType() {
         return inputType;
     }
 
-    public final VotingOutputTypes getOutputType() {
+    public final VotingOutputType getOutputType() {
         return outputType;
     }
 

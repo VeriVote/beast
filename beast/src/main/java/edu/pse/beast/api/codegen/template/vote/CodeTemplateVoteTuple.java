@@ -8,7 +8,7 @@ import java.util.Map;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.io.PathHandler;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -22,8 +22,8 @@ public class CodeTemplateVoteTuple {
     private static final Map<String, String> SETUP_TEMPLATES =
             new LinkedHashMap<String, String>();
 
-    private static final Map<VotingInputTypes, String> TEMPLATES =
-            new LinkedHashMap<VotingInputTypes, String>();
+    private static final Map<VotingInputType, String> TEMPLATES =
+            new LinkedHashMap<VotingInputType, String>();
 
     private static final List<LoopBound> LOOP_BOUNDS_PREFERENCE =
             LoopBound.codeGenLoopboundList(
@@ -32,12 +32,12 @@ public class CodeTemplateVoteTuple {
                     LoopBoundType.AMOUNT_CANDIDATES)
             );
 
-    private static final Map<VotingInputTypes, List<LoopBound>> LOOP_BOUNDS =
-            new LinkedHashMap<VotingInputTypes, List<LoopBound>>(
-                    Map.of(VotingInputTypes.PREFERENCE, LOOP_BOUNDS_PREFERENCE)
+    private static final Map<VotingInputType, List<LoopBound>> LOOP_BOUNDS =
+            new LinkedHashMap<VotingInputType, List<LoopBound>>(
+                    Map.of(VotingInputType.PREFERENCE, LOOP_BOUNDS_PREFERENCE)
             );
 
-    public static final List<LoopBound> getLoopBounds(final VotingInputTypes key) {
+    public static final List<LoopBound> getLoopBounds(final VotingInputType key) {
         assert key != null;
         return PathHandler.getLoopBounds(key, LOOP_BOUNDS);
     }
@@ -48,7 +48,7 @@ public class CodeTemplateVoteTuple {
     }
 
     // TODO: APPROVAL, WEIGHTED_APPROVAL, SINGLE_CHOICE, SINGLE_CHOICE_STACK etc.
-    public final String getTemplate(final VotingInputTypes key) {
+    public final String getTemplate(final VotingInputType key) {
         assert key != null;
         return PathHandler.getTemplate(key, TEMPLATES, FILE_PREFIX, this.getClass());
     }

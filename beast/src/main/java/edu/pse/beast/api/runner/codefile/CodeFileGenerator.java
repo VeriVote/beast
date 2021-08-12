@@ -12,7 +12,7 @@ import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.pse.beast.api.codegen.init.InitVoteHelper;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -28,7 +28,7 @@ public class CodeFileGenerator {
     private static final String PATH_TO_TEMP_FOLDER = "/core/cfiles/";
 
     public static CodeFileData createCodeFileCheck(final CElectionDescription descr,
-                                                   final PreAndPostConditions propDescr,
+                                                   final PropertyDescription propDescr,
                                                    final CodeGenOptions options,
                                                    final PathHandler pathHandler,
                                                    final InitVoteHelper initVoteHelper)

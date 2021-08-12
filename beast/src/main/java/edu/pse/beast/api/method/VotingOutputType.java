@@ -6,7 +6,7 @@ package edu.pse.beast.api.method;
  * @author Holger Klein
  *
  */
-public enum VotingOutputTypes {
+public enum VotingOutputType {
     CANDIDATE_LIST, PARLIAMENT, PARLIAMENT_STACK, SINGLE_CANDIDATE;
 
     private static final String BLANK = " ";

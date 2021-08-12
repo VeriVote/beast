@@ -8,7 +8,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.elect.CodeTemplateElectComparison;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -29,7 +29,7 @@ public class ElectComparisonHelper {
     public static String generateCode(final String generatedVarName,
                                       final Comparison comparison,
                                       final ElectionTypeCStruct comparedType,
-                                      final VotingOutputTypes votingOutputType,
+                                      final VotingOutputType votingOutputType,
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =

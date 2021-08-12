@@ -6,7 +6,7 @@ package edu.pse.beast.api.method;
  * @author Holger Klein
  *
  */
-public enum VotingInputTypes {
+public enum VotingInputType {
 
     /*
      * every voter gives a list of 0s and 1s which states whether they approve

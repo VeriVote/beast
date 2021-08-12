@@ -10,7 +10,7 @@ import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.vote.CodeTemplateVoteComparison;
 import edu.pse.beast.api.codegen.template.vote.CodeTemplateVotePermutation;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -34,7 +34,7 @@ public class VotePermutationHelper {
     public static String generateCode(final String generatedVarName,
                                       final String varName,
                                       final ElectionTypeCStruct voteArrStruct,
-                                      final VotingInputTypes votingInputType,
+                                      final VotingInputType votingInputType,
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =

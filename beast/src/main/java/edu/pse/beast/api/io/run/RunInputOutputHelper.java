@@ -15,7 +15,7 @@ import edu.pse.beast.api.io.code.CodeFileDataInputOutputHelper;
 import edu.pse.beast.api.io.loopbound.LoopBoundHandlerInputOutputHelper;
 import edu.pse.beast.api.io.loopbound.LoopBoundInputOutputHelper;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
 import edu.pse.beast.api.runner.threadpool.WorkUnitState;
@@ -72,10 +72,10 @@ public class RunInputOutputHelper {
     }
 
     private static PropertyCheckRun cbmcRunFromJSON(final JSONObject json,
-                                                final CElectionDescription descr,
-                                                final PreAndPostConditions propDescr,
-                                                final Configuration tc,
-                                                final RelativePathConverter pathHandler) {
+                                                    final CElectionDescription descr,
+                                                    final PropertyDescription propDescr,
+                                                    final Configuration tc,
+                                                    final RelativePathConverter pathHandler) {
         final int v = json.getInt(AMT_VOTER_KEY);
         final int c = json.getInt(AMT_CANDS_KEY);
         final int s = json.getInt(AMT_SEATS_KEY);
@@ -112,8 +112,7 @@ public class RunInputOutputHelper {
 
     public static List<PropertyCheckRun> runListFromJSONArr(final JSONArray arr,
                                                             final CElectionDescription descr,
-                                                            final PreAndPostConditions
-                                                                    propDescr,
+                                                            final PropertyDescription propDescr,
                                                             final Configuration tc,
                                                             final RelativePathConverter
                                                                     pathHandler) {

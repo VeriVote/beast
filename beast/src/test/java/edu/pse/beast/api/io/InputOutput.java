@@ -19,10 +19,10 @@ import edu.pse.beast.api.cparser.AntlrCLoopParser;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.CElectionSimpleType;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -64,8 +64,8 @@ public class InputOutput {
     @Test
     public void testInputOutputOfElectionDescription() throws IOException {
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         final String bordaCode = getTemplate(BORDA);
         descr.getVotingFunction().setCode(bordaCode);
@@ -120,11 +120,11 @@ public class InputOutput {
     }
 
     @Test
-    public void testInputOutputOfPreAndPostConditionDescription() throws IOException {
+    public void testInputOutputOfPropertyDescription() throws IOException {
         final String pre = getTemplate(REINFORCE + PRE);
         final String post = getTemplate(REINFORCE + POST);
 
-        final List<PreAndPostConditions> propDecsr =
+        final List<PropertyDescription> propDecsr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post);
 
         propDecsr.get(0).getVariables()
@@ -137,9 +137,9 @@ public class InputOutput {
         File f = new File(this.getClass().getResource(TESTFILES).getFile());
         f.mkdirs();
         f = new File(this.getClass().getResource(TESTFILES + File.separator + PROP).getFile());
-        InputOutputInterface.storePreAndPostConditionDescription(propDecsr.get(0), f);
-        final PreAndPostConditions loadedPropDescr =
-                InputOutputInterface.loadPreAndPostConditionDescription(f);
+        InputOutputInterface.storePropertyDescription(propDecsr.get(0), f);
+        final PropertyDescription loadedPropDescr =
+                InputOutputInterface.loadPropertyDescription(f);
         assertEquals(propDecsr.get(0), loadedPropDescr);
     }
 }

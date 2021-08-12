@@ -11,7 +11,7 @@ import edu.pse.beast.api.codegen.init.TestInitVoteHelper;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.codefile.CodeFileGenerator;
 import edu.pse.beast.api.runner.propertycheck.PropertyCheckWorkUnit;
@@ -53,7 +53,7 @@ public class BEAST {
     }
 
     public final CodeFileData generateCodeFilePropertyCheck(final CElectionDescription descr,
-                                                            final PreAndPostConditions propDescr,
+                                                            final PropertyDescription propDescr,
                                                             final CodeGenOptions codeGenOpts,
                                                             final PathHandler handler)
                                                                     throws IOException {
@@ -63,7 +63,7 @@ public class BEAST {
     }
 
     public final CodeFileData generateCodeFileCheck(final CElectionDescription descr,
-                                                    final PreAndPostConditions propDescr,
+                                                    final PropertyDescription propDescr,
                                                     final CodeGenOptions codeGenOptions,
                                                     final PathHandler pathHandler,
                                                     final VotingParameters args)

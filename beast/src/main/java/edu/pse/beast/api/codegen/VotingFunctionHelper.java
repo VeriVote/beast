@@ -9,8 +9,8 @@ import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.CodeTemplateVotingFunctionResultCopy;
 import edu.pse.beast.api.codegen.template.CodeTemplateVotingFunctionVoteArrayInit;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -35,7 +35,7 @@ public class VotingFunctionHelper {
     private static final String LIST_MEMBER = "LIST_MEMBER";
 
     public static String generateVoteResultCopy(final CNames names,
-                                                final VotingOutputTypes votingOutputType,
+                                                final VotingOutputType votingOutputType,
                                                 final ElectionTypeCStruct outputStruct,
                                                 final CodeGenOptions options,
                                                 final CodeGenLoopBoundHandler loopBoundHandler) {
@@ -60,7 +60,7 @@ public class VotingFunctionHelper {
     }
 
     public static String generateVoteArrayCopy(final CNames names,
-                                               final VotingInputTypes votingInputType,
+                                               final VotingInputType votingInputType,
                                                final ElectionTypeCStruct inputStruct,
                                                final CodeGenOptions options,
                                                final CodeGenLoopBoundHandler loopBoundHandler) {

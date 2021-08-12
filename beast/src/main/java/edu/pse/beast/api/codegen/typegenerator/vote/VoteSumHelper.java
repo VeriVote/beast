@@ -9,7 +9,7 @@ import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.loopbound.LoopBound;
 import edu.pse.beast.api.codegen.template.vote.CodeTemplateVoteSumForCandidate;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -29,7 +29,7 @@ public class VoteSumHelper {
 
     public static String generateCode(final String generatedVarName,
                                       final VoteArrayAccess voteAccess,
-                                      final VotingInputTypes votingInputType,
+                                      final VotingInputType votingInputType,
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replaceMap =

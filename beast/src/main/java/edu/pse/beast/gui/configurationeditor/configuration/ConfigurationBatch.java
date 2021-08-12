@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.configurationeditor.configuration.cbmc.Configuration;
 
 /**
@@ -23,14 +23,14 @@ public class ConfigurationBatch {
     private static final String PROP_NAME = "PROP_NAME";
 
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
     private String name;
 
     private Map<String, Configuration> configsByName =
             new LinkedHashMap<String, Configuration>();
 
     public ConfigurationBatch(final CElectionDescription descr,
-                              final PreAndPostConditions propDescr,
+                              final PropertyDescription propDescr,
                               final String nameString) {
         this.description = descr;
         this.propertyDescription = propDescr;
@@ -41,7 +41,7 @@ public class ConfigurationBatch {
         return description;
     }
 
-    public final PreAndPostConditions getPropDescr() {
+    public final PropertyDescription getPropDescr() {
         return propertyDescription;
     }
 

@@ -16,10 +16,10 @@ import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.CElectionSimpleType;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -51,8 +51,8 @@ public class AddSimpleDeclaration {
     @Test
     public void testSimpleFunctionDeclsAdded() {
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         final String bordaCode = getTemplate(BORDA);
         descr.getVotingFunction().setCode(bordaCode);
@@ -71,7 +71,7 @@ public class AddSimpleDeclaration {
         final String pre = getTemplate(REINFORCE + PRE);
         final String post = getTemplate(REINFORCE + POST);
 
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE, pre, post).get(0);
         final String code =
                 CBMCCodeGenerator

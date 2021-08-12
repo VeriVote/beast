@@ -21,7 +21,7 @@ import org.fxmisc.richtext.CodeArea;
 import edu.pse.beast.api.PropertyCheckCallback;
 import edu.pse.beast.api.io.InputOutputInterface;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.propertycheck.output.JSONMessage;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
@@ -52,7 +52,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     private static final String STOP = "Stop";
     private static final String SHOW_GENERATED_EXAMPLE = "Show Generated Example";
 
-    private static final String COUNTER_EXAMPLE_FXML = "counterExampleGUI.fxml";
+    private static final String COUNTER_EXAMPLE_FXML = "counterexample.fxml";
 
     @FXML
     private AnchorPane topLevelAnchorPane;
@@ -226,7 +226,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
 
     @Override
     public final void onPropertyCheckStart(final CElectionDescription description,
-                                          final PreAndPostConditions propertyDescr,
+                                          final PropertyDescription propertyDescr,
                                           final BoundValues bounds,
                                           final String uuid) {
         display();
@@ -234,7 +234,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
 
     @Override
     public final void onPropertyCheckFinished(final CElectionDescription description,
-                                             final PreAndPostConditions propertyDescr,
+                                             final PropertyDescription propertyDescr,
                                              final BoundValues bounds,
                                              final String uuid) {
         display();
@@ -242,7 +242,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
 
     @Override
     public final void onPropertyCheckStopped(final CElectionDescription descr,
-                                            final PreAndPostConditions propertyDescr,
+                                            final PropertyDescription propertyDescr,
                                             final BoundValues bounds,
                                             final String uuid) {
         display();
@@ -251,7 +251,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     @Override
     public final void onPropertyCheckRawOutput(final String sessionUUID,
                                               final CElectionDescription description,
-                                              final PreAndPostConditions propertyDescr,
+                                              final PropertyDescription propertyDescr,
                                               final BoundValues bounds,
                                               final String uuid, final String output) {
         Platform.runLater(() -> {
@@ -261,7 +261,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
 
     @Override
     public final void onPropertyCheckRawOutputComplete(final CElectionDescription description,
-                                                      final PreAndPostConditions propertyDescr,
+                                                      final PropertyDescription propertyDescr,
                                                       final BoundValues bounds,
                                                       final String uuid,
                                                       final List<String> output) {

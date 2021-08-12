@@ -50,8 +50,8 @@ import edu.pse.beast.api.codegen.typegenerator.vote.VoteSumHelper;
 import edu.pse.beast.api.codegen.typegenerator.vote.VoteTupleHelper;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionVotingType;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * Visits the Boolean Exp AST to generate the cbmc code
@@ -130,9 +130,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
     private Stack<String> booleanVarNameStack = new Stack<String>();
 
     private ElectionTypeCStruct voteArrStruct;
-    private VotingInputTypes votingInputType;
+    private VotingInputType votingInputType;
     private ElectionTypeCStruct voteResultStruct;
-    private VotingOutputTypes votingOutputType;
+    private VotingOutputType votingOutputType;
     private CodeGenOptions options;
 
     private Mode assumeAssertMode;
@@ -141,9 +141,9 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
     private GeneratedCodeInfo cbmcGeneratedCode;
 
     public CodeGenASTVisitor(final ElectionTypeCStruct voteArrayStruct,
-                             final VotingInputTypes inputType,
+                             final VotingInputType inputType,
                              final ElectionTypeCStruct resultStruct,
-                             final VotingOutputTypes outputType,
+                             final VotingOutputType outputType,
                              final CodeGenOptions codeGenerationOptions,
                              final CodeGenLoopBoundHandler codeGenLoopBoundHandler,
                              final GeneratedCodeInfo generatedCodeInfo) {

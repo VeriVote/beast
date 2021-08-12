@@ -33,7 +33,7 @@ import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.os.OS;
 import edu.pse.beast.api.os.OSHelper;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.gui.ceditor.CEditorCodeElement;
 import edu.pse.beast.gui.ceditor.CElectionEditor;
 import edu.pse.beast.gui.configurationeditor.ConfigurationTopLevelGUIHandler;
@@ -47,7 +47,7 @@ import edu.pse.beast.gui.options.ceditor.CEditorOptions;
 import edu.pse.beast.gui.options.ceditor.CEditorOptionsGUI;
 import edu.pse.beast.gui.options.processhandler.ProcessHandlerWindowsOptionsGUI;
 import edu.pse.beast.gui.processhandler.CBMCProcessHandlerCreator;
-import edu.pse.beast.gui.propertyeditor.PreAndPostPropertyEditor;
+import edu.pse.beast.gui.propertyeditor.PropertyEditor;
 import edu.pse.beast.gui.propertyeditor.PropertyEditorCodeElement;
 import edu.pse.beast.gui.workspace.BeastWorkspace;
 import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
@@ -72,7 +72,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private static final int LEFT_OFFSET = 0;
     private static final int RIGHT_OFFSET = 0;
 
-    private static final String OPTIONS_FXML = "/edu/pse/beast/optionsGUI.fxml";
+    private static final String OPTIONS_FXML = "/edu/pse/beast/gui/options.fxml";
     private OptionsGUIController optionsGUIController;
     private FXMLLoader optionsFXMLLoader =
             new FXMLLoader(getClass().getResource(OPTIONS_FXML));
@@ -141,7 +141,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private Button saveElectionDescriptionButton;
 
     @FXML
-    private ChoiceBox<PreAndPostConditions> openedPropertyDescriptionChoiceBox;
+    private ChoiceBox<PropertyDescription> openedPropertyDescriptionChoiceBox;
     @FXML
     private Button addPropDescrButton;
     @FXML
@@ -231,13 +231,13 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 new VirtualizedScrollPane<PropertyEditorCodeElement>(postPropertyEditor);
         prePropertyPane.setContent(preVsp);
         postPropertyPane.setContent(postVsp);
-        final PreAndPostPropertyEditor.Buttons buttons =
-                new PreAndPostPropertyEditor.Buttons(addPropDescrButton, loadPropDescrButton,
-                                                     savePropDescrButton, removeSymbVarButton);
+        final PropertyEditor.Buttons buttons =
+                new PropertyEditor.Buttons(addPropDescrButton, loadPropDescrButton,
+                                           savePropDescrButton, removeSymbVarButton);
         // FIXME: Not sure what to do here
-        new PreAndPostPropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
-                                     symbVarsListView, addSymbVarMenu,
-                                     openedPropertyDescriptionChoiceBox, beastWorkspace);
+        new PropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
+                           symbVarsListView, addSymbVarMenu,
+                           openedPropertyDescriptionChoiceBox, beastWorkspace);
     }
 
     private void initConfigurationHandler() throws IOException {

@@ -15,9 +15,9 @@ import edu.pse.beast.api.cparser.AntlrCLoopParser;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -56,8 +56,8 @@ public class CodeGeneration {
     @Test
     public void testGenerateSimpleCode() {
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         final String bordaCode = getTemplate(BORDA);
         descr.getVotingFunction().setCode(bordaCode);
@@ -70,7 +70,7 @@ public class CodeGeneration {
         final String pre = VOTES_VAR + TWO + EQ + ELECT_VAR + ONE + SEMI;
         final String post = ELECT_VAR + TWO + EQ + ELECT_VAR + ONE + SEMI;
 
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE_NAME, pre, post).get(0);
         final String code =
                 CBMCCodeGenerator.generateCodeForPropertyCheck(descr, propDescr, codeGenOptions,
@@ -81,8 +81,8 @@ public class CodeGeneration {
     @Test
     public void testGenerateBordaCode() {
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         final String bordaCode = getTemplate(BORDA);
         descr.getVotingFunction().setCode(bordaCode);
@@ -94,7 +94,7 @@ public class CodeGeneration {
 
         final String pre = getTemplate(REINFORCE_NAME + PRE);
         final String post = getTemplate(REINFORCE_NAME + POST);
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE_NAME, pre, post).get(0);
         final String code =
                 CBMCCodeGenerator
@@ -106,8 +106,8 @@ public class CodeGeneration {
     @Test
     public void testConstants() {
         final CElectionDescription descr =
-                new CElectionDescription(VotingInputTypes.PREFERENCE,
-                                         VotingOutputTypes.CANDIDATE_LIST,
+                new CElectionDescription(VotingInputType.PREFERENCE,
+                                         VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
         final String bordaCode = getTemplate(BORDA);
         descr.getVotingFunction().setCode(bordaCode);
@@ -120,7 +120,7 @@ public class CodeGeneration {
         final String pre = V + ONE + EQ + V + TWO + SEMI;
         final String post = C + ONE + EQ + C + TWO + SEMI;
 
-        final PreAndPostConditions propDescr =
+        final PropertyDescription propDescr =
                 CreationHelper.createSimpleCondList(REINFORCE_NAME, pre, post).get(0);
         final String code =
                 CBMCCodeGenerator

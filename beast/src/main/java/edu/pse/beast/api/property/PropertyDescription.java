@@ -7,11 +7,11 @@ import java.util.UUID;
 import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
 
 /**
- * The Class PreAndPostConditionsDescription.
+ * The Class PropertyDescription.
  *
  * @author Niels Hanselmann
  */
-public final class PreAndPostConditions {
+public final class PropertyDescription {
     private String uuid;
 
     /** The name. */
@@ -33,7 +33,7 @@ public final class PreAndPostConditions {
      *
      * @param nameString the name string
      */
-    public PreAndPostConditions(final String nameString) {
+    public PropertyDescription(final String nameString) {
         this.uuid = UUID.randomUUID().toString();
         this.name = nameString;
         this.preConditionsDescription = new FormalPropertyDescription();
@@ -41,11 +41,11 @@ public final class PreAndPostConditions {
         this.boundedVarDescription = new FormalPropertyDescription();
     }
 
-    public PreAndPostConditions(final String uuidString,
-                                           final String nameString,
-                                           final List<SymbolicVariable> cbmcVars,
-                                           final FormalPropertyDescription preConditionsDescr,
-                                           final FormalPropertyDescription postConditionsDescr) {
+    public PropertyDescription(final String uuidString,
+                    final String nameString,
+                    final List<SymbolicVariable> cbmcVars,
+                    final FormalPropertyDescription preConditionsDescr,
+                    final FormalPropertyDescription postConditionsDescr) {
         this.uuid = uuidString;
         this.name = nameString;
         this.variables = cbmcVars;
@@ -57,15 +57,15 @@ public final class PreAndPostConditions {
     /**
      * Creator with a SymbolicVariableList.
      *
-     * @param nameString     name of the PreAndPostConditionsDescription
+     * @param nameString     name of the PropertyDescription
      * @param preDescr       the preConditionDescription
      * @param postDescr      the postConditionDescription
      * @param boundedVarDesc the boundedVarDescription
      */
-    public PreAndPostConditions(final String nameString,
-                                           final FormalPropertyDescription preDescr,
-                                           final FormalPropertyDescription postDescr,
-                                           final FormalPropertyDescription boundedVarDesc) {
+    public PropertyDescription(final String nameString,
+                               final FormalPropertyDescription preDescr,
+                               final FormalPropertyDescription postDescr,
+                               final FormalPropertyDescription boundedVarDesc) {
         this.name = nameString;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;
@@ -151,7 +151,7 @@ public final class PreAndPostConditions {
         } else if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final PreAndPostConditions other = (PreAndPostConditions) obj;
+        final PropertyDescription other = (PropertyDescription) obj;
         if (boundedVarDescription == null) {
             if (other.boundedVarDescription != null) {
                 return false;

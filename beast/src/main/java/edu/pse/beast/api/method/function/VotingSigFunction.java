@@ -7,8 +7,8 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.ccode.CTypeNameBrackets;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionVotingType;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -43,12 +43,12 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
     private static final Map<String, String> TEMPLATES =
             new LinkedHashMap<String, String>();
 
-    private VotingInputTypes inputType;
-    private VotingOutputTypes outputType;
+    private VotingInputType inputType;
+    private VotingOutputType outputType;
 
     public VotingSigFunction(final String nameString,
-                             final VotingInputTypes inType,
-                             final VotingOutputTypes outType) {
+                             final VotingInputType inType,
+                             final VotingOutputType outType) {
         super(nameString);
         this.inputType = inType;
         this.outputType = outType;
@@ -63,29 +63,29 @@ public class VotingSigFunction extends CElectionDescriptionFunction {
         return PathHandler.getTemplate(key, TEMPLATES, FILE_PREFIX, this.getClass());
     }
 
-    public final VotingInputTypes getInputType() {
+    public final VotingInputType getInputType() {
         return inputType;
     }
 
-    public final VotingOutputTypes getOutputType() {
+    public final VotingOutputType getOutputType() {
         return outputType;
     }
 
-    public final void setInputType(final VotingInputTypes inType) {
+    public final void setInputType(final VotingInputType inType) {
         this.inputType = inType;
     }
 
-    public final void setOutputType(final VotingOutputTypes outType) {
+    public final void setOutputType(final VotingOutputType outType) {
         this.outputType = outType;
     }
 
     private String getReturnType() {
         assert outputType != null;
         String type = UINT;
-        if (VotingOutputTypes.CANDIDATE_LIST.equals(outputType)) {
+        if (VotingOutputType.CANDIDATE_LIST.equals(outputType)) {
             type += arr(CAND_SYMB);
-        } else if (VotingOutputTypes.PARLIAMENT.equals(outputType)
-                || VotingOutputTypes.PARLIAMENT_STACK.equals(outputType)) {
+        } else if (VotingOutputType.PARLIAMENT.equals(outputType)
+                || VotingOutputType.PARLIAMENT_STACK.equals(outputType)) {
             type += arr(SEAT_SYMB);
         }
         return type;

@@ -27,8 +27,8 @@ import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.CElectionSimpleType;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.method.function.CelectionDescriptionFunctionType;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
@@ -49,6 +49,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     private static final String EMPTY = "";
     private static final String BLANK = " ";
     private static final String COMMA = ", ";
+    private static final String UNDERSCORE = "_";
     private static final String LINE_BREAK = "\n";
 
     private static final String ADD_FUNCTION = "Add Function";
@@ -68,7 +69,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     private static final String LOOPBOUND_TYPE = "Loop Bound Type";
     private static final String MANUAL_VALUE = "Manual Value";
 
-    private static final String CSS_RESOURCE = "/edu/pse/beast/ceditor.css";
+    private static final String CSS_RESOURCE = "/edu/pse/beast/gui/ceditor/ceditor.css";
     private static final String CSS_LOCKED_CLASS_NAME = "locked";
     private static final String CSS_UNLOCKED_CLASS_NAME = "unlocked";
     private static final String FX_FONT_SIZE = "-fx-font-size: ";
@@ -178,11 +179,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
         final TextField nameTextField = new TextField();
         nameTextField.setText(currentDescription.getName());
-        final ChoiceBox<VotingInputTypes> inputTypeCB = new ChoiceBox<VotingInputTypes>();
-        inputTypeCB.getItems().addAll(VotingInputTypes.values());
+        final ChoiceBox<VotingInputType> inputTypeCB = new ChoiceBox<VotingInputType>();
+        inputTypeCB.getItems().addAll(VotingInputType.values());
         inputTypeCB.getSelectionModel().select(currentDescription.getInputType());
-        final ChoiceBox<VotingOutputTypes> outTypeCB = new ChoiceBox<VotingOutputTypes>();
-        outTypeCB.getItems().addAll(VotingOutputTypes.values());
+        final ChoiceBox<VotingOutputType> outTypeCB = new ChoiceBox<VotingOutputType>();
+        outTypeCB.getItems().addAll(VotingOutputType.values());
         outTypeCB.getSelectionModel().select(currentDescription.getOutputType());
 
         final Optional<ButtonType> res =
@@ -190,13 +191,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                                             List.of(NAME, INPUT_TYPE, OUTPUT_TYPE),
                                             List.of(nameTextField, inputTypeCB, outTypeCB))
                 .showAndWait();
-        if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+        if (res.isPresent()
+                && !res.get().getButtonData().isCancelButton()
+                && !nameTextField.getText().isBlank()) {
             final String name = nameTextField.getText();
-            final VotingInputTypes inType = inputTypeCB.getValue();
-            final VotingOutputTypes outType = outTypeCB.getValue();
-            if (!name.isBlank()) {
-                beastWorkspace.editDescr(currentDescription, name, inType, outType);
-            }
+            final VotingInputType inType = inputTypeCB.getValue();
+            final VotingOutputType outType = outTypeCB.getValue();
+            beastWorkspace.editDescr(currentDescription, name, inType, outType);
         }
     }
 
@@ -285,7 +286,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 DialogHelper
                 .generateDialog(REMOVE_FUNCTION_DIALOG, List.of(NAME), List.of(nameField))
                 .showAndWait();
-        if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+        if (res.isPresent()
+                && !res.get().getButtonData().isCancelButton()
+                && !nameField.getText().isBlank()) {
             final String name = nameField.getText();
             beastWorkspace.addVotingSigFunctionToDescr(currentDescription, name);
         }
@@ -344,7 +347,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                                                     addArgButton, removeArgButton,
                                                     argumentsLabel))
                 .showAndWait();
-        if (res.isPresent() && !res.get().getButtonData().isCancelButton()) {
+        if (res.isPresent()
+                && !res.get().getButtonData().isCancelButton()
+                && !nameField.getText().isBlank()) {
             // TODO add error checking here to make sure the function data is
             // valid
             final CElectionSimpleType returnType =
@@ -525,13 +530,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final TextField nameField = new TextField();
 
         final ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<String>();
-        for (final VotingInputTypes it : VotingInputTypes.values()) {
+        for (final VotingInputType it : VotingInputType.values()) {
             inputTypeChoiceBox.getItems().add(it.toString());
         }
         inputTypeChoiceBox.getSelectionModel().selectFirst();
 
         final ChoiceBox<String> outputTypeChoiceBox = new ChoiceBox<String>();
-        for (final VotingOutputTypes ot : VotingOutputTypes.values()) {
+        for (final VotingOutputType ot : VotingOutputType.values()) {
             outputTypeChoiceBox.getItems().add(ot.toString());
         }
         outputTypeChoiceBox.getSelectionModel().selectFirst();
@@ -540,17 +545,21 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final Optional<ButtonType> res =
                 DialogHelper.generateDialog(CREATE_ELECTION_DIALOG, inputNames, nodes)
                 .showAndWait();
-        if (res.isPresent()) {
+        if (res.isPresent()
+                && (res.get().getButtonData().isCancelButton()
+                        || !nameField.getText().isBlank())) {
             if (res.get().getButtonData().isCancelButton()) {
                 return;
             }
             final String name = nameField.getText();
-            final VotingInputTypes inputType =
-                    VotingInputTypes.valueOf(
-                            inputTypeChoiceBox.getSelectionModel().getSelectedItem());
-            final VotingOutputTypes outputType =
-                    VotingOutputTypes.valueOf(
-                            outputTypeChoiceBox.getSelectionModel().getSelectedItem());
+            final VotingInputType inputType =
+                    VotingInputType.valueOf(
+                            inputTypeChoiceBox.getSelectionModel().getSelectedItem()
+                            .toUpperCase().replaceAll(BLANK, UNDERSCORE));
+            final VotingOutputType outputType =
+                    VotingOutputType.valueOf(
+                            outputTypeChoiceBox.getSelectionModel().getSelectedItem()
+                            .toUpperCase().replaceAll(BLANK, UNDERSCORE));
             final CElectionDescription descr =
                     new CElectionDescription(inputType, outputType, name);
             beastWorkspace.addElectionDescription(descr);

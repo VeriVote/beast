@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 import edu.pse.beast.api.codegen.ast.BooleanExpASTData;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.SymbolicVariable;
-import edu.pse.beast.api.method.VotingInputTypes;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingInputType;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -165,14 +165,14 @@ public class CFunction {
     public static final class VotingFunction {
         public final ElectionTypeCStruct votes;
         public final ElectionTypeCStruct result;
-        public final VotingInputTypes profileType;
-        public final VotingOutputTypes resultType;
+        public final VotingInputType profileType;
+        public final VotingOutputType resultType;
         public final String function;
 
         public VotingFunction(final ElectionTypeCStruct voteStruct,
                               final ElectionTypeCStruct resultStruct,
-                              final VotingInputTypes inputType,
-                              final VotingOutputTypes outputType,
+                              final VotingInputType inputType,
+                              final VotingOutputType outputType,
                               final String functionName) {
             this.votes = voteStruct;
             this.result = resultStruct;
@@ -189,11 +189,11 @@ public class CFunction {
      *
      */
     public static final class Input {
-        public final VotingInputTypes type;
+        public final VotingInputType type;
         public final ElectionTypeCStruct struct;
         public final String structVarName;
 
-        public Input(final VotingInputTypes votingInputType,
+        public Input(final VotingInputType votingInputType,
                      final ElectionTypeCStruct inputStruct,
                      final String votingStructVarName) {
             this.type = votingInputType;
@@ -209,11 +209,11 @@ public class CFunction {
      *
      */
     public static final class Output {
-        public final VotingOutputTypes type;
+        public final VotingOutputType type;
         public final ElectionTypeCStruct struct;
         public final String structVarName;
 
-        public Output(final VotingOutputTypes votingOutputType,
+        public Output(final VotingOutputType votingOutputType,
                       final ElectionTypeCStruct outputStruct,
                       final String resultStructVarName) {
             this.type = votingOutputType;

@@ -24,7 +24,7 @@ public class ErrorGUIController {
     @FXML
     private TextArea esceptionTextArea;
 
-    private String fxml = "/edu/pse/beast/errorGUI.fxml";
+    private String fxml = "/edu/pse/beast/gui/error/error.fxml";
     private FXMLLoader fxmlLoader = new FXMLLoader(
             getClass().getResource(fxml));
 

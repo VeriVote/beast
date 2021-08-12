@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -26,7 +26,7 @@ public class JSONRunningDataExtractor {
     private static final String PROGRAM_KEY = "program";
 
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
     private int seatAmount;
     private int candidateAmount;
     private int voterAmount;
@@ -37,7 +37,7 @@ public class JSONRunningDataExtractor {
     private String currentOutput;
 
     public JSONRunningDataExtractor(final CElectionDescription descr,
-                                    final PreAndPostConditions propDescr,
+                                    final PropertyDescription propDescr,
                                     final int seats,
                                     final int candidates,
                                     final int voters,

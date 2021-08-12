@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.cparser.CLoopParseResultType;
-import edu.pse.beast.api.cparser.CLoopTypes;
+import edu.pse.beast.api.cparser.CLoopType;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
 
 /**
@@ -65,7 +65,7 @@ public class ExtractedCLoopInputOutputHelper {
 
     private static ExtractedCLoop toExtractedLoop(final JSONObject json) {
         final String uuid = json.getString(UUID_KEY);
-        final CLoopTypes loopType = CLoopTypes.valueOf(json.getString(LOOPTYPE_KEY));
+        final CLoopType loopType = CLoopType.valueOf(json.getString(LOOPTYPE_KEY));
 
         final int line = json.getInt(LINE_KEY);
         final int posInLine = json.getInt(POS_IN_LINE_KEY);
@@ -75,6 +75,7 @@ public class ExtractedCLoopInputOutputHelper {
                 CLoopParseResultType.valueOf(json.getString(PARSE_RESULT_KEY));
         final LoopBoundType loopBoundType =
                 LoopBoundType.valueOf(json.getString(PARSED_BOUND_TYPE_KEY));
+
         final String functionName = json.getString(FUNCTION_NAME_KEY);
         final ExtractedCLoop.Types types =
                 new ExtractedCLoop.Types(loopType, parseResultType, loopBoundType);

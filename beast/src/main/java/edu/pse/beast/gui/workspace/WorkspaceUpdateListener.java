@@ -7,7 +7,7 @@ import edu.pse.beast.api.method.CElectionDescription;
 import edu.pse.beast.api.method.function.CElectionDescriptionFunction;
 import edu.pse.beast.api.method.function.SimpleTypeFunction;
 import edu.pse.beast.api.method.function.VotingSigFunction;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
 import edu.pse.beast.gui.configurationeditor.configuration.ConfigurationBatch;
 import edu.pse.beast.gui.configurationeditor.configuration.cbmc.Configuration;
@@ -29,7 +29,7 @@ public interface WorkspaceUpdateListener {
     default void handleWorkspaceErrorNoProcessStarter() {
     }
 
-    default void handleWorkspaceUpdateAddedVarToPropDescr(PreAndPostConditions currentPropDescr,
+    default void handleWorkspaceUpdateAddedVarToPropDescr(PropertyDescription currentPropDescr,
                                                           SymbolicVariable var) {
     }
 
@@ -50,16 +50,16 @@ public interface WorkspaceUpdateListener {
                                               CElectionDescriptionFunction func) {
     }
 
-    default void handleAddedPropDescr(PreAndPostConditions propDescr) {
+    default void handleAddedPropDescr(PropertyDescription propDescr) {
     }
 
     default void handleAddedConfiguration(ConfigurationBatch tc) {
     }
 
-    default void handlePropDescrChangedCode(PreAndPostConditions propDescr) {
+    default void handlePropDescrChangedCode(PropertyDescription propDescr) {
     }
 
-    default void handlePropDescrRemovedVar(PreAndPostConditions propDescr,
+    default void handlePropDescrRemovedVar(PropertyDescription propDescr,
                                            SymbolicVariable selectedVar) {
     }
 

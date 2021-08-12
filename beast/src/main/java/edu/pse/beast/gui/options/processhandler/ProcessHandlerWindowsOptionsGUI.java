@@ -26,7 +26,7 @@ public class ProcessHandlerWindowsOptionsGUI extends OptionsCategoryGUI {
     @FXML
     private Button vsDevCmdButton;
 
-    private String fxml = "/edu/pse/beast/processHandlerWindowsOptions.fxml";
+    private String fxml = "/edu/pse/beast/gui/options/processhandler/windowsoptions.fxml";
     private FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
 
     private CBMCProcessHandlerCreator cbmcProcessHandlerCreator;

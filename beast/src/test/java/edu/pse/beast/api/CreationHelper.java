@@ -3,7 +3,7 @@ package edu.pse.beast.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 
 /**
  * TODO: Write documentation.
@@ -12,15 +12,15 @@ import edu.pse.beast.api.property.PreAndPostConditions;
  *
  */
 public class CreationHelper {
-    public static List<PreAndPostConditions> createSimpleCondList(final String name,
+    public static List<PropertyDescription> createSimpleCondList(final String name,
                                                                   final String preCode,
                                                                   final String postCode) {
-        final PreAndPostConditions conds =
-                new PreAndPostConditions(name);
+        final PropertyDescription conds =
+                new PropertyDescription(name);
         conds.getPreConditionsDescription().setCode(preCode);
         conds.getPostConditionsDescription().setCode(postCode);
-        final List<PreAndPostConditions> condList =
-                new ArrayList<PreAndPostConditions>();
+        final List<PropertyDescription> condList =
+                new ArrayList<PropertyDescription>();
         condList.add(conds);
         return condList;
     }

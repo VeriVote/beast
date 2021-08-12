@@ -6,7 +6,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.codegen.template.elect.CodeTemplateElectEmpty;
-import edu.pse.beast.api.method.VotingOutputTypes;
+import edu.pse.beast.api.method.VotingOutputType;
 
 /**
  * TODO: Write documentation.
@@ -22,7 +22,7 @@ public class IsElectEmptyHelper {
     public static String generateCode(final String generatedVarName,
                                       final String testedVarName,
                                       final ElectionTypeCStruct electStruct,
-                                      final VotingOutputTypes votingOutputType,
+                                      final VotingOutputType votingOutputType,
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final Map<String, String> replacementMap =

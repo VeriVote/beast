@@ -4,7 +4,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.cbmc.ElectionTypeCStruct;
 import edu.pse.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
-import edu.pse.beast.api.method.VotingInputTypes;
+import edu.pse.beast.api.method.VotingInputType;
 
 /**
  * TODO: Write documentation.
@@ -33,7 +33,7 @@ public abstract class InitVoteHelper {
 
     public abstract String generateCode(int voteNumber,
                                         ElectionTypeCStruct voteArrStruct,
-                                        VotingInputTypes votingInputType,
+                                        VotingInputType votingInputType,
                                         CodeGenOptions options,
                                         CodeGenLoopBoundHandler loopBoundHandler,
                                         GeneratedCodeInfo codeInfo);

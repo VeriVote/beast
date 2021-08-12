@@ -13,7 +13,7 @@ import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.codegen.loopbound.CodeGenLoopBoundHandler;
 import edu.pse.beast.api.io.PathHandler;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.codefile.CodeFileData;
 import edu.pse.beast.api.runner.propertycheck.process.cbmc.CBMCProcessHandlerSource;
 import edu.pse.beast.api.runner.threadpool.WorkUnit;
@@ -31,7 +31,7 @@ import edu.pse.beast.api.runner.threadpool.WorkUnitState;
 public class PropertyCheckWorkUnit implements WorkUnit {
     // fields to start the election check
     private CElectionDescription description;
-    private PreAndPostConditions propertyDescription;
+    private PropertyDescription propertyDescription;
     private int voterAmount;
     private int candidateAmount;
     private int seatAmount;
@@ -207,10 +207,10 @@ public class PropertyCheckWorkUnit implements WorkUnit {
      */
     public static final class ElectionAndProperty {
         final CElectionDescription election;
-        final PreAndPostConditions property;
+        final PropertyDescription property;
 
         public ElectionAndProperty(final CElectionDescription descr,
-                                   final PreAndPostConditions propDescr) {
+                                   final PropertyDescription propDescr) {
             this.election = descr;
             this.property = propDescr;
         }

@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import edu.pse.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.pse.beast.api.io.run.RunInputOutputHelper;
 import edu.pse.beast.api.method.CElectionDescription;
-import edu.pse.beast.api.property.PreAndPostConditions;
+import edu.pse.beast.api.property.PropertyDescription;
 import edu.pse.beast.api.runner.propertycheck.run.PropertyCheckRun;
 import edu.pse.beast.gui.configurationeditor.configuration.ConfigurationBatch;
 import edu.pse.beast.gui.configurationeditor.configuration.ConfigurationList;
@@ -83,9 +83,7 @@ public class WorkspaceInputOutput {
         json.put(CONFIG_NAME_KEY, config.getName());
         json.put(START_RUNS_ON_CREATION_KEY, config.getStartRunsOnCreation());
 
-        json.put(RUNS_KEY,
-                 RunInputOutputHelper
-                .runListToJSON(config.getRuns(), pathHandler));
+        json.put(RUNS_KEY, RunInputOutputHelper.runListToJSON(config.getRuns(), pathHandler));
         return json;
     }
 
@@ -99,10 +97,9 @@ public class WorkspaceInputOutput {
         return null;
     }
 
-    private static PreAndPostConditions
-                propDescrByUUID(final String uuid,
-                                final List<PreAndPostConditions> propDescrs) {
-        for (final PreAndPostConditions propDescr : propDescrs) {
+    private static PropertyDescription propDescrByUUID(final String uuid,
+                                                       final List<PropertyDescription> propDescrs) {
+        for (final PropertyDescription propDescr : propDescrs) {
             if (propDescr.getUuid().equals(uuid)) {
                 return propDescr;
             }
@@ -113,7 +110,7 @@ public class WorkspaceInputOutput {
     private static Configuration
                 cbmcPropertyConfigFromJson(final JSONObject json,
                                            final List<CElectionDescription> descrs,
-                                           final List<PreAndPostConditions> propDescrs,
+                                           final List<PropertyDescription> propDescrs,
                                            final RelativePathConverter pathHandler) {
         final Configuration cbmcPropertyConfiguration = new Configuration();
 
@@ -137,8 +134,7 @@ public class WorkspaceInputOutput {
 
         cbmcPropertyConfiguration.setName(name);
 
-        final boolean startRunsOnCreation =
-                json.getBoolean(START_RUNS_ON_CREATION_KEY);
+        final boolean startRunsOnCreation = json.getBoolean(START_RUNS_ON_CREATION_KEY);
 
         cbmcPropertyConfiguration.setStartRunsOnCreation(startRunsOnCreation);
 
@@ -152,8 +148,7 @@ public class WorkspaceInputOutput {
             cbmcPropertyConfiguration.setDescr(descr);
         }
 
-        final PreAndPostConditions propDescr =
-                propDescrByUUID(propDescrUUID, propDescrs);
+        final PropertyDescription propDescr = propDescrByUUID(propDescrUUID, propDescrs);
         if (propDescr == null) {
             throw new NotImplementedException();
         } else {
@@ -162,9 +157,8 @@ public class WorkspaceInputOutput {
 
         final List<PropertyCheckRun> cbmcRuns =
                 RunInputOutputHelper
-                .runListFromJSONArr(json.getJSONArray(RUNS_KEY),
-                                            descr, propDescr, cbmcPropertyConfiguration,
-                                            pathHandler);
+                .runListFromJSONArr(json.getJSONArray(RUNS_KEY), descr, propDescr,
+                                    cbmcPropertyConfiguration, pathHandler);
         cbmcPropertyConfiguration.addRuns(cbmcRuns);
         return cbmcPropertyConfiguration;
     }
@@ -182,8 +176,7 @@ public class WorkspaceInputOutput {
     private static List<Configuration>
                 cbmcPropertyConfigListFromJsonArr(final JSONArray arr,
                                                   final List<CElectionDescription> descrs,
-                                                  final List<PreAndPostConditions>
-                                                        propDescrs,
+                                                  final List<PropertyDescription> propDescrs,
                                                   final RelativePathConverter pathHandler) {
         final List<Configuration> list = new ArrayList<Configuration>();
         for (int i = 0; i < arr.length(); ++i) {
@@ -200,15 +193,14 @@ public class WorkspaceInputOutput {
         json.put(PROP_DESCR_UUID_KEY, tc.getPropDescr().getUuid());
         json.put(CONFIG_NAME_KEY, tc.getName());
         json.put(CBMC_CONFIG_LIST_KEY,
-                 cbmcConfigCollectionToJSON(tc.getConfigurationsByName().values(),
-                                                pathHandler));
+                 cbmcConfigCollectionToJSON(tc.getConfigurationsByName().values(), pathHandler));
         return json;
     }
 
     private static ConfigurationBatch configFromJson(final JSONObject json,
-                                                final List<CElectionDescription> descrs,
-                                                final List<PreAndPostConditions> pDescrs,
-                                                final RelativePathConverter pathHandler) {
+                                                     final List<CElectionDescription> descrs,
+                                                     final List<PropertyDescription> pDescrs,
+                                                     final RelativePathConverter pathHandler) {
         final String descrUUID = json.getString(DESCR_UUID_KEY);
         final String propDescrUUID = json.getString(PROP_DESCR_UUID_KEY);
         final String name = json.getString(CONFIG_NAME_KEY);
@@ -221,8 +213,7 @@ public class WorkspaceInputOutput {
             throw new NotImplementedException();
         }
 
-        final PreAndPostConditions propDescr =
-                propDescrByUUID(propDescrUUID, pDescrs);
+        final PropertyDescription propDescr = propDescrByUUID(propDescrUUID, pDescrs);
         if (propDescr == null) {
             throw new NotImplementedException();
         }
@@ -245,12 +236,11 @@ public class WorkspaceInputOutput {
 
     static ConfigurationList configListFromJsonArr(final JSONArray arr,
                                                    final List<CElectionDescription> descrs,
-                                                   final List<PreAndPostConditions> pDes,
+                                                   final List<PropertyDescription> pDes,
                                                    final RelativePathConverter pathHandler) {
         final ConfigurationList configurationList = new ConfigurationList();
         for (int i = 0; i < arr.length(); ++i) {
-            configurationList.add(configFromJson(arr.getJSONObject(i),
-                                                         descrs, pDes, pathHandler));
+            configurationList.add(configFromJson(arr.getJSONObject(i), descrs, pDes, pathHandler));
         }
         return configurationList;
     }
@@ -285,23 +275,21 @@ public class WorkspaceInputOutput {
             final String relativePath = descrArr.getString(i);
             final File descrFile =
                     relativePathConverter.getFileFromRelativePath(relativePath);
-            final CElectionDescription loadedDescr =
-                    InputOutputInterface.loadCElection(descrFile);
+            final CElectionDescription loadedDescr = InputOutputInterface.loadCElection(descrFile);
             descrs.add(loadedDescr);
             beastWorkspace.addElectionDescription(loadedDescr);
             beastWorkspace.addFileForDescr(loadedDescr, descrFile);
         }
 
         final JSONArray propDescrArr = json.getJSONArray(PROP_DESCR_FILES_KEY);
-        final List<PreAndPostConditions> propDescrs =
-                new ArrayList<PreAndPostConditions>();
+        final List<PropertyDescription> propDescrs = new ArrayList<PropertyDescription>();
 
         for (int i = 0; i < propDescrArr.length(); ++i) {
             final String relativePath = propDescrArr.getString(i);
             final File propDescrFile =
                     relativePathConverter.getFileFromRelativePath(relativePath);
-            final PreAndPostConditions loadedPropDescr =
-                    InputOutputInterface.loadPreAndPostConditionDescription(propDescrFile);
+            final PropertyDescription loadedPropDescr =
+                    InputOutputInterface.loadPropertyDescription(propDescrFile);
             propDescrs.add(loadedPropDescr);
             beastWorkspace.addPropertyDescription(loadedPropDescr);
             beastWorkspace.addFileForPropDescr(loadedPropDescr, propDescrFile);
@@ -320,12 +308,10 @@ public class WorkspaceInputOutput {
         return beastWorkspace;
     }
 
-    public static void storeWorkspace(final BeastWorkspace beastWorkspace,
-                                      final File f,
+    public static void storeWorkspace(final BeastWorkspace beastWorkspace, final File f,
                                       final RelativePathConverter relativePathConverter)
                                               throws IOException {
-        final JSONObject json =
-                generateWorkspaceJSON(beastWorkspace, relativePathConverter);
+        final JSONObject json = generateWorkspaceJSON(beastWorkspace, relativePathConverter);
         InputOutputInterface.writeStringToFile(f, json.toString(2));
     }
 }
