@@ -167,7 +167,7 @@ public class CElectionInputOutput {
 
         json.put(DESCR_UUID_KEY, descr.getUuid());
 
-        final String s = json.toString();
+        final String s = json.toString(2);
         InputOutputInterface.writeStringToFile(f, s);
     }
 

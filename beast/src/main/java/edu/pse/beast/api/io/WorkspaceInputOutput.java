@@ -326,6 +326,6 @@ public class WorkspaceInputOutput {
                                               throws IOException {
         final JSONObject json =
                 generateWorkspaceJSON(beastWorkspace, relativePathConverter);
-        InputOutputInterface.writeStringToFile(f, json.toString());
+        InputOutputInterface.writeStringToFile(f, json.toString(2));
     }
 }

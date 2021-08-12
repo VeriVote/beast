@@ -65,7 +65,7 @@ public class PreAndPostPropertyInputOutput {
         json.put(SYMB_VAR_KEY, fromSymbVarList(propDescr.getVariables()));
         json.put(PROP_DESCR_UUID_KEY, propDescr.getUuid());
 
-        InputOutputInterface.writeStringToFile(f, json.toString());
+        InputOutputInterface.writeStringToFile(f, json.toString(2));
     }
 
     private static List<SymbolicVariable> symbolicVarListFromJson(final JSONArray arr) {

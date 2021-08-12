@@ -111,6 +111,79 @@ public class BeastWorkspace {
 
     private PathHandler pathHandler;
 
+    private static <K> File getFile(final K descr,
+                                    final String name,
+                                    final Map<K, File> filesPerDescription,
+                                    final File directory,
+                                    final String fileEnding,
+                                    final String dialogTitle) {
+        File f = filesPerDescription.get(descr);
+        final String fileName = f != null ? f.getName() : name + fileEnding;
+        f = FileDialogHelper.letUserSaveFile(directory, dialogTitle, fileName);
+        if (f != null && filesPerDescription.containsKey(descr)
+                && f.getParentFile().equals(directory)
+                && f.getName().equals(fileName)) {
+            f = filesPerDescription.get(descr);
+        } else if (f != null) {
+            filesPerDescription.put(descr, f);
+        }
+        return f;
+    }
+
+    private static boolean askUserIfReallyDelete() {
+        final Alert reallyRemove =
+                new Alert(AlertType.CONFIRMATION,
+                          CONFIRMATION_MESSAGE_STRING,
+                          ButtonType.OK, ButtonType.NO);
+        final Optional<ButtonType> res = reallyRemove.showAndWait();
+        if (res.isPresent() || res.get().getButtonData().isCancelButton()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void messageUpdateListener() {
+        for (final WorkspaceUpdateListener l : updateListener) {
+            l.handleWorkspaceUpdateGeneric();
+        }
+    }
+
+    private boolean saveAll(final Set<CElectionDescription> unchangedMethods,
+                            final Set<PreAndPostConditions> unchangedProperties) {
+        final List<CElectionDescription> descrListCopy =
+                new ArrayList<CElectionDescription>(unchangedMethods);
+        boolean res = true;
+        for (final CElectionDescription descr : descrListCopy) {
+            res &= descr != null && saveDescr(descr);
+        }
+        final List<PreAndPostConditions> propDescrListCopy =
+                new ArrayList<PreAndPostConditions>(unchangedProperties);
+        for (final PreAndPostConditions propDescr : propDescrListCopy) {
+            res &= savePropDescr(propDescr);
+        }
+        return res;
+    }
+
+    private void loadWorkspace(final BeastWorkspace ws) {
+        loadedDescrs = ws.loadedDescrs;
+        filesPerDescr = ws.filesPerDescr;
+        descrWithUnsavedChanges = ws.descrWithUnsavedChanges;
+        loadedPropDescrs = ws.loadedPropDescrs;
+        filesPerPropDescr = ws.filesPerPropDescr;
+        propDescrWithUnsavedChanges = ws.propDescrWithUnsavedChanges;
+        codeGenerationOptions = ws.codeGenerationOptions;
+        setConfigList(ws.configurationList);
+        name = ws.name;
+        workspaceFile = ws.workspaceFile;
+        pathHandler = ws.pathHandler;
+        messageUpdateListener();
+    }
+
+    private void handleDescrChange(final CElectionDescription descr) {
+        descrWithUnsavedChanges.add(descr);
+    }
+
     public static final BeastWorkspace
             getStandardWorkspace(final CBMCProcessHandlerCreator processHandlerCreator) {
         final BeastWorkspace beastWorkspace = new BeastWorkspace();
@@ -195,12 +268,6 @@ public class BeastWorkspace {
             }
         }
         return null;
-    }
-
-    private void messageUpdateListener() {
-        for (final WorkspaceUpdateListener l : updateListener) {
-            l.handleWorkspaceUpdateGeneric();
-        }
     }
 
     public final void addElectionDescription(final CElectionDescription descr) {
@@ -369,18 +436,11 @@ public class BeastWorkspace {
     }
 
     public final boolean saveDescr(final CElectionDescription descr) {
-        File f = null;
-        if (filesPerDescr.containsKey(descr)) {
-            f = filesPerDescr.get(descr);
-        } else {
-            f = FileDialogHelper
-                    .letUserSaveFile(pathHandler.getElectionDescrDir(),
-                                     SAVE_PROPERTY_DIALOG_TITLE,
-                                     descr.getName() + BELEC_FILE_ENDING);
-            if (f == null) {
-                return false;
-            }
-            filesPerDescr.put(descr, f);
+        File f = getFile(descr, descr.getName(), filesPerDescr,
+                         pathHandler.getElectionDescrDir(),
+                         BELEC_FILE_ENDING, SAVE_PROPERTY_DIALOG_TITLE);
+        if (f == null) {
+            return false;
         }
         try {
             InputOutputInterface.storeCElection(descr, f);
@@ -394,22 +454,14 @@ public class BeastWorkspace {
     }
 
     public final boolean savePropDescr(final PreAndPostConditions propDescr) {
-        File f = null;
-        if (filesPerPropDescr.containsKey(propDescr)) {
-            f = filesPerPropDescr.get(propDescr);
-        } else {
-            f = FileDialogHelper
-                    .letUserSaveFile(pathHandler.getPropDescrDir(),
-                                     SAVE_PROPERTY_DIALOG_TITLE,
-                                     propDescr.getName() + BPRP_FILE_ENDING);
-            if (f == null) {
-                return false;
-            }
-            filesPerPropDescr.put(propDescr, f);
+        File f = getFile(propDescr, propDescr.getName(), filesPerPropDescr,
+                         pathHandler.getPropDescrDir(),
+                         BPRP_FILE_ENDING, SAVE_PROPERTY_DIALOG_TITLE);
+        if (f == null) {
+            return false;
         }
         try {
-            InputOutputInterface
-                .storePreAndPostConditionDescription(propDescr, f);
+            InputOutputInterface.storePreAndPostConditionDescription(propDescr, f);
             propDescrWithUnsavedChanges.remove(propDescr);
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
@@ -419,38 +471,8 @@ public class BeastWorkspace {
         return true;
     }
 
-    private boolean saveAll() {
-        final List<CElectionDescription> descrListCopy =
-                new ArrayList<CElectionDescription>(descrWithUnsavedChanges);
-        boolean res = true;
-        for (final CElectionDescription descr : descrListCopy) {
-            res &= descr != null && saveDescr(descr);
-        }
-        final List<PreAndPostConditions> propDescrListCopy =
-                new ArrayList<PreAndPostConditions>(propDescrWithUnsavedChanges);
-        for (final PreAndPostConditions propDescr : propDescrListCopy) {
-            res &= savePropDescr(propDescr);
-        }
-        return res;
-    }
-
     public final void setWorkspaceFile(final File file) {
         this.workspaceFile = file;
-    }
-
-    private void loadWorkspace(final BeastWorkspace ws) {
-        loadedDescrs = ws.loadedDescrs;
-        filesPerDescr = ws.filesPerDescr;
-        descrWithUnsavedChanges = ws.descrWithUnsavedChanges;
-        loadedPropDescrs = ws.loadedPropDescrs;
-        filesPerPropDescr = ws.filesPerPropDescr;
-        propDescrWithUnsavedChanges = ws.propDescrWithUnsavedChanges;
-        codeGenerationOptions = ws.codeGenerationOptions;
-        setConfigList(ws.configurationList);
-        name = ws.name;
-        workspaceFile = ws.workspaceFile;
-        pathHandler = ws.pathHandler;
-        messageUpdateListener();
     }
 
     public final void letUserLoadWorkSpace() {
@@ -475,25 +497,24 @@ public class BeastWorkspace {
     }
 
     public final void saveWorkspace() {
-        final boolean allSaved = saveAll();
+        final boolean allSaved = saveAll(descrWithUnsavedChanges, propDescrWithUnsavedChanges);
         if (!allSaved) {
             errorHandler.logAndDisplayError(
                     new BeastError(BeastErrorType.ERROR_WHEN_SAVING_ALL, NONE));
         }
-
-        if (workspaceFile == null) {
-            workspaceFile =
-                    FileDialogHelper.letUserSaveFile(
-                            pathHandler.getWorkspaceDir(), SAVE_WORKSPACE_TITLE,
-                            name + BEASTWS_FILE_ENDING);
-        }
-        if (workspaceFile == null) {
+        File f = workspaceFile;
+        final String fileName = f != null ? f.getName() : name + BEASTWS_FILE_ENDING;
+        f = FileDialogHelper.letUserSaveFile(pathHandler.getWorkspaceDir(),
+                                             SAVE_WORKSPACE_TITLE,
+                                             fileName);
+        if (f == null) {
             return;
+        } else if (f.getParentFile().equals(pathHandler.getWorkspaceDir())
+                && f.getName().equals(fileName)) {
+            f = workspaceFile;
         }
-
         try {
-            InputOutputInterface.storeBeastWorkspace(this, workspaceFile,
-                    pathHandler);
+            InputOutputInterface.storeBeastWorkspace(this, f, pathHandler);
         } catch (IOException e) {
             errorHandler.logAndDisplayError(
                     new BeastError(BeastErrorType.IO_ERROR, NONE, e));
@@ -529,9 +550,6 @@ public class BeastWorkspace {
     // in here. should we move that into CelectionDescription?
     // I do not think so, I like it to remain just a data class, however
     // reasonable people can disagree on that
-    private void handleDescrChange(final CElectionDescription descr) {
-        descrWithUnsavedChanges.add(descr);
-    }
 
     public final void updateCodeForDescrFunction(final CElectionDescription descr,
                                                  final CElectionDescriptionFunction function,
@@ -608,8 +626,8 @@ public class BeastWorkspace {
     }
 
     public final void createConfiguration(final String nameString,
-                                       final CElectionDescription descr,
-                                       final PreAndPostConditions propDescr) {
+                                          final CElectionDescription descr,
+                                          final PreAndPostConditions propDescr) {
         final ConfigurationBatch tc = new ConfigurationBatch(descr, propDescr, nameString);
         final Configuration configuration = new Configuration();
         configuration.setDescr(descr);
@@ -669,18 +687,6 @@ public class BeastWorkspace {
         for (final WorkspaceUpdateListener l : updateListener) {
             l.handleConfigurationDeleted(tc);
         }
-    }
-
-    private boolean askUserIfReallyDelete() {
-        final Alert reallyRemove =
-                new Alert(AlertType.CONFIRMATION,
-                          CONFIRMATION_MESSAGE_STRING,
-                          ButtonType.OK, ButtonType.NO);
-        final Optional<ButtonType> res = reallyRemove.showAndWait();
-        if (res.isPresent() || res.get().getButtonData().isCancelButton()) {
-            return false;
-        }
-        return true;
     }
 
     public final void removeDescr(final CElectionDescription descr) {
