@@ -2,9 +2,12 @@ package edu.pse.beast.gui.ceditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -178,6 +181,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             return;
         }
         final TextField nameTextField = new TextField();
+        final BooleanBinding nameTextBlank = Bindings.createBooleanBinding(() -> {
+            return nameTextField.getText().isBlank();
+        }, nameTextField.textProperty());
         nameTextField.setText(currentDescription.getName());
         final ChoiceBox<VotingInputType> inputTypeCB = new ChoiceBox<VotingInputType>();
         inputTypeCB.getItems().addAll(VotingInputType.values());
@@ -187,7 +193,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         outTypeCB.getSelectionModel().select(currentDescription.getOutputType());
 
         final Optional<ButtonType> res =
-                DialogHelper.generateDialog(EDIT_ELECTION_DIALOG,
+                DialogHelper.generateDialog(EDIT_ELECTION_DIALOG, nameTextBlank,
                                             List.of(NAME, INPUT_TYPE, OUTPUT_TYPE),
                                             List.of(nameTextField, inputTypeCB, outTypeCB))
                 .showAndWait();
@@ -206,6 +212,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 loopBounds.getSelectionModel().getSelectedItem();
         if (selectedLoop != null) {
             final TextField manualBound = new TextField();
+            final BooleanBinding textBlank = Bindings.createBooleanBinding(() -> {
+                return manualBound.getText().isBlank();
+            }, manualBound.textProperty());
             manualBound.setVisible(false);
             final ChoiceBox<LoopBoundType> loopBoundChoiceBox = new ChoiceBox<LoopBoundType>();
             loopBoundChoiceBox.getItems().addAll(LoopBoundType.values());
@@ -220,7 +229,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 });
             loopBoundChoiceBox.getSelectionModel().select(selectedLoop.getParsedLoopBoundType());
             final Optional<ButtonType> res =
-                    DialogHelper.generateDialog(EDIT_LOOP_BOUND_DIALOG,
+                    DialogHelper.generateDialog(EDIT_LOOP_BOUND_DIALOG, textBlank,
                                                 List.of(LOOPBOUND_TYPE, MANUAL_VALUE),
                                                 List.of(loopBoundChoiceBox, manualBound))
                     .showAndWait();
@@ -282,10 +291,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
     private void addVotingFunction() {
         final TextField nameField = new TextField();
+        final BooleanBinding textBlank = Bindings.createBooleanBinding(() -> {
+            return nameField.getText().isBlank();
+        }, nameField.textProperty());
         final Optional<ButtonType> res =
                 DialogHelper
-                .generateDialog(REMOVE_FUNCTION_DIALOG, List.of(NAME), List.of(nameField))
-                .showAndWait();
+                .generateDialog(REMOVE_FUNCTION_DIALOG, textBlank, List.of(NAME),
+                                List.of(nameField)).showAndWait();
         if (res.isPresent()
                 && !res.get().getButtonData().isCancelButton()
                 && !nameField.getText().isBlank()) {
@@ -297,6 +309,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     // TODO(Holger) make this nicer, add error checking for wrong var names etc
     private void addSimpleFunction() {
         final TextField nameField = new TextField();
+        final BooleanBinding textBlank = Bindings.createBooleanBinding(() -> {
+            return nameField.getText().isBlank();
+        }, nameField.textProperty());
         final ChoiceBox<CElectionSimpleType> returnTypeChoiceBox =
                 new ChoiceBox<CElectionSimpleType>();
         returnTypeChoiceBox.getItems().addAll(CElectionSimpleType.values());
@@ -306,6 +321,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final List<CElectionSimpleType> argTypes = new ArrayList<CElectionSimpleType>();
         final List<String> argNames = new ArrayList<String>();
         final TextField argsNameTextField = new TextField();
+        final BooleanBinding argNameBlank = Bindings.createBooleanBinding(() -> {
+            return argsNameTextField.getText().isBlank();
+        }, argsNameTextField.textProperty());
         final ChoiceBox<CElectionSimpleType> argsTypeChoiceBox =
                 new ChoiceBox<CElectionSimpleType>();
         argsTypeChoiceBox.getItems().addAll(CElectionSimpleType.values());
@@ -325,11 +343,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             }
             l.setText(text);
         };
+
         addArgButton.setOnAction(e -> {
             argTypes.add(argsTypeChoiceBox.getSelectionModel().getSelectedItem());
             argNames.add(argsNameTextField.getText());
             updateArgLabel.accept(argumentsLabel);
         });
+        addArgButton.disableProperty().bind(argNameBlank);
         removeArgButton.setOnAction(e -> {
             if (!argTypes.isEmpty()) {
                 final int idx = argTypes.size() - 1;
@@ -340,7 +360,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         });
 
         final Optional<ButtonType> res =
-                DialogHelper.generateDialog(ADD_SIMPLE_FUNCTION_DIALOG,
+                DialogHelper.generateDialog(ADD_SIMPLE_FUNCTION_DIALOG, textBlank,
                                             List.of(NAME, RETURN_TYPE),
                                             List.of(nameField, returnTypeChoiceBox,
                                                     argsTypeChoiceBox, argsNameTextField,
@@ -528,6 +548,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     public final void createNewDescription() {
         final List<String> inputNames = List.of(NAME, INPUT_TYPE, OUTPUT_TYPE);
         final TextField nameField = new TextField();
+        final BooleanBinding textBlank = Bindings.createBooleanBinding(() -> {
+            return nameField.getText().isBlank();
+        }, nameField.textProperty());
 
         final ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<String>();
         for (final VotingInputType it : VotingInputType.values()) {
@@ -543,7 +566,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final List<Node> nodes =
                 List.of(nameField, inputTypeChoiceBox, outputTypeChoiceBox);
         final Optional<ButtonType> res =
-                DialogHelper.generateDialog(CREATE_ELECTION_DIALOG, inputNames, nodes)
+                DialogHelper.generateDialog(CREATE_ELECTION_DIALOG, textBlank, inputNames, nodes)
                 .showAndWait();
         if (res.isPresent()
                 && (res.get().getButtonData().isCancelButton()

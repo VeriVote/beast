@@ -3,6 +3,8 @@ package edu.pse.beast.gui.configurationeditor;
 import java.util.List;
 import java.util.Map;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -71,6 +73,10 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
         createConfigurationButton.setOnAction(e -> {
             createConfiguration();
         });
+        final BooleanBinding nameTextBlank = Bindings.createBooleanBinding(() -> {
+            return nameTextField.getText().isBlank();
+        }, nameTextField.textProperty());
+        createConfigurationButton.disableProperty().bind(nameTextBlank);
         gotoConfigButton.setOnAction(e -> {
             configurationTreeView.getSelectionModel().select(
                     ConfigurationTreeViewHelper

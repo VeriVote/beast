@@ -4,6 +4,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.List;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -24,6 +25,7 @@ public class DialogHelper {
     private static final String OK = "OK";
 
     public static Dialog<ButtonType> generateDialog(final String title,
+                                                    final BooleanBinding binding,
                                                     final List<String> inputNames,
                                                     final List<Node> inputs) {
         final Point position = MouseInfo.getPointerInfo().getLocation();
@@ -32,8 +34,8 @@ public class DialogHelper {
         dialog.setX(position.getX());
         dialog.setY(position.getY());
         final ButtonType buttonType = new ButtonType(OK, ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes()
-            .addAll(buttonType, ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().addAll(buttonType, ButtonType.CANCEL);
+        dialog.getDialogPane().lookupButton(buttonType).disableProperty().bind(binding);
 
         final GridPane grid = new GridPane();
         grid.setHgap(DEFAULT_DIALOG_SIZE);

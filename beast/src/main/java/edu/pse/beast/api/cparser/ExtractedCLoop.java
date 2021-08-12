@@ -148,13 +148,12 @@ public class ExtractedCLoop {
         parsedLoopBoundType = LoopBoundType.MANUALLY_ENTERED;
     }
 
-    private static AssignmentExpressionContext
-                initForLoopExpression(final IterationStatementContext ctx) {
+    private static AssignmentExpressionContext initForLoopExp(final IterationStatementContext ctx) {
         final ForConditionContext forCond = ctx.forCondition();
-        ForExpressionContext forExpCtx = forCond != null ? forCond.forExpression(0) : null;
+        final ForExpressionContext forExpCtx = forCond != null ? forCond.forExpression(0) : null;
         final AssignmentExpressionContext expCtx =
-                forExpCtx.assignmentExpression().isEmpty() ?
-                        null : forExpCtx.assignmentExpression(0);
+                !forExpCtx.assignmentExpression().isEmpty()
+                ? forExpCtx.assignmentExpression(0) : null;
         return expCtx;
     }
 
@@ -174,8 +173,8 @@ public class ExtractedCLoop {
         final String seatsVarName = codeGenOptions.getCurrentAmountSeatsVarName();
 
         final String lessThanText =
-                relCond.shiftExpression().size() >= 2 && relCond.Less().size() != 0 ?
-                        relCond.shiftExpression(1).getText() : relCond.getText();
+                relCond.shiftExpression().size() >= 2 && !relCond.Less().isEmpty()
+                ? relCond.shiftExpression(1).getText() : relCond.getText();
 
         if (lessThanText.equals(votersVarName)) {
             loopParseResult = CLoopParseResultType.PROBABLE_SUCCESS_CONSTANT_LOOP;
@@ -195,7 +194,7 @@ public class ExtractedCLoop {
 
         if (context.For() != null) {
             loopType = CLoopType.FOR;
-            final AssignmentExpressionContext condExp = initForLoopExpression(context);
+            final AssignmentExpressionContext condExp = initForLoopExp(context);
 
             final CLoopParseResultType parseFail;
             if (condExp == null) {

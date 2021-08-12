@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -86,9 +88,13 @@ public class PropertyEditor implements WorkspaceUpdateListener {
         addPropertyDescriptionButton.setOnAction(e -> {
             final List<String> names = List.of(NAME);
             final TextField nameField = new TextField();
+            final BooleanBinding textBlank = Bindings.createBooleanBinding(() -> {
+                return nameField.getText().isBlank();
+            }, nameField.textProperty());
             final List<Node> nodes = List.of(nameField);
             final Optional<ButtonType> res =
-                    DialogHelper.generateDialog(ADD_PROPERTY, names, nodes).showAndWait();
+                    DialogHelper.generateDialog(ADD_PROPERTY, textBlank, names, nodes)
+                    .showAndWait();
             if (res.isPresent()
                     && !res.get().getButtonData().isCancelButton()
                     && !nameField.getText().isBlank()) {
@@ -115,9 +121,13 @@ public class PropertyEditor implements WorkspaceUpdateListener {
             item.setOnAction(e -> {
                 final List<String> names = List.of(NAME);
                 final TextField nameField = new TextField();
+                final BooleanBinding textBlank = Bindings.createBooleanBinding(() -> {
+                    return nameField.getText().isBlank();
+                }, nameField.textProperty());
                 final List<Node> inputs = List.of(nameField);
                 final Optional<ButtonType> res =
-                        DialogHelper.generateDialog(INIT_VARIABLE, names, inputs).showAndWait();
+                        DialogHelper.generateDialog(INIT_VARIABLE, textBlank, names, inputs)
+                        .showAndWait();
                 if (res.isPresent()
                         && !res.get().getButtonData().isCancelButton()
                         && !nameField.getText().isBlank()) {
