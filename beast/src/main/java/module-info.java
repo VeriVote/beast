@@ -29,11 +29,11 @@ module edu.pse.beast {
     requires java.datatransfer;
     requires transitive java.desktop;
     requires java.logging;
-    requires transitive javafx.base;
-    requires transitive javafx.controls;
+    requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.graphics;
+    requires transitive javafx.base;
     requires javafx.swing;
+    requires transitive javafx.graphics;
     requires transitive org.antlr.antlr4.runtime;
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;

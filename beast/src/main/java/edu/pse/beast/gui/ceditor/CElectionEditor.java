@@ -2,7 +2,6 @@ package edu.pse.beast.gui.ceditor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -306,6 +305,39 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
     }
 
+    private static void setLabelsAndActions(final FunctionArgumentEditor fae,
+                                            final List<CElectionSimpleType> argTypes,
+                                            final List<String> argNames,
+                                            final Button addArgButton,
+                                            final Button removeArgButton) {
+        final Consumer<Label> updateArgLabel = l -> {
+            l.setVisible(!argNames.isEmpty());
+            if (argNames.isEmpty()) {
+                return;
+            }
+            String text = EMPTY;
+            for (int i = 0; i < argNames.size(); ++i) {
+                text += argTypes.get(i) + BLANK + argNames.get(i) + COMMA;
+            }
+            l.setText(text);
+        };
+
+        addArgButton.setOnAction(e -> {
+            argTypes.add(fae.typeChoiceBox.getSelectionModel().getSelectedItem());
+            argNames.add(fae.nameTextField.getText());
+            updateArgLabel.accept(fae.label);
+        });
+        addArgButton.disableProperty().bind(fae.nameBlank);
+        removeArgButton.setOnAction(e -> {
+            if (!argTypes.isEmpty()) {
+                final int idx = argTypes.size() - 1;
+                argTypes.remove(idx);
+                argNames.remove(idx);
+                updateArgLabel.accept(fae.label);
+            }
+        });
+    }
+
     // TODO(Holger) make this nicer, add error checking for wrong var names etc
     private void addSimpleFunction() {
         final TextField nameField = new TextField();
@@ -332,32 +364,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         final Button addArgButton = new Button(ADD_ARGUMENT);
         final Button removeArgButton = new Button(REMOVE_LAST);
 
-        final Consumer<Label> updateArgLabel = l -> {
-            l.setVisible(!argNames.isEmpty());
-            if (argNames.isEmpty()) {
-                return;
-            }
-            String text = EMPTY;
-            for (int i = 0; i < argNames.size(); ++i) {
-                text += argTypes.get(i) + BLANK + argNames.get(i) + COMMA;
-            }
-            l.setText(text);
-        };
-
-        addArgButton.setOnAction(e -> {
-            argTypes.add(argsTypeChoiceBox.getSelectionModel().getSelectedItem());
-            argNames.add(argsNameTextField.getText());
-            updateArgLabel.accept(argumentsLabel);
-        });
-        addArgButton.disableProperty().bind(argNameBlank);
-        removeArgButton.setOnAction(e -> {
-            if (!argTypes.isEmpty()) {
-                final int idx = argTypes.size() - 1;
-                argTypes.remove(idx);
-                argNames.remove(idx);
-                updateArgLabel.accept(argumentsLabel);
-            }
-        });
+        setLabelsAndActions(
+                new FunctionArgumentEditor(argsTypeChoiceBox, argsNameTextField,
+                                           argumentsLabel, argNameBlank),
+                argTypes, argNames, addArgButton, removeArgButton
+        );
 
         final Optional<ButtonType> res =
                 DialogHelper.generateDialog(ADD_SIMPLE_FUNCTION_DIALOG, textBlank,
@@ -706,6 +717,29 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                          final CodeArea closBrackArea) {
             this.elect = electCodeArea;
             this.closeBrackets = closBrackArea;
+        }
+    }
+
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Michael Kirsten
+     *
+     */
+    public static final class FunctionArgumentEditor {
+        final ChoiceBox<CElectionSimpleType> typeChoiceBox;
+        final TextField nameTextField;
+        final Label label;
+        final BooleanBinding nameBlank;
+
+        public FunctionArgumentEditor(final ChoiceBox<CElectionSimpleType> argsTypeChoiceBox,
+                                      final TextField argsNameTextField,
+                                      final Label argumentsLabel,
+                                      final BooleanBinding argNameBlank) {
+            this.typeChoiceBox = argsTypeChoiceBox;
+            this.nameTextField = argsNameTextField;
+            this.label = argumentsLabel;
+            this.nameBlank = argNameBlank;
         }
     }
 }
