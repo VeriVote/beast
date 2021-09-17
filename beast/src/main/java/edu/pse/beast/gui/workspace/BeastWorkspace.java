@@ -161,17 +161,21 @@ public class BeastWorkspace {
     }
 
     private void loadWorkspace(final BeastWorkspace ws) {
-        loadedDescrs = ws.loadedDescrs;
-        filesPerDescr = ws.filesPerDescr;
-        descrWithUnsavedChanges = ws.descrWithUnsavedChanges;
-        loadedPropDescrs = ws.loadedPropDescrs;
-        filesPerPropDescr = ws.filesPerPropDescr;
-        propDescrWithUnsavedChanges = ws.propDescrWithUnsavedChanges;
-        codeGenerationOptions = ws.codeGenerationOptions;
-        setConfigList(ws.configurationList);
-        name = ws.name;
-        workspaceFile = ws.workspaceFile;
-        pathHandler = ws.pathHandler;
+        loadedDescrs = ws != null ? ws.loadedDescrs : new ArrayList<CElectionDescription>();
+        filesPerDescr =
+                ws != null ? ws.filesPerDescr : new LinkedHashMap<CElectionDescription, File>();
+        descrWithUnsavedChanges =
+                ws != null ? ws.descrWithUnsavedChanges : new LinkedHashSet<CElectionDescription>();
+        loadedPropDescrs = ws != null ? ws.loadedPropDescrs : new ArrayList<PropertyDescription>();
+        filesPerPropDescr =
+                ws != null ? ws.filesPerPropDescr : new LinkedHashMap<PropertyDescription, File>();
+        propDescrWithUnsavedChanges = ws != null
+                ? ws.propDescrWithUnsavedChanges : new LinkedHashSet<PropertyDescription>();
+        codeGenerationOptions = ws != null ? ws.codeGenerationOptions : null;
+        setConfigList(ws != null ? ws.configurationList : new ConfigurationList());
+        name = ws != null ? ws.name : DEFAULT_WORKSPACE_NAME;
+        workspaceFile = ws != null ? ws.workspaceFile : null;
+        pathHandler = ws != null ? ws.pathHandler : null;
         messageUpdateListener();
     }
 
@@ -467,7 +471,8 @@ public class BeastWorkspace {
         this.workspaceFile = file;
     }
 
-    public final void letUserLoadWorkSpace() {
+    public final boolean letUserLoadWorkSpace() {
+        boolean loaded = false;
         final File f =
                 FileDialogHelper
                 .letUserOpenFile(WORKSPACE_STRING, BEASTWS_FILE_ENDING,
@@ -478,6 +483,7 @@ public class BeastWorkspace {
             try {
                 final BeastWorkspace ws =
                         InputOutputInterface.loadBeastWorkspace(f, pathHandler);
+                loaded = true;
                 loadWorkspace(ws);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -486,6 +492,11 @@ public class BeastWorkspace {
 
             }
         }
+        return loaded;
+    }
+
+    public final void newWorkspace() {
+        loadWorkspace(null);
     }
 
     public final void saveWorkspace() {
@@ -682,21 +693,23 @@ public class BeastWorkspace {
         }
     }
 
-    public final void removeDescr(final CElectionDescription descr) {
+    public final boolean removeDescr(final CElectionDescription descr) {
         if (configurationList.getConfigsByDescr().containsKey(descr)) {
             if (!askUserIfReallyDelete()) {
-                return;
+                return false;
             }
         }
         configurationList.removeAll(descr);
+        return true;
     }
 
-    public final void removePropDescr(final PropertyDescription propDescr) {
+    public final boolean removePropDescr(final PropertyDescription propDescr) {
         if (configurationList.getConfigsByPropDescr().containsKey(propDescr)) {
             if (!askUserIfReallyDelete()) {
-                return;
+                return false;
             }
         }
         configurationList.removeAll(propDescr);
+        return true;
     }
 }

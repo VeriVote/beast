@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -60,10 +61,11 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  */
 public class BeastGUIController implements WorkspaceUpdateListener {
     // =================Options Start
-    private static final String LOAD_WS_TEXT = "Load Workspace";
-    private static final String SAVE_WS_TEXT = "Save Workspace";
+    private static final String NEW_WS_TEXT = "New";
+    private static final String LOAD_WS_TEXT = "Load";
+    private static final String SAVE_WS_TEXT = "Save";
     private static final String QUIT_WS_TEXT = "Quit";
-    private static final String FILE_TEXT = "File";
+    private static final String FILE_TEXT = "Workspace";
     private static final String PREFERENCES_TEXT = "Preferences";
     private static final String OPTIONS_TEXT = "Options";
 
@@ -95,6 +97,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     @FXML
     private AnchorPane codePane;
+
+    @FXML
+    private Label descriptionInputStatus;
+
+    @FXML
+    private Label descriptionOutputStatus;
 
     @FXML
     private MenuButton addFunctionMenuButton;
@@ -163,6 +171,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     private CElectionEditor cElectionEditor;
 
+    private PropertyEditor propertyEditor;
+
     private BeastWorkspace beastWorkspace;
 
     private File optionsSaveFile;
@@ -195,6 +205,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         AnchorPane.setLeftAnchor(closingBracketArea, 0d);
         AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
+        final String empty = "–";
+        descriptionInputStatus.setText(empty);
+        descriptionOutputStatus.setText(empty);
+
         final CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
         final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
                 new VirtualizedScrollPane<CEditorCodeElement>(cEditorGUIElement);
@@ -215,7 +229,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 new CElectionEditor.LoopBoundEditor(computeLoopBoundButton, editLoopBoundButton,
                                                     loopBoundList);
         final CElectionEditor.CodeAreas codeAreas =
-                new CElectionEditor.CodeAreas(cEditorGUIElement, closingBracketArea);
+                new CElectionEditor.CodeAreas(cEditorGUIElement, closingBracketArea,
+                                              descriptionInputStatus, descriptionOutputStatus);
         cElectionEditor =
                 new CElectionEditor(primaryStage, cEditorGUIElementVsp, electDescButtons,
                                     functionEditor, loopBoundEditor, codeAreas, beastWorkspace);
@@ -233,11 +248,12 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         postPropertyPane.setContent(postVsp);
         final PropertyEditor.Buttons buttons =
                 new PropertyEditor.Buttons(addPropDescrButton, loadPropDescrButton,
-                                           savePropDescrButton, removeSymbVarButton);
-        // FIXME: Not sure what to do here
-        new PropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
-                           symbVarsListView, addSymbVarMenu,
-                           openedPropertyDescriptionChoiceBox, beastWorkspace);
+                                           savePropDescrButton, deletePropDescrButton,
+                                           removeSymbVarButton);
+        propertyEditor =
+                new PropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
+                                   symbVarsListView, addSymbVarMenu,
+                                   openedPropertyDescriptionChoiceBox, beastWorkspace);
     }
 
     private void initConfigurationHandler() throws IOException {
@@ -258,6 +274,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private void initMenu() {
         final Menu fileMenu = new Menu();
         fileMenu.setText(FILE_TEXT);
+        final MenuItem newWorkspaceMenuItem = new MenuItem(NEW_WS_TEXT);
         final MenuItem loadWorkspaceMenuItem = new MenuItem(LOAD_WS_TEXT);
         final MenuItem saveWorkspaceMenuItem = new MenuItem(SAVE_WS_TEXT);
         final MenuItem exitWorkspaceMenuItem = new MenuItem(QUIT_WS_TEXT);
@@ -272,6 +289,10 @@ public class BeastGUIController implements WorkspaceUpdateListener {
             beastWorkspace.shutdown();
             Platform.exit();
         });
+        newWorkspaceMenuItem.setOnAction(e -> {
+            beastWorkspace.newWorkspace();
+        });
+        fileMenu.getItems().add(newWorkspaceMenuItem);
         fileMenu.getItems().add(loadWorkspaceMenuItem);
         fileMenu.getItems().add(saveWorkspaceMenuItem);
         fileMenu.getItems().add(exitWorkspaceMenuItem);

@@ -408,7 +408,7 @@ public class CodeGenASTVisitor implements BooleanAstVisitor {
         codeBlock.addAssignment(UINT + varName, ONE);
         codeBlock.addSnippet(code);
         node.getFollowingExpNode().getVisited(this);
-        codeBlock.addSnippet(varName + AND_EQ + booleanVarNameStack.pop());
+        codeBlock.addSnippet(varName + AND_EQ + booleanVarNameStack.pop() + SEMI.trim());
         codeBlock.addSnippet(BRACE_CL);
         booleanVarNameStack.push(varName);
         scopeHandler.pop();

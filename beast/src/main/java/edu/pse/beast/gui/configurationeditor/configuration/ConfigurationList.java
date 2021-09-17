@@ -2,6 +2,7 @@ package edu.pse.beast.gui.configurationeditor.configuration;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -148,7 +149,8 @@ public class ConfigurationList implements WorkspaceUpdateListener {
     public final void deleteConfiguration(final ConfigurationBatch tc) {
         configsByName.remove(tc.getName());
         configsByDescr.get(tc.getDescr()).remove(tc);
-        configsByPropDescr.get(tc.getPropDescr()).remove(tc);
+        final List<ConfigurationBatch> emptyList = new LinkedList<ConfigurationBatch>();
+        configsByPropDescr.getOrDefault(tc.getPropDescr(), emptyList).remove(tc);
     }
 
     public final void removeAll(final CElectionDescription descr) {

@@ -26,7 +26,7 @@ public class CodeTemplateVoteSumForCandidate {
 
     private static final Map<VotingInputType, List<LoopBound>> LOOP_BOUNDS =
             new LinkedHashMap<VotingInputType, List<LoopBound>>(
-            Map.of(VotingInputType.SINGLE_CHOICE, null,
+            Map.of(VotingInputType.SINGLE_CHOICE, LOOP_BOUNDS_PREFERENCE,
                     VotingInputType.SINGLE_CHOICE_STACK, LOOP_BOUNDS_PREFERENCE));
 
     private static final Map<VotingInputType, String> TEMPLATES =

@@ -14,10 +14,24 @@
        Voting rules are methods to aggregate the preferences of a group to make decisions.
   </description>
   <url>https://github.com/VeriVote/BEAST</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
   <organization>
     <name>KIT</name>
     <url>https://www.kit.edu</url>
   </organization>
+  <developers>
+    <developer>
+      <name>Michael Kirsten</name>
+      <email>kirsten@kit.edu</email>
+      <organization>KIT</organization>
+      <organizationUrl>https://formal.kastel.kit.edu/kirsten</organizationUrl>
+    </developer>
+  </developers>
   <properties>
     <skipTests>false</skipTests>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,8 +39,10 @@
     <maven.version>3.8.1</maven.version>
     <maven.compiler.release>11</maven.compiler.release>
     <jdk.version>11</jdk.version>
-    <javafx.version>16</javafx.version>
+    <javafx.version>17.0.0.1</javafx.version>
     <javafx.maven.plugin.version>0.0.6</javafx.maven.plugin.version>
+    <antlr.version>4.9.2</antlr.version>
+    <ikonli.version>12.2.0</ikonli.version>
     <exec.mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
   </properties>
   <distributionManagement>
@@ -85,6 +101,21 @@
       <version>0.10.6</version>
     </dependency>
     <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-javafx</artifactId>
+      <version>${ikonli.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-elusive-pack</artifactId>
+      <version>${ikonli.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-fontawesome5-pack</artifactId>
+      <version>${ikonli.version}</version>
+    </dependency>
+    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.11.0</version>
@@ -109,12 +140,12 @@
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4</artifactId>
-      <version>4.9.2</version>
+      <version>${antlr.version}</version>
     </dependency>
     <dependency>
       <groupId>org.antlr</groupId>
       <artifactId>antlr4-runtime</artifactId>
-      <version>4.9.2</version>
+      <version>${antlr.version}</version>
     </dependency>
     <dependency>
       <groupId>net.java.dev.jna</groupId>
@@ -211,7 +242,6 @@
             <goals>
               <goal>display-dependency-updates</goal>
               <goal>display-plugin-updates</goal>
-              <goal>display-property-updates</goal>
             </goals>
           </execution>
         </executions>
@@ -242,7 +272,7 @@
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
-        <version>4.9.2</version>
+        <version>${antlr.version}</version>
         <executions>
           <execution>
             <id>antlr</id>
@@ -314,6 +344,8 @@
           <version>3.8.1</version>
           <configuration>
             <release>${maven.compiler.release}</release>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
           </configuration>
         </plugin>
         <plugin>
@@ -361,6 +393,7 @@
               </goals>
               <configuration>
                 <transformers>
+                  <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                   <transformer
                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                     <mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</mainClass>

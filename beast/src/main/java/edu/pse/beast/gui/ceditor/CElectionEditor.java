@@ -50,11 +50,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     private static final double LINE_SCALE = 1.3;
     private static final String EMPTY = "";
     private static final String BLANK = " ";
+    private static final String NONE = "–";
     private static final String COMMA = ", ";
     private static final String UNDERSCORE = "_";
     private static final String LINE_BREAK = "\n";
 
-    private static final String ADD_FUNCTION = "Add Function";
     private static final String ADD_ARGUMENT = "Add Argument";
     private static final String REMOVE_LAST = "Remove Last Argument";
 
@@ -66,8 +66,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
     private static final String RETURN_TYPE = "Return Type:";
     private static final String NAME = "Name:";
-    private static final String INPUT_TYPE = "Input Type";
-    private static final String OUTPUT_TYPE = "Output Type";
+    private static final String INPUT_TYPE = "Input Type:";
+    private static final String OUTPUT_TYPE = "Output Type:";
     private static final String LOOPBOUND_TYPE = "Loop Bound Type";
     private static final String MANUAL_VALUE = "Manual Value";
 
@@ -93,6 +93,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     private Button addElectionDescriptionButton;
     private Button loadElectionDescriptionButton;
     private Button editDescriptionButton;
+    private Button saveDescriptionButton;
+    private Button removeDescriptionButton;
+
+    private Label inputTypeLabel;
+    private Label outputTypeLabel;
 
     private MenuButton addFunctionMenuButton;
     private Button removeFunctionButton;
@@ -111,16 +116,14 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                            final FunctionEditor functionEditor,
                            final LoopBoundEditor loopBoundEditor,
                            final CodeAreas codeAreas,
-                           // final CEditorCodeElement electCodeArea, final CodeArea closBrackArea,
                            final BeastWorkspace workspace) {
         codeStyleSheet = this.getClass().getResource(CSS_RESOURCE).toExternalForm();
         this.addElectionDescriptionButton = electDescrButtons.add;
         this.loadElectionDescriptionButton = electDescrButtons.load;
         this.editDescriptionButton = electDescrButtons.edit;
+        this.saveDescriptionButton = electDescrButtons.save;
+        this.removeDescriptionButton = electDescrButtons.delete;
 
-        this.editDescriptionButton.setOnAction(e -> {
-            editDescription();
-        });
         setupNewElectionButtons();
 
         this.computeLoopBoundsButton = loopBoundEditor.generateButton;
@@ -151,6 +154,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         this.electionCodeArea = codeAreas.elect;
         this.functionDeclarationArea = functionEditor.declarationArea;
         this.closingBracketArea = codeAreas.closeBrackets;
+        this.inputTypeLabel = codeAreas.electInputStatus;
+        this.outputTypeLabel = codeAreas.electOutputStatus;
         this.cEditorVirtualizedScrollPane = cEditorGUIElementVsp;
         this.functionDeclarationArea.setEditable(false);
         this.closingBracketArea.setEditable(false);
@@ -202,7 +207,19 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             final String name = nameTextField.getText();
             final VotingInputType inType = inputTypeCB.getValue();
             final VotingOutputType outType = outTypeCB.getValue();
+            inputTypeLabel.setText(inType.toNiceString());
+            outputTypeLabel.setText(inType.toNiceString());
             beastWorkspace.editDescr(currentDescription, name, inType, outType);
+        }
+    }
+
+    private void removeDescription() {
+        if (currentDescription == null) {
+            return;
+        }
+        if (beastWorkspace.removeDescr(currentDescription)) {
+            inputTypeLabel.setText(NONE);
+            outputTypeLabel.setText(NONE);
         }
     }
 
@@ -258,17 +275,25 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         loadElectionDescriptionButton.setOnAction(e -> {
             letUserLoadDescr();
         });
+        editDescriptionButton.setOnAction(e -> {
+            editDescription();
+        });
+        saveDescriptionButton.setOnAction(e -> {
+            saveDescription();
+        });
+        removeDescriptionButton.setOnAction(e -> {
+            removeDescription();
+        });
     }
 
     private void setupFunctionButtons() {
-        addFunctionMenuButton.setText(ADD_FUNCTION);
         addFunctionMenuButton.getItems().clear();
 
         final MenuItem addSimpleFuncMenuItem =
-                new MenuItem(CelectionDescriptionFunctionType.SIMPLE.toString());
+                new MenuItem(CelectionDescriptionFunctionType.SIMPLE.toNiceString());
         /*
          * MenuItem addVotingFuncMenuItem = new MenuItem(
-         * CelectionDescriptionFunctionType.VOTING.toString());
+         * CelectionDescriptionFunctionType.VOTING.toNiceString());
          */
         addSimpleFuncMenuItem.setOnAction(e -> addSimpleFunction());
         // addVotingFuncMenuItem.setOnAction(e -> addVotingFunction());
@@ -402,6 +427,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 .addListener((observable, oldValue, newValue) -> {
                     selectedDescrChanged(newValue);
                 });
+        openedElectionDescriptionChoiceBox.setDisable(true);
     }
 
     /* ========== Handle Workspace Updates =========== */
@@ -420,6 +446,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         } else {
             openedElectionDescriptionChoiceBox.getSelectionModel().selectLast();
         }
+        final boolean noChoice = openedElectionDescriptionChoiceBox.getItems().size() < 1;
+        openedElectionDescriptionChoiceBox.setDisable(noChoice);
     }
 
     @Override
@@ -552,7 +580,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
     public final void loadElectionDescription(final CElectionDescription descr) {
         this.currentDescription = descr;
+        final String in = descr == null ? NONE : descr.getInputType().toNiceString();
+        final String out = descr == null ? NONE : descr.getOutputType().toNiceString();
+        this.inputTypeLabel.setText(in);
+        this.outputTypeLabel.setText(out);
         editDescriptionButton.setDisable(descr == null);
+        saveDescriptionButton.setDisable(descr == null);
+        removeDescriptionButton.setDisable(descr == null);
         populateFunctionList(descr);
     }
 
@@ -565,13 +599,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
         final ChoiceBox<String> inputTypeChoiceBox = new ChoiceBox<String>();
         for (final VotingInputType it : VotingInputType.values()) {
-            inputTypeChoiceBox.getItems().add(it.toString());
+            inputTypeChoiceBox.getItems().add(it.toNiceString());
         }
         inputTypeChoiceBox.getSelectionModel().selectFirst();
 
         final ChoiceBox<String> outputTypeChoiceBox = new ChoiceBox<String>();
         for (final VotingOutputType ot : VotingOutputType.values()) {
-            outputTypeChoiceBox.getItems().add(ot.toString());
+            outputTypeChoiceBox.getItems().add(ot.toNiceString());
         }
         outputTypeChoiceBox.getSelectionModel().selectFirst();
         final List<Node> nodes =
@@ -604,7 +638,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         beastWorkspace.letUserLoadDescr();
     }
 
-    public final void save() {
+    public final void saveDescription() {
         if (currentDescription != null) {
             beastWorkspace.saveDescr(currentDescription);
         }
@@ -712,11 +746,17 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     public static final class CodeAreas {
         final CEditorCodeElement elect;
         final CodeArea closeBrackets;
+        final Label electInputStatus;
+        final Label electOutputStatus;
 
         public CodeAreas(final CEditorCodeElement electCodeArea,
-                         final CodeArea closBrackArea) {
+                         final CodeArea closBrackArea,
+                         final Label electInput,
+                         final Label electOutput) {
             this.elect = electCodeArea;
             this.closeBrackets = closBrackArea;
+            this.electInputStatus = electInput;
+            this.electOutputStatus = electOutput;
         }
     }
 

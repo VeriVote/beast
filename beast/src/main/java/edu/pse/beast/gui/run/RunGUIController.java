@@ -11,12 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import edu.pse.beast.api.PropertyCheckCallback;
 import edu.pse.beast.api.io.InputOutputInterface;
@@ -44,11 +46,13 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     private static final double MAX_FONT_SIZE = 30.0;
     private static final int DEFAULT_FONT_SIZE = 12;
 
+    private static final String HIDE = "far-eye-slash";
     private static final String RUN_OUT_OF_DATE = "Has Changes";
     private static final String SHOW_LOGS = "Show Logs";
     private static final String OUTPUT_MESSAGES = "Output Messages";
     private static final String DELETE = "Delete";
-    private static final String PUT_RUN_ON_QUEUE = "Put Run on Queue";
+    private static final String PUT_RUN_ON_QUEUE = "Start Check";
+    private static final String PLAY = "far-play-circle";
     private static final String STOP = "Stop";
     private static final String SHOW_GENERATED_EXAMPLE = "Show Generated Example";
 
@@ -95,6 +99,17 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         counterExampleLoader.load();
     }
 
+    private void setButton(final Button button, final String tooltip, final String icon) {
+        button.setTooltip(new Tooltip(tooltip));
+        button.setGraphic(new FontIcon(icon));
+    }
+
+    private Button createButton(final String tooltip, final String icon) {
+        final Button button = new Button();
+        setButton(button, tooltip, icon);
+        return button;
+    }
+
     private WorkUnitState prepareWorkUnitState(final PropertyCheckRun checkRun,
                                                final Label workUnitStateLabel,
                                                final Button openFileButton,
@@ -108,7 +123,11 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         final CodeFileData codeFile = checkRun.getCodeFile();
         textField.setText(codeFile.getFile().getAbsolutePath());
         openFileButton.setOnAction(e -> {
-            displayCodeArea(contents);
+            hideOrDisplayCodeArea(contents);
+            final boolean empty = outputAnchorPane.getChildren().isEmpty();
+            setButton(openFileButton,
+                      empty ? "Display Source Code" : "Hide Source Code",
+                      empty ? "far-file-code" : HIDE);
         });
 
         final WorkUnitState state = checkRun.getState();
@@ -123,17 +142,96 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         return state;
     }
 
+    private void addHButtons(final Button... buttons) {
+        stateHBox.getChildren().addAll(List.of(buttons));
+    }
+
     private void displayCounterExample(final PropertyCheckRun checkRun, final HBox hBox,
                                        final CounterExampleGuiController controller) {
         if (checkRun.getJsonOutputHandler().didFindCounterExample()) {
-            final Button showExampleButton = new Button(SHOW_GENERATED_EXAMPLE);
+            final Button showExampleButton = new Button();
             showExampleButton.setOnAction(e -> {
                 final AnchorPane pane =
                         controller.display(checkRun.getJsonOutputHandler().getGeneratedExample());
                 displayNode(pane);
+                final boolean empty = outputAnchorPane.getChildren().isEmpty();
+                setButton(showExampleButton,
+                          empty ? SHOW_GENERATED_EXAMPLE : "Hide Generated Example",
+                          empty ? "far-file-alt" : HIDE);
             });
             hBox.getChildren().add(showExampleButton);
         }
+    }
+
+    private HorizontalButtons initHorizontalButtons() {
+        final Button showLogsButton = new Button();
+        showLogsButton.setOnAction(e -> {
+            hideOrDisplayCodeArea(logs);
+            final boolean empty = outputAnchorPane.getChildren().isEmpty();
+            setButton(showLogsButton,
+                      empty ? SHOW_LOGS : "Hide Logs",
+                      empty ? "far-comments" : HIDE);
+        });
+
+        final Button showMessagesButton = new Button();
+        showMessagesButton.setOnAction(e -> {
+            hideOrDisplayCodeArea(messages);
+            final boolean empty = outputAnchorPane.getChildren().isEmpty();
+            setButton(showMessagesButton,
+                      empty ? OUTPUT_MESSAGES : "Hide Messages",
+                      empty ? "far-envelope-open" : HIDE);
+        });
+
+        final Button deleteButton = createButton(DELETE, "fas-times");
+        deleteButton.setOnAction(e -> {
+            beastWorkspace.deleteCBMCRun(run);
+        });
+
+        return new HorizontalButtons(showLogsButton, showMessagesButton, deleteButton);
+    }
+
+    private void display() {
+        Platform.runLater(() -> {
+            if (run == null) {
+                return;
+            }
+            final WorkUnitState state =
+                    prepareWorkUnitState(run, stateLabel, openCreatedFileButton, stateHBox,
+                                         createdFileTextField, fileContents);
+            final HorizontalButtons buttons = initHorizontalButtons();
+
+            switch (state) {
+            case INITIALIZED:
+                final Button putRunOnQueueButton = createButton(PUT_RUN_ON_QUEUE, PLAY);
+                putRunOnQueueButton.setOnAction(e -> {
+                    beastWorkspace.addRunToQueue(run);
+                });
+                addHButtons(putRunOnQueueButton, buttons.delete);
+                break;
+            case ON_QUEUE:
+                break;
+            case RUNNING:
+                final Button stopCBMCButton = createButton(STOP, "far-stop-circle");
+                stopCBMCButton.setOnAction(e -> {
+                    beastWorkspace.stopRun(run);
+                });
+                addHButtons(buttons.showLogs, buttons.showMessages, stopCBMCButton);
+                break;
+            case FINISHED:
+                displayCounterExample(run, stateHBox, counterExampleGuiController);
+                addHButtons(buttons.showLogs, buttons.showMessages, buttons.delete);
+                break;
+            case STOPPED:
+                final Button putRunOnQueueButton2 = createButton(PUT_RUN_ON_QUEUE, PLAY);
+                putRunOnQueueButton2.setOnAction(e -> {
+                    beastWorkspace.addRunToQueue(run);
+                });
+                addHButtons(putRunOnQueueButton2, buttons.delete);
+                break;
+            default:
+                break;
+            }
+        });
     }
 
     public final void display(final PropertyCheckRun checkRun) {
@@ -162,66 +260,6 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         logs.clear();
         logs.appendText(checkRun.getOutput());
         display();
-    }
-
-    private void display() {
-        Platform.runLater(() -> {
-            if (run == null) {
-                return;
-            }
-            final WorkUnitState state =
-                    prepareWorkUnitState(run, stateLabel, openCreatedFileButton, stateHBox,
-                                         createdFileTextField, fileContents);
-
-            final Button showLogsButton = new Button(SHOW_LOGS);
-            showLogsButton.setOnAction(e -> {
-                displayCodeArea(logs);
-            });
-
-            final Button showMessagesButton = new Button(OUTPUT_MESSAGES);
-            showMessagesButton.setOnAction(e -> {
-                displayCodeArea(messages);
-            });
-
-            final Button deleteButton = new Button(DELETE);
-            deleteButton.setOnAction(e -> {
-                beastWorkspace.deleteCBMCRun(run);
-            });
-
-            switch (state) {
-            case INITIALIZED:
-                final Button putRunOnQueueButton = new Button(PUT_RUN_ON_QUEUE);
-                putRunOnQueueButton.setOnAction(e -> {
-                    beastWorkspace.addRunToQueue(run);
-                });
-                stateHBox.getChildren().addAll(List.of(putRunOnQueueButton, deleteButton));
-                break;
-            case ON_QUEUE:
-                break;
-            case RUNNING:
-                final Button stopCBMCButton = new Button(STOP);
-                stopCBMCButton.setOnAction(e -> {
-                    beastWorkspace.stopRun(run);
-                });
-                stateHBox.getChildren().addAll(
-                        List.of(showLogsButton, showMessagesButton, stopCBMCButton));
-                break;
-            case FINISHED:
-                displayCounterExample(run, stateHBox, counterExampleGuiController);
-                stateHBox.getChildren().addAll(
-                        List.of(showLogsButton, showMessagesButton, deleteButton));
-                break;
-            case STOPPED:
-                final Button putRunOnQueueButton2 = new Button(PUT_RUN_ON_QUEUE);
-                putRunOnQueueButton2.setOnAction(e -> {
-                    beastWorkspace.addRunToQueue(run);
-                });
-                stateHBox.getChildren().addAll(List.of(putRunOnQueueButton2, deleteButton));
-                break;
-            default:
-                break;
-            }
-        });
     }
 
     @Override
@@ -278,19 +316,21 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         return topLevelAnchorPane;
     }
 
-    private void displayCodeArea(final CodeArea codeArea) {
+    private void hideOrDisplayCodeArea(final CodeArea codeArea) {
         final VirtualizedScrollPane<CodeArea> vsp =
-                new VirtualizedScrollPane<CodeArea>(codeArea);
+                codeArea != null ? new VirtualizedScrollPane<CodeArea>(codeArea) : null;
         displayNode(vsp);
     }
 
     private void displayNode(final Node n) {
         outputAnchorPane.getChildren().clear();
-        outputAnchorPane.getChildren().add(n);
-        AnchorPane.setTopAnchor(n, 0d);
-        AnchorPane.setBottomAnchor(n, 0d);
-        AnchorPane.setLeftAnchor(n, 0d);
-        AnchorPane.setRightAnchor(n, 0d);
+        if (n != null) {
+            outputAnchorPane.getChildren().add(n);
+            AnchorPane.setTopAnchor(n, 0d);
+            AnchorPane.setBottomAnchor(n, 0d);
+            AnchorPane.setLeftAnchor(n, 0d);
+            AnchorPane.setRightAnchor(n, 0d);
+        }
     }
 
     @FXML
@@ -312,5 +352,25 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     @Override
     public final void handleConfigurationUpdatedFiles(final Configuration currentConfig) {
         display();
+    }
+
+    /**
+     * TODO: Write documentation.
+     *
+     * @author Michael Kirsten
+     *
+     */
+    public static final class HorizontalButtons {
+        final Button showLogs;
+        final Button showMessages;
+        final Button delete;
+
+        public HorizontalButtons(final Button showLogsButton,
+                                 final Button showMessagesButton,
+                                 final Button deleteButton) {
+            this.showLogs = showLogsButton;
+            this.showMessages = showMessagesButton;
+            this.delete = deleteButton;
+        }
     }
 }

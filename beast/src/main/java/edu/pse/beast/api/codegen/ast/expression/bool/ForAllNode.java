@@ -11,8 +11,6 @@ import edu.pse.beast.api.codegen.cbmc.SymbolicVariable.VariableType;
  */
 public final class ForAllNode extends QuantifierNode {
 
-    private SymbolicVariable var;
-
     /**
      * Instantiates a new for all node.
      *
@@ -25,7 +23,7 @@ public final class ForAllNode extends QuantifierNode {
     }
 
     public SymbolicVariable getVar() {
-        return var;
+        return getDeclaredSymbolicVar();
     }
 
     @Override
@@ -35,7 +33,7 @@ public final class ForAllNode extends QuantifierNode {
 
     @Override
     public void getVisited(final BooleanAstVisitor visitor) {
-        if (var.getVarType() == VariableType.VOTER) {
+        if (getDeclaredSymbolicVar().getVarType() == VariableType.VOTER) {
             visitor.visitForAllVotersNode(this);
         }
     }

@@ -90,7 +90,6 @@ public class CBMCTestRun implements PropertyCheckCallback {
                                               final String uuid,
                                               final String output) {
         final JSONMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
-        System.out.println(msg);
     }
 
 }

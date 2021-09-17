@@ -1,0 +1,6 @@
+unsigned int GENERATED_VAR = 0;
+for (unsigned int i = 0; i < VOTE_VAR.AMT_MEMBER; ++i) {
+    if (VOTE_VAR.LIST_MEMBER[i][0] == CANDIDATE_VAR) {
+        ++GENERATED_VAR;
+    }
+}

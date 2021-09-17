@@ -13,171 +13,295 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <TabPane fx:id="topLeveLTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-        <tabs>
-          <Tab fx:id="election" text="Election Editor">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="496.0">
-                     <children>
-                        <SplitPane dividerPositions="0.7091304347826087" prefHeight="160.0" prefWidth="460.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+  <children>
+    <TabPane fx:id="topLeveLTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+      <tabs>
+        <Tab fx:id="election" text="Election Editor">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="496.0">
+              <children>
+                <SplitPane dividerPositions="0.7091304347826087" prefHeight="160.0" prefWidth="460.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0">
+                      <children>
+                        <ChoiceBox fx:id="openedElectionDescriptionChoiceBox" prefHeight="40.0" prefWidth="287.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <AnchorPane fx:id="codePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                        <Separator prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                        <Button fx:id="addElectionDescriptionButton" layoutX="301.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="301.0" AnchorPane.topAnchor="5.0">
+                          <tooltip>
+                            <Tooltip text="New" />
+                          </tooltip>
+                          <graphic>
+                            <FontIcon iconLiteral="eli-file-new" iconSize="32" />
+                          </graphic>
+                        </Button>
+                        <Button fx:id="loadElectionDescriptionButton" layoutX="351.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="351.0" AnchorPane.topAnchor="5.0">
+                          <tooltip>
+                            <Tooltip text="Load" />
+                          </tooltip>
+                          <graphic>
+                            <FontIcon iconLiteral="eli-folder-open" iconSize="32" />
+                          </graphic>
+                        </Button>
+                        <Button fx:id="saveElectionDescriptionButton" layoutX="401.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="5.0">
+                          <tooltip>
+                            <Tooltip text="Save" />
+                          </tooltip>
+                          <graphic>
+                            <FontIcon iconLiteral="fas-save" iconSize="32" />
+                          </graphic>
+                        </Button>
+                        <Button fx:id="editDescrButton" layoutX="451.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="451.0" AnchorPane.topAnchor="5.0">
+                          <tooltip>
+                            <Tooltip text="Edit" />
+                          </tooltip>
+                          <graphic>
+                            <FontIcon iconLiteral="eli-file-edit" iconSize="32" />
+                          </graphic>
+                        </Button>
+                        <Button fx:id="deleteDescrButton" layoutX="501.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="501.0">
+                          <tooltip>
+                            <Tooltip text="Delete" />
+                          </tooltip>
+                          <graphic>
+                            <FontIcon iconLiteral="eli-remove" iconSize="32" />
+                          </graphic>
+                        </Button>
+                        <HBox prefHeight="25.0" alignment="CENTER_LEFT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" spacing="25" style="-fx-background-color: -fx-color">
+                          <children>
+                            <Label text="Input Type:" />
+                            <Label fx:id="descriptionInputStatus" />
+                            <Separator prefWidth="50.0" orientation="VERTICAL" />
+                            <Label text="Output Type:" />
+                            <Label fx:id="descriptionOutputStatus" />
+                          </children>
+                        </HBox>
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="200.0">
+                      <children>
+                        <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="469.0">
-                                 <children>
-                                    <ChoiceBox fx:id="openedElectionDescriptionChoiceBox" prefHeight="25.0" prefWidth="287.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                                    <AnchorPane fx:id="codePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
-                                    <Separator prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
-                                    <Button fx:id="addElectionDescriptionButton" layoutX="301.0" layoutY="5.0" mnemonicParsing="false" text="New" AnchorPane.leftAnchor="301.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="loadElectionDescriptionButton" layoutX="348.0" layoutY="5.0" mnemonicParsing="false" text="Load" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="saveElectionDescriptionButton" layoutX="396.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="396.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="editDescrButton" layoutX="445.0" layoutY="5.0" mnemonicParsing="false" text="Edit" AnchorPane.leftAnchor="445.0" AnchorPane.topAnchor="5.0" />
-                                    <Button fx:id="deleteDescrButton" layoutX="491.0" layoutY="5.0" mnemonicParsing="false" text="Delete" AnchorPane.leftAnchor="491.0" />
-                                 </children>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
+                              <children>
+                                <Label text="Loop Bounds" alignment="CENTER_LEFT" layoutY="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <padding>
+                                    <Insets left="5.0" top="5.0" />
+                                  </padding>
+                                </Label>
+                                <Button fx:id="computeLoopBoundButton" layoutX="95.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.topAnchor="3.0">
+                                  <tooltip>
+                                    <Tooltip text="Compute" />
+                                  </tooltip>
+                                  <graphic>
+                                    <FontIcon iconLiteral="fas-calculator" iconSize="16" />
+                                  </graphic>
+                                </Button>
+                                <Button fx:id="editLoopBoundButton" layoutX="130.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.topAnchor="3.0">
+                                  <tooltip>
+                                    <Tooltip text="Edit" />
+                                  </tooltip>
+                                  <graphic>
+                                    <FontIcon iconLiteral="eli-edit" iconSize="16" />
+                                  </graphic>
+                                </Button>
+                                <ListView fx:id="loopBoundList" prefHeight="245.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
+                              </children>
                             </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="200.0">
-                                 <children>
-                                    <SplitPane dividerPositions="0.516260162601626" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <items>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <ListView fx:id="loopBoundList" prefHeight="180.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                                                <Button fx:id="computeLoopBoundButton" layoutX="14.0" layoutY="204.0" mnemonicParsing="false" text="Compute" AnchorPane.bottomAnchor="5.0" />
-                                                <Label text="Loop Bounds" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                <Button fx:id="editLoopBoundButton" layoutX="102.0" layoutY="175.0" mnemonicParsing="false" text="Edit" AnchorPane.bottomAnchor="5.0" />
-                                             </children>
-                                          </AnchorPane>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
-                                             <children>
-                                                <Button fx:id="removeFunctionButton" layoutX="101.0" layoutY="162.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                <ListView fx:id="functionList" prefHeight="171.0" prefWidth="121.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                                                <Label text="Functions" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                <MenuButton fx:id="addFunctionMenuButton" layoutY="162.0" mnemonicParsing="false" text="MenuButton" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
-                                                  <items>
-                                                    <MenuItem mnemonicParsing="false" text="Action 1" />
-                                                    <MenuItem mnemonicParsing="false" text="Action 2" />
-                                                  </items>
-                                                </MenuButton>
-                                             </children>
-                                          </AnchorPane>
-                                      </items>
-                                    </SplitPane>
-                                 </children>
-                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
+                              <children>
+                                <Label text="Functions" alignment="CENTER_LEFT" layoutY="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                  <padding>
+                                    <Insets left="5.0" top="5.0" />
+                                  </padding>
+                                </Label>
+                                <MenuButton fx:id="addFunctionMenuButton" layoutX="85.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.topAnchor="3.0">
+                                  <tooltip>
+                                    <Tooltip text="Create Function" />
+                                  </tooltip>
+                                  <graphic>
+                                    <FontIcon iconLiteral="eli-plus" iconSize="16" />
+                                  </graphic>
+                                  <items>
+                                    <MenuItem mnemonicParsing="false" text="Action 1" />
+                                    <MenuItem mnemonicParsing="false" text="Action 2" />
+                                  </items>
+                                </MenuButton>
+                                <Button fx:id="removeFunctionButton" layoutX="140.0" layoutY="5.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" AnchorPane.topAnchor="3.0">
+                                  <tooltip>
+                                    <Tooltip text="Remove Function" />
+                                  </tooltip>
+                                  <graphic>
+                                    <FontIcon iconLiteral="eli-remove" iconSize="16" />
+                                  </graphic>
+                                </Button>
+                                <ListView fx:id="functionList" prefHeight="220.0" prefWidth="121.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
+                              </children>
+                            </AnchorPane>
                           </items>
                         </SplitPane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab fx:id="property" text="Property Editor">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ChoiceBox fx:id="openedPropertyDescriptionChoiceBox" prefHeight="25.0" prefWidth="370.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                        <SplitPane dividerPositions="0.2837209302325581, 0.7" orientation="VERTICAL" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
-                           <items>
-                              <BorderPane>
-                                 <top>
-                                    <BorderPane BorderPane.alignment="CENTER" />
-                                 </top>
-                                 <center>
-                                    <TabPane BorderPane.alignment="CENTER">
-                                       <tabs>
-                                          <Tab closable="false" text="Variables">
-                                             <content>
-                                                <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                   <right>
-                                                      <BorderPane BorderPane.alignment="CENTER">
-                                                         <top>
-                                                            <BorderPane BorderPane.alignment="CENTER">
-                                                               <left>
-                                                                  <MenuButton fx:id="addSymbVarMenu" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="Add" BorderPane.alignment="CENTER" />
-                                                               </left>
-                                                            </BorderPane>
-                                                         </top>
-                                                         <bottom>
-                                                            <BorderPane BorderPane.alignment="CENTER">
-                                                               <left>
-                                                                  <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="Remove" BorderPane.alignment="CENTER" />
-                                                               </left>
-                                                            </BorderPane>
-                                                         </bottom>
-                                                      </BorderPane>
-                                                   </right>
-                                                   <center>
-                                                      <ListView fx:id="symbVarsListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                                                   </center>
-                                                </BorderPane>
-                                             </content>
-                                          </Tab>
-                                       </tabs>
-                                    </TabPane>
-                                 </center>
-                              </BorderPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <TitledPane fx:id="prePropertyPane" animated="false" layoutY="52.0" prefHeight="115.0" prefWidth="405.0" text="Precondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <TitledPane fx:id="postPropertyPane" animated="false" text="Postcondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
-                           </items>
-                        </SplitPane>
-                        <Button fx:id="addPropDescrButton" layoutX="380.0" layoutY="5.0" mnemonicParsing="false" text="New" AnchorPane.leftAnchor="380.0" />
-                        <Button fx:id="loadPropDescrButton" layoutX="428.0" layoutY="5.0" mnemonicParsing="false" text="Load" AnchorPane.leftAnchor="428.0" />
-                        <Button fx:id="savePropDescrButton" layoutX="477.0" layoutY="5.0" mnemonicParsing="false" text="Save" AnchorPane.leftAnchor="477.0" />
-                        <Button fx:id="deletePropDescrButton" layoutX="525.0" layoutY="5.0" mnemonicParsing="false" text="Delete" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-            <Tab fx:id="tests" text="Property Checker">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <SplitPane dividerPositions="0.35289855072463767" layoutX="118.0" layoutY="137.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <HBox prefHeight="34.0" prefWidth="234.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                                       <children>
-                                          <Label text="Group by">
-                                             <padding>
-                                                <Insets right="5.0" top="5.0" />
-                                             </padding>
-                                          </Label>
-                                          <ChoiceBox fx:id="sortCriteriumChoiceBox" prefWidth="170.0">
-                                             <HBox.margin>
-                                                <Insets right="5.0" />
-                                             </HBox.margin></ChoiceBox>
-                                       </children>
-                                    </HBox>
-                                    <TreeView fx:id="configurationTreeView" layoutX="1.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
-                                 </children>
-                              </AnchorPane>
-                            <AnchorPane fx:id="configDetailsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="477.0" />
-                          </items>
-                        </SplitPane>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab fx:id="logs" text="Logs">
-              <content>
-                <AnchorPane fx:id="logAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-      <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-   </children>
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="property" text="Property Editor">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <ChoiceBox fx:id="openedPropertyDescriptionChoiceBox" prefHeight="40.0" prefWidth="370.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                <SplitPane dividerPositions="0.2837209302325581, 0.7" orientation="VERTICAL" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                  <items>
+                    <BorderPane>
+                      <top>
+                        <BorderPane BorderPane.alignment="CENTER" />
+                      </top>
+                      <center>
+                        <TabPane BorderPane.alignment="CENTER">
+                          <tabs>
+                            <Tab closable="false" text="Variables">
+                              <content>
+                                <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                  <right>
+                                    <BorderPane BorderPane.alignment="CENTER">
+                                      <top>
+                                        <BorderPane BorderPane.alignment="CENTER">
+                                          <left>
+                                            <MenuButton fx:id="addSymbVarMenu" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+                                              <tooltip>
+                                                <Tooltip text="Add Symbolic Variable" />
+                                              </tooltip>
+                                              <graphic>
+                                                <FontIcon iconLiteral="eli-plus" iconSize="16" />
+                                              </graphic>
+                                            </MenuButton>
+                                          </left>
+                                        </BorderPane>
+                                      </top>
+                                      <bottom>
+                                        <BorderPane BorderPane.alignment="CENTER">
+                                          <left>
+                                            <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" BorderPane.alignment="CENTER">
+                                              <tooltip>
+                                                <Tooltip text="Remove" />
+                                              </tooltip>
+                                              <graphic>
+                                                <FontIcon iconLiteral="eli-remove" iconSize="16" />
+                                              </graphic>
+                                            </Button>
+                                          </left>
+                                        </BorderPane>
+                                      </bottom>
+                                    </BorderPane>
+                                  </right>
+                                  <center>
+                                    <ListView fx:id="symbVarsListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                  </center>
+                                </BorderPane>
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
+                      </center>
+                    </BorderPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                      <children>
+                        <TitledPane fx:id="prePropertyPane" animated="false" layoutY="52.0" prefHeight="115.0" prefWidth="405.0" text="Precondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                      <children>
+                        <TitledPane fx:id="postPropertyPane" animated="false" text="Postcondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                      </children>
+                    </AnchorPane>
+                  </items>
+                </SplitPane>
+                <Button fx:id="addPropDescrButton" layoutX="380.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="380.0">
+                  <tooltip>
+                    <Tooltip text="New" />
+                  </tooltip>
+                  <graphic>
+                    <FontIcon iconLiteral="eli-file-new" iconSize="32" />
+                  </graphic>
+                </Button>
+                <Button fx:id="loadPropDescrButton" layoutX="430.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="430.0">
+                  <tooltip>
+                    <Tooltip text="Load" />
+                  </tooltip>
+                  <graphic>
+                    <FontIcon iconLiteral="eli-folder-open" iconSize="32" />
+                  </graphic>
+                </Button>
+                <Button fx:id="savePropDescrButton" layoutX="480.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="480.0">
+                  <tooltip>
+                    <Tooltip text="Save" />
+                  </tooltip>
+                  <graphic>
+                    <FontIcon iconLiteral="fas-save" iconSize="32" />
+                  </graphic>
+                </Button>
+                <Button fx:id="deletePropDescrButton" layoutX="530.0" layoutY="5.0" mnemonicParsing="false" AnchorPane.leftAnchor="530.0">
+                  <tooltip>
+                    <Tooltip text="Delete" />
+                  </tooltip>
+                  <graphic>
+                    <FontIcon iconLiteral="eli-remove" iconSize="32" />
+                  </graphic>
+                </Button>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="tests" text="Property Checker">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <SplitPane dividerPositions="0.35289855072463767" layoutX="118.0" layoutY="137.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                      <children>
+                        <HBox prefHeight="34.0" prefWidth="234.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                          <children>
+                            <Label text="Group by">
+                              <padding>
+                                <Insets right="5.0" top="5.0" />
+                              </padding>
+                            </Label>
+                            <ChoiceBox fx:id="sortCriteriumChoiceBox" prefWidth="170.0">
+                              <HBox.margin>
+                                <Insets right="5.0" />
+                              </HBox.margin>
+                            </ChoiceBox>
+                          </children>
+                        </HBox>
+                        <TreeView fx:id="configurationTreeView" layoutX="1.0" layoutY="49.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane fx:id="configDetailsAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="477.0" />
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab fx:id="logs" text="Logs">
+          <content>
+            <AnchorPane fx:id="logAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+    <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+  </children>
 </AnchorPane>

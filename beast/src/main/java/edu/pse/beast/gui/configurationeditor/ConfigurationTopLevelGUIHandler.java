@@ -33,7 +33,7 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
 public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener {
     private static final String ELECTION_DESCRIPTION = "Election Description";
     private static final String PROPERTY_DESCRIPTION = "Property Description";
-    private static final String CBMC = "cbmc";
+    private static final String CBMC = "Verification";
     private static final String CONFIG_FXML = "configuration.fxml";
     private static final String CBMC_CONFIG_FXML = "check.fxml";
     private static final String CBMC_RUN_FXML = "run.fxml";

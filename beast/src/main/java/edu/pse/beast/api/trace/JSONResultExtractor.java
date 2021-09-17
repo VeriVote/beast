@@ -116,7 +116,8 @@ public class JSONResultExtractor {
                     if (lhs.startsWith(V) || lhs.startsWith(C) || lhs.startsWith(S)) {
                         try {
                             Integer.valueOf(lhs.substring(1));
-                            System.out.println(lhs + BLANK + valueJsonObj.getString(DATA));
+                            // System.out.println(lhs + BLANK + valueJsonObj.getString(DATA));
+                            // FIXME: Do something!?
                         } catch (NumberFormatException e) {
                             // TODO: handle exception
                         }
@@ -133,8 +134,6 @@ public class JSONResultExtractor {
                 final String memberName = lhs.substring(dotIdx + 1);
 
                 String valueStr = removeAnythingButDigits(valueJsonObj.getString(DATA));
-                System.out.println(valueJsonObj.getString(DATA));
-                System.out.println(valueJsonObj);
 
                 try {
                     Integer.valueOf(valueStr);

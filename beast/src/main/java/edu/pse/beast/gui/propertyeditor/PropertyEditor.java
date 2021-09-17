@@ -43,6 +43,7 @@ public class PropertyEditor implements WorkspaceUpdateListener {
     private Button addPropertyDescriptionButton;
     private Button loadPropertyDescriptionButton;
     private Button savePropertyDescriptionButton;
+    private Button removePropertyDescriptionButton;
 
     public PropertyEditor(final PropertyEditorCodeElement preEditor,
                           final PropertyEditorCodeElement postEditor,
@@ -61,9 +62,13 @@ public class PropertyEditor implements WorkspaceUpdateListener {
         this.addPropertyDescriptionButton = buttons.addPropertyDescription;
         this.loadPropertyDescriptionButton = buttons.loadPropertyDescription;
         this.savePropertyDescriptionButton = buttons.savePropertyDescription;
+        this.removePropertyDescriptionButton = buttons.removePropertyDescription;
 
         savePropertyDescriptionButton.setOnAction(e -> {
             save();
+        });
+        removePropertyDescriptionButton.setOnAction(e -> {
+            remove();
         });
         initAddPropDescrButton();
         workspace.registerUpdateListener(this);
@@ -166,6 +171,9 @@ public class PropertyEditor implements WorkspaceUpdateListener {
                         selectedPropDescrChanged(oldVal);
                     }
                 });
+        openedPropertyDescriptionChoiceBox.setDisable(true);
+        savePropertyDescriptionButton.setDisable(true);
+        removePropertyDescriptionButton.setDisable(true);
     }
 
     private void updatePropDescrChoiceBox() {
@@ -179,6 +187,8 @@ public class PropertyEditor implements WorkspaceUpdateListener {
         } else {
             openedPropertyDescriptionChoiceBox.getSelectionModel().selectLast();
         }
+        final boolean noChoice = openedPropertyDescriptionChoiceBox.getItems().size() < 1;
+        openedPropertyDescriptionChoiceBox.setDisable(noChoice);
     }
 
     private void handleWorkspaceUpdate() {
@@ -206,6 +216,8 @@ public class PropertyEditor implements WorkspaceUpdateListener {
             postConditionEditor.insertText(0,
                     propDescr.getPostConditionsDescription().getCode());
         }
+        savePropertyDescriptionButton.setDisable(propDescr == null);
+        removePropertyDescriptionButton.setDisable(propDescr == null);
         populateVariableList(propDescr != null ? propDescr.getVariables() : null);
     }
 
@@ -237,6 +249,12 @@ public class PropertyEditor implements WorkspaceUpdateListener {
         }
     }
 
+    public final void remove() {
+        if (currentPropertyDescription != null) {
+            beastWorkspace.removePropDescr(currentPropertyDescription);
+        }
+    }
+
     /**
      * TODO: Write documentation.
      *
@@ -247,15 +265,18 @@ public class PropertyEditor implements WorkspaceUpdateListener {
         final Button addPropertyDescription;
         final Button loadPropertyDescription;
         final Button savePropertyDescription;
+        final Button removePropertyDescription;
         final Button removeSymbolicVariable;
 
         public Buttons(final Button addPropDescrButton,
                        final Button loadPropDescrButton,
                        final Button savePropDescrButton,
+                       final Button deletePropDescrButton,
                        final Button removeSymbVarButton) {
             this.addPropertyDescription = addPropDescrButton;
             this.loadPropertyDescription = loadPropDescrButton;
             this.savePropertyDescription = savePropDescrButton;
+            this.removePropertyDescription = deletePropDescrButton;
             this.removeSymbolicVariable = removeSymbVarButton;
         }
     }

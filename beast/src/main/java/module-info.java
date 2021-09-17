@@ -34,6 +34,10 @@ module edu.pse.beast {
     requires transitive javafx.base;
     requires javafx.swing;
     requires transitive javafx.graphics;
+    requires org.kordamp.ikonli.core;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.elusive;
+    requires org.kordamp.ikonli.fontawesome5;
     requires transitive org.antlr.antlr4.runtime;
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;

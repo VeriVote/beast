@@ -73,8 +73,12 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
         createConfigurationButton.setOnAction(e -> {
             createConfiguration();
         });
+        descrChoiceBox.setDisable(true);
+        propDescrChoiceBox.setDisable(true);
         final BooleanBinding nameTextBlank = Bindings.createBooleanBinding(() -> {
-            return nameTextField.getText().isBlank();
+            final boolean noDescrChoice = descrChoiceBox.getItems().size() < 1;
+            final boolean noPropDescrChoice = propDescrChoiceBox.getItems().size() < 1;
+            return nameTextField.getText().isBlank() || noDescrChoice || noPropDescrChoice;
         }, nameTextField.textProperty());
         createConfigurationButton.disableProperty().bind(nameTextBlank);
         gotoConfigButton.setOnAction(e -> {
@@ -92,9 +96,9 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
                 .addListener((ob, o, n) -> {
                     gotoConfigButton.setDisable(n == null);
                     deleteConfigButton.setDisable(n == null);
-                    if (n == o) {
-                        System.out.println(SAME_CONFIGURATION);
-                    }
+                    // if (n == o) {
+                    // System.out.println(SAME_CONFIGURATION); FIXME: Do something!
+                    // }
                 });
         loadDescrButton.setOnAction(e -> {
             beastWorkspace.letUserLoadDescr();
@@ -124,10 +128,14 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
         descrChoiceBox.getItems().clear();
         descrChoiceBox.getItems().addAll(beastWorkspace.getLoadedDescrs());
         descrChoiceBox.getSelectionModel().select(0);
+        final boolean noDescrChoice = descrChoiceBox.getItems().size() < 1;
+        descrChoiceBox.setDisable(noDescrChoice);
 
         propDescrChoiceBox.getItems().clear();
         propDescrChoiceBox.getItems().addAll(beastWorkspace.getLoadedPropDescrs());
         propDescrChoiceBox.getSelectionModel().select(0);
+        final boolean noPropDescrChoice = propDescrChoiceBox.getItems().size() < 1;
+        propDescrChoiceBox.setDisable(noPropDescrChoice);
 
         configurationListView.getItems().clear();
         final boolean emptyConfigurationList =

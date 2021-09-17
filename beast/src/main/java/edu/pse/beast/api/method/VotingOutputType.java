@@ -18,4 +18,19 @@ public enum VotingOutputType {
                 .toLowerCase()
                 .replaceAll(UNDERSCORE, BLANK);
     }
+
+    public String toNiceString() {
+        final String lowerCaseString = toString();
+        String niceString = "";
+        boolean space = true;
+        for (int i = 0; i < lowerCaseString.length(); i++) {
+            final char c =
+                    space && Character.isLetter(lowerCaseString.charAt(i))
+                    ? Character.toUpperCase(lowerCaseString.charAt(i))
+                            : lowerCaseString.charAt(i);
+            niceString += Character.toString(c);
+            space = Character.isSpaceChar(c);
+        }
+        return niceString;
+    }
 }

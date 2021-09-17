@@ -1,10 +1,14 @@
 package edu.pse.beast.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * TODO: Write documentation.
@@ -13,8 +17,14 @@ import javafx.stage.Stage;
  *
  */
 public class BeastWithGuiApplicationClass extends Application {
+    private static final int SCENE_WIDTH = 1000;
+    private static final int SCENE_HEIGHT = 600;
+
+    private static final String FILE_STRING = "file:///";
     private static final String TITLE = "BEAST";
     private static final String FXML_RESOURCE_NAME = "/edu/pse/beast/gui/beast.fxml";
+    private static final String BEAST_LOGO = "/edu/pse/beast/gui/beast.png";
+
     private BeastGUIController controller = new BeastGUIController();
 
     public static void main(final String[] args) {
@@ -29,7 +39,16 @@ public class BeastWithGuiApplicationClass extends Application {
         controller.setPrimaryStage(primaryStage);
         final Parent root = loader.load();
         primaryStage.setTitle(TITLE);
-        primaryStage.setScene(new Scene(root));
+        final Image icon = new Image(FILE_STRING + getClass().getResource(BEAST_LOGO).getFile());
+        primaryStage.getIcons().add(icon);
+        primaryStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(final WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         primaryStage.show();
     }
 
