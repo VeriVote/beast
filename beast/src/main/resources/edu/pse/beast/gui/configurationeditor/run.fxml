@@ -11,9 +11,16 @@
 
 <AnchorPane fx:id="topLevelAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
+    <HBox fx:id="stateHBox" prefHeight="37.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <children>
+        <Label fx:id="stateLabel" />
+      </children>
+    </HBox>
     <AnchorPane prefHeight="43.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
       <children>
-        <Button fx:id="openCreatedFileButton" mnemonicParsing="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label text="Created File:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+        <TextField fx:id="createdFileTextField" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="0.0" />
+        <Button fx:id="openCreatedFileButton" text="Display" mnemonicParsing="false" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
           <tooltip>
             <Tooltip text="Display Source File" />
           </tooltip>
@@ -21,17 +28,10 @@
             <FontIcon iconLiteral="far-file-code" iconSize="16" />
           </graphic>
         </Button>
-        <Label text="Created File:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-        <TextField fx:id="createdFileTextField" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
       </children>
     </AnchorPane>
-    <HBox fx:id="stateHBox" prefHeight="37.0" prefWidth="600.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-      <children>
-        <Label fx:id="stateLabel" />
-      </children>
-    </HBox>
-    <AnchorPane fx:id="outputAnchorPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
     <Label text="Font Size" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="80.0" />
     <Slider fx:id="runTextfieldFontSizeSlider" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="82.0" />
+    <AnchorPane fx:id="outputAnchorPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
   </children>
 </AnchorPane>

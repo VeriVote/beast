@@ -21,7 +21,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -60,6 +59,7 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  *
  */
 public class BeastGUIController implements WorkspaceUpdateListener {
+    private static final String NONE = "–";
     // =================Options Start
     private static final String NEW_WS_TEXT = "New";
     private static final String LOAD_WS_TEXT = "Load";
@@ -89,8 +89,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
     private Button computeLoopBoundButton;
     @FXML
     private TabPane topLeveLTabPane;
-
-    private Stage primaryStage;
 
     @FXML
     private Button loadElectionDescriptionButton;
@@ -205,9 +203,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         AnchorPane.setLeftAnchor(closingBracketArea, 0d);
         AnchorPane.setRightAnchor(closingBracketArea, 0d);
 
-        final String empty = "–";
-        descriptionInputStatus.setText(empty);
-        descriptionOutputStatus.setText(empty);
+        descriptionInputStatus.setText(NONE);
+        descriptionOutputStatus.setText(NONE);
 
         final CEditorCodeElement cEditorGUIElement = new CEditorCodeElement();
         final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp =
@@ -232,8 +229,8 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 new CElectionEditor.CodeAreas(cEditorGUIElement, closingBracketArea,
                                               descriptionInputStatus, descriptionOutputStatus);
         cElectionEditor =
-                new CElectionEditor(primaryStage, cEditorGUIElementVsp, electDescButtons,
-                                    functionEditor, loopBoundEditor, codeAreas, beastWorkspace);
+                new CElectionEditor(cEditorGUIElementVsp, electDescButtons, functionEditor,
+                                    loopBoundEditor, codeAreas, beastWorkspace);
     }
 
     private void initPropertyEditor() {
@@ -380,10 +377,6 @@ public class BeastGUIController implements WorkspaceUpdateListener {
         linkOptions();
 
         initMenu();
-    }
-
-    public final void setPrimaryStage(final Stage primStage) {
-        this.primaryStage = primStage;
     }
 
     @Override

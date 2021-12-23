@@ -36,7 +36,6 @@ public class BeastWithGuiApplicationClass extends Application {
         final FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(FXML_RESOURCE_NAME));
         loader.setController(controller);
-        controller.setPrimaryStage(primaryStage);
         final Parent root = loader.load();
         primaryStage.setTitle(TITLE);
         final Image icon = new Image(FILE_STRING + getClass().getResource(BEAST_LOGO).getFile());

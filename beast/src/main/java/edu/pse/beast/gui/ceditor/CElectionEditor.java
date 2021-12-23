@@ -1,9 +1,14 @@
 package edu.pse.beast.gui.ceditor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -20,10 +25,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.model.StyleSpans;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import edu.pse.beast.api.codegen.loopbound.LoopBoundType;
 import edu.pse.beast.api.cparser.ExtractedCLoop;
@@ -47,6 +53,147 @@ import edu.pse.beast.gui.workspace.WorkspaceUpdateListener;
  *
  */
 public class CElectionEditor implements WorkspaceUpdateListener {
+    /** The Constant QUERY. */
+    private static final String QUERY = "?";
+    /** The Constant PIPE. */
+    private static final String PIPE = "|";
+
+    /** The Constant LT_SIGN. */
+    private static final String LT_SIGN = "<";
+    /** The Constant GT_SIGN. */
+    private static final String GT_SIGN = ">";
+    /** The Constant OPENING_PARENTHESES. */
+    private static final String OPENING_PARENTHESES = "(";
+    /** The Constant CLOSING_PARENTHESES. */
+    private static final String CLOSING_PARENTHESES = ")";
+
+    /** The Constant B_PATTERN. */
+    private static final String B_PATTERN = "\\b";
+
+    /** The Constant TAB_SPACES. */
+    private static final int TAB_SPACES = 4;
+
+    /**
+     * The Constant KEYWORDS. TODO maybe change to generic styled area.
+     */
+    private static final String[] KEYWORDS =
+        { C.AUTO, C.BREAK, C.CASE, C.CONST, C.CONTINUE, C.DEFAULT, C.DO, C.ELSE, "error", C.CONST,
+                C.CONTINUE, C.DEFAULT, C.DO, C.ELSE, C.ENUM, C.EXTERN, C.FOR, C.GOTO, C.IF,
+                C.RETURN, C.SIGNED, C.SIZE_OF, C.STATIC, C.STRUCT, C.SWITCH, C.TYPE_DEF, C.UNION,
+                C.UNSIGNED, C.VOLATILE, C.WHILE };
+
+    /** The Constant PREPROCESSOR. */
+    private static final String[] PREPROCESSOR =
+        { "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include" };
+
+    /** The Constant DATATYPES. */
+    private static final String[] DATATYPES =
+        { C.CHAR, C.DOUBLE, C.ENUM, C.FLOAT, C.INT, C.LONG, C.REGISTER, C.VOID };
+
+    /** The Constant KEYWORD_PATTERN. */
+    private static final String KEYWORD_PATTERN =
+            B_PATTERN + OPENING_PARENTHESES + String.join(PIPE, KEYWORDS)
+            + CLOSING_PARENTHESES + B_PATTERN;
+
+    /** The Constant PREPROCESSOR_PATTERN. */
+    private static final String PREPROCESSOR_PATTERN =
+            B_PATTERN + OPENING_PARENTHESES + String.join(PIPE, PREPROCESSOR)
+            + CLOSING_PARENTHESES + B_PATTERN;
+
+    /** The Constant DATATYPE_PATTERN. */
+    private static final String DATATYPE_PATTERN =
+            B_PATTERN + OPENING_PARENTHESES + String.join(PIPE, DATATYPES)
+            + CLOSING_PARENTHESES + B_PATTERN;
+
+    /** The Constant POINTER_PATTERN. */
+    private static final String POINTER_PATTERN =
+            B_PATTERN + OPENING_PARENTHESES
+            + String.join(PIPE, Arrays.stream(DATATYPES)
+                    .map(s -> "\\*[\\s]*" + s).toArray(String[]::new))
+            + CLOSING_PARENTHESES + B_PATTERN;
+
+    /** The Constant METHOD_PATTERN. */
+    private static final String METHOD_PATTERN = "[\\w]+[\\s]*\\(";
+
+    /** The Constant INCLUDE_PATTERN. */
+    private static final String INCLUDE_PATTERN = "[.]*include[\\s]+[<|\"].+\\.[\\w]*[>|\"]";
+
+    /** The Constant PAREN_PATTERN. */
+    private static final String PAREN_PATTERN = "\\(|\\)";
+
+    /** The Constant BRACE_PATTERN. */
+    private static final String BRACE_PATTERN = "\\{|\\}";
+
+    /** The Constant BRACKET_PATTERN. */
+    private static final String BRACKET_PATTERN = "\\[|\\]";
+
+    /** The Constant SEMICOLON_PATTERN. */
+    private static final String SEMICOLON_PATTERN = "\\;";
+
+    /** The Constant STRING_PATTERN. */
+    private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
+
+    /** The Constant COMMENT_PATTERN. */
+    private static final String COMMENT_PATTERN = "//[^\n]*" + PIPE + "/\\*(.|\\R)*?\\*/";
+
+    /** The Constant KEYWORD_STRING. */
+    private static final String KEYWORD_STRING = "KEYWORD";
+
+    /** The Constant PREPROCESSOR_STRING. */
+    private static final String PREPROCESSOR_STRING = "PREPROCESSOR";
+
+    /** The Constant DATATYPE_STRING. */
+    private static final String DATATYPE_STRING = "DATATYPE";
+
+    /** The Constant POINTER_STRING. */
+    private static final String POINTER_STRING = "POINTER";
+
+    /** The Constant METHOD_STRING. */
+    private static final String METHOD_STRING = "METHOD";
+
+    /** The Constant INCLUDE_STRING. */
+    private static final String INCLUDE_STRING = "INCLUDE";
+
+    /** The Constant PAREN_STRING. */
+    private static final String PAREN_STRING = "PAREN";
+
+    /** The Constant BRACE_STRING. */
+    private static final String BRACE_STRING = "BRACE";
+
+    /** The Constant BRACKET_STRING. */
+    private static final String BRACKET_STRING = "BRACKET";
+
+    /** The Constant SEMICOLON_STRING. */
+    private static final String SEMICOLON_STRING = "SEMICOLON";
+
+    /** The Constant STRING_STRING. */
+    private static final String STRING_STRING = "STRING";
+
+    /** The Constant COMMENT_STRING. */
+    private static final String COMMENT_STRING = "COMMENT";
+
+    /** The Constant PATTERN. */
+    private static final Pattern PATTERN =
+            Pattern.compile(OPENING_PARENTHESES + QUERY + LT_SIGN + KEYWORD_STRING + GT_SIGN
+                    + KEYWORD_PATTERN + CLOSING_PARENTHESES + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + PREPROCESSOR_STRING + GT_SIGN + PREPROCESSOR_PATTERN
+                    + CLOSING_PARENTHESES + PIPE + OPENING_PARENTHESES + QUERY + LT_SIGN
+                    + DATATYPE_STRING + GT_SIGN + DATATYPE_PATTERN + CLOSING_PARENTHESES + PIPE
+                    + OPENING_PARENTHESES + QUERY + LT_SIGN + POINTER_STRING + GT_SIGN
+                    + POINTER_PATTERN + CLOSING_PARENTHESES + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + METHOD_STRING + GT_SIGN + METHOD_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY + LT_SIGN + INCLUDE_STRING + GT_SIGN
+                    + INCLUDE_PATTERN + CLOSING_PARENTHESES + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + PAREN_STRING + GT_SIGN + PAREN_PATTERN + CLOSING_PARENTHESES + PIPE
+                    + OPENING_PARENTHESES + QUERY + LT_SIGN + BRACE_STRING + GT_SIGN
+                    + BRACE_PATTERN + CLOSING_PARENTHESES + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + BRACKET_STRING + GT_SIGN + BRACKET_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY + LT_SIGN + SEMICOLON_STRING + GT_SIGN
+                    + SEMICOLON_PATTERN + CLOSING_PARENTHESES + PIPE + OPENING_PARENTHESES + QUERY
+                    + LT_SIGN + STRING_STRING + GT_SIGN + STRING_PATTERN + CLOSING_PARENTHESES
+                    + PIPE + OPENING_PARENTHESES + QUERY + LT_SIGN + COMMENT_STRING + GT_SIGN
+                    + COMMENT_PATTERN + CLOSING_PARENTHESES);
+
     private static final double LINE_SCALE = 1.3;
     private static final String EMPTY = "";
     private static final String BLANK = " ";
@@ -110,13 +257,13 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
     private double currentTextSize;
 
-    public CElectionEditor(final Stage primaryStage,
-                           final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
+    public CElectionEditor(final VirtualizedScrollPane<CEditorCodeElement> cEditorGUIElementVsp,
                            final ElectionDescriptionButtons electDescrButtons,
                            final FunctionEditor functionEditor,
                            final LoopBoundEditor loopBoundEditor,
                            final CodeAreas codeAreas,
                            final BeastWorkspace workspace) {
+        codeAreas.elect.setStyleSpans(0, computeHighlighting(codeAreas.elect.getText()));
         codeStyleSheet = this.getClass().getResource(CSS_RESOURCE).toExternalForm();
         this.addElectionDescriptionButton = electDescrButtons.add;
         this.loadElectionDescriptionButton = electDescrButtons.load;
@@ -127,7 +274,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         setupNewElectionButtons();
 
         this.computeLoopBoundsButton = loopBoundEditor.generateButton;
-        loopBoundEditor.generateButton.setOnAction(e -> {
+        this.computeLoopBoundsButton.setOnAction(e -> {
             workspace.findLoopBounds(currentDescription, currentDisplayedFunction);
         });
         loopBoundEditor.editButton.setDisable(true);
@@ -137,7 +284,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
         this.functions = functionEditor.list;
         this.loopBounds = loopBoundEditor.list;
-        loopBoundEditor.list.getSelectionModel().selectedItemProperty()
+        this.loopBounds.getSelectionModel().selectedItemProperty()
                 .addListener((e, oldVal, newVal) -> {
                     loopBoundEditor.editButton.setDisable(newVal == null);
                     if (newVal == null) {
@@ -160,9 +307,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         this.functionDeclarationArea.setEditable(false);
         this.closingBracketArea.setEditable(false);
 
-        codeAreas.elect.getStylesheets().add(codeStyleSheet);
-        functionEditor.declarationArea.getStylesheets().add(codeStyleSheet);
-        codeAreas.closeBrackets.getStylesheets().add(codeStyleSheet);
+        this.electionCodeArea.getStylesheets().add(codeStyleSheet);
+        this.functionDeclarationArea.getStylesheets().add(codeStyleSheet);
+        this.closingBracketArea.getStylesheets().add(codeStyleSheet);
 
         this.beastWorkspace = workspace;
         this.openedElectionDescriptionChoiceBox = electDescrButtons.choiceBox;
@@ -172,11 +319,56 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
         initListViews();
         initOpenedDescrChoiceBox();
+        // addSyntaxHighlighting(this.electionCodeArea);
         handleWorkspaceUpdateGeneric();
         workspace.registerUpdateListener(this);
-        codeAreas.elect.setChangeListener(text -> {
+        this.electionCodeArea.setChangeListener(text -> {
             workspace.updateCodeForDescrFunction(currentDescription,
                     currentDisplayedFunction, text);
+        });
+    }
+
+    /**
+     * Compute highlighting.
+     *
+     * @param text the text
+     * @return the style spans
+     */
+    private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
+        final Matcher matcher = PATTERN.matcher(text);
+        int lastKwEnd = 0;
+        final StyleSpansBuilder<Collection<String>> spansBuilder =
+                new StyleSpansBuilder<Collection<String>>();
+        while (matcher.find()) {
+            final String[] styleClasses =
+                    new String[] { KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING,
+                            DATATYPE_STRING, POINTER_STRING, INCLUDE_STRING, PAREN_STRING,
+                            BRACE_STRING, BRACKET_STRING, SEMICOLON_STRING, STRING_STRING,
+                            COMMENT_STRING };
+            String styleClass = null;
+            for (final String style : styleClasses) {
+                if (styleClass == null && matcher.group(style) != null) {
+                    styleClass = style.toLowerCase();
+                }
+            }
+            /* never happens */ assert styleClass != null;
+            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            lastKwEnd = matcher.end();
+        }
+        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        return spansBuilder.create();
+    }
+
+    /**
+     * Add syntax highlighting.
+     */
+    private void addSyntaxHighlighting(final CodeArea area) {
+        area.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
+        .subscribe(change -> {
+            area.setStyleSpans(0, computeHighlighting(area.getText()));
+            // currentDisplayedFunction.setCode(area.getText());
+            // area.insertText(0, currentDisplayedFunction.getCode());
         });
     }
 
@@ -781,5 +973,111 @@ public class CElectionEditor implements WorkspaceUpdateListener {
             this.label = argumentsLabel;
             this.nameBlank = argNameBlank;
         }
+    }
+
+    public static final class C {
+        /** The Constant AUTO. */
+        public static final String AUTO = "auto";
+        /** The Constant BREAK. */
+        public static final String BREAK = "break";
+        /** The Constant CASE. */
+        public static final String CASE = "case";
+        /** The Constant CHAR. */
+        public static final String CHAR = "char";
+        /** The Constant CONST. */
+        public static final String CONST = "const";
+        /** The Constant CONTINUE. */
+        public static final String CONTINUE = "continue";
+        /** The Constant DEFAULT. */
+        public static final String DEFAULT = "default";
+        /** The Constant DEFINE. */
+        public static final String DEFINE = "#define";
+        /** The Constant DO. */
+        public static final String DO = "do";
+        /** The Constant DOUBLE. */
+        public static final String DOUBLE = "double";
+        /** The Constant ELSE. */
+        public static final String ELSE = "else";
+        /** The Constant ENUM. */
+        public static final String ENUM = "enum";
+        /** The Constant EXTERN. */
+        public static final String EXTERN = "extern";
+        /** The Constant FLOAT. */
+        public static final String FLOAT = "float";
+        /** The Constant FOR. */
+        public static final String FOR = "for";
+        /** The Constant GOTO. */
+        public static final String GOTO = "goto";
+        /** The Constant IF. */
+        public static final String IF = "if";
+        /** The Constant INCLUDE. */
+        public static final String INCLUDE = "#include";
+        /** The Constant INLINE. */
+        public static final String INLINE = "inline";
+        /** The Constant INT. */
+        public static final String INT = "int";
+        /** The Constant LONG. */
+        public static final String LONG = "long";
+        /** The Constant REGISTER. */
+        public static final String REGISTER = "register";
+        /** The Constant RESTRICT. */
+        public static final String RESTRICT = "restrict";
+        /** The Constant RETURN. */
+        public static final String RETURN = "return";
+        /** The Constant SHORT. */
+        public static final String SHORT = "short";
+        /** The Constant SIGNED. */
+        public static final String SIGNED = "signed";
+        /** The Constant SIZE_OF. */
+        public static final String SIZE_OF = "sizeof";
+        /** The Constant STATIC. */
+        public static final String STATIC = "static";
+        /** The Constant STRUCT. */
+        public static final String STRUCT = "struct";
+        /** The Constant SWITCH. */
+        public static final String SWITCH = "switch";
+        /** The Constant TYPE_OF. */
+        public static final String TYPE_DEF = "typedef";
+        /** The Constant UNION. */
+        public static final String UNION = "union";
+        /** The Constant UNSIGNED. */
+        public static final String UNSIGNED = "unsigned";
+        /** The Constant VOID. */
+        public static final String VOID = "void";
+        /** The Constant VOLATILE. */
+        public static final String VOLATILE = "volatile";
+        /** The Constant WHILE. */
+        public static final String WHILE = "while";
+        /** The Constant ALIGN_AS. */
+        public static final String ALIGN_AS = "_Alignas";
+        /** The Constant ALIGN_OF. */
+        public static final String ALIGN_OF = "_Alignof";
+        /** The Constant ATOMIC. */
+        public static final String ATOMIC = "_Atomic";
+        /** The Constant BOOL. */
+        public static final String BOOL = "_Bool";
+        /** The Constant COMPLEX. */
+        public static final String COMPLEX = "_Complex";
+        /** The Constant GENERIC. */
+        public static final String GENERIC = "_Generic";
+        /** The Constant IMAGINARY. */
+        public static final String IMAGINARY = "_Imaginary";
+        /** The Constant NO_RETURN. */
+        public static final String NO_RETURN = "_Noreturn";
+        /** The Constant STATIC_ASSERT. */
+        public static final String STATIC_ASSERT = "_Static_assert";
+        /** The Constant THREAD_LOCAL. */
+        public static final String THREAD_LOCAL = "_Thread_local";
+
+        /** The Constant OPENING_PARENTHESES. */
+        public static final String OPENING_PARENTHESES = "(";
+        /** The Constant CLOSING_PARENTHESES. */
+        public static final String CLOSING_PARENTHESES = ")";
+        /** The Constant OPENING_BRACES. */
+        public static final String OPENING_BRACES = "{";
+        /** The Constant CLOSING_BRACES. */
+        public static final String CLOSING_BRACES = "}";
+        /** The Constant SEMICOLON. */
+        public static final String SEMICOLON = ";";
     }
 }

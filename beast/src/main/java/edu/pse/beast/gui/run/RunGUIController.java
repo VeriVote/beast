@@ -46,13 +46,13 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     private static final double MAX_FONT_SIZE = 30.0;
     private static final int DEFAULT_FONT_SIZE = 12;
 
-    private static final String HIDE = "far-eye-slash";
+    private static final String HIDE_BUTTON = "far-eye-slash";
     private static final String RUN_OUT_OF_DATE = "Has Changes";
     private static final String SHOW_LOGS = "Show Logs";
     private static final String OUTPUT_MESSAGES = "Output Messages";
     private static final String DELETE = "Delete";
     private static final String PUT_RUN_ON_QUEUE = "Start Check";
-    private static final String PLAY = "far-play-circle";
+    private static final String PLAY_BUTTON = "far-play-circle";
     private static final String STOP = "Stop";
     private static final String SHOW_GENERATED_EXAMPLE = "Show Generated Example";
 
@@ -99,15 +99,60 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         counterExampleLoader.load();
     }
 
-    private void setButton(final Button button, final String tooltip, final String icon) {
-        button.setTooltip(new Tooltip(tooltip));
-        button.setGraphic(new FontIcon(icon));
+    private String firstPart(final String s) {
+        return s == null ? "" : s.trim().split(" ")[0];
     }
 
-    private Button createButton(final String tooltip, final String icon) {
+    private void setButton(final Button button, final String showTooltip, final String showIcon) {
+        button.setGraphic(new FontIcon(showIcon));
+        button.setText(firstPart(showTooltip));
+        button.setTooltip(new Tooltip(showTooltip));
+    }
+
+    private Button createButton(final String showTooltip, final String showIcon) {
         final Button button = new Button();
-        setButton(button, tooltip, icon);
+        setButton(button, showTooltip, showIcon);
         return button;
+    }
+
+    private void switchIcon(final Button button, final String showIcon, final String hideIcon) {
+        final Node n = button.graphicProperty().getValue();
+        if (n instanceof FontIcon) {
+            final FontIcon icon = (FontIcon) n;
+            if (icon.getIconLiteral().equalsIgnoreCase(showIcon)) {
+                icon.setIconLiteral(hideIcon);
+            } else if (icon.getIconLiteral().equalsIgnoreCase(hideIcon)) {
+                icon.setIconLiteral(showIcon);
+            }
+        }
+    }
+
+    private void switchTooltip(final Button button,
+                               final String showTooltip, final String hideTooltip) {
+        if (button.getTooltip().getText().equalsIgnoreCase(showTooltip)) {
+            button.getTooltip().setText(hideTooltip);
+            button.setText(firstPart(hideTooltip));
+        } else if (button.getTooltip().getText().equalsIgnoreCase(hideTooltip)) {
+            button.getTooltip().setText(showTooltip);
+            button.setText(firstPart(showTooltip));
+        }
+    }
+
+    private void displayNode(final Node n, final boolean show) {
+        outputAnchorPane.getChildren().clear();
+        if (n != null && show) {
+            outputAnchorPane.getChildren().add(n);
+            AnchorPane.setTopAnchor(n, 0d);
+            AnchorPane.setBottomAnchor(n, 0d);
+            AnchorPane.setLeftAnchor(n, 0d);
+            AnchorPane.setRightAnchor(n, 0d);
+        }
+    }
+
+    private void hideOrDisplayCodeArea(final CodeArea codeArea, final boolean show) {
+        final VirtualizedScrollPane<CodeArea> vsp =
+                codeArea != null ? new VirtualizedScrollPane<CodeArea>(codeArea) : null;
+        displayNode(vsp, show);
     }
 
     private WorkUnitState prepareWorkUnitState(final PropertyCheckRun checkRun,
@@ -122,12 +167,12 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         // created file controls
         final CodeFileData codeFile = checkRun.getCodeFile();
         textField.setText(codeFile.getFile().getAbsolutePath());
+        setButton(openFileButton, "Display Source Code", "far-file-code");
         openFileButton.setOnAction(e -> {
-            hideOrDisplayCodeArea(contents);
-            final boolean empty = outputAnchorPane.getChildren().isEmpty();
-            setButton(openFileButton,
-                      empty ? "Display Source Code" : "Hide Source Code",
-                      empty ? "far-file-code" : HIDE);
+            final boolean show = !openFileButton.getTooltip().getText().startsWith("Hide");
+            hideOrDisplayCodeArea(contents, show);
+            switchIcon(openFileButton, "far-file-code", HIDE_BUTTON);
+            switchTooltip(openFileButton, "Display Source Code", "Hide Source Code");
         });
 
         final WorkUnitState state = checkRun.getState();
@@ -149,37 +194,34 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     private void displayCounterExample(final PropertyCheckRun checkRun, final HBox hBox,
                                        final CounterExampleGuiController controller) {
         if (checkRun.getJsonOutputHandler().didFindCounterExample()) {
-            final Button showExampleButton = new Button();
+            final Button showExampleButton = createButton(SHOW_GENERATED_EXAMPLE, "far-file-alt");
             showExampleButton.setOnAction(e -> {
+                final boolean show = !showExampleButton.getTooltip().getText().startsWith("Hide");
                 final AnchorPane pane =
                         controller.display(checkRun.getJsonOutputHandler().getGeneratedExample());
-                displayNode(pane);
-                final boolean empty = outputAnchorPane.getChildren().isEmpty();
-                setButton(showExampleButton,
-                          empty ? SHOW_GENERATED_EXAMPLE : "Hide Generated Example",
-                          empty ? "far-file-alt" : HIDE);
+                displayNode(pane, show);
+                switchIcon(showExampleButton, "far-file-alt", HIDE_BUTTON);
+                switchTooltip(showExampleButton, SHOW_GENERATED_EXAMPLE, "Hide Generated Example");
             });
             hBox.getChildren().add(showExampleButton);
         }
     }
 
     private HorizontalButtons initHorizontalButtons() {
-        final Button showLogsButton = new Button();
+        final Button showLogsButton = createButton(SHOW_LOGS, "far-comments");
         showLogsButton.setOnAction(e -> {
-            hideOrDisplayCodeArea(logs);
-            final boolean empty = outputAnchorPane.getChildren().isEmpty();
-            setButton(showLogsButton,
-                      empty ? SHOW_LOGS : "Hide Logs",
-                      empty ? "far-comments" : HIDE);
+            final boolean show = !showLogsButton.getTooltip().getText().startsWith("Hide");
+            hideOrDisplayCodeArea(logs, show);
+            switchIcon(showLogsButton, "far-comments", HIDE_BUTTON);
+            switchTooltip(showLogsButton, SHOW_LOGS, "Hide Logs");
         });
 
-        final Button showMessagesButton = new Button();
+        final Button showMessagesButton = createButton(OUTPUT_MESSAGES, "far-envelope-open");
         showMessagesButton.setOnAction(e -> {
-            hideOrDisplayCodeArea(messages);
-            final boolean empty = outputAnchorPane.getChildren().isEmpty();
-            setButton(showMessagesButton,
-                      empty ? OUTPUT_MESSAGES : "Hide Messages",
-                      empty ? "far-envelope-open" : HIDE);
+            final boolean show = !showMessagesButton.getTooltip().getText().startsWith("Hide");
+            hideOrDisplayCodeArea(messages, show);
+            switchIcon(showMessagesButton, "far-envelope-open", HIDE_BUTTON);
+            switchTooltip(showMessagesButton, OUTPUT_MESSAGES, "Hide Messages");
         });
 
         final Button deleteButton = createButton(DELETE, "fas-times");
@@ -202,7 +244,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
 
             switch (state) {
             case INITIALIZED:
-                final Button putRunOnQueueButton = createButton(PUT_RUN_ON_QUEUE, PLAY);
+                final Button putRunOnQueueButton = createButton(PUT_RUN_ON_QUEUE, PLAY_BUTTON);
                 putRunOnQueueButton.setOnAction(e -> {
                     beastWorkspace.addRunToQueue(run);
                 });
@@ -222,7 +264,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
                 addHButtons(buttons.showLogs, buttons.showMessages, buttons.delete);
                 break;
             case STOPPED:
-                final Button putRunOnQueueButton2 = createButton(PUT_RUN_ON_QUEUE, PLAY);
+                final Button putRunOnQueueButton2 = createButton(PUT_RUN_ON_QUEUE, PLAY_BUTTON);
                 putRunOnQueueButton2.setOnAction(e -> {
                     beastWorkspace.addRunToQueue(run);
                 });
@@ -314,23 +356,6 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
 
     public final AnchorPane getTopLevelAnchorPane() {
         return topLevelAnchorPane;
-    }
-
-    private void hideOrDisplayCodeArea(final CodeArea codeArea) {
-        final VirtualizedScrollPane<CodeArea> vsp =
-                codeArea != null ? new VirtualizedScrollPane<CodeArea>(codeArea) : null;
-        displayNode(vsp);
-    }
-
-    private void displayNode(final Node n) {
-        outputAnchorPane.getChildren().clear();
-        if (n != null) {
-            outputAnchorPane.getChildren().add(n);
-            AnchorPane.setTopAnchor(n, 0d);
-            AnchorPane.setBottomAnchor(n, 0d);
-            AnchorPane.setLeftAnchor(n, 0d);
-            AnchorPane.setRightAnchor(n, 0d);
-        }
     }
 
     @FXML

@@ -1,2 +1,61 @@
-.locked { -rtfx-background-color: lightgray; }
-.unlocked { -rtfx-background-color: white; }
+.locked {
+    -rtfx-background-color: lightgray;
+}
+
+.unlocked {
+    -rtfx-background-color: white;
+}
+
+.keyword {
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+}
+
+.preprocessor {
+   -fx-fill: red;
+   -fx-font-weight: bold;
+}
+
+.method {
+   -fx-fill: firebrick;
+   -fx-font-weight: bold;
+}
+
+.datatype {
+   -fx-fill: blue;
+}
+
+.include {
+   -fx-fill: orange
+}
+
+.paren {
+   -fx-fill: firebrick;
+   -fx-font-weight: bold;
+}
+
+.brace {
+   -fx-fill: teal;
+   -fx-font-weight: bold;
+}
+
+.bracket {
+   -fx-fill: darkgreen;
+   -fx-font-weight: bold;
+}
+
+.semicolon {
+   -fx-font-weight: bold;
+}
+
+.pointer {
+   -fx-fill: red;
+}
+
+.string {
+   -fx-fill: blue;
+}
+
+.comment {
+   -fx-fill: cadetblue;
+}
