@@ -33,4 +33,4 @@ This software was designed and implemented during the bachelor course
 * Lukas Stapelbroek
 * Jonas Wohnig
 
-For more information, please contact [Michael Kirsten](https://formal.iti.kit.edu/~kirsten/?lang=en).
+For more information, please contact [Michael Kirsten](https://formal.kastel.kit.edu/~kirsten/?lang=en).
