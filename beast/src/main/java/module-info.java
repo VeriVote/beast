@@ -25,7 +25,7 @@ module edu.pse.beast {
     requires transitive com.google.gson;
     requires com.sun.jna;
     requires com.sun.jna.platform;
-    requires flowless;
+    requires org.fxmisc.flowless;
     requires java.datatransfer;
     requires transitive java.desktop;
     requires java.logging;
@@ -43,7 +43,7 @@ module edu.pse.beast {
     requires org.apache.commons.lang3;
     requires reactfx;
     requires org.fxmisc.richtext;
-    requires undofx;
+    requires org.fxmisc.undo;
     requires wellbehavedfx;
     requires java.base;
     requires org.json;
