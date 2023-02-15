@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
    http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>edu.pse.beast</groupId>
   <artifactId>Beast</artifactId>
   <version>2.02</version>
+
   <packaging>jar</packaging>
   <name>Beast</name>
   <description>
@@ -21,7 +24,7 @@
     </license>
   </licenses>
   <organization>
-    <name>KIT</name>
+    <name>Karlsruhe Institute of Technology (KIT)</name>
     <url>https://www.kit.edu</url>
   </organization>
   <developers>
@@ -32,19 +35,21 @@
       <organizationUrl>https://formal.kastel.kit.edu/kirsten</organizationUrl>
     </developer>
   </developers>
+
   <properties>
     <skipTests>false</skipTests>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.version>3.8.1</maven.version>
     <maven.compiler.release>11</maven.compiler.release>
-    <jdk.version>11</jdk.version>
-    <javafx.version>17.0.1</javafx.version>
+    <jdk.version>1.7</jdk.version>
+    <javafx.version>19.0.2.1</javafx.version>
     <javafx.maven.plugin.version>0.0.7</javafx.maven.plugin.version>
-    <antlr.version>4.9.3</antlr.version>
-    <ikonli.version>12.2.0</ikonli.version>
+    <antlr.version>4.9.3</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
+    <ikonli.version>12.3.1</ikonli.version>
     <exec.mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
   </properties>
+
   <distributionManagement>
     <downloadUrl>https://github.com/VeriVote/BEAST</downloadUrl>
     <repository>
@@ -98,7 +103,17 @@
     <dependency>
       <groupId>org.fxmisc.richtext</groupId>
       <artifactId>richtextfx</artifactId>
-      <version>0.10.6</version>
+      <version>0.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.fxmisc.flowless</groupId>
+      <artifactId>flowless</artifactId>
+      <version>0.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.fxmisc.undo</groupId>
+      <artifactId>undofx</artifactId>
+      <version>2.1.1</version>
     </dependency>
     <dependency>
       <groupId>org.kordamp.ikonli</groupId>
@@ -135,7 +150,7 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <scope>test</scope>
-      <version>4.1.1</version>
+      <version>4.8.0</version>
     </dependency>
     <dependency>
       <groupId>org.antlr</groupId>
@@ -150,17 +165,17 @@
     <dependency>
       <groupId>net.java.dev.jna</groupId>
       <artifactId>jna-platform</artifactId>
-      <version>5.10.0</version>
+      <version>5.13.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.8.9</version>
+      <version>2.10.1</version>
     </dependency>
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20211205</version>
+      <version>20220924</version>
     </dependency>
   </dependencies>
   <profiles>
@@ -259,7 +274,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>3.2.5</version>
+                  <version>3.3.9</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>${jdk.version}</version>
@@ -341,7 +356,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.10.1</version>
           <configuration>
             <release>${maven.compiler.release}</release>
             <source>${jdk.version}</source>
@@ -426,14 +441,31 @@
             <dependency>
               <groupId>com.puppycrawl.tools</groupId>
               <artifactId>checkstyle</artifactId>
-              <version>9.2</version>
+              <version>10.7.0</version>
             </dependency>
           </dependencies>
         </plugin>
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>4.3.0</version>
+          <version>4.7.2.1</version>
+          <configuration>
+            <plugins>
+              <plugin>
+                <groupId>com.h3xstream.findsecbugs</groupId>
+                <artifactId>findsecbugs-plugin</artifactId>
+                <version>1.12.0</version>
+              </plugin>
+            </plugins>
+          </configuration>
+          <dependencies>
+            <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+            <dependency>
+              <groupId>com.github.spotbugs</groupId>
+              <artifactId>spotbugs</artifactId>
+              <version>4.7.3</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -451,7 +483,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.1.2</version>
+        <version>3.4.2</version>
         <reportSets>
           <reportSet>
             <reports><!-- select reports -->
@@ -474,7 +506,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.1.3</version>
+        <version>4.7.2.1</version>
         <reportSets>
           <reportSet>
             <reports>
