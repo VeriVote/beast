@@ -44,7 +44,7 @@
     <maven.compiler.release>11</maven.compiler.release>
     <jdk.version>1.7</jdk.version>
     <javafx.version>19.0.2.1</javafx.version>
-    <javafx.maven.plugin.version>0.0.7</javafx.maven.plugin.version>
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
     <antlr.version>4.9.3</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
     <ikonli.version>12.3.1</ikonli.version>
     <exec.mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
@@ -150,7 +150,7 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <scope>test</scope>
-      <version>4.8.0</version>
+      <version>4.8.1</version>
     </dependency>
     <dependency>
       <groupId>org.antlr</groupId>
@@ -305,7 +305,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.2</version>
         <configuration>
           <release>${jdk.version}</release>
           <descriptorRefs>
@@ -404,7 +404,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.4</version>
+          <version>3.4.1</version>
           <executions>
             <execution>
               <phase>package</phase>
