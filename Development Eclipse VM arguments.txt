@@ -6,4 +6,4 @@
 --add-opens javafx.graphics/javafx.scene.text=richtextfx
 --add-opens javafx.graphics/com.sun.javafx.text=richtextfx
 
---add-opens java.base/java.lang=edu.pse.beast
+--add-opens java.base/java.lang=edu.kit.kastel.formal.beast
