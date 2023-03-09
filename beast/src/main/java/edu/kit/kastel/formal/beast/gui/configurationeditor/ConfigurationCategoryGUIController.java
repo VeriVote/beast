@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+
 import edu.kit.kastel.formal.beast.api.method.CElectionDescription;
 import edu.kit.kastel.formal.beast.api.property.PropertyDescription;
 import edu.kit.kastel.formal.beast.gui.configurationeditor.configuration.ConfigurationBatch;

@@ -1,6 +1,7 @@
 package edu.kit.kastel.formal.beast.gui.configurationeditor;
 
 import javafx.scene.control.TreeItem;
+
 import edu.kit.kastel.formal.beast.gui.configurationeditor.configuration.cbmc.Configuration;
 import edu.kit.kastel.formal.beast.gui.configurationeditor.treeview.ConfigurationItem;
 import edu.kit.kastel.formal.beast.gui.configurationeditor.treeview.ConfigurationItemType;

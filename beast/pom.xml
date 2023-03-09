@@ -49,7 +49,7 @@
     <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
     <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
     <ikonli.version>12.3.1</ikonli.version>
-    <exec.mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
+    <exec.mainClass>edu.kit.kastel.formal.beast/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
   </properties>
 
   <distributionManagement>
@@ -224,7 +224,7 @@
     <finalName>Beast</finalName>
     <plugins>
       <!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version> <configuration> <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+        <version>3.1.0</version> <configuration> <mainClass>edu.kit.kastel.formal.beast/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
         </configuration> <executions> <execution> <id>run</id> <phase>execution</phase>
         <goals> <goal>java</goal> </goals> </execution> </executions> </plugin -->
       <plugin>
@@ -237,7 +237,7 @@
           <release>${maven.compiler.release}</release>
           <jlinkImageName>beast</jlinkImageName>
           <launcher>beast</launcher>
-          <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+          <mainClass>edu.kit.kastel.formal.beast/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
         </configuration>
         <executions>
           <execution>
@@ -316,7 +316,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+              <mainClass>edu.kit.kastel.formal.beast/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>
@@ -393,7 +393,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+                <mainClass>edu.kit.kastel.formal.beast/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               </manifest>
@@ -418,7 +418,7 @@
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                   <transformer
                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+                    <mainClass>edu.kit.kastel.formal.beast/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
                   </transformer>
                 </transformers>
               </configuration>
@@ -449,7 +449,7 @@
             <dependency>
               <groupId>com.puppycrawl.tools</groupId>
               <artifactId>checkstyle</artifactId>
-              <version>10.8.0</version>
+              <version>10.8.1</version>
             </dependency>
           </dependencies>
         </plugin>

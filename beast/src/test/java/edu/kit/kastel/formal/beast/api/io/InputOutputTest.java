@@ -17,8 +17,6 @@ import edu.kit.kastel.formal.beast.api.codegen.cbmc.SymbolicVariable;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.SymbolicVariable.VariableType;
 import edu.kit.kastel.formal.beast.api.cparser.AntlrCLoopParser;
 import edu.kit.kastel.formal.beast.api.cparser.ExtractedCLoop;
-import edu.kit.kastel.formal.beast.api.io.InputOutputInterface;
-import edu.kit.kastel.formal.beast.api.io.PathHandler;
 import edu.kit.kastel.formal.beast.api.method.CElectionDescription;
 import edu.kit.kastel.formal.beast.api.method.CElectionSimpleType;
 import edu.kit.kastel.formal.beast.api.method.VotingInputType;

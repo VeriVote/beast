@@ -1,6 +1,9 @@
-
 module edu.kit.kastel.formal.beast {
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires transitive javafx.graphics;
 
+    exports edu.kit.kastel.formal.beast.gui to javafx.graphics;
     exports edu.kit.kastel.formal.beast.api.cparser;
     exports edu.kit.kastel.formal.beast.api.codegen.ast;
     exports edu.kit.kastel.formal.beast.api.codegen.ast.expression;
@@ -16,7 +19,6 @@ module edu.kit.kastel.formal.beast {
     exports edu.kit.kastel.formal.beast.api.method.function;
     exports edu.kit.kastel.formal.beast.api.codegen.init;
     exports edu.kit.kastel.formal.beast.api.method.antlr;
-    exports edu.kit.kastel.formal.beast.gui;
     exports edu.kit.kastel.formal.beast.api.property.antlr;
     exports edu.kit.kastel.formal.beast.api.test;
     exports edu.kit.kastel.formal.beast.api.codegen.ast.expression.type.symbolic;
@@ -29,11 +31,8 @@ module edu.kit.kastel.formal.beast {
     requires java.datatransfer;
     requires transitive java.desktop;
     requires java.logging;
-    requires javafx.controls;
-    requires javafx.fxml;
     requires transitive javafx.base;
     requires javafx.swing;
-    requires transitive javafx.graphics;
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.elusive;

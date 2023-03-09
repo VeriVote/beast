@@ -12,8 +12,6 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.kit.kastel.formal.beast.api.io.InputOutputInterface;
-import edu.kit.kastel.formal.beast.api.io.PathHandler;
 import edu.kit.kastel.formal.beast.api.method.CElectionDescription;
 import edu.kit.kastel.formal.beast.api.method.VotingInputType;
 import edu.kit.kastel.formal.beast.api.method.VotingOutputType;

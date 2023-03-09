@@ -10,6 +10,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
 import edu.kit.kastel.formal.beast.api.method.CElectionDescription;
 import edu.kit.kastel.formal.beast.api.property.PropertyDescription;
 import edu.kit.kastel.formal.beast.gui.workspace.BeastWorkspace;

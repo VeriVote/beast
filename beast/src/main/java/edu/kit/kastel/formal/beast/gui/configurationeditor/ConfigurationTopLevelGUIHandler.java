@@ -9,6 +9,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+
 import edu.kit.kastel.formal.beast.api.runner.propertycheck.run.PropertyCheckRun;
 import edu.kit.kastel.formal.beast.gui.configurationeditor.configuration.ConfigurationBatch;
 import edu.kit.kastel.formal.beast.gui.configurationeditor.configuration.ConfigurationGUIController;

@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.SymbolicVariable;
 import edu.kit.kastel.formal.beast.api.property.PropertyDescription;
 import edu.kit.kastel.formal.beast.gui.DialogHelper;

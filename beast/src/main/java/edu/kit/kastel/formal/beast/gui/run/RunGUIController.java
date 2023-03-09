@@ -42,19 +42,26 @@ import edu.kit.kastel.formal.beast.gui.workspace.WorkspaceUpdateListener;
 public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateListener {
     private static final String STATE_TEXT = "State: ";
     private static final String LINE_BREAK = "\n";
+    private static final String SPACE = " ";
     private static final double MIN_FONT_SIZE = 4.0;
     private static final double MAX_FONT_SIZE = 30.0;
     private static final int DEFAULT_FONT_SIZE = 12;
 
+    private static final String CODE_FILE_MSG = "Display Source Code";
+    private static final String CODE_FILE_BUTTON = "far-file-code";
+    private static final String HIDE = "Hide";
     private static final String HIDE_BUTTON = "far-eye-slash";
+    private static final String SHOW_MESSAGES_BUTTON = "far-envelope-open";
     private static final String RUN_OUT_OF_DATE = "Has Changes";
     private static final String SHOW_LOGS = "Show Logs";
+    private static final String SHOW_LOGS_BUTTON = "far-comments";
     private static final String OUTPUT_MESSAGES = "Output Messages";
     private static final String DELETE = "Delete";
     private static final String PUT_RUN_ON_QUEUE = "Start Check";
     private static final String PLAY_BUTTON = "far-play-circle";
     private static final String STOP = "Stop";
     private static final String SHOW_GENERATED_EXAMPLE = "Show Generated Example";
+    private static final String SHOW_EXAMPLE_BUTTON = "far-file-alt";
 
     private static final String COUNTER_EXAMPLE_FXML = "counterexample.fxml";
 
@@ -100,7 +107,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     }
 
     private String firstPart(final String s) {
-        return s == null ? "" : s.trim().split(" ")[0];
+        return s == null ? "" : s.trim().split(SPACE)[0];
     }
 
     private void setButton(final Button button, final String showTooltip, final String showIcon) {
@@ -167,17 +174,17 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         // created file controls
         final CodeFileData codeFile = checkRun.getCodeFile();
         textField.setText(codeFile.getFile().getAbsolutePath());
-        setButton(openFileButton, "Display Source Code", "far-file-code");
+        setButton(openFileButton, CODE_FILE_MSG, CODE_FILE_BUTTON);
         openFileButton.setOnAction(e -> {
-            final boolean show = !openFileButton.getTooltip().getText().startsWith("Hide");
+            final boolean show = !openFileButton.getTooltip().getText().startsWith(HIDE);
             hideOrDisplayCodeArea(contents, show);
-            switchIcon(openFileButton, "far-file-code", HIDE_BUTTON);
-            switchTooltip(openFileButton, "Display Source Code", "Hide Source Code");
+            switchIcon(openFileButton, CODE_FILE_BUTTON, HIDE_BUTTON);
+            switchTooltip(openFileButton, CODE_FILE_MSG, "Hide Source Code");
         });
 
         final WorkUnitState state = checkRun.getState();
         hBox.getChildren().clear();
-        workUnitStateLabel.setText(STATE_TEXT + checkRun.getStatusString() + " ");
+        workUnitStateLabel.setText(STATE_TEXT + checkRun.getStatusString() + SPACE);
         hBox.getChildren().add(workUnitStateLabel);
 
         if (checkRun.isDescrChanged() || checkRun.isPropDescrChanged()) {
@@ -194,13 +201,14 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     private void displayCounterExample(final PropertyCheckRun checkRun, final HBox hBox,
                                        final CounterExampleGuiController controller) {
         if (checkRun.getJsonOutputHandler().didFindCounterExample()) {
-            final Button showExampleButton = createButton(SHOW_GENERATED_EXAMPLE, "far-file-alt");
+            final Button showExampleButton =
+                    createButton(SHOW_GENERATED_EXAMPLE, SHOW_EXAMPLE_BUTTON);
             showExampleButton.setOnAction(e -> {
-                final boolean show = !showExampleButton.getTooltip().getText().startsWith("Hide");
+                final boolean show = !showExampleButton.getTooltip().getText().startsWith(HIDE);
                 final AnchorPane pane =
                         controller.display(checkRun.getJsonOutputHandler().getGeneratedExample());
                 displayNode(pane, show);
-                switchIcon(showExampleButton, "far-file-alt", HIDE_BUTTON);
+                switchIcon(showExampleButton, SHOW_EXAMPLE_BUTTON, HIDE_BUTTON);
                 switchTooltip(showExampleButton, SHOW_GENERATED_EXAMPLE, "Hide Generated Example");
             });
             hBox.getChildren().add(showExampleButton);
@@ -208,19 +216,19 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
     }
 
     private HorizontalButtons initHorizontalButtons() {
-        final Button showLogsButton = createButton(SHOW_LOGS, "far-comments");
+        final Button showLogsButton = createButton(SHOW_LOGS, SHOW_LOGS_BUTTON);
         showLogsButton.setOnAction(e -> {
-            final boolean show = !showLogsButton.getTooltip().getText().startsWith("Hide");
+            final boolean show = !showLogsButton.getTooltip().getText().startsWith(HIDE);
             hideOrDisplayCodeArea(logs, show);
-            switchIcon(showLogsButton, "far-comments", HIDE_BUTTON);
+            switchIcon(showLogsButton, SHOW_LOGS_BUTTON, HIDE_BUTTON);
             switchTooltip(showLogsButton, SHOW_LOGS, "Hide Logs");
         });
 
-        final Button showMessagesButton = createButton(OUTPUT_MESSAGES, "far-envelope-open");
+        final Button showMessagesButton = createButton(OUTPUT_MESSAGES, SHOW_MESSAGES_BUTTON);
         showMessagesButton.setOnAction(e -> {
-            final boolean show = !showMessagesButton.getTooltip().getText().startsWith("Hide");
+            final boolean show = !showMessagesButton.getTooltip().getText().startsWith(HIDE);
             hideOrDisplayCodeArea(messages, show);
-            switchIcon(showMessagesButton, "far-envelope-open", HIDE_BUTTON);
+            switchIcon(showMessagesButton, SHOW_MESSAGES_BUTTON, HIDE_BUTTON);
             switchTooltip(showMessagesButton, OUTPUT_MESSAGES, "Hide Messages");
         });
 

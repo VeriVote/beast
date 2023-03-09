@@ -7,8 +7,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.CreationHelper;
-import edu.kit.kastel.formal.beast.api.codegen.cbmc.CBMCCodeGenerator;
-import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.kit.kastel.formal.beast.api.codegen.init.InitVoteHelper;
 import edu.kit.kastel.formal.beast.api.codegen.init.SymbVarInitVoteHelper;

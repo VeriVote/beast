@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
 import edu.kit.kastel.formal.beast.api.method.CElectionDescription;
 import edu.kit.kastel.formal.beast.api.property.PropertyDescription;
 import edu.kit.kastel.formal.beast.gui.workspace.BeastWorkspace;

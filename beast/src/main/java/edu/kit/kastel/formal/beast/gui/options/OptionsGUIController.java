@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import edu.kit.kastel.formal.beast.api.io.options.OptionsInputOutput;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import edu.kit.kastel.formal.beast.api.io.options.OptionsInputOutput;
 
 /**
  * TODO: Write documentation.

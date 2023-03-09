@@ -19,6 +19,17 @@ public class IsElectEmptyHelper {
     private static final String TESTED_VAR = "TESTED_VAR";
     private static final String AMOUNT_MEMBER = "AMT_MEMBER";
 
+    /**
+     * TODO: Write documentation.
+     *
+     * @param generatedVarName the generated variable name
+     * @param testedVarName the name of the tested variable
+     * @param electStruct the struct of the selected election type
+     * @param votingOutputType the selected voting output type
+     * @param options further code generation options, e.g., parameters
+     * @param loopBoundHandler the loop bound handler
+     * @return the generated code
+     */
     public static String generateCode(final String generatedVarName,
                                       final String testedVarName,
                                       final ElectionTypeCStruct electStruct,

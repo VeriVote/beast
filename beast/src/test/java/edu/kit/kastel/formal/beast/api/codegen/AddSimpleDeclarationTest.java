@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import edu.kit.kastel.formal.beast.api.CreationHelper;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CBMCCodeGenerator;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.kit.kastel.formal.beast.api.codegen.init.InitVoteHelper;
@@ -19,7 +20,6 @@ import edu.kit.kastel.formal.beast.api.method.VotingInputType;
 import edu.kit.kastel.formal.beast.api.method.VotingOutputType;
 import edu.kit.kastel.formal.beast.api.method.function.SimpleTypeFunction;
 import edu.kit.kastel.formal.beast.api.property.PropertyDescription;
-import edu.kit.kastel.formal.beast.api.CreationHelper;
 
 /**
  * TODO: Write documentation.

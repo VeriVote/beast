@@ -7,8 +7,6 @@ import java.util.Map;
 import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
-import edu.kit.kastel.formal.beast.api.cparser.AntlrCLoopParser;
-import edu.kit.kastel.formal.beast.api.cparser.ExtractedCLoop;
 import edu.kit.kastel.formal.beast.api.io.PathHandler;
 
 /**

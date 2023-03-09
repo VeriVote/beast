@@ -63,9 +63,9 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     /** The Constant GT_SIGN. */
     private static final String GT_SIGN = ">";
     /** The Constant OPENING_PARENTHESES. */
-    private static final String OPENING_PARENTHESES = "(";
+    private static final String OPENING_PARENTHESES = AnsiC.OPENING_PARENTHESES;
     /** The Constant CLOSING_PARENTHESES. */
-    private static final String CLOSING_PARENTHESES = ")";
+    private static final String CLOSING_PARENTHESES = AnsiC.CLOSING_PARENTHESES;
 
     /** The Constant B_PATTERN. */
     private static final String B_PATTERN = "\\b";
@@ -77,18 +77,24 @@ public class CElectionEditor implements WorkspaceUpdateListener {
      * The Constant KEYWORDS. TODO maybe change to generic styled area.
      */
     private static final String[] KEYWORDS =
-        {C.AUTO, C.BREAK, C.CASE, C.CONST, C.CONTINUE, C.DEFAULT, C.DO, C.ELSE, "error", C.CONST,
-          C.CONTINUE, C.DEFAULT, C.DO, C.ELSE, C.ENUM, C.EXTERN, C.FOR, C.GOTO, C.IF,
-          C.RETURN, C.SIGNED, C.SIZE_OF, C.STATIC, C.STRUCT, C.SWITCH, C.TYPE_DEF, C.UNION,
-          C.UNSIGNED, C.VOLATILE, C.WHILE };
+        {
+        AnsiC.AUTO, AnsiC.BREAK, AnsiC.CASE, AnsiC.CONST, AnsiC.CONTINUE, AnsiC.DEFAULT,
+        AnsiC.DO, AnsiC.ELSE, "error", AnsiC.CONST, AnsiC.CONTINUE, AnsiC.DEFAULT, AnsiC.DO,
+        AnsiC.ELSE, AnsiC.ENUM, AnsiC.EXTERN, AnsiC.FOR, AnsiC.GOTO, AnsiC.IF, AnsiC.RETURN,
+        AnsiC.SIGNED, AnsiC.SIZE_OF, AnsiC.STATIC, AnsiC.STRUCT, AnsiC.SWITCH, AnsiC.TYPE_DEF,
+        AnsiC.UNION, AnsiC.UNSIGNED, AnsiC.VOLATILE, AnsiC.WHILE
+        };
 
     /** The Constant PREPROCESSOR. */
     private static final String[] PREPROCESSOR =
-        {"#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include" };
+        {AnsiC.DEFINE, "#elif", "#endif", "#ifdef", "#ifndef", AnsiC.INCLUDE };
 
     /** The Constant DATATYPES. */
     private static final String[] DATATYPES =
-        {C.CHAR, C.DOUBLE, C.ENUM, C.FLOAT, C.INT, C.LONG, C.REGISTER, C.VOID };
+        {
+        AnsiC.CHAR, AnsiC.DOUBLE, AnsiC.ENUM, AnsiC.FLOAT, AnsiC.INT, AnsiC.LONG,
+        AnsiC.REGISTER, AnsiC.VOID
+        };
 
     /** The Constant KEYWORD_PATTERN. */
     private static final String KEYWORD_PATTERN =
@@ -342,10 +348,11 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                 new StyleSpansBuilder<Collection<String>>();
         while (matcher.find()) {
             final String[] styleClasses =
-                    new String[] { KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING,
-                            DATATYPE_STRING, POINTER_STRING, INCLUDE_STRING, PAREN_STRING,
-                            BRACE_STRING, BRACKET_STRING, SEMICOLON_STRING, STRING_STRING,
-                            COMMENT_STRING };
+                    new String[] {
+                        KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING, DATATYPE_STRING,
+                        POINTER_STRING, INCLUDE_STRING, PAREN_STRING, BRACE_STRING, BRACKET_STRING,
+                        SEMICOLON_STRING, STRING_STRING, COMMENT_STRING
+                    };
             String styleClass = null;
             for (final String style : styleClasses) {
                 if (styleClass == null && matcher.group(style) != null) {
@@ -363,14 +370,15 @@ public class CElectionEditor implements WorkspaceUpdateListener {
 
     /**
      * Add syntax highlighting.
+     * @param area the code area
      */
     private void addSyntaxHighlighting(final CodeArea area) {
         area.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
-        .subscribe(change -> {
-            area.setStyleSpans(0, computeHighlighting(area.getText()));
-            // currentDisplayedFunction.setCode(area.getText());
-            // area.insertText(0, currentDisplayedFunction.getCode());
-        });
+            .subscribe(change -> {
+                area.setStyleSpans(0, computeHighlighting(area.getText()));
+                // currentDisplayedFunction.setCode(area.getText());
+                // area.insertText(0, currentDisplayedFunction.getCode());
+            });
     }
 
     private void editDescription() {
@@ -976,7 +984,10 @@ public class CElectionEditor implements WorkspaceUpdateListener {
         }
     }
 
-    public static final class C {
+    /**
+     * Some selected keywords from the ANSI-C language.
+     */
+    public static final class AnsiC {
         /** The Constant AUTO. */
         public static final String AUTO = "auto";
         /** The Constant BREAK. */
