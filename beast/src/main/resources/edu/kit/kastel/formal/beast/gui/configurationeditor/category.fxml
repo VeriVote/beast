@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="topLevelAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="topLevelAnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="397.0" prefWidth="477.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <GridPane layoutX="10.0" layoutY="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
       <columnConstraints>

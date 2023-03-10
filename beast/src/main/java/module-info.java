@@ -1,4 +1,4 @@
-module edu.kit.kastel.formal.beast {
+module edu.kit.kastel.formal.beast.gui {
     requires javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.graphics;
@@ -37,7 +37,7 @@ module edu.kit.kastel.formal.beast {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.elusive;
     requires org.kordamp.ikonli.fontawesome5;
-    requires transitive org.antlr.antlr4.runtime;
+    requires org.antlr.antlr4.runtime;
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;
     requires reactfx;
@@ -57,5 +57,5 @@ module edu.kit.kastel.formal.beast {
     opens edu.kit.kastel.formal.beast.gui.configurationeditor.configuration.cbmc to javafx.fxml;
     opens edu.kit.kastel.formal.beast.gui.configurationeditor to javafx.fxml;
     opens edu.kit.kastel.formal.beast.gui.run to javafx.fxml;
-    opens edu.kit.kastel.formal.beast.api.method to gson;
+    opens edu.kit.kastel.formal.beast.api.method to com.google.gson;
 }
