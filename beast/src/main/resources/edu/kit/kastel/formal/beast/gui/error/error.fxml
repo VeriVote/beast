@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="topLevelAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <ListView fx:id="errorListView" layoutX="14.0" layoutY="14.0" prefHeight="374.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+    <TextArea fx:id="moreTextArea" layoutX="227.0" layoutY="14.0" prefHeight="92.0" prefWidth="360.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+    <TextArea fx:id="esceptionTextArea" layoutX="235.0" layoutY="186.0" prefHeight="283.0" prefWidth="360.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+  </children>
+</AnchorPane>

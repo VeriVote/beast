@@ -6,7 +6,7 @@
    http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>edu.pse.beast</groupId>
+  <groupId>edu.kit.kastel.formal.beast.gui</groupId>
   <artifactId>Beast</artifactId>
   <version>2.02</version>
 
@@ -42,12 +42,14 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.version>3.8.1</maven.version>
     <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <jdk.version>1.7</jdk.version>
     <javafx.version>19.0.2.1</javafx.version>
-    <javafx.maven.plugin.version>0.0.7</javafx.maven.plugin.version>
-    <antlr.version>4.9.3</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+    <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
     <ikonli.version>12.3.1</ikonli.version>
-    <exec.mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
+    <exec.mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
   </properties>
 
   <distributionManagement>
@@ -150,7 +152,7 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <scope>test</scope>
-      <version>4.8.0</version>
+      <version>4.8.1</version>
     </dependency>
     <dependency>
       <groupId>org.antlr</groupId>
@@ -175,7 +177,12 @@
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20220924</version>
+      <version>20230227</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ferstl</groupId>
+      <artifactId>depgraph-maven-plugin</artifactId>
+      <version>4.0.2</version>
     </dependency>
   </dependencies>
   <profiles>
@@ -217,7 +224,7 @@
     <finalName>Beast</finalName>
     <plugins>
       <!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version> <configuration> <mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</mainClass>
+        <version>3.1.0</version> <configuration> <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
         </configuration> <executions> <execution> <id>run</id> <phase>execution</phase>
         <goals> <goal>java</goal> </goals> </execution> </executions> </plugin -->
       <plugin>
@@ -230,7 +237,7 @@
           <release>${maven.compiler.release}</release>
           <jlinkImageName>beast</jlinkImageName>
           <launcher>beast</launcher>
-          <mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</mainClass>
+          <mainClass>edu.kit.kastel.formal.beast.gui/edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
         </configuration>
         <executions>
           <execution>
@@ -245,7 +252,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
-        <version>2.8.1</version>
+        <version>2.15.0</version>
         <configuration>
           <rulesUri>file:///${basedir}/rules.xml</rulesUri>
           <allowSnapshots>false</allowSnapshots>
@@ -264,7 +271,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -300,7 +307,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.5.0</version>
         <configuration>
           <release>${jdk.version}</release>
           <descriptorRefs>
@@ -309,7 +316,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</mainClass>
+              <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>
@@ -335,10 +342,15 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.9.1</version>
+        <version>3.12.1</version>
         <configuration>
           <locales>en</locales>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.ferstl</groupId>
+        <artifactId>depgraph-maven-plugin</artifactId>
+        <version>4.0.2</version>
       </plugin>
     </plugins>
     <pluginManagement>
@@ -356,7 +368,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.10.1</version>
+          <version>3.11.0</version>
           <configuration>
             <release>${maven.compiler.release}</release>
             <source>${jdk.version}</source>
@@ -366,32 +378,32 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
           <configuration>
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</mainClass>
+                <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               </manifest>
               <manifestEntries>
-                <Automatic-Module-Name>edu.pse.beast</Automatic-Module-Name>
+                <Automatic-Module-Name>edu.kit.kastel.formal.beast</Automatic-Module-Name>
               </manifestEntries>
             </archive>
           </configuration>
@@ -399,7 +411,15 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.4</version>
+          <version>3.4.1</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+                <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
           <executions>
             <execution>
               <phase>package</phase>
@@ -411,7 +431,7 @@
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                   <transformer
                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>edu.pse.beast.gui.BeastWithGuiApplicationClass</mainClass>
+                    <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
                   </transformer>
                 </transformers>
               </configuration>
@@ -421,13 +441,14 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.2.1</version>
           <configuration>
+            <failsOnError>false</failsOnError>
             <includeTestSourceDirectory>true</includeTestSourceDirectory>
             <includeResources>true</includeResources>
             <includeTestResources>true</includeTestResources>
@@ -441,15 +462,17 @@
             <dependency>
               <groupId>com.puppycrawl.tools</groupId>
               <artifactId>checkstyle</artifactId>
-              <version>10.7.0</version>
+              <version>10.8.1</version>
             </dependency>
           </dependencies>
         </plugin>
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>4.7.2.1</version>
+          <version>4.7.3.2</version>
           <configuration>
+            <xmlOutput>true</xmlOutput>
+            <failOnError>false</failOnError>
             <plugins>
               <plugin>
                 <groupId>com.h3xstream.findsecbugs</groupId>
@@ -506,7 +529,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.2.1</version>
+        <version>4.7.3.2</version>
         <reportSets>
           <reportSet>
             <reports>
