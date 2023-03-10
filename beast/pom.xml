@@ -347,6 +347,11 @@
           <locales>en</locales>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.github.ferstl</groupId>
+        <artifactId>depgraph-maven-plugin</artifactId>
+        <version>4.0.2</version>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
