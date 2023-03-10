@@ -1,5 +1,5 @@
 module edu.kit.kastel.formal.beast.gui {
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.graphics;
 
@@ -37,7 +37,7 @@ module edu.kit.kastel.formal.beast.gui {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.elusive;
     requires org.kordamp.ikonli.fontawesome5;
-    requires org.antlr.antlr4.runtime;
+    requires transitive org.antlr.antlr4.runtime;
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;
     requires reactfx;
