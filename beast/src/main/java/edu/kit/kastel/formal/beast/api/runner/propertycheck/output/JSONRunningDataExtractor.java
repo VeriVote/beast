@@ -25,12 +25,12 @@ public class JSONRunningDataExtractor {
     private static final String MESSAGE_TYPE_KEY = "messageType";
     private static final String PROGRAM_KEY = "program";
 
-    private CElectionDescription description;
-    private PropertyDescription propertyDescription;
-    private int seatAmount;
-    private int candidateAmount;
-    private int voterAmount;
-    private GeneratedCodeInfo codeInfo;
+    // private CElectionDescription description;
+    // private PropertyDescription propertyDescription;
+    // private int seatAmount;
+    // private int candidateAmount;
+    // private int voterAmount;
+    // private GeneratedCodeInfo codeInfo;
 
     private List<JSONMessage> messages = new ArrayList<JSONMessage>();
 
@@ -43,12 +43,12 @@ public class JSONRunningDataExtractor {
                                     final int voters,
                                     final GeneratedCodeInfo generatedCodeInfo) {
         super();
-        this.description = descr;
-        this.propertyDescription = propDescr;
-        this.seatAmount = seats;
-        this.candidateAmount = candidates;
-        this.voterAmount = voters;
-        this.codeInfo = generatedCodeInfo;
+        // this.description = descr;
+        // this.propertyDescription = propDescr;
+        // this.seatAmount = seats;
+        // this.candidateAmount = candidates;
+        // this.voterAmount = voters;
+        // this.codeInfo = generatedCodeInfo;
     }
 
     public final List<JSONMessage> getMessages() {

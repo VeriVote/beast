@@ -8,7 +8,6 @@ import edu.kit.kastel.formal.beast.api.method.CElectionDescription;
 import edu.kit.kastel.formal.beast.api.property.PropertyDescription;
 import edu.kit.kastel.formal.beast.api.runner.codefile.CodeFileData;
 import edu.kit.kastel.formal.beast.api.runner.propertycheck.PropertyCheckWorkUnit;
-import edu.kit.kastel.formal.beast.api.runner.propertycheck.output.JSONMessage;
 import edu.kit.kastel.formal.beast.api.runner.propertycheck.output.JSONRunningDataExtractor;
 import edu.kit.kastel.formal.beast.api.test.VotingParameters;
 
@@ -89,7 +88,8 @@ public class CBMCTestRun implements PropertyCheckCallback {
                                               final BoundValues bounds,
                                               final String uuid,
                                               final String output) {
-        final JSONMessage msg = cbmcJsonRunningDataExtractor.appendOutput(output);
+        // final JSONMessage msg =
+        cbmcJsonRunningDataExtractor.appendOutput(output);
     }
 
 }

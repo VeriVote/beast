@@ -44,7 +44,7 @@
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <jdk.version>1.7</jdk.version>
+    <jdk.version>11</jdk.version>
     <javafx.version>19.0.2.1</javafx.version>
     <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
     <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
@@ -274,7 +274,7 @@
         <version>3.2.1</version>
         <executions>
           <execution>
-            <id>enforce-maven</id>
+            <id>enforce-versions</id>
             <goals>
               <goal>enforce</goal>
             </goals>

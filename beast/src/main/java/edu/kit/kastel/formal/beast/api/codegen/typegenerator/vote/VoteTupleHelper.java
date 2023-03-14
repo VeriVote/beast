@@ -42,23 +42,23 @@ public class VoteTupleHelper {
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final CodeTemplateVoteTuple voteTuple = new CodeTemplateVoteTuple();
-        String voteAmtSum = EMPTY;
+        final StringBuilder voteAmtSum = new StringBuilder();
         for (int i = 0; i < voteNames.size() - 1; ++i) {
-            voteAmtSum +=
+            voteAmtSum.append(
                     voteTuple.getTemplate(AMOUNT_FILE_KEY)
                     .replaceAll(CURRENT_VOTE, voteNames.get(i))
                     .replace(AMOUNT_MEMBER, voteArrStruct.getAmountName())
                     .replace(LINE_BREAK, EMPTY)
-                    + PLUS;
+                    + PLUS);
         }
-        voteAmtSum +=
+        voteAmtSum.append(
                 voteTuple.getTemplate(AMOUNT_FILE_KEY)
                 .replaceAll(CURRENT_VOTE, voteNames.get(voteNames.size() - 1))
                 .replace(AMOUNT_MEMBER, voteArrStruct.getAmountName())
-                .replace(LINE_BREAK, EMPTY);
+                .replace(LINE_BREAK, EMPTY));
 
         final Map<String, String> replacementMap =
-                Map.of(VOTE_AMOUNT_SUM, voteAmtSum,
+                Map.of(VOTE_AMOUNT_SUM, voteAmtSum.toString(),
                        AMOUNT_MEMBER, voteArrStruct.getAmountName(),
                        LIST_MEMBER, voteArrStruct.getListName(),
                        NONDET_UINT, options.getCbmcNondetUintName(),
@@ -67,15 +67,15 @@ public class VoteTupleHelper {
                        VOTE_TYPE, voteArrStruct.getStruct().getName(),
                        VAR_NAME, generatedVarName,
                        ASSUME, options.getCbmcAssumeName());
-        String code = voteTuple.getTemplate(VAR_SETUP_FILE_KEY);
+        final StringBuilder code = new StringBuilder(voteTuple.getTemplate(VAR_SETUP_FILE_KEY));
 
         for (final String voteVarName : voteNames) {
-            code += voteTuple.getTemplate(votingInputType)
-                    .replaceAll(CURRENT_VOTE, voteVarName);
+            code.append(voteTuple.getTemplate(votingInputType)
+                        .replaceAll(CURRENT_VOTE, voteVarName));
         }
         final List<LoopBound> loopbounds = CodeTemplateVoteTuple.getLoopBounds(votingInputType);
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+        return CodeGenerationToolbox.replacePlaceholders(code.toString(), replacementMap);
     }
 }

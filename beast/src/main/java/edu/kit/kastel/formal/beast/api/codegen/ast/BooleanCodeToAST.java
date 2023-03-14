@@ -334,7 +334,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
     public void exitElectExp(final ElectExpContext ctx) {
         final String numberString =
                 ctx.Elect().getText().substring(ELECT.length());
-        final int number = Integer.valueOf(numberString);
+        final int number = Integer.parseInt(numberString);
         setLastElectNumber(number);
 
         final int amtAccessingTypes = ctx.passSymbVar().size();
@@ -356,7 +356,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
     public void exitVoteExp(final VoteExpContext ctx) {
         final String numberString =
                 ctx.Vote().getText().substring(VOTER.length());
-        final int number = Integer.valueOf(numberString);
+        final int number = Integer.parseInt(numberString);
         setLastVoteNumber(number);
         final int amtAccessingTypes = ctx.passSymbVar().size();
         final List<SymbolicVariable> accessingVars = new ArrayList<SymbolicVariable>();
@@ -391,7 +391,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
 
     @Override
     public void exitInteger(final IntegerContext ctx) {
-        expStack.push(new IntegerNode(Integer.valueOf(ctx.getText())));
+        expStack.push(new IntegerNode(Integer.parseInt(ctx.getText())));
     }
 
     @Override
@@ -402,7 +402,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
                              final TerminalNode tn,
                              final boolean unique) {
         final String numberString = tn.getText().substring(exprStr.length());
-        final int number = Integer.valueOf(numberString);
+        final int number = Integer.parseInt(numberString);
         setLastVoteNumber(number);
         final SymbolicVarByNameExp access = (SymbolicVarByNameExp) expStack.pop();
         final VoteSumForCandExp expNode =
@@ -426,11 +426,11 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
     }
 
     private int extractNumberFromVote(final String voteString) {
-        return Integer.valueOf(voteString.substring(VOTER.length()));
+        return Integer.parseInt(voteString.substring(VOTER.length()));
     }
 
     private int extractNumberFromElect(final String electString) {
-        return Integer.valueOf(electString.substring(ELECT.length()));
+        return Integer.parseInt(electString.substring(ELECT.length()));
     }
 
     @Override
@@ -499,6 +499,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
             node.addVoteNumber(number);
             setLastVoteNumber(number);
         }
+        expStack.push(node);
     }
 
     @Override

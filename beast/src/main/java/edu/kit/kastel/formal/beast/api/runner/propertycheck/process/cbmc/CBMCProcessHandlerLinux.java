@@ -32,7 +32,8 @@ public class CBMCProcessHandlerLinux implements CBMCProcessHandler {
                                             final CodeGenOptions codeGenOptions,
                                             final PathHandler pathHandler) throws IOException {
         final File cbmc =
-                new File(pathHandler.getBaseDir().getAbsolutePath() + RELATIVE_PATH_TO_CBMC);
+                PathHandler.toFile(pathHandler.getBaseDir().getAbsolutePath()
+                                    + RELATIVE_PATH_TO_CBMC);
         final String arg =
                 CBMCArgumentHelper.argumentListToString(
                         getArguments(v, c, s, cFile, loopBounds, codeGenOptions, cbmc));

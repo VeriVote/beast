@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import org.apache.commons.lang3.NotImplementedException;
@@ -26,7 +27,7 @@ public class InputOutputInterface {
     }
 
     public static void writeStringToFile(final File f, final String s) throws IOException {
-        final BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+        final BufferedWriter writer = new BufferedWriter(new FileWriter(f, StandardCharsets.UTF_8));
         writer.write(s);
         writer.close();
     }

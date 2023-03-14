@@ -152,7 +152,7 @@ public class ExtractedCLoop {
         final ForConditionContext forCond = ctx.forCondition();
         final ForExpressionContext forExpCtx = forCond != null ? forCond.forExpression(0) : null;
         final AssignmentExpressionContext expCtx =
-                !forExpCtx.assignmentExpression().isEmpty()
+                forExpCtx != null && !forExpCtx.assignmentExpression().isEmpty()
                 ? forExpCtx.assignmentExpression(0) : null;
         return expCtx;
     }

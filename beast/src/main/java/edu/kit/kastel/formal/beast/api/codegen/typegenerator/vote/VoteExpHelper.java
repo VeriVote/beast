@@ -23,11 +23,11 @@ public class VoteExpHelper {
                                               final CodeGenOptions options,
                                               final ElectionTypeCStruct voteStruct) {
         String code = VOTE_VAR + DOT + LIST_MEMBER + ACC;
-        String accBrackets = "";
+        final StringBuilder accBrackets = new StringBuilder();
         for (SymbolicVariable var : list) {
-            accBrackets += "[" + var.getName() + "]";
+            accBrackets.append("[" + var.getName() + "]");
         }
-        code = code.replaceAll(ACC, accBrackets);
+        code = code.replaceAll(ACC, accBrackets.toString());
         code = code.replaceAll(VOTE_VAR, voteVarName);
         code = code.replaceAll(VOTE_VAR, voteVarName);
         code = code.replaceAll(LIST_MEMBER, voteStruct.getListName());

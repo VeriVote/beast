@@ -27,7 +27,7 @@ import edu.kit.kastel.formal.beast.gui.workspace.WorkspaceUpdateListener;
  *
  */
 public class ConfigurationCategoryGUIController implements WorkspaceUpdateListener {
-    private static final String SAME_CONFIGURATION = "Another one.";
+    // private static final String SAME_CONFIGURATION = "Another one.";
 
     @FXML
     private AnchorPane topLevelAnchorPane;
@@ -146,16 +146,16 @@ public class ConfigurationCategoryGUIController implements WorkspaceUpdateListen
         if (currentCategory.equals(descriptionSortCriterion)) {
             final Map<CElectionDescription, List<ConfigurationBatch>> map =
                     beastWorkspace.getConfigsByElectionDescription();
-            for (final CElectionDescription descr : map.keySet()) {
-                for (final ConfigurationBatch tc : map.get(descr)) {
+            for (final List<ConfigurationBatch> batchList : map.values()) {
+                for (final ConfigurationBatch tc : batchList) {
                     configurationListView.getItems().add(tc);
                 }
             }
         } else {
             final Map<PropertyDescription, List<ConfigurationBatch>> map =
                     beastWorkspace.getConfigsByPropertyDescription();
-            for (final PropertyDescription propDescr : map.keySet()) {
-                for (final ConfigurationBatch tc : map.get(propDescr)) {
+            for (final List<ConfigurationBatch> configBatches : map.values()) {
+                for (final ConfigurationBatch tc : configBatches) {
                     configurationListView.getItems().add(tc);
                 }
             }

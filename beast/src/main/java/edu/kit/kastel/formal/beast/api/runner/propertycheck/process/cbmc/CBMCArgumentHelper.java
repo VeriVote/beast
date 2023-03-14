@@ -28,16 +28,16 @@ public class CBMCArgumentHelper {
     }
 
     public static String argumentListToString(final List<String> arguments) {
-        String argument = EMPTY;
+        final StringBuilder argument = new StringBuilder();
         int a = 0;
         for (final String arg: arguments) {
-            if (!argument.isEmpty() && a != arguments.size()) {
-                argument += BLANK;
+            if (!argument.toString().isEmpty() && a != arguments.size()) {
+                argument.append(BLANK);
             }
-            argument += arg;
+            argument.append(arg);
             a++;
         }
-        return argument;
+        return argument.toString();
     }
 
     public static String getJsonOutputCommand() {

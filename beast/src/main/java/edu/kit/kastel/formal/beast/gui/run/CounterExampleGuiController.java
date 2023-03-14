@@ -89,40 +89,40 @@ public class CounterExampleGuiController {
                                    assignment.getMemberToAssignment().get(key));
         }
 
-        String assignmentString = "";
+        StringBuilder assignmentString = new StringBuilder();
         if (amtBrackets == 0) {
             final String value = assignment.getAssignmentFor(listVarName);
-            assignmentString = listVarName + BLANK + value + LINE_BREAK;
+            assignmentString = new StringBuilder(listVarName + BLANK + value + LINE_BREAK);
         } else if (amtBrackets == 1) {
             for (int i = 0; i < LINE_WIDTH; ++i) {
-                for (final List<Integer> positions : positionsToStrings.keySet()) {
-                    if (positions.get(0) == i) {
-                        assignmentString +=
-                                positionsToStrings.get(positions) + COMMA;
+                for (final Map.Entry<List<Integer>, String> positions
+                        : positionsToStrings.entrySet()) {
+                    if (positions.getKey().get(0) == i) {
+                        assignmentString.append(positions.getValue() + COMMA);
                         continue;
                     }
                 }
             }
-            assignmentString += LINE_BREAK;
+            assignmentString.append(LINE_BREAK);
         } else if (amtBrackets == 2) {
             for (int i = 0; i < LINE_WIDTH; ++i) {
                 boolean foundNew = false;
                 for (int j = 0; j < LINE_WIDTH; ++j) {
-                    for (final List<Integer> positions : positionsToStrings.keySet()) {
-                        if (positions.get(0) == i && positions.get(1) == j) {
-                            assignmentString +=
-                                    positionsToStrings.get(positions) + COMMA;
+                    for (final Map.Entry<List<Integer>, String> posToString
+                            : positionsToStrings.entrySet()) {
+                        if (posToString.getKey().get(0) == i && posToString.getKey().get(1) == j) {
+                            assignmentString.append(posToString.getValue() + COMMA);
                             foundNew = true;
                             continue;
                         }
                     }
                 }
                 if (foundNew) {
-                    assignmentString += LINE_BREAK;
+                    assignmentString.append(LINE_BREAK);
                 }
             }
         }
-        return assignmentString;
+        return assignmentString.toString();
     }
 
     private void displayAssignment(final StructAssignment assignment) {

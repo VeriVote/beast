@@ -65,7 +65,7 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
                                       final String arg) throws IOException {
         final String batPath =
                 cFile.getParent() + WIN_SEP + cFile.getName().replace(DOT_C, DOT_BAT);
-        final File batFile = new File(batPath);
+        final File batFile = PathHandler.toFile(batPath);
         InputOutputInterface.writeStringToFile(batFile, vsCmdPath + AND + arg);
         return batFile;
     }
@@ -76,8 +76,8 @@ public class CBMCProcessHandlerWindows implements CBMCProcessHandler {
                                             final CodeGenOptions codeGenOptions,
                                             final PathHandler pathHandler) throws IOException {
         final File cbmc =
-                new File(pathHandler.getBaseDir().getAbsolutePath()
-                        + RELATIVE_PATH_TO_CBMC + DOT_EXE);
+                PathHandler.toFile(pathHandler.getBaseDir().getAbsolutePath()
+                                    + RELATIVE_PATH_TO_CBMC + DOT_EXE);
         final String arg =
                 CBMCArgumentHelper.argumentListToString(
                         getArguments(v, c, s, cFile, loopBounds, codeGenOptions, cbmc));

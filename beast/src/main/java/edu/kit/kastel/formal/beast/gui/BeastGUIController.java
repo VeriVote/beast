@@ -169,7 +169,7 @@ public class BeastGUIController implements WorkspaceUpdateListener {
 
     private CElectionEditor cElectionEditor;
 
-    private PropertyEditor propertyEditor;
+    // private PropertyEditor propertyEditor;
 
     private BeastWorkspace beastWorkspace;
 
@@ -247,10 +247,9 @@ public class BeastGUIController implements WorkspaceUpdateListener {
                 new PropertyEditor.Buttons(addPropDescrButton, loadPropDescrButton,
                                            savePropDescrButton, deletePropDescrButton,
                                            removeSymbVarButton);
-        propertyEditor =
-                new PropertyEditor(prePropertyEditor, postPropertyEditor, buttons,
-                                   symbVarsListView, addSymbVarMenu,
-                                   openedPropertyDescriptionChoiceBox, beastWorkspace);
+        // propertyEditor =
+        new PropertyEditor(prePropertyEditor, postPropertyEditor, buttons, symbVarsListView,
+                           addSymbVarMenu, openedPropertyDescriptionChoiceBox, beastWorkspace);
     }
 
     private void initConfigurationHandler() throws IOException {

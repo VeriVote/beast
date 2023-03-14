@@ -57,14 +57,14 @@ public class SimpleTypeFunction extends CElectionDescriptionFunction {
 
     private String getArgString() {
         final List<String> argsList = getArgs();
-        String args = "";
+        final StringBuilder args = new StringBuilder();
         for (int i = 0; i < argsList.size() - 1; ++i) {
-            args += argsList.get(i) + COMMA + BLANK;
+            args.append(argsList.get(i) + COMMA + BLANK);
         }
         if (!argsList.isEmpty()) {
-            args += argsList.get(argsList.size() - 1);
+            args.append(argsList.get(argsList.size() - 1));
         }
-        return args;
+        return args.toString();
     }
 
     public final String getTemplate(final String key) {

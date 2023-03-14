@@ -19,7 +19,6 @@ import edu.kit.kastel.formal.beast.api.runner.propertycheck.output.JSONHelper;
  */
 public class JSONResultExtractor {
     private static final String NONE = "";
-    private static final String BLANK = " ";
     private static final String NOT_A_NUMBER = "NaN";
 
     private static final String RESULT_KEY = "result";
@@ -39,11 +38,11 @@ public class JSONResultExtractor {
     private static final String S = "S"; // TODO: If ever used, change to non-hard-coded version
     private static final String V = "V"; // TODO: If ever used, change to non-hard-coded version
 
-    private CElectionDescription description;
-    private PropertyDescription propertyDescription;
-    private int seatAmount;
-    private int candidateAmount;
-    private int voterAmount;
+    // private CElectionDescription description;
+    // private PropertyDescription propertyDescription;
+    // private int seatAmount;
+    // private int candidateAmount;
+    // private int voterAmount;
     private List<String> rawOutput = new ArrayList<String>();
     private JSONArray resultArr = new JSONArray();
     private JSONArray traceArr;
@@ -61,11 +60,11 @@ public class JSONResultExtractor {
                                final int seats,
                                final int candidates,
                                final int votes) {
-        this.description = descr;
-        this.propertyDescription = propDescr;
-        this.seatAmount = seats;
-        this.candidateAmount = candidates;
-        this.voterAmount = votes;
+        // this.description = descr;
+        // this.propertyDescription = propDescr;
+        // this.seatAmount = seats;
+        // this.candidateAmount = candidates;
+        // this.voterAmount = votes;
         this.generatedCodeInfo = codeInfo;
     }
 
@@ -173,13 +172,13 @@ public class JSONResultExtractor {
     }
 
     private static String removeAnythingButDigits(final String s) {
-        String newString = NONE;
+        final StringBuilder newString = new StringBuilder();
         for (int i = 0; i < s.length(); ++i) {
             if (Character.isDigit(s.charAt(i))) {
-                newString += s.charAt(i);
+                newString.append(s.charAt(i));
             }
         }
-        return newString;
+        return newString.toString();
     }
 
     public final CounterExample getGeneratedExample() {

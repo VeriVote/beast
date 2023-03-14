@@ -34,11 +34,13 @@ public class FileDialogHelper {
                 letUserOpenFile(ELECTION_DESCRIPTION_STRING, ELECTION_FILE_ENDING,
                                 CHOOSE_ELECTION_DIALOG_TITLE, baseDir,
                                 primaryStage);
+        final CElectionDescription descr;
         if (f != null) {
-            final CElectionDescription descr = InputOutputInterface.loadCElection(f);
-            return new Tuple<CElectionDescription, File>(descr, f);
+            descr = InputOutputInterface.loadCElection(f);
+        } else {
+            descr = null;
         }
-        return new Tuple<CElectionDescription, File>(null, f);
+        return new Tuple<CElectionDescription, File>(descr, f);
     }
 
     public static Tuple<PropertyDescription, File>
@@ -47,12 +49,13 @@ public class FileDialogHelper {
         final File f = letUserOpenFile(PROPERTY_DESCRIPTION_STRING, PROPERTY_FILE_ENDING,
                                        CHOOSE_PROPERTY_DIALOG_TITLE,
                                        propDescrDir, primaryStage);
+        final PropertyDescription propDescr;
         if (f != null) {
-            final PropertyDescription propDescr =
-                    InputOutputInterface.loadPropertyDescription(f);
-            return new Tuple<PropertyDescription, File>(propDescr, f);
+            propDescr = InputOutputInterface.loadPropertyDescription(f);
+        } else {
+            propDescr = null;
         }
-        return new Tuple<PropertyDescription, File>(null, f);
+        return new Tuple<PropertyDescription, File>(propDescr, f);
     }
 
     public static File letUserOpenFile(final String extDescr,

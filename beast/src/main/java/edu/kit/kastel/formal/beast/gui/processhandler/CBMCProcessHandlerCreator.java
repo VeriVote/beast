@@ -8,6 +8,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 
+import edu.kit.kastel.formal.beast.api.io.PathHandler;
 import edu.kit.kastel.formal.beast.api.os.OSHelper;
 import edu.kit.kastel.formal.beast.api.runner.propertycheck.process.cbmc.CBMCProcessHandler;
 import edu.kit.kastel.formal.beast.api.runner.propertycheck.process.cbmc.CBMCProcessHandlerLinux;
@@ -47,12 +48,11 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
 
         final File file;
         if (result.isPresent()
-                && !result.get().getButtonData().isCancelButton()
-                && vsDevCmdPath != null) {
+                && !result.get().getButtonData().isCancelButton()) {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(NAVIGATE_TO + VS_DEV_COMMAND_FILE + DOT);
             if (vsDevCmdPath != null) {
-                fileChooser.setInitialDirectory(new File(vsDevCmdPath).getParentFile());
+                fileChooser.setInitialDirectory(PathHandler.toFile(vsDevCmdPath).getParentFile());
             }
             file = fileChooser.showOpenDialog(null);
         } else {
@@ -99,7 +99,7 @@ public class CBMCProcessHandlerCreator implements CBMCProcessHandlerSource {
     }
 
     public final void setVsDevCmdPath(final String vsDevCmdPathString) {
-        if (isVsDevCmd(new File(vsDevCmdPathString))) {
+        if (isVsDevCmd(PathHandler.toFile(vsDevCmdPathString))) {
             this.vsDevCmdPath = vsDevCmdPathString;
             processHandler = new CBMCProcessHandlerWindows(vsDevCmdPathString);
         }
