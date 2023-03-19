@@ -18,7 +18,6 @@ import edu.kit.kastel.formal.beast.api.runner.propertycheck.output.JSONHelper;
  *
  */
 public class JSONResultExtractor {
-    private static final String NONE = "";
     private static final String NOT_A_NUMBER = "NaN";
 
     private static final String RESULT_KEY = "result";

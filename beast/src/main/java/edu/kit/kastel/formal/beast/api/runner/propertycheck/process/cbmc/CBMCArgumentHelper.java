@@ -12,7 +12,6 @@ import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
  *
  */
 public class CBMCArgumentHelper {
-    private static final String EMPTY = "";
     private static final String BLANK = " ";
     private static final String PREPROC_FLAG = "-D ";
     private static final String SET = "=";
