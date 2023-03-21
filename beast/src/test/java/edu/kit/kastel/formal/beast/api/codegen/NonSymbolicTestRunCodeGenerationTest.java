@@ -33,11 +33,11 @@ public class NonSymbolicTestRunCodeGenerationTest {
 
     @Test
     public void testNumbers() {
-        final String votingCode = NONE + "\n";
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputType.PREFERENCE,
                                          VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
+        final String votingCode = NONE + "\n";
         descr.getVotingFunction().setCode(votingCode);
 
         final CodeGenOptions codeGenOpts = new CodeGenOptions();

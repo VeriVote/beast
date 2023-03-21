@@ -39,12 +39,12 @@ public class CodeGeneration2Test {
 
     @Test
     public void testNumbers() {
-        final String votingCode = NONE;
-
         final CElectionDescription descr =
                 new CElectionDescription(VotingInputType.SINGLE_CHOICE,
                                          VotingOutputType.CANDIDATE_LIST,
                                          BORDA_STRING);
+
+        final String votingCode = NONE;
         descr.getVotingFunction().setCode(votingCode);
 
         final CodeGenOptions codeGenOptions = new CodeGenOptions();
