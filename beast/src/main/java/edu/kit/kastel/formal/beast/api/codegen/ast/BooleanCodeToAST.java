@@ -499,7 +499,7 @@ public final class BooleanCodeToAST extends FormalPropertyDescriptionBaseListene
             node.addVoteNumber(number);
             setLastVoteNumber(number);
         }
-        expStack.push(node);
+        // expStack.push(node);
     }
 
     @Override
