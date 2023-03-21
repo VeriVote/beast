@@ -50,7 +50,8 @@ public class PathHandler implements RelativePathConverter {
      * @return the file from a filtered file name
      */
     public static File toFile(final String fileName) {
-        return new File(FilenameUtils.getPath(fileName), FilenameUtils.getName(fileName));
+        return new File(FilenameUtils.getPrefix(fileName) + FilenameUtils.getPath(fileName),
+                        FilenameUtils.getName(fileName));
     }
 
     public final File getBaseDir() {
