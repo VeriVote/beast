@@ -63,7 +63,7 @@ public class CEditorOptionsGUI extends OptionsCategoryGUI {
         fontSizeSlider.setValue(options.getFontSize());
         fontSizeSlider.setShowTickLabels(true);
         fontSizeSlider.valueProperty().addListener((ob, o, n) -> {
-            final double newVal = Math.round((double) n * ONE_HUNDRED) / ONE_HUNDRED;
+            final double newVal = Math.round((double) n * ONE_HUNDRED) / (double) ONE_HUNDRED;
             fontSizeTextField.setText(String.valueOf(newVal));
             fontSizeSlider.setValue(newVal);
             options.setFontSize(newVal);

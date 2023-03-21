@@ -39,17 +39,18 @@ public class ElectTupleHelper {
                                       final CodeGenOptions options,
                                       final CodeGenLoopBoundHandler loopBoundHandler) {
         final CodeTemplateElectTuple electTuple = new CodeTemplateElectTuple();
-        String electAmtSum = "";
+        final StringBuilder electAmtSum = new StringBuilder();
         for (int i = 0; i < electNames.size() - 1; ++i) {
-            electAmtSum += electTuple.getTemplate(AMOUNT_FILE_KEY)
-                           .replaceAll(CURRENT_ELECT, electNames.get(i))
-                           + PLUS;
+            electAmtSum.append(
+                    electTuple.getTemplate(AMOUNT_FILE_KEY)
+                            .replaceAll(CURRENT_ELECT, electNames.get(i))
+                           + PLUS);
         }
-        electAmtSum += electTuple.getTemplate(AMOUNT_FILE_KEY)
-                        .replaceAll(CURRENT_ELECT, electNames.get(electNames.size() - 1));
+        electAmtSum.append(electTuple.getTemplate(AMOUNT_FILE_KEY)
+                        .replaceAll(CURRENT_ELECT, electNames.get(electNames.size() - 1)));
 
         final Map<String, String> replacementMap =
-                Map.of(ELECT_AMT_SUM, electAmtSum,
+                Map.of(ELECT_AMT_SUM, electAmtSum.toString(),
                        AMT_MEMBER, electStruct.getAmountName(),
                        LIST_MEMBER, electStruct.getListName(),
                        NONDET_UINT, options.getCbmcNondetUintName(),
@@ -57,15 +58,15 @@ public class ElectTupleHelper {
                        VOTE_TYPE, electStruct.getStruct().getName(),
                        VAR_NAME, generatedVarName,
                        ASSUME, options.getCbmcAssumeName());
-        String code = electTuple.getTemplate(VAR_SETUP_FILE_KEY);
+        final StringBuilder code = new StringBuilder(electTuple.getTemplate(VAR_SETUP_FILE_KEY));
 
         for (final String electVarName : electNames) {
-            code += electTuple.getTemplate(votingOutputType)
-                    .replaceAll(CURRENT_ELECT, electVarName);
+            code.append(electTuple.getTemplate(votingOutputType)
+                        .replaceAll(CURRENT_ELECT, electVarName));
         }
         final List<LoopBound> loopbounds = CodeTemplateElectTuple.getLoopBounds(votingOutputType);
 
         loopBoundHandler.pushMainLoopBounds(loopbounds);
-        return CodeGenerationToolbox.replacePlaceholders(code, replacementMap);
+        return CodeGenerationToolbox.replacePlaceholders(code.toString(), replacementMap);
     }
 }

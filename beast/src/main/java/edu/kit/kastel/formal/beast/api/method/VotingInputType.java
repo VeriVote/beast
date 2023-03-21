@@ -58,16 +58,16 @@ public enum VotingInputType {
 
     public String toNiceString() {
         final String lowerCaseString = toString();
-        String niceString = "";
+        final StringBuilder niceString = new StringBuilder();
         boolean space = true;
         for (int i = 0; i < lowerCaseString.length(); i++) {
             final char c =
                     space && Character.isLetter(lowerCaseString.charAt(i))
                     ? Character.toUpperCase(lowerCaseString.charAt(i))
                             : lowerCaseString.charAt(i);
-            niceString += Character.toString(c);
+            niceString.append(Character.toString(c));
             space = Character.isSpaceChar(c);
         }
-        return niceString;
+        return niceString.toString();
     }
 }

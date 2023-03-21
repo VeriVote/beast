@@ -374,7 +374,7 @@ public class RunGUIController implements PropertyCheckCallback, WorkspaceUpdateL
         runTextfieldFontSizeSlider.setMax(MAX_FONT_SIZE);
         runTextfieldFontSizeSlider.setValue(currentDisplayFontSize);
         runTextfieldFontSizeSlider.valueProperty().addListener((ob, o, n) -> {
-            final double displayFontSize = Math.round((double) n * 100) / 100;
+            final double displayFontSize = Math.round((double) n * 100) / (double) 100;
             final String styleString =
                     "-fx-font-size: " + displayFontSize + "px;";
             logs.setStyle(styleString);

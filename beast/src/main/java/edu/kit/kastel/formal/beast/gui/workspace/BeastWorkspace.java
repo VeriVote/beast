@@ -200,7 +200,11 @@ public class BeastWorkspace {
         codeGenOptions.setCbmcAssumeName(ASSUME);
 
         beastWorkspace.setCodeGenOptions(codeGenOptions);
-        beastWorkspace.setPathHandler(new PathHandler());
+        try {
+            beastWorkspace.setPathHandler(new PathHandler());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         beastWorkspace.setConfigList(new ConfigurationList());
         return beastWorkspace;
     }

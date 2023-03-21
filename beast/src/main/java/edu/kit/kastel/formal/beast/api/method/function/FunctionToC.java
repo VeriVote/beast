@@ -18,7 +18,7 @@ public class FunctionToC {
     public static CTypeNameBrackets votingTypeToC(final CElectionVotingType type,
                                                   final String name, final String v,
                                                   final String c, final String s) {
-        String arrayBracks = NONE;
+        final StringBuilder arrayBracks = new StringBuilder();
         for (int i = 0; i < type.getListDimensions(); ++i) {
             String arraySize = NONE;
             switch (type.getListSizes().get(i)) {
@@ -33,9 +33,9 @@ public class FunctionToC {
                 break;
             default:
             }
-            arrayBracks += BRACKET_OPEN + arraySize + BRACKET_CLOSE;
+            arrayBracks.append(BRACKET_OPEN + arraySize + BRACKET_CLOSE);
         }
         return new CTypeNameBrackets(TypeManager.simpleTypeToCType(type.getSimpleType()),
-                                     name, arrayBracks);
+                                     name, arrayBracks.toString());
     }
 }

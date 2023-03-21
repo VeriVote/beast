@@ -38,7 +38,7 @@ public class CodeFileGenerator {
                                                                    initVoteHelper);
         final String absolutePath =
                 pathHandler.getBaseDir().getAbsolutePath() + PATH_TO_TEMP_FOLDER;
-        final File file = File.createTempFile(TMP_PREFIX, DOT_C, new File(absolutePath));
+        final File file = File.createTempFile(TMP_PREFIX, DOT_C, PathHandler.toFile(absolutePath));
         FileUtils.writeStringToFile(file, code.getCode(),
                 Charset.defaultCharset());
         final CodeFileData codeFile = new CodeFileData();

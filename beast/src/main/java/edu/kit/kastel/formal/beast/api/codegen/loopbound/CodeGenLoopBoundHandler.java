@@ -67,24 +67,24 @@ public class CodeGenLoopBoundHandler {
     }
 
     public final void finishAddedLoopbounds() {
-        for (final String k : votingInitLoopbounds.keySet()) {
-            final List<LoopBound> initLbs = votingInitLoopbounds.get(k);
+        for (final Map.Entry<String, List<LoopBound>> e : votingInitLoopbounds.entrySet()) {
+            final List<LoopBound> initLbs = e.getValue();
             for (int i = 0; i < initLbs.size(); ++i) {
                 initLbs.get(i).setIndex(i);
-                initLbs.get(i).setFunctionName(k);
+                initLbs.get(i).setFunctionName(e.getKey());
             }
-            final List<LoopBound> extractedLbs = functionNamesToLoopbounds.get(k);
-            final int amtInitLoops = votingInitLoopbounds.get(k).size();
+            final List<LoopBound> extractedLbs = functionNamesToLoopbounds.get(e.getKey());
+            final int amtInitLoops = e.getValue().size();
             for (final LoopBound lb : extractedLbs) {
-                lb.setFunctionName(k);
+                lb.setFunctionName(e.getKey());
                 lb.incrementIndexBy(amtInitLoops);
             }
             final int amtLoopboundsInFunc =
-                    votingInitLoopbounds.get(k).size() + extractedLbs.size();
-            for (int i = 0; i < votingBackLoopbounds.get(k).size(); ++i) {
-                final LoopBound lb = votingBackLoopbounds.get(k).get(i);
+                    e.getValue().size() + extractedLbs.size();
+            for (int i = 0; i < votingBackLoopbounds.get(e.getKey()).size(); ++i) {
+                final LoopBound lb = votingBackLoopbounds.get(e.getKey()).get(i);
                 lb.setIndex(i + amtLoopboundsInFunc);
-                lb.setFunctionName(k);
+                lb.setFunctionName(e.getKey());
             }
         }
     }
@@ -97,14 +97,14 @@ public class CodeGenLoopBoundHandler {
             lb.setIndex(i);
             created.add(lb.getUnwindString(v, c, s));
         }
-        for (final String k : functionNamesToLoopbounds.keySet()) {
-            for (final LoopBound lb : votingInitLoopbounds.get(k)) {
+        for (final Map.Entry<String, List<LoopBound>> e : functionNamesToLoopbounds.entrySet()) {
+            for (final LoopBound lb : votingInitLoopbounds.get(e.getKey())) {
                 created.add(lb.getUnwindString(v, c, s));
             }
-            for (final LoopBound lb : functionNamesToLoopbounds.get(k)) {
+            for (final LoopBound lb : e.getValue()) {
                 created.add(lb.getUnwindString(v, c, s));
             }
-            for (final LoopBound lb : votingBackLoopbounds.get(k)) {
+            for (final LoopBound lb : votingBackLoopbounds.get(e.getKey())) {
                 created.add(lb.getUnwindString(v, c, s));
             }
         }

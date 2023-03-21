@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -36,51 +39,62 @@ public class PathHandler implements RelativePathConverter {
 
     private String baseDir;
 
-    public PathHandler() {
+    public PathHandler() throws IOException {
         tryload();
     }
 
+    /**
+     * This method turns a full file name to a file while avoiding potential path traversals.
+     *
+     * @param fileName the desired file name
+     * @return the file from a filtered file name
+     */
+    public static File toFile(final String fileName) {
+        return new File(FilenameUtils.getPrefix(fileName) + FilenameUtils.getPath(fileName),
+                        FilenameUtils.getName(fileName));
+    }
+
     public final File getBaseDir() {
-        return new File(baseDir);
+        return toFile(baseDir);
     }
 
     public final File getWorkspaceDir() {
-        return new File(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_WORKSPACE_SAVE_FILES);
+        return toFile(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_WORKSPACE_SAVE_FILES);
     }
 
     public final File getElectionDescrDir() {
-        return new File(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_DESCR_SAVE_FILES);
+        return toFile(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_DESCR_SAVE_FILES);
     }
 
     public final File getPropDescrDir() {
-        return new File(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_PROP_DESCR_SAVE_FILES);
+        return toFile(baseDir + REL_PATH_TO_SAVE_FILES + REL_PATH_TO_PROP_DESCR_SAVE_FILES);
     }
 
     public final File getOptionsFile() {
-        return new File(baseDir + REL_PATH_TO_OPTIONS_FILE);
+        return toFile(baseDir + REL_PATH_TO_OPTIONS_FILE);
     }
 
-    private void tryload() {
+    private void tryload() throws IOException {
         baseDir = System.getProperty(USER_DIR) + SLASH;
         if (!getWorkspaceDir().exists()) {
-            getWorkspaceDir().mkdirs();
+            Files.createDirectories(Paths.get(getWorkspaceDir().getPath()));
         }
         if (!getElectionDescrDir().exists()) {
-            getElectionDescrDir().mkdirs();
+            Files.createDirectories(Paths.get(getElectionDescrDir().getPath()));
         }
         if (!getPropDescrDir().exists()) {
-            getPropDescrDir().mkdirs();
+            Files.createDirectories(Paths.get(getPropDescrDir().getPath()));
         }
     }
 
     @Override
     public final String getRelativePathTo(final File f) {
-        return new File(baseDir).toURI().relativize(f.toURI()).getPath();
+        return toFile(baseDir).toURI().relativize(f.toURI()).getPath();
     }
 
     @Override
     public final File getFileFromRelativePath(final String relativePath) {
-        return new File(baseDir + relativePath);
+        return toFile(baseDir + relativePath);
     }
 
     private static String getDirectory(final Class<?> c) {

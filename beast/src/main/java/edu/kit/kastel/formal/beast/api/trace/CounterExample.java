@@ -60,10 +60,10 @@ public class CounterExample {
 
     @Override
     public final String toString() {
-        String s = EMPTY;
-        for (final String varname : varNamesToAssignments.keySet()) {
-            s += varNamesToAssignments.get(varname).toString();
+        final StringBuilder s = new StringBuilder(EMPTY);
+        for (final StructAssignment varAssignment : varNamesToAssignments.values()) {
+            s.append(varAssignment.toString());
         }
-        return s;
+        return s.toString();
     }
 }

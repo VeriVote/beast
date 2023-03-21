@@ -3,6 +3,7 @@ package edu.kit.kastel.formal.beast.api.runner.propertycheck;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -122,40 +123,35 @@ public class PropertyCheckWorkUnit implements WorkUnit {
             state = WorkUnitState.RUNNING;
             final BoundValues bounds = new BoundValues(candidateAmount, seatAmount, voterAmount);
             callBack.onPropertyCheckStart(description, propertyDescription,
-                                         bounds, uuid);
+                                          bounds, uuid);
             try {
                 process = processStarterSource.getProcessHandler()
                             .startCheckForParam(voterAmount, candidateAmount, seatAmount,
                                                 codeFile.getFile(), loopBounds,
                                                 codeGenerationOptions, pathHandler);
-                final BufferedReader reader =
-                        new BufferedReader(new InputStreamReader(process.getInputStream()));
-                String line;
-                final List<String> output = new ArrayList<String>();
-                try {
+                try (BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(process.getInputStream(),
+                                                                 StandardCharsets.UTF_8))) {
+                    String line;
+                    final List<String> output = new ArrayList<String>();
                     while ((line = reader.readLine()) != null) {
                         callBack.onPropertyCheckRawOutput(sessionUUID, description,
-                                                         propertyDescription,
-                                                         bounds, uuid, line);
+                                                          propertyDescription,
+                                                          bounds, uuid, line);
                         output.add(line);
                     }
-                } catch (IOException e) {
-                    // TODO error handling
-                    e.printStackTrace();
-                    state = WorkUnitState.STOPPED;
-                    processStarterSource.getProcessHandler().endProcess(process);
-                    return;
+                    callBack.onPropertyCheckRawOutputComplete(description, propertyDescription,
+                                                              bounds, uuid, output);
+                    state = WorkUnitState.FINISHED;
+                    callBack.onPropertyCheckFinished(description, propertyDescription,
+                                                     bounds, uuid);
                 }
-                callBack.onPropertyCheckRawOutputComplete(description, propertyDescription,
-                                                         bounds, uuid, output);
-                state = WorkUnitState.FINISHED;
-                callBack.onPropertyCheckFinished(description, propertyDescription,
-                                                bounds, uuid);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
+                // TODO error handling
                 e.printStackTrace();
                 state = WorkUnitState.STOPPED;
                 processStarterSource.getProcessHandler().endProcess(process);
+                return;
             }
         }
     }

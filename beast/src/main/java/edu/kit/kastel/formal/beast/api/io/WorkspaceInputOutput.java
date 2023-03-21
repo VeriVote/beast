@@ -272,9 +272,9 @@ public class WorkspaceInputOutput {
         final List<CElectionDescription> descrs = new ArrayList<CElectionDescription>();
 
         for (int i = 0; i < descrArr.length(); ++i) {
-            final String relativePath = descrArr.getString(i);
-            final File descrFile =
-                    relativePathConverter.getFileFromRelativePath(relativePath);
+            final String path = descrArr.getString(i);
+            final File descrFile = PathHandler.toFile(path);
+                    // relativePathConverter.getFileFromRelativePath(path);
             final CElectionDescription loadedDescr = InputOutputInterface.loadCElection(descrFile);
             descrs.add(loadedDescr);
             beastWorkspace.addElectionDescription(loadedDescr);

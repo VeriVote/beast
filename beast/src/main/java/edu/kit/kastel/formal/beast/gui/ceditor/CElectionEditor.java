@@ -70,8 +70,8 @@ public class CElectionEditor implements WorkspaceUpdateListener {
     /** The Constant B_PATTERN. */
     private static final String B_PATTERN = "\\b";
 
-    /** The Constant TAB_SPACES. */
-    private static final int TAB_SPACES = 4;
+    // /** The Constant TAB_SPACES. */
+    // private static final int TAB_SPACES = 4;
 
     /**
      * The Constant KEYWORDS. TODO maybe change to generic styled area.
@@ -456,7 +456,7 @@ public class CElectionEditor implements WorkspaceUpdateListener {
                         loopBoundChoiceBox.getSelectionModel().getSelectedItem();
                 if (selectedType == LoopBoundType.MANUALLY_ENTERED) {
                     try {
-                        final int bound = Integer.valueOf(manualBound.getText());
+                        final int bound = Integer.parseInt(manualBound.getText());
                         selectedLoop.setParsedLoopBoundType(selectedType);
                         selectedLoop.setManualInteger(bound);
                     } catch (NumberFormatException e) {

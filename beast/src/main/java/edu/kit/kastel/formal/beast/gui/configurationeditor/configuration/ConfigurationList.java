@@ -78,8 +78,7 @@ public class ConfigurationList implements WorkspaceUpdateListener {
 
     public final List<PropertyCheckRun> getRuns() {
         final List<PropertyCheckRun> list = new ArrayList<PropertyCheckRun>();
-        for (final CElectionDescription descr : configsByDescr.keySet()) {
-            final List<ConfigurationBatch> configBatches = configsByDescr.get(descr);
+        for (final List<ConfigurationBatch> configBatches : configsByDescr.values()) {
             for (final ConfigurationBatch configBatch : configBatches) {
                 for (final Configuration config : configBatch.getConfigs()) {
                     list.addAll(config.getRuns());

@@ -55,7 +55,7 @@ public class ComparisonNode extends BooleanExpressionNode {
                 EQUALS.equals(comparisonSymb)
                 ? ComparisonType.EQ
                         : (NOT_EQUALS.equals(comparisonSymb)
-                                ? ComparisonType.UNEQ : this.comparisonType);
+                                ? ComparisonType.UNEQ : null);
     }
 
     private String getTreeStringExtra() {

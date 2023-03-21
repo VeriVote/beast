@@ -39,6 +39,10 @@ public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener 
     private static final String CBMC_RUN_FXML = "run.fxml";
     private static final String CONFIG_CATEGORY_FXML = "category.fxml";
 
+    private static final String DESCR_SORT_CRIT = ELECTION_DESCRIPTION;
+    private static final String PROP_DESCR_SORT_CRIT = PROPERTY_DESCRIPTION;
+    // private static final String CBMC_CONFIGURATION_HEADING = "cbmc Properties";
+
     private ChoiceBox<String> sortCriteriumChoiceBox;
     private TreeView<ConfigurationItem> configurationTreeView;
     private AnchorPane configurationAnchorPane;
@@ -64,11 +68,7 @@ public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener 
     private FXMLLoader cbmcRunFXMLLoader =
             new FXMLLoader(getClass().getResource(CBMC_RUN_FXML));
 
-    private final String descrSortCrit = ELECTION_DESCRIPTION;
-    private final String propDescrSortCrit = PROPERTY_DESCRIPTION;
-    // private final String cbmcConfigurationHeading = "cbmc Properties";
-
-    private String sortCriterium = descrSortCrit;
+    private String sortCriterium = DESCR_SORT_CRIT;
 
     public ConfigurationTopLevelGUIHandler(final ChoiceBox<String> sortCritChoiceBox,
                                            final TreeView<ConfigurationItem> configurationList,
@@ -78,7 +78,8 @@ public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener 
         workspace.registerUpdateListener(this);
 
         categoryGUIController =
-                new ConfigurationCategoryGUIController(workspace, descrSortCrit, configurationList);
+                new ConfigurationCategoryGUIController(workspace, DESCR_SORT_CRIT,
+                                                       configurationList);
         configGUIController = new ConfigurationGUIController(workspace);
         checkConfigGUIController = new CheckConfigurationGUIController(workspace);
         cbmcRunGUIController = new RunGUIController(workspace, configurationList);
@@ -161,16 +162,16 @@ public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener 
         configurationTreeView.setRoot(root);
 
         final Map<String, List<ConfigurationBatch>> configurations;
-        if (sortCriterium.equals(descrSortCrit)) {
+        if (sortCriterium.equals(DESCR_SORT_CRIT)) {
             configurations = beastWorkspace.getConfigsByElectionDescriptionName();
         } else { // if (sortCriterium.equals(propDescrSortCrit)) {
             configurations = beastWorkspace.getConfigsByPropertyDescriptionName();
         }
 
-        for (final String name : configurations.keySet()) {
+        for (final Map.Entry<String, List<ConfigurationBatch>> confIt : configurations.entrySet()) {
             final TreeItem<ConfigurationItem> parentItem =
-                    new TreeItem<ConfigurationItem>(new ConfigurationCategoryItem(name));
-            final List<ConfigurationBatch> configurationsForParent = configurations.get(name);
+                    new TreeItem<ConfigurationItem>(new ConfigurationCategoryItem(confIt.getKey()));
+            final List<ConfigurationBatch> configurationsForParent = confIt.getValue();
 
             for (final ConfigurationBatch configuration : configurationsForParent) {
                 final TreeItem<ConfigurationItem> configItem =
@@ -196,8 +197,8 @@ public class ConfigurationTopLevelGUIHandler implements WorkspaceUpdateListener 
     }
 
     private void setupSortCriteriumChoiceBox() {
-        sortCriteriumChoiceBox.getItems().add(descrSortCrit);
-        sortCriteriumChoiceBox.getItems().add(propDescrSortCrit);
+        sortCriteriumChoiceBox.getItems().add(DESCR_SORT_CRIT);
+        sortCriteriumChoiceBox.getItems().add(PROP_DESCR_SORT_CRIT);
         sortCriteriumChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((e, oldVal, newVal) -> {
                     sortCriterium = newVal;
