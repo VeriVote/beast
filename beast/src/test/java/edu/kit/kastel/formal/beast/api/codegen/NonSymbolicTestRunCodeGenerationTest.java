@@ -37,7 +37,7 @@ public class NonSymbolicTestRunCodeGenerationTest {
                 new CElectionDescription(VotingInputType.PREFERENCE,
                                          VotingOutputType.CANDIDATE_LIST,
                                          BORDA);
-        final String votingCode = NONE + "\n";
+        final String votingCode = NONE;
         descr.getVotingFunction().setCode(votingCode);
 
         final CodeGenOptions codeGenOpts = new CodeGenOptions();
