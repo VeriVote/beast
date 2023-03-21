@@ -184,7 +184,7 @@ storageClassSpecifier
     :   'typedef'
     |   'extern'
     |   'static'
-    |   '_Thread_local'
+    |   '_Thread_local_y'
     |   'auto'
     |   'register'
     ;
@@ -539,7 +539,7 @@ Generic : '_Generic';
 Imaginary : '_Imaginary';
 Noreturn : '_Noreturn';
 StaticAssert : '_Static_assert';
-ThreadLocal : '_Thread_local';
+ThreadLocal : '_Thread_local_x';
 
 LeftParen : '(';
 RightParen : ')';
