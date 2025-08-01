@@ -10,9 +10,9 @@
 
 name: Java CI with Maven
 permissions:
-  actions: read
-  contents: read
-  checks: read
+  actions: write
+  contents: write
+  checks: write
 
 on:
   workflow_dispatch:
