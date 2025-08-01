@@ -9,6 +9,9 @@
 # documentation.
 
 name: Java CI with Maven
+permissions:
+  contents: read
+  checks: write
 
 on:
   workflow_dispatch:
@@ -36,7 +39,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v4
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/beast/pom.xml') }}
