@@ -1,35 +1,72 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
    http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>edu.kit.kastel.formal.beast.gui</groupId>
   <artifactId>Beast</artifactId>
   <version>2.02</version>
+
   <packaging>jar</packaging>
+  <name>Beast</name>
+  <description>
+       BEAST aims to make the verification of voting rules easier.
+       Voting rules are methods to aggregate the preferences of a group to make decisions.
+  </description>
+  <url>https://github.com/VeriVote/BEAST</url>
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+  <organization>
+    <name>Karlsruhe Institute of Technology (KIT)</name>
+    <url>https://www.kit.edu</url>
+  </organization>
+  <developers>
+    <developer>
+      <name>Michael Kirsten</name>
+      <email>kirsten@kit.edu</email>
+      <organization>KIT</organization>
+      <organizationUrl>https://formal.kastel.kit.edu/kirsten</organizationUrl>
+    </developer>
+  </developers>
+
   <properties>
     <skipTests>false</skipTests>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.version>3.6.3</maven.version>
+    <maven.version>3.8.1</maven.version>
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <jdk.version>11</jdk.version>
-    <javafx.version>20</javafx.version>
+    <javafx.version>19.0.2.1</javafx.version>
     <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
-    <junit.version>5.9.2</junit.version>
-    <surefire.version>3.0.0</surefire.version>
     <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
     <ikonli.version>12.3.1</ikonli.version>
-    <resources.version>3.3.1</resources.version>
-    <deploy.version>3.1.1</deploy.version>
-    <depgraph.version>4.0.2</depgraph.version>
-    <checkstyle.version>10.9.3</checkstyle.version>
-    <spotbugs.version>4.7.3.3</spotbugs.version>
     <exec.mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
   </properties>
+
+  <distributionManagement>
+    <downloadUrl>https://github.com/VeriVote/BEAST</downloadUrl>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>beast</id>
+      <name>BEAST</name>
+      <url>file://${basedir}/target/deployment</url>
+      <layout>default</layout>
+    </repository>
+    <site>
+      <id>beast</id>
+      <name>BEAST</name>
+      <url>file://${basedir}/target/deployment/site</url>
+    </site>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
@@ -50,35 +87,11 @@
       <artifactId>javafx-graphics </artifactId> <version>${javafx.version}</version> <classifier>mac</classifier>
       <optional>true</optional> </dependency> -->
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.version}</version>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-suite-engine</artifactId>
-      <version>1.9.2</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-runner</artifactId>
-      <version>1.9.2</version>
-      <scope>test</scope>
-    </dependency -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-params</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency -->
     <dependency>
       <groupId>com.gluonhq</groupId>
       <artifactId>charm-down-core</artifactId>
@@ -130,11 +143,6 @@
       <version>3.18.0</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <version>${surefire.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
       <version>2.2</version>
@@ -144,7 +152,7 @@
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <scope>test</scope>
-      <version>4.8.3</version>
+      <version>4.8.1</version>
     </dependency>
     <dependency>
       <groupId>org.antlr</groupId>
@@ -174,34 +182,49 @@
     <dependency>
       <groupId>com.github.ferstl</groupId>
       <artifactId>depgraph-maven-plugin</artifactId>
-      <version>${depgraph.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-surefire-provider</artifactId>
-      <version>1.3.2</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.maven.surefire</groupId>
-      <artifactId>surefire-api</artifactId>
-      <version>${surefire.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.puppycrawl.tools</groupId>
-      <artifactId>checkstyle</artifactId>
-      <version>${checkstyle.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.spotbugs</groupId>
-      <artifactId>spotbugs</artifactId>
-      <version>4.7.3</version>
+      <version>4.0.2</version>
     </dependency>
   </dependencies>
+  <profiles>
+    <profile>
+      <id>m2e</id>
+      <!--This profile is activated when eclipse interacts with
+        maven (using m2e). -->
+      <activation>
+        <property>
+          <name>m2e.version</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <!--eclipse do not support duplicated package-info.java, in both src
+              and test. -->
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-testCompile</id>
+                <phase>test-compile</phase>
+                <configuration>
+                  <testExcludes>
+                    <exclude>**/package-info.java</exclude>
+                  </testExcludes>
+                </configuration>
+                <goals>
+                  <goal>testCompile</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <build>
     <finalName>Beast</finalName>
     <plugins>
       <!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>exec-maven-plugin</artifactId>
-        <version>${deploy.version}</version> <configuration> <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
+        <version>3.1.0</version> <configuration> <mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</mainClass>
         </configuration> <executions> <execution> <id>run</id> <phase>execution</phase>
         <goals> <goal>java</goal> </goals> </execution> </executions> </plugin -->
       <plugin>
@@ -210,7 +233,7 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>${javafx.maven.plugin.version}</version>
         <configuration>
-          <vendor>Karlsruhe Institute of Technology (KIT)</vendor>
+          <vendor>KIT</vendor>
           <release>${maven.compiler.release}</release>
           <jlinkImageName>beast</jlinkImageName>
           <launcher>beast</launcher>
@@ -258,7 +281,7 @@
             <configuration>
               <rules>
                 <requireMavenVersion>
-                  <version>3.6.3</version>
+                  <version>3.3.9</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
                   <version>${jdk.version}</version>
@@ -327,53 +350,20 @@
       <plugin>
         <groupId>com.github.ferstl</groupId>
         <artifactId>depgraph-maven-plugin</artifactId>
-        <version>${depgraph.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${surefire.version}</version>
-        <configuration>
-          <useSystemClassLoader>false</useSystemClassLoader>
-          <additionalClasspathElements>
-            <additionalClasspathElement>src/test/java/</additionalClasspathElement>
-          </additionalClasspathElements>
-          <includes>
-            <include>**/*Test.java</include>
-          </includes>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>1.3.2</version>
-          </dependency>
-        </dependencies>
+        <version>4.0.2</version>
       </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${surefire.version}</version>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.surefire</groupId>
-              <artifactId>surefire-api</artifactId>
-              <version>${surefire.version}</version>
-            </dependency>
-          </dependencies>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${surefire.version}</version>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -393,12 +383,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>${deploy.version}</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>${deploy.version}</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -412,9 +402,9 @@
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                 <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               </manifest>
-              <!-- manifestEntries>
+              <manifestEntries>
                 <Automatic-Module-Name>edu.kit.kastel.formal.beast</Automatic-Module-Name>
-              </manifestEntries -->
+              </manifestEntries>
             </archive>
           </configuration>
         </plugin>
@@ -451,7 +441,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>${resources.version}</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -468,11 +458,18 @@
             <failsOnError>true</failsOnError>
             <linkXRef>false</linkXRef>
           </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>10.9.2</version>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>com.github.spotbugs</groupId>
           <artifactId>spotbugs-maven-plugin</artifactId>
-          <version>${spotbugs.version}</version>
+          <version>4.7.3.2</version>
           <configuration>
             <xmlOutput>true</xmlOutput>
             <failOnError>false</failOnError>
@@ -484,6 +481,14 @@
               </plugin>
             </plugins>
           </configuration>
+          <dependencies>
+            <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+            <dependency>
+              <groupId>com.github.spotbugs</groupId>
+              <artifactId>spotbugs</artifactId>
+              <version>4.7.3</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -512,11 +517,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>${surefire.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <reportSets>
           <reportSet>
@@ -529,7 +529,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>${spotbugs.version}</version>
+        <version>4.7.3.2</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -540,131 +540,4 @@
       </plugin>
     </plugins>
   </reporting>
-  <name>Beast</name>
-  <description>
-       BEAST aims to make the verification of voting rules easier.
-       Voting rules are methods to aggregate the preferences of a group to make decisions.
-  </description>
-  <url>https://github.com/VeriVote/BEAST</url>
-  <inceptionYear>2017</inceptionYear>
-  <licenses>
-    <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
-    </license>
-  </licenses>
-  <organization>
-    <name>Karlsruhe Institute of Technology (KIT)</name>
-    <url>https://www.kit.edu</url>
-  </organization>
-  <developers>
-    <developer>
-      <name>Michael Kirsten</name>
-      <email>kirsten@kit.edu</email>
-      <url>https://formal.kastel.kit.edu/kirsten</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </developer>
-  </developers>
-  <contributors>
-    <contributor>
-      <name>Lukas Stapelbroek</name>
-      <email>lukas-stapelbroek@gmx.de</email>
-      <url>https://github.com/Skypr</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-    <contributor>
-      <name>Holger Klein</name>
-      <email>holgerhugoklein@googlemail.com</email>
-      <url>https://github.com/bigolol</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-    <contributor>
-      <name>Niels Hanselmann</name>
-      <url>https://github.com/NielsCo</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-    <contributor>
-      <name>Nikolai Schnell</name>
-      <url>https://github.com/NikolaiLMS</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-    <contributor>
-      <name>Justin Hecht</name>
-      <url>https://github.com/justin-hecht</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-    <contributor>
-      <name>Jonas Wohnig</name>
-      <url>https://github.com/JonasWoh</url>
-      <organization>Karlsruhe Institute of Technology (KIT)</organization>
-      <organizationUrl>https://www.kit.edu</organizationUrl>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-  </contributors>
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/VeriVote/BEAST</url>
-  </issueManagement>
-  <distributionManagement>
-    <repository>
-      <uniqueVersion>false</uniqueVersion>
-      <id>beast</id>
-      <name>BEAST</name>
-      <url>file://${basedir}/target/deployment</url>
-      <layout>default</layout>
-    </repository>
-    <site>
-      <id>beast</id>
-      <name>BEAST</name>
-      <url>file://${basedir}/target/deployment/site</url>
-    </site>
-    <downloadUrl>https://github.com/VeriVote/BEAST</downloadUrl>
-  </distributionManagement>
-  <profiles>
-    <profile>
-      <id>m2e</id>
-      <!--This profile is activated when eclipse interacts with
-        maven (using m2e). -->
-      <activation>
-        <property>
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <!--eclipse do not support duplicated package-info.java, in both src
-              and test. -->
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-testCompile</id>
-                <phase>test-compile</phase>
-                <configuration>
-                  <testExcludes>
-                    <exclude>**/package-info.java</exclude>
-                  </testExcludes>
-                </configuration>
-                <goals>
-                  <goal>testCompile</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
