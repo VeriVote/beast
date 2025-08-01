@@ -8,6 +8,21 @@
   <artifactId>Beast</artifactId>
   <version>2.02</version>
   <packaging>jar</packaging>
+  <properties>
+    <skipTests>false</skipTests>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.version>3.8.1</maven.version>
+    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <jdk.version>11</jdk.version>
+    <javafx.version>19.0.2.1</javafx.version>
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+    <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
+    <ikonli.version>12.3.1</ikonli.version>
+    <exec.mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
