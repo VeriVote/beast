@@ -10,7 +10,9 @@
 
 name: Java CI with Maven
 permissions:
+  actions: read
   contents: read
+  checks: read
 
 on:
   workflow_dispatch:
