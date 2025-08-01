@@ -1,7 +1,7 @@
 package edu.kit.kastel.formal.beast.api.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import edu.kit.kastel.formal.beast.api.CreationHelper;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;

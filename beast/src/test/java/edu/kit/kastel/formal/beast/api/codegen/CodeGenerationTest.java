@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import edu.kit.kastel.formal.beast.api.CreationHelper;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CBMCCodeGenerator;
