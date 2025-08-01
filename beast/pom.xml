@@ -309,7 +309,6 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.7.1</version>
         <configuration>
-          <release>${jdk.version}</release>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
@@ -453,7 +452,7 @@
             <includeResources>true</includeResources>
             <includeTestResources>true</includeTestResources>
             <configLocation>checks.xml</configLocation>
-            <encoding>UTF-8</encoding>
+            <inputEncoding>UTF-8</inputEncoding>
             <consoleOutput>true</consoleOutput>
             <failsOnError>true</failsOnError>
             <linkXRef>false</linkXRef>
