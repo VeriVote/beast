@@ -45,7 +45,7 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <jdk.version>21</jdk.version>
-    <javafx.version>25-ea+22b</javafx.version>
+    <javafx.version>24.0.2</javafx.version>
     <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
     <antlr.version>4.13.2</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
     <ikonli.version>12.4.0</ikonli.version>
