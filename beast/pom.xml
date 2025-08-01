@@ -12,15 +12,22 @@
     <skipTests>false</skipTests>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.version>3.8.1</maven.version>
+    <maven.version>3.6.3</maven.version>
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <jdk.version>11</jdk.version>
-    <javafx.version>19.0.2.1</javafx.version>
+    <javafx.version>20</javafx.version>
     <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+    <junit.version>5.9.2</junit.version>
+    <surefire.version>3.0.0</surefire.version>
     <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
     <ikonli.version>12.3.1</ikonli.version>
+    <resources.version>3.3.1</resources.version>
+    <deploy.version>3.1.1</deploy.version>
+    <depgraph.version>4.0.2</depgraph.version>
+    <checkstyle.version>10.9.3</checkstyle.version>
+    <spotbugs.version>4.7.3.3</spotbugs.version>
     <exec.mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
   </properties>
   <dependencies>
@@ -190,28 +197,6 @@
       <version>4.7.3</version>
     </dependency>
   </dependencies>
-  <properties>
-    <skipTests>false</skipTests>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.version>3.6.3</maven.version>
-    <maven.compiler.release>11</maven.compiler.release>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
-    <jdk.version>11</jdk.version>
-    <javafx.version>20</javafx.version>
-    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
-    <junit.version>5.9.2</junit.version>
-    <surefire.version>3.0.0</surefire.version>
-    <antlr.version>4.12.0</antlr.version><!-- Newer ANTLR versions require maven version 3.8 -->
-    <ikonli.version>12.3.1</ikonli.version>
-    <resources.version>3.3.1</resources.version>
-    <deploy.version>3.1.1</deploy.version>
-    <depgraph.version>4.0.2</depgraph.version>
-    <checkstyle.version>10.9.3</checkstyle.version>
-    <spotbugs.version>4.7.3.3</spotbugs.version>
-    <exec.mainClass>edu.kit.kastel.formal.beast.gui.BeastWithGuiApplicationClass</exec.mainClass>
-  </properties>
   <build>
     <finalName>Beast</finalName>
     <plugins>
