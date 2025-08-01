@@ -452,7 +452,6 @@
             <includeResources>true</includeResources>
             <includeTestResources>true</includeTestResources>
             <configLocation>checks.xml</configLocation>
-            <inputEncoding>UTF-8</inputEncoding>
             <consoleOutput>true</consoleOutput>
             <failsOnError>true</failsOnError>
             <linkXRef>false</linkXRef>
