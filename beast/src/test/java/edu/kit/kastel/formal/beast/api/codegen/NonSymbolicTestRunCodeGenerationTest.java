@@ -2,7 +2,7 @@ package edu.kit.kastel.formal.beast.api.codegen;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.CreationHelper;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CBMCCodeGenerator;

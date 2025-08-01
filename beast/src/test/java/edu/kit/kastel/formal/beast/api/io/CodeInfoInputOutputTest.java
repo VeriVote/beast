@@ -1,7 +1,7 @@
 package edu.kit.kastel.formal.beast.api.io;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.info.GeneratedCodeInfo;
 import edu.kit.kastel.formal.beast.api.io.code.GeneratedCodeInfoInputOutputHelper;

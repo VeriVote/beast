@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.json.JSONException;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
 import edu.kit.kastel.formal.beast.api.method.CElectionDescription;

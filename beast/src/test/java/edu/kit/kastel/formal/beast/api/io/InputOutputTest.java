@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import edu.kit.kastel.formal.beast.api.CreationHelper;
 import edu.kit.kastel.formal.beast.api.codegen.cbmc.CodeGenOptions;
