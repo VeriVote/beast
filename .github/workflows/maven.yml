@@ -9,6 +9,9 @@
 # documentation.
 
 name: Java CI with Maven
+permissions:
+  contents: read
+  checks: write
 
 on:
   workflow_dispatch:
