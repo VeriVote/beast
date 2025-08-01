@@ -11,7 +11,7 @@
 name: Java CI with Maven
 permissions:
   actions: read
-  contents: write
+  contents: read
   checks: write
 
 on:
