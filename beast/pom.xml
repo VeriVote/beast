@@ -323,14 +323,7 @@
         </configuration>
         <executions>
           <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>create-executable</id>
+            <id>make-jar-with-dependencies</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
