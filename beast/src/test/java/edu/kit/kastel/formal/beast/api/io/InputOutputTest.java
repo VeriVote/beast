@@ -1,7 +1,7 @@
 package edu.kit.kastel.formal.beast.api.io;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.Assertions.assertEquals;
+import static org.junit.Assertions.assertNull;
 
 import java.io.File;
 import java.io.IOException;
